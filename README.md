@@ -10,7 +10,7 @@ Bienvenidos al repositorio del  **Grupo 02** del curso **Proyecto Integrador 202
 
 Este espacio integra la documentación, avances y entregables de nuestro proyecto académico, desarrollado bajo la metodología VDI 2206, que establece un enfoque sistemático para el diseño, desarrollo y validación de sistemas de ingeniería.  
 
-Como equipo nos interesa combinar lo que aprendemos en nuestra carrera con la creatividad, la investigación, la tecnología y la búsqueda de soluciones a problemas reales. 
+Como equipo queremos combinar lo que aprendemos en nuestra carrera con la creatividad, la investigación, la tecnología y la búsqueda de soluciones a problemas reales. 
 
 Es por ello que estamos interesados en trabajar en los siguientes **Objetivos de Desarrollo Sostenible (ODS):**  
 
