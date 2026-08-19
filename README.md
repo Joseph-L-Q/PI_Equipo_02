@@ -1,23 +1,26 @@
 <h1 align="center" style="color: #0000FF; font-weight: bold;">
 
-  Equipo 02 - Proyecto Integrador
+Equipo 02 - Proyecto Integrador
 
 ![Logo de la universidad](Recursos/Imágenes/cayetano.png)
 
 ## 🌍 Descripción del Equipo 
-Bienvenidos al repositorio del  **Grupo 02** del curso **Proyecto Integrador 2026-2**, conformado por estudiantes de la carrera de Ingeniería Informática / Industrial.  
+
+Bienvenidos al repositorio del  **Grupo 02** del curso **Proyecto Integrador 2026-2**, conformado por estudiantes de la carrera de Ingeniería Informática e Industrial.  
+
 Este espacio integra la documentación, avances y entregables de nuestro proyecto académico, desarrollado bajo la metodología VDI 2206, que establece un enfoque sistemático para el diseño, desarrollo y validación de sistemas de ingeniería.  
 
-Nos interesa trabajar en los siguientes **Objetivos de Desarrollo Sostenible (ODS):**  
-- ODS 3: Salud y Bienestar  
+Como equipo nos interesa combinar lo que aprendemos en nuestra carrera con la creatividad, la investigación, la tecnología y la búsqueda de soluciones a problemas reales. 
+
+Es por ello que estamos interesados en trabajar en los siguientes **Objetivos de Desarrollo Sostenible (ODS):**  
+
 - ODS 6: Agua Limpia y Saneamiento  
-- ODS 9: Industria, Innovación e Infraestructura  
-- ODS 11: Ciudades y Comunidades Sostenibles  
-- ODS 13: Acción por el Clima  
+- ODS 14: Vida submarina
 
 ---
 
 ## 📸 Fotografía del Equipo  
+
 <p align="center">
 <img width="1408" height="768" alt="imagen_alumnos_IA" src="https://github.com/user-attachments/assets/3829718f-51c7-4d00-b262-ef37f178f059" />
   <em>Figura 1. Fotografía del equipo 02</em>
