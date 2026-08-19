@@ -1,6 +1,6 @@
 <h1 align="center" style="color: #0000FF; font-weight: bold;">
-# Equipo 02 - Proyecto Integrador
 
+  Equipo 02 - Proyecto Integrador
 
 ![Logo de la universidad](Recursos/Imágenes/cayetano.png)
 
