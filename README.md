@@ -1,7 +1,7 @@
 # Equipo 02 - Proyecto Integrador
 ### Carrera de Ingeniería Informática / Industrial  
 
-![Logo de la universidad](images/cayetano.png)
+![Logo de la universidad](Imágenes/cayetano.png)
 
 ## 🌍 Descripción del Equipo 
 Somos el **Equipo 02** del curso **Nombre del curso 2026-2**, conformado por estudiantes de la carrera de Ingeniería Informática / Industrial.  
