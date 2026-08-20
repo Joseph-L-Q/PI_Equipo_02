@@ -2,16 +2,7 @@
 
 Equipo 02 - Proyecto Integrador
 
-</h1>
-
-<p align="center">
-  <img src="Recursos/Imágenes/cayetano.png" width="180" alt="Logo de la Universidad Peruana Cayetano Heredia">
-</p>
-
-<p align="center">
-  Ingeniería Informática e Ingeniería Industrial<br>
-  Proyecto Integrador 2026-2
-</p>
+![Logo de la universidad](Recursos/Imágenes/cayetano.png)
 
 ## 🌍 Descripción del Equipo 
 
