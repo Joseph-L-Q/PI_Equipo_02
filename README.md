@@ -33,9 +33,9 @@ Es por ello que estamos interesados en trabajar en los siguientes **Objetivos de
 | Foto | Nombre | Rol | Intereses |
 |------|--------|-----|-----------|
 | <img src="/Recursos/Imágenes/integrante1.png" width="90"/> | **Nombre 1** | Líder del equipo | Innovación social, sostenibilidad |
-| <img src="/Recursos/Imágenes/integrante2.png" width="90"/> | **Nombre 2** | Responsable de investigación | Gestión ambiental, desarrollo comunitario |
+| <img src="https://github.com/Joseph-L-Q/ProyectoIntegradorGrupo02/blob/main/Recursos/Im%C3%A1genes/Gabi.jpeg" width="90"/> | **Gabriela Santamaría Huaytan** | Responsable de investigación | Gestión ambiental, desarrollo comunitario |
 | <img src="https://github.com/Joseph-L-Q/ProyectoIntegradorGrupo02/blob/main/Recursos/Im%C3%A1genes/Mar%C3%ADa.jpeg" width="90"/> | **María Rebeca Antezana De la Cruz** | Diseñadora | Diseño de prototipos, creatividad aplicada |
-| <img src="/Recursos/Imágenes/integrante2.png" width="90"/> | **Nombre 4** | Encargado/a de documentación | Comunicación científica, redacción técnica |
+| <img src="/Recursos/Imágenes/integrante2.png" width="90"/> | **Melissa Bustos Montañez** | Encargado/a de documentación | Comunicación científica, redacción técnica |
 | <img src="/Recursos/Imágenes/integrante1.png" width="90"/> | **Nombre 5** | Programador/a - Modelador/a | Programación, análisis de datos, simulación |
 
 ---
