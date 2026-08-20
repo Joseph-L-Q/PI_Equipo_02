@@ -34,8 +34,8 @@ Es por ello que estamos interesados en trabajar en los siguientes **Objetivos de
 |------|--------|-----|-----------|
 | <img src="Recursos/Imágenes/Gabi.jpeg" width="150"/> | **Gabriela Santamaría Huaytan** | Responsable de investigación | Gestión ambiental, desarrollo comunitario |
 | <img src="Recursos/Imágenes/María.jpeg" width="150"/> | **María Antezana De la Cruz** | Diseñadora | Diseño de prototipos, creatividad aplicada |
-| <img src="/Recursos/Imágenes/Melissa.jpg" width="150"/> | **Melissa Bustos Montañez** | Encargado/a de documentación | Comunicación científica, redacción técnica |
-| <img src="/Recursos/Imágenes/Joseph.jpeg" width="150"/> | **Joseph Lombardi Quispe** | Programador/a - Modelador/a | Programación, análisis de datos, simulación |
+| <img src="/Recursos/Imágenes/Melissa.jpg" width="150"/> | **Melissa Bustos Montañez** | Encargada de documentación | Comunicación científica, redacción técnica |
+| <img src="/Recursos/Imágenes/Joseph.jpeg" width="150"/> | **Joseph Lombardi Quispe** | Programador - Modelador | Programación, análisis de datos, simulación |
 
 ---
 
