@@ -74,7 +74,7 @@ Los Objetivos de Desarrollo Sostenible (ODS) son una iniciativa de la Organizaci
 ### ODS 12: Producción y Consumo Responsables
 
 * **Definición:** Garantizar modalidades de consumo y producción sostenibles.
-* **Relación:** El proyecto contribuye directamente a la Meta 12.2: Gestión sostenible y uso eficiente de los recursos naturales. Al monitorear en tiempo real el estado de las mallas, se programan las limpiezas basándose en datos reales, evitando desplazamientos marítimos innecesarios (ahorro de combustible), prolongando la vida útil de las linternas y maximizando el aprovechamiento del recurso marino.
+* **Relación:** El proyecto contribuye directamente a la Meta 12.2: Gestión sostenible y uso eficiente de los recursos naturales. Al monitorear en tiempo real el estado de las mallas, se programan las limpiezas basándose en datos reales, evitando desplazamientos marítimos innecesarios, prolongando la vida útil de las linternas y maximizando el aprovechamiento del recurso marino.
 
 ### ODS 9: Industria, Innovación e Infraestructura
 
@@ -92,69 +92,10 @@ Frente a esto, el proyecto **LanternGuard** propone analizar la malla de manera 
 Con este proyecto se logrará:
 * Optimizar las jornadas de mantenimiento y lavado de linternas.
 * Reducir la mortalidad de la concha de abanico por asfixia u obstrucción del flujo de agua.
-* Mejorar la productividad y el peso biológico del cultivo (músculo y gónada).
+* Mejorar la productividad y el peso biológico del cultivo.
 * Disminuir costos operativos y de combustible para los acuicultores.
 * Tomar decisiones de recambio basadas en datos objetivos y no en estimaciones.
 * Promover una acuicultura más sostenible, moderna y responsable.
-
----
-
-## Nuestra propuesta
-
-Se desarrolló **LanternGuard**, un sistema inteligente de monitoreo submarino y evaluación preventiva de *biofouling* orientado al cultivo de concha de abanico en la costa peruana. El sistema es capaz de capturar imágenes de la malla bajo el agua, medir variables oceanográficas clave, procesar los datos mediante un microcontrolador ESP32 y transmitir alertas de mantenimiento, contando con una arquitectura modular dividida entre la zona sumergida y la superficie.
-
-El sistema se basa en tres componentes integrados:
-
-### 1. Monitoreo visual y ambiental submarino
-
-El módulo sumergido incorpora:
-* Cámara HD / ESP32-CAM para la captura periódica de imágenes de la malla.
-* Sensor de temperatura del agua (DS18B20).
-* Sensor de turbidez ambiental para caracterizar la claridad del medio marino.
-
-### 2. Procesamiento y evaluación de biofouling
-
-Los datos recolectados son procesados para:
-* Evaluar el porcentaje de área cubierta por organismos incrustantes mediante algoritmos de procesamiento de imágenes.
-* Clasificar la condición de la linterna en niveles de alerta (Normal, Vigilancia, Limpieza Recomendada).
-* Transmitir la información mediante un cable umbilical hacia la unidad de superficie.
-
-### 3. Sistema de energía y protección autónomo
-
-El prototipo garantiza su operación en mar mediante:
-* Unidad de superficie flotante con panel solar y batería de respaldo para suministro eléctrico continuo.
-* Carcasa estanca hermética con junta de sellado y prensaestopas para proteger la electrónica de la corrosión salina.
-* Mecanismo de autolimpieza en la ventana óptica transparente para evitar que el *biofouling* obstruya el lente de la cámara.
-
----
-
-## ¿Qué haríamos con la información?
-
-Al obtener el porcentaje de bioincrustación y los datos de temperatura y turbidez, estos son procesados y estructurados para su visualización. Esto permite al acuicultor conocer de manera inmediata la condición física del cultivo sin necesidad de sumergirse.
-
-A partir de esta información, el sistema permite:
-* Generar alertas automáticas indicando cuando una linterna ha superado el umbral crítico de cobertura (ej. >50%).
-* Correlacionar la temperatura y la turbidez con la velocidad de crecimiento del *biofouling* para predecir futuros mantenimientos.
-* Registrar el historial de limpieza antes y después de cada intervención para medir la efectividad de las jornadas de trabajo.
-* Optimizar el uso de embarcaciones y personal de trabajo, acudiendo al mar únicamente cuando la infraestructura requiera atención.
-
----
-
-## Alcance
-
-La optimización del mantenimiento en el cultivo de concha de abanico requiere sistemas que permitan evaluar con precisión y en tiempo real el estado de las mallas. En este sentido, el proyecto desarrolló el prototipo **LanternGuard**, que integra módulos de captura visual, sensorización ambiental y alimentación fotovoltaica autónoma.
-
-El sistema cuenta con un gabinete diseñado para entornos marinos, sellado herméticamente y adaptado para fijarse a la estructura de la linterna. Está dirigido a maricultores y empresas del sector acuícola que buscan reducir costos de inspección y mejorar la eficiencia de sus cultivos.
-
-A corto plazo, el prototipo permite validar la efectividad de la visión artificial para detectar *biofouling* en condiciones reales de agua salada. A largo plazo, el proyecto busca escalar hacia plataformas de monitoreo en red para concesiones acuícolas completas, promoviendo la digitalización de la maricultura en el Perú.
-
----
-
-## Conclusión
-
-El desarrollo del proyecto **LanternGuard** evidenció que el monitoreo visual y ambiental continuo es clave para mejorar la eficiencia productiva en el cultivo de concha de abanico. La variabilidad de factores como la temperatura y la velocidad de incrustación requiere estrategias específicas que superen los métodos tradicionales basados en calendarios fijos.
-
-A través del diseño e implementación de este sistema modular, el equipo logró integrar hardware embebido, visión artificial y protección contra el medio marino en una solución práctica. Este sistema permite tomar decisiones de mantenimiento basadas en datos reales, proteger la supervivencia del recurso y reducir costos innecesarios.
 
 ---
 
@@ -171,8 +112,7 @@ A través del diseño e implementación de este sistema modular, el equipo logr�
 
 📌 **Resumen Final**
 
-El presente README describe la conformación del equipo, la problemática abordada y la propuesta de solución desarrollada en el marco del curso Proyecto Integrador 2026-2. El proyecto se enfoca en la ineficiencia de las inspecciones de *biofouling* en el cultivo de concha de abanico debido a la falta de monitoreo subacuático continuo.
-
-En este contexto, se plantea el desarrollo de **LanternGuard**, una solución tecnológica orientada al monitoreo automático de la condición de las mallas y variables ambientales. Esta propuesta busca integrar sostenibilidad, ingeniería de sistemas e innovación, contribuyendo a una acuicultura más eficiente, competitiva y responsable.
+Como Equipo 02, asumimos el reto de integrar nuestras distintas habilidades y perspectivas para desarrollar un trabajo basado en la ingeniería, la investigación y la innovación. Nuestro compromiso es aplicar estos conocimientos de manera responsable, buscando que cada decisión y cada etapa del proyecto respondan a criterios técnicos y aporten valor frente a las necesidades identificadas.
 
 Este repositorio reúne el trabajo realizado por el equipo y refleja nuestro proceso de aprendizaje, colaboración y desarrollo a lo largo del curso Proyecto Integrador 2026-2. 
+
