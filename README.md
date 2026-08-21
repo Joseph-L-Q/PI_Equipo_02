@@ -33,10 +33,10 @@ Es por ello que estamos interesados en trabajar en los siguientes **Objetivos de
 | Foto | Nombre | Rol | Intereses |
 |------|--------|-----|-----------|
 | <img src="Recursos/Imágenes/Gabi.jpeg" width="150"/> | **Gabriela Santamaría Huaytan** | Responsable de investigación | Gestión ambiental, desarrollo comunitario |
-| <img src="Recursos/Imágenes/María.jpeg" width="150"/> | **María Antezana De la Cruz** | Diseñadora | Diseño de prototipos, creatividad aplicada |
+| <img src="Recursos/Imágenes/María.jpeg" width="150"/> | **María Antezana De la Cruz** | Diseñadora y Líder del equipo | Diseño de prototipos, creatividad aplicada, innovación social, sostenibilidad |
 | <img src="/Recursos/Imágenes/Melissa.jpg" width="150"/> | **Melissa Bustos Montañez** | Encargada de documentación | Comunicación científica, redacción técnica |
 | <img src="/Recursos/Imágenes/Joseph.jpeg" width="150"/> | **Joseph Lombardi Quispe** | Programador - Modelador | Programación, análisis de datos, simulación |
-
+| <img src=""/> | **Yoichi Palacios Tanaka** | Programador - Modelador | Programación, análisis de datos, simulación |
 ---
 
 ## 📌 Resumen Final  
