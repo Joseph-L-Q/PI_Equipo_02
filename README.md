@@ -1,19 +1,21 @@
-# Equipo 02 - Proyecto Integrador
+<h1 align="center" style="color: #0000FF; font-weight: bold;">
 
-**Carrera de Ingeniería Informática / Industrial**
+Equipo 02 - Proyecto Integrador
 
-**Universidad Peruana Cayetano Heredia**
+![Logo de la universidad](Recursos/Imágenes/cayetano.png)
 
 ---
 
-## Sobre nosotros:
+## Descripción del Equipo 
 
-Somos el **Equipo 02** del curso **Proyecto Integrador 2026-2**, conformado por estudiantes de las carreras de Ingeniería Informática e Industrial.
+Bienvenidos al repositorio del  **Grupo 02** del curso **Proyecto Integrador 2026-2**, conformado por estudiantes de la carrera de Ingeniería Informática e Ingeniería Industrial de la Universidad Peruana Cayetano Heredia.
+
+Este espacio integra la documentación, avances y entregables de nuestro proyecto académico, desarrollado bajo la metodología VDI 2206, que establece un enfoque sistemático para el diseño, desarrollo y validación de sistemas de ingeniería.  
 
 Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemáticas reales del sector acuícola en el Perú, específicamente relacionadas con la gestión eficiente y el monitoreo preventivo del *biofouling* en el cultivo de concha de abanico (*Argopecten purpuratus*). A través de este proyecto, buscamos proponer alternativas innovadoras que permitan automatizar la inspección subacuática, optimizar las labores de mantenimiento y contribuir a una producción acuícola más eficiente, rentable y sostenible.
 
 <p align="center">
-  <img src="Recursos/Imágenes/Grupo2.png" alt="Fotografía del equipo 02" width="100%">
+  <img src="Recursos/Imágenes/Grupo2.jpeg" alt="Fotografía del equipo 02" width="100%">
   <br>
   <em>Figura 1. Fotografía del equipo 02</em>
 </p>
@@ -24,19 +26,19 @@ Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemá
 
 | Foto | Nombre | Rol | Intereses | Correo |
 |------|--------|-----|-----------|--------|
-| <img src="Recursos/Imágenes/Gabi.jpeg" width="150"/> | **Santamaría Huaytan, Gabriela** | Responsable de investigación ambiental | Gestión ambiental, desarrollo comunitario, acuicultura sostenible | gabriela.santamaria@upch.pe |
 | <img src="Recursos/Imágenes/María.jpeg" width="150"/> | **Antezana De la Cruz, María** | Líder del equipo y diseñadora | Diseño de prototipos, UX/UI, creatividad aplicada, innovación social | maria.antezana@upch.pe |
+| <img src="Recursos/Imágenes/Gabi.jpeg" width="150"/> | **Santamaría Huaytan, Gabriela** | Responsable de investigación ambiental | Gestión ambiental, desarrollo comunitario, acuicultura sostenible | gabriela.santamaria@upch.pe |
 | <img src="Recursos/Imágenes/Melissa.jpg" width="150"/> | **Bustos Montañez, Melissa** | Especialista en documentación técnica | Comunicación científica, redacción técnica, análisis de requerimientos | melissa.bustos@upch.pe |
 | <img src="Recursos/Imágenes/Joseph.jpeg" width="150"/> | **Lombardi Quispe, Joseph** | Programador y modelador de sistemas | Programación, análisis de datos, desarrollo embebido | joseph.lombardi@upch.pe |
-| <img src="Recursos/Imágenes/Yoichi.jpeg" width="150"/> | **Palacios Tanaka, Yoichi** | Programador y analista de simulación | Programación, visión artificial, simulación de sistemas | yoichi.palacios@upch.pe |
+| <img src="Recursos/Imágenes/Yoichi.jpeg" width="150"/> | **Palacios Tanaka, Yoichi** | Programador y modelador de sistemas | Programación,  análisis de datos, desarrollo embebido | yoichi.palacios@upch.pe |
 
 ---
 
 ## ¿Por qué este proyecto?
 
-En el Perú, la acuicultura de la concha de abanico cumple un rol fundamental en el desarrollo socioeconómico de la costa peruana, destacando por su alta demanda de exportación. Pese a estas fortalezas, la actividad se enfrenta a un problema crítico: la rápida acumulación de bioincrustaciones o *biofouling* en las mallas de las "linternas" donde se cultivan las conchas. En la práctica, no existe una herramienta de evaluación continua, lo que obliga a depender de inspecciones visuales manuales mediante buceo o recambios a ciegas, generando desperdicio de horas de trabajo, elevados costos operativos y pérdida de biomasa.
+Elegimos trabajar con la acuicultura de la concha de abanico porque es una actividad importante para la costa peruana y tiene un gran potencial comercial, pero durante su cultivo existe un problema que puede dificultar el manejo de las linternas: la acumulación de biofouling en sus mallas. Actualmente, para conocer el estado de estas estructuras, los trabajadores deben realizar inspecciones y labores de limpieza o recambio de manera periódica, lo que implica tiempo, esfuerzo y recursos, y no siempre permite saber con precisión cuándo es realmente necesario intervenir.
 
-Como equipo, nos motivó abordar esta problemática desde una perspectiva práctica y preventiva, proponiendo el desarrollo de un sistema de monitoreo subacuático inteligente que permita cuantificar la acumulación de *biofouling* y predecir cuándo es momento de realizar la limpieza o recambio. De esta manera, buscamos aportar a una mejor toma de decisiones en el mar, optimizar los recursos logísticos de los productores y contribuir a una acuicultura más eficiente y sostenible.
+Con este proyecto buscamos facilitar el trabajo de los productores, optimizar el uso de recursos y contribuir a mantener mejores condiciones para el cultivo, favoreciendo la supervivencia y producción de las conchas de abanico.
 
 ---
 
@@ -62,7 +64,6 @@ Como grupo, nuestro objetivo es optimizar la gestión del mantenimiento y recamb
 
 1. Capturar e identificar cuantitativamente el nivel de bioincrustación (*biofouling*) en la malla de la linterna mediante procesamiento de imágenes y visión artificial, enviando los datos a un módulo de alertas para indicar el estado del cultivo.
 2. Medir y registrar variables ambientales clave como la temperatura del agua y la turbidez en intervalos regulares para evaluar su correlación con la velocidad de crecimiento del *biofouling*.
-3. Diseñar e implementar un prototipo físico modular con una unidad submarina estanca con autolimpieza de ventana óptica y una unidad de superficie con alimentación fotovoltaica autónoma.
 
 ---
 
@@ -70,20 +71,15 @@ Como grupo, nuestro objetivo es optimizar la gestión del mantenimiento y recamb
 
 Los Objetivos de Desarrollo Sostenible (ODS) son una iniciativa de la Organización de las Naciones Unidas orientada a abordar los principales desafíos globales. Este proyecto se alinea con estos objetivos al integrar tecnología avanzada en la gestión de la acuicultura sostenible:
 
-### ODS 12: Producción y Consumo Responsables (ODS Principal)
+### ODS 12: Producción y Consumo Responsables
 
 * **Definición:** Garantizar modalidades de consumo y producción sostenibles.
-* **Relación:** El proyecto contribuye directamente a la Meta 12.2 (gestión sostenible y uso eficiente de los recursos naturales). Al monitorear en tiempo real el estado de las mallas, se programan las limpiezas basándose en datos reales, evitando desplazamientos marítimos innecesarios (ahorro de combustible), prolongando la vida útil de las linternas y maximizando el aprovechamiento del recurso marino.
+* **Relación:** El proyecto contribuye directamente a la Meta 12.2: Gestión sostenible y uso eficiente de los recursos naturales. Al monitorear en tiempo real el estado de las mallas, se programan las limpiezas basándose en datos reales, evitando desplazamientos marítimos innecesarios (ahorro de combustible), prolongando la vida útil de las linternas y maximizando el aprovechamiento del recurso marino.
 
-### ODS 9: Industria, Innovación e Infraestructura (ODS Secundario)
+### ODS 9: Industria, Innovación e Infraestructura
 
 * **Definición:** Construir infraestructuras resilientes, promover la industrialización sostenible y fomentar la innovación.
 * **Relación:** El proyecto introduce tecnologías emergentes como Internet de las Cosas (IoT), visión artificial y energía solar en el sector acuícola, modernizando las herramientas de trabajo en el mar y fortaleciendo la competitividad de los productores locales.
-
-### ODS 14: Vida Submarina (Ámbito de Aplicación)
-
-* **Definición:** Conservar y utilizar sosteniblemente los océanos, los mares y los recursos marinos.
-* **Relación:** El proyecto promueve mejores prácticas de cultivo suspendido en el ecosistema marino, reduciendo el impacto de limpiezas tardías o agresivas sobre el fondo marino y favoreciendo una producción responsable en armonía con las condiciones oceanográficas.
 
 ---
 
