@@ -91,7 +91,6 @@ Frente a esto, el proyecto **LanternGuard** propone analizar la malla de manera 
 
 Con este proyecto se logrará:
 * Optimizar las jornadas de mantenimiento y lavado de linternas.
-* Reducir la mortalidad de la concha de abanico por asfixia u obstrucción del flujo de agua.
 * Mejorar la productividad y el peso biológico del cultivo.
 * Disminuir costos operativos y de combustible para los acuicultores.
 * Tomar decisiones de recambio basadas en datos objetivos y no en estimaciones.
