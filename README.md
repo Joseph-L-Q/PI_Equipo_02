@@ -13,7 +13,7 @@ Somos el **Equipo 02** del curso **Proyecto Integrador 2026-2**, conformado por 
 Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemáticas reales del sector acuícola en el Perú, específicamente relacionadas con la gestión eficiente y el monitoreo preventivo del *biofouling* en el cultivo de concha de abanico (*Argopecten purpuratus*). A través de este proyecto, buscamos proponer alternativas innovadoras que permitan automatizar la inspección subacuática, optimizar las labores de mantenimiento y contribuir a una producción acuícola más eficiente, rentable y sostenible.
 
 <p align="center">
-  <img src="Recursos/Imágenes/Grupo2.jpeg" alt="Fotografía del equipo 02" width="100%">
+  <img src="Recursos/Imágenes/Grupo2.png" alt="Fotografía del equipo 02" width="100%">
   <br>
   <em>Figura 1. Fotografía del equipo 02</em>
 </p>
