@@ -1,46 +1,182 @@
-<h1 align="center" style="color: #0000FF; font-weight: bold;">
+# Equipo 02 - Proyecto Integrador
 
-Equipo 02 - Proyecto Integrador
+**Carrera de Ingeniería Informática / Industrial**
 
-![Logo de la universidad](Recursos/Imágenes/cayetano.png)
-
-## 🌍 Descripción del Equipo 
-
-Bienvenidos al repositorio del  **Grupo 02** del curso **Proyecto Integrador 2026-2**, conformado por estudiantes de la carrera de Ingeniería Informática e Ingeniería Industrial de la Universidad Peruana Cayetano Heredia.
-
-Este espacio integra la documentación, avances y entregables de nuestro proyecto académico, desarrollado bajo la metodología VDI 2206, que establece un enfoque sistemático para el diseño, desarrollo y validación de sistemas de ingeniería.  
-
-Como equipo, buscamos combinar los conocimientos adquiridos en nuestras carreras con la investigación, la creatividad, la tecnología y la ingeniería, trabajando de manera conjunta para identificar problemas reales y plantear soluciones que sean innovadoras, viables y responsables con nuestro entorno. 
-
-Es por ello que estamos interesados en trabajar en los siguientes **Objetivos de Desarrollo Sostenible (ODS):**  
-
-- ODS 6: Agua Limpia y Saneamiento  
-- ODS 14: Vida submarina
+**Universidad Peruana Cayetano Heredia**
 
 ---
 
-## 📸 Fotografía del Equipo  
+## Sobre nosotros:
+
+Somos el **Equipo 02** del curso **Proyecto Integrador 2026-2**, conformado por estudiantes de las carreras de Ingeniería Informática e Industrial.
+
+Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemáticas reales del sector acuícola en el Perú, específicamente relacionadas con la gestión eficiente y el monitoreo preventivo del *biofouling* en el cultivo de concha de abanico (*Argopecten purpuratus*). A través de este proyecto, buscamos proponer alternativas innovadoras que permitan automatizar la inspección subacuática, optimizar las labores de mantenimiento y contribuir a una producción acuícola más eficiente, rentable y sostenible.
 
 <p align="center">
-<img width="1408" height="768" alt="Fotografía del equipo 02" src="Recursos/Imágenes/Grupo2.jpeg" />
+  <img src="Recursos/Imágenes/Grupo2.jpeg" alt="Fotografía del equipo 02" width="100%">
+  <br>
   <em>Figura 1. Fotografía del equipo 02</em>
 </p>
 
 ---
 
-## 👥 Integrantes del Equipo  
+## 👥 Integrantes del Equipo
 
-| Foto | Nombre | Rol | Intereses |
-|------|--------|-----|-----------|
-| <img src="Recursos/Imágenes/Gabi.jpeg" width="150"/> | **Gabriela Santamaría Huaytan** | Responsable de investigación | Gestión ambiental, desarrollo comunitario |
-| <img src="Recursos/Imágenes/María.jpeg" width="150"/> | **María Antezana De la Cruz** | Diseñadora y Líder del equipo | Diseño de prototipos, creatividad aplicada, innovación social, sostenibilidad |
-| <img src="/Recursos/Imágenes/Melissa.jpg" width="150"/> | **Melissa Bustos Montañez** | Encargada de documentación | Comunicación científica, redacción técnica |
-| <img src="/Recursos/Imágenes/Joseph.jpeg" width="150"/> | **Joseph Lombardi Quispe** | Programador - Modelador | Programación, análisis de datos, simulación |
-| <img src=""/> | **Yoichi Palacios Tanaka** | Programador - Modelador | Programación, análisis de datos, simulación |
+| Foto | Nombre | Rol | Intereses | Correo |
+|------|--------|-----|-----------|--------|
+| <img src="Recursos/Imágenes/Gabi.jpeg" width="150"/> | **Santamaría Huaytan, Gabriela** | Responsable de investigación ambiental | Gestión ambiental, desarrollo comunitario, acuicultura sostenible | gabriela.santamaria@upch.pe |
+| <img src="Recursos/Imágenes/María.jpeg" width="150"/> | **Antezana De la Cruz, María** | Líder del equipo y diseñadora | Diseño de prototipos, UX/UI, creatividad aplicada, innovación social | maria.antezana@upch.pe |
+| <img src="Recursos/Imágenes/Melissa.jpg" width="150"/> | **Bustos Montañez, Melissa** | Especialista en documentación técnica | Comunicación científica, redacción técnica, análisis de requerimientos | melissa.bustos@upch.pe |
+| <img src="Recursos/Imágenes/Joseph.jpeg" width="150"/> | **Lombardi Quispe, Joseph** | Programador y modelador de sistemas | Programación, análisis de datos, desarrollo embebido | joseph.lombardi@upch.pe |
+| <img src="Recursos/Imágenes/Yoichi.jpeg" width="150"/> | **Palacios Tanaka, Yoichi** | Programador y analista de simulación | Programación, visión artificial, simulación de sistemas | yoichi.palacios@upch.pe |
+
 ---
 
-## 📌 Resumen Final  
+## ¿Por qué este proyecto?
 
-Como Equipo 02, asumimos el reto de integrar nuestras distintas habilidades y perspectivas para desarrollar un trabajo basado en la ingeniería, la investigación y la innovación. Nuestro compromiso es aplicar estos conocimientos de manera responsable, buscando que cada decisión y cada etapa del proyecto respondan a criterios técnicos y aporten valor frente a las necesidades identificadas.
+En el Perú, la acuicultura de la concha de abanico cumple un rol fundamental en el desarrollo socioeconómico de la costa peruana, destacando por su alta demanda de exportación. Pese a estas fortalezas, la actividad se enfrenta a un problema crítico: la rápida acumulación de bioincrustaciones o *biofouling* en las mallas de las "linternas" donde se cultivan las conchas. En la práctica, no existe una herramienta de evaluación continua, lo que obliga a depender de inspecciones visuales manuales mediante buceo o recambios a ciegas, generando desperdicio de horas de trabajo, elevados costos operativos y pérdida de biomasa.
+
+Como equipo, nos motivó abordar esta problemática desde una perspectiva práctica y preventiva, proponiendo el desarrollo de un sistema de monitoreo subacuático inteligente que permita cuantificar la acumulación de *biofouling* y predecir cuándo es momento de realizar la limpieza o recambio. De esta manera, buscamos aportar a una mejor toma de decisiones en el mar, optimizar los recursos logísticos de los productores y contribuir a una acuicultura más eficiente y sostenible.
+
+---
+
+## Problemática
+
+En las principales zonas acuícolas de la costa peruana, la actividad maricultura se desarrolla en condiciones variables donde el bioincrustamiento es agresivo y constante. La falta de un monitoreo preciso de la condición física de la infraestructura dificulta tomar decisiones correctas en el manejo del cultivo.
+
+Esta problemática se hace evidente en los sistemas suspendidos en linternas, donde la malla retiene progresivamente diversos organismos marinos (ascidias, briozoos, balanos y algas). Esta cobertura reduce drásticamente el flujo de agua y la disponibilidad de oxígeno y fitoplancton para las conchas de abanico, limitando su crecimiento e incrementando la mortalidad del recurso.
+
+Actualmente, el mantenimiento suele basarse en métodos tradicionales con calendarios fijos o revisiones físicas invasivas que no consideran el estado real de cada linterna. Esto provoca que se retiren estructuras antes de tiempo o que se reaccione cuando la malla ya está totalmente obstruida. Cabe resaltar que la acumulación de bioincrustaciones en una linterna puede sobrepasar los 130 kg de biomasa no deseada, incrementando de manera drástica el peso y complicando la maniobra para los trabajadores.
+
+Diversos estudios acuícolas señalan que un manejo oportuno del recambio de linternas reduce la biomasa de *biofouling* en más del 60%, incrementa la supervivencia de las conchas en un 10.8% y mejora sustancialmente el peso del músculo y la gónada. 
+
+En consecuencia, la falta de herramientas tecnológicas que permitan monitorear de manera precisa y continua la condición de las mallas genera desperdicio de recursos operativos, deterioro de la biomasa y menores ingresos para los acuicultores.
+
+---
+
+## Objetivo:
+
+Como grupo, nuestro objetivo es optimizar la gestión del mantenimiento y recambio de linternas en sistemas de cultivo de concha de abanico mediante el monitoreo subacuático de la bioincrustación y variables ambientales, con el fin de proteger la biomasa del cultivo, mejorar la toma de decisiones en las operaciones marítimas y reducir los costos por intervenciones tardías o innecesarias.
+
+### Objetivos específicos:
+
+1. Capturar e identificar cuantitativamente el nivel de bioincrustación (*biofouling*) en la malla de la linterna mediante procesamiento de imágenes y visión artificial, enviando los datos a un módulo de alertas para indicar el estado del cultivo.
+2. Medir y registrar variables ambientales clave como la temperatura del agua y la turbidez en intervalos regulares para evaluar su correlación con la velocidad de crecimiento del *biofouling*.
+3. Diseñar e implementar un prototipo físico modular con una unidad submarina estanca con autolimpieza de ventana óptica y una unidad de superficie con alimentación fotovoltaica autónoma.
+
+---
+
+## ODS en los que nos enfocamos:
+
+Los Objetivos de Desarrollo Sostenible (ODS) son una iniciativa de la Organización de las Naciones Unidas orientada a abordar los principales desafíos globales. Este proyecto se alinea con estos objetivos al integrar tecnología avanzada en la gestión de la acuicultura sostenible:
+
+### ODS 12: Producción y Consumo Responsables (ODS Principal)
+
+* **Definición:** Garantizar modalidades de consumo y producción sostenibles.
+* **Relación:** El proyecto contribuye directamente a la Meta 12.2 (gestión sostenible y uso eficiente de los recursos naturales). Al monitorear en tiempo real el estado de las mallas, se programan las limpiezas basándose en datos reales, evitando desplazamientos marítimos innecesarios (ahorro de combustible), prolongando la vida útil de las linternas y maximizando el aprovechamiento del recurso marino.
+
+### ODS 9: Industria, Innovación e Infraestructura (ODS Secundario)
+
+* **Definición:** Construir infraestructuras resilientes, promover la industrialización sostenible y fomentar la innovación.
+* **Relación:** El proyecto introduce tecnologías emergentes como Internet de las Cosas (IoT), visión artificial y energía solar en el sector acuícola, modernizando las herramientas de trabajo en el mar y fortaleciendo la competitividad de los productores locales.
+
+### ODS 14: Vida Submarina (Ámbito de Aplicación)
+
+* **Definición:** Conservar y utilizar sosteniblemente los océanos, los mares y los recursos marinos.
+* **Relación:** El proyecto promueve mejores prácticas de cultivo suspendido en el ecosistema marino, reduciendo el impacto de limpiezas tardías o agresivas sobre el fondo marino y favoreciendo una producción responsable en armonía con las condiciones oceanográficas.
+
+---
+
+## Enfoque y sustento
+
+La acuicultura es uno de los pilares del desarrollo económico en el litoral peruano. Pese a esto, surge un problema constante en el manejo de la bioincrustación en los sistemas de cultivo suspendido. Actualmente, no se monitorea adecuadamente la condición visual de las mallas bajo el agua, lo que provoca que se intervenga demasiado tarde o se malgasten recursos en revisiones innecesarias.
+
+Frente a esto, el proyecto **LanternGuard** propone analizar la malla de manera precisa utilizando un sistema subacuático equipado con visión artificial y sensores ambientales que permitan saber exactamente cuál es el porcentaje de *biofouling* acumulado. Así, se podrán tomar decisiones oportunas y basadas en datos reales.
+
+Con este proyecto se logrará:
+* Optimizar las jornadas de mantenimiento y lavado de linternas.
+* Reducir la mortalidad de la concha de abanico por asfixia u obstrucción del flujo de agua.
+* Mejorar la productividad y el peso biológico del cultivo (músculo y gónada).
+* Disminuir costos operativos y de combustible para los acuicultores.
+* Tomar decisiones de recambio basadas en datos objetivos y no en estimaciones.
+* Promover una acuicultura más sostenible, moderna y responsable.
+
+---
+
+## Nuestra propuesta
+
+Se desarrolló **LanternGuard**, un sistema inteligente de monitoreo submarino y evaluación preventiva de *biofouling* orientado al cultivo de concha de abanico en la costa peruana. El sistema es capaz de capturar imágenes de la malla bajo el agua, medir variables oceanográficas clave, procesar los datos mediante un microcontrolador ESP32 y transmitir alertas de mantenimiento, contando con una arquitectura modular dividida entre la zona sumergida y la superficie.
+
+El sistema se basa en tres componentes integrados:
+
+### 1. Monitoreo visual y ambiental submarino
+
+El módulo sumergido incorpora:
+* Cámara HD / ESP32-CAM para la captura periódica de imágenes de la malla.
+* Sensor de temperatura del agua (DS18B20).
+* Sensor de turbidez ambiental para caracterizar la claridad del medio marino.
+
+### 2. Procesamiento y evaluación de biofouling
+
+Los datos recolectados son procesados para:
+* Evaluar el porcentaje de área cubierta por organismos incrustantes mediante algoritmos de procesamiento de imágenes.
+* Clasificar la condición de la linterna en niveles de alerta (Normal, Vigilancia, Limpieza Recomendada).
+* Transmitir la información mediante un cable umbilical hacia la unidad de superficie.
+
+### 3. Sistema de energía y protección autónomo
+
+El prototipo garantiza su operación en mar mediante:
+* Unidad de superficie flotante con panel solar y batería de respaldo para suministro eléctrico continuo.
+* Carcasa estanca hermética con junta de sellado y prensaestopas para proteger la electrónica de la corrosión salina.
+* Mecanismo de autolimpieza en la ventana óptica transparente para evitar que el *biofouling* obstruya el lente de la cámara.
+
+---
+
+## ¿Qué haríamos con la información?
+
+Al obtener el porcentaje de bioincrustación y los datos de temperatura y turbidez, estos son procesados y estructurados para su visualización. Esto permite al acuicultor conocer de manera inmediata la condición física del cultivo sin necesidad de sumergirse.
+
+A partir de esta información, el sistema permite:
+* Generar alertas automáticas indicando cuando una linterna ha superado el umbral crítico de cobertura (ej. >50%).
+* Correlacionar la temperatura y la turbidez con la velocidad de crecimiento del *biofouling* para predecir futuros mantenimientos.
+* Registrar el historial de limpieza antes y después de cada intervención para medir la efectividad de las jornadas de trabajo.
+* Optimizar el uso de embarcaciones y personal de trabajo, acudiendo al mar únicamente cuando la infraestructura requiera atención.
+
+---
+
+## Alcance
+
+La optimización del mantenimiento en el cultivo de concha de abanico requiere sistemas que permitan evaluar con precisión y en tiempo real el estado de las mallas. En este sentido, el proyecto desarrolló el prototipo **LanternGuard**, que integra módulos de captura visual, sensorización ambiental y alimentación fotovoltaica autónoma.
+
+El sistema cuenta con un gabinete diseñado para entornos marinos, sellado herméticamente y adaptado para fijarse a la estructura de la linterna. Está dirigido a maricultores y empresas del sector acuícola que buscan reducir costos de inspección y mejorar la eficiencia de sus cultivos.
+
+A corto plazo, el prototipo permite validar la efectividad de la visión artificial para detectar *biofouling* en condiciones reales de agua salada. A largo plazo, el proyecto busca escalar hacia plataformas de monitoreo en red para concesiones acuícolas completas, promoviendo la digitalización de la maricultura en el Perú.
+
+---
+
+## Conclusión
+
+El desarrollo del proyecto **LanternGuard** evidenció que el monitoreo visual y ambiental continuo es clave para mejorar la eficiencia productiva en el cultivo de concha de abanico. La variabilidad de factores como la temperatura y la velocidad de incrustación requiere estrategias específicas que superen los métodos tradicionales basados en calendarios fijos.
+
+A través del diseño e implementación de este sistema modular, el equipo logró integrar hardware embebido, visión artificial y protección contra el medio marino en una solución práctica. Este sistema permite tomar decisiones de mantenimiento basadas en datos reales, proteger la supervivencia del recurso y reducir costos innecesarios.
+
+---
+
+## Referencias
+
+📚 **Referencias**
+
+* FAO. (2022). *El estado mundial de la pesca y la acuicultura 2022. Hacia la transformación azul.* Roma, FAO.
+* Lodeiros, C., & García, N. (2004). *Efecto de la bioincrustación sobre el crecimiento y supervivencia de la concha de abanico Argopecten purpuratus en cultivo suspendido.* Ciencias Marinas.
+* Mendo, J., & Wolff, M. (2003). *El manejo de la pesca y acuicultura de la concha de abanico (Argopecten purpuratus) en el Perú.* Universidad Nacional Agraria La Molina.
+* Samanco Marine Research Group. (2025). *Evaluación del impacto de la bioincrustación y estrategias de recambio de linternas en el rendimiento biológico de Argopecten purpuratus.*
+
+---
+
+📌 **Resumen Final**
+
+El presente README describe la conformación del equipo, la problemática abordada y la propuesta de solución desarrollada en el marco del curso Proyecto Integrador 2026-2. El proyecto se enfoca en la ineficiencia de las inspecciones de *biofouling* en el cultivo de concha de abanico debido a la falta de monitoreo subacuático continuo.
+
+En este contexto, se plantea el desarrollo de **LanternGuard**, una solución tecnológica orientada al monitoreo automático de la condición de las mallas y variables ambientales. Esta propuesta busca integrar sostenibilidad, ingeniería de sistemas e innovación, contribuyendo a una acuicultura más eficiente, competitiva y responsable.
 
 Este repositorio reúne el trabajo realizado por el equipo y refleja nuestro proceso de aprendizaje, colaboración y desarrollo a lo largo del curso Proyecto Integrador 2026-2. 
