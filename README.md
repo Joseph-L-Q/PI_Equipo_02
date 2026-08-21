@@ -26,11 +26,11 @@ Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemá
 
 | Foto | Nombre | Rol | Intereses | Correo |
 |------|--------|-----|-----------|--------|
-| <img src="Recursos/Imágenes/María.jpeg" width="150"/> | **Antezana De la Cruz, María** | Líder del equipo y diseñadora | Diseño de prototipos, UX/UI, creatividad aplicada, innovación social | maria.antezana@upch.pe |
-| <img src="Recursos/Imágenes/Gabi.jpeg" width="150"/> | **Santamaría Huaytan, Gabriela** | Responsable de investigación ambiental | Gestión ambiental, desarrollo comunitario, acuicultura sostenible | gabriela.santamaria@upch.pe |
-| <img src="Recursos/Imágenes/Melissa.jpg" width="150"/> | **Bustos Montañez, Melissa** | Especialista en documentación técnica | Comunicación científica, redacción técnica, análisis de requerimientos | melissa.bustos@upch.pe |
-| <img src="Recursos/Imágenes/Joseph.jpeg" width="150"/> | **Lombardi Quispe, Joseph** | Programador y modelador de sistemas | Programación, análisis de datos, desarrollo embebido | joseph.lombardi@upch.pe |
-| <img src="Recursos/Imágenes/Yoichi.jpeg" width="150"/> | **Palacios Tanaka, Yoichi** | Programador y modelador de sistemas | Programación,  análisis de datos, desarrollo embebido | yoichi.palacios@upch.pe |
+| <img src="Recursos/Imágenes/María.jpeg" width="100"/> | **Antezana De la Cruz, María** | Líder del equipo y diseñadora | Diseño de prototipos, UX/UI, creatividad aplicada, innovación social | maria.antezana@upch.pe |
+| <img src="Recursos/Imágenes/Gabi.jpeg" width="100"/> | **Santamaría Huaytan, Gabriela** | Responsable de investigación ambiental | Gestión ambiental, desarrollo comunitario, acuicultura sostenible | gabriela.santamaria@upch.pe |
+| <img src="Recursos/Imágenes/Melissa.jpg" width="100"/> | **Bustos Montañez, Melissa** | Especialista en documentación técnica | Comunicación científica, redacción técnica, análisis de requerimientos | melissa.bustos@upch.pe |
+| <img src="Recursos/Imágenes/Joseph.jpeg" width="100"/> | **Lombardi Quispe, Joseph** | Programador y modelador de sistemas | Programación, análisis de datos, desarrollo embebido | joseph.lombardi@upch.pe |
+| <img src="Recursos/Imágenes/Yoichi.jpeg" width="100"/> | **Palacios Tanaka, Yoichi** | Programador y modelador de sistemas | Programación,  análisis de datos, desarrollo embebido | yoichi.palacios@upch.pe |
 
 ---
 
