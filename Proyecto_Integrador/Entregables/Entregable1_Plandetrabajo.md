@@ -50,23 +50,23 @@ gantt
     section Requisitos
     Lista de exigencias y plan de trabajo (Rev. 2)  :done, req, 2026-08-17, 2026-08-25
 
-    section Diseno del sistema
-    Modulo mecanico                                 :mec, 2026-08-25, 2026-08-27
-    Modulo electronico                              :ele, 2026-09-01, 2026-09-03
+    section Diseño del sistema
+    Módulo mecánico                                 :mec, 2026-08-25, 2026-08-27
+    Módulo electrónico                              :ele, 2026-09-01, 2026-09-03
     Software                                        :sof, 2026-09-08, 2026-09-10
     IA / IoT / RRNN aplicadas al proyecto           :ia,  2026-09-15, 2026-10-01
 
-    section Hitos
-    Examen y presentacion de avance                 :milestone, m1, 2026-10-06, 0d
-    Presentacion final                              :milestone, m2, 2026-12-01, 0d
+    section Avance
+    Examen y presentación de avance                 :milestone, m1, 2026-10-06, 0d
 
-    section Integracion y validacion
-    Integracion de modulos e identificacion de TRL  :int, 2026-10-20, 2026-10-29
-    Pruebas y validacion en tanque                  :val, 2026-11-03, 2026-11-12
+    section Integración y validación
+    Integración de módulos e identificación de TRL  :int, 2026-10-20, 2026-10-29
+    Pruebas y validación en tanque                  :val, 2026-11-03, 2026-11-12
 
     section Cierre
-    Propiedad intelectual y documentacion           :doc, 2026-11-17, 2026-12-01
-    Presentacion final (preparacion)                :pf,  2026-12-01, 2026-12-03
+    Propiedad intelectual y documentación           :doc, 2026-11-17, 2026-12-01
+    Preparación de la presentación final            :pf,  2026-12-01, 2026-12-03
+    Presentación final                              :milestone, m2, 2026-12-03, 0d
 ```
 
 ---
