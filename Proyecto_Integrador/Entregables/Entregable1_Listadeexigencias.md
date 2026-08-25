@@ -35,6 +35,11 @@
 
 ---
 
+# PLAN DE TRABAJO 
+
+<img width="1867" height="787" alt="plandetrabajo" src="https://github.com/user-attachments/assets/dfecfb81-770c-4786-b296-d041bc87f0a7" />
+
+---
 
 ## Bibliografía
 
