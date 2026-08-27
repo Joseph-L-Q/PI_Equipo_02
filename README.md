@@ -58,12 +58,12 @@ En consecuencia, la falta de herramientas tecnológicas que permitan monitorear 
 
 ## Objetivo:
 
-Como grupo, nuestro objetivo es optimizar la gestión del mantenimiento y recambio de linternas en sistemas de cultivo de concha de abanico mediante el monitoreo subacuático de la bioincrustación y variables ambientales, con el fin de proteger la biomasa del cultivo, mejorar la toma de decisiones en las operaciones marítimas y reducir los costos por intervenciones tardías o innecesarias.
+Como grupo, nuestro objetivo es optimizar la gestión del mantenimiento y recambio de linternas en sistemas de cultivo de concha de abanico mediante el monitoreo subacuático de la bioincrustación, con el fin de proteger la biomasa del cultivo, mejorar la toma de decisiones en las operaciones marítimas y reducir los costos por intervenciones tardías o innecesarias.
 
 ### Objetivos específicos:
 
 1. Capturar e identificar cuantitativamente el nivel de bioincrustación (*biofouling*) en la malla de la linterna mediante procesamiento de imágenes y visión artificial, enviando los datos a un módulo de alertas para indicar el estado del cultivo.
-2. Medir y registrar variables ambientales clave como la temperatura del agua y la turbidez en intervalos regulares para evaluar su correlación con la velocidad de crecimiento del *biofouling*.
+2. Registrar las imágenes captadas para conformar una base de datos que sirva de referencia en el reconocimiento de patrones de *biofouling* en etapas posteriores del proyecto.
 
 ---
 
@@ -87,7 +87,7 @@ Los Objetivos de Desarrollo Sostenible (ODS) son una iniciativa de la Organizaci
 
 La acuicultura es uno de los pilares del desarrollo económico en el litoral peruano. Pese a esto, surge un problema constante en el manejo de la bioincrustación en los sistemas de cultivo suspendido. Actualmente, no se monitorea adecuadamente la condición visual de las mallas bajo el agua, lo que provoca que se intervenga demasiado tarde o se malgasten recursos en revisiones innecesarias.
 
-Frente a esto, el proyecto **LanternGuard** propone analizar la malla de manera precisa utilizando un sistema subacuático equipado con visión artificial y sensores ambientales que permitan saber exactamente cuál es el porcentaje de *biofouling* acumulado. Así, se podrán tomar decisiones oportunas y basadas en datos reales.
+Frente a esto, el proyecto **LanternGuard** propone analizar la malla de manera precisa utilizando un sistema subacuático equipado con visión artificial que permita saber exactamente cuál es el porcentaje de *biofouling* acumulado. Así, se podrán tomar decisiones oportunas y basadas en datos reales.
 
 Con este proyecto se logrará:
 * Optimizar las jornadas de mantenimiento y lavado de linternas.
