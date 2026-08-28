@@ -31,6 +31,6 @@ El esfuerzo máximo obtenido en la simulación fue aproximadamente de $2.129 \ti
   <br>
   <em>Figura 12. Distribución de esfuerzos de Von Mises obtenida en la simulación estructural de la Pieza 6 en SimScale.</em>
 </p>
-
+* **Enlace a la simulación:**  https://www.simscale.com/workbench/?pid=8625166258768738677&rru=e91d804f-773e-4b8f-a97d-c430fa681059&ci=752d8350-37b9-423c-b85b-8c7a6f7d1ae3&mt=SIMULATION_RESULT&ct=SOLUTION_FIELD
 
 ---
