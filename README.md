@@ -12,7 +12,7 @@ Bienvenidos al repositorio del  **Grupo 02** del curso **Proyecto Integrador 202
 
 Este espacio integra la documentación, avances y entregables de nuestro proyecto académico, desarrollado bajo la metodología VDI 2206, que establece un enfoque sistemático para el diseño, desarrollo y validación de sistemas de ingeniería.  
 
-Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemáticas reales del sector acuícola en el Perú, específicamente relacionadas con la gestión eficiente y el monitoreo preventivo del *biofouling* en el cultivo de concha de abanico (*Argopecten purpuratus*). A través de este proyecto, buscamos proponer alternativas innovadoras que permitan automatizar la inspección subacuática, optimizar las labores de mantenimiento y contribuir a una producción acuícola más eficiente, rentable y sostenible.
+Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemáticas reales del sector acuícola en el Perú, específicamente relacionadas con la gestión eficiente y el monitoreo preventivo del biofouling en el cultivo de concha de abanico (Argopecten purpuratus) en sistemas suspendidos. A través de este proyecto, buscamos proponer una alternativa tecnológica basada en visión por computadora e inspección subacuática automatizada, la cual implementa un algoritmo de segmentación de imágenes a escala para cuantificar el porcentaje de área libre y detectar la obstrucción de las mallas. Con esto, buscamos optimizar las labores de limpieza y recambio de linternas, contribuyendo a una producción acuícola más eficiente, rentable y sostenible.
 
 <p align="center">
   <img src="Recursos/Imágenes/Grupo2.png" alt="Fotografía del equipo 02" width="100%">
@@ -38,7 +38,7 @@ Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemá
 
 Elegimos trabajar con la acuicultura de la concha de abanico porque es una actividad importante para la costa peruana y tiene un gran potencial comercial, pero durante su cultivo existe un problema que puede dificultar el manejo de las linternas: la acumulación de biofouling en sus mallas. Actualmente, para conocer el estado de estas estructuras, los trabajadores deben realizar inspecciones y labores de limpieza o recambio de manera periódica, lo que implica tiempo, esfuerzo y recursos, y no siempre permite saber con precisión cuándo es realmente necesario intervenir.
 
-Con este proyecto buscamos facilitar el trabajo de los productores, optimizar el uso de recursos y contribuir a mantener mejores condiciones para el cultivo, favoreciendo la supervivencia y producción de las conchas de abanico.
+Con este proyecto buscamos facilitar el trabajo de los productores mediante un módulo de inspección con visión por computadora, capaz de comparar en serie la captura actual frente a la captura previa para analizar la tasa de reducción del área libre en la malla. Al calcular este cambio progresivo a lo largo del tiempo, el algoritmo detecta la velocidad con la que se acumula el biofouling y emite alertas oportunas antes de que la estructura quede obstruida, optimizando las jornadas de mantenimiento y favoreciendo la supervivencia de la concha de abanico.
 
 ---
 
@@ -52,18 +52,21 @@ Actualmente, el mantenimiento suele basarse en métodos tradicionales con calend
 
 Diversos estudios acuícolas señalan que un manejo oportuno del recambio de linternas reduce la biomasa de *biofouling* en más del 60%, incrementa la supervivencia de las conchas en un 10.8% y mejora sustancialmente el peso del músculo y la gónada. 
 
-En consecuencia, la falta de herramientas tecnológicas que permitan monitorear de manera precisa y continua la condición de las mallas genera desperdicio de recursos operativos, deterioro de la biomasa y menores ingresos para los acuicultores.
+En consecuencia, la falta de herramientas tecnológicas automatizadas capaces de evaluar y comparar periódicamente la reducción del área libre en las mallas genera desperdicio de recursos operativos, intervenciones tardías o innecesarias, deterioro de la biomasa y menores ingresos para los acuicultores.
 
 ---
 
 ## Objetivo:
 
-Como grupo, nuestro objetivo es optimizar la gestión del mantenimiento y recambio de linternas en sistemas de cultivo de concha de abanico mediante el monitoreo subacuático de la bioincrustación y variables ambientales, con el fin de proteger la biomasa del cultivo, mejorar la toma de decisiones en las operaciones marítimas y reducir los costos por intervenciones tardías o innecesarias.
+Como grupo, nuestro objetivo es optimizar la gestión del mantenimiento y recambio de linternas en sistemas de cultivo de concha de abanico mediante el monitoreo subacuático y la cuantificación del porcentaje de obstrucción en sus mallas, con el fin de proteger la biomasa del cultivo, mejorar la toma de decisiones en las operaciones marítimas y reducir los costos por intervenciones tardías o innecesarias.
 
 ### Objetivos específicos:
 
-1. Capturar e identificar cuantitativamente el nivel de bioincrustación (*biofouling*) en la malla de la linterna mediante procesamiento de imágenes y visión artificial, enviando los datos a un módulo de alertas para indicar el estado del cultivo.
-2. Medir y registrar variables ambientales clave como la temperatura del agua y la turbidez en intervalos regulares para evaluar su correlación con la velocidad de crecimiento del *biofouling*.
+1. Desarrollar un algoritmo de visión por computadora capaz de segmentar el área útil de la malla y cuantificar progresivamente el nivel de obstrucción (biofouling) mediante la comparación secuencial entre la captura actual y la captura previa.
+
+2. Diseñar e implementar un prototipo a escala de laboratorio para simular entornos de mallas en distintas condiciones (limpia vs. obstruida) y validar la precisión del algoritmo en la detección del porcentaje de área libre.
+
+3. Transmitir los datos procesados y el nivel de obstrucción calculado hacia un módulo de alertas para notificar oportunamente al acuicultor cuando se alcancen umbrales críticos de mantenimiento.
 
 ---
 
@@ -71,15 +74,20 @@ Como grupo, nuestro objetivo es optimizar la gestión del mantenimiento y recamb
 
 Los Objetivos de Desarrollo Sostenible (ODS) son una iniciativa de la Organización de las Naciones Unidas orientada a abordar los principales desafíos globales. Este proyecto se alinea con estos objetivos al integrar tecnología avanzada en la gestión de la acuicultura sostenible:
 
+### ODS 14: Vida Submarina
+
+* **Definición:** Conservar y utilizar sosteniblemente los océanos, los mares y los recursos marinos para el desarrollo sostenible.
+* **Relación:** El proyecto contribuye directamente a la **Meta 14.b: Facilitar el acceso de los pescadores artesanales y acuicultores de pequeña escala a los recursos marinos y los mercados**. Al implementar un sistema de inspección subacuática por visión por computadora, se protegen los cultivos de concha de abanico, garantizando la supervivencia del recurso, mejorando el rendimiento biológico y protegiendo la economía de las comunidades maricultoras locales.
+
 ### ODS 12: Producción y Consumo Responsables
 
 * **Definición:** Garantizar modalidades de consumo y producción sostenibles.
-* **Relación:** El proyecto contribuye directamente a la Meta 12.2: Gestión sostenible y uso eficiente de los recursos naturales. Al monitorear en tiempo real el estado de las mallas, se programan las limpiezas basándose en datos reales, evitando desplazamientos marítimos innecesarios, prolongando la vida útil de las linternas y maximizando el aprovechamiento del recurso marino.
+* **Relación:** Se alinea con la **Meta 12.2: Gestión sostenible y uso eficiente de los recursos naturales**. Al calcular el porcentaje de obstrucción en las mallas comparando capturas secuenciales, las labores de limpieza y recambio se programan con datos objetivos. Esto evita salidas marítimas innecesarias, reduce el consumo de combustible y prolonga la vida útil de las linternas.
 
 ### ODS 9: Industria, Innovación e Infraestructura
 
 * **Definición:** Construir infraestructuras resilientes, promover la industrialización sostenible y fomentar la innovación.
-* **Relación:** El proyecto introduce tecnologías emergentes como Internet de las Cosas (IoT), visión artificial y energía solar en el sector acuícola, modernizando las herramientas de trabajo en el mar y fortaleciendo la competitividad de los productores locales.
+* **Relación:** Introduce tecnologías de **visión por computadora, procesamiento digital de imágenes a escala y sistemas de monitoreo de bajo costo** en la acuicultura tradicional peruana, modernizando las herramientas de trabajo en el mar.
 
 ---
 
@@ -87,25 +95,30 @@ Los Objetivos de Desarrollo Sostenible (ODS) son una iniciativa de la Organizaci
 
 La acuicultura es uno de los pilares del desarrollo económico en el litoral peruano. Pese a esto, surge un problema constante en el manejo de la bioincrustación en los sistemas de cultivo suspendido. Actualmente, no se monitorea adecuadamente la condición visual de las mallas bajo el agua, lo que provoca que se intervenga demasiado tarde o se malgasten recursos en revisiones innecesarias.
 
-Frente a esto, el proyecto **LanternGuard** propone analizar la malla de manera precisa utilizando un sistema subacuático equipado con visión artificial y sensores ambientales que permitan saber exactamente cuál es el porcentaje de *biofouling* acumulado. Así, se podrán tomar decisiones oportunas y basadas en datos reales.
+Frente a esto, el proyecto **LanternGuard** propone analizar la malla de manera precisa utilizando un sistema subacuático equipado con un algoritmo de visión por computadora que procesa y compara de manera secuencial la imagen actual frente a la captura previa, aplicando técnicas de segmentación para medir la tasa de reducción del área libre en la malla. La efectividad de este modelo de evaluación se valida mediante un prototipo experimental a escala de laboratorio, demostrando su viabilidad técnica para la generación de alertas oportunas.
 
 Con este proyecto se logrará:
-* Optimizar las jornadas de mantenimiento y lavado de linternas.
-* Mejorar la productividad y el peso biológico del cultivo.
-* Disminuir costos operativos y de combustible para los acuicultores.
+
 * Tomar decisiones de recambio basadas en datos objetivos y no en estimaciones.
+* Determinar con precisión la velocidad de obstrucción de la malla mediante la comparación de capturas consecutivas.
+* Programar jornadas de mantenimiento y lavado de linternas fundamentadas en datos reales de área libre.
+* Disminuir gastos logísticos, tiempo de trabajo y consumo de combustible al evitar inspecciones o recambios innecesarios.
+* Mantener el flujo constante de agua y nutrientes, favoreciendo la supervivencia, la salud y el peso comercial de la concha de abanico.
 * Promover una acuicultura más sostenible, moderna y responsable.
 
 ---
 
 ## Referencias
 
-📚 **Referencias**
+[1] Ministerio de la Producción (PRODUCE) y Organismo Nacional de Sanidad Pesquera (SANIPES), *Manual de cosecha y poscosecha de concha de abanico (Argopecten purpuratus)*. Lima, Perú: PRODUCE, 2021.
 
-* FAO. (2022). *El estado mundial de la pesca y la acuicultura 2022. Hacia la transformación azul.* Roma, FAO.
-* Lodeiros, C., & García, N. (2004). *Efecto de la bioincrustación sobre el crecimiento y supervivencia de la concha de abanico Argopecten purpuratus en cultivo suspendido.* Ciencias Marinas.
-* Mendo, J., & Wolff, M. (2003). *El manejo de la pesca y acuicultura de la concha de abanico (Argopecten purpuratus) en el Perú.* Universidad Nacional Agraria La Molina.
-* Samanco Marine Research Group. (2025). *Evaluación del impacto de la bioincrustación y estrategias de recambio de linternas en el rendimiento biológico de Argopecten purpuratus.*
+[2] Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO), *El estado mundial de la pesca y la acuicultura 2022: Hacia la transformación azul*. Roma, Italia: FAO, 2022.
+
+[3] C. Lodeiros y N. García, «Efecto de la bioincrustación sobre el crecimiento y supervivencia de la concha de abanico Argopecten purpuratus en cultivo suspendido», *Ciencias Marinas*, vol. 30, n.º 3, pp. 45-56, 2004.
+
+[4] J. Mendo y M. Wolff, «El manejo de la pesca y acuicultura de la concha de abanico (Argopecten purpuratus) en el Perú», *Revista Peruana de Biología*, vol. 10, n.º 2, pp. 120-134, 2003.
+
+[5] Samanco Marine Research Group, *Evaluación del impacto de la bioincrustación y estrategias de recambio de linternas en el rendimiento biológico de Argopecten purpuratus*, Informe Técnico N.º 4, Chimbote, Perú, 2025.
 
 ---
 
