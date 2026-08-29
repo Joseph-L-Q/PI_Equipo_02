@@ -95,7 +95,7 @@ Los Objetivos de Desarrollo Sostenible (ODS) son una iniciativa de la Organizaci
 
 La acuicultura es uno de los pilares del desarrollo económico en el litoral peruano. Pese a esto, surge un problema constante en el manejo de la bioincrustación en los sistemas de cultivo suspendido. Actualmente, no se monitorea adecuadamente la condición visual de las mallas bajo el agua, lo que provoca que se intervenga demasiado tarde o se malgasten recursos en revisiones innecesarias.
 
-Frente a esto, el proyecto **LanternGuard** propone analizar la malla de manera precisa utilizando un sistema subacuático equipado con un algoritmo de visión por computadora que procesa y compara de manera secuencial la imagen actual frente a la captura previa, aplicando técnicas de segmentación para medir la tasa de reducción del área libre en la malla. La efectividad de este modelo de evaluación se valida mediante un prototipo experimental a escala de laboratorio, demostrando su viabilidad técnica para la generación de alertas oportunas.
+Frente a esto, el proyecto **LanternGuard** propone analizar las linternas de manera precisa utilizando un sistema subacuático equipado con un algoritmo de visión por computadora que procesa y compara de manera secuencial la imagen actual frente a la captura previa, aplicando técnicas de segmentación para medir la tasa de reducción del área libre en las linternas. La efectividad de este modelo de evaluación se valida mediante un prototipo experimental a escala de laboratorio, demostrando su viabilidad técnica para la generación de alertas oportunas.
 
 Con este proyecto se logrará:
 
