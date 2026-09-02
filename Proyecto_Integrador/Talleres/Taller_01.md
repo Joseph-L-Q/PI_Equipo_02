@@ -1,4 +1,4 @@
-# Diseño y Simulación Estructural de Componentes del Grupo 2
+# Taller 01: Diseño y Simulación Estructural de Componentes del Grupo 2
 
 A continuación, se presenta la documentación detallada del modelado 3D y el análisis de elementos finitos (FEA) de los componentes que conforman el sistema de monitoreo submarino, evaluando su comportamiento mecánico bajo las condiciones reales de operación en el entorno marino.
 
