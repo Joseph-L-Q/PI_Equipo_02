@@ -122,7 +122,7 @@ Para la integración con el microcontrolador ESP32 en el módulo de control, se 
 
 ---
 
-### 3.5. Gabriela Santamaría
+### 3.5. Gabriela Santamaria
 
 <p align="center">
   <img src="../Recursos/esquema_electronico_integrante5.png" alt="Esquema Electrónico - Integrante 5" width="80%">
