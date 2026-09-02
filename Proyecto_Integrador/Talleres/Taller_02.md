@@ -63,7 +63,7 @@ En este taller se realizó la introducción al diseño de esquemáticos electró
   <em><b>Figura 5.</b> Esquemático del circuito de prueba en EasyEDA elaborado por Gabriela Santamaria.</em>
 </p>
 
-> **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en: [Gerber_Santamaria_PCB1_2026-09-01.zip](Recursos/Imágenes/Gerber_Santamaria_PCB1_2026-09-01.zip).
+> **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en: [`Gerber_Santamaria_PCB1_2026-09-01.zip`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/Gerber_Santamaria_PCB1_2026-09-01.zip).
 ---
 
 ## 3. Bases del esquemático para LanternGuard
