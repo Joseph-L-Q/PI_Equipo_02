@@ -125,12 +125,11 @@ Para la integración con el microcontrolador ESP32 en el módulo de control, se 
 ### 3.5. Gabriela Santamaria
 
 <p align="center">
-  <img src="../Recursos/esquema_electronico_integrante5.png" alt="Esquema Electrónico - Integrante 5" width="80%">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/Esquem%C3%A1tico_sensor_Santamaria.png" alt="Esquema Electrónico - Gabriela Santamaria" width="80%">
   <br>
   <em><b>Figura 10.</b> Esquemático del módulo de sensores de Lantern Guard en EasyEDA elaborado por Gabriela Santamaria.</em>
 </p>
 
-> **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en: [`Gerber_Integrante5_2026-09-01.zip`](../Recursos/Gerber_Integrante5_2026-09-01.zip).
-
+> **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en:  [`Gerber_Santamaria_Sensor_PCB1_2026-09-02.zip`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/Gerber_Santamaria_Sensor_PCB1_2026-09-02.zip).
 ---
 
