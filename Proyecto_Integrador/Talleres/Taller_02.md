@@ -55,7 +55,7 @@ En este taller se realizó la introducción al diseño de esquemáticos electró
 
 ---
 
-### 2.5. Gabriela Santamaría
+### 2.5. Gabriela Santamaria
 
 <p align="center">
   <img src="../Recursos/esquema_electronico_integrante5.png" alt="Esquema Electrónico - Integrante 5" width="80%">
