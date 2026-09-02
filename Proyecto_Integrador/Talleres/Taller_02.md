@@ -127,7 +127,7 @@ Para la integración con el microcontrolador ESP32 en el módulo de control, se 
 <p align="center">
   <img src="../Recursos/esquema_electronico_integrante5.png" alt="Esquema Electrónico - Integrante 5" width="80%">
   <br>
-  <em><b>Figura 10.</b> Esquemático del módulo de sensores de Lantern Guard en EasyEDA elaborado por [Nombre Integrante 5].</em>
+  <em><b>Figura 10.</b> Esquemático del módulo de sensores de Lantern Guard en EasyEDA elaborado por Gabriela Santamaria.</em>
 </p>
 
 > **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en: [`Gerber_Integrante5_2026-09-01.zip`](../Recursos/Gerber_Integrante5_2026-09-01.zip).
