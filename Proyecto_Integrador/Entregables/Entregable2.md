@@ -18,10 +18,10 @@
 
 # EVALUACIÓN
 
-<img width="1496" height="820" alt="Matriz 1" src="https://github.com/user-attachments/assets/c1e51cae-330d-4a8e-a2af-12d1ffa3d409" />
+<img width="1246" height="682" alt="1" src="https://github.com/user-attachments/assets/46d0367f-82ab-41b9-9ce4-30720b1b7281" />
 
-<img width="1868" height="526" alt="Matriz 2" src="https://github.com/user-attachments/assets/db2ff0be-a823-469d-a7f7-497388273f3e" />
+<img width="1868" height="531" alt="2" src="https://github.com/user-attachments/assets/108bd2bd-2179-44af-a89e-84733749e683" />
 
-<img width="1867" height="762" alt="Matriz 3" src="https://github.com/user-attachments/assets/195a8dd2-316e-4088-bb28-a38adade9a6c" />
+<img width="1862" height="761" alt="3" src="https://github.com/user-attachments/assets/40b9d48e-1723-4217-a347-e5e51f6d2bfe" />
 
 ---
