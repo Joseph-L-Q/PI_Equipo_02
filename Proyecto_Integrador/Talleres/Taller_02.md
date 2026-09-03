@@ -34,15 +34,12 @@ En este taller se realizó la introducción al diseño de esquemáticos electró
 ### 2.3. Joseph Lombardi
 
 <p align="center">
-  <img
-    src="Recursos/Im%C3%A1genes/Esquematico_Prueba_Joseph.png"
-    alt="Esquemático del circuito de prueba elaborado por Joseph Lombardi"
-    width="80%">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/ab9084373628f2e3de4e49a7390c74c93baff3af/Recursos/Im%C3%A1genes/Prueba_Joseph.png" alt="Esquema Electrónico - Joseph" width="80%">
   <br>
-  <em><strong>Figura 3.</strong> Esquemático del circuito de prueba elaborado en EasyEDA por Joseph Lombardi.</em>
+  <em><b>Figura 2.</b> Esquemático del circuito de prueba en EasyEDA elaborado por Joseph.</em>
 </p>
 
-> **Archivos Gerber:** Los archivos Gerber correspondientes al diseño de la PCB están disponibles en [`Gerber_Joseph_2026-09-01.zip`](Recursos/Im%C3%A1genes/Gerber_Joseph_2026-09-01.zip).
+> **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en: [`Gerber_Joseph_2026-09-01.zip`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/ab9084373628f2e3de4e49a7390c74c93baff3af/Recursos/Im%C3%A1genes/Gerber_Joseph_2026-09-01.zip).
 
 ---
 
