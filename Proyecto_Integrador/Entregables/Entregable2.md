@@ -6,15 +6,13 @@
 
 # ESTRUCTURA DE FUNCIONES
 
-
+<img width="2275" height="2182" alt="estructura de funciones" src="https://github.com/user-attachments/assets/dbf83190-9204-49a1-846b-ee8e4ac362eb" />
 
 ---
 
 # MATRIZ MORFOLÓGICA
 
-<img width="942" height="2925" alt="Matriz Morfológica" src="https://github.com/user-attachments/assets/c9a273a1-74bf-4d87-9bc7-768335ed2642" />
-
-<img width="941" height="192" alt="Matriz preliminar" src="https://github.com/user-attachments/assets/0a727df5-9412-400f-b82d-34159215053f" />
+<img width="942" height="3176" alt="Matriz Morfológica" src="https://github.com/user-attachments/assets/f82007d8-de8c-4833-bbf9-d8058536128c" />
 
 ---
 
