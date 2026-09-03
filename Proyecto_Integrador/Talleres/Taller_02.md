@@ -34,12 +34,12 @@ En este taller se realizó la introducción al diseño de esquemáticos electró
 ### 2.3. Joseph Lombardi
 
 <p align="center">
-  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/ab9084373628f2e3de4e49a7390c74c93baff3af/Recursos/Im%C3%A1genes/Prueba_Joseph.png" alt="Esquema Electrónico - Joseph" width="80%">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/7c1b7cb5571a7d855a7c57e26ea00cef6f20bc7e/Recursos/Im%C3%A1genes/lab_Joseph.png" alt="Esquema Electrónico - Joseph" width="80%">
   <br>
   <em><b>Figura 2.</b> Esquemático del circuito de prueba en EasyEDA elaborado por Joseph.</em>
 </p>
 
-> **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en: [`Gerber_Joseph_2026-09-01.zip`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/ab9084373628f2e3de4e49a7390c74c93baff3af/Recursos/Im%C3%A1genes/Gerber_Joseph_2026-09-01.zip).
+> **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en: [`Gerber_2026-09-01 (1).zip`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/8b224b77d41da60ee013fc8c81c32c2f6018c7d8/Recursos/Im%C3%A1genes/Gerber_PCB1_2026-09-03%20(1).zip).
 
 ---
 
@@ -103,7 +103,7 @@ Para la integración con el microcontrolador ESP32 en el módulo de control, se 
 <p align="center">
   <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/ab9084373628f2e3de4e49a7390c74c93baff3af/Recursos/Im%C3%A1genes/Prueba_Joseph.png" alt="Esquema Electrónico - Joseph" width="80%">
   <br>
-  <em><b>Figura 2.</b> Esquemático del circuito de prueba en EasyEDA elaborado por Joseph.</em>
+  <em><b>Figura 2.</b> Esquemático del módulo de sensores de Lantern Guard en EasyEDA elaborado por Joseph.</em>
 </p>
 
 > **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en: [`Gerber_Joseph_2026-09-01.zip`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/ab9084373628f2e3de4e49a7390c74c93baff3af/Recursos/Im%C3%A1genes/Gerber_Joseph_2026-09-01.zip).
