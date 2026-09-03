@@ -100,11 +100,13 @@ Para la integración con el microcontrolador ESP32 en el módulo de control, se 
 
 ### 2.3. Joseph Lombardi
 
-![Esquemático del circuito de prueba elaborado por Joseph Lombardi](Recursos/Im%C3%A1genes/Esquematico_Prueba_Joseph.png)
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/ab9084373628f2e3de4e49a7390c74c93baff3af/Recursos/Im%C3%A1genes/Prueba_Joseph.png" alt="Esquema Electrónico - Joseph" width="80%">
+  <br>
+  <em><b>Figura 2.</b> Esquemático del circuito de prueba en EasyEDA elaborado por Joseph.</em>
+</p>
 
-*Figura 3. Esquemático del circuito de prueba elaborado en EasyEDA por Joseph Lombardi.*
-
-> **Nota sobre los archivos Gerber:** Los archivos Gerber correspondientes al diseño de la PCB están disponibles en [`Gerber_Joseph_2026-09-01.zip`](Recursos/Im%C3%A1genes/Gerber_Joseph_2026-09-01.zip).
+> **Nota de Archivos Gerber:** El archivo comprimido con los Gerber de este circuito se encuentra disponible en: [`Gerber_Joseph_2026-09-01.zip`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/ab9084373628f2e3de4e49a7390c74c93baff3af/Recursos/Im%C3%A1genes/Gerber_Joseph_2026-09-01.zip).
 
 ---
 
