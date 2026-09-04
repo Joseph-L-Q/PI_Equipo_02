@@ -1,6 +1,6 @@
 # Placa PCB para Sensor de Proximidad con ESP32
 
-Este apartado contiene los archivos de fabricación y el diseño de nuestra placa PCB, elaborada para integrar un microcontrolador ESP32-S3 con un módulo de sensores. 
+Este apartado contiene los archivos de fabricación y el diseño de mi placa PCB, elaborada para integrar un microcontrolador **ESP32** con un módulo de sensores. 
 
 ## ¿Qué sensor utilicé y para qué sirve?
 
