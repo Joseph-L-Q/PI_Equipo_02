@@ -12,10 +12,10 @@ El propósito de esta placa es servir como una base física sólida y robusta. A
 
 Desarrollé esta placa como parte de mi proyecto universitario para tener un circuito más ordenado, seguro y fácil de manejar. 
 
-Para que la arquitectura del diseño sea clara, la dividí en tres partes clave:
+Para que la arquitectura del diseño sea clara, la dividí en tres partes:
 
 * **Módulo de Procesamiento:** El cerebro del sistema, comandado por nuestro ESP32.
-* **Módulo de Alimentación:** Conectores de energía mecánicamente seguros para la batería.
+* **Módulo de Alimentación:** Conectores de energía seguros para la batería.
 * **Módulo de Proximidad:** La interfaz directa para la conexión con el entorno.
 
 ## Imágenes del Diseño
