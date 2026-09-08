@@ -6,7 +6,7 @@
 
 # ESTRUCTURA DE FUNCIONES
 
-<img width="2275" height="2182" alt="estructura de funciones" src="https://github.com/user-attachments/assets/dbf83190-9204-49a1-846b-ee8e4ac362eb" />
+<img width="2275" height="1882" alt="ProjectoIntegrador" src="https://github.com/user-attachments/assets/e319ef65-26c5-42d8-a85d-240314eadd9b" />
 
 ---
 
