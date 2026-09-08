@@ -1,6 +1,6 @@
 # CAJA NEGRA
 
-<img width="1920" height="1080" alt="CAJA NEGRA" src="https://github.com/user-attachments/assets/b6ecdae8-105a-43e9-a89b-a092b033b184" />
+<img width="1920" height="1080" alt="CAJA NEGRA (1)" src="https://github.com/user-attachments/assets/50578ccb-ad71-485a-a96d-dbf5dc5a0764" />
 
 ---
 
