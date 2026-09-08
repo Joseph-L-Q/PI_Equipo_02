@@ -12,7 +12,7 @@
 
 # MATRIZ MORFOLÓGICA
 
-<img width="942" height="3176" alt="Matriz Morfológica" src="https://github.com/user-attachments/assets/f82007d8-de8c-4833-bbf9-d8058536128c" />
+<img width="976" height="3177" alt="Almacenar energía (1)" src="https://github.com/user-attachments/assets/b68cf693-bc91-4500-b44e-2da2cf285a9b" />
 
 ---
 
