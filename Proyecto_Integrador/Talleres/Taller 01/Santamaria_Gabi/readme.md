@@ -14,9 +14,15 @@ Se diseñó este componente, correspondiente a la carcasa de la cámara del sist
 
 # Simulación de Esfuerzos Mecánicos de la Pieza 3 en SimScale
 
-Se analizó el comportamiento estructural de la pieza asignando material PETG ($\rho = 1270 \text{ kg/m}^3$, $E = 2.1 \text{ GPa}$, $\nu = 0.38$). Mediante un análisis estático, se aplicó una sujeción fija en las zonas de unión de la carcasa y una presión externa uniforme de $50\,000 \text{ Pa}$ ($0.5 \text{ bar}$) sobre las caras exteriores expuestas. 
+Se analizó el comportamiento estructural de la pieza asignando material PETG ($\rho = 1270 \text{ kg/m}^3$, $E = 2.1 \text{ GPa}$, $\nu = 0.38$). Mediante un análisis estático, se consideraron las condiciones de operación a las que estaría sometida la carcasa de la cámara dentro del entorno submarino.
 
-Los resultados de la simulación permiten evaluar la resistencia mecánica de la carcasa mediante el esfuerzo equivalente de Von Mises, verificando que la pieza soporta adecuadamente las cargas aplicadas durante las condiciones de operación previstas.
+Para la simulación se establecieron las siguientes condiciones de carga:
+
+- **Sujeción fija:** aplicada en las zonas de unión de la carcasa, representando los puntos donde la pieza se encuentra asegurada al sistema.
+- **Presión externa uniforme:** de $50\,000 \text{ Pa}$ ($0.5 \text{ bar}$) aplicada sobre las caras exteriores expuestas, representando la presión generada por el entorno marino.
+- **Gravedad:** se consideró una aceleración gravitacional de $9.81 \text{ m/s}^2$ en dirección vertical hacia abajo (**eje -Y del sistema de coordenadas**), con el objetivo de incluir el efecto del peso propio de la carcasa durante las condiciones de operación.
+
+Los resultados de la simulación permiten evaluar la resistencia mecánica de la carcasa mediante el esfuerzo equivalente de Von Mises, verificando que la pieza soporta adecuadamente las cargas aplicadas durante las condiciones previstas de funcionamiento.
 
 <p align="center">
   <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/Pieza3_SimScale_Santamaria.png" alt="Simulación de Esfuerzos de la Pieza 3" width="100%"/>
