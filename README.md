@@ -2,7 +2,7 @@
 
 Equipo 02 - Proyecto Integrador
 
-![Logo de la universidad](Recursos/Imágenes/cayetano.png)
+![Imagen del proyecto](Recursos/Imágenes/imagen_proyecto.png)
 
 ---
 
