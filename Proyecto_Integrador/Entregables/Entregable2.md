@@ -40,14 +40,24 @@ Presenta las diferentes alternativas de componentes y materiales evaluados para 
 
 ---
 
-## 📊 4. Evaluación de Soluciones
+## 4. Evaluación de Soluciones
 
 Ponderación y selección de la mejor combinación de componentes según criterios de resistencia al agua, energía, costos y viabilidad del proyecto.
 
-<img width="1246" height="682" alt="1" src="https://github.com/user-attachments/assets/46d0367f-82ab-41b9-9ce4-30720b1b7281" />
+### 4.1. Criterios de Evaluación y Pesos
 
-<img width="1868" height="531" alt="2" src="https://github.com/user-attachments/assets/108bd2bd-2179-44af-a89e-84733749e683" />
+<img width="1547" height="727" alt="EV1" src="https://github.com/user-attachments/assets/3a3f3055-9a6c-411f-b712-37303488fbe7" />
 
-<img width="1862" height="761" alt="3" src="https://github.com/user-attachments/assets/40b9d48e-1723-4217-a347-e5e51f6d2bfe" />
+### 4.2. Matriz de Pugh
+
+<img width="1151" height="718" alt="EV2" src="https://github.com/user-attachments/assets/1984e92e-6e13-4b6c-93be-9d96267d6bfe" />
+
+### 4.3. Evaluación Ponderada 
+
+<img width="1227" height="865" alt="EV3" src="https://github.com/user-attachments/assets/5f48cb78-c18a-4818-86d8-7e3a524e9eea" />
+
+### Solución seleccionada
+
+<img width="1686" height="172" alt="EV4" src="https://github.com/user-attachments/assets/a19fbb39-a68e-440f-880c-1d58e827e529" />
 
 ---
