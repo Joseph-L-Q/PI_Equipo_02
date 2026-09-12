@@ -36,7 +36,7 @@ Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemá
 
 ## ¿Por qué este proyecto?
 
-Elegimos trabajar con la acuicultura de la concha de abanico porque es una actividad importante para la costa peruana y tiene un gran potencial comercial [[1]](#referencias), [[4]](#referencias), pero durante su cultivo existe un problema que puede dificultar el manejo de las linternas: la acumulación de biofouling en sus mallas. Actualmente, para conocer el estado de estas estructuras, los trabajadores deben realizar inspecciones y labores de limpieza o recambio de manera periódica, lo que implica tiempo, esfuerzo y recursos, y no siempre permite saber con precisión cuándo es realmente necesario intervenir.
+Elegimos trabajar con la acuicultura de la concha de abanico porque es una actividad importante para la costa peruana y tiene un gran potencial comercial [[1]](#referencias), [[2]](#referencias), pero durante su cultivo existe un problema que puede dificultar el manejo de las linternas: la acumulación de biofouling en sus mallas. Actualmente, para conocer el estado de estas estructuras, los trabajadores deben realizar inspecciones y labores de limpieza o recambio de manera periódica, lo que implica tiempo, esfuerzo y recursos, y no siempre permite saber con precisión cuándo es realmente necesario intervenir.
 
 Con este proyecto buscamos facilitar el trabajo de los productores mediante un módulo de inspección con visión por computadora, capaz de comparar en serie la captura actual frente a la captura previa para analizar la tasa de reducción del área libre en la malla. Al calcular este cambio progresivo a lo largo del tiempo, el algoritmo detecta la velocidad con la que se acumula el biofouling y emite alertas oportunas antes de que la estructura quede obstruida, optimizando las jornadas de mantenimiento y favoreciendo la supervivencia de la concha de abanico.
 
@@ -48,9 +48,9 @@ En las principales zonas acuícolas de la costa peruana, la actividad maricultur
 
 Esta problemática se hace evidente en los sistemas suspendidos en linternas, donde la malla retiene progresivamente diversos organismos marinos (ascidias, briozoos, balanos y algas). Esta cobertura reduce drásticamente el flujo de agua y la disponibilidad de oxígeno y fitoplancton para las conchas de abanico, limitando su crecimiento e incrementando la mortalidad del recurso [[3]](#referencias).
 
-Actualmente, el mantenimiento suele basarse en métodos tradicionales con calendarios fijos o revisiones físicas invasivas que no consideran el estado real de cada linterna. Esto provoca que se retiren estructuras antes de tiempo o que se reaccione cuando la malla ya está totalmente obstruida. Cabe resaltar que la acumulación de bioincrustaciones en una linterna puede sobrepasar los 130 kg de biomasa no deseada [[5]](#referencias), incrementando de manera drástica el peso y complicando la maniobra para los trabajadores.
+Actualmente, el mantenimiento suele basarse en métodos tradicionales con calendarios fijos o revisiones físicas invasivas que no consideran el estado real de cada linterna. Esto provoca que se retiren estructuras antes de tiempo o que se reaccione cuando la malla ya está totalmente obstruida. Cabe resaltar que la acumulación de bioincrustaciones en una linterna puede sobrepasar los 130 kg de biomasa no deseada [[4]](#referencias), incrementando de manera drástica el peso y complicando la maniobra para los trabajadores.
 
-Diversos estudios acuícolas señalan que un manejo oportuno del recambio de linternas reduce la biomasa de *biofouling* en más del 60%, incrementa la supervivencia de las conchas en un 10.8% y mejora sustancialmente el peso del músculo y la gónada [[3]](#referencias), [[5]](#referencias). 
+Diversos estudios acuícolas señalan que un manejo oportuno del recambio de linternas reduce la biomasa de *biofouling* en más del 60%, incrementa la supervivencia de las conchas en un 10.8% y mejora sustancialmente el peso del músculo y la gónada [[3]](#referencias), [[4]](#referencias). 
 
 En consecuencia, la falta de herramientas tecnológicas automatizadas capaces de evaluar y comparar periódicamente la reducción del área libre en las mallas genera desperdicio de recursos operativos, intervenciones tardías o innecesarias, deterioro de la biomasa y menores ingresos para los acuicultores.
 
@@ -93,7 +93,7 @@ Los Objetivos de Desarrollo Sostenible (ODS) son una iniciativa de la Organizaci
 
 ## Enfoque y sustento
 
-La acuicultura es uno de los pilares del desarrollo económico en el litoral peruano [[2]](#referencias), [[4]](#referencias). Pese a esto, surge un problema constante en el manejo de la bioincrustación en los sistemas de cultivo suspendido. Actualmente, no se monitorea adecuadamente la condición visual de las mallas bajo el agua, lo que provoca que se intervenga demasiado tarde o se malgasten recursos en revisiones innecesarias.
+La acuicultura es uno de los pilares del desarrollo económico en el litoral peruano [[2]](#referencias), [[5]](#referencias). Pese a esto, surge un problema constante en el manejo de la bioincrustación en los sistemas de cultivo suspendido. Actualmente, no se monitorea adecuadamente la condición visual de las mallas bajo el agua, lo que provoca que se intervenga demasiado tarde o se malgasten recursos en revisiones innecesarias.
 
 Frente a esto, el proyecto **LanternGuard** propone analizar las linternas de manera precisa utilizando un sistema subacuático equipado con un algoritmo de visión por computadora que procesa y compara de manera secuencial la imagen actual frente a la captura previa, aplicando técnicas de segmentación para medir la tasa de reducción del área libre en las linternas. La efectividad de este modelo de evaluación se valida mediante un prototipo experimental a escala de laboratorio, demostrando su viabilidad técnica para la generación de alertas oportunas.
 
@@ -112,13 +112,13 @@ Con este proyecto se logrará:
 
 [1] Ministerio de la Producción (PRODUCE) y Organismo Nacional de Sanidad Pesquera (SANIPES), *Manual de cosecha y poscosecha de concha de abanico (Argopecten purpuratus)*. Lima, Perú: PRODUCE, 2021.
 
-[2] Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO), *El estado mundial de la pesca y la acuicultura 2022: Hacia la transformación azul*. Roma, Italia: FAO, 2022.
+[2] J. Mendo y M. Wolff, «El manejo de la pesca y acuicultura de la concha de abanico (Argopecten purpuratus) en el Perú», *Revista Peruana de Biología*, vol. 10, n.º 2, pp. 120-134, 2003.
 
 [3] C. Lodeiros y N. García, «Efecto de la bioincrustación sobre el crecimiento y supervivencia de la concha de abanico Argopecten purpuratus en cultivo suspendido», *Ciencias Marinas*, vol. 30, n.º 3, pp. 45-56, 2004.
 
-[4] J. Mendo y M. Wolff, «El manejo de la pesca y acuicultura de la concha de abanico (Argopecten purpuratus) en el Perú», *Revista Peruana de Biología*, vol. 10, n.º 2, pp. 120-134, 2003.
+[4] Samanco Marine Research Group, *Evaluación del impacto de la bioincrustación y estrategias de recambio de linternas en el rendimiento biológico de Argopecten purpuratus*, Informe Técnico N.º 4, Chimbote, Perú, 2025.
 
-[5] Samanco Marine Research Group, *Evaluación del impacto de la bioincrustación y estrategias de recambio de linternas en el rendimiento biológico de Argopecten purpuratus*, Informe Técnico N.º 4, Chimbote, Perú, 2025.
+[5] Organización de las Naciones Unidas para la Alimentación y la Agricultura (FAO), *El estado mundial de la pesca y la acuicultura 2022: Hacia la transformación azul*. Roma, Italia: FAO, 2022.
 
 ---
 
