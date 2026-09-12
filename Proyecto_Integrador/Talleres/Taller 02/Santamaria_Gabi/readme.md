@@ -25,10 +25,13 @@ Para que la arquitectura del diseño sea clara, la dividí en dos partes:
 
 **2. Diseño de la PCB (2D)**
 
-<img width="422" height="377" alt="Captura de pantalla 2026-09-03 232456" src="https://github.com/user-attachments/assets/dcf4c3ae-288a-4f94-beba-46b31883acc7" />
+<img width="635" height="527" alt="Captura de pantalla 2026-09-11 190616" src="https://github.com/user-attachments/assets/b9ec411e-ad91-47d3-ba3e-29832d5e395c" />
+
 
 
 **3. Vista 3D**
 
-<img width="1238" height="727" alt="Captura de pantalla 2026-09-03 232648" src="https://github.com/user-attachments/assets/f3229288-1f05-4d5c-82ee-bf10f61904d5" />
+<img width="762" height="632" alt="Captura de pantalla 2026-09-11 190934" src="https://github.com/user-attachments/assets/8d36ef7a-33eb-4dcc-8f02-23f4ef9f8be6" />
+<img width="761" height="638" alt="Captura de pantalla 2026-09-11 190958" src="https://github.com/user-attachments/assets/6b22871a-a5bb-45e0-b107-b139c965f8b9" />
+
 
