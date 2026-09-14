@@ -37,6 +37,7 @@ El desarrollo de la PCB facilita la instalación de los componentes, reduce posi
   <br>
   <em><b>Figura 1.</b> Esquemático electrónico desarrollado por Joseph Lombardi.</em>
 </p>
+> **Nota de esquemático en pdf:** El esquemático en pdf se encuentra disponible en: [`PDF`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/cd3e37132c4b87cd0c85d2f2956931da2b564a05/Proyecto_Integrador/Talleres/Taller%2002/Lombardi_Joseph/SCH_Schematic1_2026-09-04.pdf).
 
 **2. Diseño de la PCB en 2D**
 
