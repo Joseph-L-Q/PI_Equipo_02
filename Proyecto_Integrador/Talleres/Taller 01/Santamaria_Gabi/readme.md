@@ -1,4 +1,4 @@
-# Diseño de la Pieza 3 en Onshape
+# Diseño de la Pieza 5 en Onshape
 
 Se diseñó este componente, correspondiente a la carcasa de la cámara del sistema de monitoreo submarino. La pieza cuenta con una estructura tipo caja con una tapa superior para proteger los componentes internos frente a las condiciones del entorno marino. Asimismo, presenta una perforación lateral destinada al paso de conexiones y fue diseñada considerando su integración con los demás componentes del sistema.
 
@@ -12,7 +12,7 @@ Se diseñó este componente, correspondiente a la carcasa de la cámara del sist
 
 ---
 
-# Simulación de Esfuerzos Mecánicos de la Pieza 3 en SimScale
+# Simulación de Esfuerzos Mecánicos de la Pieza 5 en SimScale
 
 Se analizó el comportamiento estructural de la pieza asignando material PETG ($\rho = 1270 \text{ kg/m}^3$, $E = 2.1 \text{ GPa}$, $\nu = 0.38$). Mediante un análisis estático, se consideraron las condiciones de operación a las que estaría sometida la carcasa de la cámara dentro del entorno submarino.
 
@@ -29,6 +29,5 @@ Los resultados de la simulación permiten evaluar la resistencia mecánica de la
   <br>
   <em>Figura 6. Mapa de resultados de la simulación estructural en SimScale para la carcasa de la cámara.</em>
 </p>
-**Enlace a la Simulación Interactiva en SimScale:
-(https://www.simscale.com/workbench/?pid=3625990943939288531&mi=spec:dfec5281-373c-4798-8061-038d3f92c13e%2Cservice:SIMULATION%2Cstrategy:1)
+* **Enlace a la Simulación en SimScale:** [Ver modelo en SimScale](https://www.simscale.com/workbench/?pid=3625990943939288531&mi=spec:dfec5281-373c-4798-8061-038d3f92c13e%2Cservice:SIMULATION%2Cstrategy:1&ps=domain)
 
