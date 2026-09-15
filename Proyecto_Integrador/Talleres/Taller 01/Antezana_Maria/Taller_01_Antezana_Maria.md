@@ -19,7 +19,7 @@ Se realizó un Análisis Estructural Estático (*Static Structural Analysis*) en
 #### Configuración de Materiales y Fuerzas aplicadas:
 * **Material Asignado:** PETG (Polietileno Tereftalato de Glicol), con densidad $\rho = 1270 \text{ kg/m}^3$, módulo de Elasticidad $E = 2.1 \text{ GPa}$, coeficiente de Poisson $\nu = 0.38$ y límite elástico $\sigma_y = 50 \text{ MPa}$.
 * **Presión Hidrostática (*Pressure 2*):** Carga uniforme de $50\,000 \text{ Pa}$ ($50 \text{ kPa} / 0.5 \text{ bar}$) aplicada sobre la cara exterior expuesta al medio marino.
-* **Aceleración de Gravedad ($g$):** Configurada globalmente en el árbol del proyecto (*Model*) con un valor de $9.81 \text{ m/s}^2$ orientada en dirección vertical hacia abajo (**eje $-Y$** del sistema de coordenadas), con el fin de considerar el peso propio de la pieza durante su operación.
+* **Aceleración de Gravedad ($g$):** Configurada globalmente en el árbol del proyecto (*Model*) con un valor de $9.81 \text{ m/s}^2$ orientada en dirección vertical hacia abajo (**eje $-Z$** del sistema de coordenadas, **e_z = -1** en la configuración de SimScale), con el fin de considerar el peso propio de la pieza durante su operación.
 
 <p align="center">
   <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/Pieza%205_SimScale_Antezana.png" alt="Simulación de Esfuerzos Von Mises" width="100%"/>
