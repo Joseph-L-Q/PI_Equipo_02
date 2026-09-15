@@ -28,11 +28,11 @@ Para que la distribución del diseño sea clara, la dividí en tres secciones pr
 
 **2. Diseño de la PCB (2D)**
 
-<img width="80%" alt="PCB_Antezana_Maria" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/2D_Sensores_Antezana.png" />
+<img width="80%" alt="PCB_Antezana_Maria" src="---" />
 
 **3. Vista 3D**
 
-<img width="80%" alt="Vista3D_Antezana_Maria" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/3D_Sensores_Antezana.png" />
-<img width="80%" alt="Vista3D_Antezana_Maria" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/3D_sensore_Ante.png" />
+<img width="80%" alt="Vista3D_Antezana_Maria" src="--" />
+<img width="80%" alt="Vista3D_Antezana_Maria" src="---" />
 
 > **Nota de Archivos Gerber:** El archivo comprimido con los Gerber necesarios para la fabricación de la placa PCB se encuentra disponible en: [`Gerber_Maria_2026-09-04.zip`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2002/Antezana_Maria/Gerber_PCB1_Antezana_Sensores.zip).
