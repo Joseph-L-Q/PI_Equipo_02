@@ -27,9 +27,9 @@ Los resultados de la simulación permiten evaluar la resistencia mecánica de la
 <img width="1867" height="883" alt="Captura de pantalla 2026-09-15 083329" src="https://github.com/user-attachments/assets/39a98d47-f6ad-4e9f-a8a7-2c079a456241" />
 
   <br>
-  <em>Figura 6. Mapa de resultados de la simulación estructural en SimScale para la carcasa de la cámara.</em>
+              <em>Figura 6. Mapa de resultados de la simulación estructural en SimScale para la carcasa de la cámara.</em>
 </p>
 
-* **Enlace a la simulación en SimScale:** [Ver simulación interactiva en SimScale](https://www.simscale.com/workbench/?pid=3625990943939288531)
+**Enlace a la simulación en SimScale:** [Ver simulación interactiva en SimScale](https://www.simscale.com/workbench/?pid=3625990943939288531&rru=99af16d0-b8de-4950-aa59-c2476dfb0985&ci=7986929d-80de-42ec-94f1-fd0981a968ac&mt=SIMULATION_RESULT&ct=SOLUTION_FIELD)
 
 ---
