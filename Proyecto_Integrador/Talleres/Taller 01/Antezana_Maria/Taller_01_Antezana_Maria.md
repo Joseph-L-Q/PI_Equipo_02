@@ -22,7 +22,7 @@ Se realizó un Análisis Estructural Estático (*Static Structural Analysis*) en
 * **Aceleración de Gravedad ($g$):** Configurada globalmente en el árbol del proyecto (*Model*) con un valor de $9.81 \text{ m/s}^2$ orientada en dirección vertical hacia abajo (**eje $-Z$** del sistema de coordenadas, **e_z = -1** en la configuración de SimScale), con el fin de considerar el peso propio de la pieza durante su operación.
 
 <p align="center">
-  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/Pieza%205_SimScale_Antezana.png" alt="Simulación de Esfuerzos Von Mises" width="100%"/>
+  <img src="---" alt="Simulación de Esfuerzos Von Mises" width="100%"/>
   <br>
   <em>Figura 2. Mapa de distribución de esfuerzos de Von Mises en la Pieza 5 mediante SimScale.</em>
 </p>
