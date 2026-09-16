@@ -1,4 +1,4 @@
-# Taller 3: Regresión Lineal y Árboles de Decisión
+# Taller 3: Introducción a la IA - Regresión Lineal y Árboles de Decisión
 
 ---
 
@@ -58,45 +58,87 @@ Para justificar la selección de características y evaluar la independencia ent
 ## 3. Desarrollo y Evaluación de Modelos
 
 ### 3.1 Regresión Lineal Multi-variable
-*Principios matemáticos del modelo de Regresión Lineal, supuestos de homocedasticidad y normalidad de residuos [1].*
 
-![Fig. 3. Código de entrenamiento y gráfica de residuos del modelo de Regresión Lineal](ruta/a/tu/imagen3.png)  
-* **Fig. 3.** Código de entrenamiento y gráfica de residuos del modelo de Regresión Lineal.
+La Regresión Lineal Múltiple permite modelar la variable objetivo $y$ (**Consumo_Energia**) a partir de una combinación lineal de los cuatro predictores ambientales y operacionales, expresándose según la ecuación:
 
-*Análisis del desempeño del modelo basado en los coeficientes obtenidos y el comportamiento de las predicciones frente a los valores reales.*
+$$Y = \beta_0 + \beta_1 X_{\text{Temp}} + \beta_2 X_{\text{Horas}} + \beta_3 X_{\text{Carga}} + \beta_4 X_{\text{Humedad}} + \epsilon$$
+
+Para validar formalmente el modelo, se evaluaron los supuestos estadísticos clave de **homocedasticidad** y **normalidad de residuos**, siguiendo el marco metodológico de diagnóstico de regresión [1]. Específicamente, se analizó el comportamiento de los residuos definidos por la ecuación:
+
+$$e_i = Y_i - \hat{Y}_i$$
+
+Según la teoría de estimación por Mínimos Cuadrados Ordinarios (MCO) [1], el cumplimiento de estos supuestos asegura que los estimadores $\beta_j$ obtenidos sean los **mejores estimadores lineales e insesgados (BLUE)** por el Teorema de Gauss-Márkov:
+
+* **Homocedasticidad:** Verificación de varianza constante ($\text{Var}(e_i) = \sigma^2$), garantizando que la incertidumbre de predicción no aumente con la magnitud del consumo [1].
+* **Normalidad:** Verificación de que $e_i \sim \mathcal{N}(0, \sigma^2)$, lo cual valida la significancia estadística de la prueba $t$ calculada para cada variable en la tabla `cdf` [1].
+
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/Regresi%C3%B3n%20Lineal%20Multi-variable.jpg" alt="Regresión Lineal: entrenamiento, coeficientes y análisis de residuos" width="100%"/>
+  <br>
+  <em>Figura 3. Entrenamiento del modelo lineal, tabla de coeficientes con prueba t (`cdf`), histograma de normalidad de residuos y diagrama de dispersión para verificación de homocedasticidad.</em>
+</p>
+
+**Análisis Crítico de Coeficientes y Supuestos del Modelo:**
+
+* **Ecuación del Modelo y Significancia Estadística:**
+  * **Intersección ($\beta_0 = 2.7411$):** Representa el consumo base del sistema en condiciones nulas.
+  * **Horas de Operación ($\beta_2 = 1.6688$, $t = 127.02$):** Es la variable con mayor impacto directo. Por cada hora adicional de operación, el consumo energético se incrementa en promedio $1.67 \text{ kWh}$. Su elevado valor en la estadística $t$ ($127.02$) ratifica su extrema significancia estadística.
+  * **Efecto de Carga y Clima:** Las variables `Carga` ($\beta_3 = 0.0963$, $t = 51.83$) y `Temperatura` ($\beta_1 = 0.1371$, $t = 18.15$) muestran un efecto positivo moderado, mientras que `Humedad` ($\beta_4 = 0.0268$, $t = 10.26$) aporta un ajuste marginal pero estadísticamente válido.
+* **Evaluación de Normalidad de Residuos:** El histograma de residuos ($Y_{test} - \hat{Y}$) refleja una distribución simétrica con forma de campana acampanada (Gaussiana) centrada en $0$, cumpliendo con el supuesto de normalidad en las perturbaciones aleatorias [1].
+* **Verificación de Homocedasticidad:** En el diagrama de dispersión de *Valores residuales vs. predichos*, los errores se distribuyen aleatoriamente en una banda horizontal homogénea entre $-6$ y $+6 \text{ kWh}$ sin formar patrones cónicos ni tendencias cuadráticas. Esto confirma una varianza de error constante a lo largo de toda la escala de consumo predicho.
 
 ### 3.2 Árboles de Decisión para Regresión
-*Fundamentos del algoritmo de partición recursiva, criterios de impureza y control de profundidad para evitar sobreajuste [2].*
 
-![Fig. 4. Visualización de la estructura y divisiones del Árbol de Decisión](ruta/a/tu/imagen4.png)  
-* **Fig. 4.** Visualización de la estructura y divisiones del Árbol de Decisión.
+El algoritmo de Árboles de Decisión para Regresión se basa en la partición recursiva del espacio de características. En cada nodo, el modelo selecciona la variable $X_j$ y el umbral de corte $s$ que minimizan la impureza del sistema, medida a través de la Reducción de la Varianza (o Suma de Errores Cuadráticos, $SSE$):
 
-*Evaluación de la importancia de variables en el árbol y diagnóstico del equilibrio entre sesgo y varianza.*
+$$\text{Impureza (SSE)} = \sum_{i \in R_1} (y_i - \hat{y}_{R_1})^2 + \sum_{i \in R_2} (y_i - \hat{y}_{R_2})^2$$
+
+Donde $\hat{y}_{R_1}$ y $\hat{y}_{R_2}$ son las medias de la variable respuesta en cada región subdividida. Para mitigar el **sobreajuste** (*overfitting*) y mantener un equilibrio óptimo entre **sesgo y varianza**, se aplicó una poda previa restringiendo la profundidad máxima a `max_depth = 5` [2].
+
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/Arbol_de_Decision_Regresion.png" alt="Estructura, importancia de características y predicción del Árbol de Decisión" width="100%"/>
+  <br>
+  <em>Figura 4. Entrenamiento del Árbol de Decisión (`max_depth=5`), gráfico de importancia relativa de características y evaluación de predicciones reales vs. predichas.</em>
+</p>
+
+**Importancia de Variables y Equilibrio Sesgo-Varianza:**
+
+* **Jerarquía de Importancia de Características (*Feature Importance*):**
+  * **Variable Dominante:** Al igual que en la regresión lineal, la variable de **Horas de Operación** concentra la mayor ganancia de información e importancia relativa ($\approx 53.7\%$), siendo el nodo raíz primario de división.
+  * **Aporte Secundario:** La variable **Temperatura** representa aproximadamente el $26.9\%$ de la importancia, seguida de la **Carga** ($11.1\%$). Las demás variables aportan un porcentaje marginal en la reducción total de la varianza.
+* **Evaluación del Control de Profundidad (`max_depth=5`):**
+  * **Control de Varianza:** Al limitar la profundidad del árbol a 5 niveles, se impide que el algoritmo memorice el ruido del conjunto de entrenamiento, evitando la creación de hojas terminales con muy pocos datos.
+  * **Sesgo Acotado:** El modelo logra capturar la no-linealidad de los datos sin perder generalización, manteniendo un error medio cuadrático ($MSE$) estable sobre el conjunto de prueba (`X_test`).
 
 ---
 
-## 4. Comparativa de Resultados y Discusión
+## 4. Comparativa de Resultados, Discusión y conclusión
 
-*Evaluación cuantitativa comparativa de las métricas clave obtenidas en la fase de prueba:*
+Para determinar cuál modelo ofrece el mejor rendimiento sobre datos no vistos, se evaluaron cuantitativamente las predicciones sobre el conjunto de prueba ($30\%$ de los datos, $1,500$ registros) mediante el Error Cuadrático Medio ($MSE$), Error Absoluto Medio ($MAE$) y el Coeficiente de Determinación ($R^2$).
 
-| Modelo | MSE | MAE | $R^2$ Score | Fortalezas | Limitaciones |
+| Modelo | MSE ($kWh^2$) | MAE ($kWh$) | $R^2$ Score | Fortalezas | Limitaciones |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Regresión Lineal** | *[Valor]* | *[Valor]* | *[Valor]* | Alta interpretabilidad, bajo costo computacional | Sensible a *outliers* y asume linealidad |
-| **Árbol de Decisión** | *[Valor]* | *[Valor]* | *[Valor]* | Captura relaciones no lineales complejas | Propenso a *overfitting* sin poda |
-
-*Discusión sobre qué modelo ofrece el mejor rendimiento en función de las necesidades operativas del problema.*
+| **Regresión Lineal** | **4.6124** | **1.7448** | **0.8512** | • **Alta interpretabilidad:** Muestra con claridad matemática exacta cuánto cambia el consumo según cada variable.<br>• **Bajo costo computacional:** Consume muy poca memoria y recursos del sistema.<br>• **Rápida inferencia:** Calcula predicciones de forma instantánea.<br>• **Variables significativas:** Confirma que los datos usados afectan realmente el resultado. | • **Asume linealidad:** Asume que los datos crecen o decrecen siempre a ritmo constante.<br>• **Sensible a datos raros:** Se distorsiona fácilmente si existen lecturas erróneas o picos extremos (*outliers*). |
+| **Árbol de Decisión** | **5.7499** | **1.9239** | **0.8145** | • **Capta patrones complejos:** Detecta relaciones no lineales entre las variables.<br>• **Sin supuestos rígidos:** No exige que los datos sigan una distribución normal.<br>• **Lógica intuitiva:** Genera reglas de decisión fáciles de entender. | • **Sensible a variaciones:** Pequeños cambios en los datos de entrenamiento pueden alterar la estructura del árbol.<br>• **Riesgo de sobreajuste:** Requiere limitar su profundidad para no memorizar el ruido. |
 
 ---
 
-## 5. Propuesta de Integración en Arquitectura de Datos
-*Estrategia para empaquetar el modelo entrenado (`joblib`/`pickle`), automatizar la ingesta de datos y desplegarlo como servicio consumible.*
+### Discusión
 
-*Descripción del flujo de inferencia en tiempo real o por lotes para el proyecto.*
+1. **Rendimiento Predictivo Global:**
+   * La **Regresión Lineal Múltiple** obtuvo un rendimiento superior en todas las métricas de prueba, alcanzando un $R^2 = 0.8512$ ($85.12\%$ de varianza explicada) en comparación con el $R^2 = 0.8145$ ($81.45\%$) del Árbol de Decisión.
+   * El Error Absoluto Medio de la Regresión Lineal ($MAE = 1.7448 \text{ kWh}$) demuestra que sus estimaciones se desvían, en promedio, menos de $1.75 \text{ kWh}$ respecto al consumo real observado, ofreciendo mayor precisión global para la planificación de carga energética.
 
+2. **Acerca de la Estructura de los Datos:**
+   * Dado que las variables clave (`Horas_Operacion` y `Carga`) presentan un comportamiento fuertemente lineal respecto a la variable objetivo `Consumo_Energia`, las funciones continuas de la Regresión Lineal se adaptan con mayor fluidez al dominio del problema que las aproximaciones escalonadas por regiones cuadradas de los Árboles de Decisión.
+
+### Conclusión
+
+A partir del análisis cuantitativo y la naturaleza del dataset, la **Regresión Lineal Múltiple** se consolida como la solución superior para este proyecto. Al presentar una relación fuertemente lineal entre las horas de operación y el consumo energético, la regresión logra un mejor ajuste global ($R^2 = 0.8512$), reduciendo el error medio a solo $1.74 \text{ kWh}$. Además, su fórmula matemática directa facilita una integración ligera y de respuesta inmediata en sistemas de monitoreo en tiempo real o dispositivos IoT con capacidad de procesamiento limitada.
+
+Por otro lado, aunque el **Árbol de Decisión** registra un margen de error ligeramente mayor ($MAE = 1.92 \text{ kWh}$), su valor principal radica en escenarios de auditoría, análisis de negocio o generación de tableros ejecutivos (*dashboards*). Resulta la alternativa ideal si el problema requiere clasificar el consumo en reglas de decisión simples y visuales (como umbrales de alerta según temperatura y carga) o si en el futuro se trabaja con variables con comportamientos no lineales complejos sin necesidad de validar supuestos estadísticos de normalidad.
 ---
 
 ## Referencias
 
-* [1] F. Pedregosa *et al.*, "Scikit-learn: Machine Learning in Python," *Journal of Machine Learning Research*, vol. 12, pp. 2825-2830, 2011.
-* [2] L. Breiman, *Classification and Regression Trees*, Routledge, 2017.
-* [3] IEEE, "IEEE Editorial Style Manual," IEEE Periodicals, Piscataway, NJ, USA, 2021.
+* [1] D. C. Montgomery, E. A. Peck, y G. G. Vining, Introduction to Linear Regression Analysis, 5ta ed. Hoboken, NJ: John Wiley & Sons, 2012.
