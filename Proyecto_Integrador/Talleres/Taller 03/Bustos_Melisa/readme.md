@@ -4,11 +4,9 @@
 
 ## 1. Introducción y Planteamiento del Problema
 
-En este taller desarrollamos e implementamos modelos de aprendizaje automático (Machine Learning) para la estimación predictiva del consumo de energía en un entorno operativo o industrial. 
+En este taller desarrollamos e implementamos modelos de aprendizaje automático (Machine Learning) para la predicción del **Consumo de Energía** en un entorno operativo. Trabajamos con un conjunto de datos (`Data_PI_regresion.csv`) de 5,000 registros capturados por sensores, que incluyen variables ambientales e industriales: **Temperatura, Horas de Operación, Carga y Humedad**.
 
-* **Contextualización del Dataset:** Trabajamos con un conjunto de datos (`Data_PI_regresion.csv`) que contiene **5,000 registros numéricos** capturados directamente por sensores. Las variables independientes que alimentan el sistema son: **Temperatura** (°C), **Horas de Operación** ($h$), **Carga** (%) y **Humedad** (%). La variable objetivo continua que buscamos predecir es el **Consumo de Energía** ($kWh$).
-* **Definición del Problema:** Los sistemas industriales sufren de fluctuaciones ineficientes en su consumo eléctrico. Monitorear los sensores en tiempo real está bien, pero no es suficiente; la falta de anticipación genera sobrecostos operativos y un desgaste acelerado de los equipos.
-* **Objetivo del Análisis:** El propósito fundamental es pasar de un sistema de monitoreo reactivo a uno predictivo. Buscamos construir, diagnosticar y comparar algoritmos (Regresión Lineal y Árboles de Decisión) para determinar cómo las variables del entorno afectan la demanda energética y lograr automatizar la toma de decisiones.
+El problema central que abordamos es la fluctuación ineficiente del consumo eléctrico. En la industria, no anticipar estos picos genera desgaste de equipos y sobrecostos. Por ello, el objetivo de este análisis no es solo leer datos históricos, sino construir un algoritmo predictivo que tome estas variables independientes y proyecte con alta precisión la demanda energética futura, permitiendo una toma de decisiones automatizada y en tiempo real.
 
 ---
 
