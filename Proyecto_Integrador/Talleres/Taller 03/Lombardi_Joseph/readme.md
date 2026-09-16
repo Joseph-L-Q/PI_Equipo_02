@@ -20,7 +20,7 @@ El uso de estos modelos permite aprovechar las mediciones de los sensores para o
 
 Antes de entrenar los modelos se revisó el estado general del conjunto de datos. Esta etapa permitió comprobar si existían datos faltantes, registros repetidos o tipos de variables incorrectos que pudieran perjudicar los resultados.
 
-https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011416.png
+![Carga e inspección del conjunto de datos](https://raw.githubusercontent.com/Joseph-L-Q/PI_Equipo_02/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011416.png)
 
 *Figura 1. Lectura del archivo CSV, revisión con `info()` y resumen estadístico mediante `describe()`.*
 
@@ -37,8 +37,9 @@ Con `df.info()` se comprobó que el conjunto posee **5,000 observaciones complet
 
 Después se estudiaron las relaciones entre las variables mediante gráficos de dispersión y la correlación de Pearson. Esto permitió identificar cuáles características se relacionan más con el consumo y verificar si las variables de entrada entregan información diferente entre sí.
 
-https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011513.png
-https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011533.png
+![Matriz de dispersión de las variables](https://raw.githubusercontent.com/Joseph-L-Q/PI_Equipo_02/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011513.png)
+
+![Mapa de calor de correlaciones](https://raw.githubusercontent.com/Joseph-L-Q/PI_Equipo_02/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011533.png)
 
 *Figura 2. Matriz de dispersión (`pairplot`) y mapa de calor (`heatmap`) con las correlaciones de Pearson.*
 
@@ -56,21 +57,28 @@ https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214
 
 La Regresión Lineal Múltiple estima el **Consumo de Energía** a partir de una combinación de las cuatro variables ambientales y operativas. Su ecuación general es:
 
-$$Y=\beta_0+\beta_1X_{\text{Temp}}+\beta_2X_{\text{Horas}}+\beta_3X_{\text{Carga}}+\beta_4X_{\text{Humedad}}+\epsilon$$
+$$
+Y=\beta_0+\beta_1X_{\text{Temp}}+\beta_2X_{\text{Horas}}+\beta_3X_{\text{Carga}}+\beta_4X_{\text{Humedad}}+\epsilon
+$$
 
 Para comprobar que el modelo fuese estadísticamente adecuado se revisaron dos supuestos: la **homocedasticidad** y la **normalidad de los residuos** [1]. Los residuos se calcularon como la diferencia entre el valor real y el valor estimado:
 
-$$e_i=Y_i-\hat{Y}_i$$
+$$
+e_i=Y_i-\hat{Y}_i
+$$
 
 De acuerdo con el método de Mínimos Cuadrados Ordinarios [1], el cumplimiento de estos supuestos permite considerar a los coeficientes $\beta_j$ como buenos estimadores lineales e insesgados, según el teorema de Gauss-Márkov.
 
 - **Homocedasticidad:** Significa que la varianza de los residuos se mantiene aproximadamente constante, es decir, $\text{Var}(e_i)=\sigma^2$.
 - **Normalidad:** Se espera que los residuos sigan aproximadamente una distribución normal, $e_i\sim\mathcal{N}(0,\sigma^2)$. Esto respalda la interpretación de la prueba $t$ aplicada a los coeficientes.
 
-https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011640.png
-https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011702.png
-https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011731.png
-https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011745.png
+![Entrenamiento y coeficientes de la regresión lineal](https://raw.githubusercontent.com/Joseph-L-Q/PI_Equipo_02/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011640.png)
+
+![Cálculo de errores y estadísticos del modelo](https://raw.githubusercontent.com/Joseph-L-Q/PI_Equipo_02/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011702.png)
+
+![Histograma para analizar la normalidad de los residuos](https://raw.githubusercontent.com/Joseph-L-Q/PI_Equipo_02/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011731.png)
+
+![Gráfico de residuos frente a valores predichos](https://raw.githubusercontent.com/Joseph-L-Q/PI_Equipo_02/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011745.png)
 
 *Figura 3. Entrenamiento de la regresión, coeficientes, estadísticos t, histograma de residuos y gráfico de residuos frente a predicciones.*
 
@@ -86,11 +94,17 @@ https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214
 
 El Árbol de Decisión divide repetidamente el espacio de las variables de entrada. En cada nodo selecciona una variable $X_j$ y un punto de corte $s$ que reduzcan el error dentro de las regiones resultantes. La impureza puede expresarse mediante la suma de errores cuadrados:
 
-$$\text{Impureza (SSE)}=\sum_{i\in R_1}(y_i-\hat{y}_{R_1})^2+\sum_{i\in R_2}(y_i-\hat{y}_{R_2})^2$$
+$$
+\text{Impureza (SSE)}
+=
+\sum_{i\in R_1}(y_i-\hat{y}_{R_1})^2
++
+\sum_{i\in R_2}(y_i-\hat{y}_{R_2})^2
+$$
 
 En esta fórmula, $\hat{y}_{R_1}$ y $\hat{y}_{R_2}$ representan el promedio de la variable objetivo en cada región. Para disminuir el riesgo de **sobreajuste**, se limitó la profundidad a `max_depth=5` [2].
 
-https://github.com/Joseph-L-Q/PI_Equipo_02/blob/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011825.png
+![Resultados del árbol de decisión para regresión](https://raw.githubusercontent.com/Joseph-L-Q/PI_Equipo_02/0c097c3afedb0f7793e3182da5661214b79f0a3a/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-16%20011825.png)
 
 *Figura 4. Entrenamiento del árbol con `max_depth=5`, importancia de las características y comparación entre valores reales y predichos.*
 
@@ -141,7 +155,7 @@ El análisis exploratorio ayudó a conocer cómo estaban distribuidos los datos 
 
 El procedimiento completo se encuentra en el siguiente notebook:
 
-- [https://github.com/Joseph-L-Q/PI_Equipo_02/blob/883baf2025cea2ac40ce47bfb3caa032e26716e4/Proyecto_Integrador/Talleres/Taller%2003/Lombardi_Joseph/readme.md`Regresion_Lineal_Joseph_Lombardi.ipynb`]
+- [`Regresion_Lineal_Joseph_Lombardi.ipynb`](./Regresion_Lineal_Joseph_Lombardi.ipynb)
 
 En este archivo se incluye la exploración inicial, la preparación del conjunto de datos, el entrenamiento de la regresión lineal, la evaluación de las predicciones y los residuos, así como la implementación y revisión del árbol de decisión.
 
