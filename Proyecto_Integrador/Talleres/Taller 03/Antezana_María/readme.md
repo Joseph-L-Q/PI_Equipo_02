@@ -137,6 +137,7 @@ Para determinar cuál modelo ofrece el mejor rendimiento sobre datos no vistos, 
 A partir del análisis cuantitativo y la naturaleza del dataset, la **Regresión Lineal Múltiple** se consolida como la solución superior para este proyecto. Al presentar una relación fuertemente lineal entre las horas de operación y el consumo energético, la regresión logra un mejor ajuste global ($R^2 = 0.8512$), reduciendo el error medio a solo $1.74 \text{ kWh}$. Además, su fórmula matemática directa facilita una integración ligera y de respuesta inmediata en sistemas de monitoreo en tiempo real o dispositivos IoT con capacidad de procesamiento limitada.
 
 Por otro lado, aunque el **Árbol de Decisión** registra un margen de error ligeramente mayor ($MAE = 1.92 \text{ kWh}$), su valor principal radica en escenarios de auditoría, análisis de negocio o generación de tableros ejecutivos (*dashboards*). Resulta la alternativa ideal si el problema requiere clasificar el consumo en reglas de decisión simples y visuales (como umbrales de alerta según temperatura y carga) o si en el futuro se trabaja con variables con comportamientos no lineales complejos sin necesidad de validar supuestos estadísticos de normalidad.
+
 ---
 
 ## Referencias
