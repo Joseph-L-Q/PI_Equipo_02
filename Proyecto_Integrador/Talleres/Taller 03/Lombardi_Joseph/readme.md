@@ -155,7 +155,7 @@ El análisis exploratorio ayudó a conocer cómo estaban distribuidos los datos 
 
 El procedimiento completo se encuentra en el siguiente notebook:
 
-- [`Regresion_Lineal_Joseph_Lombardi.ipynb`](./Regresion_Lineal_Joseph_Lombardi.ipynb)
+- [`Regresion_Lineal_Joseph_Lombardi.ipynb`](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/9213d17fcbe06ba0462b9637a5865634ddceae99/Proyecto_Integrador/Talleres/Taller%2003/Lombardi_Joseph/Regresi%C3%B3n_Lineal_Lombardi.ipynb)
 
 En este archivo se incluye la exploración inicial, la preparación del conjunto de datos, el entrenamiento de la regresión lineal, la evaluación de las predicciones y los residuos, así como la implementación y revisión del árbol de decisión.
 
