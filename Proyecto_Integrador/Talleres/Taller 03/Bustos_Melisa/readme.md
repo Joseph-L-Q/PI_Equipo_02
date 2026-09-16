@@ -65,7 +65,7 @@ Para resolver el problema, decidimos contrastar dos lógicas de programación co
 
 ---
 
-## 4. Aprendizajes Clave y Aplicación al Proyecto
+## 4. Aprendizajes y Aplicación al Proyecto
 
 La parte más valiosa de este taller fue comprender que la inteligencia artificial aplicada no es una "caja negra" donde metes datos y salen resultados mágicos. Requiere interpretación crítica.
 
@@ -74,6 +74,14 @@ La parte más valiosa de este taller fue comprender que la inteligencia artifici
 *   **Impacto en el monitoreo marino:** Todo este flujo de trabajo cambia por completo la perspectiva de nuestro diseño de monitoreo de biomasa marina. Las técnicas de correlación y entrenamiento lineal que programamos aquí son exactamente las que necesitamos para procesar los datos continuos de los sensores sumergidos. Cruzando el tiempo de inmersión, la temperatura y la salinidad, podremos predecir con precisión la tasa de incrustación de *biofouling* o proyectar el desarrollo de las conchas de abanico, convirtiendo nuestro dispositivo en una herramienta de analítica predictiva avanzada.
 
 ---
+
+## 5. Archivo Principal del Proyecto
+
+El desarrollo completo y estructurado de este taller se encuentra implementado en el siguiente notebook:
+
+* [Regresion_lineal_Bustos.ipynb]https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Bustos_Melisa/Regresi%C3%B3n_Lineal_Bustos.ipynb
+
+Este archivo contiene el código fuente paso a paso: desde el análisis exploratorio de datos (EDA) y la preparación del dataset, hasta el entrenamiento de la regresión lineal, el diagnóstico estadístico de residuos y la implementación gráfica del modelo basado en árboles de decisión.
 
 ## Referencias
 
