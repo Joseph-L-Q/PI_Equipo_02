@@ -151,7 +151,7 @@ La exploración inicial de los datos permitió comprender la estructura de la in
 ## 6. Archivo principal del proyecto
 
 El desarrollo completo del taller se encuentra implementado en el siguiente notebook:
-* **`Regresion_lineal_Antezana.ipynb`**
+* [Regresión_Lineal_Antezana.ipynb](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Antezana_Mar%C3%ADa/Regresi%C3%B3n_Lineal_Antezana.ipynb)
 
 Este archivo contiene el análisis exploratorio de datos, preparación del dataset, entrenamiento del modelo de regresión lineal, evaluación mediante predicciones y residuos, además de la implementación y análisis del modelo basado en árbol de decisión.
 
