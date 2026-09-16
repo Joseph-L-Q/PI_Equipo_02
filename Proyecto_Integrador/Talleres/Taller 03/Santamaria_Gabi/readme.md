@@ -28,7 +28,7 @@ Se realizó una revisión inicial mediante herramientas estadísticas y descript
 
 Este análisis permitió verificar la organización de la información y comprender la naturaleza de los datos antes de iniciar la construcción de los modelos.
 
-![Fig. 1. Inspección inicial del conjunto de datos]<img width="646" height="628" alt="Captura de pantalla 2026-09-15 222700" src="https://github.com/user-attachments/assets/11bf8f53-083e-4a77-95d2-9ddf9b7eb3c0" />
+<img width="646" height="628" alt="Captura de pantalla 2026-09-15 222700" src="https://github.com/user-attachments/assets/11bf8f53-083e-4a77-95d2-9ddf9b7eb3c0" />
 
 
 **Fig. 1.** Inspección de la estructura del conjunto de datos mediante información general y estadísticas descriptivas.
