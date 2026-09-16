@@ -140,6 +140,31 @@ Por otro lado, aunque el **Árbol de Decisión** registra un margen de error lig
 
 ---
 
-## Referencias
+## 5. Aspectos más importantes del desarrollo
+
+Uno de los principales aprendizajes obtenidos durante el taller fue comprender que la construcción de un modelo de inteligencia artificial requiere varias etapas estructuradas y no solamente el entrenamiento de un algoritmo. 
+
+La exploración inicial de los datos permitió comprender la estructura de la información disponible, mientras que la evaluación del modelo permitió analizar si las predicciones obtenidas eran confiables mediante métricas numéricas y diagnósticos de residuos. La parte más importante del desarrollo fue comprender la relación entre los datos, el modelo y los resultados obtenidos. La comparación entre la regresión lineal y el árbol de decisión permitió reconocer que existen diferentes metodologías de aprendizaje y que cada una presenta ventajas específicas dependiendo del problema analizado.
+
+---
+
+## 6. Archivo principal del proyecto
+
+El desarrollo completo del taller se encuentra implementado en el siguiente notebook:
+* **`Regresion_lineal_Antezana.ipynb`**
+
+Este archivo contiene el análisis exploratorio de datos, preparación del dataset, entrenamiento del modelo de regresión lineal, evaluación mediante predicciones y residuos, además de la implementación y análisis del modelo basado en árbol de decisión.
+
+---
+
+## 7. Conclusiones finales
+
+El desarrollo de este taller permitió comprender las principales etapas involucradas en un proyecto de ciencia de datos, desde la exploración inicial de información hasta la construcción y evaluación de modelos predictivos. La regresión lineal permitió analizar cómo diferentes variables se relacionan con el consumo energético y generar predicciones mediante un modelo matemático continuo. Por otro lado, el árbol de decisión ofreció una alternativa diferente para identificar patrones complejos y evaluar la importancia relativa de cada variable.
+
+Asimismo, esta experiencia resulta clave para nuestro proyecto de cultivo de conchas de abanico. Las técnicas de regresión y análisis exploratorio aprendidas en este taller se pueden aplicar directamente para predecir el crecimiento, tasa de supervivencia o biomasa de las conchas en función de parámetros fisicoquímicos del agua (como temperatura, salinidad, pH y oxígeno disuelto). En conclusión, el aprendizaje más valioso fue entender que un modelo predictivo no se evalúa únicamente por sus métricas numéricas, sino por la capacidad de interpretar los datos, validar sus supuestos y transformar esas predicciones en decisiones operativas reales.
+
+---
+
+## 8. Referencias
 
 * [1] D. C. Montgomery, E. A. Peck, y G. G. Vining, Introduction to Linear Regression Analysis, 5ta ed. Hoboken, NJ: John Wiley & Sons, 2012.
