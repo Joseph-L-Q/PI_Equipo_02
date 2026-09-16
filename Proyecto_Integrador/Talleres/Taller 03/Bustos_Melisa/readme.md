@@ -79,7 +79,7 @@ La parte más valiosa de este taller fue comprender que la inteligencia artifici
 
 El desarrollo completo y estructurado de este taller se encuentra implementado en el siguiente notebook:
 
-* [Regresion_lineal_Bustos.ipynb]https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Bustos_Melisa/Regresi%C3%B3n_Lineal_Bustos.ipynb
+* [Regresion_lineal_Bustos.ipynb](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Bustos_Melisa/Regresi%C3%B3n_Lineal_Bustos.ipynb)
 
 Este archivo contiene el código fuente paso a paso: desde el análisis exploratorio de datos (EDA) y la preparación del dataset, hasta el entrenamiento de la regresión lineal, el diagnóstico estadístico de residuos y la implementación gráfica del modelo basado en árboles de decisión.
 
