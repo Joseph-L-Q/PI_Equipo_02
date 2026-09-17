@@ -168,7 +168,7 @@ En conclusión, el aprendizaje más importante fue comprender que un modelo pred
 
 # Referencias
 
-[1] F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, et al., “Scikit-learn: Machine learning in Python,” *Journal of Machine Learning Research*, vol. 12, pp. 2825–2830, 2011.
+<a id="ref1"></a>[1] F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, O. Grisel, et al., “Scikit-learn: Machine learning in Python,” *Journal of Machine Learning Research*, vol. 12, pp. 2825–2830, 2011.
 
-[2] Scikit-learn Developers, “Decision Trees,” *Scikit-learn Documentation*. Accessed: Sep. 17, 2026. [Online]. Available: https://scikit-learn.org/stable/modules/tree.html
+<a id="ref2"></a>[2] Scikit-learn Developers, “Decision Trees,” *Scikit-learn Documentation*. Accessed: Sep. 17, 2026. [Online]. Available: https://scikit-learn.org/stable/modules/tree.html
 
