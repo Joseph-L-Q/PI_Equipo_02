@@ -32,20 +32,6 @@ Montana es un estado de baja densidad poblacional situado en el noroeste de Esta
 
 ---
 
-## Tabla de contenido
-
-1. [Introducción](#1-introducción)
-2. [Metodología](#2-metodología)
-3. [Resultados](#3-resultados)
-4. [Discusión](#4-discusión)
-5. [Conclusiones](#5-conclusiones)
-6. [Referencias bibliográficas](#6-referencias-bibliográficas)
-7. [Anexo A. Resultados numéricos consolidados](#anexo-a-resultados-numéricos-consolidados)
-8. [Anexo B. Contraste entre los dos modelos](#anexo-b-contraste-entre-los-dos-modelos)
-9. [Anexo C. Contraste de hipótesis](#anexo-c-contraste-de-hipótesis)
-
----
-
 ## 1. Introducción
 
 ### 1.1 Contexto del problema
@@ -105,7 +91,7 @@ El procedimiento de obtención siguió estos pasos:
 4. Se estableció el rango temporal comprendido entre el 1 de enero de 2022 y el 31 de diciembre de 2023.
 5. Se descargó el archivo resultante en formato CSV.
 
-<!-- ESPACIO PARA IMAGEN -->
+<img width="1102" height="615" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/Upfoto_I74Lg0hDuim25xWChnVbuAQF9IF9uiIHSmFVXj7UuDt0z.jpg" />
 
 **Figura 1.** Búsqueda y filtrado de datos de NO₂ en el portal AQS de la EPA.
 
@@ -113,7 +99,7 @@ El archivo descargado contiene 730 registros, que corresponden a los 365 días d
 
 ### 2.3 Herramientas computacionales
 
-El análisis se desarrolló íntegramente en **Google Colab**, el entorno de notebooks en la nube de Google, que ejecuta Python 3 sin necesidad de instalar nada en el equipo local y mantiene preinstaladas las bibliotecas científicas más usadas. Trabajar en esta plataforma facilita además el trabajo colaborativo, ya que varios integrantes del grupo pueden abrir y ejecutar el mismo notebook.
+El análisis se desarrolló íntegramente en **Google Colab**, el entorno de notebooks en la nube de Google, que ejecuta Python 3 sin necesidad de instalar nada en el equipo local y mantiene preinstaladas las bibliotecas científicas más usadas.
 
 Las bibliotecas empleadas fueron las siguientes:
 
@@ -272,9 +258,9 @@ La regresión lineal descansa sobre cuatro supuestos que conviene comprobar ante
 
 | Supuesto | Qué exige | Cómo se verificó | Figura |
 |---|---|---|---|
-| Linealidad | La relación entre predictores y respuesta debe ser recta | Diagramas de dispersión individuales | Figura 13 |
-| Normalidad de residuos | Los errores deben distribuirse normalmente en torno a cero | Histograma de residuos con curva de densidad | Figura 15 |
-| Homocedasticidad | La varianza del error debe ser constante | Residuos frente a valores predichos | Figura 16 |
+| Linealidad | La relación entre predictores y respuesta debe ser recta | Diagramas de dispersión individuales | Figura 12 |
+| Normalidad de residuos | Los errores deben distribuirse normalmente en torno a cero | Histograma de residuos con curva de densidad | Figura 14 |
+| Homocedasticidad | La varianza del error debe ser constante | Residuos frente a valores predichos | Figura 15 |
 | Independencia | Las observaciones no deben estar correlacionadas entre sí | Estadístico de Durbin-Watson (no aplicado) | — |
 
 El tratamiento formal de estos supuestos y de las consecuencias que acarrea su incumplimiento puede consultarse en [11] y [16].
@@ -335,31 +321,37 @@ La ausencia de valores faltantes en las variables de interés es un punto favora
 
 ### 3.2 Estadística descriptiva
 
+La aplicación de `df.describe()` sobre las variables transformadas arrojó los siguientes valores:
+
 <img width="1102" height="392" alt="image" src="https://github.com/user-attachments/assets/24130358-c206-43bc-82ad-d7fe266af502" />
 
 **Figura 3.** Comando `df.describe().round(2)` y su salida, con el resumen estadístico de las siete variables.
 
-**Interpretación de la variable objetivo.** La concentración de NO₂ tiene una media de 10.47 ppb y una mediana de 9.00 ppb. Que la media supere a la mediana indica que la distribución está sesgada hacia la derecha, es decir, que existe una cola de valores altos que empuja el promedio hacia arriba.
+**Interpretación de la variable objetivo:** La concentración de NO₂ tiene una media de 10.47 ppb y una mediana de 9.00 ppb. Que la media supere a la mediana indica que la distribución está sesgada hacia la derecha, es decir, que existe una cola de valores altos que empuja el promedio hacia arriba.
 
 La desviación estándar es de 6.37 ppb, lo que frente a una media de 10.47 ppb da un coeficiente de variación cercano al 61 %. Se trata de una dispersión considerable: los valores diarios se alejan bastante del promedio, lo cual ya anticipa que predecirlos no será sencillo.
 
 Los valores se extienden entre 0 y 35 ppb, y el 50 % central de los días se ubica entre 6 y 14 ppb, de modo que el rango intercuartílico es de 8 ppb. Todos estos valores quedan muy por debajo del estándar nacional de calidad del aire de Estados Unidos, fijado en 100 ppb como promedio horario máximo diario en su percentil 98 anual [13], lo que confirma que el aire de la zona se mantiene limpio a lo largo de todo el período.
 
-**Interpretación de las variables de cobertura.** Las variables `Obs_Count` y `Percent_Complete` tienen una mediana de 24 y de 100 % respectivamente, que son los valores máximos posibles. Esto significa que en la mayoría de los días el equipo registró las veinticuatro mediciones horarias esperadas. El mínimo de 10 observaciones, equivalente al 42 % de completitud, corresponde a jornadas en las que hubo interrupciones del equipo. Conviene tener presente que estas dos variables describen el funcionamiento del instrumento y no un fenómeno atmosférico, un punto que resultará importante en la discusión.
+**Interpretación de las variables de cobertura:** Las variables `Obs_Count` y `Percent_Complete` tienen una mediana de 24 y de 100 % respectivamente, que son los valores máximos posibles. Esto significa que en la mayoría de los días el equipo registró las veinticuatro mediciones horarias esperadas. El mínimo de 10 observaciones, equivalente al 42 % de completitud, corresponde a jornadas en las que hubo interrupciones del equipo. Conviene tener presente que estas dos variables describen el funcionamiento del instrumento y no un fenómeno atmosférico, un punto que resultará importante en la discusión.
 
 ### 3.3 Análisis exploratorio visual
+
+#### 3.3.1 Matriz de dispersión general
 
 ![Matriz de dispersión entre todas las variables](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/01_pairplot_melisa.png)
 
 **Figura 4.** Matriz de dispersión de todas las variables del conjunto depurado, generada con `sns.pairplot()`.
 
-**Interpretación.** Las celdas que cruzan `NO2_Max` con las variables temporales muestran nubes de puntos organizadas en bandas verticales, sin ninguna pendiente apreciable. Esta forma es precisamente la firma visual de la ausencia de relación lineal, porque significa que para cualquier valor del predictor la concentración de NO₂ puede tomar prácticamente todo su rango. La única estructura clara del gráfico aparece entre `Obs_Count` y `Percent_Complete`, cuyos puntos se alinean formando una recta casi perfecta y anticipan el problema que se documenta más adelante.
+**Interpretación:** Las celdas que cruzan `NO2_Max` con las variables temporales muestran nubes de puntos organizadas en bandas verticales, sin ninguna pendiente apreciable. Esta forma es precisamente la firma visual de la ausencia de relación lineal, porque significa que para cualquier valor del predictor la concentración de NO₂ puede tomar prácticamente todo su rango. La única estructura clara del gráfico aparece entre `Obs_Count` y `Percent_Complete`, cuyos puntos se alinean formando una recta casi perfecta y anticipan el problema que se documenta más adelante.
+
+#### 3.3.2 Distribución de la variable objetivo
 
 ![Histograma de la concentración máxima diaria de NO2](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/02_histograma_no2_melisa.png)
 
 **Figura 5.** Histograma de `NO2_Max` con veinticinco intervalos.
 
-**Interpretación.** La distribución tiene un solo pico y se inclina hacia la derecha. La mayor cantidad de días se concentra en el intervalo que va de 5 a 10 ppb, y a partir de ahí la frecuencia cae de forma progresiva, hasta el punto de que muy pocas jornadas superan los 25 ppb. Esta forma es característica de los contaminantes atmosféricos, que se ajustan mejor a distribuciones log-normales o gamma que a la normal, porque no pueden tomar valores negativos, se acumulan cerca del límite inferior y presentan episodios extremos de manera esporádica.
+**Interpretación:** La distribución tiene un solo pico y se inclina hacia la derecha. La mayor cantidad de días se concentra en el intervalo que va de 5 a 10 ppb, y a partir de ahí la frecuencia cae de forma progresiva, hasta el punto de que muy pocas jornadas superan los 25 ppb. Esta forma es característica de los contaminantes atmosféricos, que se ajustan mejor a distribuciones log-normales o gamma que a la normal, porque no pueden tomar valores negativos, se acumulan cerca del límite inferior y presentan episodios extremos de manera esporádica.
 
 ![Curva de densidad de la concentración de NO2](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/03_densidad_no2_melisa.png)
 
@@ -377,7 +369,7 @@ Los valores se extienden entre 0 y 35 ppb, y el 50 % central de los días se ubi
 
 **Figura 8.** Representación de la matriz de correlación como mapa de calor, generada con `sns.heatmap()`.
 
-**Interpretación.** De esta matriz se desprenden dos hallazgos, y ambos resultan decisivos para entender lo que ocurrió después.
+**Interpretación:** De esta matriz se desprenden dos hallazgos, y ambos resultan decisivos para entender lo que ocurrió después.
 
 El primero es que ninguna variable predictora alcanza siquiera un valor absoluto de 0.05 en su correlación con `NO2_Max`. La más alta es la de `Obs_Count`, con 0.0439, un número que según los criterios convencionales de clasificación [14] corresponde a una correlación nula o trivial. Si se eleva al cuadrado, se obtiene que apenas el 0.19 % de la varianza es compartida. Desde la etapa exploratoria, entonces, ya podía preverse que el modelo lineal tendría un poder predictivo muy limitado.
 
@@ -407,13 +399,13 @@ La partición dejó 511 registros para entrenamiento y 219 para prueba, cifra qu
 
 **Figura 11.** Tabla de coeficientes con sus errores estándar y estadísticos t, calculados manualmente.
 
-**Interpretación del intercepto.** El valor obtenido, 1566.83 ppb, no tiene ningún sentido físico. Representa lo que el modelo predeciría si todas las variables valieran cero, incluida la variable `Year`, una condición que nunca podría darse. Su magnitud desproporcionada se explica por una cuestión de escala: como `Year` toma valores cercanos a 2022 y su coeficiente es de −0.7727, el producto de ambos ronda los −1562, y el intercepto debe compensar esa cifra para que la predicción final caiga dentro del rango observado de 0 a 35 ppb.
+**Interpretación del intercepto:** El valor obtenido, 1566.83 ppb, no tiene ningún sentido físico. Representa lo que el modelo predeciría si todas las variables valieran cero, incluida la variable `Year`, una condición que nunca podría darse. Su magnitud desproporcionada se explica por una cuestión de escala: como `Year` toma valores cercanos a 2022 y su coeficiente es de −0.7727, el producto de ambos ronda los −1562, y el intercepto debe compensar esa cifra para que la predicción final caiga dentro del rango observado de 0 a 35 ppb.
 
-**Interpretación de los coeficientes temporales.** Todos ellos resultan de una magnitud despreciable. Un cambio de un mes modifica la predicción en apenas 0.0149 ppb, y un cambio de día de la semana en 0.0335 ppb. Frente a una desviación estándar de 6.37 ppb en la variable objetivo, estos efectos son irrelevantes en términos prácticos.
+**Interpretación de los coeficientes temporales:** Todos ellos resultan de una magnitud despreciable. Un cambio de un mes modifica la predicción en apenas 0.0149 ppb, y un cambio de día de la semana en 0.0335 ppb. Frente a una desviación estándar de 6.37 ppb en la variable objetivo, estos efectos son irrelevantes en términos prácticos.
 
-**Interpretación de los coeficientes de cobertura.** Los de `Obs_Count` y `Percent_Complete` aparecen como los de mayor magnitud, pero presentan una anomalía llamativa: tienen signos opuestos, uno positivo y otro negativo, a pesar de que ambas variables están correlacionadas al 0.9998. Esta inversión de signos es un síntoma clásico de multicolinealidad, y ocurre porque los coeficientes terminan compensándose entre sí, lo que hace que pierdan toda interpretación individual.
+**Interpretación de los coeficientes de cobertura:** Los de `Obs_Count` y `Percent_Complete` aparecen como los de mayor magnitud, pero presentan una anomalía llamativa: tienen signos opuestos, uno positivo y otro negativo, a pesar de que ambas variables están correlacionadas al 0.9998. Esta inversión de signos es un síntoma clásico de multicolinealidad, y ocurre porque los coeficientes terminan compensándose entre sí, lo que hace que pierdan toda interpretación individual.
 
-**Advertencia metodológica.** Los errores estándar que se calcularon manualmente en el notebook emplean una fórmula que considera la variabilidad de cada predictor de forma aislada, sin incorporar la matriz de covarianzas completa. Cuando existe colinealidad como la detectada aquí, ese procedimiento subestima los errores estándar y, en consecuencia, infla artificialmente los estadísticos t. Los valores de 17.35 y −15.89 que aparecen en la tabla son, por lo tanto, espurios. El apartado 3.8 presenta el cálculo correcto realizado con `statsmodels`, donde esos mismos coeficientes resultan no significativos.
+**Advertencia metodológica:** Los errores estándar que se calcularon manualmente en el notebook emplean una fórmula que considera la variabilidad de cada predictor de forma aislada, sin incorporar la matriz de covarianzas completa. Cuando existe colinealidad como la detectada aquí, ese procedimiento subestima los errores estándar y, en consecuencia, infla artificialmente los estadísticos t. Los valores de 17.35 y −15.89 que aparecen en la tabla son, por lo tanto, espurios. El apartado 3.8 presenta el cálculo correcto realizado con `statsmodels`, donde esos mismos coeficientes resultan no significativos.
 
 ### 3.6 Relación individual entre predictores y variable objetivo
 
@@ -421,7 +413,7 @@ La partición dejó 511 registros para entrenamiento y 219 para prueba, cifra qu
 
 **Figura 12.** Diagramas de dispersión de los seis predictores frente a `NO2_Max`, organizados con `gridspec.GridSpec()`.
 
-**Interpretación panel por panel.** El gráfico de `Year` muestra dos columnas verticales, una por cada año, de altura prácticamente idéntica, lo que descarta cualquier tendencia entre 2022 y 2023.
+**Interpretación panel por panel:** El gráfico de `Year` muestra dos columnas verticales, una por cada año, de altura prácticamente idéntica, lo que descarta cualquier tendencia entre 2022 y 2023.
 
 El de `Month` presenta doce columnas y aporta el dato más interesante de todo el panel. Se aprecia una ligera reducción de los valores máximos en los meses centrales del año, que corresponden al verano boreal, junto con una mayor dispersión hacia arriba en los meses fríos. Esto sugiere que existe una estacionalidad débil pero real, atribuible a las inversiones térmicas del invierno y a la mayor demanda de calefacción. El problema es que esa relación no es monótona, ya que los valores son altos en ambos extremos del año y bajos en el centro, y un término lineal simple no puede representar esa forma.
 
@@ -433,47 +425,53 @@ Los dos últimos paneles, correspondientes a `Obs_Count` y `Percent_Complete`, m
 
 ### 3.7 Evaluación del modelo y verificación de supuestos
 
+#### 3.7.1 Valores reales frente a predichos
+
 ![Dispersión de NO2 real frente a NO2 predicho](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/06_real_vs_predicho_melisa.png)
 
 **Figura 13.** Valores reales de NO₂ frente a los valores predichos por el modelo lineal, sobre el conjunto de prueba.
 
-**Interpretación.** El criterio de calidad para este gráfico es que los puntos se alineen sobre una diagonal de 45 grados, que es donde el valor predicho coincide con el real. Lo que se observa, en cambio, es una nube horizontal. Mientras los valores reales se extienden de 0 a 35 ppb, las predicciones se comprimen en una franja estrecha alrededor de los 10 ppb, muy cerca de la media de la variable.
+**Interpretación:** El criterio de calidad para este gráfico es que los puntos se alineen sobre una diagonal de 45 grados, que es donde el valor predicho coincide con el real. Lo que se observa, en cambio, es una nube horizontal. Mientras los valores reales se extienden de 0 a 35 ppb, las predicciones se comprimen en una franja estrecha alrededor de los 10 ppb, muy cerca de la media de la variable.
 
 Este comportamiento tiene una explicación estadística precisa. Cuando los predictores no aportan información útil, la solución de mínimos cuadrados tiende a converger hacia la media, porque en ausencia de información adicional la media es el valor que minimiza el error cuadrático. Dicho de otro modo, el modelo no está prediciendo: está devolviendo el promedio disfrazado de predicción.
+
+#### 3.7.2 Normalidad de los residuos
 
 ![Histograma de residuos con curva de densidad](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/07_histograma_residuos_melisa.png)
 
 **Figura 14.** Distribución de los residuos del modelo, calculados como la diferencia entre `Y_test` y las predicciones.
 
-**Interpretación.** Los residuos se centran aproximadamente en cero, tal como debe ocurrir, ya que en mínimos cuadrados la suma de residuos es nula por construcción. La forma general tiene un solo pico, aunque presenta un sesgo hacia la derecha con una cola más extendida, heredado de la asimetría de la variable original. El supuesto de normalidad se cumple, entonces, solo de manera aproximada.
+**Interpretación:** Los residuos se centran aproximadamente en cero, tal como debe ocurrir, ya que en mínimos cuadrados la suma de residuos es nula por construcción. La forma general tiene un solo pico, aunque presenta un sesgo hacia la derecha con una cola más extendida, heredado de la asimetría de la variable original. El supuesto de normalidad se cumple, entonces, solo de manera aproximada.
 
 Vale aclarar que en muestras grandes como esta, con 219 observaciones de prueba, el teorema del límite central amortigua el impacto de las desviaciones moderadas de la normalidad sobre la validez de las pruebas. La normalidad afecta sobre todo a los intervalos de confianza, no a la insesgadez de los estimadores.
+
+#### 3.7.3 Homocedasticidad
 
 ![Residuos frente a valores predichos](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/08_residuos_vs_predichos_melisa.png)
 
 **Figura 15.** Residuos del modelo frente a los valores predichos.
 
-**Interpretación.** Lo deseable en este gráfico es una nube de puntos sin estructura aparente, repartida con amplitud constante alrededor de la línea horizontal del cero. Lo que aparece, sin embargo, es una franja vertical estrecha: los valores predichos ocupan un intervalo muy reducido sobre el eje horizontal, mientras que los residuos se dispersan ampliamente sobre el vertical.
+**Interpretación:** Lo deseable en este gráfico es una nube de puntos sin estructura aparente, repartida con amplitud constante alrededor de la línea horizontal del cero. Lo que aparece, sin embargo, es una franja vertical estrecha: los valores predichos ocupan un intervalo muy reducido sobre el eje horizontal, mientras que los residuos se dispersan ampliamente sobre el vertical.
 
 Esta configuración no indica heterocedasticidad en sentido estricto, porque la varianza del error no crece de forma sistemática a medida que aumenta la predicción. Lo que revela es algo más de fondo, y es que la varianza de los residuos resulta prácticamente igual a la varianza total de la variable objetivo. El modelo no consiguió separar la variabilidad total en una parte explicada y otra residual, de manera que toda ella quedó del lado de los residuos.
 
 ### 3.8 Validación estadística formal
 
-<!-- ESPACIO PARA IMAGEN -->
+<img width="1116" height="723" alt="image" src="https://github.com/user-attachments/assets/4d92e6d3-b8c2-492e-b45f-2edd7d50e395" />
 
 **Figura 16.** Salida completa de `sm.OLS().fit().summary()`, con los indicadores de ajuste, los coeficientes y sus p-valores.
 
-**Interpretación del coeficiente de determinación.** El R² obtenido es de 0.004, lo que significa que el modelo explica el 0.4 % de la variabilidad del NO₂ y deja sin explicar el 99.6 % restante. Este es el indicador más contundente del fracaso predictivo del modelo.
+**Interpretación del coeficiente de determinación:** El R² obtenido es de 0.004, lo que significa que el modelo explica el 0.4 % de la variabilidad del NO₂ y deja sin explicar el 99.6 % restante. Este es el indicador más contundente del fracaso predictivo del modelo.
 
-**Interpretación del R² ajustado.** Su valor de −0.004 tiene un significado muy concreto. Esta versión del coeficiente penaliza la inclusión de predictores que no aportan capacidad explicativa, y que resulte negativo indica que el modelo con seis variables ajusta peor que uno trivial que se limitara a predecir siempre la media. Las seis variables no solo son inútiles, sino que además agregan ruido.
+**Interpretación del R² ajustado:** Su valor de −0.004 tiene un significado muy concreto. Esta versión del coeficiente penaliza la inclusión de predictores que no aportan capacidad explicativa, y que resulte negativo indica que el modelo con seis variables ajusta peor que uno trivial que se limitara a predecir siempre la media. Las seis variables no solo son inútiles, sino que además agregan ruido.
 
-**Interpretación de la prueba F.** El estadístico F vale 0.5100 y su p-valor asociado es de 0.801. Esta prueba contrasta la hipótesis de que todos los coeficientes son simultáneamente cero, y como 0.801 supera ampliamente el nivel de significancia de 0.05, no se rechaza la hipótesis nula. Dicho en términos probabilísticos, si en la población no existiera ninguna relación entre estos predictores y el NO₂, habría un 80.1 % de probabilidad de observar por puro azar un ajuste igual o mejor que el obtenido.
+**Interpretación de la prueba F:** El estadístico F vale 0.5100 y su p-valor asociado es de 0.801. Esta prueba contrasta la hipótesis de que todos los coeficientes son simultáneamente cero, y como 0.801 supera ampliamente el nivel de significancia de 0.05, no se rechaza la hipótesis nula. Dicho en términos probabilísticos, si en la población no existiera ninguna relación entre estos predictores y el NO₂, habría un 80.1 % de probabilidad de observar por puro azar un ajuste igual o mejor que el obtenido.
 
-**Interpretación de los p-valores individuales.** Los seis predictores presentan p-valores que van de 0.390 a 0.931, todos muy por encima del umbral de 0.05. Ninguna variable resulta estadísticamente significativa por sí sola.
+**Interpretación de los p-valores individuales:** Los seis predictores presentan p-valores que van de 0.390 a 0.931, todos muy por encima del umbral de 0.05. Ninguna variable resulta estadísticamente significativa por sí sola.
 
-**Interpretación de los intervalos de confianza.** Todos ellos contienen el valor cero. El de `Obs_Count`, por ejemplo, va de −9.044 a 23.141, de modo que el rango de valores plausibles para el efecto real de esa variable incluye tanto efectos negativos como positivos considerables. Esa amplitud es consecuencia directa de la multicolinealidad, que infla los errores estándar hasta valores como el 8.197 de `Obs_Count`, superior al propio coeficiente.
+**Interpretación de los intervalos de confianza:** Todos ellos contienen el valor cero. El de `Obs_Count`, por ejemplo, va de −9.044 a 23.141, de modo que el rango de valores plausibles para el efecto real de esa variable incluye tanto efectos negativos como positivos considerables. Esa amplitud es consecuencia directa de la multicolinealidad, que infla los errores estándar hasta valores como el 8.197 de `Obs_Count`, superior al propio coeficiente.
 
-**Criterios de información.** El AIC alcanza 4785 y el BIC 4817. Estos valores no dicen mucho por sí solos, pero sirven como referencia para comparar modelos alternativos que se construyan sobre el mismo conjunto de datos, donde los valores menores indican un mejor equilibrio entre ajuste y simplicidad.
+**Criterios de información:** El AIC alcanza 4785 y el BIC 4817. Estos valores no dicen mucho por sí solos, pero sirven como referencia para comparar modelos alternativos que se construyan sobre el mismo conjunto de datos, donde los valores menores indican un mejor equilibrio entre ajuste y simplicidad.
 
 ### 3.9 Modelo de contraste: árbol de decisión
 
@@ -481,11 +479,11 @@ Esta configuración no indica heterocedasticidad en sentido estricto, porque la 
 
 **Figura 17.** Valores reales de NO₂ frente a los predichos por el árbol de decisión con profundidad máxima de cinco niveles.
 
-**Interpretación.** El error cuadrático medio del árbol es de 31.474, cuya raíz cuadrada da un RMSE cercano a los 5.61 ppb. Para valorar esa cifra hay que compararla con la desviación estándar de la variable objetivo, que es de 6.37 ppb y equivale al error que cometería un modelo nulo que siempre predijera la media. La mejora, por lo tanto, ronda el 12 %: es modesta, aunque supera claramente lo logrado por el modelo lineal.
+**Interpretación:** El error cuadrático medio del árbol es de 31.474, cuya raíz cuadrada da un RMSE cercano a los 5.61 ppb. Para valorar esa cifra hay que compararla con la desviación estándar de la variable objetivo, que es de 6.37 ppb y equivale al error que cometería un modelo nulo que siempre predijera la media. La mejora, por lo tanto, ronda el 12 %: es modesta, aunque supera claramente lo logrado por el modelo lineal.
 
 En el plano visual, la dispersión muestra más variabilidad vertical que la Figura 13, lo que significa que el árbol sí produce predicciones diferenciadas en lugar de concentrarlas todas alrededor de la media. Aun así, la alineación con la diagonal sigue siendo pobre.
 
-
+<img width="1118" height="217" alt="image" src="https://github.com/user-attachments/assets/f2f2a45f-8d02-4dcc-b701-90ec7ae14c2b" />
 
 **Figura 18.** Comando `tree_model.feature_importances_` y su salida, con la importancia relativa de cada predictor.
 
@@ -502,7 +500,7 @@ En el plano visual, la dispersión muestra más variabilidad vertical que la Fig
 | `Obs_Count` | 0.0101 | 1.01 % |
 | `Percent_Complete` | 0.0186 | 1.86 % |
 
-**Interpretación.** Este resultado es, probablemente, el hallazgo más informativo de todo el trabajo. El árbol asigna casi el 70 % de la importancia a la variable `Month`, que es justamente la que en el modelo lineal tenía el coeficiente más insignificante, con un valor de 0.0149 y un p-valor de 0.897.
+**Interpretación:** Este resultado es, probablemente, el hallazgo más informativo de todo el trabajo. El árbol asigna casi el 70 % de la importancia a la variable `Month`, que es justamente la que en el modelo lineal tenía el coeficiente más insignificante, con un valor de 0.0149 y un p-valor de 0.897.
 
 La contradicción es solo aparente, y al resolverla se entiende el problema de fondo. La relación entre el mes y la concentración de NO₂ sí existe, pero no es lineal. El ciclo estacional del contaminante tiene una forma aproximadamente sinusoidal, con valores altos en invierno, bajos en verano y altos otra vez al cerrar el año. Un coeficiente lineal único no puede representar ese recorrido, porque al promediar una pendiente ascendente en la primera mitad del año con una descendente en la segunda, el resultado neto tiende a cero. El árbol de decisión, en cambio, puede cortar el año en tramos y asignar una predicción distinta a cada uno, y por eso logra capturar el patrón.
 
@@ -526,15 +524,15 @@ Ahora bien, conviene enmarcar correctamente este resultado. Un modelo que no log
 
 ### 4.2 Causas del bajo poder predictivo
 
-**Faltan las variables que realmente importan.** Esta es la causa principal. Las concentraciones de NO₂ dependen de dos grupos de factores. Por un lado están las emisiones, que responden a la densidad del tráfico, a la actividad industrial y al consumo de combustibles. Por otro lado está la dispersión atmosférica, gobernada por la velocidad y dirección del viento, la temperatura, la altura de la capa de mezcla, la estabilidad atmosférica, la radiación solar y la precipitación. El conjunto de datos no contiene ninguna de estas variables. Lo que se utilizó como predictores fueron etiquetas temporales y metadatos sobre la calidad del muestreo, que en el mejor de los casos solo podrían funcionar como aproximaciones muy indirectas de los procesos reales.
+**Faltan las variables que realmente importan:** Esta es la causa principal. Las concentraciones de NO₂ dependen de dos grupos de factores. Por un lado están las emisiones, que responden a la densidad del tráfico, a la actividad industrial y al consumo de combustibles. Por otro lado está la dispersión atmosférica, gobernada por la velocidad y dirección del viento, la temperatura, la altura de la capa de mezcla, la estabilidad atmosférica, la radiación solar y la precipitación. El conjunto de datos no contiene ninguna de estas variables. Lo que se utilizó como predictores fueron etiquetas temporales y metadatos sobre la calidad del muestreo, que en el mejor de los casos solo podrían funcionar como aproximaciones muy indirectas de los procesos reales.
 
-**La multicolinealidad distorsionó los coeficientes.** La correlación de 0.9998 entre `Obs_Count` y `Percent_Complete` refleja una dependencia funcional entre ambas. Cuando dos columnas de la matriz de diseño son casi linealmente dependientes, esa matriz se acerca a la singularidad y su inversa arroja valores muy grandes, lo que infla los errores estándar de los coeficientes [15], [16]. En este trabajo las consecuencias se vieron con claridad: coeficientes de signos opuestos para variables positivamente correlacionadas, errores estándar desmesurados e intervalos de confianza tan amplios que resultan inutilizables.
+**La multicolinealidad distorsionó los coeficientes:** La correlación de 0.9998 entre `Obs_Count` y `Percent_Complete` refleja una dependencia funcional entre ambas. Cuando dos columnas de la matriz de diseño son casi linealmente dependientes, esa matriz se acerca a la singularidad y su inversa arroja valores muy grandes, lo que infla los errores estándar de los coeficientes [15], [16]. En este trabajo las consecuencias se vieron con claridad: coeficientes de signos opuestos para variables positivamente correlacionadas, errores estándar desmesurados e intervalos de confianza tan amplios que resultan inutilizables.
 
-**La única relación existente no es lineal.** Como mostró el análisis de importancias del árbol, la variable `Month` sí contiene información predictiva, y de hecho concentra cerca del 70 % de la que el modelo no lineal logra aprovechar. El inconveniente es que esa información tiene forma cíclica, y la regresión lineal, por su propia especificación funcional, no puede capturar patrones periódicos a menos que se transforme la variable previamente.
+**La única relación existente no es lineal:** Como mostró el análisis de importancias del árbol, la variable `Month` sí contiene información predictiva, y de hecho concentra cerca del 70 % de la que el modelo no lineal logra aprovechar. El inconveniente es que esa información tiene forma cíclica, y la regresión lineal, por su propia especificación funcional, no puede capturar patrones periódicos a menos que se transforme la variable previamente.
 
-**Se usaron variables que describen el instrumento, no el fenómeno.** Incluir `Obs_Count` y `Percent_Complete` resulta cuestionable desde el punto de vista conceptual, porque ambas informan sobre el funcionamiento del equipo de medición y no sobre la atmósfera. Cualquier asociación que mostraran con el NO₂ sería, en el mejor de los casos, espuria.
+**Se usaron variables que describen el instrumento, no el fenómeno:** Incluir `Obs_Count` y `Percent_Complete` resulta cuestionable desde el punto de vista conceptual, porque ambas informan sobre el funcionamiento del equipo de medición y no sobre la atmósfera. Cualquier asociación que mostraran con el NO₂ sería, en el mejor de los casos, espuria.
 
-**El fenómeno tiene un componente aleatorio irreducible.** Incluso contando con un conjunto completo de variables meteorológicas, la concentración diaria de contaminantes conserva un margen de aleatoriedad considerable. Ningún modelo determinista puede aspirar a explicar la totalidad de la varianza.
+**El fenómeno tiene un componente aleatorio irreducible:** Incluso contando con un conjunto completo de variables meteorológicas, la concentración diaria de contaminantes conserva un margen de aleatoriedad considerable. Ningún modelo determinista puede aspirar a explicar la totalidad de la varianza.
 
 ### 4.3 Sobre el cumplimiento de los supuestos
 
@@ -602,7 +600,13 @@ Resulta llamativa, por último, la ausencia de un efecto de día de la semana. E
 
 ---
 
-## 6. Referencias bibliográficas
+## 6. Archivo principal del proyecto
+
+El desarrollo completo de este análisis se encuentra en el archivo Analisis_Calidad_Aire_Montana.ipynb. Dentro de este documento podrán encontrar todos los comandos ejecutados y los resultados obtenidos durante el estudio. El archivo contiene el flujo de trabajo íntegro, abarcando desde la preparación de los datos de NO2 en Montana hasta el modelamiento y la validación estadística, lo que permite reproducir fácilmente toda la investigación y verificar los hallazgos del informe.
+
+[Analisis_Calidad_Aire_Montana.ipynb](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Taller%203.1/Bustos_Melisa/Tarea_Bustos_Melisa.ipynb)
+
+## 7. Referencias bibliográficas
 
 [1] World Health Organization, *WHO Global Air Quality Guidelines: Particulate Matter (PM2.5 and PM10), Ozone, Nitrogen Dioxide, Sulfur Dioxide and Carbon Monoxide*. Geneva, Switzerland: WHO, 2021. [Online]. Available: https://www.who.int/publications/i/item/9789240034228
 
