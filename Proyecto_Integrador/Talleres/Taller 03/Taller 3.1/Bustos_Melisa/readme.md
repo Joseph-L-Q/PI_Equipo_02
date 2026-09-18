@@ -109,10 +109,6 @@ El procedimiento de obtención siguió estos pasos:
 
 **Figura 1.** Búsqueda y filtrado de datos de NO₂ en el portal AQS de la EPA.
 
-<!-- ESPACIO PARA IMAGEN -->
-
-**Figura 2.** Parámetros de descarga aplicados y archivo CSV obtenido.
-
 El archivo descargado contiene 730 registros, que corresponden a los 365 días de 2022 más los 365 días de 2023. Cada fila representa un día, y la variable de interés es la concentración máxima horaria registrada en esa jornada, expresada en partes por billón.
 
 ### 2.3 Herramientas computacionales
@@ -331,17 +327,17 @@ El marco teórico de estos indicadores se desarrolla en [15].
 
 La inspección inicial confirmó que el archivo contiene 730 registros y 21 columnas. De ellas, 19 presentan valores completos en las 730 filas, mientras que las columnas `CBSA Code` y `CBSA Name` aparecen totalmente vacías, ya que corresponden a un área estadística metropolitana que no aplica a una estación rural como esta.
 
-<!-- ESPACIO PARA IMAGEN -->
+<img width="1102" height="615" alt="image" src="https://github.com/user-attachments/assets/220ec30c-c427-49d7-abd7-eb4143e28ce1" />
 
-**Figura 3.** Comando `df.info(verbose=True)` y su salida, con el detalle de columnas, tipos de dato y valores no nulos.
+**Figura 2.** Comando `df.info(verbose=True)` y su salida, con el detalle de columnas, tipos de dato y valores no nulos.
 
 La ausencia de valores faltantes en las variables de interés es un punto favorable, porque permitió avanzar al modelado sin necesidad de aplicar técnicas de imputación, que siempre introducen supuestos adicionales.
 
 ### 3.2 Estadística descriptiva
 
-<!-- ESPACIO PARA IMAGEN -->
+<img width="1102" height="392" alt="image" src="https://github.com/user-attachments/assets/24130358-c206-43bc-82ad-d7fe266af502" />
 
-**Figura 4.** Comando `df.describe().round(2)` y su salida, con el resumen estadístico de las siete variables.
+**Figura 3.** Comando `df.describe().round(2)` y su salida, con el resumen estadístico de las siete variables.
 
 **Interpretación de la variable objetivo.** La concentración de NO₂ tiene una media de 10.47 ppb y una mediana de 9.00 ppb. Que la media supere a la mediana indica que la distribución está sesgada hacia la derecha, es decir, que existe una cola de valores altos que empuja el promedio hacia arriba.
 
@@ -355,31 +351,31 @@ Los valores se extienden entre 0 y 35 ppb, y el 50 % central de los días se ubi
 
 ![Matriz de dispersión entre todas las variables](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/01_pairplot_melisa.png)
 
-**Figura 5.** Matriz de dispersión de todas las variables del conjunto depurado, generada con `sns.pairplot()`.
+**Figura 4.** Matriz de dispersión de todas las variables del conjunto depurado, generada con `sns.pairplot()`.
 
 **Interpretación.** Las celdas que cruzan `NO2_Max` con las variables temporales muestran nubes de puntos organizadas en bandas verticales, sin ninguna pendiente apreciable. Esta forma es precisamente la firma visual de la ausencia de relación lineal, porque significa que para cualquier valor del predictor la concentración de NO₂ puede tomar prácticamente todo su rango. La única estructura clara del gráfico aparece entre `Obs_Count` y `Percent_Complete`, cuyos puntos se alinean formando una recta casi perfecta y anticipan el problema que se documenta más adelante.
 
 ![Histograma de la concentración máxima diaria de NO2](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/02_histograma_no2_melisa.png)
 
-**Figura 6.** Histograma de `NO2_Max` con veinticinco intervalos.
+**Figura 5.** Histograma de `NO2_Max` con veinticinco intervalos.
 
 **Interpretación.** La distribución tiene un solo pico y se inclina hacia la derecha. La mayor cantidad de días se concentra en el intervalo que va de 5 a 10 ppb, y a partir de ahí la frecuencia cae de forma progresiva, hasta el punto de que muy pocas jornadas superan los 25 ppb. Esta forma es característica de los contaminantes atmosféricos, que se ajustan mejor a distribuciones log-normales o gamma que a la normal, porque no pueden tomar valores negativos, se acumulan cerca del límite inferior y presentan episodios extremos de manera esporádica.
 
 ![Curva de densidad de la concentración de NO2](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/03_densidad_no2_melisa.png)
 
-**Figura 7.** Curva de densidad de `NO2_Max`, obtenida con `.plot.density()`.
+**Figura 6.** Curva de densidad de `NO2_Max`, obtenida con `.plot.density()`.
 
 **Interpretación.** La versión suavizada confirma lo que mostraba el histograma. El punto más alto de la curva se sitúa entre los 7 y los 9 ppb, algo por debajo de la media aritmética, lo cual encaja con el orden que caracteriza a las distribuciones sesgadas a la derecha, donde la moda queda por debajo de la mediana y esta por debajo de la media. La cola derecha se extiende sin cortes hasta los 35 ppb.
 
 ### 3.4 Matriz de correlación
 
-<!-- ESPACIO PARA IMAGEN -->
+<img width="1106" height="440" alt="image" src="https://github.com/user-attachments/assets/061f5a9e-637e-4167-9578-7e468c611ed3" />
 
-**Figura 8.** Comando `.corr()` y su salida, con la matriz de correlaciones de Pearson entre las siete variables.
+**Figura 7.** Comando `.corr()` y su salida, con la matriz de correlaciones de Pearson entre las siete variables.
 
 ![Mapa de calor de la matriz de correlación](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/04_heatmap_correlacion_melisa.png)
 
-**Figura 9.** Representación de la matriz de correlación como mapa de calor, generada con `sns.heatmap()`.
+**Figura 8.** Representación de la matriz de correlación como mapa de calor, generada con `sns.heatmap()`.
 
 **Interpretación.** De esta matriz se desprenden dos hallazgos, y ambos resultan decisivos para entender lo que ocurrió después.
 
@@ -399,17 +395,17 @@ El segundo hallazgo es que la correlación entre `Obs_Count` y `Percent_Complete
 
 La partición dejó 511 registros para entrenamiento y 219 para prueba, cifra que se verificó consultando `predictions.shape`.
 
-<!-- ESPACIO PARA IMAGEN -->
+<img width="1098" height="235" alt="image" src="https://github.com/user-attachments/assets/10779ad9-482b-4f7e-afca-0a67cefa9443" />
 
-**Figura 10.** Comandos de partición con `train_test_split()` y verificación de las dimensiones resultantes.
+**Figura 9.** Comandos de partición con `train_test_split()` y verificación de las dimensiones resultantes.
 
-<!-- ESPACIO PARA IMAGEN -->
+<img width="1103" height="572" alt="image" src="https://github.com/user-attachments/assets/3542bc15-cccd-4260-b457-473e12cd88bc" />
 
-**Figura 11.** Salida de `lm.intercept_` y `lm.coef_`, con el intercepto y los seis coeficientes estimados.
+**Figura 10.** Salida de `lm.intercept_` y `lm.coef_`, con el intercepto y los seis coeficientes estimados.
 
-<!-- ESPACIO PARA IMAGEN -->
+<img width="1117" height="685" alt="image" src="https://github.com/user-attachments/assets/8c1cd7c4-ec27-4fa9-854c-bb6c1862abed" />
 
-**Figura 12.** Tabla de coeficientes con sus errores estándar y estadísticos t, calculados manualmente.
+**Figura 11.** Tabla de coeficientes con sus errores estándar y estadísticos t, calculados manualmente.
 
 **Interpretación del intercepto.** El valor obtenido, 1566.83 ppb, no tiene ningún sentido físico. Representa lo que el modelo predeciría si todas las variables valieran cero, incluida la variable `Year`, una condición que nunca podría darse. Su magnitud desproporcionada se explica por una cuestión de escala: como `Year` toma valores cercanos a 2022 y su coeficiente es de −0.7727, el producto de ambos ronda los −1562, y el intercepto debe compensar esa cifra para que la predicción final caiga dentro del rango observado de 0 a 35 ppb.
 
@@ -423,7 +419,7 @@ La partición dejó 511 registros para entrenamiento y 219 para prueba, cifra qu
 
 ![Diagramas de dispersión de cada predictor frente al NO2](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/05_dispersion_predictores_melisa.png)
 
-**Figura 13.** Diagramas de dispersión de los seis predictores frente a `NO2_Max`, organizados con `gridspec.GridSpec()`.
+**Figura 12.** Diagramas de dispersión de los seis predictores frente a `NO2_Max`, organizados con `gridspec.GridSpec()`.
 
 **Interpretación panel por panel.** El gráfico de `Year` muestra dos columnas verticales, una por cada año, de altura prácticamente idéntica, lo que descarta cualquier tendencia entre 2022 y 2023.
 
@@ -439,7 +435,7 @@ Los dos últimos paneles, correspondientes a `Obs_Count` y `Percent_Complete`, m
 
 ![Dispersión de NO2 real frente a NO2 predicho](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/06_real_vs_predicho_melisa.png)
 
-**Figura 14.** Valores reales de NO₂ frente a los valores predichos por el modelo lineal, sobre el conjunto de prueba.
+**Figura 13.** Valores reales de NO₂ frente a los valores predichos por el modelo lineal, sobre el conjunto de prueba.
 
 **Interpretación.** El criterio de calidad para este gráfico es que los puntos se alineen sobre una diagonal de 45 grados, que es donde el valor predicho coincide con el real. Lo que se observa, en cambio, es una nube horizontal. Mientras los valores reales se extienden de 0 a 35 ppb, las predicciones se comprimen en una franja estrecha alrededor de los 10 ppb, muy cerca de la media de la variable.
 
@@ -447,7 +443,7 @@ Este comportamiento tiene una explicación estadística precisa. Cuando los pred
 
 ![Histograma de residuos con curva de densidad](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/07_histograma_residuos_melisa.png)
 
-**Figura 15.** Distribución de los residuos del modelo, calculados como la diferencia entre `Y_test` y las predicciones.
+**Figura 14.** Distribución de los residuos del modelo, calculados como la diferencia entre `Y_test` y las predicciones.
 
 **Interpretación.** Los residuos se centran aproximadamente en cero, tal como debe ocurrir, ya que en mínimos cuadrados la suma de residuos es nula por construcción. La forma general tiene un solo pico, aunque presenta un sesgo hacia la derecha con una cola más extendida, heredado de la asimetría de la variable original. El supuesto de normalidad se cumple, entonces, solo de manera aproximada.
 
@@ -455,7 +451,7 @@ Vale aclarar que en muestras grandes como esta, con 219 observaciones de prueba,
 
 ![Residuos frente a valores predichos](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/08_residuos_vs_predichos_melisa.png)
 
-**Figura 16.** Residuos del modelo frente a los valores predichos.
+**Figura 15.** Residuos del modelo frente a los valores predichos.
 
 **Interpretación.** Lo deseable en este gráfico es una nube de puntos sin estructura aparente, repartida con amplitud constante alrededor de la línea horizontal del cero. Lo que aparece, sin embargo, es una franja vertical estrecha: los valores predichos ocupan un intervalo muy reducido sobre el eje horizontal, mientras que los residuos se dispersan ampliamente sobre el vertical.
 
@@ -465,7 +461,7 @@ Esta configuración no indica heterocedasticidad en sentido estricto, porque la 
 
 <!-- ESPACIO PARA IMAGEN -->
 
-**Figura 17.** Salida completa de `sm.OLS().fit().summary()`, con los indicadores de ajuste, los coeficientes y sus p-valores.
+**Figura 16.** Salida completa de `sm.OLS().fit().summary()`, con los indicadores de ajuste, los coeficientes y sus p-valores.
 
 **Interpretación del coeficiente de determinación.** El R² obtenido es de 0.004, lo que significa que el modelo explica el 0.4 % de la variabilidad del NO₂ y deja sin explicar el 99.6 % restante. Este es el indicador más contundente del fracaso predictivo del modelo.
 
@@ -483,19 +479,19 @@ Esta configuración no indica heterocedasticidad en sentido estricto, porque la 
 
 ![Dispersión real frente a predicho del árbol de decisión](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/09_arbol_real_vs_predicho_melisa.png)
 
-**Figura 18.** Valores reales de NO₂ frente a los predichos por el árbol de decisión con profundidad máxima de cinco niveles.
+**Figura 17.** Valores reales de NO₂ frente a los predichos por el árbol de decisión con profundidad máxima de cinco niveles.
 
 **Interpretación.** El error cuadrático medio del árbol es de 31.474, cuya raíz cuadrada da un RMSE cercano a los 5.61 ppb. Para valorar esa cifra hay que compararla con la desviación estándar de la variable objetivo, que es de 6.37 ppb y equivale al error que cometería un modelo nulo que siempre predijera la media. La mejora, por lo tanto, ronda el 12 %: es modesta, aunque supera claramente lo logrado por el modelo lineal.
 
-En el plano visual, la dispersión muestra más variabilidad vertical que la Figura 14, lo que significa que el árbol sí produce predicciones diferenciadas en lugar de concentrarlas todas alrededor de la media. Aun así, la alineación con la diagonal sigue siendo pobre.
+En el plano visual, la dispersión muestra más variabilidad vertical que la Figura 13, lo que significa que el árbol sí produce predicciones diferenciadas en lugar de concentrarlas todas alrededor de la media. Aun así, la alineación con la diagonal sigue siendo pobre.
 
-<!-- ESPACIO PARA IMAGEN -->
 
-**Figura 19.** Comando `tree_model.feature_importances_` y su salida, con la importancia relativa de cada predictor.
+
+**Figura 18.** Comando `tree_model.feature_importances_` y su salida, con la importancia relativa de cada predictor.
 
 ![Importancia relativa de las características](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/10_importancia_caracteristicas_melisa.png)
 
-**Figura 20.** Representación gráfica de la importancia relativa de los predictores, generada con `plt.barh()`.
+**Figura 19.** Representación gráfica de la importancia relativa de los predictores, generada con `plt.barh()`.
 
 | Variable | Importancia | Porcentaje |
 |---|---|---|
