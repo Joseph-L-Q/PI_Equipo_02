@@ -150,7 +150,7 @@ La parte más importante del desarrollo fue comprender la relación entre los da
 
 El desarrollo completo del taller se encuentra implementado en el siguiente notebook:
 
-- `Regresion_lineal_Santamaria.ipynb`
+- [Regresion_lineal_Santamaria.ipynb](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Santamaria_Gabi/Regresion_lineal_Santamaria.ipynb)
 
 Este archivo contiene el análisis exploratorio de datos, preparación del dataset, entrenamiento del modelo de regresión lineal, evaluación mediante predicciones y residuos, además de la implementación y análisis del modelo basado en árbol de decisión.
 
