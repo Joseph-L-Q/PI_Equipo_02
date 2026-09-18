@@ -600,11 +600,15 @@ Resulta llamativa, por último, la ausencia de un efecto de día de la semana. E
 
 ---
 
-## 6. Archivo principal del proyecto
+## 6. Archivos principales del proyecto
 
-El desarrollo completo de este análisis se encuentra en el archivo Analisis_Calidad_Aire_Montana.ipynb. Dentro de este documento podrán encontrar todos los comandos ejecutados y los resultados obtenidos durante el estudio. El archivo contiene el flujo de trabajo íntegro, abarcando desde la preparación de los datos de NO2 en Montana hasta el modelamiento y la validación estadística, lo que permite reproducir fácilmente toda la investigación y verificar los hallazgos del informe.
+La información fundamental de este estudio se encuentra consolidada en el archivo ad_viz_plotval_data_2022_2023.csv. En este dataset se recopilan los registros diarios de calidad del aire correspondientes al contaminante NO2 en la región de Montana, abarcando los años 2022 y 2023. Este archivo constituye la fuente de datos original a partir de la cual se alimenta todo el procesamiento, visualización y análisis del proyecto.
 
-[Analisis_Calidad_Aire_Montana.ipynb](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Taller%203.1/Bustos_Melisa/Tarea_Bustos_Melisa.ipynb)
+[ad_viz_plotval_data_2022_2023.csv](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Taller%203.1/Bustos_Melisa/ad_viz_plotval_data_2022_2023.csv)
+
+Por otro lado, el desarrollo completo de este análisis se encuentra en el archivo Tarea_Bustos_Melisa.ipynb. Dentro de este documento podrán encontrar todos los comandos ejecutados y los resultados obtenidos durante el estudio. El archivo contiene el flujo de trabajo íntegro, abarcando desde la preparación de los datos de NO2 en Montana hasta el modelamiento y la validación estadística, lo que permite reproducir fácilmente toda la investigación y verificar los hallazgos del informe.
+
+[Tarea_Bustos_Melisa.ipynb](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Taller%203.1/Bustos_Melisa/Tarea_Bustos_Melisa.ipynb)
 
 ## 7. Referencias bibliográficas
 
