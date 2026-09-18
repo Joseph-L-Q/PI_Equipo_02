@@ -8,7 +8,7 @@
 
 **Curso:** Proyecto Integrador 
 
-**Taller:** Taller 03 - Regresión Lineal
+**Taller:** Taller 03.1 - Regresión Lineal
 
 **Título del proyecto:**
 
