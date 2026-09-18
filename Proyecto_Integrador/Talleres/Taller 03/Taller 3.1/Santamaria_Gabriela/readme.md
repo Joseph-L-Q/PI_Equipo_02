@@ -5,7 +5,9 @@
 # Carátula
 
 **Universidad:** Universidad Peruana Cayetano Heredia
+
 **Curso:** Proyecto Integrador 
+
 **Taller:** Taller 03 - Regresión Lineal
 
 **Título del proyecto:**
@@ -13,7 +15,9 @@
 **Análisis de Regresión Lineal entre la Concentración de Ozono y el Índice de Calidad del Aire (AQI)**
 
 **Autor:** Gabriela Santamaria
+
 **Docente:** Maria Angelica Rejas Nuñez 
+
 **Año:** 2026
 
 ---
