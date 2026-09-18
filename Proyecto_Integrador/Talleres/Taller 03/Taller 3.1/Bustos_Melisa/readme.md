@@ -131,12 +131,12 @@ La siguiente tabla reúne todos los comandos utilizados en el notebook, ordenado
 | 7 | `.dt.year`, `.dt.month`, `.dt.day`, `.dt.dayofweek` | pandas | Nuevas variables | Extrae componentes de una fecha | Cuatro variables temporales |
 | 8 | `df[[...]]` | pandas | Limpieza | Conserva solo las columnas relevantes | De 21 a 7 columnas |
 | 9 | `df.rename(columns={})` | pandas | Limpieza | Cambia el nombre de las columnas | Nombres cortos y sin espacios |
-| 10 | `sns.pairplot()` | seaborn | Exploración | Cruza todas las variables entre sí | Figura 5 |
-| 11 | `.plot.hist(bins=25)` | pandas | Exploración | Dibuja un histograma de frecuencias | Figura 6 |
-| 12 | `.plot.density()` | pandas | Exploración | Dibuja la curva de densidad | Figura 7 |
+| 10 | `sns.pairplot()` | seaborn | Exploración | Cruza todas las variables entre sí | Figura 4 |
+| 11 | `.plot.hist(bins=25)` | pandas | Exploración | Dibuja un histograma de frecuencias | Figura 5 |
+| 12 | `.plot.density()` | pandas | Exploración | Dibuja la curva de densidad | Figura 6 |
 | 13 | `df.select_dtypes()` | pandas | Correlación | Filtra únicamente las columnas numéricas | Subconjunto numérico |
 | 14 | `.corr()` | pandas | Correlación | Calcula la matriz de correlación de Pearson | Matriz de 7 × 7 |
-| 15 | `sns.heatmap(annot=True)` | seaborn | Correlación | Representa la matriz como mapa de calor | Figura 9 |
+| 15 | `sns.heatmap(annot=True)` | seaborn | Correlación | Representa la matriz como mapa de calor | Figura 8 |
 | 16 | `train_test_split()` | scikit-learn | Partición | Separa entrenamiento y prueba | 511 y 219 registros |
 | 17 | `LinearRegression()` | scikit-learn | Modelado | Crea el modelo lineal | Objeto `lm` |
 | 18 | `lm.fit()` | scikit-learn | Entrenamiento | Estima los coeficientes | Modelo ajustado |
@@ -144,16 +144,16 @@ La siguiente tabla reúne todos los comandos utilizados en el notebook, ordenado
 | 20 | `lm.coef_` | scikit-learn | Resultados | Devuelve los seis coeficientes | Arreglo de betas |
 | 21 | `lm.predict()` | scikit-learn | Predicción | Aplica el modelo a datos nuevos | 219 predicciones |
 | 22 | `np.square()`, `np.sum()`, `np.sqrt()` | numpy | Inferencia | Operaciones del error estándar | Columna de errores |
-| 23 | `gridspec.GridSpec(2, 3)` | matplotlib | Visualización | Ordena varios gráficos en cuadrícula | Figura 13 |
-| 24 | `sns.histplot(kde=True)` | seaborn | Diagnóstico | Histograma de residuos con curva | Figura 15 |
-| 25 | `plt.scatter()` | matplotlib | Diagnóstico | Dibuja diagramas de dispersión | Figuras 14, 16 y 18 |
+| 23 | `gridspec.GridSpec(2, 3)` | matplotlib | Visualización | Ordena varios gráficos en cuadrícula | Figura 12 |
+| 24 | `sns.histplot(kde=True)` | seaborn | Diagnóstico | Histograma de residuos con curva | Figura 14 |
+| 25 | `plt.scatter()` | matplotlib | Diagnóstico | Dibuja diagramas de dispersión | Figuras 13, 15 y 17 |
 | 26 | `tree.DecisionTreeRegressor()` | scikit-learn | Contraste | Ajusta un árbol de decisión | Modelo no lineal |
-| 27 | `tree_model.feature_importances_` | scikit-learn | Interpretación | Mide la importancia de cada variable | Figura 19 |
+| 27 | `tree_model.feature_importances_` | scikit-learn | Interpretación | Mide la importancia de cada variable | Figura 18 |
 | 28 | `metrics.mean_squared_error()` | scikit-learn | Evaluación | Calcula el error cuadrático medio | MSE = 31.474 |
-| 29 | `plt.barh()` | matplotlib | Visualización | Dibuja barras horizontales | Figura 19 |
+| 29 | `plt.barh()` | matplotlib | Visualización | Dibuja barras horizontales | Figura 18 |
 | 30 | `sm.add_constant()` | statsmodels | Inferencia | Agrega la columna del intercepto | Matriz de diseño |
 | 31 | `sm.OLS().fit()` | statsmodels | Inferencia | Ajusta mínimos cuadrados ordinarios | Objeto de resultados |
-| 32 | `.summary()` | statsmodels | Inferencia | Genera el reporte estadístico completo | Figura 17 |
+| 32 | `.summary()` | statsmodels | Inferencia | Genera el reporte estadístico completo | Figura 16 |
 
 #### 2.4.1 Carga e inspección
 
