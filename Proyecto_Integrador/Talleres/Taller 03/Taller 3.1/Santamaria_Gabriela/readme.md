@@ -8,9 +8,7 @@
 **Curso:** Proyecto Integrador
 **Taller:** Taller 03 - Regresión Lineal
 
-**Título del proyecto:**
-
-**Análisis de Regresión Lineal entre la Concentración de Ozono y el Índice de Calidad del Aire (AQI)**
+**Título del proyecto:**Análisis de Regresión Lineal entre la Concentración de Ozono y el Índice de Calidad del Aire (AQI)
 
 **Autor:** Gabriela Santamaria Huaytan 
 **Docente:** Maria Angelica Rejas Nuñez 
