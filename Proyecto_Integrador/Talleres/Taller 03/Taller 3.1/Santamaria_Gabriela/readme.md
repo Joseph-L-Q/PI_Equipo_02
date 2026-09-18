@@ -318,77 +318,241 @@ La alta correlación obtenida justifica la utilización de un modelo de regresi�
 # 3.6 Construcción del modelo de regresión lineal
 
 
-**(Insertar aquí gráfico de dispersión con línea de regresión)**
+<img width="760" height="692" alt="image" src="https://github.com/user-attachments/assets/1d851cf6-4465-47db-9adb-c5d33a833134" />
 
 
-**Fig. 7.** Ajuste del modelo de regresión lineal entre la concentración de ozono y el AQI.
+**Fig. 7.** Relación ajustada mediante el modelo de regresión lineal entre la concentración de ozono y el AQI diario.
 
 
-El modelo de regresión lineal permitió establecer una relación matemática entre la concentración de ozono y el valor del AQI.
+El modelo de regresión lineal permitió representar matemáticamente la relación existente entre la concentración de ozono y el Índice de Calidad del Aire (AQI).
 
-La línea de regresión representa la tendencia promedio que sigue el conjunto de datos y permite estimar el valor esperado del AQI para una determinada concentración de ozono.
+La distribución de los puntos evidencia una tendencia creciente entre ambas variables, indicando que incrementos en la concentración de ozono están asociados con valores mayores de AQI.
 
-El coeficiente asociado a la variable independiente representa el incremento esperado del AQI cuando aumenta la concentración de ozono, mientras que el intercepto corresponde al valor estimado cuando la concentración del contaminante tiende a cero.
+El ajuste obtenido confirma que la variable concentración de ozono presenta capacidad explicativa sobre el comportamiento del AQI dentro del conjunto de datos analizado.
 
-El comportamiento observado confirma que existe una relación lineal adecuada entre ambas variables.
+El coeficiente obtenido representa la variación esperada del AQI ante incrementos en la concentración de ozono, mientras que el intercepto corresponde al valor estimado del AQI cuando la concentración del contaminante tiende a cero.
 
 ---
 
 # 3.7 Comparación entre valores reales y valores predichos
 
 
-**(Insertar aquí gráfico de `Y_test` frente a `predictions`)**
+<img width="571" height="612" alt="image" src="https://github.com/user-attachments/assets/34dea91d-d278-4475-a72f-2e42c3295049" />
 
 
-**Fig. 8.** Comparación entre valores reales y valores predichos mediante el modelo de regresión lineal.
+**Fig. 8.** Comparación entre valores reales y valores predichos generados por el modelo de regresión lineal.
 
 
-La comparación entre los valores reales y predichos permite evaluar visualmente la capacidad del modelo para realizar estimaciones.
+La comparación entre los valores reales y predichos permitió evaluar visualmente el desempeño del modelo sobre datos que no fueron utilizados durante el entrenamiento.
 
-Cuando los puntos se encuentran cercanos a una línea diagonal imaginaria significa que existe una mayor similitud entre los valores observados y los valores calculados por el modelo.
+La cercanía entre ambos valores representa una menor diferencia de predicción y, por lo tanto, un mejor ajuste del modelo.
 
-La distribución de los puntos permite identificar qué tan cercano es el comportamiento de las predicciones respecto a los datos reales.
+Los puntos alejados respecto a la tendencia principal representan observaciones donde el modelo presenta mayores errores de estimación.
 
-Los puntos alejados representan observaciones donde el modelo presenta mayores diferencias de estimación.
+Esta evaluación permitió verificar que el modelo logra seguir adecuadamente el comportamiento general del AQI, aunque existen algunos registros donde la predicción presenta mayor desviación respecto al valor real.
 
 ---
 
 # 3.8 Análisis de residuos del modelo
 
 
-**(Insertar aquí histograma de residuos `Y_test - predictions`)**
+<img width="842" height="670" alt="image" src="https://github.com/user-attachments/assets/9bb0cfd2-22b1-4e8d-a763-7bd828f621c0" />
 
 
-**Fig. 9.** Histograma de residuos del modelo de regresión lineal.
+
+**Fig. 9.** Distribución de los residuos obtenidos del modelo de regresión lineal.
 
 
-Los residuos representan la diferencia entre el valor real del AQI y el valor estimado por el modelo.
+Los residuos representan la diferencia entre los valores reales del AQI y los valores estimados por el modelo.
 
-La distribución obtenida muestra que la mayoría de los residuos se concentran alrededor de cero, indicando que gran parte de las predicciones presentan errores pequeños.
+La distribución obtenida muestra que la mayoría de los errores se concentran alrededor del valor cero, indicando que gran parte de las predicciones presentan diferencias pequeñas respecto a los valores observados.
 
-Sin embargo, se identifica la presencia de un valor alejado respecto al comportamiento principal de los datos, correspondiente a una observación donde el modelo presentó una diferencia mayor entre el AQI real y el AQI estimado.
+Sin embargo, se identifica la presencia de una observación alejada del comportamiento principal de los residuos. Este valor representa un caso donde el modelo presentó una mayor diferencia entre el AQI real y el AQI estimado.
 
-Este comportamiento puede asociarse a un evento particular donde la relación entre ozono y AQI no siguió exactamente la tendencia general aprendida por el modelo.
+La presencia de este valor atípico puede estar asociada a condiciones particulares del día analizado, donde la relación entre concentración de ozono y AQI presentó un comportamiento diferente al patrón general aprendido por el modelo.
 
 ---
 
 # 3.9 Evaluación de homocedasticidad mediante residuos
 
 
-**(Insertar aquí gráfico de residuos frente a valores predichos)**
+<img width="592" height="597" alt="image" src="https://github.com/user-attachments/assets/6c29ae1d-d166-4717-8418-6b0444590e55" />
 
 
 **Fig. 10.** Dispersión de residuos frente a valores predichos para evaluar el comportamiento del error.
 
 
-Este gráfico permite analizar si los residuos presentan una distribución uniforme respecto a los valores estimados.
+El gráfico de residuos frente a valores predichos permite analizar si los errores presentan una distribución aleatoria o si existe algún patrón asociado a los valores estimados por el modelo.
 
-Se observa que los residuos forman agrupaciones asociadas a determinados valores predichos, comportamiento relacionado con la repetición de ciertos niveles de concentración de ozono y AQI dentro del conjunto de datos.
+Se observa que los residuos presentan agrupaciones asociadas a determinados valores predichos, comportamiento relacionado con la repetición de ciertos valores de concentración de ozono dentro del periodo analizado.
 
-Además, se identifica nuevamente la presencia del valor atípico observado en el histograma de residuos.
+Asimismo, se identifica nuevamente la presencia del valor atípico observado en el histograma de residuos.
 
-La existencia de cierta tendencia en la dispersión de los residuos puede indicar una posible desviación respecto al supuesto ideal de homocedasticidad, por lo que sería recomendable complementar el análisis mediante pruebas estadísticas adicionales.
+Aunque el modelo presenta un comportamiento adecuado en términos generales, la distribución de los residuos sugiere que sería conveniente complementar el análisis mediante pruebas estadísticas adicionales para evaluar con mayor precisión el supuesto de homocedasticidad.
+
+---
+## 3.10 Modelo de árbol de decisión
+
+Como segundo enfoque predictivo se implementó un modelo basado en árboles de decisión con la finalidad de comparar su comportamiento frente al modelo de regresión lineal.
+
+A diferencia de la regresión lineal, que busca representar una relación matemática entre variables mediante una ecuación, los árboles de decisión generan reglas de decisión mediante divisiones sucesivas del conjunto de datos.
+
+Este modelo permite identificar patrones dentro de la información y realizar predicciones a partir de las condiciones establecidas durante el proceso de entrenamiento.
+
+
+### Construcción del modelo de árbol de decisión
+
+
+<img width="636" height="692" alt="image" src="https://github.com/user-attachments/assets/32c21201-b653-4a06-834e-27c3c39270d6" />
+
+
+
+**Fig. 11.** Modelo basado en árbol de decisión para la predicción del Índice de Calidad del Aire (AQI).
+
+
+La construcción del árbol permitió desarrollar un segundo modelo predictivo utilizando una metodología diferente a la regresión lineal.
+
+El algoritmo divide progresivamente los datos en diferentes nodos con el objetivo de encontrar reglas que reduzcan el error de predicción.
+
+La representación gráfica del árbol permite visualizar la estructura de decisiones generada por el modelo y comprender cómo se realizan las predicciones a partir de las variables utilizadas.
+
+Este enfoque resulta útil debido a que permite capturar relaciones que pueden presentar comportamientos no necesariamente lineales.
+
 
 ---
 
+### Importancia de variables del árbol
 
+
+<img width="970" height="701" alt="image" src="https://github.com/user-attachments/assets/f4e65502-2f4f-4814-85f5-e39546864963" />
+
+
+**Fig. 12.** Importancia relativa de las variables utilizadas en el modelo de árbol de decisión.
+
+
+El análisis de importancia de variables permitió identificar cuáles características tuvieron mayor influencia durante el proceso de predicción del modelo.
+
+Esta evaluación se basa en la contribución de cada variable durante las divisiones realizadas por el árbol, considerando aquellas que generan una mayor reducción del error dentro del modelo.
+
+A diferencia de la regresión lineal, donde la influencia de las variables se interpreta mediante coeficientes, el árbol de decisión permite analizar la relevancia de cada característica según su participación en las reglas generadas.
+
+Este resultado facilita la interpretación del modelo y permite reconocer cuáles variables aportan mayor información para estimar el comportamiento del AQI.
+
+
+---
+## 3.11 Validación estadística mediante OLS
+
+
+<img width="775" height="637" alt="image" src="https://github.com/user-attachments/assets/28299285-e398-4c2a-8103-de86c1b289d0" />
+
+
+**Fig. 13.** Resumen estadístico del modelo de regresión lineal mediante Ordinary Least Squares (OLS).
+
+
+Con la finalidad de complementar la evaluación del modelo de regresión lineal, se realizó una validación estadística mediante el método de Mínimos Cuadrados Ordinarios (OLS, por sus siglas en inglés).
+
+Este análisis permitió evaluar la significancia estadística de la relación existente entre la concentración de ozono y el Índice de Calidad del Aire mediante indicadores como:
+
+- Coeficiente estimado.
+- Error estándar.
+- Estadístico t.
+- Valor p (*p-value*).
+
+
+El coeficiente estimado representa la relación entre la variable independiente y la variable objetivo, mientras que el error estándar permite evaluar la variabilidad asociada a dicha estimación.
+
+Asimismo, el estadístico t y el valor p permiten determinar si la variable predictora presenta una relación estadísticamente significativa dentro del modelo.
+
+Esta validación complementa los resultados obtenidos mediante las métricas predictivas, debido a que permite evaluar no solamente la capacidad del modelo para realizar predicciones, sino también la relevancia estadística de la relación encontrada entre las variables analizadas.
+
+---
+# 4. Discusión
+
+Los resultados obtenidos permitieron analizar la relación entre la concentración de ozono y el Índice de Calidad del Aire (AQI) mediante diferentes enfoques de modelamiento predictivo.
+
+El análisis exploratorio evidenció una relación positiva entre ambas variables, observándose que incrementos en la concentración de ozono se asociaron con aumentos en los valores del AQI. Esta relación fue confirmada mediante el análisis de correlación, donde se obtuvo una asociación lineal elevada entre las variables analizadas.
+
+El modelo de regresión lineal permitió representar matemáticamente esta relación y generar predicciones del AQI a partir de la concentración de ozono. La comparación entre valores reales y predichos mostró que el modelo logra seguir la tendencia general de los datos; sin embargo, algunas observaciones presentaron mayores diferencias, reflejadas posteriormente en el análisis de residuos.
+
+El análisis de residuos permitió evaluar el comportamiento de los errores del modelo. La concentración de la mayoría de residuos alrededor del valor cero indica que el modelo presenta un comportamiento adecuado para gran parte de las observaciones. No obstante, la presencia de valores alejados evidencia casos particulares donde la relación entre las variables no siguió completamente la tendencia aprendida por el modelo.
+
+Por otro lado, la implementación del modelo basado en árbol de decisión permitió evaluar un enfoque alternativo al modelo lineal. Mientras la regresión lineal busca establecer una relación continua entre las variables mediante una ecuación matemática, el árbol de decisión genera reglas de predicción mediante divisiones sucesivas del conjunto de datos.
+
+El análisis de importancia de variables del árbol permitió identificar aquellas características con mayor contribución dentro del proceso predictivo. Este enfoque facilita la interpretación del modelo al mostrar qué variables influyen en mayor medida durante la generación de las predicciones.
+
+La validación estadística mediante OLS complementó el análisis del modelo de regresión lineal al evaluar la significancia de la relación encontrada entre la concentración de ozono y el AQI. Esto permitió analizar no solamente el desempeño predictivo del modelo, sino también la relevancia estadística de la variable utilizada como predictor.
+
+Sin embargo, es importante considerar algunas limitaciones del análisis. El modelo desarrollado utiliza principalmente la concentración de ozono como variable explicativa, por lo que no incorpora otros factores ambientales que pueden influir en la calidad del aire, como temperatura, humedad, velocidad del viento u otros contaminantes atmosféricos.
+
+Por ello, futuras mejoras podrían considerar la incorporación de nuevas variables predictoras y la evaluación de modelos más complejos que permitan capturar relaciones no lineales y mejorar la capacidad de predicción.
+
+---
+# 5. Archivo principal del proyecto
+
+El desarrollo completo del análisis se encuentra implementado en el siguiente notebook:
+
+- [Regresion_lineal_Santamaria_ad_viz_plotval_data.ipynb](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Proyecto_Integrador/Talleres/Taller%2003/Taller%203.1/Santamaria_Gabriela/Regresion_lineal_Santamaria_ad_viz_plotval_data.ipynb)
+
+
+El notebook contiene el desarrollo completo del proyecto, incluyendo:
+
+- Carga y exploración inicial del conjunto de datos.
+- Análisis descriptivo de las variables.
+- Preparación y selección de datos para el modelamiento.
+- Visualización de relaciones y distribuciones mediante gráficos exploratorios.
+- Construcción del modelo de regresión lineal.
+- Evaluación del modelo mediante valores reales y predichos.
+- Análisis de residuos para evaluar el comportamiento de los errores.
+- Implementación del modelo basado en árbol de decisión.
+- Análisis de importancia de variables.
+- Validación estadística mediante el modelo OLS.
+
+Este archivo permite reproducir el flujo completo del análisis y verificar los resultados presentados en el presente informe.
+
+---
+
+# 6. Conclusiones
+
+A partir del análisis realizado sobre la relación entre la concentración de ozono y el Índice de Calidad del Aire (AQI), se obtuvieron las siguientes conclusiones:
+
+- El análisis exploratorio permitió identificar una relación positiva entre la concentración máxima diaria de ozono y el AQI, evidenciando que incrementos en la concentración del contaminante están asociados con aumentos en el índice de calidad del aire.
+
+- El modelo de regresión lineal permitió representar adecuadamente la relación entre ambas variables, mostrando capacidad para estimar el comportamiento general del AQI a partir de la concentración de ozono.
+
+- La evaluación mediante comparación entre valores reales y predichos permitió verificar el desempeño del modelo; sin embargo, el análisis de residuos evidenció la presencia de algunas observaciones con mayores errores de estimación.
+
+- El análisis de residuos permitió evaluar el comportamiento del modelo e identificar posibles valores atípicos que pueden influir en la precisión de las predicciones.
+
+- La implementación del modelo basado en árbol de decisión permitió analizar un enfoque alternativo al modelo lineal, facilitando la identificación de patrones mediante reglas de decisión e importancia relativa de variables.
+
+- La validación estadística mediante OLS permitió complementar el análisis predictivo mediante la evaluación de la significancia estadística de la relación entre la concentración de ozono y el AQI.
+
+- Como mejora futura, se recomienda incorporar variables ambientales adicionales como temperatura, humedad, velocidad del viento u otros contaminantes, con la finalidad de desarrollar modelos más completos y mejorar la capacidad predictiva.
+
+  ---
+
+# 7.Referencias
+
+<a id="ref1"></a>
+
+[1] U.S. Environmental Protection Agency, "AirData: Air Quality Data Collected at Outdoor Monitors Across the US," EPA. [Online]. Available: https://www.epa.gov/outdoor-air-quality-data.
+
+
+<a id="ref2"></a>
+
+[2] F. Pedregosa et al., "Scikit-learn: Machine Learning in Python," Journal of Machine Learning Research, vol. 12, pp. 2825–2830, 2011.
+
+
+<a id="ref3"></a>
+
+[3] W. McKinney, "Data Structures for Statistical Computing in Python," in Proceedings of the 9th Python in Science Conference, pp. 56–61, 2010.
+
+
+<a id="ref4"></a>
+
+[4] M. L. Waskom, "seaborn: Statistical Data Visualization," Journal of Open Source Software, vol. 6, no. 60, p. 3021, 2021.
+
+
+<a id="ref5"></a>
+
+[5] J. D. Hunter, "Matplotlib: A 2D Graphics Environment," Computing in Science & Engineering, vol. 9, no. 3, pp. 90–95, 2007.
