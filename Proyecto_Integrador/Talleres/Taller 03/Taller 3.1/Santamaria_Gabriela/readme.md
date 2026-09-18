@@ -5,12 +5,14 @@
 # Carátula
 
 **Universidad:** Universidad Peruana Cayetano Heredia
-**Curso:** Proyecto Integrador
+**Curso:** Proyecto Integrador 
 **Taller:** Taller 03 - Regresión Lineal
 
-**Título del proyecto:**Análisis de Regresión Lineal entre la Concentración de Ozono y el Índice de Calidad del Aire (AQI)
+**Título del proyecto:**
 
-**Autor:** Gabriela Santamaria Huaytan 
+**Análisis de Regresión Lineal entre la Concentración de Ozono y el Índice de Calidad del Aire (AQI)**
+
+**Autor:** Gabriela Santamaria
 **Docente:** Maria Angelica Rejas Nuñez 
 **Año:** 2026
 
@@ -166,4 +168,5 @@ Los residuos fueron evaluados mediante:
 Este análisis permitió verificar si los errores presentaban un comportamiento adecuado y detectar posibles valores atípicos dentro del conjunto evaluado.
 
 ---
+
 
