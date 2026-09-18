@@ -10,7 +10,7 @@ El análisis se realizó utilizando un conjunto de datos compuesto por variables
 
 El objetivo principal fue comprender el proceso completo de construcción de un modelo predictivo, iniciando desde la exploración y preparación de los datos, continuando con el entrenamiento de modelos y finalmente evaluando la capacidad de predicción obtenida.
 
-Para ello, se implementó inicialmente un modelo de regresión lineal, una técnica de aprendizaje supervisado utilizada para modelar la relación entre variables predictoras y una variable objetivo [1]. Posteriormente, se desarrolló un modelo basado en árboles de decisión con la finalidad de comparar diferentes enfoques de aprendizaje automático y analizar la importancia de las variables dentro del proceso predictivo [2].
+Para ello, se implementó inicialmente un modelo de regresión lineal, una técnica de aprendizaje supervisado utilizada para modelar la relación entre variables predictoras y una variable objetivo [1](#ref1). Posteriormente, se desarrolló un modelo basado en árboles de decisión con la finalidad de comparar diferentes enfoques de aprendizaje automático y analizar la importancia de las variables dentro del proceso predictivo [2](#ref2).
 
 ---
 
@@ -68,7 +68,7 @@ Este análisis permitió conocer qué variables presentan mayor relación con el
 
 # 3. Desarrollo del modelo de regresión lineal
 
-La regresión lineal fue utilizada como primer modelo predictivo debido a su capacidad para representar la relación entre una variable objetivo y diferentes variables explicativas [1].
+La regresión lineal fue utilizada como primer modelo predictivo debido a su capacidad para representar la relación entre una variable objetivo y diferentes variables explicativas [1](#ref1).
 
 Para desarrollar el modelo se realizó la separación de los datos en conjuntos de entrenamiento y prueba. Esta división permitió que el algoritmo aprendiera utilizando una parte de la información y posteriormente fuera evaluado con datos que no habían sido utilizados durante el entrenamiento.
 
@@ -108,7 +108,7 @@ También se realizó una evaluación estadística mediante el cálculo del error
 
 Como segundo enfoque de aprendizaje automático se implementó un modelo basado en árboles de decisión utilizando datos simulados.
 
-Este algoritmo utiliza reglas de decisión generadas mediante divisiones sucesivas de las variables para realizar predicciones y determinar la importancia relativa de las características utilizadas [2].
+Este algoritmo utiliza reglas de decisión generadas mediante divisiones sucesivas de las variables para realizar predicciones y determinar la importancia relativa de las características utilizadas [2](#ref2).
 
 El desarrollo de este modelo permitió comparar una metodología basada en relaciones matemáticas lineales frente a un modelo capaz de identificar patrones mediante reglas de decisión.
 
@@ -166,13 +166,19 @@ En conclusión, el aprendizaje más importante fue comprender que un modelo pred
 
 ---
 
-REFERENCIAS
+# 10. Referencias
+
+<a id="ref1"></a>
 
 [1] F. Pedregosa, G. Varoquaux, A. Gramfort, V. Michel, B. Thirion, 
 O. Grisel, et al., “Scikit-learn: Machine Learning in Python,” 
-Journal of Machine Learning Research, vol. 12, pp. 2825–2830, 2011.
+*Journal of Machine Learning Research*, vol. 12, pp. 2825–2830, 2011.
 
-[2] Scikit-learn Developers, “Decision Trees,” Scikit-learn Documentation. 
-[Online]. Available: https://scikit-learn.org/stable/modules/tree.html
+
+<a id="ref2"></a>
+
+[2] Scikit-learn Developers, “Decision Trees,” 
+*Scikit-learn Documentation*. [Online]. Available: 
+https://scikit-learn.org/stable/modules/tree.html. 
 [Accessed: Sep. 17, 2026].
 
