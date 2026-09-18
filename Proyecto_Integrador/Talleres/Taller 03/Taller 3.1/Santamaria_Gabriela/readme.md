@@ -66,6 +66,7 @@ La selección de estos parámetros permitió obtener registros diarios correspon
 
 <img width="716" height="969" alt="imagen" src="https://github.com/user-attachments/assets/101c7724-c30c-4e98-b035-601cc8637c94" />
 
+
 **Fig. 1.** Configuración de parámetros para la descarga del conjunto de datos desde la plataforma AirData de la Environmental Protection Agency (EPA).
 
 
@@ -200,6 +201,193 @@ Para ello se utilizaron:
 - Histograma de residuos.
 - Gráfico de residuos frente a valores predichos.
 
+
+---
+# 3. Resultados
+
+En esta sección se presentan los resultados obtenidos durante el análisis exploratorio de datos, construcción del modelo de regresión lineal y evaluación del desempeño predictivo.
+
+Las visualizaciones permiten comprender el comportamiento de las variables analizadas, identificar relaciones entre ellas y evaluar la capacidad del modelo para estimar el Índice de Calidad del Aire (AQI) a partir de la concentración de ozono.
+
+---
+
+# 3.1 Inspección inicial del conjunto de datos
+
+<img width="572" height="542" alt="image" src="https://github.com/user-attachments/assets/1b6a2f65-a0b0-473b-bed9-056eb26e296a" />
+
+<img width="1775" height="362" alt="image" src="https://github.com/user-attachments/assets/1358d295-a78e-4048-bc54-85b19f57495e" />
+
+
+**Fig. 2.** Inspección de la estructura del conjunto de datos mediante información general y estadísticas descriptivas.
+
+
+La exploración inicial permitió conocer la estructura del conjunto de datos antes de realizar el modelamiento predictivo.
+
+Mediante la función `df.info()` se identificaron las variables disponibles, sus respectivos tipos de datos y la estructura general del dataset. Asimismo, la función `df.describe()` permitió obtener información estadística de las variables numéricas, como valores mínimos, máximos, promedio y dispersión.
+
+Esta etapa fue fundamental debido a que permitió determinar cuáles variables contenían información útil para el análisis y seleccionar aquellas relacionadas directamente con el objetivo del proyecto.
+
+A partir de esta revisión se seleccionaron como variables principales:
+
+- **Daily Max 8-hour Ozone Concentration:** variable predictora.
+- **Daily AQI Value:** variable objetivo.
+
+Las demás variables fueron consideradas principalmente como información descriptiva de la estación de monitoreo y no fueron utilizadas dentro del modelo debido a que no aportaban variabilidad al análisis.
+
+---
+
+# 3.2 Análisis de relación entre la concentración de ozono y AQI
+
+
+<img width="701" height="575" alt="image" src="https://github.com/user-attachments/assets/2edc981c-8df2-4136-807a-7be046b30b4e" />
+
+
+**Fig. 3.** Relación entre la concentración de ozono y el AQI diario mediante un análisis gráfico de dispersión.
+
+
+El análisis gráfico permitió observar la relación existente entre la concentración de ozono y el Índice de Calidad del Aire.
+
+En la figura se observa una tendencia creciente entre ambas variables, indicando que cuando aumenta la concentración de ozono también tiende a aumentar el valor del AQI.
+
+La distribución de los puntos presenta un comportamiento aproximadamente lineal, lo cual representa una condición favorable para aplicar un modelo de regresión lineal simple.
+
+Sin embargo, también se observa que algunos valores presentan agrupaciones específicas. Esto ocurre debido a que las mediciones de concentración de ozono presentan valores repetidos durante diferentes días del periodo analizado, generando concentraciones de puntos en determinadas zonas del gráfico.
+
+---
+
+# 3.3 Distribución del Índice de Calidad del Aire (AQI)
+
+
+<img width="817" height="551" alt="image" src="https://github.com/user-attachments/assets/b1799cba-07e1-43d2-b0ff-bbfc8eeff47d" />
+
+
+
+**Fig. 4.** Distribución de frecuencia del Índice de Calidad del Aire (AQI).
+
+
+El histograma permite analizar la frecuencia con la que aparecen los diferentes valores de AQI registrados durante el periodo de estudio.
+
+La distribución muestra que los datos no se encuentran repartidos uniformemente, sino que existe una concentración de observaciones dentro de determinados rangos de AQI.
+
+Este comportamiento puede explicarse debido a que las condiciones ambientales no presentan cambios completamente aleatorios durante el periodo analizado, generando días con niveles similares de contaminación.
+
+Asimismo, la presencia de valores alejados del grupo principal puede representar eventos particulares con condiciones de contaminación diferentes al comportamiento habitual.
+
+Estos valores extremos son importantes debido a que pueden influir posteriormente en el ajuste del modelo y en la magnitud de los errores de predicción.
+
+---
+
+# 3.4 Análisis de densidad del AQI
+
+
+<img width="687" height="547" alt="image" src="https://github.com/user-attachments/assets/9a18355a-2b69-48d4-a7ec-d2b29150d2d3" />
+
+
+**Fig. 5.** Distribución de densidad del AQI diario.
+
+
+La curva de densidad permite observar de manera continua la distribución de los valores del AQI y complementar la información obtenida mediante el histograma.
+
+El punto máximo de la curva representa la zona donde se concentra la mayor cantidad de observaciones, correspondiente aproximadamente al rango de AQI más frecuente durante el periodo analizado.
+
+La forma de la curva permite identificar la tendencia general de los datos y observar si existen concentraciones principales o desviaciones hacia valores extremos.
+
+---
+
+# 3.5 Matriz de correlación entre variables
+
+
+<img width="737" height="672" alt="image" src="https://github.com/user-attachments/assets/23a831a1-c386-42f5-a8b5-f0f18d373874" />
+
+
+**Fig. 6.** Matriz de correlación entre la concentración de ozono y el AQI diario.
+
+
+La matriz de correlación permitió cuantificar la relación lineal existente entre las variables utilizadas en el análisis.
+
+El resultado obtenido muestra una correlación positiva extremadamente alta entre la concentración de ozono y el AQI, con valores cercanos a 1.
+
+Este resultado indica que ambas variables presentan un comportamiento altamente relacionado, donde incrementos en la concentración de ozono están asociados con aumentos en el valor del AQI.
+
+Esta relación es coherente debido a que el AQI correspondiente al contaminante ozono se encuentra directamente relacionado con la concentración medida del mismo.
+
+La alta correlación obtenida justifica la utilización de un modelo de regresión lineal para representar matemáticamente dicha relación.
+
+---
+
+# 3.6 Construcción del modelo de regresión lineal
+
+
+**(Insertar aquí gráfico de dispersión con línea de regresión)**
+
+
+**Fig. 7.** Ajuste del modelo de regresión lineal entre la concentración de ozono y el AQI.
+
+
+El modelo de regresión lineal permitió establecer una relación matemática entre la concentración de ozono y el valor del AQI.
+
+La línea de regresión representa la tendencia promedio que sigue el conjunto de datos y permite estimar el valor esperado del AQI para una determinada concentración de ozono.
+
+El coeficiente asociado a la variable independiente representa el incremento esperado del AQI cuando aumenta la concentración de ozono, mientras que el intercepto corresponde al valor estimado cuando la concentración del contaminante tiende a cero.
+
+El comportamiento observado confirma que existe una relación lineal adecuada entre ambas variables.
+
+---
+
+# 3.7 Comparación entre valores reales y valores predichos
+
+
+**(Insertar aquí gráfico de `Y_test` frente a `predictions`)**
+
+
+**Fig. 8.** Comparación entre valores reales y valores predichos mediante el modelo de regresión lineal.
+
+
+La comparación entre los valores reales y predichos permite evaluar visualmente la capacidad del modelo para realizar estimaciones.
+
+Cuando los puntos se encuentran cercanos a una línea diagonal imaginaria significa que existe una mayor similitud entre los valores observados y los valores calculados por el modelo.
+
+La distribución de los puntos permite identificar qué tan cercano es el comportamiento de las predicciones respecto a los datos reales.
+
+Los puntos alejados representan observaciones donde el modelo presenta mayores diferencias de estimación.
+
+---
+
+# 3.8 Análisis de residuos del modelo
+
+
+**(Insertar aquí histograma de residuos `Y_test - predictions`)**
+
+
+**Fig. 9.** Histograma de residuos del modelo de regresión lineal.
+
+
+Los residuos representan la diferencia entre el valor real del AQI y el valor estimado por el modelo.
+
+La distribución obtenida muestra que la mayoría de los residuos se concentran alrededor de cero, indicando que gran parte de las predicciones presentan errores pequeños.
+
+Sin embargo, se identifica la presencia de un valor alejado respecto al comportamiento principal de los datos, correspondiente a una observación donde el modelo presentó una diferencia mayor entre el AQI real y el AQI estimado.
+
+Este comportamiento puede asociarse a un evento particular donde la relación entre ozono y AQI no siguió exactamente la tendencia general aprendida por el modelo.
+
+---
+
+# 3.9 Evaluación de homocedasticidad mediante residuos
+
+
+**(Insertar aquí gráfico de residuos frente a valores predichos)**
+
+
+**Fig. 10.** Dispersión de residuos frente a valores predichos para evaluar el comportamiento del error.
+
+
+Este gráfico permite analizar si los residuos presentan una distribución uniforme respecto a los valores estimados.
+
+Se observa que los residuos forman agrupaciones asociadas a determinados valores predichos, comportamiento relacionado con la repetición de ciertos niveles de concentración de ozono y AQI dentro del conjunto de datos.
+
+Además, se identifica nuevamente la presencia del valor atípico observado en el histograma de residuos.
+
+La existencia de cierta tendencia en la dispersión de los residuos puede indicar una posible desviación respecto al supuesto ideal de homocedasticidad, por lo que sería recomendable complementar el análisis mediante pruebas estadísticas adicionales.
 
 ---
 
