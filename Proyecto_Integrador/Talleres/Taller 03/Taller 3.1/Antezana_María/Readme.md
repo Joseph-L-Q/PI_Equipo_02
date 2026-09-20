@@ -91,9 +91,11 @@ El procedimiento de descarga y preparación de la información siguió estos pas
 4. Configuración del rango temporal continuo entre el 1 de enero de 2022 y el 31 de diciembre de 2023.
 5. Descarga del archivo final en formato delimitado por comas (CSV) denominado `SO2_daily_aqs_data_downloaded_2026-09-19 23_09_37.csv`.
 
-<img width="1102" height="615" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/1.png" />
-
-**Figura 1.** Interfaz de filtrado y descarga de datos de calidad del aire ($SO_2$) en el portal AQS de la EPA.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/1.png" alt="filtrado y descarga de datos de calidad del aire" width="80%"/>
+  <br>
+  <em>Figura 1. Interfaz de filtrado y descarga de datos de calidad del aire ($SO_2$) en el portal AQS de la EPA.</em>
+</p>
 
 El archivo consolidado comprende un total de **3,581 registros diarios**, cubriendo los 730 días lectivos del período 2022–2023 repartidos entre los distintos monitores operativos de la zona. Cada observación representa una jornada completa de monitoreo, y la variable respuesta fundamental es la concentración máxima horaria diaria de $SO_2$, medida en partes por billón (ppb).
 
@@ -317,17 +319,21 @@ El marco teórico de estos indicadores se desarrolla en [15].
 
 La inspección inicial confirmó que el archivo descargado contiene **3,581 registros diarios** y 28 columnas originales. Tras el proceso de limpieza y selección de características, la matriz de trabajo quedó conformada por 7 variables procesadas sin ningún valor faltante, lo que permitió desarrollar el modelado sobre el 100% de la muestra.
 
-<img width="1102" height="615" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/2.png" />
-
-**Figura 2.** Salida del comando `df.info(verbose=True)` para la estructura depurada.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/2.png" alt="Reporte OLS summary" width="80%"/>
+  <br>
+  <em>Figura 2. Salida del comando `df.info(verbose=True)` para la estructura depurada. </em>
+</p>
 
 ### 3.2 Estadística descriptiva
 
 El análisis estadístico de la serie histórica arrojó los siguientes parámetros descriptivos cuantitativos:
 
-<img width="1102" height="392" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/3.png" />
-
-**Figura 3.** Resumen estadístico obtenido con `df.describe().round(2)`.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/3.png" alt="Reporte OLS summary" width="80%"/>
+  <br>
+  <em>Figura 3. Resumen estadístico obtenido con `df.describe().round(2)`. </em>
+</p>
 
 **Interpretación de la variable objetivo (`SO2_Max`):** La concentración diaria de $SO_2$ presenta una media de 2.50 ppb y una mediana de 1.20 ppb. Que la media supere sustancialmente a la mediana evidencia un **sesgo positivo (hacia la derecha)**, impulsado por días con eventos esporádicos de contaminación industrial. La desviación estándar alcanza los 5.54 ppb, reflejando un coeficiente de variación del 221.6%, representativo de una volatilidad diaria elevada. El 75% de los datos se ubica por debajo de 2.10 ppb, con un pico máximo de 72.70 ppb, situándose todos los registros dentro del estándar primario nacional de la EPA (75 ppb como promedio horario diario) [16].
 
@@ -337,35 +343,45 @@ El análisis estadístico de la serie histórica arrojó los siguientes parámet
 
 #### 3.3.1 Matriz de dispersión general
 
-![Matriz de dispersión entre todas las variables](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/4.png)
-
-**Figura 4.** Matriz de dispersión multivariada generada mediante `sns.pairplot()`.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/4.png" alt="Reporte OLS summary" width="90%"/>
+  <br>
+  <em>Figura 4.  Matriz de dispersión multivariada generada mediante `sns.pairplot()`. </em>
+</p>
 
 **Interpretación:** Las intersecciones entre `SO2_Max` y los predictores temporales muestran franjas de dispersión verticales sin inclinación lineal evidente, sugiriendo ausencia de relación lineal directa. La única estructura con pendiente definida se presenta entre `Obs_Count` y `Percent_Complete`, cuya alineación casi perfecta anticipa la multicolinealidad.
 
 #### 3.3.2 Distribución de la variable objetivo
 
-![Histograma de la concentración máxima diaria de SO2](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/5.png)
-
-**Figura 5.** Histograma de frecuencias de `SO2_Max` en 25 intervalos.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/5.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 5. Histograma de frecuencias de `SO2_Max` en 25 intervalos.</em>
+</p>
 
 **Interpretación:** La distribución exhibe una forma unimodal fuertemente sesgada a la derecha. La enorme mayoría de los días se concentra en el intervalo inferior de 0 a 2.5 ppb, con una caída exponencial de frecuencia a medida que aumentan los niveles de concentración.
 
-![Curva de densidad de la concentración de SO2](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/6.png)
-
-**Figura 6.** Curva de estimación de densidad de probabilidad por núcleo (KDE).
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/6.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 6. Curva de estimación de densidad de probabilidad por núcleo (KDE).</em>
+</p>
 
 **Interpretación:** La función de densidad confirma que la mayor masa de probabilidad se sitúa alrededor de 1.2 ppb, decayendo progresivamente con una cola extendida hacia los 72.7 ppb.
 
 ### 3.4 Matriz de correlación
 
-<img width="1106" height="440" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/7.png" />
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/7.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 7. Comando `.corr()` y su salida, con la matriz de correlaciones de Pearson entre las siete variables.</em>
+</p>
 
-**Figura 7.** Comando `.corr()` y su salida, con la matriz de correlaciones de Pearson entre las siete variables.
-
-![Mapa de calor de la matriz de correlación](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/8.png)
-
-**Figura 8.** Mapa de calor de la matriz de correlación de Pearson (`sns.heatmap`).
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/8.png" alt="Reporte OLS summary" width="80%"/>
+  <br>
+  <em>Figura 8. Mapa de calor de la matriz de correlación de Pearson (`sns.heatmap`).</em>
+</p>
 
 **Interpretación:** Se observan dos hallazgos clave:
 1. Ninguna variable predictora alcanza un coeficiente de correlación absoluto de 0.08 frente a `SO2_Max`. Las asociaciones más altas corresponden a `Year` ($r = 0.0699$) y `Month` ($r = 0.0602$), valores considerados nulos o triviales [14].
@@ -383,25 +399,33 @@ El análisis estadístico de la serie histórica arrojó los siguientes parámet
 
 La partición $70/30$ destinó 2,506 registros para entrenamiento y 1,075 para evaluación de prueba.
 
-<img width="1098" height="235" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/9.png" />
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/9.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 9. Verificación de dimensiones mediante `train_test_split()`.</em>
+</p>
 
-**Figura 9.** Verificación de dimensiones mediante `train_test_split()`.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/10.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 10. Intercepto ($\beta_0 = -1991.79$) y coeficientes del modelo de regresión lineal.</em>
+</p>
 
-<img width="1103" height="572" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/10.png" />
-
-**Figura 10.** Intercepto ($\beta_0 = -1991.79$) y coeficientes del modelo de regresión lineal.
-
-<img width="1117" height="685" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/11.png" />
-
-**Figura 11.** Tabla de coeficientes, errores estándar y estadísticos $t$ calculados sobre entrenamiento.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/11.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 11. Tabla de coeficientes, errores estándar y estadísticos $t$ calculados sobre entrenamiento.</em>
+</p>
 
 **Interpretación:** El intercepto ($\beta_0 = -1991.79$) actúa como constante de ajuste de escala para compensar la variable `Year`. Por su parte, los coeficientes `Obs_Count` ($\beta = -22.9801$) y `Percent_Complete` ($\beta = +5.5247$) muestran signos opuestos atípicos inducidos por la multicolinealidad casi perfecta existente entre ambas variables.
 
 ### 3.6 Relación individual entre predictores y variable objetivo
 
-![Diagramas de dispersión de cada predictor frente al SO2](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/12.png)
-
-**Figura 12.** Diagramas de dispersión individuales de las 6 variables predictoras frente a `SO2_Max`.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/12.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 12. Diagramas de dispersión individuales de las 6 variables predictoras frente a `SO2_Max`.</em>
+</p>
 
 **Interpretación panel por panel:** Las columnas de `Year`, `Day` y `DayOfWeek` no exhiben patrones ni tendencias. La variable `Month` refleja elevaciones leves en los meses de invierno por estabilidad atmosférica, pero con una relación no monótona. Las variables `Obs_Count` y `Percent_Complete` concentran casi la totalidad de sus observaciones en el límite superior derecho.
 
@@ -409,43 +433,55 @@ La partición $70/30$ destinó 2,506 registros para entrenamiento y 1,075 para e
 
 #### 3.7.1 Valores reales frente a predichos
 
-![Dispersión de SO2 real frente a SO2 predicho](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/13.png)
-
-**Figura 13.** Dispersión de valores reales de $SO_2$ frente a los predichos sobre la muestra de prueba (1,075 registros).
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/13.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 13. Dispersión de valores reales frente a los predichos sobre la muestra de prueba (1,075 registros).</em>
+</p>
 
 **Interpretación:** En lugar de seguir la diagonal de $45^\circ$, los puntos forman una banda horizontal compacta alrededor de 2.5 ppb. Al carecer de capacidad explicativa, el estimador por Mínimos Cuadrados convergió hacia la media muestral para minimizar la suma de errores cuadráticos.
 
 #### 3.7.2 Normalidad de los residuos
 
-![Histograma de residuos con curva de densidad](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/14.png)
-
-**Figura 14.** Distribución empírica de los residuos del modelo ($y_i - \hat{y}_i$).
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/14.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 14. Distribución empírica de los residuos del modelo ($y_i - \hat{y}_i$).</em>
+</p>
 
 **Interpretación:** Los errores se centran en cero, pero exhiben una cola hacia la derecha generada por los picos de contaminación, cumpliendo el supuesto de normalidad solo de forma aproximada.
 
 #### 3.7.3 Homocedasticidad
 
-![Residuos frente a valores predichos](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/15.png)
-
-**Figura 15.** Diagrama de dispersión de residuos frente a valores predichos.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/15.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 15. Diagrama de dispersión de residuos frente a valores predichos.</em>
+</p>
 
 **Interpretación:** Muestra una franja vertical concentrada debido a la reducida dispersión de las predicciones, evidenciando que la varianza residual abarca casi la totalidad de la varianza original de los datos.
 
 ### 3.8 Modelo de contraste: árbol de decisión
 
-![Dispersión real frente a predicho del árbol de decisión](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/16.png)
-
-**Figura 16.** Valores reales frente a predichos por el Árbol de Decisión (`max_depth=5`).
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/16.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 16. Valores reales frente a predichos por el Árbol de Decisión (`max_depth=5`).</em>
+</p>
 
 **Interpretación:** El Árbol de Decisión obtuvo un Error Cuadrático Medio ($MSE$) de $25.105$ en la fase de prueba ($MAE = 2.397 \text{ ppb}$, $R^2 = 0.0288$), superando ligeramente el desempeño de la regresión lineal ($MSE = 25.355$).
 
-<img width="1118" height="217" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/17.png" />
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/17.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 17. Importancia relativa de las características obtenida con `tree_model.feature_importances_`.</em>
+</p>
 
-**Figura 17.** Importancia relativa de las características obtenida con `tree_model.feature_importances_`.
-
-![Importancia relativa de las características](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/18.png)
-
-**Figura 18.** Gráfico de barras de importancia de variables del Árbol de Decisión.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/18.png" alt="Reporte OLS summary" width="70%"/>
+  <br>
+  <em>Figura 18. Gráfico de barras de importancia de variables del Árbol de Decisión.</em>
+</p>
 
 | Variable | Importancia | Porcentaje |
 |---|---|---|
@@ -463,7 +499,7 @@ La partición $70/30$ destinó 2,506 registros para entrenamiento y 1,075 para e
 ### 3.9 Validación estadística formal
 
 <p align="center">
-  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/19.png" alt="Reporte OLS summary" width="100%"/>
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/19.png" alt="Reporte OLS summary" width="80%"/>
   <br>
   <em>Figura 19. Reporte estadístico formal de OLS generado mediante statsmodels.</em>
 </p>
