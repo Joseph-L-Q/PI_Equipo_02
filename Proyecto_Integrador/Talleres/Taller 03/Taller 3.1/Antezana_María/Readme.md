@@ -462,9 +462,11 @@ La partición $70/30$ destinó 2,506 registros para entrenamiento y 1,075 para e
 
 ### 3.9 Validación estadística formal
 
-<img width="1116" height="723" alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/19.png" />
-
-**Figura 19.** Reporte estadístico formal de OLS generado mediante `statsmodels`.
+<p align="center">
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/main/Recursos/Im%C3%A1genes/19.png" alt="Reporte OLS summary" width="100%"/>
+  <br>
+  <em>Figura 19. Reporte estadístico formal de OLS generado mediante statsmodels.</em>
+</p>
 
 **Interpretación:**
 * **$R^2$:** El coeficiente de determinación es de $0.024$, indicando que el modelo lineal solo explica el $2.4\%$ de la variabilidad del $SO_2$.
