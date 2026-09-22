@@ -34,7 +34,11 @@ Primero construí una CNN básica desde cero, utilizando bloques de convolución
 
 A partir de la época 4, el modelo empezó a mejorar su clasificación hasta alcanzar una exactitud de **63.27%** y un ROC-AUC entre **0.67 y 0.69**. Esto muestra que el modelo sí logró aprender características de las imágenes, aunque su desempeño todavía fue moderado. Por eso, no basta con construir una red neuronal, sino que también es necesario evaluar sus resultados y probar diferentes alternativas para mejorarla.
 
-<img width="700" alt="fig2a" src="RUTA_A_TU_IMAGEN_FIG2A" />
+<img width="637" height="416" alt="image" src="https://github.com/user-attachments/assets/51574238-0c42-4f48-908a-4aca598c624c" />
+
+
+<img width="1012" height="804" alt="Captura de pantalla 2026-09-22 163229" src="https://github.com/user-attachments/assets/4550fcfc-b3c3-4929-972d-6333772da1eb" />
+
 
 > **Fig. 2.** Curvas de pérdida de entrenamiento y métricas de validación (accuracy, ROC-AUC) del modelo CNN desde cero.
 
@@ -56,7 +60,10 @@ También trabajé con una técnica de interpretabilidad llamada **Grad-CAM**, ut
 
 Las zonas con mayor intensidad indican que tuvieron una mayor influencia en la predicción, mientras que las zonas con menor intensidad tuvieron una menor influencia. Esto permite observar si el modelo realmente está prestando atención a las partes importantes de la imagen.
 
-<img width="700" alt="fig3" src="RUTA_A_TU_IMAGEN_FIG3" />
+<img width="718" height="787" alt="image" src="https://github.com/user-attachments/assets/68cccec0-c82b-4471-ac9d-548eb999df02" />
+
+<img width="1778" height="866" alt="image" src="https://github.com/user-attachments/assets/399f4c02-1a40-4417-8909-1190732cc339" />
+
 
 > **Fig. 3.** Mapa de calor generado mediante Grad-CAM, mostrando las regiones de la imagen que tuvieron mayor influencia en la predicción del modelo.
 
@@ -80,7 +87,8 @@ En el taller utilicé Keras para trabajar un problema de **clasificación binari
 
 Primero descargué los datos y utilicé el diccionario de palabras proporcionado por el dataset. Después apliqué **one-hot encoding** para transformar la información textual en una representación que pudiera ser procesada por la red neuronal. Finalmente, construí un modelo con dos capas ocultas de 16 neuronas y una capa de salida con una neurona.
 
-<img width="700" alt="fig4" src="RUTA_A_TU_IMAGEN_FIG4" />
+<img width="630" height="682" alt="image" src="https://github.com/user-attachments/assets/5b89569f-fc77-481b-8e63-bf091fbc36f6" />
+
 
 > **Fig. 4.** Curva de pérdida del conjunto de entrenamiento y del conjunto de validación del modelo de Keras, donde se observa la aparición del sobreajuste.
 
