@@ -1,6 +1,6 @@
 # Taller 4: Redes Neuronales: CNN, Keras y Perceptrón
 
-En esta sesión aprendí a utilizar y entender tres formas de trabajar con redes neuronales: las Redes Neuronales Convolucionales (CNN) utilizando PyTorch [1], el framework Keras [4] y el Perceptrón como la unidad más básica de una red neuronal. Cada uno tiene una forma diferente de trabajar, pero en conjunto me ayudaron a entender cómo una red neuronal puede aprender a partir de datos y cómo elegir una técnica dependiendo del problema.
+En esta sesión aprendí a utilizar y entender tres formas de trabajar con redes neuronales: las Redes Neuronales Convolucionales (CNN) utilizando PyTorch  <a href="#ref2">[1]</a>, el framework Keras  <a href="#ref2">[4]</a> y el Perceptrón como la unidad más básica de una red neuronal. Cada uno tiene una forma diferente de trabajar, pero en conjunto me ayudaron a entender cómo una red neuronal puede aprender a partir de datos y cómo elegir una técnica dependiendo del problema.
 
 ---
 
@@ -10,7 +10,7 @@ Las CNN son un tipo de red neuronal especialmente utilizada para trabajar con im
 
 ### ¿Por qué sirve?
 
-Las CNN son adecuadas cuando el problema consiste en reconocer patrones visuales en imágenes. En el taller trabajé este tipo de red utilizando PyTorch [1] y GPU. La GPU permite realizar muchas operaciones en paralelo, lo que facilita el entrenamiento de modelos que requieren una gran cantidad de cálculos.
+Las CNN son adecuadas cuando el problema consiste en reconocer patrones visuales en imágenes. En el taller trabajé este tipo de red utilizando PyTorch <a href="#ref2">[1]</a> y GPU. La GPU permite realizar muchas operaciones en paralelo, lo que facilita el entrenamiento de modelos que requieren una gran cantidad de cálculos.
 
 ### Partes principales
 
@@ -24,7 +24,7 @@ Las CNN son adecuadas cuando el problema consiste en reconocer patrones visuales
 
 > **Fig. 1.** Diagrama de la arquitectura de una CNN mostrando el flujo de una imagen a través de las capas de convolución, activación, pooling y capas densas.
 
-Para practicar utilicé el dataset **TrashNet** [2], que contiene imágenes de diferentes tipos de residuos. En el ejercicio trabajado se utilizaron imágenes de vidrio y plástico, clasificadas como 0 y 1, y divididas en conjuntos de entrenamiento, validación y prueba.
+Para practicar utilicé el dataset **TrashNet** <a href="#ref2">[2]</a> , que contiene imágenes de diferentes tipos de residuos. En el ejercicio trabajado se utilizaron imágenes de vidrio y plástico, clasificadas como 0 y 1, y divididas en conjuntos de entrenamiento, validación y prueba.
 
 Primero construí una CNN básica desde cero, utilizando bloques de convolución, ReLU y pooling, y finalmente un clasificador. Para evaluar el modelo utilicé diferentes métricas, como *accuracy*, ROC-AUC, matriz de confusión, *precision*, *recall* y F1-score.
 
@@ -44,7 +44,7 @@ Esta parte es importante para mi proyecto porque **LanternGuard** probablemente 
 
 ### Grad-CAM
 
-También trabajé con una técnica de interpretabilidad llamada **Grad-CAM**, utilizando una versión simplificada de ResNet18 [3]. Esta técnica genera un mapa de calor sobre la imagen para mostrar las zonas que tuvieron mayor influencia en la decisión del modelo.
+También trabajé con una técnica de interpretabilidad llamada **Grad-CAM**, utilizando una versión simplificada de ResNet18 <a href="#ref2">[3]</a>. Esta técnica genera un mapa de calor sobre la imagen para mostrar las zonas que tuvieron mayor influencia en la decisión del modelo.
 
 Las zonas con mayor intensidad indican que tuvieron una mayor influencia en la predicción, mientras que las zonas con menor intensidad tuvieron una menor influencia. Esto permite observar si el modelo realmente está prestando atención a las partes importantes de la imagen.
 
@@ -58,13 +58,13 @@ Finalmente, guardé el modelo entrenado para poder utilizarlo posteriormente sin
 
 ## 2. Keras
 
-Keras [4] es un framework que permite construir y entrenar redes neuronales de una manera más sencilla. En comparación con programar una red desde cero utilizando PyTorch, Keras facilita la definición de las capas, el entrenamiento y la evaluación del modelo.
+Keras  <a href="#ref2">[4]</a>  es un framework que permite construir y entrenar redes neuronales de una manera más sencilla. En comparación con programar una red desde cero utilizando PyTorch, Keras facilita la definición de las capas, el entrenamiento y la evaluación del modelo.
 
 ### ¿Por qué sirve?
 
 Keras permite realizar pruebas de diferentes modelos de manera más rápida y directa, por lo que puede ser práctico cuando se quiere desarrollar una aplicación que utilice redes neuronales sin tener que programar todos los componentes desde cero.
 
-En el taller utilicé Keras para trabajar un problema de **clasificación binaria** utilizando el dataset **IMDB** [5], que contiene reseñas de películas que deben clasificarse como positivas o negativas.
+En el taller utilicé Keras para trabajar un problema de **clasificación binaria** utilizando el dataset **IMDB**  <a href="#ref2">[5]</a> , que contiene reseñas de películas que deben clasificarse como positivas o negativas.
 
 Primero descargué los datos y utilicé el diccionario de palabras proporcionado por el dataset. Después apliqué **one-hot encoding** para transformar la información textual en una representación que pudiera ser procesada por la red neuronal. Finalmente, construí un modelo con dos capas ocultas de 16 neuronas y una capa de salida con una neurona.
 
@@ -122,7 +122,7 @@ Mi proyecto se llama **LanternGuard** y busca desarrollar un sistema que permita
 
 El sensor de proximidad puede ayudar a detectar la presencia o cercanía de la linterna respecto al sistema de medición, mientras que la cámara proporciona la información visual que será analizada mediante inteligencia artificial.
 
-Para la parte de análisis de imágenes utilizaría una **CNN**, debido a que el objetivo es reconocer patrones visuales relacionados con la presencia de bioincrustación. La experiencia realizada con TrashNet [2] me permitió entender cómo una CNN puede aprender características de una imagen y utilizarlas para realizar una clasificación.
+Para la parte de análisis de imágenes utilizaría una **CNN**, debido a que el objetivo es reconocer patrones visuales relacionados con la presencia de bioincrustación. La experiencia realizada con TrashNet  <a href="#ref2">[2]</a> me permitió entender cómo una CNN puede aprender características de una imagen y utilizarlas para realizar una clasificación.
 
 En LanternGuard, las fotografías podrían organizarse según diferentes niveles de bioincrustación, por ejemplo:
 
@@ -161,13 +161,25 @@ Finalmente, relacionar estos conocimientos con **LanternGuard** me permitió ide
 
 ## Referencias
 
+<a id="ref1"></a>
+
 [1] A. Paszke, S. Gross, F. Massa, A. Lerer, J. Bradbury, G. Chanan, T. Killeen, Z. Lin, N. Gimelshein, L. Antiga, A. Desmaison, A. Kopf, E. Yang, Z. DeVito, M. Raison, A. Tejani, S. Chilamkurthy, B. Steiner, L. Fang, J. Bai y S. Chintala, “PyTorch: An Imperative Style, High-Performance Deep Learning Library,” en *Advances in Neural Information Processing Systems 32 (NeurIPS)*, 2019, pp. 8024–8035.
+
+<a id="ref2"></a>
+
 
 [2] G. Thung y M. Yang, “Classification of Trash for Recyclability Status,” *CS229 Project Report*, Stanford University, Stanford, CA, USA, 2016. [En línea]. Disponible en: https://cs229.stanford.edu/proj2016/report/ThungYang-ClassificationOfTrashForRecyclabilityStatus-report.pdf
 
+<a id="ref3"></a>
+
 [3] K. He, X. Zhang, S. Ren y J. Sun, “Deep Residual Learning for Image Recognition,” en *Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, Las Vegas, NV, USA, 2016, pp. 770–778, doi: 10.1109/CVPR.2016.90.
 
+<a id="ref4"></a>
+
 [4] F. Chollet et al., “Keras,” 2015. [En línea]. Disponible en: https://keras.io
+
+
+<a id="ref5"></a>
 
 [5] A. L. Maas, R. E. Daly, P. T. Pham, D. Huang, A. Y. Ng y C. Potts, “Learning Word Vectors for Sentiment Analysis,” en *Proc. 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies*, Portland, OR, USA, 2011, pp. 142–150.
 
