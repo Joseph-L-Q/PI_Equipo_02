@@ -1,6 +1,6 @@
 # Taller 4: Redes Neuronales: CNN, Keras y Perceptrón
 
-En esta sesión aprendí a utilizar y entender tres formas de trabajar con redes neuronales: las Redes Neuronales Convolucionales (CNN) utilizando PyTorch  <a href="#ref2">[1]</a>, el framework Keras  <a href="#ref2">[4]</a> y el Perceptrón como la unidad más básica de una red neuronal. Cada uno tiene una forma diferente de trabajar, pero en conjunto me ayudaron a entender cómo una red neuronal puede aprender a partir de datos y cómo elegir una técnica dependiendo del problema.
+En esta sesión aprendí a utilizar y entender tres formas de trabajar con redes neuronales: las Redes Neuronales Convolucionales (CNN) utilizando PyTorch <a href="#ref2">[1]</a>, el framework Keras <a href="#ref2">[4]</a> y el Perceptrón como la unidad más básica de una red neuronal. Cada uno tiene una forma diferente de trabajar, pero en conjunto me ayudaron a entender cómo una red neuronal puede aprender a partir de datos y cómo elegir una técnica dependiendo del problema.
 
 ---
 
@@ -22,13 +22,23 @@ Las CNN son adecuadas cuando el problema consiste en reconocer patrones visuales
 
 * **Capas fully-connected (densas):** reciben la información procesada por las capas anteriores y la utilizan para obtener la clasificación final.
 
+<img width="578" height="803" alt="image" src="https://github.com/user-attachments/assets/a07a8288-c953-4b20-9dd4-91e8a50753c0" />
+
 > **Fig. 1.** Diagrama de la arquitectura de una CNN mostrando el flujo de una imagen a través de las capas de convolución, activación, pooling y capas densas.
 
-Para practicar utilicé el dataset **TrashNet** <a href="#ref2">[2]</a> , que contiene imágenes de diferentes tipos de residuos. En el ejercicio trabajado se utilizaron imágenes de vidrio y plástico, clasificadas como 0 y 1, y divididas en conjuntos de entrenamiento, validación y prueba.
+En este diagrama se puede observar el flujo completo de una imagen a través de la CNN: primero pasa por las capas de convolución, donde se extraen características básicas como bordes y texturas; luego por la activación ReLU, que introduce no linealidad; después por el pooling, que reduce la dimensionalidad conservando la información relevante; y finalmente por las capas densas, que combinan todas las características aprendidas para producir la clasificación final.
+
+Para practicar utilicé el dataset **TrashNet** <a href="#ref2">[2]</a>, que contiene imágenes de diferentes tipos de residuos. En el ejercicio trabajado se utilizaron imágenes de vidrio y plástico, clasificadas como 0 y 1, y divididas en conjuntos de entrenamiento, validación y prueba.
 
 Primero construí una CNN básica desde cero, utilizando bloques de convolución, ReLU y pooling, y finalmente un clasificador. Para evaluar el modelo utilicé diferentes métricas, como *accuracy*, ROC-AUC, matriz de confusión, *precision*, *recall* y F1-score.
 
 A partir de la época 4, el modelo empezó a mejorar su clasificación hasta alcanzar una exactitud de **63.27%** y un ROC-AUC entre **0.67 y 0.69**. Esto muestra que el modelo sí logró aprender características de las imágenes, aunque su desempeño todavía fue moderado. Por eso, no basta con construir una red neuronal, sino que también es necesario evaluar sus resultados y probar diferentes alternativas para mejorarla.
+
+<img width="700" alt="fig2a" src="RUTA_A_TU_IMAGEN_FIG2A" />
+
+> **Fig. 2.** Curvas de pérdida de entrenamiento y métricas de validación (accuracy, ROC-AUC) del modelo CNN desde cero.
+
+Las curvas muestran que la pérdida de entrenamiento disminuyó de forma constante a lo largo de las épocas, mientras que las métricas de validación (accuracy y ROC-AUC) se mantuvieron bastante estables durante las primeras épocas y solo mejoraron notablemente a partir de la época 4, hasta alcanzar el 63.27% de exactitud y un ROC-AUC entre 0.67 y 0.69. Esto confirma que el modelo tardó varias épocas en empezar a generalizar, y que su desempeño, aunque por encima del azar, todavía fue moderado.
 
 ### Data augmentation y Transfer Learning
 
@@ -36,9 +46,7 @@ Después probé **data augmentation**, realizando pequeñas rotaciones y desplaz
 
 Luego utilicé **transfer learning**, que consiste en aprovechar un modelo que ya fue entrenado previamente con una gran cantidad de imágenes y adaptarlo a un nuevo problema. Primero entrené la última capa del modelo y posteriormente realicé *fine-tuning*, descongelando algunas de las últimas capas para que pudieran adaptarse al nuevo conjunto de datos.
 
-En comparación con la CNN construida desde cero, el uso de transfer learning y *fine-tuning* permitió mejorar la capacidad del modelo para diferenciar entre vidrio y plástico.
-
-> **Fig. 2.** Curvas de entrenamiento y métricas del modelo CNN desde cero y del modelo utilizando transfer learning y fine-tuning.
+En comparación con la CNN construida desde cero, el uso de transfer learning y *fine-tuning* permitió mejorar la capacidad del modelo para diferenciar entre vidrio y plástico (los resultados numéricos de esta comparación están detallados en la sección 7.4 del notebook).
 
 Esta parte es importante para mi proyecto porque **LanternGuard** probablemente no tendrá al inicio una gran cantidad de fotografías propias de linternas con diferentes niveles de bioincrustación. Por eso, una alternativa sería utilizar un modelo previamente entrenado y adaptarlo con fotografías propias del proyecto.
 
@@ -48,7 +56,11 @@ También trabajé con una técnica de interpretabilidad llamada **Grad-CAM**, ut
 
 Las zonas con mayor intensidad indican que tuvieron una mayor influencia en la predicción, mientras que las zonas con menor intensidad tuvieron una menor influencia. Esto permite observar si el modelo realmente está prestando atención a las partes importantes de la imagen.
 
+<img width="700" alt="fig3" src="RUTA_A_TU_IMAGEN_FIG3" />
+
 > **Fig. 3.** Mapa de calor generado mediante Grad-CAM, mostrando las regiones de la imagen que tuvieron mayor influencia en la predicción del modelo.
+
+El mapa de calor muestra que el modelo concentró su atención en la zona central del objeto (la botella), y no en el fondo de la imagen. Esto indica que la red aprendió a identificar correctamente la región relevante para la clasificación, en lugar de basarse en elementos externos o irrelevantes de la fotografía.
 
 Para LanternGuard, esta herramienta podría ser útil para comprobar que la CNN está enfocándose en las zonas donde realmente aparece la bioincrustación de la linterna y no en elementos externos de la fotografía.
 
@@ -58,15 +70,17 @@ Finalmente, guardé el modelo entrenado para poder utilizarlo posteriormente sin
 
 ## 2. Keras
 
-Keras  <a href="#ref2">[4]</a>  es un framework que permite construir y entrenar redes neuronales de una manera más sencilla. En comparación con programar una red desde cero utilizando PyTorch, Keras facilita la definición de las capas, el entrenamiento y la evaluación del modelo.
+Keras <a href="#ref2">[4]</a> es un framework que permite construir y entrenar redes neuronales de una manera más sencilla. En comparación con programar una red desde cero utilizando PyTorch, Keras facilita la definición de las capas, el entrenamiento y la evaluación del modelo.
 
 ### ¿Por qué sirve?
 
 Keras permite realizar pruebas de diferentes modelos de manera más rápida y directa, por lo que puede ser práctico cuando se quiere desarrollar una aplicación que utilice redes neuronales sin tener que programar todos los componentes desde cero.
 
-En el taller utilicé Keras para trabajar un problema de **clasificación binaria** utilizando el dataset **IMDB**  <a href="#ref2">[5]</a> , que contiene reseñas de películas que deben clasificarse como positivas o negativas.
+En el taller utilicé Keras para trabajar un problema de **clasificación binaria** utilizando el dataset **IMDB** <a href="#ref2">[5]</a>, que contiene reseñas de películas que deben clasificarse como positivas o negativas.
 
 Primero descargué los datos y utilicé el diccionario de palabras proporcionado por el dataset. Después apliqué **one-hot encoding** para transformar la información textual en una representación que pudiera ser procesada por la red neuronal. Finalmente, construí un modelo con dos capas ocultas de 16 neuronas y una capa de salida con una neurona.
+
+<img width="700" alt="fig4" src="RUTA_A_TU_IMAGEN_FIG4" />
 
 > **Fig. 4.** Curva de pérdida del conjunto de entrenamiento y del conjunto de validación del modelo de Keras, donde se observa la aparición del sobreajuste.
 
@@ -94,9 +108,7 @@ El **Perceptrón** es uno de los modelos más simples de una red neuronal. Recib
 
 Aunque es un modelo sencillo, entender su funcionamiento ayuda a comprender cómo se construyen redes neuronales más complejas. También permite entender por qué algunos problemas necesitan varias capas para poder ser resueltos.
 
-La **función de activación** transforma el resultado obtenido después de combinar las entradas y sus pesos. Por ejemplo, la función escalón puede producir una salida de 0 o 1, mientras que la función *tanh* transforma el resultado a un valor entre -1 y 1.
-
-> **Fig. 5.** Comparación de la salida del perceptrón utilizando diferentes funciones de activación: función escalón y tanh.
+La **función de activación** transforma el resultado obtenido después de combinar las entradas y sus pesos. Por ejemplo, la función escalón puede producir una salida de 0 o 1, mientras que la función *tanh* transforma el resultado a un valor entre -1 y 1 (esta comparación se probó de forma numérica en el notebook, sin una visualización gráfica generada).
 
 Durante el taller probé el perceptrón utilizando compuertas lógicas:
 
@@ -108,7 +120,11 @@ Durante el taller probé el perceptrón utilizando compuertas lógicas:
 
 Al observar las fronteras de decisión, pude comprobar que AND y OR pueden ser representadas mediante una sola frontera lineal. En cambio, XOR presenta una distribución que no puede separarse correctamente utilizando una sola línea.
 
-> **Fig. 6.** Fronteras de decisión de las compuertas AND, OR y el intento de resolver XOR utilizando un solo perceptrón.
+<img width="450" alt="fig6a" src="RUTA_A_TU_IMAGEN_FIG6A" />
+<img width="450" alt="fig6b" src="RUTA_A_TU_IMAGEN_FIG6B" />
+
+> **Fig. 5a.** Fronteras de decisión lineales de las compuertas AND y OR.
+> **Fig. 5b.** Intento de separar la compuerta XOR utilizando una sola recta, mostrando que no es posible resolverla con un solo perceptrón.
 
 La conclusión principal fue que **un solo perceptrón no puede resolver el problema XOR**, porque sus puntos no pueden separarse mediante una única frontera lineal. Sin embargo, utilizando más de un perceptrón y una capa de salida sí es posible resolverlo.
 
@@ -122,7 +138,7 @@ Mi proyecto se llama **LanternGuard** y busca desarrollar un sistema que permita
 
 El sensor de proximidad puede ayudar a detectar la presencia o cercanía de la linterna respecto al sistema de medición, mientras que la cámara proporciona la información visual que será analizada mediante inteligencia artificial.
 
-Para la parte de análisis de imágenes utilizaría una **CNN**, debido a que el objetivo es reconocer patrones visuales relacionados con la presencia de bioincrustación. La experiencia realizada con TrashNet  <a href="#ref2">[2]</a> me permitió entender cómo una CNN puede aprender características de una imagen y utilizarlas para realizar una clasificación.
+Para la parte de análisis de imágenes utilizaría una **CNN**, debido a que el objetivo es reconocer patrones visuales relacionados con la presencia de bioincrustación. La experiencia realizada con TrashNet <a href="#ref2">[2]</a> me permitió entender cómo una CNN puede aprender características de una imagen y utilizarlas para realizar una clasificación.
 
 En LanternGuard, las fotografías podrían organizarse según diferentes niveles de bioincrustación, por ejemplo:
 
@@ -163,25 +179,20 @@ Finalmente, relacionar estos conocimientos con **LanternGuard** me permitió ide
 
 <a id="ref1"></a>
 
-[1] A. Paszke, S. Gross, F. Massa, A. Lerer, J. Bradbury, G. Chanan, T. Killeen, Z. Lin, N. Gimelshein, L. Antiga, A. Desmaison, A. Kopf, E. Yang, Z. DeVito, M. Raison, A. Tejani, S. Chilamkurthy, B. Steiner, L. Fang, J. Bai y S. Chintala, “PyTorch: An Imperative Style, High-Performance Deep Learning Library,” en *Advances in Neural Information Processing Systems 32 (NeurIPS)*, 2019, pp. 8024–8035.
+[1] A. Paszke, S. Gross, F. Massa, A. Lerer, J. Bradbury, G. Chanan, T. Killeen, Z. Lin, N. Gimelshein, L. Antiga, A. Desmaison, A. Kopf, E. Yang, Z. DeVito, M. Raison, A. Tejani, S. Chilamkurthy, B. Steiner, L. Fang, J. Bai y S. Chintala, "PyTorch: An Imperative Style, High-Performance Deep Learning Library," en *Advances in Neural Information Processing Systems 32 (NeurIPS)*, 2019, pp. 8024–8035.
 
 <a id="ref2"></a>
 
-
-[2] G. Thung y M. Yang, “Classification of Trash for Recyclability Status,” *CS229 Project Report*, Stanford University, Stanford, CA, USA, 2016. [En línea]. Disponible en: https://cs229.stanford.edu/proj2016/report/ThungYang-ClassificationOfTrashForRecyclabilityStatus-report.pdf
+[2] G. Thung y M. Yang, "Classification of Trash for Recyclability Status," *CS229 Project Report*, Stanford University, Stanford, CA, USA, 2016. [En línea]. Disponible en: https://cs229.stanford.edu/proj2016/report/ThungYang-ClassificationOfTrashForRecyclabilityStatus-report.pdf
 
 <a id="ref3"></a>
 
-[3] K. He, X. Zhang, S. Ren y J. Sun, “Deep Residual Learning for Image Recognition,” en *Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, Las Vegas, NV, USA, 2016, pp. 770–778, doi: 10.1109/CVPR.2016.90.
+[3] K. He, X. Zhang, S. Ren y J. Sun, "Deep Residual Learning for Image Recognition," en *Proc. IEEE Conference on Computer Vision and Pattern Recognition (CVPR)*, Las Vegas, NV, USA, 2016, pp. 770–778, doi: 10.1109/CVPR.2016.90.
 
 <a id="ref4"></a>
 
-[4] F. Chollet et al., “Keras,” 2015. [En línea]. Disponible en: https://keras.io
-
+[4] F. Chollet et al., "Keras," 2015. [En línea]. Disponible en: https://keras.io
 
 <a id="ref5"></a>
 
-[5] A. L. Maas, R. E. Daly, P. T. Pham, D. Huang, A. Y. Ng y C. Potts, “Learning Word Vectors for Sentiment Analysis,” en *Proc. 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies*, Portland, OR, USA, 2011, pp. 142–150.
-
-
-
+[5] A. L. Maas, R. E. Daly, P. T. Pham, D. Huang, A. Y. Ng y C. Potts, "Learning Word Vectors for Sentiment Analysis," en *Proc. 49th Annual Meeting of the Association for Computational Linguistics: Human Language Technologies*, Portland, OR, USA, 2011, pp. 142–150.
