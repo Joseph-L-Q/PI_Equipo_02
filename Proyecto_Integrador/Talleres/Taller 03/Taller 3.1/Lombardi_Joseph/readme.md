@@ -58,13 +58,13 @@ La matriz de dispersión permitió observar las relaciones entre las principales
 
 El histograma muestra que la mayoría de los valores AQI se concentra en la parte baja de la distribución. Esto indica que durante gran parte del año la calidad del aire presentó niveles bajos de contaminación por monóxido de carbono.
 
-![Histograma del AQI diario](./imagenes_tarea_PI_3_1/02_histograma_aqi.png)
+![Histograma del AQI diario](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3dbab29044c51c54b91ecd876f4427a9020b7f21/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20151928.png)
 
 *Figura 2. Distribución del valor AQI diario mediante 25 intervalos.*
 
 El gráfico de densidad confirma que la mayor concentración de datos se encuentra alrededor de los valores AQI más bajos y que la distribución se extiende hacia la derecha por la presencia de algunos registros mayores.
 
-![Densidad del AQI diario](./imagenes_tarea_PI_3_1/03_densidad_aqi.png)
+![Densidad del AQI diario](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3dbab29044c51c54b91ecd876f4427a9020b7f21/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20151934.png)
 
 *Figura 3. Curva de densidad del AQI diario.*
 
@@ -72,7 +72,7 @@ El gráfico de densidad confirma que la mayor concentración de datos se encuent
 
 El mapa de calor permitió medir la relación lineal entre las variables numéricas.
 
-![Mapa de calor de correlaciones](./imagenes_tarea_PI_3_1/04_mapa_correlacion.png)
+![Mapa de calor de correlaciones](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3dbab29044c51c54b91ecd876f4427a9020b7f21/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20151959.png)
 
 *Figura 4. Mapa de calor con los coeficientes de correlación.*
 
@@ -84,7 +84,7 @@ Los resultados más importantes fueron los siguientes:
 
 Los gráficos individuales también muestran que el AQI aumenta casi de forma lineal cuando se incrementa la concentración de CO. En cambio, las otras variables no presentan una tendencia clara.
 
-![Relación entre las variables y el AQI](./imagenes_tarea_PI_3_1/05_relacion_variables_aqi.png)
+![Relación entre las variables y el AQI](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3dbab29044c51c54b91ecd876f4427a9020b7f21/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20152035.png)
 
 *Figura 5. Relación de cada variable predictora con el AQI diario.*
 
@@ -150,7 +150,7 @@ El análisis OLS obtuvo un $R^2=0.996$, pero también generó una advertencia de
 
 ### 4.3 Predicciones y métricas
 
-![Valores reales y predichos con regresión lineal](./imagenes_tarea_PI_3_1/06_aqi_real_predicho_lineal.png)
+![Valores reales y predichos con regresión lineal](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3dbab29044c51c54b91ecd876f4427a9020b7f21/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20152109.png)
 
 *Figura 6. Comparación del AQI real y el AQI estimado mediante Regresión Lineal.*
 
@@ -172,13 +172,13 @@ $$
 e_i=Y_i-\widehat{Y}_i
 $$
 
-![Histograma de los residuos](./imagenes_tarea_PI_3_1/07_histograma_residuos.png)
+![Histograma de los residuos](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3dbab29044c51c54b91ecd876f4427a9020b7f21/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20152117.png)
 
 *Figura 7. Histograma de residuos con curva de densidad.*
 
 El histograma permite revisar si los errores se concentran cerca de cero. No obstante, el resumen OLS reportó asimetría positiva y una prueba de Jarque-Bera con $p<0.05$, por lo que la normalidad de los residuos no se cumple de manera perfecta.
 
-![Residuos frente a valores predichos](./imagenes_tarea_PI_3_1/08_homocedasticidad.png)
+![Residuos frente a valores predichos](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3dbab29044c51c54b91ecd876f4427a9020b7f21/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20152124.png)
 
 *Figura 8. Residuos frente a las predicciones para revisar la homocedasticidad.*
 
@@ -198,7 +198,7 @@ tree.DecisionTreeRegressor(max_depth=5, random_state=10)
 
 La profundidad máxima se limitó a cinco niveles para reducir el riesgo de sobreajuste. El árbol divide los datos en grupos y asigna una predicción de acuerdo con las condiciones aprendidas.
 
-![Valores reales y predichos con el árbol](./imagenes_tarea_PI_3_1/09_aqi_real_predicho_arbol.png)
+![Valores reales y predichos con el árbol](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3dbab29044c51c54b91ecd876f4427a9020b7f21/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20152155.png)
 
 *Figura 9. Comparación entre el AQI real y el estimado por el Árbol de Decisión.*
 
@@ -214,7 +214,7 @@ El árbol presenta un $R^2$ elevado y predice exactamente muchos registros. Su $
 
 ### 5.3 Importancia de las variables
 
-![Importancia de las variables](./imagenes_tarea_PI_3_1/10_importancia_variables.png)
+![Importancia de las variables](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3dbab29044c51c54b91ecd876f4427a9020b7f21/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20152211.png)
 
 *Figura 10. Importancia relativa de las características empleadas por el árbol.*
 
