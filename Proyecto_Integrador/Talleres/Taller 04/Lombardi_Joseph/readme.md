@@ -16,7 +16,7 @@ Después construimos una CNN desde cero y la entrenamos durante ocho épocas. Un
 
 También revisamos una **matriz de confusión**. Esta nos deja ver los aciertos y errores por separado: cuántas imágenes de vidrio se clasificaron como vidrio, cuántas se confundieron con plástico y lo mismo para las imágenes de plástico. Así entendí mejor los resultados, porque una sola cifra de exactitud no muestra en qué clase se equivoca el modelo.
 
-![Matriz de confusión de la CNN entrenada desde cero]([LINK_DE_LA_IMAGEN](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/1a9c0e53495ca54dbad3161197d47b2c07016004/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20162426.png))
+![Matriz de confusión de la CNN entrenada desde cero](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/1a9c0e53495ca54dbad3161197d47b2c07016004/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20162426.png)
 
 Luego probamos el **aumento de datos** (*data augmentation*). Consistió en aplicar pequeñas rotaciones y desplazamientos a las imágenes de entrenamiento para que la red viera más variaciones. La exactitud en prueba subió un poco, de **55,03 % a 56,38 %**. En este caso ayudó, aunque la mejora fue pequeña.
 
