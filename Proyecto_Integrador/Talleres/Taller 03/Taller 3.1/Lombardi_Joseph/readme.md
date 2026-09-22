@@ -52,7 +52,7 @@ La mayor parte de los días presenta concentraciones bajas de CO y valores AQI r
 
 La matriz de dispersión permitió observar las relaciones entre las principales variables numéricas. La relación más clara aparece entre la concentración máxima de CO y el AQI diario.
 
-![Matriz de dispersión de las variables](./imagenes_tarea_PI_3_1/01_matriz_dispersion.png)
+![Matriz de dispersión de las variables](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/cd568524646eaf95ff010f9f3e8c9deeacb91bf0/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20151854.png)
 
 *Figura 1. Matriz de dispersión de las variables numéricas seleccionadas.*
 
