@@ -25,3 +25,41 @@ La mejora más grande llegó cuando usamos **ResNet18**. Esta red ya había sido
 Por último, usamos **Grad-CAM** para generar un mapa de calor sobre una imagen. Las zonas más resaltadas muestran qué partes influyeron más en la predicción de ResNet18. Esto sirve para observar en qué se fijó el modelo, aunque el mapa por sí solo no asegura que haya clasificado bien. Al final también guardamos los modelos para poder recuperarlos sin entrenarlos otra vez.
 
 ![Imagen original, mapa Grad-CAM y superposición](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/ce2cf0d0b135a149e0c698f04cf2ff8137af02b1/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20162820.png)
+
+# Lo que aprendí sobre la clasificación binaria con Keras
+
+En esta parte usamos **Keras** para crear una red neuronal que clasifica reseñas de películas de IMDB como **negativas (0)** o **positivas (1)**. Aprendí que Keras permite construir y entrenar el modelo sin tener que programar cada paso de la red desde cero.
+
+Las reseñas primero se cargaron como secuencias de números, donde cada número representa una palabra. Después las convertimos en vectores de **0 y 1**: el 1 indica que una palabra aparece en la reseña y el 0 que no aparece. Así la red puede trabajar con el texto.
+
+El modelo tenía **dos capas ocultas de 16 neuronas** y una capa final que daba un valor entre 0 y 1. Se entrenó durante **20 épocas**. También se separaron datos de validación para revisar cómo respondía a reseñas que no estaba usando para aprender.
+
+Al observar la gráfica, vimos que el error en entrenamiento seguía bajando, pero el error de validación empezó a subir. Entendí que eso se llama **sobreajuste**: el modelo aprende muy bien las reseñas de entrenamiento, pero le cuesta más generalizar a otras. Al evaluarlo con los datos de prueba obtuvo **86,11 % de exactitud**.
+
+![Gráfica de pérdida de entrenamiento y validación del modelo original — celda 87](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/5a4fb13d34ac5dbbbb6ac189aba1339bd776f650/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20203519.png)
+
+Luego probamos un **modelo más pequeño**, con una sola capa oculta de 4 neuronas. Al comparar las gráficas, vimos que el aumento del error de validación era menos pronunciado. Aprendí que reducir el tamaño de una red puede ayudar a controlar el sobreajuste.
+
+![Comparación de la pérdida de validación del modelo pequeño y el original — celda 94](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/5a4fb13d34ac5dbbbb6ac189aba1339bd776f650/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20203534.png)
+
+También vimos la **regularización L2**, que penaliza los pesos muy grandes, y **dropout**, que durante el entrenamiento desactiva aleatoriamente algunas neuronas. Las dos técnicas buscan que el modelo no dependa demasiado de los ejemplos que ya conoce.
+
+![Comparación del modelo con regularización y el original — celda 98](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/5a4fb13d34ac5dbbbb6ac189aba1339bd776f650/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20203550.png)
+
+![Comparación del modelo con dropout y el original — celda 102](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/5a4fb13d34ac5dbbbb6ac189aba1339bd776f650/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20203603.png)
+
+Por último, el modelo original hizo predicciones sobre las reseñas de prueba. Para una de ellas dio **0,9937**, un valor muy cercano a 1, así que la clasificó como **positiva**. Con esta práctica entendí que no basta con mirar qué tan bien aprende una red durante el entrenamiento: también hay que revisar cómo funciona con datos nuevos.
+
+# Lo que aprendí sobre el perceptrón
+
+En esta parte aprendí que un **perceptrón** es una neurona artificial sencilla. Recibe datos de entrada, multiplica cada uno por un **peso**, suma un **sesgo** (*bias*) y aplica una **función de activación** para obtener una salida. Los pesos indican cuánto influye cada dato en la decisión.
+
+Primero vimos un ejemplo sobre una alerta de sobrecalentamiento. Las entradas fueron la **temperatura** y la **vibración** de un equipo industrial. Con los pesos y el sesgo elegidos en el código, la suma dio **−5**. Como el resultado fue negativo, la función escalón devolvió **0**, es decir, **sin alerta**. También probamos la función **tanh**: esta dio un valor cercano a **−1** y llegó a la misma decisión. Así entendí que distintas funciones de activación pueden dar salidas diferentes a partir de la misma suma.
+
+Después probamos el perceptrón con entradas de **0 y 1**. Al cambiar los pesos y el sesgo, conseguimos que se comportara como una compuerta **AND**, que da 1 solo cuando las dos entradas son 1, y como una compuerta **OR**, que da 1 cuando al menos una entrada es 1. También vimos que elegir otros pesos cambia la decisión: una de las configuraciones que probamos ya no se comportaba como AND.
+
+![Gráfico con los puntos y las fronteras de decisión de AND y OR — celda 128](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/5a4fb13d34ac5dbbbb6ac189aba1339bd776f650/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20203621.png)
+
+Por último, revisamos **XOR**, que da 1 cuando las dos entradas son diferentes. En el gráfico vimos que sus resultados no se pueden separar con una sola línea. Por eso, **un solo perceptrón no puede resolver XOR**, pero una red con varias neuronas y una capa de salida sí puede hacerlo. Esa fue la idea que más me ayudó a entender por qué las redes neuronales usan varias capas.
+
+![Gráfico que muestra por qué XOR necesita más de una frontera de decisión — celda 130](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/5a4fb13d34ac5dbbbb6ac189aba1339bd776f650/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-09-22%20203629.png)
