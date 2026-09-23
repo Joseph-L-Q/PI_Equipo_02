@@ -334,6 +334,7 @@ Función de activación
 Salida del modelo
 
 
+
 Durante el entrenamiento, el modelo ajusta sus pesos con el objetivo de reducir los errores entre la salida obtenida y la salida esperada.
 
 ---
