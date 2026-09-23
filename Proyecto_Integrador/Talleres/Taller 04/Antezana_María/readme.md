@@ -312,9 +312,148 @@ Como el dispositivo solo se encarga de medir (con el sensor de proximidad) y tom
 
 ## 5. Borrador de Implementación para LanternGuard
 
+### 5.1. Elección y preparación del dataset
+
+Para esta prueba de concepto se utilizó el dataset **Healthy and Bleached Corals Image Classification** [15], disponible en Kaggle, que contiene fotografías submarinas de corales clasificados en dos estados: sano (*healthy*) y blanqueado (*bleached*). Se eligió este dataset porque el problema es análogo al que enfrenta **LanternGuard**: clasificar visualmente el estado de salud de un organismo marino (coral vs. concha de abanico) a partir de imágenes, donde una alteración visible en la superficie o textura del organismo indica un problema biológico o ambiental — en el caso del coral, blanqueamiento por estrés térmico; en el caso de las conchas de abanico, biofouling o deterioro de la concha.
+
+<p align="center">
+  <img width="922" height="462" alt="image" src="https://github.com/user-attachments/assets/399e55d5-ff88-449c-a45a-27d50af73ca2" width="80%"/>
+  <br>
+  <em><b>Figura 16.</b> Ejemplos de imágenes de coral sano y coral blanqueado del dataset utilizado.</em>
+</p>
+
+A diferencia de TrashNet, este dataset no venía dividido en carpetas de *train/val/test*, por lo que la partición se hizo manualmente con `random_split`, usando una semilla fija para que la división fuera reproducible: 70 % para entrenamiento, 15 % para validación y 15 % para prueba. Además, al tratarse de fotografías submarinas de distintos tamaños (a diferencia de TrashNet, que ya venía uniforme), fue necesario aplicar un `Resize` a todas las imágenes antes de convertirlas a tensor, para que pudieran procesarse en lotes (*batches*) dentro del mismo modelo.
+
+### 5.2. Modelo 1: CNN entrenada desde cero
+
+Se construyó una CNN básica (misma arquitectura del Taller 4: bloques de convolución + ReLU + pooling, y un clasificador final), adaptada para recibir imágenes a color (3 canales RGB) en vez de escala de grises, ya que el color es un indicador relevante en el blanqueamiento de coral.
+
+<p align="center">
+  <img width="820" height="742" alt="image" src="https://github.com/user-attachments/assets/c94aab7b-7239-48a9-bc08-bc3b5fa62008" width="70%"/>
+  <br>
+  <em><b>Figura 17.</b> Pérdida de entrenamiento y métricas de validación (Accuracy y ROC-AUC) de la CNN entrenada desde cero sobre el dataset de coral.</em>
+</p>
+
+**Interpretación:** la pérdida disminuye de forma constante a lo largo de las 10 épocas, y tanto el accuracy como el ROC-AUC de validación muestran una tendencia de mejora sostenida, sin señales claras de sobreajuste dentro del rango entrenado.
+
+<p align="center">
+  <img width="475" height="387" alt="image" src="https://github.com/user-attachments/assets/006e3dff-16ec-49d9-95b9-1416b4253c71" width="70%"/>
+  <br>
+  <em><b>Figura 18.</b> Matriz de confusión de la CNN entrenada desde cero sobre el conjunto de prueba.</em>
+</p>
+
+**Interpretación:** en el conjunto de prueba, el modelo alcanzó una exactitud de 72.66 % y un ROC-AUC de 0.7750. Es un resultado considerablemente mejor que el obtenido en TrashNet con una CNN desde cero (54.36 %), posiblemente porque las diferencias visuales entre coral sano y blanqueado (color, textura) son más marcadas que entre vidrio y plástico en escala de grises.
+
+### 5.3. Data augmentation
+
+Se aplicó *data augmentation* (rotaciones leves y traslaciones de hasta 5 %) sobre las mismas imágenes de entrenamiento, para evaluar si generaba una mejora similar a la observada en TrashNet.
+
+<p align="center">
+  <img width="1053" height="226" alt="image" src="https://github.com/user-attachments/assets/350cb786-37bc-4abc-8a73-ddb40c79be53" />
+  <br>
+  <em><b>Figura 19.</b> Comparación de resultados en el conjunto de prueba entre la CNN desde cero sin augmentation y con augmentation.</em>
+</p>
+
+| Modelo | Test accuracy | Test ROC-AUC |
+|---|---|---|
+| CNN desde cero (sin augmentation) | 0.7266 | 0.7750 |
+| CNN desde cero (con augmentation) | 0.6835 | 0.7860 |
+
+**Interpretación:** a diferencia de TrashNet, donde el augmentation mejoró tanto el accuracy como el ROC-AUC, aquí el resultado fue mixto: el accuracy bajó levemente mientras que el ROC-AUC subió un poco. Esto sugiere que, con un dataset más pequeño como el de coral, las transformaciones leves no aportan tanta variedad nueva al modelo, y en algunos casos pueden introducir ruido que dificulta la clasificación exacta aunque mantenga (o mejore ligeramente) la capacidad de separar ambas clases.
+
+### 5.4. Transfer Learning
+
+Se aplicó transfer learning con **ResNet18** [7] preentrenada en ImageNet, siguiendo el mismo procedimiento de dos etapas usado en el Taller 4: primero se entrenó solo la última capa (extractor congelado), y después se realizó *fine-tuning* descongelando el último bloque convolucional (`layer4`).
+
+<p align="center">
+  <img width="1055" height="366" alt="image" src="https://github.com/user-attachments/assets/050e7b70-ae67-4378-84bd-79a1f3b23c99" />
+  <br>
+  <em><b>Figura 20.</b> Entrenamiento de la etapa 1 del transfer learning (ResNet18 con el extractor de características congelado, solo se entrena la capa final).</em>
+</p>
+
+<p align="center">
+  <img width="1053" height="480" alt="image" src="https://github.com/user-attachments/assets/432604de-3c43-4296-9146-30ae5ac0dd1c" />
+  <br>
+  <em><b>Figura 21.</b> Fine-tuning (etapa 2): se descongela "layer4" además de la capa final, permitiendo que la red ajuste sus filtros más profundos a las texturas del coral.</em>
+</p>
+
+| Etapa | Val accuracy (última época) | Val ROC-AUC (última época) |
+|---|---|---|
+| Etapa 1 (solo capa final) | 0.7246 | 0.8088 |
+| Etapa 2 (fine-tuning) | 0.7464 | 0.8750 |
+
+**Interpretación:** el fine-tuning mejoró notablemente el desempeño respecto a solo entrenar la capa final, lo que confirma que ajustar los filtros más profundos del extractor a las texturas específicas del coral aporta valor adicional, más allá de simplemente reutilizar las características generales aprendidas de ImageNet.
+
+En el conjunto de prueba, el modelo final obtuvo:
+
+    Transfer learning | test_acc=0.7626 | test_auc=0.8651
+
+                  precision    recall  f1-score   support
+               0     0.6988    0.8788    0.7785        66
+               1     0.8571    0.6575    0.7442        73
+
+    Matriz de confusión:
+    [[58  8]
+     [25 48]]
+
+**Interpretación:** el transfer learning superó tanto a la CNN desde cero como a la versión con augmentation, alcanzando el mejor accuracy (76.26 %) y el mejor ROC-AUC (0.8651) de los tres modelos. Sin embargo, la matriz de confusión muestra una asimetría relevante: el modelo detecta mejor los corales sanos (recall 0.88) que los blanqueados (recall 0.66), es decir, 25 de 73 corales blanqueados fueron clasificados erróneamente como sanos. Para una aplicación como LanternGuard, este tipo de error (falso negativo) sería el más costoso, ya que implicaría no detectar un problema real a tiempo — un punto importante a considerar si este enfoque se extendiera al monitoreo de biofouling.
+
+### 5.5. Comparación global
+
+    Resumen de resultados en test (Coral)
+    CNN desde cero (sin aug)   | acc=0.7266 | auc=0.7750
+    CNN desde cero (con aug)   | acc=0.6835 | auc=0.7860
+    Transfer learning (ResNet) | acc=0.7626 | auc=0.8651
+
+**Interpretación:** de los tres enfoques probados, el transfer learning fue el que mejor desempeño general obtuvo, replicando la misma tendencia observada en el Taller 4 con TrashNet: reutilizar una red preentrenada resulta más efectivo que entrenar una CNN desde cero cuando se dispone de un dataset relativamente pequeño, como es el caso de este dataset de coral.
+
+### 5.6. Interpretabilidad con Grad-CAM
+
+Se aplicó **Grad-CAM** [8] sobre el modelo con transfer learning, para visualizar en qué regiones de la imagen se enfocaba el modelo al tomar sus decisiones, comparando un ejemplo de cada clase.
+
+<p align="center">
+  <img width="935" height="326" alt="image" src="https://github.com/user-attachments/assets/e45a36f8-2c94-4207-9ba7-c9470b19b98d" />
+  <br>
+  <em><b>Figura 22.</b> Grad-CAM sobre un coral blanqueado, correctamente clasificado.</em>
+</p>
+
+<p align="center">
+  <img width="935" height="333" alt="image" src="https://github.com/user-attachments/assets/8c420b6c-c96b-487a-818b-caf662047d04" />
+  <br>
+  <em><b>Figura 23.</b> Grad-CAM sobre un coral sano, correctamente clasificado.</em>
+</p>
+
+**Interpretación:** en el caso del coral blanqueado, el mapa de calor se concentra principalmente en el cuerpo central del coral. En el caso del coral sano, en cambio, la mayor influencia se ubica en la parte superior/borde de la estructura, con poca influencia del agua de fondo en ambos casos. Esto indica que el modelo no usa el mismo patrón espacial para ambas clases, lo cual es una señal positiva: sugiere que está aprendiendo rasgos visuales distintivos del organismo y no simplemente memorizando la composición general de la imagen o fijándose en el entorno.
+
+### 5.7. Conclusión de la prueba de concepto
+
+Los resultados obtenidos muestran que un enfoque de clasificación de imágenes mediante CNN y transfer learning es viable para diferenciar estados visuales de un organismo marino a partir de fotografías, alcanzando un ROC-AUC de 0.8651 con relativamente poco ajuste. Esto respalda la factibilidad de aplicar un enfoque similar en LanternGuard, aunque los resultados también evidencian dos aspectos a considerar antes de una implementación real: (1) el desbalance en la detección de la clase de interés (recall más bajo en la clase "afectada"), que podría abordarse con más datos, balanceo de clases o ajuste del umbral de decisión; y (2) la necesidad de un dataset propio de conchas de abanico con biofouling, ya que este taller usó un dataset externo (coral) solo como validación conceptual de la metodología.
+
 ---
 
 ## 6. Conclusiones
+
+### CNN (Redes Neuronales Convolucionales)
+- Aprendí que una CNN entrenada desde cero puede funcionar, pero su desempeño depende mucho de la cantidad de datos disponibles: con pocas imágenes (como en TrashNet y en el dataset de coral), el modelo tiene una capacidad de generalización limitada.
+- El **transfer learning** fue, por lejos, la técnica que más mejoró los resultados en ambos casos (TrashNet y coral), lo que me enseñó que no siempre hay que "reinventar la rueda": reutilizar el conocimiento de un modelo preentrenado es mucho más eficiente cuando no se cuenta con un dataset grande.
+- El **data augmentation** no siempre garantiza una mejora; en TrashNet ayudó claramente, pero en el dataset de coral el efecto fue mixto. Esto me hizo entender que cada técnica hay que probarla y evaluarla en el contexto específico del problema, no asumir que siempre funciona igual.
+- **Grad-CAM** fue clave para no quedarme solo con el número de accuracy: me permitió confirmar que el modelo realmente se está fijando en el organismo (coral) y no en elementos irrelevantes del fondo, lo cual es importante para poder confiar en un modelo antes de usarlo en un contexto real como LanternGuard.
+- Es importante porque este es justamente el tipo de tarea (clasificación de imágenes de un organismo marino) que se necesitaría para automatizar la inspección visual en el monitoreo de conchas de abanico.
+
+### Keras (Clasificación binaria con redes densas)
+- Entendí de forma muy práctica qué es el **sobreajuste (overfitting)**: verlo directamente en las curvas de pérdida de entrenamiento vs. validación me ayudó a identificarlo mucho mejor que solo leyendo la definición.
+- Aprendí que un modelo más grande no es necesariamente mejor: reducir el número de neuronas hizo que el sobreajuste apareciera de forma más lenta y leve.
+- Técnicas como **regularización L2** y **Dropout** son herramientas concretas para combatir el sobreajuste, y cada una lo hace de forma distinta (penalizando pesos grandes vs. apagando neuronas aleatoriamente), lo cual amplía las opciones disponibles según el problema.
+- Es importante porque estos mismos conceptos (sobreajuste, regularización) no son exclusivos de texto: aplican igual a los modelos de imágenes de CNN, así que entenderlos aquí primero, en un ejemplo más simple, facilitó entender por qué en la CNN también hay que estar atentos a este fenómeno.
+
+### Perceptrón
+- Comprendí que el perceptrón es la unidad más básica detrás de redes mucho más complejas como las CNN: entender cómo combina entradas, pesos, sesgo y una función de activación ayuda a entender "por dentro" cómo funciona una neurona en general.
+- El experimento con las compuertas AND, OR y XOR fue clave para entender el concepto de **separabilidad lineal**: un solo perceptrón puede resolver problemas donde una línea recta separa las clases, pero no problemas como XOR, donde se necesitan varias neuronas trabajando en conjunto.
+- Esto es importante porque explica de forma muy directa por qué las redes neuronales modernas necesitan varias capas (arquitecturas profundas): un modelo con una sola "neurona" tiene límites claros, y agregar capas es lo que permite resolver problemas más complejos, como distinguir un coral sano de uno blanqueado.
+
+### Reflexión general
+- Los tres métodos, aunque son distintos, comparten una misma lógica de fondo: entrada → pesos/parámetros → función de activación → salida, y todos requieren evaluar con cuidado el resultado (no solo el accuracy) para saber si el modelo realmente está aprendiendo algo útil.
+- Este taller hizo que me de cuenta de que un enfoque de clasificación de imágenes con redes neuronales es viable para un proyecto como LanternGuard, aunque también deja claro que se necesitaría un dataset propio de conchas de abanico para llegar a una implementación real, en vez de depender de un dataset externo usado solo como prueba.
 
 ---
 
@@ -347,3 +486,5 @@ Como el dispositivo solo se encarga de medir (con el sensor de proximidad) y tom
 [13] M. Minsky and S. Papert, *Perceptrons: An Introduction to Computational Geometry*. Cambridge, MA, USA: MIT Press, 1969.
 
 [14] A. G. Howard *et al.*, "MobileNets: Efficient convolutional neural networks for mobile vision applications," *arXiv preprint arXiv:1704.04861*, 2017.
+
+[15] vencerlanz09, "Healthy and Bleached Corals Image Classification," Kaggle, 2022. [Online]. Available: https://www.kaggle.com/datasets/vencerlanz09/healthy-and-bleached-corals-image-classification
