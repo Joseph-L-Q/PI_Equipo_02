@@ -316,13 +316,21 @@ El funcionamiento del Perceptrón se basa en realizar una combinación entre las
 El proceso general es:
 
 Datos de entrada
+
 ↓
+
 Multiplicación por pesos
+
 ↓
+
 Suma de valores
+
 ↓
+
 Función de activación
+
 ↓
+
 Salida del modelo
 
 
@@ -463,40 +471,9 @@ Entre sus ventajas se encuentran:
 # Propuesta general del sistema LanternGuard
 
 El funcionamiento planteado para el sistema sería:
-┌─────────────────────────┐
-│ 📷 Captura de imagen    │
-│ Cámara en linterna      │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│ 🖼 Preprocesamiento     │
-│ Ajuste tamaño           │
-│ Normalización           │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│ 🧠 CNN + Transfer       │
-│ Learning                │
-│ Extracción patrones     │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│ 🔍 Análisis visual      │
-│ Texturas y formas       │
-│ Bioincrustación         │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│ 📊 Clasificación        │
-│ Normal                  │
-│ Advertencia             │
-│ Crítico                 │
-└───────────┬─────────────┘
-            ↓
-┌─────────────────────────┐
-│ 👨‍🌾 Resultado para      │
-│ acuicultor              │
-└─────────────────────────┘
+
+<img width="197" height="692" alt="image" src="https://github.com/user-attachments/assets/c1091db5-01b9-41c6-8e64-97aaba5ae83e" />
+
 
 > **Fig. 10. Flujo general de funcionamiento propuesto para el sistema LanternGuard.**
 
