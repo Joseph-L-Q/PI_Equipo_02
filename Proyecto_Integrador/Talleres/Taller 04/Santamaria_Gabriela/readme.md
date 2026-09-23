@@ -245,11 +245,17 @@ La estructura del modelo permitió que la red aprenda relaciones entre las palab
 El flujo general del modelo fue:
 
 Entrada de texto
+
 ↓
+
 Procesamiento numérico
+
 ↓
+
 Capas neuronales
+
 ↓
+
 Clasificación positiva o negativa 
 
 ---
