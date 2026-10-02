@@ -1168,6 +1168,8 @@ Con la mejora, los datos que llegan a Node-RED ya no son inventados: son las med
 
 ## 12. Comparación: datos simulados vs. datos reales
 
+<div align="center">
+  
 | Aspecto | Etapa 1 (simulado) | Etapa 2 (DHT11) |
 |---|---|---|
 | Origen de los datos | Números al azar (`random`) | Medición del sensor |
@@ -1176,6 +1178,8 @@ Con la mejora, los datos que llegan a Node-RED ya no son inventados: son las med
 | Reacciona al ambiente | No | Sí (por ejemplo, al soplar) |
 | ¿Sirve para tomar decisiones? | No | Sí, con el error propio del DHT11 |
 | Si el sensor falla | No aplica | El código lo detecta y no envía datos falsos |
+
+</div>
 
 ---
 
@@ -1194,7 +1198,9 @@ Durante esta parte del mini proyecto se logró:
 - Visualizar la información mediante un dashboard en Node-RED.
 - Controlar el LED del ESP32 Dev Kit 1 desde Node-RED.
 
-Después de comprobar estas funciones en la versión inicial, el dashboard fue ampliado con nuevas herramientas de monitoreo y control.
+Después de comprobar estas funciones en la versión inicial, se mejoró el código para publicar datos reales de temperatura y humedad con un sensor DHT11 y se comprobó que el sensor respondiera: vimos que la humedad subió de 55 % a 76 % al soplar aire sobre él.
+
+Asimismo, el dashboard fue ampliado con nuevas herramientas de monitoreo y control. 
 
 La versión mejorada permitió visualizar el valor actual de temperatura y humedad junto con sus respectivos valores mínimo, promedio y máximo. También se incorporó un gráfico histórico que permite observar la evolución de ambas variables.
 
@@ -1210,16 +1216,10 @@ Estas mejoras permitieron pasar de una interfaz básica de visualización y cont
 
 ## 14. Conclusiones
 
-La actividad permitió comprobar de manera práctica el funcionamiento de la comunicación MQTT utilizando un ESP32 Dev Kit 1.
+La actividad permitió comprobar de manera práctica y experimental la arquitectura de comunicación bidireccional basada en el protocolo MQTT sobre la tarjeta ESP32 Dev Kit 1. A través de esta implementación, el microcontrolador operó eficazmente como *Publisher*, enviando lecturas del entorno hacia la nube, y como *Subscriber*, recibiendo comandos remotos (`ON`/`OFF`) para la conmutación del LED azul integrado. Asimismo, la reestructuración y personalización de la jerarquía de tópicos bajo la nomenclatura del **Equipo 02** garantizó la segmentación adecuada de los mensajes en el broker, aislando el tráfico de datos para evitar colisiones e interferencias con los flujos de comunicación de los demás equipos.
 
-La modificación de los tópicos permitió identificar la comunicación correspondiente al **Equipo 02**, separándola de los demás equipos participantes.
+En la etapa de adquisición de datos, la transición desde variables aleatorias simuladas hacia la integración del sensor físico **DHT11** consolidó la capacidad del sistema para realizar mediciones ambientales reales, validando su sensibilidad ante variaciones térmicas y de humedad mediante pruebas dinámicas en el laboratorio. Cabe destacar la mantenibilidad del firmware implementado: al haber diseñado una estructura de mensaje empaquetado en formato JSON desde la fase inicial, el reemplazo de la fuente de datos solo requirió cuatro modificaciones puntuales en el código fuente, logrando que el dashboard en Node-RED continuara operando de forma transparente sin necesidad de reconfigurar la interfaz.
 
-También se comprobó que el ESP32 Dev Kit 1 puede trabajar de manera bidireccional mediante MQTT, publicando información hacia el broker y recibiendo comandos para controlar su LED integrado.
-
-El desarrollo inicial en Node-RED permitió comprobar la recepción de los datos y el envío de comandos `ON` y `OFF` desde una interfaz gráfica.
-
-Posteriormente, la mejora del dashboard permitió ampliar las posibilidades del sistema mediante el cálculo de estadísticas, la representación histórica de los datos, el monitoreo del estado de conexión, la configuración de un umbral de temperatura, la generación de alertas y nuevas opciones para controlar el LED.
-
-De esta manera, el mini proyecto muestra cómo **ESP32, MQTT y Node-RED** pueden integrarse no solo para transmitir datos, sino también para procesarlos, representarlos visualmente y generar acciones de control desde una misma interfaz.
+Por otro lado, la incorporación del método defensivo `isnan()` en el firmware aseguró la tolerancia a fallos del sistema, previniendo la transmisión de paquetes corruptos o lecturas nulas ante eventuales desconexiones del sensor. A nivel de supervisión, la plataforma Node-RED evolucionó desde un control instrumental básico hasta un entorno de monitoreo integral capaz de procesar estadísticas en tiempo real, graficar datos históricos, supervisar la conectividad del dispositivo y gestionar alertas automatizadas basadas en umbrales de temperatura. De este modo, la integración articulada entre el microcontrolador, el protocolo de mensajería ligera y la interfaz de control (ESP32 + MQTT + Node-RED) valida la arquitectura base para el proyecto **LanternGuard**, sentando los cimientos técnicos para la telemetría remota de biofouling y variables ambientales a mayor escala.
 
 ---
