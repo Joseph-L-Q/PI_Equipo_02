@@ -400,10 +400,14 @@ En la aplicación MyMQTT se visualizaron los mensajes correspondientes al tópic
 
 Además de publicar, el ESP32 **escucha** el tópico `equipo02/actuadores/led`. Entiende dos órdenes:
 
+<div align="center">
+  
 | Orden | Qué hace el ESP32 |
 |---|---|
 | `ON` | Enciende el LED azul de la tarjeta |
 | `OFF` | Apaga el LED azul |
+
+</div>
 
 El LED azul está conectado internamente al pin **GPIO2**. El código que lo controla es:
 
@@ -435,7 +439,7 @@ Comando: Apagar LED
 </p>
 
 <p align="center">
-  <img alt="image" src="https://github.com/user-attachments/assets/e54fc706-676e-4d56-8837-6990ba83d214" width="80%"/>
+  <img alt="image" src="--" width="80%"/>
   <br>
   <em><b>Figura 6.</b> ESP32 en la protoboard con el LED azul apagado (solo queda la luz roja de alimentación).</em>
 </p>
@@ -497,9 +501,9 @@ equipo02/actuadores/led
 Esta primera implementación permitió comprobar que Node-RED podía utilizarse tanto para recibir la información publicada por el ESP32 como para enviar instrucciones hacia el dispositivo.
 
 <p align="center">
-  <img width="1600" height="842" alt="image" src="https://github.com/user-attachments/assets/7da0cc5b-e4a7-45fa-b6c7-1d1c56dbebd8" />
+  <img alt="image" src="https://github.com/user-attachments/assets/7da0cc5b-e4a7-45fa-b6c7-1d1c56dbebd8"  width="80%"/>
   <br>
-  <em><b>Figura 8.</b> Versión inicial del dashboard desarrollado en Node-RED para visualizar los datos enviados por el ESP32 Dev Kit 1 y controlar el LED.</em>
+  <em><b>Figura 9.</b> Versión inicial del dashboard desarrollado en Node-RED para visualizar los datos enviados por el ESP32 Dev Kit 1 y controlar el LED.</em>
 </p>
 
 ### 9.2 Mejoras implementadas en el dashboard
@@ -569,15 +573,15 @@ equipo02/actuadores/led
 La interfaz incorpora un indicador gráfico que representa el último estado enviado. Cuando se utiliza el comando `ON`, el indicador cambia a **Encendido**; al utilizar `OFF`, cambia a **Apagado**.
 
 <p align="center">
-  <img width="1600" height="793" alt="image" src="https://github.com/user-attachments/assets/602af289-c757-49bf-8407-b8a897f22848" />
+  <img alt="image" src="https://github.com/user-attachments/assets/602af289-c757-49bf-8407-b8a897f22848"  width="80%"/>
   <br>
-  <em><b>Figura 9.</b> Versión mejorada del dashboard con el indicador del LED en estado apagado.</em>
+  <em><b>Figura 10.</b> Versión mejorada del dashboard con el indicador del LED en estado apagado.</em>
 </p>
 
 <p align="center">
-  <img width="1600" height="792" alt="image" src="https://github.com/user-attachments/assets/f5f3a76d-6b59-442f-8a31-5b84dcc091ec" />
+  <img alt="image" src="https://github.com/user-attachments/assets/f5f3a76d-6b59-442f-8a31-5b84dcc091ec"  width="80%"/>
   <br>
-  <em><b>Figura 10.</b> Versión mejorada del dashboard después de enviar el comando de encendido al LED del ESP32.</em>
+  <em><b>Figura 11.</b> Versión mejorada del dashboard después de enviar el comando de encendido al LED del ESP32.</em>
 </p>
 
 Además de los comandos individuales, se incorporó el botón:
@@ -700,9 +704,9 @@ ESP32 Dev Kit 1
 ```
 
 <p align="center">
-  <img width="1600" height="849" alt="image" src="https://github.com/user-attachments/assets/2163734e-61d9-4dbb-b37f-6c9be8f5ffcf" />
+  <img alt="image" src="https://github.com/user-attachments/assets/2163734e-61d9-4dbb-b37f-6c9be8f5ffcf" width="80%"/>
   <br>
-  <em><b>Figura 11.</b> Flujo inicial implementado en Node-RED para recibir datos mediante MQTT y enviar comandos al LED del ESP32.</em>
+  <em><b>Figura 12.</b> Flujo inicial implementado en Node-RED para recibir datos mediante MQTT y enviar comandos al LED del ESP32.</em>
 </p>
 
 ### 10.2 Flujo mejorado
@@ -841,9 +845,9 @@ Umbral inicial 30 °C
 Cuando la temperatura supera el umbral seleccionado, el sistema genera una notificación.
 
 <p align="center">
-  <img width="1600" height="847" alt="image" src="https://github.com/user-attachments/assets/7ce10bf3-1d90-45a0-b032-0b2bbcf2ca8c" />
+  <img alt="image" src="https://github.com/user-attachments/assets/7ce10bf3-1d90-45a0-b032-0b2bbcf2ca8c" width="80%"/>
   <br>
-  <em><b>Figura 12.</b> Flujo mejorado en Node-RED con procesamiento de datos, monitoreo del estado de conexión, control del LED, alertas y configuración del umbral de temperatura.</em>
+  <em><b>Figura 13.</b> Flujo mejorado en Node-RED con procesamiento de datos, monitoreo del estado de conexión, control del LED, alertas y configuración del umbral de temperatura.</em>
 </p>
 
 ---
