@@ -328,6 +328,16 @@ Al escribir la IP del ESP32 en el navegador del computador apareció el error `E
 
 Este resultado es el esperado: el programa de la Actividad 02 **no incluye un servidor web**, por lo que el ESP32 no tiene ningún servicio escuchando en el puerto 80 que responda a la petición del navegador. Para que la IP respondiera sería necesario implementar un servidor HTTP en el ESP32 y que el computador estuviera conectado a la misma red.
 
+### 6.7 Prueba de comunicación
+
+Para comprobar la comunicación entre la computadora y el microcontrolador ESP32 Dev Kit 1 se realizó una prueba utilizando el comando ping. La respuesta obtenida permitió verificar que existe comunicación entre ambos dispositivos dentro de la misma red WiFi.
+
+<p align="center">
+  <img alt="image" src="https://github.com/user-attachments/assets/7484d77b-ff45-40b6-a224-2db8d8a09ade" width="90%"/>
+  <br>
+  <em><b>Figura 8.</b> Prueba de comunicación entre la computadora y el ESP32.</em>
+</p>
+
 ---
 
 ## 7. Actividad 03: Enviando datos a la nube (potenciómetro → ThingSpeak)
@@ -438,13 +448,13 @@ Esta actividad integra las dos anteriores: la lectura confiable del sensor (Acti
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/383742ef-d200-4768-a3ac-d272dca2d44b" width="90%"/>
   <br>
-  <em><b>Figura 8.</b> Monitor serie: voltaje leído cada 0.5 s y confirmación de envío a ThingSpeak con el número de entrada.</em>
+  <em><b>Figura 9.</b> Monitor serie: voltaje leído cada 0.5 s y confirmación de envío a ThingSpeak con el número de entrada.</em>
 </p>
 
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/2e9d508c-a6f1-40bd-9e3e-09fca73c4f58" width="90%"/>
   <br>
-  <em><b>Figura 9.</b> Gráfico del Field 1 (Voltaje) en ThingSpeak mientras se gira el potenciómetro.</em>
+  <em><b>Figura 10.</b> Gráfico del Field 1 (Voltaje) en ThingSpeak mientras se gira el potenciómetro.</em>
 </p>
 
 **Interpretación:** el monitor serie muestra el voltaje local cada 0.5 s, mientras que ThingSpeak recibe un dato cada 20 s. Por eso el gráfico de la nube es una versión **submuestreada** de lo que se ve en el monitor: para que la variación se note, hay que mover el potenciómetro entre un envío y el siguiente. Cada respuesta con número de entrada mayor que cero confirma que ThingSpeak almacenó el dato. La gráfica muestra valores entre 0 V y aproximadamente 3.3 V, coherentes con el rango de alimentación del potenciómetro.
@@ -482,7 +492,7 @@ El LM35 requiere una alimentación mínima de unos 4 V [5], por eso se alimenta 
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/2832a6b1-5942-4f88-83c3-6e98b7ce94bf" width="90%"/>
   <br>
-  <em><b>Figura 10.</b> Conexión del sensor LM35 al ESP32 (+Vs a VIN, Vout a GPIO34 y GND a GND).</em>
+  <em><b>Figura 11.</b> Conexión del sensor LM35 al ESP32 (+Vs a VIN, Vout a GPIO34 y GND a GND).</em>
 </p>
 
 ### 8.4 Código
@@ -584,13 +594,13 @@ Se usó un campo distinto (Field 3) para que el gráfico de temperatura no se me
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/c8c0ff62-10d1-41f4-8f58-467947989810" width="90%"/>
   <br>
-  <em><b>Figura 11.</b> Monitor serie: temperatura en °C medida con el LM35 y confirmación de envío a ThingSpeak.</em>
+  <em><b>Figura 12.</b> Monitor serie: temperatura en °C medida con el LM35 y confirmación de envío a ThingSpeak.</em>
 </p>
 
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/f603ad1b-912a-4f3a-bad9-d9f31ac81d56" width="90%"/>
   <br>
-  <em><b>Figura 12.</b> Gráfico del Field 3 (Temperatura) en ThingSpeak.</em>
+  <em><b>Figura 13.</b> Gráfico del Field 3 (Temperatura) en ThingSpeak.</em>
 </p>
 
 **Interpretación:** a temperatura ambiente, el sensor entregó valores de aproximadamente **… °C**, coherentes con las condiciones del laboratorio. Para verificar que el sensor responde a cambios reales, se sujetó el LM35 entre los dedos: la temperatura subió de **… °C** a **… °C** en unos segundos y volvió a bajar al soltarlo. Ese comportamiento, visible tanto en el monitor serie como en la gráfica de la nube, confirma que la cadena sensor → ADC → Wi-Fi → ThingSpeak funciona de extremo a extremo.
@@ -598,7 +608,7 @@ Se usó un campo distinto (Field 3) para que el gráfico de temperatura no se me
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/9244f77f-8f1d-497f-b0d4-a3acbc29285e" width="90%"/>
   <br>
-  <em><b>Figura 13.</b> Prueba de respuesta: calentamiento del LM35 con la mano y aumento de la temperatura.</em>
+  <em><b>Figura 14.</b> Prueba de respuesta: calentamiento del LM35 con la mano y aumento de la temperatura.</em>
 </p>
 
 **Precisión:** se espera una diferencia de 1 a 2 °C respecto a un termómetro de referencia, principalmente por la no linealidad del ADC del ESP32 [2]. Esta incertidumbre es aceptable para monitoreo, pero debe considerarse si la aplicación requiere una medición más exacta.
@@ -723,25 +733,25 @@ Para encender o apagar el LED se abre una de estas URLs (con la Write API Key de
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/d88b51f2-1162-42c9-a4a5-d8759f6b5a24" width="90%"/>
   <br>
-  <em><b>Figura 14.</b> Número de entrada 73 al encender y 74 al apagar.</em>
+  <em><b>Figura 15.</b> Número de entrada 73 al encender y 74 al apagar.</em>
 </p>
 
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/0a034408-9cc4-43ef-a1c3-a53798009ab2" width="90%"/>
   <br>
-  <em><b>Figura 15.</b> Monitor serie: respuesta de la nube y mensajes «LED ENCENDIDO» y «LED APAGADO».</em>
+  <em><b>Figura 16.</b> Monitor serie: respuesta de la nube y mensajes «LED ENCENDIDO» y «LED APAGADO».</em>
 </p>
 
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/8092507c-639c-4642-9075-728657b65734" width="90%"/>
   <br>
-  <em><b>Figura 16.</b> Estado físico del LED: encendido tras el comando <code>field2=1</code> y apagado tras <code>field2=0</code>.</em>
+  <em><b>Figura 17.</b> Estado físico del LED: encendido tras el comando <code>field2=1</code> y apagado tras <code>field2=0</code>.</em>
 </p>
 
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/c552e336-8861-4e93-a4db-7aee0e29dc6c" width="90%"/>
   <br>
-  <em><b>Figura 17.</b> Gráfico del Field 2 (Led) en ThingSpeak, con las transiciones entre 1 y 0.</em>
+  <em><b>Figura 18.</b> Gráfico del Field 2 (Led) en ThingSpeak, con las transiciones entre 1 y 0.</em>
 </p>
 
 **Interpretación:** al abrir la URL de encendido, el navegador mostró el número **68**, y al abrir la de apagado, el número **69**. Ambos valores son mayores que cero, lo que confirma que ThingSpeak almacenó los comandos (si hubiera mostrado `0`, el comando habría sido rechazado). Esos números son el contador de entradas del canal, compartido con los datos de las otras actividades, por eso son altos. Pocos segundos después, el monitor serie del ESP32 registró el cambio de estado y el LED respondió. La gráfica del Field 2 muestra las transiciones entre 1 y 0 en el momento de cada comando.
