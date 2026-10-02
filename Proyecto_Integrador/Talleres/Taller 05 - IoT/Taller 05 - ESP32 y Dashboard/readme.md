@@ -56,6 +56,8 @@ Comunicar un ESP32 con un broker MQTT para enviar datos de sensores y controlar 
 
 ## 3. Materiales y herramientas utilizadas
 
+<div align="center">
+  
 | Elemento | Para qué se usó |
 |---|---|
 | ESP32 Dev Kit 1 | Cerebro del sistema: se conecta al Wi-Fi y habla con el broker |
@@ -71,11 +73,15 @@ Comunicar un ESP32 con un broker MQTT para enviar datos de sensores y controlar 
 | Biblioteca `ArduinoJson.h` | Armar los mensajes en formato JSON |
 | Biblioteca `DHT sensor library` (Adafruit) | Leer el sensor DHT11 |
 
+</div>
+
 ---
 
 ## 4. Conceptos usados
 
 Para el desarrollo de este taller fue fundamenta entender que MQTT es una forma muy ligera de enviar mensajes entre dispositivos. Funciona como un grupo de WhatsApp con temas:
+
+<div align="center">
 
 | Concepto | Explicación simple |
 |---|---|
@@ -84,6 +90,8 @@ Para el desarrollo de este taller fue fundamenta entender que MQTT es una forma 
 | **Publicar** | Enviar un mensaje a un tópico |
 | **Suscribirse** | Pedirle al broker que nos avise cuando llegue un mensaje a un tópico |
 | **Cliente** | Cualquier dispositivo o programa conectado al broker (el ESP32, Node-RED, la app del celular) |
+
+</div>
 
 ```mermaid
 flowchart LR
@@ -248,6 +256,8 @@ void loop() {
 
 ### 5.1 Explicación del código en palabras simples
 
+<div align="center">
+  
 | Parte del código | Qué hace |
 |---|---|
 | `#include <WiFi.h>` | Trae las funciones para conectarse al Wi-Fi |
@@ -265,6 +275,8 @@ void loop() {
 | `loop()` | Se repite siempre: mantiene la conexión y, cada 5 segundos, arma y envía el mensaje con los datos |
 | `millis()` en lugar de `delay()` | Permite esperar los 5 segundos **sin congelar** el ESP32, para que pueda seguir recibiendo órdenes |
 | `random(...)` | Inventa números al azar: así se simulan la temperatura y la humedad |
+
+</div>
 
 ---
 
@@ -304,11 +316,15 @@ Este tópico permite recibir los comandos utilizados para controlar el LED azul 
 
 En resumen, para que nuestros mensajes no se mezclen con los de los demás equipos, se hicieron los cambios mencionados anteriormente.
 
+<div align="center">
+
 | Elemento | Antes (taller) | Ahora (Equipo 02) |
-|---|---|---|
+| :--- | :--- | :--- |
 | Tópico de publicación | `taller/sensor/datos` | `equipo02/sensor/datos` |
 | Tópico de suscripción | `taller/actuadores/led` | `equipo02/actuadores/led` |
 | Identificador | `ESP32_Equipo02` | `ESP32_Equipo02` |
+
+</div>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/3f26d93f-ae3d-46a5-8287-d416b04a2c71" alt="Código con los tópicos del Equipo 02" width="80%"/>
