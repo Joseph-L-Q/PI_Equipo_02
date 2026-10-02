@@ -73,44 +73,56 @@ Comunicar un ESP32 con un broker MQTT para enviar datos de sensores y controlar 
 
 ---
 
-## 4. Configuración inicial del código
+## 4. Conceptos usados
 
-Para iniciar la actividad se utilizó el código proporcionado durante el taller.
+Para el desarrollo de este taller fue fundamenta entender que MQTT es una forma muy ligera de enviar mensajes entre dispositivos. Funciona como un grupo de WhatsApp con temas:
 
-El programa utiliza las siguientes bibliotecas:
+| Concepto | Explicación simple |
+|---|---|
+| **Broker** | La "oficina de correos": recibe todos los mensajes y los reparte a quien corresponde |
+| **Tópico** | El "tema" o dirección del mensaje, por ejemplo `equipo02/sensor/datos` |
+| **Publicar** | Enviar un mensaje a un tópico |
+| **Suscribirse** | Pedirle al broker que nos avise cuando llegue un mensaje a un tópico |
+| **Cliente** | Cualquier dispositivo o programa conectado al broker (el ESP32, Node-RED, la app del celular) |
+
+```mermaid
+flowchart LR
+  E["ESP32"] -- "publica en equipo02/sensor/datos" --> B(("Broker MQTT"))
+  B -- "entrega los datos" --> N["Node-RED (dashboard)"]
+  B -- "entrega los datos" --> C["App en el celular"]
+  N -- "publica ON / OFF en equipo02/actuadores/led" --> B
+  B -- "entrega el comando" --> E
+```
+
+El ESP32 **publica** datos y se **suscribe** a los comandos. Node-RED hace lo contrario: se suscribe a los datos y publica los comandos.
+
+---
+
+## 5. Configuración inicial del código
+
+Para empezar usamos el código que nos dio el profesor. Este código **no usa ningún sensor**: genera la temperatura y la humedad con números al azar.
+
+<details>
+<summary><b>Ver el código inicial completo</b></summary>
 
 ```cpp
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <ArduinoJson.h>
-```
-
-La biblioteca `WiFi.h` permite realizar la conexión del ESP32 Dev Kit 1 a una red Wi-Fi.
-
-La biblioteca `PubSubClient.h` permite establecer la comunicación mediante MQTT.
-
-La biblioteca `ArduinoJson.h` permite organizar la información que será enviada utilizando formato JSON.
-
-Código inicial : 
-#include <WiFi.h>
-#include <PubSubClient.h>
-#include <ArduinoJson.h>
 
 // ================= CONFIGURACIÓN WIFI =================
-const char* WIFI_SSID = "POCO_F5";
-const char* WIFI_PASS = "87654321";
+const char* WIFI_SSID = "TU_RED_WIFI";
+const char* WIFI_PASS = "TU_PASSWORD_WIFI";
 
 // ================= CONFIGURACIÓN MQTT =================
-// Puedes usar el dominio o la IP directa 108.181.195.81
-const char* MQTT_SERVER   = "mqtt.rcr-labs.com"; 
+const char* MQTT_SERVER   = "mqtt.rcr-labs.com";
 const int   MQTT_PORT     = 1883;
 
-// Credenciales configuradas en EMQX (Autenticación interna)
-const char* MQTT_USER     = "alumno";          // o equipo0, equipo1, etc.
-const char* MQTT_PASSWORD = "UPCH2026";
+const char* MQTT_USER     = "alumno";
+const char* MQTT_PASSWORD = "TU_PASSWORD_MQTT";
 const char* CLIENT_ID     = "ESP32_Equipo02";
 
-// Topics MQTT
+// Topics MQTT (versión del taller)
 const char* TOPIC_PUB     = "taller/sensor/datos";
 const char* TOPIC_SUB     = "taller/actuadores/led";
 
@@ -141,7 +153,7 @@ void setupWiFi() {
   Serial.println(WiFi.localIP());
 }
 
-// Recepción de mensajes suscritos (por si deseas controlar actuadores desde Node-RED)
+// Recepción de mensajes suscritos (control del LED desde Node-RED)
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Mensaje recibido en topic [");
   Serial.print(topic);
@@ -153,7 +165,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println(mensaje);
 
-  // Ejemplo: procesar comando
   if (String(topic) == TOPIC_SUB) {
     if (mensaje == "ON") {
       digitalWrite(2, HIGH);
@@ -169,12 +180,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Intentando conectar con broker MQTT...");
-    
-    // Autenticación con credenciales en EMQX
+
     if (client.connect(CLIENT_ID, MQTT_USER, MQTT_PASSWORD)) {
       Serial.println(" ¡Conectado!");
-      
-      // Suscribirse a tópicos de control si es necesario
       client.subscribe(TOPIC_SUB);
       Serial.print("Suscrito a: ");
       Serial.println(TOPIC_SUB);
@@ -193,22 +201,20 @@ void setup() {
 
   client.setServer(MQTT_SERVER, MQTT_PORT);
   client.setCallback(callback);
-  pinMode(2,OUTPUT);
+  pinMode(2, OUTPUT);
 }
 
 void loop() {
-  // Asegurar persistencia de la sesión MQTT
   if (!client.connected()) {
     reconnect();
   }
   client.loop();
 
-  // Envío periódico sin usar delay() para no congelar la recepción
   unsigned long ahora = millis();
   if (ahora - ultimoEnvio >= intervaloEnvio) {
     ultimoEnvio = ahora;
 
-    // Simulación de lectura de sensores (ej. DHT22 o BMP280)
+    // Simulación de lectura de sensores (números al azar)
     float tempSimulada = 24.0 + (random(0, 100) / 10.0);
     float humSimulada  = 55.0 + (random(0, 200) / 10.0);
 
@@ -230,24 +236,45 @@ void loop() {
     client.publish(TOPIC_PUB, jsonBuffer);
   }
 }
+```
 
-### Configuración de la red Wi-Fi
+</details>
 
-Para conectar el ESP32 Dev Kit 1 a la red Wi-Fi utilizada durante la prueba, se modificaron las credenciales de conexión de la siguiente manera:
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/bb8b158f-104b-4489-946d-dc50b5d5774a" alt="Código inicial del taller" width="80%"/>
+  <br>
+  <em><b>Figura 1.</b> Código inicial del taller para la conexión Wi-Fi y MQTT del ESP32.</em>
+</p>
 
-```cpp
-const char* WIFI_SSID = "POCO_F5";
-const char* WIFI_PASS = "87654321";
+### 5.1 Explicación del código en palabras simples
 
-<img width="1600" height="943" alt="image" src="https://github.com/user-attachments/assets/bb8b158f-104b-4489-946d-dc50b5d5774a" />
-
-**Figura 1. Código inicial utilizado para configurar la conexión Wi-Fi y la comunicación MQTT del ESP32 Dev Kit 1.**
+| Parte del código | Qué hace |
+|---|---|
+| `#include <WiFi.h>` | Trae las funciones para conectarse al Wi-Fi |
+| `#include <PubSubClient.h>` | Trae las funciones para usar MQTT |
+| `#include <ArduinoJson.h>` | Ayuda a armar el mensaje en formato JSON (ordenado en pares "nombre: valor") |
+| `WIFI_SSID` y `WIFI_PASS` | Nombre y contraseña del Wi-Fi que se va a usar |
+| `MQTT_SERVER` y `MQTT_PORT` | Dirección del broker y el "puerto" (la puerta) por donde se conecta; 1883 es la puerta estándar sin cifrado |
+| `MQTT_USER` y `MQTT_PASSWORD` | Usuario y contraseña para entrar al broker |
+| `TOPIC_PUB` | Tópico donde el ESP32 **publica** sus datos |
+| `TOPIC_SUB` | Tópico donde el ESP32 **escucha** las órdenes |
+| `setupWiFi()` | Se conecta al Wi-Fi y muestra la IP que le asignaron |
+| `callback()` | Se ejecuta sola cada vez que llega un mensaje. Si el mensaje es `ON` enciende el LED y si es `OFF` lo apaga |
+| `reconnect()` | Si se cae la conexión con el broker, intenta volver a conectarse y se suscribe de nuevo |
+| `setup()` | Se ejecuta una vez al inicio: prepara el Serial, el Wi-Fi, el broker y el LED |
+| `loop()` | Se repite siempre: mantiene la conexión y, cada 5 segundos, arma y envía el mensaje con los datos |
+| `millis()` en lugar de `delay()` | Permite esperar los 5 segundos **sin congelar** el ESP32, para que pueda seguir recibiendo órdenes |
+| `random(...)` | Inventa números al azar: así se simulan la temperatura y la humedad |
 
 ---
 
-## 5. Configuración para el Equipo 02
+### 5.2 Configuraciones adicionales
+
+Se modificó el identificador del equipo, la red Wi-Fi y los tópicos de publicación y suscripción.
 
 Después de revisar el código inicial, se realizaron las modificaciones correspondientes para identificar al **Equipo 02**.
+
+### Identificador
 
 El identificador utilizado para el dispositivo fue:
 
@@ -255,7 +282,8 @@ El identificador utilizado para el dispositivo fue:
 const char* CLIENT_ID = "ESP32_Equipo02";
 ```
 
-También se modificaron los tópicos de publicación y suscripción.
+Además, es importante resaltar que se modificaron las credenciales de conexión, las cuales no serán mostradas por temas de seguridad, y también se modificó 
+la ruta del tópico (TOPIC_PUB) de "taller/sensor/datos" a "equipo02/sensor/datos"; de manera similar con TOPIC_SUB que pasó de "taller/actuadores/led" a "equipo 02/actuadores/led"
 
 ### Tópico de publicación
 
@@ -273,10 +301,19 @@ const char* TOPIC_SUB = "equipo02/actuadores/led";
 
 Este tópico permite recibir los comandos utilizados para controlar el LED azul integrado del ESP32.
 
-<img width="1600" height="943" alt="image" src="https://github.com/user-attachments/assets/3f26d93f-ae3d-46a5-8287-d416b04a2c71" />
 
+En resumen, para que nuestros mensajes no se mezclen con los de los demás equipos, se hicieron los cambios mencionados anteriormente.
 
-**Figura 2. Código modificado con los tópicos MQTT correspondientes al Equipo 02.**
+| Elemento | Antes (taller) | Ahora (Equipo 02) |
+|---|---|---|
+| Tópico de publicación | `taller/sensor/datos` | `equipo02/sensor/datos` |
+| Tópico de suscripción | `taller/actuadores/led` | `equipo02/actuadores/led` |
+| Identificador | `ESP32_Equipo02` | `ESP32_Equipo02` |
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3f26d93f-ae3d-46a5-8287-d416b04a2c71" alt="Código con los tópicos del Equipo 02" width="80%"/>
+  <br>
+  <em><b>Figura 2.</b> Código modificado con los tópicos MQTT del Equipo 02.</em>
 
 ---
 
