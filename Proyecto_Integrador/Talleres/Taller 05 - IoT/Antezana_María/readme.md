@@ -47,6 +47,8 @@ Implementar y documentar una cadena IoT completa con un ESP32, desde la lectura 
 
 ## 3. Materiales y herramientas
 
+<div align="center">
+  
 | Elemento | Cantidad | Uso en el taller |
 |---|---|---|
 | ESP32 Dev Kit (NodeMCU ESP-32S) | 1 | Microcontrolador con Wi-Fi |
@@ -56,6 +58,8 @@ Implementar y documentar una cadena IoT completa con un ESP32, desde la lectura 
 | LED (integrado en el microcontrolador) | 1 | Actuador controlado desde la nube |
 | Celular con función de hotspot | 1 | Red Wi-Fi 2.4 GHz |
 | Cable USB de datos | 1 | Alimentación y programación |
+
+</div>
 
 <p align="center">
   <img alt="image" src="https://github.com/user-attachments/assets/00d950b3-27a4-4478-b9dc-1d36e455a083" width="90%"/>
@@ -101,20 +105,28 @@ ThingSpeak es una plataforma IoT de MathWorks organizada en **canales**, cada un
 
 Los dos servicios de la API REST que se utilizaron fueron:
 
+<div align="center">
+
 | Operación | Petición | Respuesta |
 |---|---|---|
 | Escribir un dato | `GET /update?api_key=<WRITE_KEY>&field1=<valor>` | Número de entrada (>0) si se guardó; `0` si fue rechazado |
 | Leer el último dato de un campo | `GET /channels/<ID>/fields/2/last.txt?api_key=<READ_KEY>` | Último valor del campo |
 
+</div>
+
 En la cuenta gratuita existe un intervalo mínimo de **15 segundos** entre escrituras al mismo canal [3], por lo que los programas envían un dato cada 20 s.
 
 El canal del equipo se configuró con los siguientes campos:
+
+<div align="center">
 
 | Campo | Nombre | Contenido | Actividad |
 |---|---|---|---|
 | Field 1 | Voltaje | Voltaje del potenciómetro (V) | 03 |
 | Field 2 | Led | Estado del LED (1 = encendido, 0 = apagado) | 05 |
 | Field 3 | Temperatura (°C) | Temperatura medida con el LM35 | 04 |
+
+</div>
 
 <p align="center">
   <img src="URL_FIGURA_2" alt="Configuración del canal en ThingSpeak" width="90%"/>
@@ -132,11 +144,15 @@ El canal del equipo se configuró con los siguientes campos:
 
 ### 5.2 Conexiones
 
+<div align="center">
+  
 | Pin del potenciómetro | Pin del ESP32 |
 |---|---|
 | GND | GND |
 | VCC | 3V3 |
 | SIG (señal) | GPIO34 |
+
+</div>
 
 El potenciómetro se alimenta con **3.3 V** y no con 5 V, porque los pines del ESP32 toleran como máximo 3.3 V y una señal mayor podría dañarlos.
 
@@ -187,6 +203,8 @@ void loop() {
 
 ### 5.4 Explicación del código
 
+<div align="center">
+  
 | Bloque | Qué hace | Por qué es necesario |
 |---|---|---|
 | `Serial.begin(115200)` | Abre la comunicación serie a 115200 baudios | El monitor serie debe estar a la misma velocidad; si no, aparecen caracteres ilegibles |
@@ -196,6 +214,8 @@ void loop() {
 | `suma / (float)NUM_MUESTRAS` | Calcula la media | El `(float)` evita la división entera, que truncaría los decimales |
 | `promedio * VREF / ADC_MAX` | Convierte el valor del ADC a voltaje | Es la **conversión** solicitada |
 | `Serial.print(..., 2)` | Imprime con 2 decimales | Presenta el voltaje de forma legible |
+
+</div>
 
 **Sobre el promediado.** Si el ruido de cada lectura es aleatorio e independiente, promediar $N$ muestras reduce su desviación estándar en un factor $\sqrt{N}$. Con $N = 32$ la reducción es de aproximadamente $\sqrt{32} \approx 5.7$ veces. A cambio, cada medida tarda unos $32 \times 2 = 64$ ms, un costo despreciable para una variable que cambia lentamente.
 
@@ -295,6 +315,8 @@ void loop() {
 
 ### 6.4 Explicación del código
 
+<div align="center">
+
 | Bloque | Qué hace |
 |---|---|
 | `WiFi.mode(WIFI_STA)` y `WiFi.disconnect()` | Configura el ESP32 como cliente y borra cualquier conexión previa |
@@ -304,6 +326,8 @@ void loop() {
 | Bucle `while` con `millis()` | Espera la conexión con un **tiempo máximo de 15 s**, para no bloquearse indefinidamente |
 | `WiFi.localIP()` | Devuelve la dirección IP asignada por el servidor DHCP del celular |
 | `loop()` | Verifica el estado y reconecta si se pierde el enlace |
+
+</div>
 
 ### 6.5 Resultados
 
@@ -433,6 +457,8 @@ void loop() {
 
 ### 7.3 Explicación del código
 
+<div align="center">
+  
 | Bloque | Qué hace |
 |---|---|
 | `leerVoltaje()` | Reutiliza el promediado y la conversión de la Actividad 01 |
@@ -440,6 +466,8 @@ void loop() {
 | `enviarThingSpeak()` | Arma la URL con la API key y el valor en `field1`, y envía una petición `GET` |
 | `http.getString()` | Lee la respuesta: el número de entrada si el dato se guardó, o `0` si fue rechazado |
 | `millis() - ultimoEnvio >= INTERVALO` | Temporiza el envío **sin bloquear** el programa con `delay()` y respeta el mínimo de 15 s de ThingSpeak |
+
+</div>
 
 Esta actividad integra las dos anteriores: la lectura confiable del sensor (Actividad 01) y la conectividad (Actividad 02).
 
@@ -481,11 +509,15 @@ Por ejemplo, a 25 °C la salida es de 250 mV. Con la resolución del ADC (≈ 0.
 
 Con la cara plana del sensor (donde dice LM35) hacia el frente y las patas hacia abajo, de izquierda a derecha:
 
+<div align="center">
+  
 | Pata del LM35 | Pin del ESP32 |
 |---|---|
 | +Vs (izquierda) | VIN (5 V) |
 | Vout (centro) | GPIO34 |
 | GND (derecha) | GND |
+
+</div>
 
 El LM35 requiere una alimentación mínima de unos 4 V [5], por eso se alimenta con **5 V (VIN)** y no con 3.3 V. La salida a temperatura ambiente es de solo unas decenas de milivoltios por encima de 0 (≈ 0.25 V a 25 °C), por lo que **no supera los 3.3 V** que tolera el pin de entrada.
 
@@ -580,12 +612,16 @@ void loop() {
 
 ### 8.5 Explicación del código
 
+<div align="center">
+
 | Bloque | Qué hace | Diferencia respecto a la Actividad 03 |
 |---|---|---|
 | `analogReadMilliVolts()` | Lee el pin y devuelve directamente **milivoltios**, usando la calibración de fábrica del chip | Antes se convertía manualmente de ADC a voltios |
 | 64 muestras promediadas | Reduce el ruido de la lectura | Antes eran 32 |
 | `mV / 10.0` | Convierte milivoltios a °C con la sensibilidad del LM35 | Sustituye la conversión a voltaje |
 | `&field3=` | Envía el dato al **Field 3** (Temperatura) | Antes se enviaba al Field 1 (Voltaje) |
+
+</div>
 
 Se usó un campo distinto (Field 3) para que el gráfico de temperatura no se mezcle con los datos del potenciómetro del Field 1, que corresponden a otra magnitud y a otra actividad.
 
@@ -710,6 +746,8 @@ void loop() {
 
 ### 9.4 Explicación del código
 
+<div align="center">
+  
 | Bloque | Qué hace |
 |---|---|
 | `TS_READ_KEY` | Clave de **solo lectura**: el ESP32 nunca necesita la clave de escritura para esta función |
@@ -719,14 +757,20 @@ void loop() {
 | `digitalWrite(LED_PIN, ...)` | Enciende o apaga el LED |
 | `pinMode(LED_PIN, OUTPUT)` | Configura el pin como salida |
 
+</div>
+
 ### 9.5 Comandos desde el navegador
 
 Para encender o apagar el LED se abre una de estas URLs (con la Write API Key del canal):
 
+<div align="center">
+  
 | Acción | URL |
 |---|---|
 | Encender | `https://api.thingspeak.com/update?api_key=L7ZNJ5Z633EXMQE9&field2=1` |
 | Apagar | `https://api.thingspeak.com/update?api_key=L7ZNJ5Z633EXMQE9&field2=0` |
+
+</div>
 
 ### 9.6 Resultados
 
@@ -764,12 +808,16 @@ Para encender o apagar el LED se abre una de estas URLs (con la Write API Key de
 
 Las cinco actividades se corresponden directamente con la arquitectura propuesta para LanternGuard, donde el dispositivo mide, el procesamiento pesado se realiza en la nube y el resultado llega a un aplicativo:
 
+<div align="center">
+  
 | Actividad del taller | Equivalente en LanternGuard |
 |---|---|
 | 01. Lectura analógica con promediado y conversión | Lectura confiable del sensor de proximidad que estima el volumen de biofouling; el promediado reduce el ruido de la señal |
 | 02. Conexión a una red Wi-Fi | Enlace de comunicación del dispositivo (en campo se usarían las antenas de radio del equipo, pero la lógica de conexión y reconexión es la misma) |
 | 03 y 04. Envío de datos a la nube y gráfico en tiempo real | Envío periódico de las lecturas al servidor y visualización del volumen de biofouling en el aplicativo |
 | 05. Control remoto desde la nube | Envío de comandos al dispositivo (por ejemplo, cambiar la frecuencia de medición o activar una señal de alerta) |
+
+</div>
 
 Además, la restricción de **un envío cada 15–20 s** de ThingSpeak refleja una condición real del proyecto: el dispositivo funciona con pilas y panel solar, por lo que conviene enviar datos de forma espaciada y no de forma continua, lo que reduce el consumo de energía.
 
