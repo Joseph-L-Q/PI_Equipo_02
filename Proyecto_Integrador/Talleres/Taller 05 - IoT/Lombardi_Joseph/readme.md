@@ -4,7 +4,7 @@
 
 **Curso:** Proyectos de Ingeniería — Taller de Internet de las Cosas (IoT)
 
-**Integrante:** [Joseph Lombardi]
+**Integrante:** Joseph Lombardi
 
 **Hardware utilizado:** ESP32 Dev Kit, kit de sensores, protoboard, cables jumper y multímetro.
 
@@ -86,9 +86,9 @@ El potenciómetro se conectó de la siguiente manera:
 
 La señal del potenciómetro se conectó al GPIO34 del ESP32 para realizar las lecturas analógicas.
 
-[https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014438.png]
+![Figura 1](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014438.png?raw=true)
 
-*Figura 2. Conexión del potenciómetro al ESP32.*
+*Figura 1. Conexión del potenciómetro al ESP32.*
 
 ## Código
 
@@ -144,9 +144,9 @@ De esta manera se puede observar directamente un valor de voltaje en lugar de so
 
 ## Resultados
 
-[https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014445.png]
+![Figura 2](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014445.png?raw=true)
 
-*Figura 3. Lectura obtenida con el potenciómetro.*
+*Figura 2. Lectura obtenida con el potenciómetro.*
 
 ### Interpretación
 
@@ -227,9 +227,9 @@ WiFi.localIP();
 
 ## Resultados
 
-[https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014544.png]
+![Figura 3](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014544.png?raw=true)
 
-*Figura 5. ESP32 conectado a la red Wi-Fi y dirección IP obtenida.*
+*Figura 3. ESP32 conectado a la red Wi-Fi y dirección IP obtenida.*
 
 ### Interpretación
 
@@ -255,9 +255,9 @@ Se creó un canal en ThingSpeak donde se almacenarían los datos enviados por el
 
 Se configuró un campo para guardar los valores obtenidos mediante el potenciómetro.
 
-**Imagen 6:** PEGA_AQUI_EL_LINK_DE_LA_CONFIGURACION_DE_THINGSPEAK
+![Figura 4](PEGA_AQUI_EL_LINK_DE_LA_CONFIGURACION_DE_THINGSPEAK)
 
-*Figura 6. Canal configurado en ThingSpeak.*
+*Figura 4. Canal configurado en ThingSpeak.*
 
 ## Código
 
@@ -345,13 +345,13 @@ para enviar la información hacia el canal.
 
 ## Resultados
 
-[https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014701.png]
+![Figura 5](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014701.png?raw=true)
 
-*Figura 7. Lectura del potenciómetro y envío de datos hacia ThingSpeak.*
+*Figura 5. Lectura del potenciómetro y envío de datos hacia ThingSpeak.*
 
-[https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014711.png]
+![Figura 6](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014711.png?raw=true)
 
-*Figura 8. Variación de los datos recibidos en ThingSpeak.*
+*Figura 6. Variación de los datos recibidos en ThingSpeak.*
 
 ### Interpretación
 
@@ -379,9 +379,9 @@ Posteriormente, la información obtenida es enviada mediante la conexión Wi-Fi 
 
 De esta manera, los datos pueden visualizarse de forma remota.
 
-[https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014729.png]
+![Figura 7](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014729.png?raw=true)
 
-*Figura 9. Conexión del sensor utilizado en la Actividad 04.*
+*Figura 7. Conexión del sensor utilizado en la Actividad 04.*
 
 ## Código
 
@@ -391,13 +391,13 @@ De esta manera, los datos pueden visualizarse de forma remota.
 
 ## Resultados
 
-[https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014751.png]
+![Figura 8](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014751.png?raw=true)
 
-*Figura 10. Lecturas obtenidas por el sensor.*
+*Figura 8. Lecturas obtenidas por el sensor.*
 
-[https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014812.png]
+![Figura 9](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014812.png?raw=true)
 
-*Figura 11. Datos enviados y visualizados en la plataforma IoT.*
+*Figura 9. Datos enviados y visualizados en la plataforma IoT.*
 
 ### Interpretación
 
@@ -435,9 +435,9 @@ Cuando se recibe la orden de apagado, coloca el pin en estado LOW.
 
 ## Resultados
 
-[https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014907.png]
+![Figura 10](https://github.com/Joseph-L-Q/PI_Equipo_02/blob/3f62288409db33208c72f3af6be81879bd19d7eb/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-02%20014907.png?raw=true)
 
-*Figura 14. LED encendido luego de recibir la orden.*
+*Figura 10. LED encendido luego de recibir la orden.*
 
 ### Interpretación
 
