@@ -392,7 +392,7 @@ En la aplicación MyMQTT se visualizaron los mensajes correspondientes al tópic
   <em><b>Figura 4.</b> Mensajes del ESP32 recibidos en el celular mediante el tópico <code>equipo02/sensor/datos</code>.</em>
 </p>
 
-**Interpretación:** la app muestra los mismos mensajes que imprime el ESP32. Eso confirma que los datos salen del ESP32, pasan por el broker y llegan a otro dispositivo. Además, los valores cambian mucho de un mensaje a otro sin ningún motivo (por ejemplo, la temperatura salta de 25.7 °C a 33.9 °C en 5 segundos). Eso es normal en datos simulados, pero no ocurre en el mundo real; lo veremos en la sección 11.
+**Interpretación:** la app muestra los mismos mensajes que imprime el ESP32. Eso confirma que los datos salen del ESP32, pasan por el broker y llegan a otro dispositivo. Además, los valores cambian mucho de un mensaje a otro sin ningún motivo (por ejemplo, la temperatura salta de 26.7 °C a 31.9 °C en 5 segundos). Eso es normal en datos simulados, pero no ocurre en el mundo real; lo veremos en la sección 11.
 
 ---
 
