@@ -372,20 +372,27 @@ equipo02/sensor/datos
 
 En esta parte del proyecto, los valores de temperatura y humedad fueron **simulados mediante el código**. No corresponden a lecturas realizadas mediante sensores físicos.
 
+<p align="center">
+  <img src="URL_IMG_SERIAL_SUSCRITO" alt="Monitor serie publicando datos simulados" width="80%"/>
+  <br>
+  <em><b>Figura 3.</b> Monitor serie: el ESP32 se suscribe al tópico del LED y publica datos simulados cada 5 segundos.</em>
+</p>
+
 ---
 
 ## 7. Verificación de la publicación MQTT
 
 Para comprobar que los mensajes enviados desde el ESP32 Dev Kit 1 llegaban correctamente al broker MQTT, se realizó una prueba utilizando un cliente MQTT desde un smartphone.
 
-En la aplicación se visualizaron los mensajes correspondientes al tópico del Equipo 02.
+En la aplicación MyMQTT se visualizaron los mensajes correspondientes al tópico del Equipo 02.
 
-<img width="720" height="1600" alt="image" src="https://github.com/user-attachments/assets/0b7cb643-f5fa-4b45-96dd-2b1c82a731f7" />
+<p align="center">
+  <img alt="image" src="https://github.com/user-attachments/assets/0b7cb643-f5fa-4b45-96dd-2b1c82a731f7" width="30%"/>
+  <br>
+  <em><b>Figura 4.</b> Mensajes del ESP32 recibidos en el celular mediante el tópico <code>equipo02/sensor/datos</code>.</em>
+</p>
 
-
-**Figura 3. Recepción en un smartphone de los mensajes publicados por el ESP32 Dev Kit 1 mediante el tópico `equipo02/sensor/datos`.**
-
-Esta prueba permitió verificar que el dispositivo estaba publicando correctamente la información mediante MQTT.
+**Interpretación:** la app muestra los mismos mensajes que imprime el ESP32. Eso confirma que los datos salen del ESP32, pasan por el broker y llegan a otro dispositivo. Además, los valores cambian mucho de un mensaje a otro sin ningún motivo (por ejemplo, la temperatura salta de 25.7 °C a 33.9 °C en 5 segundos). Eso es normal en datos simulados, pero no ocurre en el mundo real; lo veremos en la sección 11.
 
 ---
 
