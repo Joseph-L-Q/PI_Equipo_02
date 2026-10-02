@@ -1,0 +1,774 @@
+[
+    {
+        "id": "fead62247fb3efa1",
+        "type": "tab",
+        "label": "Equipo 02",
+        "disabled": false,
+        "info": "Dashboard del Equipo 02"
+    },
+    {
+        "id": "01ed2c9fa261d144",
+        "type": "mqtt in",
+        "z": "fead62247fb3efa1",
+        "name": "Datos ESP32",
+        "topic": "equipo02/sensor/datos",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "ac5b64dbbbde289c",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 110,
+        "y": 200,
+        "wires": [
+            [
+                "dc28b8d2d960b17c",
+                "41436130df8e20a7",
+                "f6c03caf112407ad"
+            ]
+        ]
+    },
+    {
+        "id": "f6c03caf112407ad",
+        "type": "debug",
+        "z": "fead62247fb3efa1",
+        "name": "Ver mensajes",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 330,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "41436130df8e20a7",
+        "type": "trigger",
+        "z": "fead62247fb3efa1",
+        "name": "Sin datos 15 s",
+        "op1": "",
+        "op2": "{\"online\":false}",
+        "op1type": "nul",
+        "op2type": "json",
+        "duration": "15",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "s",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "906df737bf6dcaae"
+            ]
+        ]
+    },
+    {
+        "id": "dc28b8d2d960b17c",
+        "type": "function",
+        "z": "fead62247fb3efa1",
+        "name": "Procesar datos",
+        "func": "// Botón \"Reiniciar estadísticas\"\nif (msg.topic === 'reset') {\n    context.set('s', null);\n    return [{ payload: null }, { payload: null }, { payload: [] }, null, null];\n}\nconst p = msg.payload;\nif (!p || typeof p !== 'object') return null;\nconst t = Number(p.temperatura);\nconst h = Number(p.humedad);\nif (isNaN(t) || isNaN(h)) return null;\n\nconst total = (context.get('total') || 0) + 1;\ncontext.set('total', total);\nconst hora = new Date().toLocaleTimeString('es-PE', { timeZone: 'America/Lima' });\n\n// Lecturas imposibles para un DHT (sensor mal leído): se descartan y se avisa\nif (t < -20 || t > 60 || h < 0 || h > 100) {\n    node.warn('Lectura descartada: T=' + t + ' H=' + h);\n    return [null, null, null,\n        { payload: { online: true, disp: p.dispositivo, hora: hora, n: total, aviso: 'Lectura fuera de rango descartada (T=' + t + ' °C). Revisen el sensor.' } },\n        null];\n}\n\nlet s = context.get('s') || { n: 0, tmin: t, tmax: t, tsum: 0, hmin: h, hmax: h, hsum: 0 };\ns.n++;\ns.tmin = Math.min(s.tmin, t); s.tmax = Math.max(s.tmax, t); s.tsum += t;\ns.hmin = Math.min(s.hmin, h); s.hmax = Math.max(s.hmax, h); s.hsum += h;\ncontext.set('s', s);\n\nconst umbral = flow.get('umbral') ?? 30;\nconst enAlerta = t > umbral;\nlet aviso = null;\nif (enAlerta && !context.get('alertaActiva')) {\n    aviso = { payload: 'Temperatura alta: ' + t.toFixed(1) + ' °C (umbral ' + umbral + ' °C)' };\n}\ncontext.set('alertaActiva', enAlerta);\nreturn [\n    { payload: { v: t, min: s.tmin, avg: s.tsum / s.n, max: s.tmax, umbral: umbral, alerta: enAlerta } }, // 1 tarjeta temperatura\n    { payload: { v: h, min: s.hmin, avg: s.hsum / s.n, max: s.hmax } },                                   // 2 tarjeta humedad\n    [ { topic: 'Temperatura (°C)', payload: t }, { topic: 'Humedad (%)', payload: h } ],                  // 3 gráfico\n    { payload: { online: true, disp: p.dispositivo, hora: hora, n: total } },                             // 4 encabezado\n    aviso                                                                                                 // 5 notificación\n];",
+        "outputs": 5,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "15ee87c00fb25b2c"
+            ],
+            [
+                "6d3807f2c3dc6023"
+            ],
+            [
+                "40d936667b564fca"
+            ],
+            [
+                "906df737bf6dcaae"
+            ],
+            [
+                "b56426e0180de328"
+            ]
+        ]
+    },
+    {
+        "id": "906df737bf6dcaae",
+        "type": "ui-template",
+        "z": "fead62247fb3efa1",
+        "group": "3425e70e0bc27953",
+        "page": "",
+        "ui": "",
+        "name": "Encabezado",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n  <div class=\"eq2-card\">\n    <div class=\"eq2-row\">\n      <div style=\"display:flex;align-items:center\">\n        <img v-if=\"fotoUrl && fotoOk\" class=\"eq2-foto\" :src=\"fotoUrl\" alt=\"Foto del equipo\" @error=\"fotoOk = false\">\n        <div>\n          <div class=\"eq2-title\">Equipo 02</div>\n          <div class=\"eq2-sub\">Estación de temperatura y humedad · ESP32 + DHT11 · MQTT</div>\n        </div>\n      </div>\n      <div style=\"display:flex;align-items:center\">\n        <div>\n          <div style=\"text-align:right\">\n            <div class=\"eq2-pill\" :class=\"estado\">\n              <span class=\"dot\"></span>{{ estado === 'on' ? 'EN LÍNEA' : (estado === 'off' ? 'SIN SEÑAL' : 'ESPERANDO DATOS') }}\n            </div>\n          </div>\n          <div class=\"eq2-meta\" v-if=\"estado === 'on'\">{{ s.disp }} · última lectura {{ s.hora }} · {{ s.n }} lecturas</div>\n          <div class=\"eq2-meta eq2-warn\" v-if=\"estado === 'on' && s.aviso\">{{ s.aviso }}</div>\n          <div class=\"eq2-meta\" v-else-if=\"estado === 'off'\">Sin datos hace más de 15 s</div>\n        </div>\n        <img v-if=\"logoUrl && logoOk\" class=\"eq2-logo\" :src=\"logoUrl\" alt=\"Logo\" @error=\"logoOk = false\">\n      </div>\n    </div>\n  </div>\n</template>\n<script>\nexport default {\n  data () {\n    return {\n      // ====== IMÁGENES: cambia solo estas dos líneas ======\n      fotoUrl: 'https://raw.githubusercontent.com/Joseph-L-Q/PI_Equipo_02/main/Recursos/Im%C3%A1genes/Grupo2.png',\n      logoUrl: '',   // pega aquí, entre las comillas, la URL del logo (debe terminar en .png, .jpg o .svg)\n      // ====================================================\n      fotoOk: true,\n      logoOk: true\n    }\n  },\n  computed: {\n    s () { return (this.msg && this.msg.payload && typeof this.msg.payload === 'object') ? this.msg.payload : null },\n    estado () { return this.s ? (this.s.online ? 'on' : 'off') : 'wait' }\n  }\n}\n</script>\n<style>\n.eq2-card { background:#1b2130; border:1px solid #2c3446; border-radius:12px; padding:16px 18px; color:#e6e9ef; }\n.eq2-muted { color:#8d97ab; }\n.eq2-label { font-size:.78rem; font-weight:700; letter-spacing:1.4px; color:#8d97ab; display:flex; align-items:center; gap:6px; }\n.eq2-row { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }\n.eq2-val { font-size:3.4rem; font-weight:700; line-height:1.05; margin:10px 0 12px; font-variant-numeric:tabular-nums; }\n.eq2-unit { font-size:1.3rem; font-weight:500; color:#8d97ab; margin-left:6px; }\n.eq2-track { position:relative; height:12px; border-radius:6px; background:#2c3446; overflow:visible; }\n.eq2-fill { height:100%; border-radius:6px; transition:width .8s ease; }\n.eq2-fill.temp { background:linear-gradient(90deg,#fbbf24,#f97316); }\n.eq2-fill.hum { background:linear-gradient(90deg,#2dd4bf,#38bdf8); }\n.eq2-mark { position:absolute; top:-5px; width:2px; height:22px; background:#f87171; }\n.eq2-scale { display:flex; justify-content:space-between; font-size:.72rem; color:#8d97ab; margin-top:6px; }\n.eq2-stats { display:flex; gap:18px; margin-top:12px; font-size:.86rem; color:#8d97ab; }\n.eq2-stats b { color:#e6e9ef; font-weight:600; }\n.eq2-badge { font-size:.7rem; font-weight:700; letter-spacing:1px; padding:3px 9px; border-radius:20px; background:#f87171; color:#1b2130; }\n.eq2-card.alert { border-color:#f87171; }\n.eq2-title { font-size:1.45rem; font-weight:700; }\n.eq2-sub { font-size:.88rem; color:#8d97ab; margin-top:2px; }\n.eq2-pill { display:inline-flex; align-items:center; gap:8px; font-size:.8rem; font-weight:700; letter-spacing:1px; padding:6px 14px; border-radius:20px; background:#2c3446; color:#8d97ab; }\n.eq2-pill .dot { width:9px; height:9px; border-radius:50%; background:#8d97ab; }\n.eq2-pill.on { background:rgba(45,212,191,.14); color:#2dd4bf; }\n.eq2-pill.on .dot { background:#2dd4bf; box-shadow:0 0 0 0 rgba(45,212,191,.6); animation:eq2pulse 1.6s infinite; }\n.eq2-pill.off { background:rgba(248,113,113,.14); color:#f87171; }\n.eq2-pill.off .dot { background:#f87171; }\n@keyframes eq2pulse { 0%{box-shadow:0 0 0 0 rgba(45,212,191,.55)} 70%{box-shadow:0 0 0 9px rgba(45,212,191,0)} 100%{box-shadow:0 0 0 0 rgba(45,212,191,0)} }\n.eq2-meta { font-size:.82rem; color:#8d97ab; text-align:right; margin-top:6px; }\n.eq2-logo { height:44px; margin-right:14px; border-radius:6px; }\n.eq2-led { display:flex; align-items:center; gap:16px; }\n.eq2-bulb { width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#2c3446; color:#8d97ab; transition:all .25s ease; }\n.eq2-bulb.on { background:#fbbf24; color:#1b2130; box-shadow:0 0 24px 6px rgba(251,191,36,.55); }\n.eq2-led-state { font-size:1.25rem; font-weight:700; }\n.eq2-led-state.on { color:#fbbf24; }\n\n/* Oculta los grupos vacíos de versiones anteriores */\n#nrdb-ui-group-10bda0b25743b4f3,\n#nrdb-ui-group-v3_g_head,\n#nrdb-ui-group-v3_g_hum,\n#nrdb-ui-group-v3_g_ctl,\n#nrdb-ui-group-v3_g_est,\n#nrdb-ui-group-v3_g_hist,\n#nrdb-ui-group-v3_g_alr,\n#nrdb-ui-group-grp_head_eq2,\n#nrdb-ui-group-grp_estado_eq2,\n#nrdb-ui-group-grp_ctl_eq2,\n#nrdb-ui-group-grp_hist_eq2,\n#nrdb-ui-group-grp_stats_eq2 { display:none !important; }\n/* Foto y logo del encabezado */\n.eq2-foto { height:64px; max-width:180px; object-fit:cover; border-radius:10px; margin-right:16px; border:1px solid #2c3446; }\n.eq2-logo { height:48px; margin-left:18px; }\n.eq2-warn { color:#fbbf24; }\n</style>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 600,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "15ee87c00fb25b2c",
+        "type": "ui-template",
+        "z": "fead62247fb3efa1",
+        "group": "bea77b04ac8c6ba8",
+        "page": "",
+        "ui": "",
+        "name": "Tarjeta temperatura",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n  <div class=\"eq2-card\" :class=\"{ alert: d && d.alerta }\">\n    <div class=\"eq2-row\">\n      <span class=\"eq2-label\"><v-icon icon=\"mdi-thermometer\" size=\"18\"></v-icon>TEMPERATURA</span>\n      <span v-if=\"d && d.alerta\" class=\"eq2-badge\">SOBRE EL UMBRAL</span>\n    </div>\n    <div class=\"eq2-val\">{{ d ? d.v.toFixed(1) : '—' }}<span class=\"eq2-unit\">°C</span></div>\n    <div class=\"eq2-track\">\n      <div class=\"eq2-fill temp\" :style=\"{ width: pct + '%' }\"></div>\n      <div v-if=\"d && d.umbral != null\" class=\"eq2-mark\" :style=\"{ left: markPct + '%' }\" title=\"Umbral de alerta\"></div>\n    </div>\n    <div class=\"eq2-scale\"><span>0</span><span>45 °C</span></div>\n    <div class=\"eq2-stats\">\n      <span>mín <b>{{ d ? d.min.toFixed(1) : '—' }}</b></span>\n      <span>prom <b>{{ d ? d.avg.toFixed(1) : '—' }}</b></span>\n      <span>máx <b>{{ d ? d.max.toFixed(1) : '—' }}</b></span>\n    </div>\n  </div>\n</template>\n<script>\nexport default {\n  computed: {\n    d () { const p = this.msg && this.msg.payload; return (p && typeof p.v === 'number') ? p : null },\n    pct () { return this.d ? Math.max(0, Math.min(100, this.d.v / 45 * 100)) : 0 },\n    markPct () { return this.d ? Math.max(0, Math.min(100, this.d.umbral / 45 * 100)) : 0 }\n  }\n}\n</script>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 600,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6d3807f2c3dc6023",
+        "type": "ui-template",
+        "z": "fead62247fb3efa1",
+        "group": "d5bae456f6351772",
+        "page": "",
+        "ui": "",
+        "name": "Tarjeta humedad",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n  <div class=\"eq2-card\" :class=\"{ alert: d && d.alerta }\">\n    <div class=\"eq2-row\">\n      <span class=\"eq2-label\"><v-icon icon=\"mdi-water-percent\" size=\"18\"></v-icon>HUMEDAD RELATIVA</span>\n      \n    </div>\n    <div class=\"eq2-val\">{{ d ? d.v.toFixed(1) : '—' }}<span class=\"eq2-unit\">%</span></div>\n    <div class=\"eq2-track\">\n      <div class=\"eq2-fill hum\" :style=\"{ width: pct + '%' }\"></div>\n      \n    </div>\n    <div class=\"eq2-scale\"><span>0</span><span>100 %</span></div>\n    <div class=\"eq2-stats\">\n      <span>mín <b>{{ d ? d.min.toFixed(1) : '—' }}</b></span>\n      <span>prom <b>{{ d ? d.avg.toFixed(1) : '—' }}</b></span>\n      <span>máx <b>{{ d ? d.max.toFixed(1) : '—' }}</b></span>\n    </div>\n  </div>\n</template>\n<script>\nexport default {\n  computed: {\n    d () { const p = this.msg && this.msg.payload; return (p && typeof p.v === 'number') ? p : null },\n    pct () { return this.d ? Math.max(0, Math.min(100, this.d.v / 100 * 100)) : 0 },\n    markPct () { return this.d ? Math.max(0, Math.min(100, this.d.umbral / 100 * 100)) : 0 }\n  }\n}\n</script>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 600,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "40d936667b564fca",
+        "type": "ui-chart",
+        "z": "fead62247fb3efa1",
+        "group": "5e344e74910fc72c",
+        "name": "chart",
+        "label": "Historial · últimos 10 minutos",
+        "order": 1,
+        "chartType": "line",
+        "category": "topic",
+        "categoryType": "msg",
+        "xAxisLabel": "",
+        "xAxisProperty": "",
+        "xAxisPropertyType": "timestamp",
+        "xAxisType": "time",
+        "xAxisFormat": "",
+        "xAxisFormatType": "auto",
+        "xmin": "",
+        "xmax": "",
+        "yAxisLabel": "",
+        "yAxisProperty": "payload",
+        "yAxisPropertyType": "msg",
+        "ymin": "0",
+        "ymax": "100",
+        "bins": 10,
+        "action": "append",
+        "stackSeries": false,
+        "pointShape": "circle",
+        "pointRadius": 3,
+        "showLegend": true,
+        "removeOlder": "10",
+        "removeOlderUnit": "60",
+        "removeOlderPoints": "",
+        "colors": [
+            "#f97316",
+            "#38bdf8",
+            "#2dd4bf",
+            "#fbbf24",
+            "#f87171",
+            "#a78bfa",
+            "#94a3b8",
+            "#e6e9ef",
+            "#64748b"
+        ],
+        "textColor": [
+            "#c5cbd8"
+        ],
+        "textColorDefault": false,
+        "gridColor": [
+            "#2c3446"
+        ],
+        "gridColorDefault": false,
+        "width": 8,
+        "height": 6,
+        "className": "",
+        "interpolation": "linear",
+        "x": 590,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b56426e0180de328",
+        "type": "ui-notification",
+        "z": "fead62247fb3efa1",
+        "ui": "2bfb309c526bdfb1",
+        "position": "top right",
+        "colorDefault": false,
+        "color": "#f87171",
+        "displayTime": "5",
+        "showCountdown": true,
+        "outputs": 1,
+        "allowDismiss": true,
+        "dismissText": "Cerrar",
+        "allowConfirm": false,
+        "confirmText": "Confirmar",
+        "raw": false,
+        "className": "",
+        "name": "Aviso temperatura",
+        "x": 610,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "55cd7452821bbb88",
+        "type": "ui-template",
+        "z": "fead62247fb3efa1",
+        "group": "6918b210e61b2ccc",
+        "page": "",
+        "ui": "",
+        "name": "Indicador LED",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n  <div class=\"eq2-card\">\n    <div class=\"eq2-label\" style=\"margin-bottom:12px\">LED DEL ESP32</div>\n    <div class=\"eq2-led\">\n      <div class=\"eq2-bulb\" :class=\"{ on: on }\"><v-icon :icon=\"on ? 'mdi-lightbulb-on' : 'mdi-lightbulb-outline'\" size=\"34\"></v-icon></div>\n      <div>\n        <div class=\"eq2-led-state\" :class=\"{ on: on }\">{{ on ? 'Encendido' : 'Apagado' }}</div>\n        <div class=\"eq2-muted\" style=\"font-size:.82rem\">Último comando enviado</div>\n      </div>\n    </div>\n  </div>\n</template>\n<script>\nexport default { computed: { on () { return !!(this.msg && this.msg.payload === 'ON') } } }\n</script>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 620,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c87c8ee31ea677d7",
+        "type": "ui-button-group",
+        "z": "fead62247fb3efa1",
+        "name": "ON / OFF",
+        "group": "6918b210e61b2ccc",
+        "order": 2,
+        "width": 0,
+        "height": 1,
+        "label": "",
+        "className": "",
+        "rounded": true,
+        "useThemeColors": false,
+        "passthru": false,
+        "options": [
+            {
+                "label": "ENCENDER",
+                "icon": "",
+                "value": "ON",
+                "valueType": "str",
+                "color": "#fbbf24"
+            },
+            {
+                "label": "APAGAR",
+                "icon": "",
+                "value": "OFF",
+                "valueType": "str",
+                "color": "#64748b"
+            }
+        ],
+        "topic": "equipo02/actuadores/led",
+        "topicType": "str",
+        "x": 120,
+        "y": 440,
+        "wires": [
+            [
+                "83ee0d1fcef44492",
+                "55cd7452821bbb88"
+            ]
+        ]
+    },
+    {
+        "id": "fa3aa3f2ce9ca229",
+        "type": "ui-button",
+        "z": "fead62247fb3efa1",
+        "group": "6918b210e61b2ccc",
+        "name": "Parpadear",
+        "label": "Parpadear 3 veces",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "emulateClick": false,
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "iconPosition": "left",
+        "payload": "blink",
+        "payloadType": "str",
+        "topic": "blink",
+        "topicType": "str",
+        "buttonColor": "#2c3446",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 130,
+        "y": 500,
+        "wires": [
+            [
+                "2a5d5bcd400ab650"
+            ]
+        ]
+    },
+    {
+        "id": "2a5d5bcd400ab650",
+        "type": "function",
+        "z": "fead62247fb3efa1",
+        "name": "Secuencia ON/OFF",
+        "func": "// Parpadea 3 veces y termina apagado\nconst pasos = ['ON', 'OFF', 'ON', 'OFF', 'ON', 'OFF'];\npasos.forEach((v, i) => setTimeout(() => node.send({ payload: v }), i * 500));\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 500,
+        "wires": [
+            [
+                "83ee0d1fcef44492",
+                "55cd7452821bbb88"
+            ]
+        ]
+    },
+    {
+        "id": "266d171b7448713e",
+        "type": "inject",
+        "z": "fead62247fb3efa1",
+        "name": "LED apagado al iniciar",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "OFF",
+        "payloadType": "str",
+        "x": 370,
+        "y": 560,
+        "wires": [
+            [
+                "55cd7452821bbb88"
+            ]
+        ]
+    },
+    {
+        "id": "83ee0d1fcef44492",
+        "type": "mqtt out",
+        "z": "fead62247fb3efa1",
+        "name": "Comandos LED",
+        "topic": "equipo02/actuadores/led",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "ac5b64dbbbde289c",
+        "x": 620,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d3fc0dc399247bd6",
+        "type": "inject",
+        "z": "fead62247fb3efa1",
+        "name": "Umbral inicial 30 °C",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "30",
+        "payloadType": "num",
+        "x": 140,
+        "y": 640,
+        "wires": [
+            [
+                "d4c199012df10814",
+                "bbc1dccf2fed729b"
+            ]
+        ]
+    },
+    {
+        "id": "d4c199012df10814",
+        "type": "ui-slider",
+        "z": "fead62247fb3efa1",
+        "group": "48c1670555b3f83b",
+        "name": "Umbral",
+        "label": "Umbral (°C)",
+        "tooltip": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "outs": "end",
+        "topic": "umbral",
+        "topicType": "str",
+        "thumbLabel": "always",
+        "showTicks": "always",
+        "min": "20",
+        "max": "40",
+        "step": "1",
+        "className": "",
+        "iconPrepend": "",
+        "iconAppend": "",
+        "color": "#2dd4bf",
+        "colorTrack": "#2c3446",
+        "colorThumb": "#2dd4bf",
+        "showTextField": false,
+        "x": 360,
+        "y": 640,
+        "wires": [
+            [
+                "bbc1dccf2fed729b"
+            ]
+        ]
+    },
+    {
+        "id": "bbc1dccf2fed729b",
+        "type": "function",
+        "z": "fead62247fb3efa1",
+        "name": "Guardar umbral",
+        "func": "const u = Number(msg.payload);\nflow.set('umbral', u);\nreturn { payload: u };",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 660,
+        "wires": [
+            [
+                "ba12ebc1f0205073"
+            ]
+        ]
+    },
+    {
+        "id": "ba12ebc1f0205073",
+        "type": "ui-template",
+        "z": "fead62247fb3efa1",
+        "group": "48c1670555b3f83b",
+        "page": "",
+        "ui": "",
+        "name": "Texto regla",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n  <div class=\"eq2-muted\" style=\"font-size:.9rem\">\n    Se avisa cuando la temperatura supera <b style=\"color:#f87171\">{{ msg && msg.payload != null ? msg.payload : '—' }} °C</b>.\n    La línea roja en la barra de temperatura marca ese límite.\n  </div>\n</template>",
+        "storeOutMessages": true,
+        "passthru": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 760,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6342a0a4a85c85e7",
+        "type": "ui-button",
+        "z": "fead62247fb3efa1",
+        "group": "48c1670555b3f83b",
+        "name": "Reiniciar",
+        "label": "Reiniciar estadísticas y gráfico",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "emulateClick": false,
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "iconPosition": "left",
+        "payload": "reset",
+        "payloadType": "str",
+        "topic": "reset",
+        "topicType": "str",
+        "buttonColor": "#2c3446",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "dc28b8d2d960b17c"
+            ]
+        ]
+    },
+    {
+        "id": "ac5b64dbbbde289c",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt://mqtt.rcr-labs.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "3425e70e0bc27953",
+        "type": "ui-group",
+        "name": "Encabezado",
+        "page": "58d0573b34b9d706",
+        "width": "12",
+        "height": 1,
+        "order": 2,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "bea77b04ac8c6ba8",
+        "type": "ui-group",
+        "name": "Temperatura",
+        "page": "58d0573b34b9d706",
+        "width": "4",
+        "height": 1,
+        "order": 3,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "d5bae456f6351772",
+        "type": "ui-group",
+        "name": "Humedad",
+        "page": "58d0573b34b9d706",
+        "width": "4",
+        "height": 1,
+        "order": 4,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "5e344e74910fc72c",
+        "type": "ui-group",
+        "name": "Historial",
+        "page": "58d0573b34b9d706",
+        "width": "8",
+        "height": 1,
+        "order": 6,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "2bfb309c526bdfb1",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "hidden",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "6918b210e61b2ccc",
+        "type": "ui-group",
+        "name": "Control del LED",
+        "page": "58d0573b34b9d706",
+        "width": "4",
+        "height": 1,
+        "order": 5,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "48c1670555b3f83b",
+        "type": "ui-group",
+        "name": "Alerta de temperatura",
+        "page": "58d0573b34b9d706",
+        "width": "4",
+        "height": 1,
+        "order": 7,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "58d0573b34b9d706",
+        "type": "ui-page",
+        "name": "Taller IoT",
+        "ui": "2bfb309c526bdfb1",
+        "path": "/page1",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "f62b9e3ee8bf51d4",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": true,
+        "disabled": false
+    },
+    {
+        "id": "f62b9e3ee8bf51d4",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#21222c",
+            "primary": "#bd93f9",
+            "bgPage": "#282a36",
+            "groupBg": "#343746",
+            "groupOutline": "#44475a"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "ce35fa30dcd021d0",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.32.0"
+        }
+    }
+]
