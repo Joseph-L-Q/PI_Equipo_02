@@ -1,37 +1,75 @@
 # Mini Proyecto IoT: ESP32 Dev Kit 1, MQTT y Node-RED
 
+---
+
+**Curso:** Proyectos de Ingeniería — Taller de Internet de las Cosas (IoT)
+
+**Equipo:** Equipo 02
+
+**Docentes:** De la Cruz, Lewis; Chan, Renzo; Rejas, María; Rivera, Harry.
+
+**Tarjeta:** ESP32 Dev Kit 1 (en Arduino IDE: *ESP32 Dev Module*)
+
+**Protocolo:** MQTT, con el broker `mqtt.rcr-labs.com`
+
+**Interfaz:** Dashboard en Node-RED
+
+**Sensor:** DHT11, temperatura y humedad
+
+> **Nota de seguridad:** por ser un repositorio público, las contraseñas de Wi-Fi y de MQTT aparecen como `TU_RED_WIFI`, `TU_PASSWORD_WIFI` y `TU_PASSWORD_MQTT`. Los valores reales no se publican.
+
+---
+
 ## 1. Descripción
 
-Como parte del taller de Internet de las Cosas (IoT), se realizó una implementación utilizando una tarjeta **ESP32 Dev Kit 1**, comunicación mediante el protocolo **MQTT** y una interfaz desarrollada en **Node-RED**.
+En este taller armamos un sistema IoT completo con una tarjeta **ESP32 Dev Kit 1**. El sistema hace tres cosas:
 
-En esta parte del mini proyecto se configuró el ESP32 Dev Kit 1 para conectarse a una red Wi-Fi y posteriormente al broker MQTT utilizado durante el taller.
+1. **Se conecta a Internet** por Wi-Fi y al **broker MQTT** del taller.
+2. **Envía datos** de temperatura y humedad cada 5 segundos.
+3. **Recibe órdenes** para encender y apagar el LED azul de la tarjeta.
 
-El código inicial fue adaptado para trabajar con los tópicos correspondientes al **Equipo 02**. Posteriormente, se comprobó la publicación de datos mediante MQTT y se implementó el control remoto del LED azul integrado del ESP32.
+Todo se ve y se controla desde un **dashboard en Node-RED**.
 
-Finalmente, mediante Node-RED se desarrolló un dashboard que permitió visualizar los datos enviados por el dispositivo y controlar el encendido y apagado del LED.
+El trabajo tuvo dos etapas:
 
+- **Etapa 1:** usamos el código del taller, que **inventa** los valores de temperatura y humedad con números al azar (datos simulados). Con eso probamos la comunicación.
+- **Etapa 2 (mejora):** cambiamos el código para que los valores sean **reales**, medidos con un sensor **DHT11**.
 
 ---
 
 ## 2. Objetivo
 
-Implementar una comunicación IoT utilizando un ESP32 Dev Kit 1 y el protocolo MQTT, permitiendo el envío de información hacia un broker y el control remoto del LED integrado de la tarjeta mediante Node-RED.
+**Objetivo general**
+
+Comunicar un ESP32 con un broker MQTT para enviar datos de sensores y controlar un LED de forma remota desde un dashboard en Node-RED.
+
+**Objetivos específicos**
+
+- Conectar el ESP32 a una red Wi-Fi y al broker MQTT.
+- Configurar los tópicos del Equipo 02 para no mezclar nuestros mensajes con los de otros equipos.
+- Publicar datos de temperatura y humedad en formato JSON.
+- Recibir los comandos `ON` y `OFF` para controlar el LED azul de la tarjeta.
+- Visualizar los datos y controlar el LED desde Node-RED.
+- Mejorar el código para publicar **datos reales** con un sensor DHT11.
 
 ---
 
 ## 3. Materiales y herramientas utilizadas
 
-- ESP32 Dev Kit 1
-- Protoboard
-- Cable USB
-- Computadora
-- Smartphone
-- Arduino IDE
-- Node-RED
-- Broker MQTT
-- Biblioteca `WiFi.h`
-- Biblioteca `PubSubClient.h`
-- Biblioteca `ArduinoJson.h`
+| Elemento | Para qué se usó |
+|---|---|
+| ESP32 Dev Kit 1 | Cerebro del sistema: se conecta al Wi-Fi y habla con el broker |
+| Sensor DHT11 | Medir temperatura y humedad reales (etapa 2) |
+| Protoboard y cables | Conectar el sensor a la tarjeta |
+| Cable USB | Alimentar y programar la tarjeta |
+| Computadora con Arduino IDE | Escribir y subir el código |
+| Celular | Compartir Wi-Fi (hotspot) y comprobar los mensajes MQTT con una app cliente |
+| Broker MQTT (`mqtt.rcr-labs.com`, EMQX) | Reparte los mensajes |
+| Node-RED | Dashboard para ver datos y controlar el LED |
+| Biblioteca `WiFi.h` | Conexión Wi-Fi |
+| Biblioteca `PubSubClient.h` | Comunicación MQTT |
+| Biblioteca `ArduinoJson.h` | Armar los mensajes en formato JSON |
+| Biblioteca `DHT sensor library` (Adafruit) | Leer el sensor DHT11 |
 
 ---
 
