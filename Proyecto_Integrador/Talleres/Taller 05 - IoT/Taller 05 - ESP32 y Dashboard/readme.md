@@ -398,110 +398,80 @@ En la aplicación MyMQTT se visualizaron los mensajes correspondientes al tópic
 
 ## 8. Control remoto del LED
 
-Además de publicar información, el ESP32 Dev Kit 1 fue configurado para recibir comandos mediante MQTT.
+Además de publicar, el ESP32 **escucha** el tópico `equipo02/actuadores/led`. Entiende dos órdenes:
 
-El dispositivo se suscribió al tópico:
+| Orden | Qué hace el ESP32 |
+|---|---|
+| `ON` | Enciende el LED azul de la tarjeta |
+| `OFF` | Apaga el LED azul |
 
-```text
-equipo02/actuadores/led
-```
-
-Dentro del código se configuraron dos comandos:
-
-```text
-ON
-OFF
-```
-
-Cuando el ESP32 recibe el comando `ON`, se activa el LED integrado.
-
-Cuando recibe el comando `OFF`, el LED se apaga.
-
-La parte del código responsable de esta función es:
+El LED azul está conectado internamente al pin **GPIO2**. El código que lo controla es:
 
 ```cpp
 if (String(topic) == TOPIC_SUB) {
-
   if (mensaje == "ON") {
-
-    digitalWrite(2, HIGH);
+    digitalWrite(2, HIGH);               // enciende el LED
     Serial.println("Comando: Encender LED");
-
   } else if (mensaje == "OFF") {
-
-    digitalWrite(2, LOW);
+    digitalWrite(2, LOW);                // apaga el LED
     Serial.println("Comando: Apagar LED");
   }
 }
 ```
 
----
+### 8.1 Prueba con el LED apagado (`OFF`)
 
-## 9. Prueba con el LED apagado
-
-Primero se realizó una prueba enviando el comando:
-
-```text
-OFF
-```
-
-En el Monitor Serial se pudo visualizar la recepción del mensaje correspondiente al tópico del Equipo 02.
+El monitor serie mostró:
 
 ```text
 Mensaje recibido en topic [equipo02/actuadores/led]: OFF
 Comando: Apagar LED
 ```
 
-<img width="1600" height="941" alt="image" src="https://github.com/user-attachments/assets/5b7823e1-26f2-4500-be41-92e2a592f393" />
+<p align="center">
+  <img alt="image" src="https://github.com/user-attachments/assets/5b7823e1-26f2-4500-be41-92e2a592f393" width="80%"/>
+  <br>
+  <em><b>Figura 5.</b> Monitor serie: el ESP32 recibe el comando <code>OFF</code> y apaga el LED.</em>
+</p>
 
+<p align="center">
+  <img alt="image" src="https://github.com/user-attachments/assets/e54fc706-676e-4d56-8837-6990ba83d214" width="80%"/>
+  <br>
+  <em><b>Figura 6.</b> ESP32 en la protoboard con el LED azul apagado (solo queda la luz roja de alimentación).</em>
+</p>
 
-**Figura 4. Recepción del comando `OFF` mediante MQTT para apagar el LED azul integrado del ESP32 Dev Kit 1.**
+### 8.2 Prueba con el LED encendido (`ON`)
 
-Posteriormente, se verificó físicamente el estado del ESP32 Dev Kit 1.
-
-<img width="1198" height="1600" alt="image" src="https://github.com/user-attachments/assets/e54fc706-676e-4d56-8837-6990ba83d214" />
-
-
-**Figura 5. Montaje físico del ESP32 Dev Kit 1 en la protoboard con el LED azul apagado.**
-
----
-
-## 10. Prueba con el LED encendido
-
-Luego se realizó una segunda prueba enviando el comando:
-
-```text
-ON
-```
-
-En el Monitor Serial se visualizó:
+El monitor serie mostró:
 
 ```text
 Mensaje recibido en topic [equipo02/actuadores/led]: ON
 Comando: Encender LED
 ```
 
-<img width="1600" height="947" alt="image" src="https://github.com/user-attachments/assets/d5292833-ef80-426f-8248-d6a6d569f965" />
+<p align="center">
+  <img alt="image" src="https://github.com/user-attachments/assets/d5292833-ef80-426f-8248-d6a6d569f965" width="80%"/>
+  <br>
+  <em><b>Figura 7.</b> Monitor serie: el ESP32 recibe el comando <code>ON</code> y enciende el LED.</em>
+</p>
 
+<p align="center">
+  <img alt="image" src="https://github.com/user-attachments/assets/41189eae-1c7e-4159-ad49-7a00be5d2028" width="80%"/>
+  <br>
+  <em><b>Figura 8.</b> ESP32 en la protoboard con el LED azul encendido después de recibir <code>ON</code>.</em>
+</p>
 
-**Figura 6. Recepción del comando `ON` mediante MQTT para encender el LED azul integrado del ESP32 Dev Kit 1.**
-
-También se comprobó físicamente que el LED azul de la tarjeta se encendiera.
-
-<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/41189eae-1c7e-4159-ad49-7a00be5d2028" />
-
-
-**Figura 7. Montaje físico del ESP32 Dev Kit 1 en la protoboard con el LED azul encendido después de recibir el comando `ON` mediante MQTT.**
+**Interpretación:** en ambas pruebas, lo que dice el monitor serie coincide con lo que se ve en la tarjeta. Esto confirma que la comunicación funciona en los dos sentidos: el ESP32 **envía** datos y también **recibe** órdenes. Se ve además que, mientras llegan comandos, el ESP32 sigue publicando datos sin detenerse.
 
 ---
 
-## 11. Dashboard en Node-RED
+## 9. Dashboard en Node-RED
 
 Posteriormente, se utilizó **Node-RED** para desarrollar una interfaz de visualización y control a partir de los datos recibidos mediante MQTT.
 
 El desarrollo del dashboard se realizó en dos etapas. Primero se implementó una versión inicial que permitía comprobar las funciones principales del sistema. Después de verificar su funcionamiento, esta interfaz fue ampliada con nuevas herramientas de monitoreo, procesamiento y control.
 
-### 11.1 Versión inicial del dashboard
+### 9.1 Versión inicial del dashboard
 
 En la primera versión se buscó comprobar que Node-RED pudiera recibir correctamente los mensajes publicados por el ESP32 y representar la información dentro de una interfaz gráfica.
 
@@ -532,7 +502,7 @@ Esta primera implementación permitió comprobar que Node-RED podía utilizarse 
   <em><b>Figura 8.</b> Versión inicial del dashboard desarrollado en Node-RED para visualizar los datos enviados por el ESP32 Dev Kit 1 y controlar el LED.</em>
 </p>
 
-### 11.2 Mejoras implementadas en el dashboard
+### 9.2 Mejoras implementadas en el dashboard
 
 Una vez comprobado el funcionamiento de la versión inicial, se realizaron mejoras en el flujo de Node-RED y en la interfaz del dashboard. El objetivo fue organizar mejor la información disponible y añadir herramientas que permitieran interpretar el comportamiento del sistema con mayor facilidad.
 
@@ -559,7 +529,7 @@ El encabezado del dashboard permite identificar rápidamente si el dispositivo c
 
 Si transcurren más de **15 segundos** sin recibir un nuevo mensaje MQTT, el sistema cambia el estado mostrado en la interfaz para indicar que no se están recibiendo datos.
 
-### 11.3 Visualización de temperatura y humedad
+### 9.3 Visualización de temperatura y humedad
 
 La temperatura y la humedad se presentan mediante tarjetas independientes.
 
@@ -581,7 +551,7 @@ Historial · últimos 10 minutos
 
 En este gráfico se representan simultáneamente las variaciones de temperatura y humedad, lo que facilita observar la evolución de ambas variables a lo largo del tiempo.
 
-### 11.4 Control mejorado del LED
+### 9.4 Control mejorado del LED
 
 El control del LED mantiene los comandos MQTT empleados en la primera versión:
 
@@ -624,7 +594,7 @@ ON → OFF → ON → OFF → ON → OFF
 
 Los cambios se envían con intervalos de aproximadamente 500 ms, produciendo tres ciclos de encendido y apagado. La secuencia termina con el LED apagado.
 
-### 11.5 Umbral y alerta de temperatura
+### 9.5 Umbral y alerta de temperatura
 
 También se añadió una herramienta para establecer un **umbral de temperatura**.
 
@@ -652,7 +622,7 @@ se genera una alerta indicando que la temperatura ha superado el límite estable
 
 La tarjeta de temperatura también incluye una marca visual que representa la posición del umbral, permitiendo comparar rápidamente el valor actual con el límite configurado.
 
-### 11.6 Validación y reinicio de los datos
+### 9.6 Validación y reinicio de los datos
 
 Antes de actualizar el dashboard, el flujo comprueba que los valores recibidos puedan interpretarse correctamente como temperatura y humedad.
 
@@ -675,9 +645,9 @@ Esta función permite borrar los valores acumulados de mínimo, promedio y máxi
 
 ---
 
-## 12. Flujo implementado en Node-RED
+## 10. Flujo implementado en Node-RED
 
-### 12.1 Flujo inicial
+### 10.1 Flujo inicial
 
 En la primera versión de Node-RED se configuró un flujo para recibir los mensajes publicados mediante el tópico:
 
@@ -735,7 +705,7 @@ ESP32 Dev Kit 1
   <em><b>Figura 11.</b> Flujo inicial implementado en Node-RED para recibir datos mediante MQTT y enviar comandos al LED del ESP32.</em>
 </p>
 
-### 12.2 Flujo mejorado
+### 10.2 Flujo mejorado
 
 A partir del flujo inicial se incorporaron nuevos nodos para ampliar el procesamiento de la información y las funciones disponibles en el dashboard.
 
@@ -790,7 +760,7 @@ Distribución hacia el dashboard
 
 De forma paralela, el nodo **Sin datos 15 s** supervisa la llegada de mensajes. Si transcurre ese periodo sin recibir una nueva lectura, la interfaz cambia el estado del dispositivo para informar que se ha perdido temporalmente el flujo de datos.
 
-### 12.3 Flujo de control del LED
+### 10.3 Flujo de control del LED
 
 El control del LED se mantiene separado del procesamiento de temperatura y humedad.
 
@@ -842,7 +812,7 @@ ON → OFF → ON → OFF → ON → OFF
 
 Después de completar los tres ciclos, el estado final enviado es `OFF`.
 
-### 12.4 Flujo del umbral de temperatura
+### 10.4 Flujo del umbral de temperatura
 
 Para el sistema de alerta se estableció inicialmente un umbral de:
 
@@ -878,7 +848,7 @@ Cuando la temperatura supera el umbral seleccionado, el sistema genera una notif
 
 ---
 
-## 14. Resultados
+## 11. Resultados
 
 Durante esta parte del mini proyecto se logró:
 
@@ -907,7 +877,7 @@ Estas mejoras permitieron pasar de una interfaz básica de visualización y cont
 
 ---
 
-## 15. Conclusiones
+## 12. Conclusiones
 
 La actividad permitió comprobar de manera práctica el funcionamiento de la comunicación MQTT utilizando un ESP32 Dev Kit 1.
 
