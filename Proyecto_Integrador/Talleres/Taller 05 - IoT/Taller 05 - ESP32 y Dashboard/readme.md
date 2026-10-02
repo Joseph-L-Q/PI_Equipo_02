@@ -852,7 +852,334 @@ Cuando la temperatura supera el umbral seleccionado, el sistema genera una notif
 
 ---
 
-## 11. Resultados
+## 11. Mejora del código: datos reales con el sensor DHT11
+
+### 11.1 ¿Por qué mejorar el código?
+
+Hasta ahora, la temperatura y la humedad eran **números inventados**. Para que el sistema sirva de verdad, necesitamos que sean **mediciones reales**. Por eso conectamos un sensor **DHT11** y cambiamos el código.
+
+### 11.2 ¿Qué es el DHT11?
+
+Es un sensor pequeño y económico que mide **la temperatura** y **la humedad del aire**. Envía los dos datos al ESP32 por **un solo cable de datos**.
+
+<div align="center">
+  
+| Característica | Valor del DHT11 |
+|---|---|
+| Rango de temperatura | 0 a 50 °C |
+| Error de temperatura | ± 2 °C |
+| Rango de humedad | 20 a 90 % |
+| Error de humedad | ± 5 % |
+| Velocidad máxima de lectura | 1 vez por segundo |
+| Alimentación | 3.3 V a 5 V |
+
+</div>
+
+Como mide en pasos grandes, la humedad aparece en **números enteros** (55.0, 59.0, 66.0...) [3].
+
+### 11.3 Conexión del sensor
+
+<div align="center">
+  
+| Pin del DHT11 | Pin del ESP32 |
+|---|---|
+| Datos (S, OUT o DATA) | GPIO4 (D4) |
+| Alimentación (V o +) | 3V3 |
+| Tierra (G o −) | GND |
+
+</div>
+
+<p align="center">
+  <img src="URL_IMG_CONEXION_DHT11" alt="Conexión del DHT11" width="80%"/>
+  <br>
+  <em><b>Figura 11.</b> Conexión del sensor DHT11 al ESP32 (datos al GPIO4, alimentación a 3V3 y tierra a GND).</em>
+</p>
+
+### 11.4 Biblioteca necesaria
+
+Se instaló en Arduino IDE la biblioteca **DHT sensor library** (de Adafruit), junto con **Adafruit Unified Sensor**, que necesita para funcionar [4].
+
+### 11.5 Qué cambió: antes y después
+
+Solo hubo cuatro cambios. Todo lo demás (Wi-Fi, MQTT, tópicos y control del LED) quedó igual.
+
+<div align="center">
+
+| # | Cambio | Antes (simulado) | Después (real) |
+|---|---|---|---|
+| 1 | Biblioteca del sensor | — | `#include <DHT.h>` |
+| 2 | Definir el sensor | — | `#define DHTPIN 4`, `#define DHTTYPE DHT11` y `DHT dht(DHTPIN, DHTTYPE);` |
+| 3 | Iniciar el sensor | — | `dht.begin();` dentro de `setup()` |
+| 4 | Obtener los valores | Números al azar con `random()` | Lecturas del sensor con `dht.readTemperature()` y `dht.readHumidity()` |
+
+</div>
+
+**Antes** (datos simulados):
+
+```cpp
+float tempSimulada = 24.0 + (random(0, 100) / 10.0);
+float humSimulada  = 55.0 + (random(0, 200) / 10.0);
+```
+
+**Después** (datos reales):
+
+```cpp
+// Lectura REAL del DHT11
+float temperatura = dht.readTemperature();   // en °C
+float humedad     = dht.readHumidity();      // en %
+
+// Si el sensor falla, devuelve NaN (no es un número): no publicamos datos inválidos
+if (isnan(temperatura) || isnan(humedad)) {
+  Serial.println("Error al leer el DHT11. Revisa el cableado.");
+  return;
+}
+```
+
+Además, el mensaje JSON ahora se arma con **un decimal** en lugar de dos, porque el DHT11 no es tan preciso como para justificar más:
+
+```cpp
+doc["temperatura"] = serialized(String(temperatura, 1));
+doc["humedad"]     = serialized(String(humedad, 1));
+```
+
+### 11.6 Explicación de lo nuevo en palabras simples
+
+<div align="center">
+  
+| Línea | Qué hace |
+|---|---|
+| `#define DHTPIN 4` | Le dice al ESP32 en qué pin está conectado el cable de datos del sensor |
+| `#define DHTTYPE DHT11` | Le dice qué modelo de sensor es (existen otros, como el DHT22) |
+| `DHT dht(DHTPIN, DHTTYPE);` | Crea el "objeto" sensor con esos datos |
+| `dht.begin();` | Enciende y prepara el sensor |
+| `dht.readTemperature()` | Le pide al sensor la temperatura en °C |
+| `dht.readHumidity()` | Le pide al sensor la humedad en % |
+| `isnan(...)` | Revisa si la lectura falló. Si falló, el código avisa y **no envía datos falsos** |
+| `return;` | Salta este envío y espera al siguiente ciclo |
+
+</div>
+
+### 11.7 Código mejorado completo
+
+<details>
+<summary><b>Ver el código mejorado completo</b></summary>
+
+```cpp
+#include <WiFi.h>
+#include <PubSubClient.h>
+#include <ArduinoJson.h>
+#include <DHT.h>
+
+// ================= CONFIGURACIÓN WIFI =================
+const char* WIFI_SSID = "TU_RED_WIFI";
+const char* WIFI_PASS = "TU_PASSWORD_WIFI";
+
+// ================= CONFIGURACIÓN MQTT =================
+const char* MQTT_SERVER   = "mqtt.rcr-labs.com";
+const int   MQTT_PORT     = 1883;
+
+const char* MQTT_USER     = "alumno";
+const char* MQTT_PASSWORD = "TU_PASSWORD_MQTT";
+const char* CLIENT_ID     = "ESP32_Equipo02";
+
+// Topics MQTT del Equipo 02
+const char* TOPIC_PUB     = "equipo02/sensor/datos";
+const char* TOPIC_SUB     = "equipo02/actuadores/led";
+
+// ================= SENSOR DHT11 =================
+#define DHTPIN  4          // Pin de datos del DHT11 (GPIO4)
+#define DHTTYPE DHT11
+DHT dht(DHTPIN, DHTTYPE);
+
+// ================= OBJETOS Y VARIABLES ===============
+WiFiClient espClient;
+PubSubClient client(espClient);
+
+unsigned long ultimoEnvio = 0;
+const long intervaloEnvio = 5000; // Envío cada 5 segundos (no bloqueante)
+
+// Conexión a la red Wi-Fi
+void setupWiFi() {
+  delay(10);
+  Serial.println();
+  Serial.print("Conectando a Wi-Fi: ");
+  Serial.println(WIFI_SSID);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("\nWiFi conectado con éxito");
+  Serial.print("Dirección IP local: ");
+  Serial.println(WiFi.localIP());
+}
+
+// Recepción de mensajes suscritos (control del LED desde Node-RED)
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Mensaje recibido en topic [");
+  Serial.print(topic);
+  Serial.print("]: ");
+
+  String mensaje = "";
+  for (unsigned int i = 0; i < length; i++) {
+    mensaje += (char)payload[i];
+  }
+  Serial.println(mensaje);
+
+  if (String(topic) == TOPIC_SUB) {
+    if (mensaje == "ON") {
+      digitalWrite(2, HIGH);
+      Serial.println("Comando: Encender LED");
+    } else if (mensaje == "OFF") {
+      digitalWrite(2, LOW);
+      Serial.println("Comando: Apagar LED");
+    }
+  }
+}
+
+// Reconexión automática al broker EMQX
+void reconnect() {
+  while (!client.connected()) {
+    Serial.print("Intentando conectar con broker MQTT...");
+
+    if (client.connect(CLIENT_ID, MQTT_USER, MQTT_PASSWORD)) {
+      Serial.println(" ¡Conectado!");
+      client.subscribe(TOPIC_SUB);
+      Serial.print("Suscrito a: ");
+      Serial.println(TOPIC_SUB);
+    } else {
+      Serial.print(" Falló. Código de error rc=");
+      Serial.print(client.state());
+      Serial.println(" Reintentando en 5 segundos...");
+      delay(5000);
+    }
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(2, OUTPUT);
+  dht.begin();                 // Inicia el sensor DHT11
+  setupWiFi();
+
+  client.setServer(MQTT_SERVER, MQTT_PORT);
+  client.setCallback(callback);
+}
+
+void loop() {
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+
+  unsigned long ahora = millis();
+  if (ahora - ultimoEnvio >= intervaloEnvio) {
+    ultimoEnvio = ahora;
+
+    // Lectura REAL del DHT11
+    float temperatura = dht.readTemperature();   // °C
+    float humedad     = dht.readHumidity();      // %
+
+    // Si el sensor falla, devuelve NaN: no publicamos datos inválidos
+    if (isnan(temperatura) || isnan(humedad)) {
+      Serial.println("Error al leer el DHT11. Revisa el cableado.");
+      return;
+    }
+
+    // Creación del documento JSON
+    StaticJsonDocument<200> doc;
+    doc["dispositivo"] = CLIENT_ID;
+    doc["temperatura"] = serialized(String(temperatura, 1));
+    doc["humedad"]     = serialized(String(humedad, 1));
+
+    char jsonBuffer[256];
+    serializeJson(doc, jsonBuffer);
+
+    Serial.print("Publicando en ");
+    Serial.print(TOPIC_PUB);
+    Serial.print(": ");
+    Serial.println(jsonBuffer);
+
+    client.publish(TOPIC_PUB, jsonBuffer);
+  }
+}
+```
+
+</details>
+
+### 11.8 Resultados con el sensor real
+
+**Prueba 1: el sensor en reposo.** Con el sensor quieto en el aire del laboratorio, los valores se mantuvieron estables: la humedad se quedó en **55.0 %** y la temperatura bajó muy poco, entre **26.6 °C y 26.3 °C**.
+
+<p align="center">
+  <img src="URL_IMG_DHT_REPOSO" alt="Datos reales del DHT11 en reposo" width="80%"/>
+  <br>
+  <em><b>Figura 12.</b> Código mejorado y monitor serie con datos reales del DHT11 en reposo: valores estables.</em>
+</p>
+
+**Prueba 2: soplando aire con la boca.** Para comprobar que el sensor realmente mide, le soplamos aire con la boca. El aire que sale de la boca está **más húmedo y un poco más caliente** que el del ambiente.
+
+<p align="center">
+  <img src="URL_IMG_DHT_SOPLAR" alt="Humedad subiendo al soplar" width="80%"/>
+  <br>
+  <em><b>Figura 13.</b> Monitor serie al soplar aire sobre el DHT11: la humedad sube de 55 % a 76 % en unos 30 segundos.</em>
+</p>
+
+Lecturas de la Figura 13, una cada 5 segundos:
+
+<div align="center">
+  
+| Lectura | Temperatura (°C) | Humedad (%) |
+|---|---|---|
+| 1 | 25.8 | 55.0 |
+| 2 | 25.8 | 55.0 |
+| 3 | 25.8 | 59.0 |
+| 4 | 26.0 | 66.0 |
+| 5 | 26.1 | 71.0 |
+| 6 | 26.2 | 72.0 |
+| 7 | 26.3 | 76.0 |
+
+</div>
+
+**Interpretación:**
+
+- La **humedad subió 21 puntos** (de 55 % a 76 %) en unos 30 segundos. El aliento lleva vapor de agua, así que el aire alrededor del sensor se volvió más húmedo y el sensor lo detectó.
+- La **temperatura subió medio grado** (de 25.8 °C a 26.3 °C), porque el aliento está más caliente que el ambiente.
+- Los cambios son **suaves y tienen sentido**: suben poco a poco mientras sopla. Esto es muy distinto de los datos simulados, que saltaban sin motivo (por ejemplo, de 25.7 °C a 33.9 °C en solo 5 segundos).
+- El sensor **no reacciona de golpe**: la humedad tarda unos segundos en subir. Es normal en el DHT11, que es un sensor lento.
+
+Estos resultados demuestran que el código mejorado ya publica **datos reales** y que el sensor responde a cambios del ambiente.
+
+### 11.9 Datos reales en el dashboard
+
+Con la mejora, los datos que llegan a Node-RED ya no son inventados: son las mediciones del sensor. No fue necesario cambiar el dashboard, porque el mensaje JSON conserva la misma estructura (`dispositivo`, `temperatura` y `humedad`).
+
+<p align="center">
+  <img src="URL_IMG_DASHBOARD_REAL" alt="Dashboard con datos reales del DHT11" width="80%"/>
+  <br>
+  <em><b>Figura 14.</b> Dashboard de Node-RED mostrando la temperatura y la humedad reales medidas por el DHT11.</em>
+</p>
+
+---
+
+## 12. Comparación: datos simulados vs. datos reales
+
+| Aspecto | Etapa 1 (simulado) | Etapa 2 (DHT11) |
+|---|---|---|
+| Origen de los datos | Números al azar (`random`) | Medición del sensor |
+| Decimales en el mensaje | 2 | 1 |
+| Comportamiento | Saltos bruscos sin motivo | Cambios suaves que dependen del ambiente |
+| Reacciona al ambiente | No | Sí (por ejemplo, al soplar) |
+| ¿Sirve para tomar decisiones? | No | Sí, con el error propio del DHT11 |
+| Si el sensor falla | No aplica | El código lo detecta y no envía datos falsos |
+
+---
+
+## 13. Resultados
 
 Durante esta parte del mini proyecto se logró:
 
@@ -881,7 +1208,7 @@ Estas mejoras permitieron pasar de una interfaz básica de visualización y cont
 
 ---
 
-## 12. Conclusiones
+## 14. Conclusiones
 
 La actividad permitió comprobar de manera práctica el funcionamiento de la comunicación MQTT utilizando un ESP32 Dev Kit 1.
 
