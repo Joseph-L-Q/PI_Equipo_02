@@ -373,7 +373,7 @@ equipo02/sensor/datos
 En esta parte del proyecto, los valores de temperatura y humedad fueron **simulados mediante el código**. No corresponden a lecturas realizadas mediante sensores físicos.
 
 <p align="center">
-  <img src="URL_IMG_SERIAL_SUSCRITO" alt="Monitor serie publicando datos simulados" width="80%"/>
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/66aad0feee8616e3ef7408661deee15306e7c32b/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-04%20142218.png" alt="Monitor serie publicando datos simulados" width="80%"/>
   <br>
   <em><b>Figura 3.</b> Monitor serie: el ESP32 se suscribe al tópico del LED y publica datos simulados cada 5 segundos.</em>
 </p>
@@ -439,7 +439,7 @@ Comando: Apagar LED
 </p>
 
 <p align="center">
-  <img alt="image" src="--" width="80%"/>
+  <img alt="image" src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/66aad0feee8616e3ef7408661deee15306e7c32b/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-04%20142322.png" width="80%"/>
   <br>
   <em><b>Figura 6.</b> ESP32 en la protoboard con el LED azul apagado (solo queda la luz roja de alimentación).</em>
 </p>
@@ -890,7 +890,7 @@ Como mide en pasos grandes, la humedad aparece en **números enteros** (55.0, 59
 </div>
 
 <p align="center">
-  <img src="URL_IMG_CONEXION_DHT11" alt="Conexión del DHT11" width="80%"/>
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/66aad0feee8616e3ef7408661deee15306e7c32b/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-04%20142322.png" alt="Conexión del DHT11" width="80%"/>
   <br>
   <em><b>Figura 11.</b> Conexión del sensor DHT11 al ESP32 (datos al GPIO4, alimentación a 3V3 y tierra a GND).</em>
 </p>
@@ -1116,7 +1116,7 @@ void loop() {
 **Prueba 1: el sensor en reposo.** Con el sensor quieto en el aire del laboratorio, los valores se mantuvieron estables: la humedad se quedó en **55.0 %** y la temperatura bajó muy poco, entre **26.6 °C y 26.3 °C**.
 
 <p align="center">
-  <img src="URL_IMG_DHT_REPOSO" alt="Datos reales del DHT11 en reposo" width="80%"/>
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/66aad0feee8616e3ef7408661deee15306e7c32b/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-04%20142347.png" alt="Datos reales del DHT11 en reposo" width="80%"/>
   <br>
   <em><b>Figura 12.</b> Código mejorado y monitor serie con datos reales del DHT11 en reposo: valores estables.</em>
 </p>
@@ -1124,7 +1124,7 @@ void loop() {
 **Prueba 2: soplando aire con la boca.** Para comprobar que el sensor realmente mide, le soplamos aire con la boca. El aire que sale de la boca está **más húmedo y un poco más caliente** que el del ambiente.
 
 <p align="center">
-  <img src="URL_IMG_DHT_SOPLAR" alt="Humedad subiendo al soplar" width="80%"/>
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/66aad0feee8616e3ef7408661deee15306e7c32b/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-04%20142359.png" alt="Humedad subiendo al soplar" width="80%"/>
   <br>
   <em><b>Figura 13.</b> Monitor serie al soplar aire sobre el DHT11: la humedad sube de 55 % a 76 % en unos 30 segundos.</em>
 </p>
@@ -1159,7 +1159,7 @@ Estos resultados demuestran que el código mejorado ya publica **datos reales** 
 Con la mejora, los datos que llegan a Node-RED ya no son inventados: son las mediciones del sensor. No fue necesario cambiar el dashboard, porque el mensaje JSON conserva la misma estructura (`dispositivo`, `temperatura` y `humedad`).
 
 <p align="center">
-  <img src="URL_IMG_DASHBOARD_REAL" alt="Dashboard con datos reales del DHT11" width="80%"/>
+  <img src="https://github.com/Joseph-L-Q/PI_Equipo_02/blob/66aad0feee8616e3ef7408661deee15306e7c32b/Recursos/Im%C3%A1genes/Captura%20de%20pantalla%202026-10-04%20142418.png" alt="Dashboard con datos reales del DHT11" width="80%"/>
   <br>
   <em><b>Figura 14.</b> Dashboard de Node-RED mostrando la temperatura y la humedad reales medidas por el DHT11.</em>
 </p>
