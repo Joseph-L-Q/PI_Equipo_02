@@ -11,6 +11,10 @@ from pathlib import Path
 import cadquery as cq
 import numpy as np
 import trimesh
+from OCP.BOPAlgo import BOPAlgo_ArgumentAnalyzer
+from OCP.BRepCheck import BRepCheck_Analyzer
+from OCP.ShapeFix import ShapeFix_Shape
+from OCP.ShapeUpgrade import ShapeUpgrade_UnifySameDomain
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
@@ -42,11 +46,50 @@ def loc(t=(0, 0, 0), axis=(0, 0, 1), ang=0.0):
     return cq.Location(cq.Vector(*t), cq.Vector(*axis), ang)
 
 
+MIN_EDGE, MIN_FACE = 0.05, 0.01   # mm, mm²: below this Parasolid (Onshape) tends to flag slivers
+
+
+def sanitize(wp):
+    """clean() + ShapeFix_Shape + UnifySameDomain + ShapeFix_Shape, before any export."""
+    sf = ShapeFix_Shape(wp.clean().val().wrapped)
+    sf.SetPrecision(1e-6)
+    sf.SetMaxTolerance(1e-3)
+    sf.Perform()
+    u = ShapeUpgrade_UnifySameDomain(sf.Shape(), True, True, True)
+    u.Build()
+    sf2 = ShapeFix_Shape(u.Shape())
+    sf2.Perform()
+    return cq.Shape.cast(sf2.Shape())
+
+
+def brep_check(stem, shape):
+    """BRepCheck + BOPAlgo_ArgumentAnalyzer + sliver scan. Aborts the build on any fault."""
+    aa = BOPAlgo_ArgumentAnalyzer()
+    aa.SetShape1(shape.wrapped)
+    for m in ("SelfInterMode", "SmallEdgeMode", "RebuildFaceMode", "TangentMode", "MergeVertexMode",
+              "MergeEdgeMode", "ContinuityMode", "CurveOnSurfaceMode"):
+        setattr(aa, m, True)
+    aa.Perform()
+    c = dict(brep=BRepCheck_Analyzer(shape.wrapped, True).IsValid(), bop=not aa.HasFaulty(),
+             solids=len(shape.Solids()), min_edge=min(e.Length() for e in shape.Edges()),
+             min_face=min(f.Area() for f in shape.Faces()))
+    ok = c["brep"] and c["bop"] and c["solids"] == 1 and c["min_edge"] >= MIN_EDGE and c["min_face"] >= MIN_FACE
+    if not ok:
+        raise SystemExit(f"B-rep check failed for {stem}: {c}")
+    return c
+
+
 def export_part(stem, wp):
-    shape = wp.val()
-    cq.exporters.export(wp, str(STEP_DIR / f"{stem}.step"))
-    cq.exporters.export(wp, str(STL_DIR / f"{stem}.stl"), tolerance=0.05, angularTolerance=0.2)
-    return shape
+    shape = sanitize(wp)
+    check = brep_check(stem, shape)
+    out = cq.Workplane().add(shape)
+    cq.exporters.export(out, str(STEP_DIR / f"{stem}.step"))
+    cq.exporters.export(out, str(STL_DIR / f"{stem}.stl"), tolerance=0.05, angularTolerance=0.2)
+    # round trip: the STEP written to disk must read back as the same valid solid
+    back = cq.importers.importStep(str(STEP_DIR / f"{stem}.step")).val()
+    if not (BRepCheck_Analyzer(back.wrapped, True).IsValid() and abs(back.Volume() - shape.Volume()) < 1e-3 * shape.Volume()):
+        raise SystemExit(f"STEP round trip failed for {stem}")
+    return shape, check
 
 
 def mesh_checks(stem, orient):
@@ -81,10 +124,10 @@ def main():
               "No editar a mano: se regenera. Valores en mm, cm³, g y MPa.", ""]
 
     # ------------------------------------------------------------ parts
-    shapes, rows = {}, []
+    shapes, rows, checks = {}, [], {}
     for pid, stem, f, mat, qty, orient in PARTS:
         wp = f()
-        shapes[pid] = export_part(stem, wp)
+        shapes[pid], checks[pid] = export_part(stem, wp)
         mc = mesh_checks(stem, orient)
         valid = shapes[pid].isValid()
         mass = mc["vol_cm3"] * (PETG_DENSITY if mat == "PETG" else ACRYLIC_DENSITY)
@@ -101,6 +144,14 @@ def main():
         report.append(f"| {pid} | `{stem}` | {mat} | {qty} | {'sí' if valid else 'NO'} | "
                       f"{'sí' if mc['watertight'] else 'NO'} | {mc['bodies']} | {mc['vol_cm3']:.1f} | {mass:.0f} | "
                       f"{bb} | {'sí' if mc['fits_bed'] else 'NO'} | {mc['overhang_mm2']:.0f} |")
+    report += ["", "Antes de exportar, cada pieza pasa por `clean()`, `ShapeFix_Shape` y `UnifySameDomain` (OCP), y luego "
+               f"por `BRepCheck_Analyzer`, `BOPAlgo_ArgumentAnalyzer` y un barrido de astillas (arista ≥ {MIN_EDGE} mm, "
+               f"cara ≥ {MIN_FACE} mm²). Si algo falla, el build se detiene. El STEP escrito se vuelve a leer y se compara.", "",
+               "| Pieza | BRepCheck | BOPAlgo | Sólidos | Arista mínima mm | Cara mínima mm² |", "|---|---|---|---|---|---|"]
+    for pid, c in checks.items():
+        report.append(f"| {pid} | {'ok' if c['brep'] else 'FALLA'} | {'ok' if c['bop'] else 'FALLA'} | {c['solids']} | "
+                      f"{c['min_edge']:.2f} | {c['min_face']:.2f} |")
+    report.append("")
     petg_mass = sum(m * q for pid, _, mat, q, _, _, m in rows if mat == "PETG" and pid != "M8")
     win_mass = sum(m * q for pid, _, mat, q, _, _, m in rows if pid == "M7")
 
@@ -158,6 +209,11 @@ def main():
             assy.add(shapes[pid], name=f"{pid}_{nm}_{side}", loc=cl_, color=colors[col])
             world.append(shapes[pid].moved(cl_))
     assy.export(str(STEP_DIR / "ENSAMBLE_modulo.step"))
+    back = cq.importers.importStep(str(STEP_DIR / "ENSAMBLE_modulo.step"))
+    bad = [i for i, so in enumerate(back.solids().vals()) if not BRepCheck_Analyzer(so.wrapped, True).IsValid()]
+    if bad or len(back.solids().vals()) != len(world):
+        raise SystemExit(f"ENSAMBLE_modulo.step round trip: {len(back.solids().vals())} solids, invalid {bad}")
+    report_assy = f"`ENSAMBLE_modulo.step` releído: {len(world)} sólidos, todos válidos según BRepCheck."
     module = cq.Compound.makeCompound(world)
     cq.exporters.export(cq.Workplane().add(module), str(STL_DIR / "ENSAMBLE_modulo.stl"), tolerance=0.1, angularTolerance=0.3)
 
@@ -174,7 +230,7 @@ def main():
     cq.exporters.export(cq.Workplane().add(bench), str(STL_DIR / "ENSAMBLE_banco_prueba.stl"), tolerance=0.1, angularTolerance=0.3)
 
     # ------------------------------------------------------------ fit and interference
-    report += ["", "## 3. Encaje de componentes e interferencias", ""]
+    report += ["", "## 3. Encaje de componentes e interferencias", "", report_assy, ""]
     report += ["| Par | Volumen de interferencia mm³ | Holgura mínima mm | Resultado |", "|---|---|---|---|"]
 
     def pair(name, a, b, need_gap=None, tol=0.5):

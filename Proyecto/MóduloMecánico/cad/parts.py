@@ -17,16 +17,27 @@ from params import *  # noqa: F403  (all dimensions)
 def serration(r_in, r_out, n, h, offset_deg=0.0):
     """Radial teeth on the y = 0 plane pointing +Y, around the Y axis.
 
-    Ridge width = pitch at r_in, so two sets offset by half a pitch touch flank to flank at r_in
-    and leave a growing gap outward (no interference anywhere)."""
-    w = 2 * math.pi * r_in / n
-    tooth = (cq.Workplane("YZ").polyline([(0, -w / 2), (0, w / 2), (h, 0)]).close()
-             .extrude(r_out - r_in).translate((r_in, 0, 0)))
-    teeth = None
-    for k in range(n):
-        t = tooth.rotate((0, 0, 0), (0, 1, 0), k * 360.0 / n + offset_deg)
-        teeth = t if teeth is None else teeth.union(t)
-    return teeth
+    Each tooth is a wedge: its base spans exactly one pitch angle, so neighbours share their radial
+    base edge and no sliver is left between them (the old constant-width prisms left 0.003 mm gaps
+    that Parasolid/Onshape reports as faults). Height h is constant, so at every radius the profile
+    is the same triangle wave and a set offset by half a pitch meshes flank to flank.
+    Teeth are built past both radii and trimmed by an annulus, so the outer face is the cylinder
+    r_out (flush with the disc edge) instead of a chord."""
+    a = math.pi / n
+
+    def tri(r):
+        return cq.Wire.makePolygon([cq.Vector(r * math.cos(a), 0, r * math.sin(a)),
+                                    cq.Vector(r, h, 0),
+                                    cq.Vector(r * math.cos(a), 0, -r * math.sin(a))], close=True)
+
+    tooth = cq.Solid.makeLoft([tri(r_in - 1.0), tri(r_out + 1.0)], ruled=True)
+    teeth = cq.Workplane().add(tooth)
+    for k in range(1, n):
+        teeth = teeth.union(cq.Workplane().add(tooth.rotate(cq.Vector(0, 0, 0), cq.Vector(0, 1, 0), k * 360.0 / n)))
+    ring = (cq.Workplane().add(cq.Solid.makeCylinder(r_out, h + 1, cq.Vector(0, 0, 0), cq.Vector(0, 1, 0)))
+            .cut(cq.Workplane().add(cq.Solid.makeCylinder(r_in, h + 1, cq.Vector(0, 0, 0), cq.Vector(0, 1, 0)))))
+    teeth = teeth.intersect(ring)
+    return teeth.rotate((0, 0, 0), (0, 1, 0), offset_deg) if offset_deg else teeth
 
 
 # ------------------------------------------------------------------ capsule

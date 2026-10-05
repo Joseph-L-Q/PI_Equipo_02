@@ -10,12 +10,26 @@ Cama supuesta 220 × 220 × 250 mm. Voladizo = caras con normal hacia abajo a m�
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | M1 | `M1_caja_central_cuerpo` | PETG | 1 | sí | sí | 1 | 238.3 | 303 | 162 × 94 × 60 | sí | 570 |
 | M2 | `M2_caja_central_tapa` | PETG | 1 | sí | sí | 1 | 118.9 | 151 | 160 × 94 × 64 | sí | 1847 |
-| M3 | `M3_brazo` | PETG | 2 | sí | sí | 1 | 78.1 | 99 | 42 × 34 × 242 | sí | 934 |
+| M3 | `M3_brazo` | PETG | 2 | sí | sí | 1 | 78.2 | 99 | 42 × 34 × 242 | sí | 902 |
 | M4 | `M4_capsula_cuerpo_P4revB` | PETG | 2 | sí | sí | 1 | 53.7 | 68 | 64 × 64 × 56 | sí | 1101 |
-| M5 | `M5_capsula_tapa` | PETG | 2 | sí | sí | 1 | 23.4 | 30 | 64 × 64 × 33 | sí | 699 |
+| M5 | `M5_capsula_tapa` | PETG | 2 | sí | sí | 1 | 23.5 | 30 | 64 × 64 × 33 | sí | 701 |
 | M6 | `M6_bisel_ventana` | PETG | 2 | sí | sí | 1 | 2.3 | 3 | 42 × 42 × 2 | sí | 0 |
 | M7 | `M7_ventana` | acrílico 3 mm (comprado, cortado) | 2 | sí | sí | 1 | 2.1 | 3 | 3 × 30 × 30 | sí | 54 |
 | M8 | `M8_marco_malla_prueba` | PETG | 1 | sí | sí | 1 | 71.4 | 91 | 200 × 200 × 6 | sí | 0 |
+
+Antes de exportar, cada pieza pasa por `clean()`, `ShapeFix_Shape` y `UnifySameDomain` (OCP), y luego por `BRepCheck_Analyzer`, `BOPAlgo_ArgumentAnalyzer` y un barrido de astillas (arista ≥ 0.05 mm, cara ≥ 0.01 mm²). Si algo falla, el build se detiene. El STEP escrito se vuelve a leer y se compara.
+
+| Pieza | BRepCheck | BOPAlgo | Sólidos | Arista mínima mm | Cara mínima mm² |
+|---|---|---|---|---|---|
+| M1 | ok | ok | 1 | 3.00 | 5.37 |
+| M2 | ok | ok | 1 | 1.50 | 8.25 |
+| M3 | ok | ok | 1 | 0.39 | 0.73 |
+| M4 | ok | ok | 1 | 2.80 | 2.54 |
+| M5 | ok | ok | 1 | 1.05 | 0.73 |
+| M6 | ok | ok | 1 | 2.50 | 18.85 |
+| M7 | ok | ok | 1 | 3.00 | 282.74 |
+| M8 | ok | ok | 1 | 2.00 | 38.00 |
+
 
 ## 2. Espesores mínimos que quedan bajo cada corte
 
@@ -36,6 +50,8 @@ Mínimo aceptado: 1.2 mm (3 perímetros de boquilla 0.4).
 | Barra de malla de prueba | 2.00 | sí |
 
 ## 3. Encaje de componentes e interferencias
+
+`ENSAMBLE_modulo.step` releído: 12 sólidos, todos válidos según BRepCheck.
 
 | Par | Volumen de interferencia mm³ | Holgura mínima mm | Resultado |
 |---|---|---|---|
@@ -101,7 +117,7 @@ Dientes engranados a 40° (ángulo de trabajo): solape 0.00 mm³ (≈ 0 = flanco
 | **Masa total en aire** | **1022 g** (cumple ≤ 3 kg) |
 | Aire sellado (caja 470 + 2 cápsulas × 72) | 615 cm³ |
 | Volumen desplazado | 1299 cm³ |
-| Empuje en agua de mar (1.025 g/cm³) | 1331 g |
+| Empuje en agua de mar (1.025 g/cm³) | 1332 g |
 | **Peso aparente** | **-310 g** (flota) |
 | Lastre para entrar en 0.2 a 0.5 kgf | 510 a 810 g de peso aparente (acero inoxidable: ×1.15 en aire, ≈ 586 a 931 g) |
 

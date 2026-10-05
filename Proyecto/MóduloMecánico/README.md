@@ -88,6 +88,7 @@ Cada alternativa se puede activar desde `params.py` o es un cambio pequeño en `
 - **Espesores:** todos los que quedan bajo un corte (asiento de ventana, ranuras de junta, insertos, pilotos) miden ≥ 1.2 mm. El más justo está entre la ranura y el tornillo de la cápsula: 1.25 mm.
 - **Encaje:** las placas no tocan las paredes (holgura ≥ 1.59 mm). Ninguna de las cuatro contratuercas (2 PG7 en la caja, PG9 de la tapa, PG7 de cada cápsula) toca placas, paredes ni la cámara; la mínima es de 2.5 mm. La cámara cabe con 1 mm frente a la ventana.
 - **Bisagra:** sin choque de 0 a 90° y los dientes engranan sin solaparse a 40°.
+- **Geometría para Onshape:** antes de exportar, cada pieza pasa por `clean()`, `ShapeFix` y `UnifySameDomain`, y luego por `BRepCheck`, `BOPAlgo_ArgumentAnalyzer` y un barrido de aristas y caras diminutas. Si algo falla, el build se detiene, y el STEP escrito se vuelve a leer para comprobarlo. La importación en Onshape **no se probó desde aquí**: su núcleo (Parasolid) puede ser más estricto que OCCT.
 - **Presión a 15 m (0.15 MPa):** la tabla de Roark (placa plana) da un factor de seguridad de 3.9 a 18 y una flecha máxima de 0.86 mm. Pero Roark no considera el agujero del sensor en el centro del fondo (Kt ≈ 2) ni que en las paredes la flexión cruza las capas impresas. **El factor de seguridad efectivo del fondo y de las paredes es ≈ 2.** Es una estimación, no un ensayo.
 - **Flotabilidad:** con 615 cm³ de aire sellado, el conjunto **flota** (≈ −0.31 kgf de peso aparente). Para cumplir 0.2 a 0.5 kgf hace falta un **lastre de unos 0.6 a 0.9 kg** de acero inoxidable, por ejemplo una placa bajo la caja. Hay que medirlo en un balde.
 
@@ -114,7 +115,7 @@ Cada alternativa se puede activar desde `params.py` o es un cambio pequeño en `
 ```bash
 pip install cadquery trimesh
 cd Proyecto/MóduloMecánico/cad
-python build.py        # ~1 min: STEP, STL y reporte_verificacion.md
+python build.py        # ~17 min (medido): STEP, STL y reporte_verificacion.md
 ```
 
 Para cambiar una medida, edita `cad/params.py` y vuelve a correr `build.py`. El reporte dice si algo dejó de caber o de cumplir.
