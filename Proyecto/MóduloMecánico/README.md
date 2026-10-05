@@ -108,7 +108,7 @@ Cada alternativa se puede activar desde `params.py` o es un cambio pequeño en `
 - **Compresión de la junta:** está calculada (25 %), no medida. La planitud de la tapa impresa puede dejar fugas.
 - **Lastre y equilibrio:** el centro de masa respecto al centro de empuje, para que la barra no gire.
 - **Sensor ultrasónico:** el sellado del JSN-SR04T en el fondo de la caja (supuesto: junta con silicona o tuerca propia del sensor).
-- **Planos:** los planos con cajetín UPCH se hacen en Onshape (pasos abajo); no se generan aquí.
+- **Planos:** los dos planos con cajetín UPCH (sección [Planos](#planos)) se generan desde este mismo modelo con CadQuery/OCCT, no se dibujaron a mano ni en Onshape. Falta la revisión del equipo.
 
 ## Cómo regenerar
 
@@ -119,6 +119,27 @@ python build.py        # ~17 min (medido): STEP, STL y reporte_verificacion.md
 ```
 
 Para cambiar una medida, edita `cad/params.py` y vuelve a correr `build.py`. El reporte dice si algo dejó de caber o de cumplir.
+
+Vistas y planos (leen los STEP que deja `build.py`, ~30 s cada uno):
+
+```bash
+pip install pyvista matplotlib
+python vistas.py       # Recursos/Imágenes/LG_mec_vista_*.png y LG_mec_explosionada.png
+python planos.py       # planos/LG-ENS-01 y LG-M4-01 (PDF + PNG)
+```
+
+## Planos
+
+| Lámina | Contenido | Escala | Archivos |
+|---|---|---|---|
+| LG-ENS-01 (1/2) | Conjunto: vistas frontal, superior y lateral (primer diedro) + isométrica, cotas generales 770 × 94 × 157 mm, apoyos a ±250 mm, globos 1-8 y lista de piezas | 1:5 | [PDF](planos/LG-ENS-01.pdf) · [PNG](planos/LG-ENS-01.png) |
+| LG-M4-01 (2/2) | Cápsula M4: vista desde la ventana, frontal, superior, corte A-A por el eje óptico (M4 + M5 + M6 + M7) y detalle B 4:1 de la ranura de la junta | 1:1 | [PDF](planos/LG-M4-01.pdf) · [PNG](planos/LG-M4-01.png) |
+
+Cómo se hicieron, con honestidad: no se usó FreeCAD ni el editor de planos de Onshape. `cad/planos.py` proyecta los STEP con el algoritmo de líneas ocultas de OpenCASCADE (el mismo núcleo de CadQuery) y dibuja la lámina A3, el cajetín y las cotas con matplotlib. Cada cota es la distancia entre dos puntos que el script comprueba que están **sobre la superficie del sólido** (25 puntos), y luego la compara con `params.py`; si algo no coincide, el script se detiene. Las tres cotas generales salen de la caja envolvente del ensamble (769.8 → 770, 157.2 → 157, 94).
+
+El ensamble también está en Onshape: [ENLACE ONSHAPE] *(pendiente: pegar el enlace del documento)*.
+
+![Plano de conjunto](planos/LG-ENS-01.png)
 
 ## Importar en Onshape (sin probar esta noche: verifica los nombres de los menús)
 
@@ -134,6 +155,10 @@ Para cambiar una medida, edita `cad/params.py` y vuelve a correr `build.py`. El 
 6. Las piezas importadas no traen el historial paramétrico, pero se editan con *Move face* y *Offset face*. Para cambios grandes conviene editar `params.py` y reimportar.
 
 ## Imágenes
+
+Vistas tipo Onshape ("sombreado con aristas", fondo blanco, 1920 × 1080) hechas con `cad/vistas.py` (pyvista) desde `step/ENSAMBLE_modulo.step`: `LG_mec_vista_iso.png`, `LG_mec_vista_frontal.png`, `LG_mec_vista_superior.png`, `LG_mec_vista_lateral.png` y `LG_mec_explosionada.png` (con etiquetas M1-M7).
+
+![Vista explosionada](../../Recursos/Imágenes/LG_mec_explosionada.png)
 
 Renders hechos en Blender 5.2 (Mac mini), en `Recursos/Imágenes/`:
 - `LG_mec_ensamble_iso.png` (proporción 2.6 : 1, para el hueco del ensamble en el PPT);
