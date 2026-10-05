@@ -24,6 +24,7 @@ from pathlib import Path
 
 import bmesh
 import bpy
+from bpy_extras.object_utils import world_to_camera_view
 from mathutils import Matrix, Vector
 
 FPS, SECONDS = 30, 20
@@ -68,12 +69,13 @@ def args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     here = Path(__file__).resolve().parent if "__file__" in globals() else Path.cwd()
     o = {"in": str(here.parent / "stl" / "ensamble_piezas"), "png": str(here / "out" / "frames_v2"),
-         "res": "1920x1080", "samples": "64", "only": "", "light": "0.11"}
+         "res": "1920x1080", "samples": "64", "only": "", "light": "0.11", "report": "0"}
     for i in range(0, len(argv) - 1, 2):
         o[argv[i].lstrip("-")] = argv[i + 1]
     w, h = (int(v) for v in o["res"].lower().split("x"))
     only = [int(v) for v in o["only"].split(",") if v]
-    return Path(o["in"]), Path(o["png"]), (w, h), int(o["samples"]), only, float(o["light"])
+    return (Path(o["in"]), Path(o["png"]), (w, h), int(o["samples"]), only, float(o["light"]),
+            o["report"] == "1")
 
 
 f = lambda s: 1 + round(s * FPS)  # noqa: E731  seconds -> frame
@@ -102,6 +104,70 @@ def ease_all():
         for kp in fc.keyframe_points:
             kp.interpolation = "BEZIER"
             kp.handle_left_type = kp.handle_right_type = "AUTO_CLAMPED"
+
+
+def fit_turn(sc, cam, centre, d, root, corners, f0, f1, margin=0.07):
+    """Opening turn (frames f0..f1): push the camera back along d wherever the 8 corners of the
+    assembled module's bounding box (they turn with Root) would leave the frame minus `margin`.
+    The key at f1 keeps its right handle, so every frame after f1 is unchanged (checked below)."""
+    n = sc.frame_end
+    old = {}
+    for fr in range(1, n + 1):
+        sc.frame_set(fr)
+        old[fr] = cam.matrix_world.copy()
+    cur, req = {}, {}
+    for fr in range(f0, f1 + 1):
+        sc.frame_set(fr)
+        cur[fr] = (cam.location - centre).length
+        pts = [root.matrix_world @ c for c in corners]
+        lo_, hi_ = 0.5, 6.0
+        for _ in range(40):                     # smallest distance that fits all corners
+            mid = (lo_ + hi_) / 2
+            cam.location = centre + d * mid
+            bpy.context.view_layer.update()
+            ok = all(margin <= v.x <= 1 - margin and margin <= v.y <= 1 - margin and v.z > 0
+                     for v in (world_to_camera_view(sc, cam, q) for q in pts))
+            lo_, hi_ = (lo_, mid) if ok else (mid, hi_)
+        req[fr] = hi_
+    # one eased dolly-in from the widest distance needed to the existing distance at f1 (no in-out
+    # wobble), lifted wherever a frame needs more (running max + moving average stays >= req)
+    w = 8
+    rmax = {fr: max(req[j] for j in range(max(f0, fr - w), min(f1, fr + w) + 1)) for fr in req}
+    smooth = {fr: sum(rmax[j] for j in range(max(f0, fr - w), min(f1, fr + w) + 1))
+              / (min(f1, fr + w) - max(f0, fr - w) + 1) for fr in req}
+    a_, b_ = max(smooth.values()), cur[f1]
+    ease = lambda u: u * u * (3 - 2 * u)  # noqa: E731
+    new = {fr: max(a_ + (b_ - a_) * ease((fr - f0) / (f1 - f0)), smooth[fr]) for fr in req}
+    new[f1] = cur[f1]
+    for fr in range(f0, f1 + 1, 10):
+        print(f"CAM_FIT frame {fr:3d} old {cur[fr]:.3f} needed {req[fr]:.3f} new {new[fr]:.3f}")
+    if new[f1] > cur[f1] + 1e-6:
+        sys.exit(f"CAM_FIT: frame {f1} itself needs {new[f1]:.3f} > {cur[f1]:.3f}; widen the window")
+    curves = [fc for fc in fcurves() if fc.data_path == "location" and fc.id_data.name.startswith("cam")]
+    keep = {}
+    for fc in curves:
+        kp = next(k for k in fc.keyframe_points if round(k.co.x) == f1)
+        keep[fc.array_index] = (kp.handle_right.copy(), kp.handle_right_type)
+    for fr in range(f0, f1):
+        cam.location = centre + d * new[fr]
+        cam.keyframe_insert("location", frame=fr)
+    for fc in curves:
+        for kp in fc.keyframe_points:
+            if round(kp.co.x) < f1:
+                kp.interpolation = "LINEAR"
+            if round(kp.co.x) == f1:
+                kp.handle_left_type = kp.handle_right_type = "FREE"
+                kp.handle_right = keep[fc.array_index][0]
+    changed = []
+    for fr in range(1, n + 1):
+        sc.frame_set(fr)
+        m = cam.matrix_world
+        if max(abs(m[i][j] - old[fr][i][j]) for i in range(4) for j in range(4)) > 1e-6:
+            changed.append(fr)
+    print(f"CAM_FIT changed frames: {len(changed)} ({changed[0] if changed else '-'}..{changed[-1] if changed else '-'})")
+    if changed and changed[-1] >= f1:
+        sys.exit("CAM_FIT: frames after the turn changed")
+    return changed
 
 
 def surface(name, col, rough, alpha):
@@ -218,7 +284,7 @@ def area(name, loc, target, energy, size, colour=(1, 1, 1)):
 
 
 def main():
-    src, png, res, samples, only, light = args()
+    src, png, res, samples, only, light, report = args()
     man = json.loads((src / "manifest.json").read_text(encoding="utf-8"))
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc = bpy.context.scene
@@ -408,6 +474,11 @@ def main():
     r.film_transparent = False
     r.filter_size = 1.2
     sc.frame_start, sc.frame_end = 1, FPS * SECONDS
+    corners = [Vector((x, y, z)) for x in (lo.x, hi.x) for y in (lo.y, hi.y) for z in (lo.z, hi.z)]
+    changed = fit_turn(sc, cam, centre, d, root, corners, f(0), f(4))
+    if report:
+        print("CAM_FIT_FRAMES", ",".join(map(str, changed)))
+        return
     png.mkdir(parents=True, exist_ok=True)
     if hasattr(r.image_settings, "media_type"):
         r.image_settings.media_type = "IMAGE"

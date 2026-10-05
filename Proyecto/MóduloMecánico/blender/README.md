@@ -20,7 +20,7 @@ Blender -b -P blender/animacion_v2.py -- --in stl/ensamble_piezas --png check --
 
 | Tiempo | Qué pasa |
 |---|---|
-| 0–4 s | El conjunto armado gira 120° (de −98° a 22°). |
+| 0–4 s | El conjunto armado gira 120° (de −98° a 22°). La cámara se aleja lo justo para que las 8 esquinas de la caja envolvente del módulo queden dentro del cuadro con 7 % de margen en cada cuadro (`fit_turn`) y luego se acerca con suavidad hasta su distancia a los 4 s. |
 | 4–10 s | Despiece en orden de montaje inverso: M2 sube, M6 y M7 salen por el eje óptico, M5 atrás y arriba (libra el brazo), M4 se separa, M3 se aleja de la caja. Cada pieza entra con su etiqueta 3D y su fila en la leyenda. |
 | 10–13 s | Pausa explosionada con giro lento. |
 | 13–18 s | Montaje en orden; las etiquetas salen cuando cada pieza vuelve. |
@@ -35,3 +35,4 @@ Blender -b -P blender/animacion_v2.py -- --in stl/ensamble_piezas --png check --
 - **Etiquetas**: código corto 3D junto a cada pieza (solo en el lado derecho, para no amontonar) + leyenda 2D con el nombre completo a la izquierda.
 - **Fondo**: ciclorama (piso curvo que sube a pared) gris claro con 4 luces de área (clave, relleno, contra, cenital): da el degradado y la sombra de contacto sin línea de horizonte. AO = "fast GI" de Eevee Next (Blender 5.2 ya no tiene el ajuste GTAO clásico).
 - **GIF**: los 20 s completos a 2,5× = 8 s, 15 fps, 720 px de ancho.
+- **Encuadre del giro inicial** (05/10, tarde): en v2 el módulo se salía del cuadro al girar. `fit_turn` calcula cuadro a cuadro la distancia mínima y la convierte en un único acercamiento suave (2,06 m → 1,80 m); el resto del video no cambia (se verifica: solo cambian los cuadros 1–120). Los cuadros y el MP4 anteriores quedan en la Mac en `_descartados/`.
