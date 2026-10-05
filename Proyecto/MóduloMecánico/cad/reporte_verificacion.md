@@ -8,14 +8,14 @@ Cama supuesta 220 × 220 × 250 mm. Voladizo = caras con normal hacia abajo a m�
 
 | Pieza | Archivo | Material | Cant. | Sólido válido | Estanco (STL) | Cuerpos | Volumen cm³ | Masa g (100 % relleno) | Caja en orientación de impresión | Cabe en la cama | Voladizo mm² |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| P1 | `P1_caja_central_cuerpo` | PETG | 1 | sí | sí | 1 | 238.3 | 303 | 162 × 94 × 60 | sí | 570 |
-| P2 | `P2_caja_central_tapa` | PETG | 1 | sí | sí | 1 | 118.9 | 151 | 160 × 94 × 64 | sí | 1847 |
-| P3 | `P3_brazo` | PETG | 2 | sí | sí | 1 | 63.9 | 81 | 42 × 34 × 192 | sí | 930 |
-| P4 | `P4revB_capsula_cuerpo` | PETG | 2 | sí | sí | 1 | 48.4 | 61 | 64 × 64 × 48 | sí | 1101 |
-| P5 | `P5_capsula_tapa` | PETG | 2 | sí | sí | 1 | 23.4 | 30 | 64 × 64 × 33 | sí | 699 |
-| P6 | `P6_bisel_ventana` | PETG | 2 | sí | sí | 1 | 2.3 | 3 | 42 × 42 × 2 | sí | 0 |
-| P7 | `P7_ventana` | acrílico 3 mm (comprado, cortado) | 2 | sí | sí | 1 | 2.1 | 3 | 3 × 30 × 30 | sí | 54 |
-| P8 | `P8_marco_malla_prueba` | PETG | 1 | sí | sí | 1 | 71.4 | 91 | 200 × 200 × 6 | sí | 0 |
+| M1 | `M1_caja_central_cuerpo` | PETG | 1 | sí | sí | 1 | 238.3 | 303 | 162 × 94 × 60 | sí | 570 |
+| M2 | `M2_caja_central_tapa` | PETG | 1 | sí | sí | 1 | 118.9 | 151 | 160 × 94 × 64 | sí | 1847 |
+| M3 | `M3_brazo` | PETG | 2 | sí | sí | 1 | 78.1 | 99 | 42 × 34 × 242 | sí | 934 |
+| M4 | `M4_capsula_cuerpo_P4revB` | PETG | 2 | sí | sí | 1 | 53.7 | 68 | 64 × 64 × 56 | sí | 1101 |
+| M5 | `M5_capsula_tapa` | PETG | 2 | sí | sí | 1 | 23.4 | 30 | 64 × 64 × 33 | sí | 699 |
+| M6 | `M6_bisel_ventana` | PETG | 2 | sí | sí | 1 | 2.3 | 3 | 42 × 42 × 2 | sí | 0 |
+| M7 | `M7_ventana` | acrílico 3 mm (comprado, cortado) | 2 | sí | sí | 1 | 2.1 | 3 | 3 × 30 × 30 | sí | 54 |
+| M8 | `M8_marco_malla_prueba` | PETG | 1 | sí | sí | 1 | 71.4 | 91 | 200 × 200 × 6 | sí | 0 |
 
 ## 2. Espesores mínimos que quedan bajo cada corte
 
@@ -59,8 +59,17 @@ Mínimo aceptado: 1.2 mm (3 perímetros de boquilla 0.4).
 | contratuerca PG7 (−X) ↔ max485_module | 0.00 | 81.01 | OK |
 | contratuerca PG7 (−X) ↔ jsn_sr04t_board | 0.00 | 83.18 | OK |
 | contratuerca PG7 (−X) ↔ jsn_sr04t_probe | 0.00 | 48.46 | OK |
+| contratuerca PG9 (tapa) ↔ caja (cuerpo) | 0.00 | 5.00 | OK |
+| contratuerca PG9 (tapa) ↔ esp32_devkit_wroom32u | 0.00 | 33.48 | OK |
+| contratuerca PG9 (tapa) ↔ microsd_module | 0.00 | 33.66 | OK |
+| contratuerca PG9 (tapa) ↔ max485_module | 0.00 | 43.03 | OK |
+| contratuerca PG9 (tapa) ↔ jsn_sr04t_board | 0.00 | 35.88 | OK |
+| contratuerca PG9 (tapa) ↔ jsn_sr04t_probe | 0.00 | 33.00 | OK |
+| contratuerca PG7 (cápsula) ↔ cámara | 0.00 | 5.34 | OK |
+| contratuerca PG7 (cápsula) ↔ cápsula (cuerpo) | 0.00 | 0.00 | OK |
+| contratuerca PG7 (cápsula) ↔ cápsula (tapa) | 0.00 | 1.34 | OK |
 | cámara ↔ cápsula (cuerpo) | 0.00 | 1.00 | OK |
-| cámara ↔ cápsula (tapa) | 0.00 | 16.00 | OK |
+| cámara ↔ cápsula (tapa) | 0.00 | 24.00 | OK |
 | ventana ↔ cápsula (cuerpo) | 0.00 | 0.00 | OK |
 
 Bisagra: la lengüeta de la tapa engrana con las orejas del brazo. Se comprueba el cuerpo de la cápsula contra el brazo en todo el rango; los dientes de la tapa contra los del brazo se reportan aparte porque se tocan por diseño (flanco con flanco).
@@ -84,17 +93,17 @@ Dientes engranados a 40° (ángulo de trabajo): solape 0.00 mm³ (≈ 0 = flanco
 
 | Concepto | Valor |
 |---|---|
-| PETG impreso (sin el marco de prueba), 100 % relleno | 804 g |
+| PETG impreso (sin el marco de prueba), 100 % relleno | 854 g |
 | Ventanas de acrílico | 5 g |
 | Electrónica (datasheets, ver params.py) | 63 g |
 | Cables y prensaestopas (supuesto) | 40 g |
 | Tornillería (supuesto) | 60 g |
-| **Masa total en aire** | **972 g** (cumple ≤ 3 kg) |
-| Aire sellado (caja 470 + 2 cápsulas × 61) | 592 cm³ |
-| Volumen desplazado | 1237 cm³ |
-| Empuje en agua de mar (1.025 g/cm³) | 1268 g |
-| **Peso aparente** | **-295 g** (flota) |
-| Lastre para entrar en 0.2 a 0.5 kgf | 495 a 795 g de peso aparente (acero inoxidable: ×1.15 en aire, ≈ 570 a 915 g) |
+| **Masa total en aire** | **1022 g** (cumple ≤ 3 kg) |
+| Aire sellado (caja 470 + 2 cápsulas × 72) | 615 cm³ |
+| Volumen desplazado | 1299 cm³ |
+| Empuje en agua de mar (1.025 g/cm³) | 1331 g |
+| **Peso aparente** | **-310 g** (flota) |
+| Lastre para entrar en 0.2 a 0.5 kgf | 510 a 810 g de peso aparente (acero inoxidable: ×1.15 en aire, ≈ 586 a 931 g) |
 
 El relleno real < 100 % baja la masa y deja aire atrapado en las paredes: el peso aparente real será más negativo. Medir en balde y ajustar el lastre.
 
@@ -108,10 +117,10 @@ Fórmula: σ = β·q·b²/t², y = α·q·b⁴/(E·t³). Roark, *Formulas for St
 | Fondo de la caja | 132 × 66 | 6 | 0.610 | 11.1 | 4.1 | 0.86 |
 | Pared lateral de la caja | 132 × 54 | 5 | 0.656 | 11.5 | 3.9 | 0.73 |
 | Pared extrema de la caja | 66 × 54 | 5 | 0.385 | 6.7 | 6.7 | 0.38 |
-| Pared de la cápsula | 42 × 38 | 4 | 0.334 | 4.5 | 9.9 | 0.15 |
+| Pared de la cápsula | 50 × 38 | 4 | 0.421 | 5.7 | 7.9 | 0.20 |
 | Tapa de la cápsula | 38 × 38 | 5 | 0.287 | 2.5 | 18.1 | 0.07 |
 
-FDM es anisótropo: entre capas la resistencia puede caer a la mitad o menos. Con FS ≥ 2.5 en todas las placas el margen sigue siendo positivo, pero **no está probado**: falta el ensayo en cámara de presión o a profundidad. Las simulaciones SimScale del equipo usaron 50 kPa (≈ 5 m), un tercio de esta carga.
+**Límites de esta estimación.** (1) Roark supone placa sin agujeros: el agujero del sensor JSN-SR04T está en el centro del fondo, donde el momento es máximo, con un factor de concentración Kt ≈ 2. (2) En las paredes laterales la flexión cruza las capas de impresión, la dirección débil del FDM (resistencia entre capas del orden de la mitad). Con ambos efectos, el factor de seguridad efectivo del fondo y de las paredes laterales baja a **≈ 2**, no a los valores de la tabla. **No está probado**: falta el ensayo en cámara de presión o a profundidad. Las simulaciones SimScale del equipo usaron 50 kPa (≈ 5 m), un tercio de esta carga.
 
 ## 6. Junta tórica (sello de cara, estático)
 

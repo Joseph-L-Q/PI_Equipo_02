@@ -42,13 +42,17 @@ M2_PILOT = 1.8            # self-tapping M2 for the window bezel
 PG7_HOLE = 12.6           # [doc] PG7 thread 12.5 mm; nut inside
 PG7_NUT_AF = 15.0         # [ds] PG7 locknut across flats (baja) -> needs ~19 mm flat inside
 PG9_HOLE = 15.4           # [ds] PG9 thread 15.2 mm (media)
+PG9_NUT_AF = 20.0         # [ds] PG9 locknut across flats (media)
+NUT_T = 5.0               # [ds] gland locknut thickness (media)
+CAP_GLAND_X = 10.0        # PG7 centre from the capsule rear opening (bottom wall)
+LID_GLAND_Y = 18.0        # PG9 offset from the handle on the box lid
 
 # --------------------------------------------------- camera capsule: P4 rev. B
 # Original P4 (T01): 52 x 40 x 28 outer, cavity 46 x 34 x 22 -> cannot hold a 33x33 board
 # plus a 20-25 mm lens. Rev. B keeps the window, ears and hinge, and enlarges the cavity.
 CAP_CAV_W = 38.0          # board 33 + 2.5 per side
 CAP_CAV_H = 38.0
-CAP_CAV_L = 42.0          # lens 25 + board 2 + connector/cable bend 15
+CAP_CAV_L = 50.0          # lens 25 + board 2 + cable bend + PG7 locknut zone behind the board
 CAP_WALL = 4.0            # side walls
 CAP_FRONT = 6.0           # doc proposed 5 (03_INVENTARIO_CAD §5); 6 leaves a 2.8 mm window shoulder
 CAP_FLANGE = 9.0          # flange width around the rear opening
@@ -94,11 +98,11 @@ HANDLE_GRIP = 90.0        # glove width ~ 90 mm [sup]
 ARM_W = 30.0              # [doc] 03_INVENTARIO_CAD §5: arms 30 x 25
 ARM_H = 25.0
 ARM_WALL = 3.0
-ARM_LEN = 140.0           # [sup] lab scale; field unit needs total > 500 mm (rev.3 Geometria)
+ARM_LEN = 190.0           # standing print height 190 + 52 fork = 242 <= 250 bed; saddles land on a 500 mm ring
 ARM_FLANGE_T = 5.0
 FORK_REACH = 52.0         # tube end -> rounded ear tip         # ears beyond the tube end; sized so the capsule clears the arm at 0-90 deg
 RING_ROD_D = 12.0         # [sup] lantern top ring rod diameter (not in docs)
-RING_POS = 70.0           # saddle position from the arm root
+LANTERN_RING_D = 500.0    # [doc] lantern outer diameter 0.5 m (ref [1], rev.3 Geometria); ring rod assumed
 STRAP_SLOT = (26.0, 4.0)  # velcro / hose-clamp strap, gloved install <= 5 min
 
 # --------------------------------------------------- lab test mesh frame

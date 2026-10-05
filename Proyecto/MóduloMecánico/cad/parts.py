@@ -70,7 +70,7 @@ def capsule_body():
     for (y, z) in cap_screw_pts():
         body = body.cut(cq.Workplane("YZ").workplane(offset=x0).center(y, z).circle(M3_CLEAR / 2).extrude(CAP_FLANGE_T))
     # PG7 cable gland on the bottom wall, near the rear (cable runs back to the arm)
-    gx = x0 + CAP_FLANGE_T + 2 + 10.0
+    gx = x0 + CAP_GLAND_X
     body = body.cut(cq.Workplane("XY").workplane(offset=-out_h / 2).center(gx, 0).circle(PG7_HOLE / 2).extrude(CAP_WALL))
     return body
 
@@ -198,7 +198,7 @@ def box_lid():
     inner = cq.Workplane("XY").workplane(offset=z0).rect(cl_l - GROOVE_WIDTH, cl_w - GROOVE_WIDTH).extrude(GROOVE_DEPTH).edges("|Z").fillet(3.5)
     lid = lid.cut(outer.cut(inner))
     # PG9 umbilical gland beside the handle
-    lid = lid.cut(cq.Workplane("XY").workplane(offset=z0).center(0, 22).circle(PG9_HOLE / 2).extrude(BOX_LID_T))
+    lid = lid.cut(cq.Workplane("XY").workplane(offset=z0).center(0, LID_GLAND_Y).circle(PG9_HOLE / 2).extrude(BOX_LID_T))
     # handle: arch over y = 0, glove-sized opening, with an anchor eye at the top
     zt = z0 + BOX_LID_T
     leg = 12.0
@@ -238,6 +238,14 @@ def box_components():
 
 
 # ------------------------------------------------------------------ arm
+def ring_pos():
+    """Saddle position along the arm so that it lands on the lantern ring."""
+    out_l = BOX_CAV_L + 2 * BOX_WALL
+    pos = LANTERN_RING_D / 2 - out_l / 2 - ARM_PAD_T
+    assert 24 <= pos <= ARM_LEN - 16, f"saddle at {pos:.0f} mm is off the arm: change ARM_LEN or the ring"
+    return pos
+
+
 def arm_axis_x():
     return ARM_LEN + FORK_REACH - ARM_H / 2
 
@@ -250,7 +258,7 @@ def arm():
     flange = cq.Workplane("YZ").rect(ARM_PAD, ARM_PAD).extrude(ARM_FLANGE_T).edges("|X").fillet(3)
     a = tube.union(flange)
     # root: clearance for the PG7 gland body + 4 screws; tip: cable exit hole downward
-    a = a.cut(cq.Workplane("YZ").circle(9.0).extrude(ARM_FLANGE_T))
+    a = a.cut(cq.Workplane("YZ").circle(10.0).extrude(ARM_FLANGE_T))
     for (dy, dz) in ((12, 12), (-12, 12), (12, -12), (-12, -12)):
         a = a.cut(cq.Workplane("YZ").center(dy, dz).circle(M3_CLEAR / 2).extrude(ARM_FLANGE_T))
     a = a.cut(cq.Workplane("XY").workplane(offset=-ARM_H / 2).center(ARM_LEN - 14, 0).circle(5.0).extrude(t))
@@ -268,7 +276,7 @@ def arm():
         a = a.union(ear).union(teeth)
     a = a.cut(cq.Workplane("XZ").center(ax, 0).circle(M4_CLEAR / 2).extrude(30, both=True))
     # saddle on the lantern ring + strap slot
-    sx = RING_POS
+    sx = ring_pos()
     saddle = cq.Workplane("XY").workplane(offset=-ARM_H / 2 - 12).center(sx, 0).rect(24, ARM_W).extrude(12)
     rod = cq.Workplane("XZ").center(sx, -ARM_H / 2 - 12).circle(RING_ROD_D / 2 + 0.5).extrude(ARM_W, both=True)
     slot = (cq.Workplane("YZ").workplane(offset=sx - 12).center(0, -ARM_H / 2 - 4)

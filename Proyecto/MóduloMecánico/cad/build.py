@@ -27,14 +27,14 @@ HARDWARE_G = 60.0        # [sup] M3/M4 screws, nuts, inserts, 3 glands
 
 # part id, file stem, builder, material, qty, print orientation (rotation applied before the bed check)
 PARTS = [
-    ("P1", "P1_caja_central_cuerpo", P.box_body, "PETG", 1, ("X", 0)),
-    ("P2", "P2_caja_central_tapa", P.box_lid, "PETG", 1, ("X", 0)),
-    ("P3", "P3_brazo", P.arm, "PETG", 2, ("Y", -90)),        # standing on the root flange
-    ("P4", "P4revB_capsula_cuerpo", P.capsule_body, "PETG", 2, ("Y", -90)),   # standing on the rear flange
-    ("P5", "P5_capsula_tapa", P.capsule_lid, "PETG", 2, ("Y", 90)),       # inner face (groove) down
-    ("P6", "P6_bisel_ventana", P.bezel, "PETG", 2, ("Y", -90)),
-    ("P7", "P7_ventana", P.window_disc, "acrílico 3 mm (comprado, cortado)", 2, None),
-    ("P8", "P8_marco_malla_prueba", P.mesh_frame, "PETG", 1, ("X", 0)),
+    ("M1", "M1_caja_central_cuerpo", P.box_body, "PETG", 1, ("X", 0)),
+    ("M2", "M2_caja_central_tapa", P.box_lid, "PETG", 1, ("X", 0)),
+    ("M3", "M3_brazo", P.arm, "PETG", 2, ("Y", -90)),        # standing on the root flange
+    ("M4", "M4_capsula_cuerpo_P4revB", P.capsule_body, "PETG", 2, ("Y", -90)),   # standing on the rear flange
+    ("M5", "M5_capsula_tapa", P.capsule_lid, "PETG", 2, ("Y", 90)),       # inner face (groove) down
+    ("M6", "M6_bisel_ventana", P.bezel, "PETG", 2, ("Y", -90)),
+    ("M7", "M7_ventana", P.window_disc, "acrílico 3 mm (comprado, cortado)", 2, None),
+    ("M8", "M8_marco_malla_prueba", P.mesh_frame, "PETG", 1, ("X", 0)),
 ]
 
 
@@ -101,8 +101,8 @@ def main():
         report.append(f"| {pid} | `{stem}` | {mat} | {qty} | {'sí' if valid else 'NO'} | "
                       f"{'sí' if mc['watertight'] else 'NO'} | {mc['bodies']} | {mc['vol_cm3']:.1f} | {mass:.0f} | "
                       f"{bb} | {'sí' if mc['fits_bed'] else 'NO'} | {mc['overhang_mm2']:.0f} |")
-    petg_mass = sum(m * q for pid, _, mat, q, _, _, m in rows if mat == "PETG" and pid != "P8")
-    win_mass = sum(m * q for pid, _, mat, q, _, _, m in rows if pid == "P7")
+    petg_mass = sum(m * q for pid, _, mat, q, _, _, m in rows if mat == "PETG" and pid != "M8")
+    win_mass = sum(m * q for pid, _, mat, q, _, _, m in rows if pid == "M7")
 
     # ------------------------------------------------------------ derived thicknesses
     cap_fl_w = CAP_CAV_W + 2 * CAP_WALL + 2 * CAP_FLANGE
@@ -145,16 +145,16 @@ def main():
     assy = cq.Assembly(name="LanternGuard_modulo_mecanico")
     colors = {"petg": cq.Color(0.85, 0.2, 0.18), "lid": cq.Color(0.95, 0.95, 0.95), "arm": cq.Color(0.25, 0.25, 0.28),
               "win": cq.Color(0.6, 0.8, 1.0, 0.5), "frame": cq.Color(0.2, 0.55, 0.35)}
-    assy.add(shapes["P1"], name="P1_caja_cuerpo", loc=box_loc, color=colors["petg"])
-    assy.add(shapes["P2"], name="P2_caja_tapa", loc=box_loc, color=colors["lid"])
-    world = [shapes["P1"].moved(box_loc), shapes["P2"].moved(box_loc)]
+    assy.add(shapes["M1"], name="M1_caja_cuerpo", loc=box_loc, color=colors["petg"])
+    assy.add(shapes["M2"], name="M2_caja_tapa", loc=box_loc, color=colors["lid"])
+    world = [shapes["M1"].moved(box_loc), shapes["M2"].moved(box_loc)]
     for side, pre in (("der", loc()), ("izq", flip)):
         al = pre * arm_loc_r
-        assy.add(shapes["P3"], name=f"P3_brazo_{side}", loc=al, color=colors["arm"])
-        world.append(shapes["P3"].moved(al))
+        assy.add(shapes["M3"], name=f"M3_brazo_{side}", loc=al, color=colors["arm"])
+        world.append(shapes["M3"].moved(al))
         cl_ = pre * loc(hinge) * loc((0, 0, 0), (0, 1, 0), CAM_TILT_DEG)
-        for pid, nm, col in (("P4", "capsula_cuerpo", "petg"), ("P5", "capsula_tapa", "lid"),
-                             ("P6", "bisel", "lid"), ("P7", "ventana", "win")):
+        for pid, nm, col in (("M4", "capsula_cuerpo", "petg"), ("M5", "capsula_tapa", "lid"),
+                             ("M6", "bisel", "lid"), ("M7", "ventana", "win")):
             assy.add(shapes[pid], name=f"{pid}_{nm}_{side}", loc=cl_, color=colors[col])
             world.append(shapes[pid].moved(cl_))
     assy.export(str(STEP_DIR / "ENSAMBLE_modulo.step"))
@@ -168,9 +168,9 @@ def main():
     win_c = np.array(hinge) + x_front * d
     fc = win_c + TEST_DISTANCE * d
     frame_loc = loc(tuple(fc), (0, 1, 0), 90 + CAM_TILT_DEG)
-    assy.add(shapes["P8"], name="P8_marco_malla_prueba", loc=frame_loc, color=colors["frame"])
+    assy.add(shapes["M8"], name="M8_marco_malla_prueba", loc=frame_loc, color=colors["frame"])
     assy.export(str(STEP_DIR / "ENSAMBLE_banco_prueba.step"))
-    bench = cq.Compound.makeCompound(world + [shapes["P8"].moved(frame_loc)])
+    bench = cq.Compound.makeCompound(world + [shapes["M8"].moved(frame_loc)])
     cq.exporters.export(cq.Workplane().add(bench), str(STL_DIR / "ENSAMBLE_banco_prueba.stl"), tolerance=0.1, angularTolerance=0.3)
 
     # ------------------------------------------------------------ fit and interference
@@ -184,7 +184,7 @@ def main():
         report.append(f"| {name} | {v:.2f} | {gap:.2f} | {'OK' if ok else 'REVISAR'} |")
         return ok
 
-    box_b, box_l = shapes["P1"], shapes["P2"]
+    box_b, box_l = shapes["M1"], shapes["M2"]
     for nm, comp in P.box_components():
         pair(f"{nm} ↔ caja (cuerpo)", comp.val(), box_b, None if "probe" in nm else CLEARANCE)
         pair(f"{nm} ↔ caja (tapa)", comp.val(), box_l, CLEARANCE)
@@ -195,7 +195,20 @@ def main():
                .polygon(6, PG7_NUT_AF / math.cos(math.pi / 6)).extrude(6)).val()
         for nm, comp in P.box_components():
             pair(f"contratuerca PG7 ({'+' if s > 0 else '−'}X) ↔ {nm}", nut, comp.val(), CLEARANCE)
+    # PG9 locknut under the lid
+    out_l, out_w, out_h = P.box_dims()
+    nut9 = (cq.Workplane("XY").workplane(offset=out_h - NUT_T).center(0, LID_GLAND_Y)
+            .polygon(6, PG9_NUT_AF / math.cos(math.pi / 6)).extrude(NUT_T)).val()
+    pair("contratuerca PG9 (tapa) ↔ caja (cuerpo)", nut9, box_b)
+    for nm, comp in P.box_components():
+        pair(f"contratuerca PG9 (tapa) ↔ {nm}", nut9, comp.val(), CLEARANCE)
     cam = P.camera_dummy().val()
+    x0c = P.cap_dims()[5]
+    nut7 = (cq.Workplane("XY").workplane(offset=-CAP_CAV_H / 2).center(x0c + CAP_GLAND_X, 0)
+            .polygon(6, PG7_NUT_AF / math.cos(math.pi / 6)).extrude(NUT_T)).val()
+    pair("contratuerca PG7 (cápsula) ↔ cámara", nut7, cam, CLEARANCE)
+    pair("contratuerca PG7 (cápsula) ↔ cápsula (cuerpo)", nut7, P.capsule_body().val())
+    pair("contratuerca PG7 (cápsula) ↔ cápsula (tapa)", nut7, P.capsule_lid().val())
     pair("cámara ↔ cápsula (cuerpo)", cam, P.capsule_body().val(), CLEARANCE)
     pair("cámara ↔ cápsula (tapa)", cam, P.capsule_lid().val(), CLEARANCE)
     pair("ventana ↔ cápsula (cuerpo)", P.window_disc().val(), P.capsule_body().val())
@@ -204,7 +217,7 @@ def main():
                "cápsula contra el brazo en todo el rango; los dientes de la tapa contra los del brazo se reportan aparte "
                "porque se tocan por diseño (flanco con flanco).", "",
                "| Ángulo | Cuerpo cápsula ↔ brazo mm³ | Holgura mm | Tapa (sin dientes) ↔ brazo mm³ |", "|---|---|---|---|"]
-    arm_local = shapes["P3"].moved(loc((-P.arm_axis_x(), 0, 0)))      # arm in hinge frame
+    arm_local = shapes["M3"].moved(loc((-P.arm_axis_x(), 0, 0)))      # arm in hinge frame
     for ang in (0, 10, 20, 30, 40, 50, 60, 70, 80, 90):
         cs = build_capsule_set(ang)
         v1 = cs["body"].intersect(arm_local).Volume()
@@ -278,9 +291,13 @@ def main():
         sig = beta * q * b_ ** 2 / t_ ** 2
         y = alpha * q * b_ ** 4 / (E_PETG * t_ ** 3)
         report.append(f"| {name} | {a_:.0f} × {b_:.0f} | {t_:.0f} | {beta:.3f} | {sig:.1f} | {PETG_YIELD / sig:.1f} | {y:.2f} |")
-    report += ["", "FDM es anisótropo: entre capas la resistencia puede caer a la mitad o menos. Con FS ≥ 2.5 en "
-               "todas las placas el margen sigue siendo positivo, pero **no está probado**: falta el ensayo en cámara "
-               "de presión o a profundidad. Las simulaciones SimScale del equipo usaron 50 kPa (≈ 5 m), un tercio de esta carga."]
+    report += ["", "**Límites de esta estimación.** (1) Roark supone placa sin agujeros: el agujero del sensor JSN-SR04T "
+               "está en el centro del fondo, donde el momento es máximo, con un factor de concentración Kt ≈ 2. "
+               "(2) En las paredes laterales la flexión cruza las capas de impresión, la dirección débil del FDM "
+               "(resistencia entre capas del orden de la mitad). Con ambos efectos, el factor de seguridad efectivo del "
+               "fondo y de las paredes laterales baja a **≈ 2**, no a los valores de la tabla. **No está probado**: falta "
+               "el ensayo en cámara de presión o a profundidad. Las simulaciones SimScale del equipo usaron 50 kPa (≈ 5 m), "
+               "un tercio de esta carga."]
 
     # ------------------------------------------------------------ seal
     squeeze = (ORING_CORD - GROOVE_DEPTH) / ORING_CORD * 100
