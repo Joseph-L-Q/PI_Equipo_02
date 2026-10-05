@@ -14,3 +14,14 @@ Las tomó Claude en modo autónomo y queda pendiente que el grupo las confirme. 
 | 2026-10-04 | Pendiente | El paso libre para el cabo **no se resolvió** | Necesita una decisión de grupo: desplazar la caja, ranura en U o tubo sellado | — | — |
 
 Nada se subió a GitHub: los commits están solo en la rama local `yoichi/diseno-mecanico`.
+
+## Sesión del 5 oct 2026 (vistas, planos, PPT de entrega)
+
+| Fecha | Tarea | Qué se eligió | Por qué | Qué se descartó | Cómo revertir |
+|---|---|---|---|---|---|
+| 2026-10-05 | Planos | Proyección HLR de OpenCASCADE + lámina dibujada con matplotlib (`cad/planos.py`) | FreeCAD no está instalado y la ruta OCP no necesita instalar nada; cada cota se comprueba sobre la superficie del STEP y contra `params.py` | FreeCAD TechDraw headless; plano en Onshape (necesita a Yoichi) | Hacer los planos en Onshape y reemplazar los PNG/PDF de `planos/` |
+| 2026-10-05 | Planos | Lámina 2 con vista desde la ventana además de frontal, superior y corte, y un detalle B 4:1 de la ranura | La ranura de la junta (2.6 × 1.5) no se lee a 1:1 | Solo 3 vistas | Borrar `side`/detalle en `sheet_capsule()` |
+| 2026-10-05 | Planos | Globo 8 (M8) en un detalle aparte a 1:10 | M8 es del banco de prueba, no está en `ENSAMBLE_modulo` | Omitir M8 del plano | Quitar el bloque "M8" en `sheet_assembly()` |
+| 2026-10-05 | Vistas | Colores tipo Onshape: rojo #C0392B (M1, M4), negro (M3), gris claro (M2, M5, M6), acrílico translúcido (M7) | Pedido explícito; los colores del STEP tienen la tapa casi blanca, que se pierde en fondo blanco | Colores exactos del STEP | `COLOR` en `cad/vistas.py` |
+| 2026-10-05 | PPT | "abrazaderas" → "correa de velcro" también en la diapo 9 (además de 6 y 17) | El prompt decía diapos 5 y 17, pero la palabra estaba en 6, 9 y 17; se dejó coherente en todas | Cambiar solo 2 diapos | `REPLACE` en `parcial/tools/build_entrega.py` |
+| 2026-10-05 | PPT | Video reinsertado con PowerPoint por COM (XML nativo), autoplay "con la anterior" como primer efecto | El XML de python-pptx era válido y se veía en PowerPoint de escritorio, pero es la causa más probable de que otro visor lo muestre mal | Dejar el video de python-pptx | `insertar_video.py` (versión anterior) |
