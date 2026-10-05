@@ -9,19 +9,13 @@
 | Mecatrónica | Mecánica + electrónica + TI integradas de forma sinérgica |
 | Sistema mecatrónico | Sistema base + sensores + actores + procesamiento; flujos de material, energía e información |
 | Micro-ciclo | Situación/meta -> análisis y síntesis -> evaluación -> decisión -> planificar o aprender |
-| V-model 2004 | Requisitos -> diseño del sistema -> diseño por dominio -> integración -> aseguramiento; modelado envuelve; producto |
-| V-model 2020 | Tres franjas: núcleo, requisitos (continuos), modelado y análisis; secuencia lógica, no temporal |
-| Verificación | ¿Se construyó bien? Contra la especificación, mismo nivel |
-| Validación | ¿Es el producto correcto? Contra la necesidad del usuario, nivel superior |
-| 4 métodos | Análisis, inspección, demostración, ensayo |
+| V-model | 2004: requisitos -> diseño del sistema -> diseño por dominio -> integración -> aseguramiento -> producto. 2020: tres franjas (núcleo, requisitos continuos, modelado y análisis); secuencia lógica, no temporal |
+| Verificación / validación | ¿Se construyó bien? (contra la especificación) / ¿Es el producto correcto? (contra la necesidad del usuario). Métodos: análisis, inspección, demostración, ensayo |
 | Integración | Distribuida (cables), modular (interfaces), espacial (una carcasa) |
 | Lista de exigencias | E = exigencia, D = deseo; categorías: función, geometría, cinemática, fuerzas, energía, materia, señales, control |
-| Caja negra | Función global con entradas y salidas, sin la solución |
-| Matriz morfológica | Subfunciones x alternativas; N = m1 x m2 x ... x mn |
-| Overfitting | Memoriza el entrenamiento, falla con datos nuevos |
-| Transfer learning | Red preentrenada: congelar, entrenar la última capa, ajuste fino |
-| Broker MQTT | Recibe, filtra por topic, distribuye, gestiona conexiones, seguridad y QoS |
-| QoS | Máximo una vez (0), al menos una vez (1), exactamente una vez (2) |
+| Caja negra / matriz morfológica | Función global con entradas y salidas, sin la solución / subfunciones x alternativas; N = m1 x m2 x ... x mn |
+| Overfitting / transfer learning | Memoriza el entrenamiento y falla con datos nuevos / red preentrenada: congelar, entrenar la última capa, ajuste fino |
+| Broker MQTT | Recibe, filtra por topic, distribuye, gestiona conexiones, seguridad y QoS (0 máximo una vez, 1 al menos una, 2 exactamente una) |
 
 ## Fórmulas
 
@@ -61,10 +55,8 @@
 - Por qué: no hay radio bajo el agua, LoRa es de largo alcance y bajo consumo, y es lo más barato y liviano.
 - Alternativas: Sol. 2 Portenta H7 + Ethernet; Sol. 3 Raspberry Pi Zero 2 W + Wi-Fi + WhatsApp.
 
-## Inconsistencias a explicar
+## Inconsistencias a explicar y buses
 
 Comunicaciones distintas entre documentos (Wi-Fi, acústica, RS-485 + LoRa) | SimScale a 50 kPa (≈ 5 m) vs exigencia de 15 m (≈ 150 kPa) | cilindro 220 x 130 viejo en `main`.
 
-## Buses y puertos
-
-SPI (MOSI, MISO, SCK, CS; rápido) | I2C (SDA, SCL; direcciones) | UART (TX, RX) | RS-485 (par diferencial, largo alcance). MQTT: puerto 1883 sin cifrar, 8883 con TLS.
+**Buses:** SPI (MOSI, MISO, SCK, CS; rápido) | I2C (SDA, SCL; direcciones) | UART (TX, RX) | RS-485 (par diferencial, largo alcance). MQTT: puerto 1883 sin cifrar, 8883 con TLS.
