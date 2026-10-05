@@ -137,7 +137,7 @@ python planos.py       # planos/LG-ENS-01 y LG-M4-01 (PDF + PNG)
 
 Cómo se hicieron, con honestidad: no se usó FreeCAD ni el editor de planos de Onshape. `cad/planos.py` proyecta los STEP con el algoritmo de líneas ocultas de OpenCASCADE (el mismo núcleo de CadQuery) y dibuja la lámina A3, el cajetín y las cotas con matplotlib. Cada cota es la distancia entre dos puntos que el script comprueba que están **sobre la superficie del sólido** (25 puntos), y luego la compara con `params.py`; si algo no coincide, el script se detiene. Las tres cotas generales salen de la caja envolvente del ensamble (769.8 → 770, 157.2 → 157, 94).
 
-El ensamble también está en Onshape: [ENLACE ONSHAPE] *(pendiente: pegar el enlace del documento)*.
+El ensamble también está en Onshape: [documento LanternGuard en Onshape](https://cad.onshape.com/documents/334bb52b53534654aa263486/w/5f6a780b6452e0681fd370de/e/d75494b0dece2167eaac1b34?renderMode=0&uiState=6ac3edb87f46c1d8290c1f38).
 
 ![Plano de conjunto](planos/LG-ENS-01.png)
 
