@@ -110,6 +110,6 @@ Otras vistas:
 ### 2.4 Modelo CAD
 
 - Descripción del modelo, piezas y cómo regenerarlo: [README del Módulo Mecánico](../../Proyecto/MóduloMecánico/README.md).
-- Modelo en Onshape: [ENLACE ONSHAPE]
+- Modelo en Onshape: [documento LanternGuard en Onshape](https://cad.onshape.com/documents/334bb52b53534654aa263486/w/5f6a780b6452e0681fd370de/e/d75494b0dece2167eaac1b34?renderMode=0&uiState=6ac3edb87f46c1d8290c1f38)
 
 > **Nota:** los archivos `LG_mec_*`, los planos y el README del Módulo Mecánico llegan al repositorio con el PR de la rama `yoichi/diseno-mecanico`.
