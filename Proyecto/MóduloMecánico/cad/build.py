@@ -4,6 +4,7 @@
 Outputs (relative to Proyecto/MóduloMecánico/):
     step/*.step, stl/*.stl, cad/reporte_verificacion.md
 """
+import json
 import math
 import sys
 from pathlib import Path
@@ -111,6 +112,36 @@ def mesh_checks(stem, orient):
     return res
 
 
+def export_instances(shapes, box_loc, arm_loc_r, flip, hinge):
+    """One STL per assembled instance, in assembly position (mm), for the Blender animation.
+
+    The right capsule is exported at 0° tilt: blender/animacion.py turns it to CAM_TILT_DEG about the
+    hinge axis (pivot and axis written to manifest.json). Explode vectors are in assembly coordinates."""
+    out = STL_DIR / "ensamble_piezas"
+    out.mkdir(exist_ok=True)
+    t = math.radians(CAM_TILT_DEG)
+    items = [("M1_caja_cuerpo", "M1", box_loc, "red", (0, 0, 0), None),
+             ("M2_caja_tapa", "M2", box_loc, "grey", (0, 0, 70), None)]
+    for side, pre, sx in (("der", loc(), 1), ("izq", flip, -1)):
+        tilt = 0.0 if side == "der" else CAM_TILT_DEG
+        ta = math.radians(tilt)
+        axis = (sx * math.cos(ta), 0.0, -math.sin(ta))      # optical axis, pointing out of the window
+        items.append((f"M3_brazo_{side}", "M3", pre * arm_loc_r, "black", (0, 0, 0), None))
+        cl_ = pre * loc(hinge) * loc((0, 0, 0), (0, 1, 0), tilt)
+        grp = "hinge_der" if side == "der" else None
+        for pid, nm, col, dist, up in (("M4", "capsula_cuerpo", "red", 45, 0), ("M5", "capsula_tapa", "grey", 0, 45),
+                                       ("M6", "bisel", "grey", 85, 0), ("M7", "ventana", "glass", 120, 0)):
+            ex = tuple(round(dist * a + (up if i == 2 else 0), 3) for i, a in enumerate(axis))
+            items.append((f"{pid}_{nm}_{side}", pid, cl_, col, ex, grp))
+    manifest = {"units": "mm", "tilt_deg": CAM_TILT_DEG,
+                "hinge_der": {"pivot": [round(v, 4) for v in hinge], "axis": [0, 1, 0]}, "parts": []}
+    for name, pid, l, col, ex, grp in items:
+        cq.exporters.export(cq.Workplane().add(shapes[pid].moved(l)), str(out / f"{name}.stl"),
+                            tolerance=0.05, angularTolerance=0.2)
+        manifest["parts"].append({"file": f"{name}.stl", "part": pid, "color": col, "explode": ex, "group": grp})
+    (out / "manifest.json").write_text(json.dumps(manifest, indent=1), encoding="utf-8")
+
+
 def build_capsule_set(tilt):
     """Capsule parts in capsule frame, then rotated nose-down by `tilt` about the hinge (Y)."""
     rot = loc((0, 0, 0), (0, 1, 0), tilt)
@@ -215,6 +246,7 @@ def main():
         raise SystemExit(f"ENSAMBLE_modulo.step round trip: {len(back.solids().vals())} solids, invalid {bad}")
     report_assy = f"`ENSAMBLE_modulo.step` releído: {len(world)} sólidos, todos válidos según BRepCheck."
     module = cq.Compound.makeCompound(world)
+    export_instances(shapes, box_loc, arm_loc_r, flip, hinge)
     cq.exporters.export(cq.Workplane().add(module), str(STL_DIR / "ENSAMBLE_modulo.stl"), tolerance=0.1, angularTolerance=0.3)
 
     # test bench: + mesh frame in front of the right camera, perpendicular to its optical axis

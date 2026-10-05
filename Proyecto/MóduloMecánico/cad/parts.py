@@ -6,6 +6,7 @@ Local frames
   box     : cavity centred on x = y = 0, outer bottom at z = 0.
   frame   : mesh plane z = 0, centred on the origin.
 """
+import functools
 import math
 
 import cadquery as cq
@@ -14,6 +15,7 @@ from params import *  # noqa: F403  (all dimensions)
 
 
 # ------------------------------------------------------------------ helpers
+@functools.lru_cache(maxsize=None)   # ~50 s per call; returned Workplanes are never mutated
 def serration(r_in, r_out, n, h, offset_deg=0.0):
     """Radial teeth on the y = 0 plane pointing +Y, around the Y axis.
 
