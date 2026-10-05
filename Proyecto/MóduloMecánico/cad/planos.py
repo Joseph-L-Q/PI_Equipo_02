@@ -403,10 +403,13 @@ def sheet_capsule():
     Hf = dim(ax, elev.p((x0, 0, -fl_h / 2)), elev.p((x0, 0, fl_h / 2)), elev.p((x0, 0, 0))[0] - 7, vertical=True)
     Wb = dim(ax, plan.p((x_front, -out_w / 2, 0)), plan.p((x_front, out_w / 2, 0)), plan.p((x_front, 0, 0))[0] + 8,
              vertical=True)
+    xc = x0 + 32                                   # cavity width on the hidden lines of the plan view
+    Wc = dim(ax, plan.p((xc, -CAP_CAV_W / 2, 0)), plan.p((xc, CAP_CAV_W / 2, 0)), plan.p((xc, 0, 0))[0],
+             vertical=True, size=7, fmt="{:.0f} (cavidad)")
     gx = x0 + CAP_GLAND_X
     dim(ax, plan.p((x0, 0, 0)) + np.array([0, -out_w / 2 - 1]), plan.p((gx, 0, 0)) + np.array([0, -out_w / 2 - 1]),
         plan.p((0, -fl_w / 2, 0))[1] - 6)
-    text(ax, plan.p((gx, 0, 0))[0] + 2, plan.p((gx, 0, 0))[1] + 6, f"PG7 Ø{PG7_HOLE:g} (cara inferior)", 6.5)
+    text(ax, plan.p((gx, 0, 0))[0] - 6, plan.p((gx, 0, 0))[1] - 11, f"PG7 Ø{PG7_HOLE:g} (cara inferior)", 6.5)
     # side view: window seat, aperture, flange, cutting plane A-A
     r_seat = WIN_DIA / 2 + 0.2
     for r, lab, ang in ((r_seat, f"Ø{2 * r_seat:g} asiento de ventana", 35), (LENS_APERTURE / 2, f"Ø{LENS_APERTURE:g}", -40)):
@@ -477,7 +480,7 @@ def sheet_capsule():
               (x_front, 0, out_h / 2), (x0, 0, -fl_h / 2), (x_front, -out_w / 2, 0), (x_front, out_w / 2, 0),
               (x0, -fl_w / 2, 0), (x0, fl_w / 2, 0), (x0, 0, -CAP_CAV_H / 2), (x0 + CAP_CAV_L, 0, -CAP_CAV_H / 2),
               (x0 + CAP_CAV_L - 8, 0, CAP_CAV_H / 2), (x0 + 20, 0, CAP_CAV_H / 2), (x0 + 20, 0, out_h / 2),
-              (x_front - CAP_FRONT, 0, out_h / 2), (x0, -CAP_CAV_W / 2, 0), (x0, CAP_CAV_W / 2, 0)]
+              (x_front - CAP_FRONT, 0, out_h / 2), (xc, -CAP_CAV_W / 2, 0), (xc, CAP_CAV_W / 2, 0)]
     on_surface(body, c_body)
     on_surface(win, [(x_front - WIN_SEAT_DEPTH, 0, -WIN_DIA / 2), (x_front - WIN_SEAT_DEPTH, 0, WIN_DIA / 2)])
     on_surface(lid, [(x0 - GROOVE_DEPTH, 0, cl_h / 2 - GROOVE_WIDTH / 2), (x0 - GROOVE_DEPTH, 0, cl_h / 2 + GROOVE_WIDTH / 2),
@@ -489,7 +492,7 @@ def sheet_capsule():
                           ("Pared frontal", Tw, CAP_FRONT), ("Ranura ancho", gw, GROOVE_WIDTH),
                           ("Ranura prof.", gd, GROOVE_DEPTH)):
         expect(key, val, tgt, tol=0.05)
-    expect("Cavidad ancho (params)", CAP_CAV_W, 38.0, tol=0)
+    expect("Cavidad ancho", Wc, CAP_CAV_W, tol=0.05)
 
     text(ax, 330, 76, "Rayado: M4 cuerpo ///   M5 tapa \\\\\\   M6 bisel ///   M7 acrílico xxx", 6.5, ha="center")
     notes(ax, 25, 62, [
