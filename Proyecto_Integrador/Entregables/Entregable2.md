@@ -12,7 +12,7 @@ LanternGuard es un sistema de monitoreo diseñado para medir el porcentaje de bi
 
 La Caja Negra muestra las entradas y salidas principales que interactúan con nuestro sistema.
 
-<img width="1774" height="1459" alt="Caja negra" src="https://github.com/user-attachments/assets/aa16bae0-18bc-41ab-9df6-a7357741ddef" />
+<img width="1779" height="1459" alt="Caja negra" src="https://github.com/user-attachments/assets/aceb883c-00bb-40f2-84f6-c6b22b940538" />
 
 ---
 
@@ -20,7 +20,7 @@ La Caja Negra muestra las entradas y salidas principales que interactúan con nu
 
 Es el diagrama de bloques que muestra cómo funciona el sistema internamente dividiéndose por módulos.
 
-<img width="2320" height="2228" alt="Esquema de funciones" src="https://github.com/user-attachments/assets/d86bfbf1-6cd5-4dec-93f4-336dca374436" />
+<img width="2320" height="2227" alt="Esquema de funciones" src="https://github.com/user-attachments/assets/0278e1ff-b66a-468c-83db-0fd8aa2daa1d" />
 
 ### Módulos del Sistema:
 * **Módulo Mecánico:** Encargado de la hermeticidad de la carcasa bajo el agua, la barrera contra el biofouling y el soporte físico de los componentes.
