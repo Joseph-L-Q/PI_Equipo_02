@@ -98,7 +98,11 @@ Después de seleccionar el modelo, continuamos con el procedimiento de instalaci
 
 <img width="1600" height="855" alt="image" src="https://github.com/user-attachments/assets/a4779d9a-ddb6-4d07-93d2-a8d3c3106413" />
 
-*Figura 1. Selección del modelo Person Classification en SenseCraft AI para realizar las pruebas de reconocimiento de personas.*
+
+<p align="center">
+  <strong>Figura 1.</strong> <em>Selección del modelo Person Classification en SenseCraft AI para realizar las pruebas de reconocimiento de personas.</em>
+</p>
+
 
 ### 4.2. Paso 2: Conexión de la placa XIAO ESP32S3 Sense
 
@@ -119,7 +123,11 @@ Una vez realizado el procedimiento de preparación, continuamos con la ejecució
 
 <img width="1600" height="861" alt="image" src="https://github.com/user-attachments/assets/d283b017-b8bb-4c0b-aa53-aabdee270124" />
 
-*Figura 2. Pantalla de SenseCraft AI durante la preparación de la XIAO ESP32S3 Sense, donde se indica que debemos cargar el modelo en el dispositivo.*
+
+<p align="center">
+  <strong>Figura 2.</strong> <em>Pantalla de SenseCraft AI durante la preparación de la XIAO ESP32S3 Sense, donde se indica que debemos cargar el modelo en el dispositivo.</em>
+</p>
+
 
 ### 4.3. Paso 3: Inicio de la cámara y ejecución del modelo
 
@@ -144,7 +152,11 @@ Estos procesos forman parte del funcionamiento de los modelos de TinyML [ [1] ](
 
 <img width="1600" height="857" alt="image" src="https://github.com/user-attachments/assets/9421e0f5-4ac8-4cd0-9de4-74cac2eb11c7" />
 
-*Figura 3. Visualización de la cámara mediante SenseCraft AI y registros de procesamiento mostrados en Device Logger.*
+
+<p align="center">
+  <strong>Figura 3.</strong> <em>Visualización de la cámara mediante SenseCraft AI y registros de procesamiento mostrados en Device Logger.</em>
+</p>
+
 
 ### 4.4. Paso 4: Primera prueba de reconocimiento de personas
 
@@ -168,7 +180,11 @@ Esta prueba nos permitió observar directamente cómo se realiza el reconocimien
 
 <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/8076e6f7-7451-4c89-adfd-63c16d762759" />
 
-*Figura 4. Joseph Lombardi realizando la primera prueba de reconocimiento frente a la cámara de la XIAO ESP32S3 Sense.*
+
+<p align="center">
+  <strong>Figura 4.</strong> <em>Joseph Lombardi realizando la primera prueba de reconocimiento frente a la cámara de la XIAO ESP32S3 Sense.</em>
+</p>
+
 
 #### 4.4.2. Prueba con Yoichi Palacios
 
@@ -182,7 +198,11 @@ La finalidad era repetir la prueba con un participante diferente y verificar el 
 
 <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/5bf2df1e-3f2a-4788-9e86-7c0a6f385272" />
 
-*Figura 5. Yoichi Palacios realizando la prueba de reconocimiento mediante el modelo Person Classification.*
+
+<p align="center">
+  <strong>Figura 5.</strong> <em>Yoichi Palacios realizando la prueba de reconocimiento mediante el modelo Person Classification.</em>
+</p>
+
 
 **Tabla 4. Resumen de las pruebas realizadas**
 
@@ -233,7 +253,11 @@ El modelo mostró una confianza del **100 %** para la categoría Person, superan
 
 <img width="1600" height="847" alt="image" src="https://github.com/user-attachments/assets/59631cc6-debe-4e79-a64f-5efbd474143e" />
 
-*Figura 6. Resultado del reconocimiento de Joseph Lombardi mediante SenseCraft AI, con un 100 % de confianza para la categoría Person.*
+
+<p align="center">
+  <strong>Figura 6.</strong> <em>Resultado del reconocimiento de Joseph Lombardi mediante SenseCraft AI, con un 100 % de confianza para la categoría Person.</em>
+</p>
+
 
 #### 4.5.2. Resultado de reconocimiento de Yoichi Palacios Tanaka
 
@@ -245,7 +269,11 @@ Aunque fue un porcentaje diferente al de la primera prueba, también superó el 
 
 <img width="1600" height="847" alt="image" src="https://github.com/user-attachments/assets/ec6688e4-7460-49b4-b1d6-22bd1b06dac4" />
 
-*Figura 7. Resultado del reconocimiento de Yoichi Palacios Tanaka mediante SenseCraft AI, con un 89 % de confianza para la categoría Person.*
+
+<p align="center">
+  <strong>Figura 7.</strong> <em>Resultado del reconocimiento de Yoichi Palacios Tanaka mediante SenseCraft AI, con un 89 % de confianza para la categoría Person.</em>
+</p>
+
 
 #### 4.5.3. ¿Qué aprendimos de los resultados?
 
@@ -320,7 +348,11 @@ De esta manera, logramos relacionar el resultado del reconocimiento con una acci
 <img width="1600" height="856" alt="image" src="https://github.com/user-attachments/assets/c379c7c6-bbaa-4a18-b723-db9c0b1dc5b7" />
 
 
-*Figura 8. Configuración de GPIO en SenseCraft AI, donde seleccionamos Person, LED y un porcentaje de confianza mayor al 60 %.*
+
+<p align="center">
+  <strong>Figura 8.</strong> <em>Configuración de GPIO en SenseCraft AI, donde seleccionamos Person, LED y un porcentaje de confianza mayor al 60 %.</em>
+</p>
+
 
 ### 4.7. Paso 7: Comprensión de la condición de activación
 
@@ -367,7 +399,11 @@ En la primera fotografía se muestra a nuestro compañero realizando la prueba m
 
 <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/9bb9326e-4167-4c0d-89ac-5de928ca341b" />
 
-*Figura 9. Joseph Lombardi realizando la prueba de reconocimiento con la configuración GPIO activada.*
+
+<p align="center">
+  <strong>Figura 9.</strong> <em>Joseph Lombardi realizando la prueba de reconocimiento con la configuración GPIO activada.</em>
+</p>
+
 
 En la segunda fotografía enfocamos directamente el dispositivo para mostrar que el LED se encontraba encendido.
 
@@ -375,7 +411,11 @@ Esta imagen nos sirvió como evidencia de que la configuración estaba funcionan
 
 <img width="1600" height="1202" alt="image" src="https://github.com/user-attachments/assets/1976b2cb-20a6-4c49-b9ec-526cb03a9e47" />
 
-*Figura 10. Evidencia del LED encendido durante la prueba de reconocimiento de Joseph Lombardi.*
+
+<p align="center">
+  <strong>Figura 10.</strong> <em>Evidencia del LED encendido durante la prueba de reconocimiento de Joseph Lombardi.</em>
+</p>
+
 
 ### 4.9. Paso 9: Prueba del LED con Yoichi Palacios
 
@@ -396,7 +436,11 @@ En la primera se observa a nuestro compañero realizando la prueba frente a la c
 <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/916a5f0b-f587-485b-9362-aae7b5ad642d" />
 
 
-*Figura 11. Yoichi Palacios realizando la prueba de reconocimiento con la configuración GPIO.*
+
+<p align="center">
+  <strong>Figura 11.</strong> <em>Yoichi Palacios realizando la prueba de reconocimiento con la configuración GPIO.</em>
+</p>
+
 
 En la segunda fotografía se muestra el LED encendido, lo que permitió registrar la respuesta física del dispositivo.
 
