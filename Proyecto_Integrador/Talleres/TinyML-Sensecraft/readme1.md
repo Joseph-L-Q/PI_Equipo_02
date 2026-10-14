@@ -322,6 +322,8 @@ Para hacerlo, ingresamos a la opción:
 
 Dentro de esta sección configuramos los siguientes parámetros:
 
+<div align="center">
+
 **Tabla 6. Parámetros utilizados en la configuración GPIO**
 
 | Parámetro | Valor seleccionado | ¿Para qué sirve? |
@@ -485,6 +487,8 @@ En la segunda fotografía se muestra el LED encendido, lo que permitió registra
 Durante el taller conseguimos realizar las actividades relacionadas con la clasificación de personas y la activación del LED.
 
 Para presentar de manera más ordenada lo que hicimos, elaboramos el siguiente resumen.
+
+<div align="center">
 
 **Tabla 8. Resumen de los resultados del laboratorio**
 
