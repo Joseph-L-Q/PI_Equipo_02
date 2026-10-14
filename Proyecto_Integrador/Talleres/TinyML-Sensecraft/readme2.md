@@ -171,9 +171,8 @@ Durante esta etapa capturamos **81 imágenes de lentes y 81 imágenes de celular
   <em>Fuente: Elaboración propia a partir del registro realizado en SenseCraft AI.</em>
 </p>
 
-<img width="1919" height="1026" alt="Cantidad de imágenes recopiladas para las categorías Lentes y Celular" src="https://github.com/user-attachments/assets/628d6847-b9ae-486a-bfa1-3c35c543b4f7" />
-
 <p align="center">
+  <img width="1919" height="1026" alt="Cantidad de imágenes recopiladas para las categorías Lentes y Celular" src="https://github.com/user-attachments/assets/628d6847-b9ae-486a-bfa1-3c35c543b4f7" />
   <strong>Figura 1.</strong> <em>Recopilación de 81 imágenes para cada categoría: Lentes y Celular.</em>
 </p>
 
@@ -192,10 +191,8 @@ María Antezana participó en la captura de fotografías utilizando los objetos 
 Durante el procedimiento verificamos que las imágenes se registraran en las categorías correspondientes, con el propósito de organizar correctamente los datos antes de iniciar el entrenamiento.
 
 <p align="center">
-  
   <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/b7185eb7-2097-4573-a4f1-586828d2f326" />
   <strong>Figura 2.</strong> <em>María Antezana participando en la recopilación de imágenes para el entrenamiento del modelo.</em>
-  
 </p>
 
 #### 4.2.2. Participación de Melisa Bustos
