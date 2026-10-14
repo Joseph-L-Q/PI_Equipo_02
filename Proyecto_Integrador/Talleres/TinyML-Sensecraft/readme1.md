@@ -403,19 +403,10 @@ En la segunda fotografía se muestra el LED encendido, lo que permitió registra
 <img width="1600" height="1206" alt="image" src="https://github.com/user-attachments/assets/3fe710a8-b80a-4b86-a06f-835d1f614351" />
 
 
-*Figura 12. Evidencia del LED encendido durante la prueba de reconocimiento de Yoichi Palacios.*
 
-### 4.10. Paso 10: Registro final de la práctica
-
-Al finalizar las pruebas, reunimos las capturas de pantalla y las fotografías obtenidas durante el laboratorio.
-
-Estas evidencias nos permitieron mostrar cada parte del procedimiento: desde la selección del modelo hasta las pruebas de reconocimiento y el encendido del LED.
-
-De esta manera, pudimos documentar el trabajo realizado y explicar los resultados observados.
-
-![Figura 12. Evidencia complementaria](imagenes/figura-12-evidencia-adicional.jpg)
-
-*Figura 12. Evidencia complementaria del desarrollo del taller utilizando SenseCraft AI y la placa XIAO ESP32S3 Sense.*
+<p align="center">
+  <strong>Figura 12.</strong> <em>Evidencia del LED encendido durante la prueba de reconocimiento de Yoichi Palacios.</em>
+</p>
 
 ## 5. Resultados y análisis
 
