@@ -795,7 +795,7 @@ Mantuvimos la categoría Lentes y la condición Greater than con una confianza d
 
 Durante la prueba observamos nuevamente el encendido del LED al cumplirse la condición de reconocimiento.
 
-<img width="1600" height="1200" alt="Melisa Bustos realizando la prueba de activación del LED" src="URL_IMAGEN_19" />
+<img width="1600" height="1210" alt="image" src="https://github.com/user-attachments/assets/892fb724-568c-411e-a225-303c625863f6" />
 
 <p align="center">
   <strong>Figura 20.</strong> <em>Melisa Bustos comprobando el funcionamiento del reconocimiento de lentes con la salida GPIO configurada.</em>
@@ -805,7 +805,7 @@ Asimismo, registramos una fotografía más cercana para mostrar el estado del LE
 
 La imagen permite identificar la respuesta física de la placa, complementando la evidencia del procedimiento realizado por Melisa.
 
-<img width="1600" height="1200" alt="LED encendido durante la prueba de Melisa Bustos" src="URL_IMAGEN_20" />
+<img width="1600" height="1214" alt="image" src="https://github.com/user-attachments/assets/1b3739df-10cf-4b08-b7f9-11a7fcdf489a" />
 
 <p align="center">
   <strong>Figura 21.</strong> <em>Evidencia del LED encendido durante la prueba de reconocimiento de lentes realizada por Melisa Bustos.</em>
