@@ -36,6 +36,8 @@ Utilizar el modelo Person Classification en la placa XIAO ESP32S3 Sense mediante
 
 Para desarrollar el taller utilizamos los siguientes materiales y herramientas:
 
+<div align="center">
+
 **Tabla 1. Materiales y herramientas utilizados en el laboratorio**
 
 | N.º | Material o herramienta | Función |
@@ -50,9 +52,14 @@ Para desarrollar el taller utilizamos los siguientes materiales y herramientas:
 
 *Fuente: Elaboración propia.*
 
+</div>
+
+
 ### 3.2. Características de la placa
 
 La XIAO ESP32S3 Sense es una placa pequeña que permite desarrollar proyectos relacionados con inteligencia artificial, sensores y sistemas electrónicos. Una de sus ventajas es que cuenta con una cámara que podemos utilizar para realizar pruebas de reconocimiento de imágenes [ [2] ](#ref2).
+
+<div align="center">
 
 **Tabla 2. Características principales de la XIAO ESP32S3 Sense**
 
@@ -69,6 +76,8 @@ La XIAO ESP32S3 Sense es una placa pequeña que permite desarrollar proyectos re
 
 *Fuente: Material del taller [ [1] ](#ref1) y documentación de Seeed Studio [ [2] ](#ref2).*
 
+</div>
+
 En nuestro laboratorio utilizamos principalmente la cámara para reconocer personas y la salida GPIO para encender el LED.
 
 ## 4. Desarrollo del taller
@@ -81,6 +90,8 @@ Dentro de la plataforma encontramos diferentes modelos de inteligencia artificia
 
 Este modelo trabaja con dos categorías:
 
+<div align="center">
+
 **Tabla 3. Categorías del modelo Person Classification**
 
 | Categoría | Significado |
@@ -89,6 +100,8 @@ Este modelo trabaja con dos categorías:
 | Not a person | Indica que el modelo no reconoce una persona en la imagen. |
 
 *Fuente: Modelo Person Classification utilizado en SenseCraft AI.*
+
+</div>
 
 Es importante mencionar que este modelo no identifica el nombre de las personas. Lo que hace es analizar la imagen y determinar si encuentra una persona.
 
@@ -203,6 +216,7 @@ La finalidad era repetir la prueba con un participante diferente y verificar el 
   <strong>Figura 5.</strong> <em>Yoichi Palacios realizando la prueba de reconocimiento mediante el modelo Person Classification.</em>
 </p>
 
+<div align="center">
 
 **Tabla 4. Resumen de las pruebas realizadas**
 
@@ -212,6 +226,8 @@ La finalidad era repetir la prueba con un participante diferente y verificar el 
 | Yoichi Palacios | Repitió la prueba de reconocimiento. | Verificar el funcionamiento con otra persona. |
 
 *Fuente: Elaboración propia.*
+
+</div>
 
 
 ### 4.5. Paso 5: Observación y comparación de los porcentajes de confianza
@@ -226,6 +242,8 @@ Este umbral sirve como referencia mínima de confianza para las detecciones. Sin
 
 Al realizar las pruebas, obtuvimos los siguientes resultados:
 
+<div align="center">
+
 **Tabla 5. Comparación de los resultados de reconocimiento de personas**
 
 | Participante | Clasificación | Umbral configurado | Confianza obtenida |
@@ -234,6 +252,8 @@ Al realizar las pruebas, obtuvimos los siguientes resultados:
 | Yoichi Palacios Tanaka | Person | 50 % | 89 % |
 
 *Fuente: Elaboración propia a partir de las pruebas realizadas en SenseCraft AI durante el taller.*
+
+</div>
 
 Como podemos observar, el modelo reconoció a nuestros dos compañeros como personas, aunque los porcentajes de confianza fueron diferentes.
 
@@ -315,6 +335,8 @@ Dentro de esta sección configuramos los siguientes parámetros:
 
 *Fuente: Configuración realizada durante el taller en SenseCraft AI.*
 
+</div>
+
 #### ¿Por qué seleccionamos estos valores?
 
 **Object: Person**
@@ -366,6 +388,8 @@ La condición que establecimos fue la siguiente:
 
 Para comprenderlo mejor, podemos observar algunos ejemplos:
 
+<div align="center">
+
 **Tabla 7. Ejemplos del funcionamiento esperado del LED**
 
 | Confianza de Person | ¿Supera el 60 %? | Estado esperado del LED |
@@ -376,6 +400,8 @@ Para comprenderlo mejor, podemos observar algunos ejemplos:
 | 40 % | No | Apagado |
 
 *Nota: Los valores de 80 %, 60 % y 40 % son ejemplos para explicar la condición. No corresponden a mediciones adicionales del laboratorio.*
+
+</div>
 
 Esta parte fue importante porque nos permitió entender que el LED no se encendía simplemente por conectar la placa, sino porque debía cumplirse la condición que habíamos configurado.
 
@@ -475,6 +501,8 @@ Para presentar de manera más ordenada lo que hicimos, elaboramos el siguiente r
 | 9 | Prueba del LED con Yoichi | Comprobamos nuevamente el encendido del LED. |
 
 *Fuente: Elaboración propia a partir de las pruebas realizadas durante el taller.*
+
+</div>
 
 ### 5.2. Análisis del reconocimiento de personas
 
