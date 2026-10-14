@@ -191,10 +191,11 @@ María Antezana participó en la captura de fotografías utilizando los objetos 
 
 Durante el procedimiento verificamos que las imágenes se registraran en las categorías correspondientes, con el propósito de organizar correctamente los datos antes de iniciar el entrenamiento.
 
-<img width="1600" height="1200" alt="María Antezana recopilando imágenes" src="URL_IMAGEN_01" />
-
 <p align="center">
+  
+  <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/b7185eb7-2097-4573-a4f1-586828d2f326" />
   <strong>Figura 2.</strong> <em>María Antezana participando en la recopilación de imágenes para el entrenamiento del modelo.</em>
+  
 </p>
 
 #### 4.2.2. Participación de Melisa Bustos
@@ -203,9 +204,8 @@ Melisa Bustos también colaboró en el registro de fotografías mediante SenseCr
 
 En esta actividad utilizamos la cámara y la laptop para continuar recopilando los datos necesarios, manteniendo separadas las imágenes de lentes y celulares.
 
-<img width="1600" height="1200" alt="Melisa Bustos recopilando imágenes" src="URL_IMAGEN_02" />
-
 <p align="center">
+  <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/eca28692-cc3c-44b8-a062-f8acfff9740b" />
   <strong>Figura 3.</strong> <em>Melisa Bustos realizando la captura de fotografías mediante la XIAO ESP32S3 Sense.</em>
 </p>
 
@@ -215,9 +215,8 @@ Gabriela Santamaría participó en el mismo procedimiento, colaborando con la re
 
 Al completar esta etapa, contamos con 81 fotografías por categoría, las cuales quedaron preparadas para continuar con la creación del modelo.
 
-<img width="1600" height="1200" alt="Gabriela Santamaría recopilando imágenes" src="URL_IMAGEN_03" />
-
 <p align="center">
+  <img width="1200" height="1600" alt="image" src="https://github.com/user-attachments/assets/1f9c0c52-abfb-466a-9ea4-abea123a3ae7" />
   <strong>Figura 4.</strong> <em>Gabriela Santamaría participando en el registro de imágenes para el modelo de clasificación.</em>
 </p>
 
@@ -289,9 +288,8 @@ María Antezana realizó la primera prueba colocando los lentes frente a la cám
 
 Durante el procedimiento observamos cómo el modelo procesaba la imagen y comprobamos si la clasificación correspondía al objeto presentado.
 
-<img width="1600" height="1200" alt="María Antezana probando el reconocimiento de lentes" src="URL_IMAGEN_04" />
-
 <p align="center">
+  <img width="1600" height="1202" alt="image" src="https://github.com/user-attachments/assets/aeb46da9-e3d1-4ec3-88eb-2e8fd5d3ed93" />
   <strong>Figura 5.</strong> <em>María Antezana realizando la prueba de reconocimiento de lentes mediante la XIAO ESP32S3 Sense.</em>
 </p>
 
@@ -301,9 +299,8 @@ Durante esta prueba, el modelo reconoció la categoría **Lentes con una confian
 
 El resultado indica que el sistema asignó su máxima puntuación de confianza a dicha categoría en la imagen analizada.
 
-<img width="1600" height="855" alt="Resultado del reconocimiento de lentes de María Antezana" src="URL_IMAGEN_05" />
-
 <p align="center">
+  <img width="1915" height="855" alt="Captura de pantalla 2026-10-13 154822" src="https://github.com/user-attachments/assets/531287f1-a585-46fa-8f10-8513cf6cc1d3" />
   <strong>Figura 6.</strong> <em>Resultado del reconocimiento de lentes durante la prueba de María Antezana, con una confianza del 100 %.</em>
 </p>
 
@@ -313,9 +310,8 @@ Posteriormente, Melisa Bustos realizó la misma evaluación utilizando los lente
 
 Mantuvimos el modelo entrenado y su configuración inicial para comprobar si el reconocimiento se repetía correctamente durante una nueva captura.
 
-<img width="1600" height="1200" alt="Melisa Bustos probando el reconocimiento de lentes" src="URL_IMAGEN_06" />
-
 <p align="center">
+  <img width="1202" height="1600" alt="image" src="https://github.com/user-attachments/assets/e55edb64-aa5a-4be6-91c0-1ae352e39187" />
   <strong>Figura 7.</strong> <em>Melisa Bustos comprobando el reconocimiento de lentes mediante el modelo de clasificación.</em>
 </p>
 
@@ -325,9 +321,8 @@ En la prueba de Melisa también se registró una confianza del **100 %** para la
 
 Este resultado coincidió con el obtenido anteriormente por María, mostrando que el modelo mantuvo la misma puntuación de confianza durante ambas evaluaciones.
 
-<img width="1600" height="855" alt="Resultado del reconocimiento de lentes de Melisa Bustos" src="URL_IMAGEN_07" />
-
 <p align="center">
+  <img width="1919" height="1029" alt="Captura de pantalla 2026-10-13 154933" src="https://github.com/user-attachments/assets/7fcc4b8c-8ccd-4708-9f22-2725a7a33d10" />
   <strong>Figura 8.</strong> <em>Resultado del reconocimiento de lentes durante la prueba de Melisa Bustos, con una confianza del 100 %.</em>
 </p>
 
@@ -337,9 +332,8 @@ Finalmente, Gabriela Santamaría presentó los lentes frente a la cámara para c
 
 El procedimiento se realizó sin modificar los parámetros del modelo, lo que permitió comparar directamente su respuesta con las pruebas anteriores.
 
-<img width="1600" height="1200" alt="Gabriela Santamaría probando el reconocimiento de lentes" src="URL_IMAGEN_08" />
-
 <p align="center">
+  <img width="1600" height="1206" alt="image" src="https://github.com/user-attachments/assets/3011a491-5943-45d7-b850-b16658d2aaef" />
   <strong>Figura 9.</strong> <em>Gabriela Santamaría realizando la prueba de reconocimiento de lentes mediante SenseCraft AI.</em>
 </p>
 
@@ -349,9 +343,8 @@ Durante la prueba de Gabriela, SenseCraft AI mostró nuevamente una confianza de
 
 Con este resultado completamos las tres evaluaciones individuales, obteniendo la misma clasificación y porcentaje de confianza en todos los casos.
 
-<img width="1600" height="855" alt="Resultado del reconocimiento de lentes de Gabriela Santamaría" src="URL_IMAGEN_09" />
-
 <p align="center">
+  <img width="1910" height="1093" alt="Captura de pantalla 2026-10-13 155034" src="https://github.com/user-attachments/assets/03b0c796-2ba7-4975-a9c1-19821f3cec7c" />
   <strong>Figura 10.</strong> <em>Resultado del reconocimiento de lentes durante la prueba de Gabriela Santamaría, con una confianza del 100 %.</em>
 </p>
 
@@ -424,9 +417,8 @@ María Antezana realizó la primera evaluación presentando el celular frente a 
 
 Durante la prueba observamos la clasificación mostrada en SenseCraft AI para comprobar si el sistema diferenciaba el celular de los lentes utilizados anteriormente.
 
-<img width="1600" height="1200" alt="María Antezana probando el reconocimiento de celulares" src="URL_IMAGEN_10" />
-
 <p align="center">
+  <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/9071b1bb-6f98-46df-aefb-6690680b4443" />
   <strong>Figura 11.</strong> <em>María Antezana realizando la prueba de reconocimiento de celulares mediante la XIAO ESP32S3 Sense.</em>
 </p>
 
@@ -436,9 +428,8 @@ El modelo reconoció la categoría **Celular con una confianza del 88 %**, super
 
 Aunque este porcentaje fue menor que el registrado en las pruebas con lentes, la clasificación correspondió correctamente al objeto presentado.
 
-<img width="1600" height="855" alt="Resultado del reconocimiento de celulares de María Antezana" src="URL_IMAGEN_11" />
-
 <p align="center">
+  <img width="1919" height="1025" alt="Captura de pantalla 2026-10-13 154338" src="https://github.com/user-attachments/assets/ffa22a78-1711-4779-840d-07ab6844bb8f" />
   <strong>Figura 12.</strong> <em>Resultado del reconocimiento de celulares durante la prueba de María Antezana, con una confianza del 88 %.</em>
 </p>
 
@@ -448,9 +439,8 @@ Posteriormente, Melisa Bustos realizó la evaluación utilizando el mismo celula
 
 El procedimiento permitió registrar otra clasificación sin realizar cambios en el modelo ni en su umbral de confianza.
 
-<img width="1600" height="1200" alt="Melisa Bustos probando el reconocimiento de celulares" src="URL_IMAGEN_12" />
-
 <p align="center">
+  <img width="1600" height="1202" alt="image" src="https://github.com/user-attachments/assets/aabdfbb0-14cc-487a-adf1-911d31c1d506" />
   <strong>Figura 13.</strong> <em>Melisa Bustos realizando la prueba de reconocimiento de celulares mediante SenseCraft AI.</em>
 </p>
 
@@ -462,9 +452,8 @@ Este valor fue inferior al 88 % obtenido por María, pero también superó el um
 
 La diferencia permitió observar que, aun utilizando el mismo objeto y manteniendo la configuración, el modelo podía presentar distintos niveles de confianza entre una captura y otra.
 
-<img width="1600" height="855" alt="Resultado del reconocimiento de celulares de Melisa Bustos" src="URL_IMAGEN_13" />
-
 <p align="center">
+  <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/2a441eb7-d5a6-41d1-ab3d-fd79d137566b" />
   <strong>Figura 14.</strong> <em>Resultado del reconocimiento de celulares durante la prueba de Melisa Bustos, con una confianza del 77 %.</em>
 </p>
 
@@ -472,11 +461,8 @@ La diferencia permitió observar que, aun utilizando el mismo objeto y mantenien
 
 Finalmente, Gabriela Santamaría realizó la prueba para completar el reconocimiento individual de celulares.
 
-Al presentar el objeto frente a la cámara, observamos la respuesta de SenseCraft AI y registramos el porcentaje correspondiente.
-
-<img width="1600" height="1200" alt="Gabriela Santamaría probando el reconocimiento de celulares" src="URL_IMAGEN_14" />
-
 <p align="center">
+  <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/530a85b1-08e3-4d90-b119-ca27db6a0891" />
   <strong>Figura 15.</strong> <em>Gabriela Santamaría realizando la prueba de reconocimiento de celulares con el modelo desarrollado.</em>
 </p>
 
@@ -486,9 +472,8 @@ El sistema reconoció la categoría **Celular con una confianza del 90 %**, sien
 
 Este resultado también superó el umbral inicial y completó el registro necesario para comparar las respuestas del modelo.
 
-<img width="1600" height="855" alt="Resultado del reconocimiento de celulares de Gabriela Santamaría" src="URL_IMAGEN_15" />
-
 <p align="center">
+  <img width="1919" height="1016" alt="Captura de pantalla 2026-10-13 154500" src="https://github.com/user-attachments/assets/07ef5993-0541-41ca-a1ab-232b9169b932" />
   <strong>Figura 16.</strong> <em>Resultado del reconocimiento de celulares durante la prueba de Gabriela Santamaría, con una confianza del 90 %.</em>
 </p>
 
@@ -687,9 +672,8 @@ En la siguiente captura se presentan los parámetros utilizados para controlar e
 
 Se observa la selección de la categoría Lentes, la condición Greater than y el porcentaje de confianza establecido en 60 %.
 
-<img width="1600" height="855" alt="Configuración de GPIO en SenseCraft AI" src="URL_IMAGEN_16" />
-
 <p align="center">
+  <img width="1917" height="1033" alt="Captura de pantalla 2026-10-13 155219" src="https://github.com/user-attachments/assets/dd21a463-e92c-4b02-8f3e-a8ddd2eeb8cc" />
   <strong>Figura 17.</strong> <em>Configuración GPIO en SenseCraft AI, donde se establece el reconocimiento de Lentes con una confianza mayor al 60 % para activar el LED.</em>
 </p>
 
@@ -771,9 +755,8 @@ Mientras el modelo analizaba la imagen, observamos la respuesta del dispositivo 
 
 Durante la evaluación comprobamos que el LED se encendía cuando la confianza de reconocimiento superaba el 60 %.
 
-<img width="1600" height="1200" alt="María Antezana realizando la prueba de activación del LED" src="URL_IMAGEN_17" />
-
 <p align="center">
+  <img width="1600" height="1210" alt="image" src="https://github.com/user-attachments/assets/d22d0a5f-6a65-4e1b-9c7f-653572d2be4e" />
   <strong>Figura 18.</strong> <em>María Antezana realizando la prueba de reconocimiento de lentes con la configuración GPIO activada.</em>
 </p>
 
@@ -781,9 +764,8 @@ Para registrar la respuesta de la placa, tomamos una segunda fotografía con un 
 
 En esta evidencia se aprecia la luz encendida, lo que permite comprobar visualmente el funcionamiento de la salida durante la prueba de María.
 
-<img width="1600" height="1200" alt="LED encendido durante la prueba de María Antezana" src="URL_IMAGEN_18" />
-
 <p align="center">
+  <img width="1600" height="1200" alt="image" src="https://github.com/user-attachments/assets/2d8028ea-90ee-4f8f-98ff-6209ab08fdfb" />
   <strong>Figura 19.</strong> <em>Evidencia del LED encendido durante la prueba de reconocimiento de lentes realizada por María Antezana.</em>
 </p>
 
@@ -795,9 +777,8 @@ Mantuvimos la categoría Lentes y la condición Greater than con una confianza d
 
 Durante la prueba observamos nuevamente el encendido del LED al cumplirse la condición de reconocimiento.
 
-<img width="1600" height="1210" alt="image" src="https://github.com/user-attachments/assets/892fb724-568c-411e-a225-303c625863f6" />
-
 <p align="center">
+  <img width="1600" height="1210" alt="image" src="https://github.com/user-attachments/assets/892fb724-568c-411e-a225-303c625863f6" />
   <strong>Figura 20.</strong> <em>Melisa Bustos comprobando el funcionamiento del reconocimiento de lentes con la salida GPIO configurada.</em>
 </p>
 
@@ -805,9 +786,8 @@ Asimismo, registramos una fotografía más cercana para mostrar el estado del LE
 
 La imagen permite identificar la respuesta física de la placa, complementando la evidencia del procedimiento realizado por Melisa.
 
-<img width="1600" height="1214" alt="image" src="https://github.com/user-attachments/assets/1b3739df-10cf-4b08-b7f9-11a7fcdf489a" />
-
 <p align="center">
+  <img width="1600" height="1214" alt="image" src="https://github.com/user-attachments/assets/1b3739df-10cf-4b08-b7f9-11a7fcdf489a" />
   <strong>Figura 21.</strong> <em>Evidencia del LED encendido durante la prueba de reconocimiento de lentes realizada por Melisa Bustos.</em>
 </p>
 
@@ -819,19 +799,17 @@ Al colocar los lentes frente a la cámara, verificamos la respuesta del modelo y
 
 Esta evaluación permitió repetir el procedimiento utilizando los mismos parámetros, sin necesidad de realizar modificaciones adicionales.
 
-  <img width="1600" height="1206" alt="image" src="https://github.com/user-attachments/assets/97cc0b94-d3ad-4aea-a985-b2fa8729fbe7" />
-
 <p align="center">
+  <img width="1600" height="1206" alt="image" src="https://github.com/user-attachments/assets/97cc0b94-d3ad-4aea-a985-b2fa8729fbe7" />
   <strong>Figura 22.</strong> <em>Gabriela Santamaría realizando la prueba de activación del LED mediante GPIO y el reconocimiento de lentes.</em>
 </p>
 
 Al igual que en las evaluaciones anteriores, registramos una segunda fotografía enfocando la placa para mostrar con mayor claridad el LED encendido.
 
 Con esta evidencia completamos la documentación individual de las pruebas de activación.
-  
-  <img width="1600" height="1214" alt="image" src="https://github.com/user-attachments/assets/7963662e-90fa-4d4e-aea0-909414617d11" />
 
 <p align="center">
+  <img width="1600" height="1214" alt="image" src="https://github.com/user-attachments/assets/7963662e-90fa-4d4e-aea0-909414617d11" />
   <strong>Figura 23.</strong> <em>Evidencia del LED encendido durante la prueba de reconocimiento de lentes realizada por Gabriela Santamaría.</em>
 </p>
 
