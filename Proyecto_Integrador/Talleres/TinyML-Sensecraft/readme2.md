@@ -819,21 +819,19 @@ Al colocar los lentes frente a la cámara, verificamos la respuesta del modelo y
 
 Esta evaluación permitió repetir el procedimiento utilizando los mismos parámetros, sin necesidad de realizar modificaciones adicionales.
 
-<p align="center">
-  
   <img width="1600" height="1206" alt="image" src="https://github.com/user-attachments/assets/97cc0b94-d3ad-4aea-a985-b2fa8729fbe7" />
 
+<p align="center">
   <strong>Figura 22.</strong> <em>Gabriela Santamaría realizando la prueba de activación del LED mediante GPIO y el reconocimiento de lentes.</em>
 </p>
 
 Al igual que en las evaluaciones anteriores, registramos una segunda fotografía enfocando la placa para mostrar con mayor claridad el LED encendido.
 
 Con esta evidencia completamos la documentación individual de las pruebas de activación.
-
-<p align="center">
   
   <img width="1600" height="1214" alt="image" src="https://github.com/user-attachments/assets/7963662e-90fa-4d4e-aea0-909414617d11" />
 
+<p align="center">
   <strong>Figura 23.</strong> <em>Evidencia del LED encendido durante la prueba de reconocimiento de lentes realizada por Gabriela Santamaría.</em>
 </p>
 
