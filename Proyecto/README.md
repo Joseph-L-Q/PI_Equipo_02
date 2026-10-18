@@ -2,7 +2,7 @@
 
 En esta carpeta deben estar todos los archivos necesarios para poder replicar el proyecto:
 
-- Código fuente del sistema (Módulo Software)
+- Código fuente del sistema (Módulo Software).
 - Archivos de diseño 3D para la fabricación de piezas (Módulo Mecánico)
 - Esquemas electrónicos, archivos Gerber para fabricación (Módulo Electrónico)
 
