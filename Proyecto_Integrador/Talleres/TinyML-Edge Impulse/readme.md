@@ -953,15 +953,19 @@ El cambio más importante fue la forma de evaluar. Edge Impulse proporcionó un 
 
 ## 6. Conclusiones
 
-1. Con 150 fotos propias y transferencia de aprendizaje, el modelo acertó 30 de las 31 imágenes de Model testing (96,77 %). El único error fue una esponja clasificada como cable.
+1. Se logró completar el recorrido de un modelo TinyML con Edge Impulse: desde la captura de 150 imágenes propias con la XIAO ESP32S3 Sense hasta su ejecución en la placa. Con transferencia de aprendizaje (MobileNetV2 a 96x96 píxeles), el modelo alcanzó una exactitud de 91,7 % en la validación (versión int8) y de 96,77 % en Model testing (versión float32), con 30 aciertos en 31 imágenes de prueba. El único error fue una esponja clasificada como cable.
 
-2. En la placa el modelo reconoció las tres clases, tanto en el monitor serie como en SenseCraft AI. El orden de confianza se repitió en las dos herramientas: Cable (90 % en SenseCraft AI), Esponja (83 %) y Sigma Face (79 %).
+2. Las dos pruebas estadísticas cumplieron funciones distintas. Live classification, con una muestra por clase, solo permitió comprobar que el modelo funciona. Model testing, con las 31 imágenes de prueba, aportó una medida cuantitativa del desempeño y una matriz de confusión, evaluación que no se había registrado en el taller anterior.
 
-3. Sigma Face fue la clase más difícil. En el monitor serie la puntuación bajó hasta 0,59 en los bloques completos. Un rostro se mueve y cambia de fondo mucho más que un objeto sobre la mesa.
+3. El modelo reconoció las tres clases al ejecutarse en la placa, tanto en el monitor serie de Arduino IDE como en SenseCraft AI. En ambas herramientas se repitió el mismo orden de confianza: Cable (90 % en SenseCraft AI), Esponja (83 %) y Sigma Face (79 %).
 
-4. Se evidenció la importancia de no mezclar cifras de distinta procedencia. La validación usó el modelo int8 y las pruebas el float32, y los 754 ms estimados por Edge Impulse correspondían a otro microcontrolador: en la XIAO se midieron unos 190 ms.
+4. Sigma Face fue la clase más difícil, con la menor confianza y la mayor variación: en el monitor serie descendió hasta 0,59 en los bloques completos. Una posible explicación es que un rostro cambia de posición, distancia e iluminación más que un objeto inmóvil, y que su fondo difiere del de las otras dos clases. Estos factores no se comprobaron de forma separada.
 
-5. Un 96,77 % obtenido con imágenes de las mismas sesiones no asegura que el modelo funcione con otros cables, esponjas o rostros. Para medir eso se requieren datos más variados y un conjunto de prueba capturado aparte.
+5. Las cifras de distinta procedencia no deben compararse directamente. La validación usó el modelo int8 y las pruebas de Edge Impulse el float32. Los 754 ms estimados por la plataforma correspondían a un Cortex-M4F a 80 MHz, mientras que en la XIAO, que opera a 240 MHz, se midieron cerca de 190 ms de inferencia en SenseCraft AI y 182 ms en el monitor serie.
+
+6. El 96,77 % debe interpretarse con cautela. Las imágenes de prueba provienen de las mismas sesiones de captura que las de entrenamiento, y cada clase corresponde a un solo objeto sobre un fondo casi constante. Por ello, el resultado indica que el modelo distingue bien estas tres escenas, pero no garantiza el mismo desempeño con otros cables, esponjas, rostros o entornos.
+
+7. Como mejoras para un próximo taller, se recomienda fotografiar varios objetos por clase con fondos e iluminación distintos, capturar el conjunto de prueba en una sesión independiente, activar el aumento de datos y repetir las pruebas en la placa para obtener promedios más representativos.
 
 ## 7. Archivos del proyecto
 
@@ -975,7 +979,7 @@ El cambio más importante fue la forma de evaluar. Edge Impulse proporcionó un 
 
 <a id="ref1"></a>
 
-[1] Seeed Studio, "Getting Started with Seeed Studio XIAO ESP32-S3 Series," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/. [Accedido: 16-oct-2026].
+[1] Seeed Studio, "Getting Started with Seeed Studio XIAO ESP32-S3 Series," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/.
 
 <a id="ref2"></a>
 
@@ -983,32 +987,32 @@ El cambio más importante fue la forma de evaluar. Edge Impulse proporcionó un 
 
 <a id="ref3"></a>
 
-[3] Edge Impulse, "Data acquisition," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/data-acquisition. [Accedido: 16-oct-2026].
+[3] Edge Impulse, "Data acquisition," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/data-acquisition. 
 
 <a id="ref4"></a>
 
-[4] Edge Impulse, "Run Arduino library (IDE 2.0)," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/hardware/deployments/run-arduino-2-0. [Accedido: 16-oct-2026].
+[4] Edge Impulse, "Run Arduino library (IDE 2.0)," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/hardware/deployments/run-arduino-2-0.
 
 <a id="ref5"></a>
 
-[5] Seeed Studio, "XIAO ESP32S3-Sense Image Classification," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/tinyml_course_Image_classification_project/. [Accedido: 16-oct-2026].
+[5] Seeed Studio, "XIAO ESP32S3-Sense Image Classification," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/tinyml_course_Image_classification_project/.
 
 <a id="ref6"></a>
 
-[6] Edge Impulse, "Transfer learning (images)," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/transfer-learning-images. [Accedido: 16-oct-2026].
+[6] Edge Impulse, "Transfer learning (images)," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/transfer-learning-images.
 
 <a id="ref7"></a>
 
-[7] Edge Impulse, "Live classification," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/live-classification. [Accedido: 16-oct-2026].
+[7] Edge Impulse, "Live classification," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/live-classification.
 
 <a id="ref8"></a>
 
-[8] Edge Impulse, "Model testing," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/model-testing. [Accedido: 16-oct-2026].
+[8] Edge Impulse, "Model testing," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/model-testing.
 
 <a id="ref9"></a>
 
-[9] Seeed Studio, "Camera Usage in Seeed Studio XIAO ESP32S3 Sense," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/xiao_esp32s3_camera_usage/. [Accedido: 16-oct-2026].
+[9] Seeed Studio, "Camera Usage in Seeed Studio XIAO ESP32S3 Sense," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/xiao_esp32s3_camera_usage/.
 
 <a id="ref10"></a>
 
-[10] Seeed Studio, "Using a model for XIAO ESP32S3 Sense," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/sensecraft-ai/tutorials/sensecraft-ai-pretrained-models-for-xiao/. [Accedido: 16-oct-2026].
+[10] Seeed Studio, "Using a model for XIAO ESP32S3 Sense," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/sensecraft-ai/tutorials/sensecraft-ai-pretrained-models-for-xiao/.
