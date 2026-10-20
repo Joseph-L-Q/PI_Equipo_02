@@ -25,11 +25,11 @@ Nuestro objetivo es desarrollar una solución tecnológica automatizada que resp
 
 | Foto | Nombre | Rol | Intereses | Correo |
 |------|--------|-----|-----------|--------|
-| <img src="Recursos/Imágenes/María.jpeg" width="100"/> | **Antezana De la Cruz, María** | Líder del equipo y diseñadora | Diseño de prototipos, UX/UI, creatividad aplicada, innovación social | maria.antezana@upch.pe |
-| <img src="Recursos/Imágenes/Gabi.jpeg" width="100"/> | **Santamaria Huaytan, Gabriela** | Responsable de investigación ambiental | Gestión ambiental, desarrollo comunitario, acuicultura sostenible | gabriela.santamaria@upch.pe |
-| <img src="Recursos/Imágenes/Melissa.jpg" width="100"/> | **Bustos Montañez, Melissa** | Especialista en documentación técnica | Comunicación científica, redacción técnica, análisis de requerimientos | melissa.bustos@upch.pe |
-| <img src="Recursos/Imágenes/Joseph.jpeg" width="100"/> | **Lombardi Quispe, Joseph** | Programador y modelador del sistema | Programación, integración de sensores, diseño electrónico y desarrollo del sistema tecnológico | joseph.lombardi@upch.pe |
-| <img src="Recursos/Imágenes/Yoichi.jpeg" width="100"/> | **Palacios Tanaka, Yoichi** |Analista de datos y simulación del sistema | Análisis de datos, procesamiento de imágenes, simulación y evaluación de resultados | yoichi.palacios@upch.pe |
+| <img src="Recursos/Imágenes/María.jpeg" width="100"/> | **Antezana De la Cruz, María** | Líder del equipo y diseñadora | Diseño de prototipos, UX/UI e innovación social | maria.antezana@upch.pe |
+| <img src="Recursos/Imágenes/Gabi.jpeg" width="100"/> | **Santamaria Huaytan, Gabriela** | Responsable de investigación ambiental | Gestión ambiental, desarrollo comunitario y acuicultura sostenible | gabriela.santamaria@upch.pe |
+| <img src="Recursos/Imágenes/Melissa.jpg" width="100"/> | **Bustos Montañez, Melissa** | Responsable en documentación técnica | Comunicación científica, redacción técnica y análisis de requerimientos | melissa.bustos@upch.pe |
+| <img src="Recursos/Imágenes/Joseph.jpeg" width="100"/> | **Lombardi Quispe, Joseph** | Programador y modelador del sistema | Programación, integración de sensores y desarrollo tecnológico | joseph.lombardi@upch.pe |
+| <img src="Recursos/Imágenes/Yoichi.jpeg" width="100"/> | **Palacios Tanaka, Yoichi** |Analista de datos y simulación del sistema | Análisis de datos, procesamiento de imágenes y evaluación de resultados | yoichi.palacios@upch.pe |
 
 ---
 
