@@ -3,20 +3,15 @@
 
 ## 1. Introducción
 
-Tiny Machine Learning (TinyML) es ejecutar modelos de aprendizaje automático en dispositivos pequeños, como los microcontroladores. La placa hace la predicción por sí misma, sin enviar cada imagen a una computadora.
+Tiny Machine Learning (TinyML) es una tecnología que permite ejecutar modelos de aprendizaje automático en dispositivos pequeños, como los microcontroladores. Gracias a esto, la placa puede hacer la predicción por sí misma, sin necesidad de enviar cada imagen a una computadora.
 
-El jueves 15 de octubre de 2026 volvimos a trabajar con la placa **XIAO ESP32S3 Sense** de Seeed Studio, que trae un procesador ESP32-S3 y una cámara [1]. En el taller anterior entrenamos el modelo dentro de SenseCraft AI [2]. Esta vez lo entrenamos en **Edge Impulse**, una plataforma en línea donde se cargan los datos, se entrena la red neuronal y se exporta el modelo para distintas placas [3], [4]. Seeed Studio documenta este mismo flujo para la XIAO ESP32S3 Sense [5].
+En este taller se volvió a trabajar con la placa **XIAO ESP32S3 Sense** de Seeed Studio, que trae un procesador ESP32-S3 y una cámara [1]. En el taller anterior se entrenó el modelo dentro de SenseCraft AI [2]. Esta vez fue entrenado en **Edge Impulse**, una plataforma en línea donde se cargan los datos, se entrena la red neuronal y se exporta el modelo para distintas placas [3], [4]. Seeed Studio documenta este mismo flujo para la XIAO ESP32S3 Sense [5].
 
-Seguimos la guía de clase [6]. Configuramos Arduino IDE (Integrated Development Environment, entorno de desarrollo integrado), tomamos nuestras propias fotos con la cámara de la placa, entrenamos el modelo en Edge Impulse y lo evaluamos con dos pruebas estadísticas. Después lo ejecutamos en la placa desde Arduino IDE y, al final, en SenseCraft AI.
+Se configuró Arduino IDE (Integrated Development Environment, entorno de desarrollo integrado), tomando fotos propias con la cámara de la placa, se entrenó el modelo en Edge Impulse y posteriormente se evaluó con dos pruebas estadísticas. Después fue ejecutado en la placa desde Arduino IDE y, al final, en SenseCraft AI.
 
-Elegimos tres clases: **Cable**, **Esponja** y **Sigma Face**. Las dos primeras son objetos del laboratorio. La tercera es el rostro de Joseph haciendo el gesto "Sigma Face". Capturamos **50 imágenes por clase**, **150 en total**.
+Se eligieron tres clases: **Cable**, **Esponja** y **Sigma Face**. Las dos primeras son objetos del laboratorio. La tercera es el rostro de Joseph haciendo el gesto "Sigma Face". Capturando **50 imágenes por clase**, **150 en total**.
 
-Estuvimos los cinco integrantes del equipo:
-
-- **Joseph Lombardi Quispe** creó el proyecto en Edge Impulse y posó para la clase Sigma Face.
-- **Melissa Bustos** y **María Antezana** participaron en la captura del conjunto de datos y en las pruebas.
-- **Yoichi Palacios Tanaka** se encargó de la parte final: la prueba en el monitor serie de Arduino IDE y la visualización en SenseCraft AI.
-- **Gabriela Santamaría** tomó la mayoría de las fotos y capturas de pantalla de este documento.
+Con este taller se vio el recorrido completo de un modelo TinyML: desde tomar las fotos hasta ejecutarlo en la placa. Además, esta vez se pudo medir qué tan bien funcionaba el modelo con un conjunto de imágenes de prueba, algo que en el taller anterior no fue registrado.
 
 ## 2. Objetivos
 
@@ -26,12 +21,12 @@ Entrenar en Edge Impulse un clasificador de imágenes de tres clases (Cable, Esp
 
 ### 2.2. Objetivos específicos
 
-- Configurar Arduino IDE y la cámara de la placa con el ejemplo CameraWebServer.
-- Capturar 50 imágenes por clase y etiquetarlas en Edge Impulse.
-- Entrenar un modelo de 96x96 píxeles por transferencia de aprendizaje.
-- Evaluarlo con dos pruebas estadísticas: Live classification y Model testing.
-- Exportarlo como librería de Arduino, adaptar los pines de la cámara y leer sus predicciones en el monitor serie.
-- Probarlo en SenseCraft AI y comparar los resultados con el taller anterior.
+- Configurar Arduino IDE y la cámara de la placa mediante el ejemplo CameraWebServer.
+- Capturar 50 imágenes por clase y realizar su etiquetado en Edge Impulse.
+- Entrenar un modelo de 96x96 píxeles mediante transferencia de aprendizaje.
+- Evaluar el modelo con dos pruebas estadísticas: *Live classification* y *Model testing*.
+- Exportar el modelo como librería de Arduino, adaptar los pines de la cámara y leer sus predicciones en el monitor serie.
+- Probar el modelo en SenseCraft AI y comparar los resultados obtenidos con los del taller anterior.
 
 ## 3. Materiales y herramientas
 
@@ -116,107 +111,37 @@ Entrenar en Edge Impulse un clasificador de imágenes de tres clases (Cable, Esp
 
 ### 3.2. Características de la placa XIAO ESP32S3 Sense
 
-La XIAO ESP32S3 Sense tiene un procesador ESP32-S3 de doble núcleo de hasta 240 MHz, 8 MB de PSRAM (Pseudo Static Random Access Memory, memoria de acceso aleatorio pseudoestática), 8 MB de memoria Flash, Wi-Fi, Bluetooth LE (Low Energy, de bajo consumo) y un módulo de cámara [1].
+La placa XIAO ESP32S3 Sense integra un procesador ESP32-S3 de doble núcleo con una frecuencia de hasta 240 MHz, 8 MB de PSRAM (*Pseudo Static Random Access Memory*, memoria de acceso aleatorio pseudoestática), 8 MB de memoria Flash, conectividad Wi-Fi, Bluetooth LE (*Low Energy*, de bajo consumo) y un módulo de cámara [1].
 
-Lo que más usamos fue la cámara: con ella armamos el conjunto de datos y probamos el modelo. La PSRAM también importó. La guía pide activarla porque el modelo necesita memoria extra para procesar las imágenes y, sin ella, aparecen errores por falta de memoria [6].
+Entre sus componentes, el módulo de cámara resulta fundamental para la captura del conjunto de datos y la posterior ejecución de las pruebas del modelo. Asimismo, la activación de la PSRAM es un requisito establecido en la guía de laboratorio, debido a que el modelo de aprendizaje automático requiere memoria adicional para el procesamiento de imágenes; su omisión genera errores por insuficiencia de memoria durante la inferencia [5].
 
 ## 4. Desarrollo del taller
 
-### 4.1. Lo que pidió el profesor en la pizarra
+### 4.1. Configuración de Arduino IDE
 
-Al empezar la clase, el profesor escribió en la pizarra el material que debíamos llevar y cómo organizar la entrega (Figuras 1 y 2). El material era un cable con una punta tipo C y la otra USB. La entrega es una carpeta `TinyML-Edge Impulse` con el readme, `Data.zip` y `Modelo.zip`. El readme debía llevar imágenes de cinco partes: el proyecto, el dataset (imágenes y etiqueta), dos pruebas estadísticas, las pruebas de Edge Impulse (paso 6) y las pruebas en SenseCraft.
+En primer lugar, se procedió a configurar el entorno de desarrollo Arduino IDE para programar la placa XIAO ESP32S3 [5]:
 
-<p align="center">
-  <img src="imagenes/01_pizarra_completa.jpg" alt="Pizarra completa con el material pedido y la estructura de la carpeta TinyML-Edge Impulse" width="800" />
-  <br />
-  <strong>Figura 1.</strong> <em>Pizarra del profesor con el material y la estructura de la entrega.</em>
-</p>
-
-<p align="center">
-  <img src="imagenes/02_pizarra_detalle.jpg" alt="Detalle de la pizarra con la carpeta TinyML-Edge Impulse, el readme, Data.zip y Modelo.zip" width="800" />
-  <br />
-  <strong>Figura 2.</strong> <em>Detalle de la pizarra: carpeta, archivos y primeras secciones del readme.</em>
-</p>
-
-La Tabla 2 muestra dónde quedó cada punto de la pizarra en este documento.
-
-<p align="center">
-  <strong>Tabla 2.</strong> <em>Puntos de la pizarra y su ubicación en este documento.</em>
-</p>
-
-<div align="center">
-<table>
-  <thead>
-    <tr>
-      <th>Punto de la pizarra</th>
-      <th>Contenido</th>
-      <th>Ubicación</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Proyecto</td>
-      <td>Creación del proyecto en Edge Impulse.</td>
-      <td align="center">4.5</td>
-    </tr>
-    <tr>
-      <td>Dataset (imágenes y etiqueta)</td>
-      <td>Captura de las imágenes, carga y etiquetado en Edge Impulse.</td>
-      <td align="center">4.4 y 4.6</td>
-    </tr>
-    <tr>
-      <td>Pruebas estadísticas (2)</td>
-      <td>Live classification y Model testing en Edge Impulse.</td>
-      <td align="center">4.9</td>
-    </tr>
-    <tr>
-      <td>Edge Impulse: Pruebas (paso 6)</td>
-      <td>Modelo ejecutándose en la placa, leído en el monitor serie.</td>
-      <td align="center">4.12</td>
-    </tr>
-    <tr>
-      <td>SenseCraft: Pruebas</td>
-      <td>Modelo ejecutándose en SenseCraft AI.</td>
-      <td align="center">4.13</td>
-    </tr>
-    <tr>
-      <td>Data.zip y Modelo.zip</td>
-      <td>Imágenes capturadas y librería exportada.</td>
-      <td align="center">7</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-<p align="center">
-  <em>Fuente: Elaboración propia a partir de la pizarra del profesor (Figura 1).</em>
-</p>
-
-### 4.2. Configuración de Arduino IDE
-
-Primero preparamos Arduino IDE para programar la XIAO ESP32S3 [6]:
-
-1. En **Archivo >> Preferencias** agregamos esta dirección en el campo de URL (Uniform Resource Locator, dirección web) adicionales del administrador de placas:
+1. En **Archivo >> Preferencias**, se agregó la siguiente dirección URL (*Uniform Resource Locator*, dirección web) en el campo de gestor de URLs adicionales de tarjetas:
    `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_dev_index.json`
-2. En **Herramientas >> Placa >> Administrador de placas** instalamos el paquete **ESP32 de Espressif Systems**, en la versión estable recomendada por la guía. Las versiones con *alpha* en el nombre no funcionan bien con la XIAO y Edge Impulse [6].
-3. En **Herramientas >> Placa** elegimos **XIAO_ESP32S3** y, en **Herramientas >> Puerto**, el puerto de la placa.
-4. En **Herramientas >> PSRAM** elegimos **OPI PSRAM**, la PSRAM con interfaz octal (OPI, *Octal Peripheral Interface*), para tener la memoria extra que piden la cámara y el modelo [6].
+2. En **Herramientas >> Placa >> Administrador de placas**, se instaló el paquete **esp32 de Espressif Systems**, seleccionando la versión estable recomendada en la guía. Se evitó el uso de versiones etiquetadas como *alpha*, debido a problemas de compatibilidad observados con la placa XIAO y la plataforma Edge Impulse.
+3. En **Herramientas >> Placa**, se seleccionó el modelo **XIAO_ESP32S3** y, en **Herramientas >> Puerto**, se asignó el puerto COM correspondiente a la placa conectada.
+4. En **Herramientas >> PSRAM**, se configuró la opción **OPI PSRAM** (*Octal Peripheral Interface*, interfaz periférica octal) para habilitar la memoria adicional requerida por el módulo de cámara y el modelo de inferencia.
 
-### 4.3. Cámara con CameraWebServer
+### 4.2. Cámara con CameraWebServer
 
-Para tomar nuestras fotos usamos el ejemplo **Archivo >> Ejemplos >> ESP32 >> Camera >> CameraWebServer** [6]. En `board_config.h` activamos el modelo de cámara de nuestra placa:
+Para tomar nuestras fotos usamos el ejemplo **Archivo >> Ejemplos >> ESP32 >> Camera >> CameraWebServer** que se encuentra en las indicaciones. En `board_config.h` activamos el modelo de cámara de nuestra placa:
 
 ```cpp
 #define CAMERA_MODEL_XIAO_ESP32S3 // Has PSRAM
 ```
 
-En el archivo principal pusimos el nombre y la contraseña del Wi-Fi del laboratorio. Lo demás quedó con sus valores por defecto. Esas credenciales no van en este documento.
+En el programa principal se ingresaron las credenciales de la red Wi-Fi del laboratorio, manteniendo los demás parámetros con sus valores por defecto. Cabe precisar que dichas credenciales se omiten en el presente documento por motivos de seguridad.
 
-Subimos el programa y el monitor serie mostró la dirección IP (Internet Protocol) de la cámara. Al abrirla en el navegador iniciamos la transmisión con **Start Stream**. Si a la misma dirección se le añade `/capture`, se obtiene una foto fija [6].
+Tras cargar el programa, el monitor serie desplegó la dirección IP (*Internet Protocol*) asignada a la cámara. Al acceder a dicha dirección desde un navegador web, se inició la transmisión en vivo mediante la opción **Start Stream**. Adicionalmente, al añadir la extensión `/capture` a la dirección IP, se obtiene una fotografía fija.
 
-La guía avisa de dos errores comunes. Si Arduino IDE no reconoce el puerto, hay que desconectar la placa, revisar que esté bien armada y volver a conectarla. Si no se conecta al Wi-Fi, hay que revisar el nombre y la contraseña escritos en el código [6].
+De acuerdo con lo indicado en la guía de la práctica, se contemplaron dos posibles inconvenientes durante este procedimiento: si el entorno Arduino IDE no reconoce el puerto COM, se debe desconectar la placa, verificar su correcto ensamblado y volver a conectarla; por otra parte, si el dispositivo no logra conectarse a la red Wi-Fi, se deben verificar el nombre de la red y la contraseña ingresados en el código.
 
-### 4.4. Captura del conjunto de datos (dataset: imágenes y etiqueta)
+### 4.3. Captura del conjunto de datos (dataset: imágenes y etiqueta)
 
 Con la cámara transmitiendo abrimos la página **captura_xiao_etiqueta_personalizada.html** que nos dieron en clase. En ella se escribe la IP de la cámara, la etiqueta, cuántas fotos tomar y cada cuánto tiempo. Dejamos el intervalo por defecto de la página de captura. Al terminar, la página descarga un ZIP con una carpeta que lleva el nombre de la etiqueta [6].
 
@@ -229,7 +154,7 @@ Melissa y María participaron en la captura junto con el resto del equipo. Hicim
 Revisamos los archivos: cada clase tiene **50 imágenes** y todas miden **320x240 píxeles**, en formato JPEG (Joint Photographic Experts Group).
 
 <p align="center">
-  <strong>Tabla 3.</strong> <em>Distribución de las imágenes capturadas.</em>
+  <strong>Tabla 2.</strong> <em>Distribución de las imágenes capturadas.</em>
 </p>
 
 <div align="center">
@@ -275,55 +200,67 @@ Revisamos los archivos: cada clase tiene **50 imágenes** y todas miden **320x24
   <em>Fuente: Elaboración propia a partir de los archivos capturados con la XIAO ESP32S3 Sense.</em>
 </p>
 
-Antes de pasar a Edge Impulse descomprimimos los tres archivos, cerramos el monitor serie y detuvimos la transmisión, como pide la guía [6]. Las 150 imágenes están en [Data.zip](Data.zip), en las carpetas `Cable/`, `Esponja/` y `Sigma Face/`.
+Antes de pasar a Edge Impulse descomprimimos los tres archivos, cerramos el monitor serie y detuvimos la transmisión, como pide la guía. Las 150 imágenes están en [Data.zip](Data.zip), en las carpetas `Cable/`, `Esponja/` y `Sigma Face/`.
 
-### 4.5. Proyecto en Edge Impulse
+### 4.4. Proyecto en Edge Impulse
 
-Joseph creó una cuenta en Edge Impulse y un proyecto nuevo [6]. El proyecto se llama **Joseph_Lombardi-project-1** y lleva una etiqueta del Grupo 2 de Proyecto Integrador (Figura 3). Todo lo que sigue en Edge Impulse (carga, entrenamiento, pruebas y exportación) lo hicimos en ese proyecto.
+En la plataforma Edge Impulse se creó una cuenta de usuario y se registró un nuevo proyecto denominado **Joseph_Lombardi-project-1**, asignándole la etiqueta de identificación correspondiente al Grupo 2 del curso Proyecto Integrador (Figura 1). En este entorno de trabajo se centralizaron las etapas de adquisición de datos, diseño del *impulse*, entrenamiento, evaluación estadística y exportación del modelo.
 
 <p align="center">
   <img src="imagenes/03_ei_proyecto.jpg" alt="Panel principal del proyecto Joseph_Lombardi-project-1 en Edge Impulse" width="800" />
   <br />
-  <strong>Figura 3.</strong> <em>Panel principal del proyecto Joseph_Lombardi-project-1 en Edge Impulse.</em>
+  <strong>Figura 1.</strong> <em>Panel principal del proyecto Joseph_Lombardi-project-1 en Edge Impulse.</em>
 </p>
 
-### 4.6. Carga y etiquetado de las imágenes
+Como se observa en la Figura 1, la interfaz del proyecto muestra los siguientes aspectos clave de la configuración inicial:
 
-Como ya teníamos las fotos, elegimos añadir datos existentes [6]. Para cada clase seleccionamos sus 50 imágenes, dejamos la partición en **Automatically split between training and test** y escribimos la etiqueta a mano en **Enter label** [6], [3].
+- **Estructura del proyecto:** En el panel superior se confirma el nombre del proyecto (`Joseph_Lombardi-project-1`) bajo la cuenta del usuario, junto con la etiqueta personalizada de identificación (`TINYML - EDGE IMPULSE (S9 PI - GRUPO 2)`).
+- **Dispositivo de referencia (*Target*):** En la esquina superior derecha se muestra la arquitectura por defecto seleccionada por la plataforma, correspondiente a un microcontrolador **Cortex-M4F a 80 MHz**. Cabe precisar que este valor sirve únicamente como referencia base para la estimación inicial del rendimiento.
+- **Modo de privacidad:** En la sección *Sharing*, el proyecto se mantuvo configurado en modo privado (*Private*), restringiendo el acceso únicamente a los integrantes del equipo autorizados.
+
+### 4.5. Carga y etiquetado de las imágenes
+
+Para la importación del conjunto de datos a Edge Impulse, se utilizó la opción de adición de datos existentes (*Add existing data*) [3]. Para cada una de las tres clases, se seleccionaron sus 50 imágenes correspondientes, se configuró la división automática de muestras (**Automatically split between training and test**) y se ingresó manualmente la etiqueta de identificación en el campo **Enter label** [3].
 
 <p align="center">
   <img src="imagenes/04_ei_carpetas_dataset.jpg" alt="Carpetas de las tres clases en la ventana de selección de archivos" width="800" />
   <br />
-  <strong>Figura 4.</strong> <em>Carpetas descomprimidas de las tres clases: Sigma face_images_50, Cable_images_50 y Esponja_images_50.</em>
+  <strong>Figura 2.</strong> <em>Selección de los archivos descomprimidos de las tres clases.</em>
 </p>
+
+En la Figura 2 se observa la estructura de los archivos locales previamente descompresionados, organizados en las carpetas `Cable_images_50`, `Esponja_images_50` y `Sigma face_images_50`, cada una conteniendo los lotes de 50 imágenes capturadas.
 
 <p align="center">
   <img src="imagenes/05_ei_seleccion_imagenes.jpg" alt="Selección de las imágenes de la clase Sigma Face" width="800" />
   <br />
-  <strong>Figura 5.</strong> <em>Selección de las imágenes de la clase Sigma Face en la ventana de carga de Edge Impulse.</em>
+  <strong>Figura 3.</strong> <em>Selección masiva de imágenes de la clase Sigma Face en el explorador de archivos.</em>
 </p>
+
+Como se aprecia en la Figura 3, se procedió con la selección masiva de las 50 fotografías correspondientes a cada clase (ejemplificado con la clase *Sigma Face*) desde el explorador de archivos del sistema operativo para su carga directa en la plataforma.
 
 <p align="center">
   <img src="imagenes/06_ei_etiqueta_sigma_face.jpg" alt="Configuración de la carga con 50 archivos y la etiqueta Sigma Face" width="800" />
   <br />
-  <strong>Figura 6.</strong> <em>Carga de 50 archivos con partición automática y la etiqueta Sigma Face escrita a mano.</em>
+  <strong>Figura 4.</strong> <em>Parámetros de carga y asignación manual de etiqueta en Edge Impulse.</em>
 </p>
 
-Edge Impulse muestra un registro de cada carga. En la Figura 7 termina la de Sigma Face: 50 archivos subidos y ninguno fallido.
+En la Figura 4 se detallan los ajustes aplicados durante el proceso de importación: la confirmación de los 50 archivos cargados, la activación de la partición automática para la separación entre entrenamiento y prueba, y la asignación explícita del nombre de la clase en el campo *Enter label*.
 
 <p align="center">
   <img src="imagenes/07_ei_carga_completa.jpg" alt="Registro de carga de la clase Sigma Face con 50 archivos subidos y 0 fallidos" width="800" />
   <br />
-  <strong>Figura 7.</strong> <em>Registro de carga de la clase Sigma Face: 50 archivos subidos y 0 fallidos.</em>
+  <strong>Figura 5.</strong> <em>Confirmación y registro de importación en Edge Impulse.</em>
 </p>
 
-Hicimos lo mismo con Cable y Esponja. Al final, **Data acquisition** mostró **150 elementos** con una partición de **79 % / 21 %**: **119 imágenes de entrenamiento** y **31 de prueba** (Figura 8).
+La Figura 5 muestra la consola de registro (*log*) generada por la plataforma al finalizar la transferencia, confirmando el procesamiento exitoso de los 50 archivos de la clase sin registrar errores de subida. Este procedimiento se replicó bajo la misma metodología para las clases *Cable* y *Esponja*.
 
 <p align="center">
   <img src="imagenes/08_ei_dataset.jpg" alt="Sección Data acquisition con 150 elementos y partición 79 por ciento y 21 por ciento" width="800" />
   <br />
-  <strong>Figura 8.</strong> <em>Conjunto de datos en Edge Impulse: 150 elementos, 119 de entrenamiento y 31 de prueba.</em>
+  <strong>Figura 6.</strong> <em>Resumen del conjunto de datos en la sección Data acquisition.</em>
 </p>
+
+Como resultado global, la sección **Data acquisition** (Figura 6) consolidó un total de **150 muestras**. La división automática de la plataforma distribuyó los datos en una proporción aproximada de **79 % para entrenamiento** (119 imágenes) y **21 % para prueba** (31 imágenes), garantizando un balance equitativo entre las tres clases.
 
 <p align="center">
   <strong>Tabla 4.</strong> <em>Partición del conjunto de datos en Edge Impulse.</em>
@@ -340,12 +277,12 @@ Hicimos lo mismo con Cable y Esponja. Al final, **Data acquisition** mostró **1
   </thead>
   <tbody>
     <tr>
-      <td>Entrenamiento (Training)</td>
+      <td>Entrenamiento (*Training*)</td>
       <td align="center">119</td>
       <td align="center">79 %</td>
     </tr>
     <tr>
-      <td>Prueba (Test)</td>
+      <td>Prueba (*Test*)</td>
       <td align="center">31</td>
       <td align="center">21 %</td>
     </tr>
@@ -362,21 +299,21 @@ Hicimos lo mismo con Cable y Esponja. Al final, **Data acquisition** mostró **1
   <em>Fuente: Elaboración propia a partir de la sección Data acquisition de Edge Impulse.</em>
 </p>
 
-Un detalle que nos sirvió más adelante: las 31 imágenes de prueba salieron de las mismas sesiones de captura. No se usan para entrenar, pero muestran los mismos objetos, con el mismo fondo y la misma luz.
+Cabe señalar que las 31 imágenes asignadas al conjunto de prueba provienen de las mismas sesiones de adquisición que los datos de entrenamiento. Aunque no participan en la optimización de los pesos del modelo, comparten condiciones homogéneas de iluminación, fondo y perspectiva respecto al conjunto de entrenamiento.
 
-### 4.7. Diseño del impulse
+### 4.6. Diseño del impulse
 
-En Edge Impulse, un *impulse* es la cadena que recibe los datos, los procesa y se los pasa a un bloque de aprendizaje. Lo armamos en **Impulse design >> Create impulse** con tres partes [6]:
+En Edge Impulse, un *impulse* es la cadena que recibe los datos, los procesa y se los pasa a un bloque de aprendizaje. Lo armamos en **Impulse design >> Create impulse** con tres partes:
 
 - **Image data:** valores por defecto. Las imágenes se reducen a **96x96 píxeles** antes de entrar al modelo.
-- **Processing block: Image.** Normaliza las imágenes. Ahí se elige RGB (rojo, verde y azul) o escala de grises y se pulsa **Generate features** [6].
-- **Learning block: Transfer Learning (Images).** El bloque *Classification* aprende patrones a partir de las características de los datos de entrada. Transfer learning, en cambio, parte de una red ya entrenada y la ajusta a nuestras imágenes. Por eso funciona con pocas fotos, como las nuestras [6], [7].
+- **Processing block: Image.** Normaliza las imágenes. Ahí se elige RGB (rojo, verde y azul) o escala de grises y se pulsa **Generate features**.
+- **Learning block: Transfer Learning (Images).** El bloque *Classification* aprende patrones a partir de las características de los datos de entrada. Transfer learning, en cambio, parte de una red ya entrenada y la ajusta a nuestras imágenes. Por eso funciona con pocas fotos, como las nuestras [7].
 
-La capa de entrada recibe **27 648 características** (Figura 9). Eso es 96 x 96 x 3: trabajamos en RGB.
+La capa de entrada recibe **27 648 características** (Figura 7). Eso es 96 x 96 x 3: trabajamos en RGB.
 
-### 4.8. Entrenamiento por transferencia de aprendizaje
+### 4.7. Entrenamiento por transferencia de aprendizaje
 
-En **Impulse design >> Transfer learning** revisamos los parámetros y pulsamos **Save & train** [6]. El número de ciclos de entrenamiento se mantuvo en el valor por defecto. La Tabla 5 resume lo que se ve en la captura.
+En **Impulse design >> Transfer learning** revisamos los parámetros y pulsamos **Save & train**. El número de ciclos de entrenamiento se mantuvo en el valor por defecto. La Tabla 5 resume lo que se ve en la captura.
 
 <p align="center">
   <strong>Tabla 5.</strong> <em>Parámetros de entrenamiento utilizados en Edge Impulse.</em>
@@ -429,12 +366,12 @@ En **Impulse design >> Transfer learning** revisamos los parámetros y pulsamos 
 
 El *dropout* apaga al azar una parte de las neuronas durante el entrenamiento. Sirve para que el modelo no memorice las imágenes.
 
-Al terminar, Edge Impulse mostró el desempeño sobre el **conjunto de validación**, una parte de las imágenes de entrenamiento que la plataforma aparta para evaluar el modelo mientras aprende. Con la versión **Quantized (int8)**, cuyos pesos se guardan como enteros de 8 bits, obtuvimos una exactitud (*accuracy*) de **91,7 %** y una pérdida (*loss*) de **0,16** (Figura 9).
+Al terminar, Edge Impulse mostró el desempeño sobre el **conjunto de validación**, una parte de las imágenes de entrenamiento que la plataforma aparta para evaluar el modelo mientras aprende. Con la versión **Quantized (int8)**, cuyos pesos se guardan como enteros de 8 bits, obtuvimos una exactitud (*accuracy*) de **91,7 %** y una pérdida (*loss*) de **0,16** (Figura 7).
 
 <p align="center">
   <img src="imagenes/09_ei_transfer_learning.jpg" alt="Parámetros de entrenamiento, arquitectura MobileNetV2 y desempeño de validación con 91,7 por ciento de exactitud" width="800" />
   <br />
-  <strong>Figura 9.</strong> <em>Parámetros de entrenamiento, arquitectura MobileNetV2 y desempeño sobre el conjunto de validación (Quantized int8).</em>
+  <strong>Figura 7.</strong> <em>Parámetros de entrenamiento, arquitectura MobileNetV2 y desempeño sobre el conjunto de validación (Quantized int8).</em>
 </p>
 
 La Tabla 6 tiene la matriz de confusión. La puntuación F1 junta dos cosas: la precisión (de las imágenes que el modelo puso en una clase, cuántas eran de esa clase) y la exhaustividad o *recall* (de las imágenes de una clase, cuántas reconoció). La curva ROC (*Receiver Operating Characteristic*, característica operativa del receptor) mide qué tan bien separa el modelo las clases. Un área de 1,00 es una separación completa en las imágenes evaluadas.
@@ -494,11 +431,11 @@ En la misma pantalla, Edge Impulse estima el rendimiento en el dispositivo con s
   <strong>Figura 10.</strong> <em>Data explorer de las muestras clasificadas y estimación de rendimiento para el objetivo Cortex-M4F a 80 MHz.</em>
 </p>
 
-### 4.9. Pruebas estadísticas (2)
+### 4.8. Pruebas estadísticas (2)
 
 La pizarra pedía dos pruebas estadísticas. En Edge Impulse las hicimos con **Live classification** y **Model testing**.
 
-#### 4.9.1. Prueba estadística 1: Live classification
+#### 4.8.1. Prueba estadística 1: Live classification
 
 En **Live classification** se elige una muestra del conjunto de prueba y se pulsa **Load sample** para clasificarla sola [6], [8]. Probamos una imagen por clase con la versión **Unoptimized (float32)**, la versión sin cuantizar, con pesos en números decimales de 32 bits.
 
@@ -565,7 +502,7 @@ En **Live classification** se elige una muestra del conjunto de prueba y se puls
 
 Las tres muestras salieron correctas, con 1,00. Pero es una imagen por clase: sirve para ver que el modelo funciona, no para medir qué tan bien funciona.
 
-#### 4.9.2. Prueba estadística 2: Model testing
+#### 4.8.2. Prueba estadística 2: Model testing
 
 **Model testing** clasifica de una vez todo el conjunto de prueba con el botón **Classify all** [6], [9]. Con la versión **Unoptimized (float32)** obtuvimos **96,77 %** de exactitud sobre las 31 imágenes de prueba: 30 correctas.
 
@@ -632,13 +569,13 @@ Las tres muestras salieron correctas, con 1,00. Pero es una imagen por clase: si
 
 El único error fue una esponja que el modelo tomó por cable. En la validación también hubo una esponja confundida con cable. No lo tomamos como un patrón confirmado, porque las dos evaluaciones usan versiones distintas del modelo e imágenes distintas.
 
-### 4.10. Exportación del modelo (Deployment)
+### 4.9. Exportación del modelo (Deployment)
 
 En **Deployment** elegimos **Arduino library**, con TensorFlow Lite como motor de inferencia, y la versión **Quantized (int8)**. Según la guía, la versión int8 es más rápida y ocupa menos RAM y Flash, con la misma precisión reportada [6]. Al pulsar **Build**, Edge Impulse generó la librería.
 
 El archivo descargado, `ei-joseph_lombardi-project-1-arduino-1.0.1-impulse-#1.zip`, está sin cambios en esta carpeta como [Modelo.zip](Modelo.zip). Dentro está la librería `Joseph_Lombardi-project-1_inferencing`, con las etiquetas Cable, Esponja y Sigma Face.
 
-### 4.11. Modelo en Arduino IDE
+### 4.10. Modelo en Arduino IDE
 
 Con la librería descargada seguimos la guía para ejecutar el modelo en la placa [6], [4]:
 
@@ -671,7 +608,7 @@ Con la librería descargada seguimos la guía para ejecutar el modelo en la plac
 
 La guía dice que, si sale un error por falta de espacio, hay que aumentar `arena_size` en el archivo de la carpeta `tflite-model` de la librería [6]. En nuestro caso no fue necesario modificar la memoria del modelo.
 
-### 4.12. Edge Impulse: pruebas en el monitor serie
+### 4.11. Edge Impulse: pruebas en el monitor serie
 
 En la pizarra esta parte aparece como "Edge Impulse: Pruebas (paso 6)". Es el paso 6 de la parte "Modelo en Arduino IDE" de la guía [6]. Yoichi cargó el programa y abrió el monitor serie, y fuimos poniendo cada objeto frente a la cámara. Cada bloque del monitor muestra el tiempo de DSP (*Digital Signal Processing*, procesamiento digital de la señal), el tiempo de clasificación y la puntuación de cada clase.
 
@@ -756,7 +693,7 @@ En todos los bloques, la clase con mayor puntuación fue la del objeto que tení
 
 Sigma Face fue la clase más baja y la que más subía y bajaba. Arriba en la Figura 19 incluso aparece un 0,53516, de un bloque que no se ve completo.
 
-### 4.13. SenseCraft: pruebas
+### 4.12. SenseCraft: pruebas
 
 Yoichi se encargó de esta parte. Volvimos al **Dashboard** de Edge Impulse y descargamos el bloque **Transfer learning model** en formato **TensorFlow Lite (int8 quantized)** [6]. En **SenseCraft AI >> Espacio de trabajo >> Subir modelo** le pusimos un nombre, elegimos el archivo y agregamos los objetos en el mismo orden de las etiquetas del modelo: Cable, Esponja y Sigma Face [6], [11].
 
@@ -1069,24 +1006,20 @@ Para la próxima: fotografiar varios objetos por clase con fondos y luces distin
 
 <a id="ref6"></a>
 
-[6] Universidad Peruana Cayetano Heredia, *TinyML con XIAO ESP32S3 Sense: Laboratorio con Edge Impulse*, material de clase, Lima, Perú, 2026.
-
-<a id="ref7"></a>
-
-[7] Edge Impulse, "Transfer learning (images)," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/transfer-learning-images. [Accedido: 16-oct-2026].
+[6] Edge Impulse, "Transfer learning (images)," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/transfer-learning-images. [Accedido: 16-oct-2026].
 
 <a id="ref8"></a>
 
-[8] Edge Impulse, "Live classification," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/live-classification. [Accedido: 16-oct-2026].
+[7] Edge Impulse, "Live classification," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/live-classification. [Accedido: 16-oct-2026].
 
 <a id="ref9"></a>
 
-[9] Edge Impulse, "Model testing," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/model-testing. [Accedido: 16-oct-2026].
+[8] Edge Impulse, "Model testing," *Edge Impulse Documentation*. [En línea]. Disponible en: https://docs.edgeimpulse.com/studio/projects/model-testing. [Accedido: 16-oct-2026].
 
 <a id="ref10"></a>
 
-[10] Seeed Studio, "Camera Usage in Seeed Studio XIAO ESP32S3 Sense," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/xiao_esp32s3_camera_usage/. [Accedido: 16-oct-2026].
+[9] Seeed Studio, "Camera Usage in Seeed Studio XIAO ESP32S3 Sense," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/xiao_esp32s3_camera_usage/. [Accedido: 16-oct-2026].
 
 <a id="ref11"></a>
 
-[11] Seeed Studio, "Using a model for XIAO ESP32S3 Sense," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/sensecraft-ai/tutorials/sensecraft-ai-pretrained-models-for-xiao/. [Accedido: 16-oct-2026].
+[10] Seeed Studio, "Using a model for XIAO ESP32S3 Sense," *Seeed Studio Wiki*. [En línea]. Disponible en: https://wiki.seeedstudio.com/sensecraft-ai/tutorials/sensecraft-ai-pretrained-models-for-xiao/. [Accedido: 16-oct-2026].
