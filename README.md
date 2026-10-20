@@ -2,7 +2,7 @@
 
 Equipo 02 - Proyecto Integrador
 
-![Imagen del proyecto](Recursos/Imágenes/imagen_proyecto.png)
+<img width="1671" height="941" alt="Infografía marina de LanternGuard" src="https://github.com/user-attachments/assets/d8eb780e-4d5f-417a-ab17-0059d0a791a0" />
 
 ---
 
