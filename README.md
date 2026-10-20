@@ -17,7 +17,7 @@ Nuestro objetivo es desarrollar una solución tecnológica automatizada que resp
 <p align="center">
   <img src="Recursos/Imágenes/Grupo2.png" alt="Fotografía del equipo 02" width="100%">
   <br>
-  <em><strong><span style="color: black;">Figura 1.</span> Fotografía del equipo 02</strong></em>
+   <em><span style="color: black;">Figura 1.</span> Fotografía del equipo 02</em>
 </p>
 ---
 
