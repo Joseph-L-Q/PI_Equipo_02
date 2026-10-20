@@ -8,16 +8,16 @@ Equipo 02 - Proyecto Integrador
 
 ## 📖 Descripción del Equipo
 
-Bienvenidos al repositorio oficial del **Grupo 02** del curso **Proyecto Integrador (Ciclo 2026-2)**, conformado por estudiantes de las carreras de **Ingeniería Informática** e **Ingeniería Industrial** de la Universidad Peruana Cayetano Heredia (UPCH).
+Bienvenidos al repositorio oficial del **Grupo 02** del curso **Proyecto Integrador (Ciclo 2026-2)** de la Universidad Peruana Cayetano Heredia (UPCH), integrado por estudiantes de **Ingeniería Informática e Ingeniería Industrial**.
 
-Este espacio centraliza toda la documentación académica, los avances del curso y el desarrollo técnico de nuestra solución. El diseño y la construcción del proyecto se rigen bajo la metodología **VDI 2206**, un marco de ingeniería que nos permite estructurar de forma ordenada el trabajo dividiéndolo en sus componentes esenciales: un módulo mecánico, un módulo electrónico y un módulo de software.
+Este repositorio reúne la documentación académica, los avances y los recursos técnicos desarrollados durante el proyecto. Para organizar el proceso de diseño e implementación, el equipo adopta la metodología **VDI 2206**, que permite estructurar el desarrollo de sistemas mecatrónicos mediante la integración de los componentes mecánicos, electrónicos y de software.
 
-Nuestro propósito como equipo es desarrollar una alternativa tecnológica automatizada que responda a necesidades reales de optimización y sostenibilidad dentro del sector productivo peruano.
+Nuestro objetivo es desarrollar una solución tecnológica automatizada que responda a una necesidad real del sector productivo peruano, promoviendo la eficiencia operativa y la sostenibilidad.
 
 <p align="center">
   <img src="Recursos/Imágenes/Grupo2.png" alt="Fotografía del equipo 02" width="100%">
   <br>
-  <em>Figura 1. Fotografía del equipo 02</em>
+  <em>style="color: black;">Figura 1. Fotografía del equipo 02</em>
 </p>
 
 ---
