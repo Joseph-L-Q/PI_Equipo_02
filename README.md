@@ -6,13 +6,13 @@ Equipo 02 - Proyecto Integrador
 
 ---
 
-## Descripción del Equipo 
+## 📖 Descripción del Equipo
 
-Bienvenidos al repositorio del  **Grupo 02** del curso **Proyecto Integrador 2026-2**, conformado por estudiantes de la carrera de Ingeniería Informática e Ingeniería Industrial de la Universidad Peruana Cayetano Heredia.
+Bienvenidos al repositorio oficial del **Grupo 02** del curso **Proyecto Integrador (Ciclo 2026-2)**, conformado por estudiantes de las carreras de **Ingeniería Informática** e **Ingeniería Industrial** de la Universidad Peruana Cayetano Heredia (UPCH).
 
-Este espacio integra la documentación, avances y entregables de nuestro proyecto académico, desarrollado bajo la metodología VDI 2206, que establece un enfoque sistemático para el diseño, desarrollo y validación de sistemas de ingeniería.  
+Este espacio centraliza toda la documentación académica, los avances del curso y el desarrollo técnico de nuestra solución. El diseño y la construcción del proyecto se rigen bajo la metodología **VDI 2206**, un marco de ingeniería que nos permite estructurar de forma ordenada el trabajo dividiéndolo en sus componentes esenciales: un módulo mecánico, un módulo electrónico y un módulo de software.
 
-Nuestro propósito es desarrollar soluciones tecnológicas aplicadas a problemáticas reales del sector acuícola en el Perú, específicamente relacionadas con la gestión eficiente y el monitoreo preventivo del biofouling en el cultivo de concha de abanico (Argopecten purpuratus) en sistemas suspendidos. A través de este proyecto, buscamos proponer una alternativa tecnológica basada en visión por computadora e inspección subacuática automatizada, la cual implementa un algoritmo de segmentación de imágenes a escala para cuantificar el porcentaje de área libre y detectar la obstrucción de las mallas. Con esto, buscamos optimizar las labores de limpieza y recambio de linternas, contribuyendo a una producción acuícola más eficiente, rentable y sostenible.
+Nuestro propósito como equipo es desarrollar una alternativa tecnológica automatizada que responda a necesidades reales de optimización y sostenibilidad dentro del sector productivo peruano.
 
 <p align="center">
   <img src="Recursos/Imágenes/Grupo2.png" alt="Fotografía del equipo 02" width="100%">
