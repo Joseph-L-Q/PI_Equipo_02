@@ -1,19 +1,56 @@
-# LANTERNGUARD
+<h2 align="center">LANTERNGUARD</h2>
 
-**TRL 1 — Principios básicos reportados de la tecnología propuesta**
+<h1 align="center">TRL 1 — Principios básicos reportados de la tecnología propuesta</h1>
 
-**Informe de sustento científico y tecnológico**
+<p align="center"><strong>Informe de sustento científico y tecnológico</strong></p>
 
 ## Información académica
 
-| Campo | Información |
-|---|---|
-| **Proyecto** | LanternGuard |
-| **Curso** | Proyecto Integrador |
-| **Entregable** | Entregable 4 – TRL 1 |
-| **Periodo académico** | 2026 |
-| **Docentes** | Umbert Lewis de la Cruz Rodriguez<br>Renzo Jose Chan Rios<br>Maria Angelica Rejas Nuñez<br>Harry Anderson Rivera Tito |
-| **Integrantes** | Antezana De la Cruz, María<br>Santamaria Huaytan, Gabriela<br>Bustos Montañez, Melissa<br>Lombardi Quispe, Joseph<br>Palacios Tanaka, Yoichi |
+<table align="center">
+  <thead>
+    <tr>
+      <th>Campo</th>
+      <th>Información</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Proyecto</strong></td>
+      <td>LanternGuard</td>
+    </tr>
+    <tr>
+      <td><strong>Curso</strong></td>
+      <td>Proyecto Integrador</td>
+    </tr>
+    <tr>
+      <td><strong>Docentes</strong></td>
+      <td>
+        <ul>
+          <li>Umbert Lewis de la Cruz Rodriguez</li>
+          <li>Renzo Jose Chan Rios</li>
+          <li>Maria Angelica Rejas Nuñez</li>
+          <li>Harry Anderson Rivera Tito</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Integrantes</strong></td>
+      <td>
+        <ul>
+          <li>Antezana De la Cruz, María</li>
+          <li>Santamaria Huaytan, Gabriela</li>
+          <li>Bustos Montañez, Melissa</li>
+          <li>Lombardi Quispe, Joseph</li>
+          <li>Palacios Tanaka, Yoichi</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Periodo académico</strong></td>
+      <td>2026</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Presentación y alcance
 
