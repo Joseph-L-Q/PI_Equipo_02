@@ -98,7 +98,7 @@ Los microcontroladores funcionan mediante circuitos electrónicos digitales capa
 
 #### 1.6.2. Comunicación cableada mediante transceptores RS-485 MAX3485
 
-La comunicación RS-485 se fundamenta en la señalización diferencial, donde la información se representa mediante la diferencia de voltaje entre dos conductores. Este principio permite reducir la influencia de interferencias eléctricas comunes a ambos conductores. El transceptor MAX3485, documentado por Analog Devices [[15]](#ref-15), convierte señales digitales en señales diferenciales y viceversa. En LanternGuard se contempla utilizar estos transceptores para comunicar el módulo submarino con la boya mediante un cable umbilical.
+RS-485 es un estándar de comunicación eléctrica basado en la señalización diferencial, mediante la cual los datos se representan por la diferencia de voltaje entre dos conductores. Este principio reduce la susceptibilidad a interferencias eléctricas y es ampliamente utilizado en sistemas industriales. El MAX3485, documentado por Analog Devices [[15]](#ref-15), es un transceptor semidúplex que convierte las señales lógicas del microcontrolador en señales eléctricas diferenciales para su transmisión y realiza el proceso inverso durante la recepción. En Lantern Guard se propone emplear estos transceptores para establecer un enlace de comunicación cableada entre el módulo submarino y la boya mediante un cable umbilical.
 
 #### 1.6.3. Comunicación inalámbrica mediante Heltec WiFi LoRa 32 V3
 
