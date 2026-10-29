@@ -295,5 +295,16 @@
     "translationId": "6ae37a9fa828111373436ead",
     "estado": "DONE",
     "fecha": "2026-10-29T11:56:05"
+  },
+  "ensamble_D200": {
+    "file": "salida/ensambles/ensamble_D200.step",
+    "sha256": "80856579513542a16966c0707cce2b2047f5fac2cd495fd90fed80ac9d8ac75e",
+    "blobElementId": "e70fe09ce7e72f256230fbbd",
+    "partStudioIds": [
+      "4d31a54737fe0500f49e1e05"
+    ],
+    "translationId": "6ae37c5a392b1ea142d4a65f",
+    "estado": "DONE",
+    "fecha": "2026-10-29T12:03:40"
   }
 }
