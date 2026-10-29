@@ -1,0 +1,250 @@
+{
+ "z_rail": -57.35,
+ "x_joint": 55.0,
+ "eje_bisagra_carro": [
+  12.5,
+  -34.0
+ ],
+ "simscale_1_union_riel": {
+  "archivo": "simscale_1_union_riel.step",
+  "volumen_ok": true,
+  "solidos_leidos": 2,
+  "solidos_esperados": 2,
+  "piezas": {
+   "riel_central_x10a70": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 0.1,
+    "min_face": 29.154,
+    "vol_cm3": 62.768,
+    "caras": 69,
+    "bbox": [
+     10.0,
+     70.0,
+     -44.0,
+     44.0,
+     -57.35,
+     0.0
+    ]
+   },
+   "riel_ext": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 0.65,
+    "min_face": 2.6,
+    "vol_cm3": 36.998,
+    "caras": 80,
+    "bbox": [
+     55.0,
+     155.0,
+     -15.0,
+     15.0,
+     -57.35,
+     -27.35
+    ]
+   }
+  }
+ },
+ "simscale_2_gancho": {
+  "archivo": "simscale_2_gancho.step",
+  "volumen_ok": true,
+  "solidos_leidos": 1,
+  "solidos_esperados": 1,
+  "piezas": {
+   "gancho": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 1.741,
+    "min_face": 18.0,
+    "vol_cm3": 19.505,
+    "caras": 38,
+    "bbox": [
+     -47.0,
+     21.0,
+     -15.0,
+     15.0,
+     -59.0,
+     0.0
+    ]
+   }
+  }
+ },
+ "simscale_3_caja_tapa": {
+  "archivo": "simscale_3_caja_tapa.step",
+  "volumen_ok": true,
+  "solidos_leidos": 2,
+  "solidos_esperados": 2,
+  "piezas": {
+   "caja_cuerpo": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 4.0,
+    "min_face": 12.566,
+    "vol_cm3": 213.517,
+    "caras": 73,
+    "bbox": [
+     -79.82,
+     79.82,
+     -63.0,
+     63.0,
+     0.0,
+     50.0
+    ]
+   },
+   "caja_tapa": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 2.356,
+    "min_face": 28.274,
+    "vol_cm3": 131.311,
+    "caras": 44,
+    "bbox": [
+     -79.82,
+     79.82,
+     -63.0,
+     63.0,
+     50.0,
+     113.0
+    ]
+   }
+  }
+ },
+ "simscale_4_carro_capsula": {
+  "archivo": "simscale_4_carro_capsula.step",
+  "volumen_ok": true,
+  "solidos_leidos": 6,
+  "solidos_esperados": 6,
+  "piezas": {
+   "carro": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 0.5,
+    "min_face": 26.389,
+    "vol_cm3": 54.5,
+    "caras": 36,
+    "bbox": [
+     -60.0,
+     25.0,
+     -19.3,
+     19.3,
+     -46.5,
+     34.3
+    ]
+   },
+   "cap_cuerpo_M4": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 2.004,
+    "min_face": 10.122,
+    "vol_cm3": 45.985,
+    "caras": 48,
+    "bbox": [
+     33.5,
+     77.5,
+     -32.0,
+     32.0,
+     -66.0,
+     -2.0
+    ]
+   },
+   "cap_tapa_M5": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 0.6,
+    "min_face": 26.389,
+    "vol_cm3": 24.166,
+    "caras": 29,
+    "bbox": [
+     0.5,
+     33.5,
+     -32.0,
+     32.0,
+     -66.0,
+     -2.0
+    ]
+   },
+   "cap_bisel_M6": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 2.5,
+    "min_face": 219.911,
+    "vol_cm3": 1.924,
+    "caras": 4,
+    "bbox": [
+     77.5,
+     80.0,
+     -21.0,
+     21.0,
+     -55.0,
+     -13.0
+    ]
+   },
+   "cap_ventana_M7": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 3.0,
+    "min_face": 282.743,
+    "vol_cm3": 2.121,
+    "caras": 3,
+    "bbox": [
+     74.3,
+     77.3,
+     -15.0,
+     15.0,
+     -49.0,
+     -19.0
+    ]
+   },
+   "pasador_M4_acero": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 9.2,
+    "min_face": 12.566,
+    "vol_cm3": 0.231,
+    "caras": 4,
+    "bbox": [
+     10.5,
+     14.5,
+     -9.2,
+     9.2,
+     -36.0,
+     -32.0
+    ]
+   }
+  }
+ },
+ "gancho": {
+  "xk": -30.0,
+  "fx0": -47.0,
+  "fx1": 3.0,
+  "z_top_jaw": -23.8
+ },
+ "caja_outer": [
+  139.64101615137756,
+  106.0,
+  50.0
+ ],
+ "caja_screws": 10
+}
