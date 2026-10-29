@@ -91,6 +91,13 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `peine.texto_alto` | nuevo | 4.5 | engraved text height | estimado | por_verificar |
 | `peine.texto_prof` | nuevo | 0.6 | engraved text depth | estimado | por_verificar |
 | `peine.pin_L` | nuevo | 8 | comb pin length | estimado | por_verificar |
+| `gancho.brida` | nuevo | 50 × 6 | Largo (a lo largo del riel) x espesor de la placa que apoya bajo el riel; el M4 de la perilla va en un extremo, fuera del alma, para que la perilla quede al alcance | estimado | por_verificar |
+| `gancho.caida` | nuevo | 40 | Fondo del riel al centro de la varilla del aro; medir con el aro real | estimado | por_verificar |
+| `carro.largo` | 40 | 60 | M10 a lo largo del riel: perilla atras (cilindro libre de 34) + 25 de quilla abulonada adelante | estimado | por_verificar |
+| `carro.pared` | nuevo | 4 | Manga en U invertida que abraza el tramo; la perilla aprieta en la T | estimado | por_verificar |
+| `riel.salida_cable` | nuevo | 8 × 20 × 10 | Ranura lateral de salida del Cat5e en cada extension: alto x largo x distancia a la punta exterior (prompt: sale junto al carro con bucle de 40) | estimado | por_verificar |
+| `camara.lente_D` | nuevo | 16 | Porta-lente de la Arducam Mega; medir | estimado | por_verificar |
+| `aro_led.separador` | nuevo | 1.2 × 3 | Tubo opaco entre LED y lente: pared x alto sobre el aro. Con 1.5 el tubo (r 9.7) chocaba con el agujero supuesto del anillo LED (r 9.5); el p1 de 1.19 es teselado sobre una pared de 1.2 exacta | estimado | por_verificar |
 | `esp32.base` | nuevo | sin_base | Por defecto sin KIT A; 'kit_a' es la alternativa | equipo | confirmado |
 | `caja.pared` | 5 | 4 | A 1 m la presion no manda (0.0101 MPa) | equipo | confirmado |
 | `caja.fondo` | 6 | 4 | Igual que la pared | equipo | confirmado |
@@ -152,10 +159,11 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `lastre.bolsillo_largo` | nuevo | 140 | Igual al tramo central | estimado | por_verificar |
 | `lastre.bolsillos_caja` | True | False | Reemplazados por la pletina de inox bajo el tramo central (revision 28/10) | equipo | confirmado |
 | `lastre.pletina` | nuevo | 25 × 5 | Pletina de inox comercial (ancho x espesor); se apilan. Medir la comprada | estimado | por_verificar |
-| `lastre.pletina_largo` | nuevo | 130 | Largo de cada trozo; cabe bajo la brida de 140 | estimado | por_verificar |
+| `lastre.pletina_largo` | 130 | 100 | Largo de cada trozo: el bolsillo (|x| <= 53.5) deja libre la zona de la union (|x| > 55) para que la extension entre de costado | estimado | por_verificar |
 | `lastre.pletina_lados` | nuevo | 2 | Una pila a cada lado de la camara, simetricas | estimado | por_verificar |
 | `lastre.bolsillo_pletina_pared` | nuevo | 3 | Pared y tapa del bolsillo de la pletina | estimado | por_verificar |
 | `lastre.holgura_pletina` | nuevo | 0.5 | Holgura de la pletina en su bolsillo | estimado | por_verificar |
+| `lastre.bolsillo_capacidad` | nuevo | 4 | Pletinas por lado que entran en cada bolsillo (fase_a.py verifica que alcance en todos los aros) | estimado | por_verificar |
 | `lastre.pletina_nivel` | nuevo | abajo | 'abajo': bolsillos pegados a los costados de la camara, al nivel del fondo del riel (baja el centro de masa); 'brida': colgados de la brida, justo bajo la caja | estimado | por_verificar |
 | `lastre.bolsillo_pletina_y` | nuevo | 24.5 | Cara interior del bolsillo: deja libre la cabeza del M4 de la caja (y 20 + 3.5 + 1) | estimado | por_verificar |
 | `camara.envolvente` | 33 × 33 × 25 × 20 | 33 × 33 × 17 × 20 | Arducam Mega 5MP AF, 33 x 33 x 17 | fabricante | confirmado |
@@ -166,8 +174,8 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `capsula.pared` | 4 | 4 |  | equipo | confirmado |
 | `bisagra.dientes` | 36 | 36 | Bisagra dentada M4 se conserva | equipo | confirmado |
 | `bisagra.inclinacion` | 40 | 40 | Multiplo de 10 | estimado | por_verificar |
-| `masa.capsula_set` | nuevo | 104 | M4+M5+M6 (100 %) + ventana, de cad/reporte_verificacion.md (P4 rev. B vieja) | estimado | por_verificar |
-| `volumen.capsula_set` | nuevo | 154 | PETG 79.5 + aire 72 + ventana 2.1 cm3 por capsula (P4 rev. B vieja) | estimado | por_verificar |
+| `masa.capsula_set` | 104 | 93.1 | M4+M5 al 100 % + M6 + ventana, de capsula.py (Fase C, cavidad 38 x 38 x 38) | estimado | por_verificar |
+| `volumen.capsula_set` | 154 | 127.8 | PETG 71.5 + aire 54.2 + ventana 2.1 cm3 por capsula, de capsula.py (Fase C) | estimado | por_verificar |
 | `masa.capsula_contenido` | nuevo | 35 | Camara 20 + LED + cable + PG7 | estimado | por_verificar |
 | `masa.otras_piezas` | nuevo | 200 | Ganchos, carros, perillas, casquillos, pestillos, tornilleria del riel (sin modelar) | estimado | por_verificar |
 | `cable.cat5e_D` | nuevo | 5.5 | Cat5e de exterior, entra en PG7 | estimado | por_verificar |
@@ -183,6 +191,43 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `boya.panel_elevacion` | nuevo | 20 × 30 |  | equipo | confirmado |
 | `boya.francobordo_min` | nuevo | 50 |  | equipo | confirmado |
 | `umbilical` | nuevo | 6 × 3000 | Ø x largo; medir el cable real | estimado | por_verificar |
+| `capsula.frente` | 6 | 6 | Pared frontal (ventana + hombro de 2.8) | estimado | por_verificar |
+| `capsula.brida_ancho` | 9 | 9 | Brida alrededor de la apertura trasera | estimado | por_verificar |
+| `capsula.brida_espesor` | 6 | 6 |  | estimado | por_verificar |
+| `capsula.tapa` | 5 | 5 | Espesor de la tapa M5 | estimado | por_verificar |
+| `capsula.pg7_x` | 10 | 10 | Centro del PG7 desde la apertura trasera (pared inferior) | estimado | por_verificar |
+| `capsula.holgura_lateral` | 2.5 | 2.5 | Camara 33 + 2 x 2.5 por lado = cavidad 38 | estimado | por_verificar |
+| `capsula.zona_trasera` | 23 | 23 | Detras de la placa: curva del cable + contratuerca PG7 (50 - 25 - 2 de la P4 rev. B) | estimado | por_verificar |
+| `capsula.holgura_lente` | 1 | 0.5 | Punta del lente a la cara trasera de la ventana | estimado | por_verificar |
+| `ventana.asiento` | 3.2 | 3.2 | Rebaje desde fuera; el agua empuja el disco al hombro | estimado | por_verificar |
+| `ventana.apertura` | 22 | 26 | Apertura libre tras la ventana: deja pasar el anillo LED (Ø30) con 2.2 de hombro para el acrilico | estimado | por_verificar |
+| `aro_led.agujero` | nuevo | 19 | Ø interior supuesto del anillo LED; medir el comprado | estimado | por_verificar |
+| `aro_led.radios` | nuevo | 3 × 2 | Radios (cantidad, ancho) que sujetan el tubo separador al frente; tapan algo de luz del LED | estimado | por_verificar |
+| `bisel.diametro` | 42 | 42 |  | estimado | por_verificar |
+| `bisel.espesor` | 2.5 | 2.5 |  | estimado | por_verificar |
+| `bisel.tornillos` | 3 | 3 | M2 autorroscante en la pared frontal | estimado | por_verificar |
+| `m2.piloto` | 1.8 | 1.8 |  | estimado | por_verificar |
+| `bisagra.disco_D` | 24 | 24 | CONTEXTO_SESION_CHAT s4 | equipo | confirmado |
+| `bisagra.diente_alto` | 1.2 | 1.2 | CONTEXTO_SESION_CHAT s4 | equipo | confirmado |
+| `bisagra.anillo_dientes_rin` | 7 | 7 | Anillo 7-12; el M4 de 4.2 queda libre | estimado | por_verificar |
+| `bisagra.oreja` | 5 | 5 | CONTEXTO_SESION_CHAT s4: orejas de 5 | equipo | confirmado |
+| `bisagra.hueco` | 8.4 | 8.4 | CONTEXTO_SESION_CHAT s4 | equipo | confirmado |
+| `bisagra.lengua_largo` | 16 | 16 | Eje a cara exterior de la tapa (fuera del sello) | estimado | por_verificar |
+| `carro.oreja_alto` | 25 | 25 | Alto de las orejas de la horquilla del M10 | estimado | por_verificar |
+| `carro.oreja_alcance` | nuevo | 36 | Placa de tope a eje: la tapa (semiancho 32) a 90 grados queda 4 mm detras de la placa | estimado | por_verificar |
+| `carro.placa_tope` | nuevo | 4 | Placa que cierra la manga en el extremo exterior y lleva las orejas | estimado | por_verificar |
+| `carro.labio_borde` | nuevo | 6 | |y| del borde interior de los labios: deja libre la abertura de la ranura T (2.3) y el perno | estimado | por_verificar |
+| `carro.modo` | tope | deslizante | deslizante: manga abierta en los dos extremos, perilla abajo en la T, bisagra bajo el riel (+-50). tope: version del agente con placa de tope sobre el eje del riel (solo a ras de la punta) | estimado | por_verificar |
+| `carro.eje_holgura` | nuevo | 2 | Aire entre la cara superior de la capsula a 0 grados y el fondo del riel; fija la caida del eje | estimado | por_verificar |
+| `carro.quilla_holgura` | nuevo | 1 | Aire radial entre el disco de la lengua y la quilla | estimado | por_verificar |
+| `carro.rendija_holgura` | nuevo | 1 | Margen por lado de la rendija lateral de la manga sobre el alto de la ranura de salida del cable | estimado | por_verificar |
+| `carro.posiciones` | nuevo | 5 | Posiciones del barrido de 0 a 2 x recorrido desde la punta del riel | estimado | por_verificar |
+| `perilla.cilindro_libre_extra` | nuevo | 4 | Cilindro libre bajo la perilla = KNOB_D + esto (guante) | estimado | por_verificar |
+| `perilla.aire_alma` | nuevo | 1 | Aire entre el cilindro libre y el alma o la quilla | estimado | por_verificar |
+| `perilla.aire_brida` | nuevo | 0.5 | Aire entre la cara donde sale el perno y la perilla | estimado | por_verificar |
+| `casquillo.margen_punta` | nuevo | 0.3 | Puntas de la C recortadas a MIN_WALL + esto; tambien el buje del pivote del pestillo | estimado | por_verificar |
+| `gancho.solape_alma` | nuevo | 0.5 | El alma entra en la brida para que la union sea un solido | estimado | por_verificar |
+| `riel.paso_deslizamiento` | nuevo | 10 | Paso del barrido del macho deslizando de costado (verificacion) | estimado | por_verificar |
 
 ## 2. 1 piso contra 2 pisos (holgura de contratuerca 5 mm, relleno de bandeja 40 %)
 
@@ -194,7 +239,7 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | **Aire sellado cm³** | **484** | **485** |
 | Desplaza la caja (cuerpo cerrado + tapa) cm³ | 935 | 912 |
 | Empuje de la caja g | 958 | 935 |
-| Caja en aire g (M1+M2 al 100 %, bandejas 40 %, electrónica) | 573 | 541 |
+| Caja en aire g (M1+M2 al 100 %, bandejas 40 %, electrónica) | 572 | 541 |
 | Peso aparente de la caja sola g (+ hunde) | -385 | -394 |
 | Pletinas por lado (Ø100 / Ø500) | 3 / 3 | 3 / 3 |
 | Bandejas | M11_bandeja: 127.6 × 94 | M11_bandeja: 104 × 70 |
@@ -240,7 +285,7 @@ Prensaestopas del fondo en x = ±11.16, y = 0. Agujero de la bandeja sobre cada 
 
 | Pieza | BRepCheck | BOPAlgo | Sólidos | Arista mín | Cara mín | Resultado |
 |---|---|---|---|---|---|---|
-| M1_caja_cuerpo (preliminar) | ok | ok | 1 | 4.00 | 5.37 | ok |
+| M1_caja_cuerpo (preliminar) | ok | ok | 1 | 4.00 | 12.57 | ok |
 | M2_caja_tapa (preliminar) | ok | ok | 1 | 1.50 | 8.25 | ok |
 | M11_bandeja | ok | ok | 1 | 3.00 | 9.42 | ok |
 | tapa_bolsillo_n (referencia) | ok | ok | 1 | 3.00 | 87.03 | ok |
@@ -266,27 +311,27 @@ M1, M2, M4, M5 y los tramos del riel al 100 % con 5 perímetros. Bandeja y pieza
 |---|---|
 | Aire sellado (cavidad − bandejas − módulos − contratuercas) | 484 cm³ |
 | Volumen desplazado por la caja | 935 cm³ → empuje 958 g |
-| Cámara + tapas de bolsillo (100 %) | 198 cm³, 251 g |
+| Cámara + tapas de bolsillo (100 %) | 184 cm³, 234 g |
 | Electrónica + 3 PG7 + tornillería + cables (estimado) | 94 g |
-| Pletina de inox 25 × 5 × 130 | 128 g cada una, hunde 112 g; se ponen de a 2 (una por lado) |
+| Pletina de inox 25 × 5 × 100 | 99 g cada una, hunde 86 g; se ponen de a 2 (una por lado) |
 | Bolsillos (uno por lado, fuera del sello, pegados a la cámara al nivel del fondo del riel) | 3 pletinas por lado, 15.5 de hondo |
 
 **Nodo completo** (extensiones por sección al 100 %, cápsulas P4 rev. B viejas, 200 g de ganchos/carros/perillas sin modelar). Objetivo: 0.2 a 0.5 kgf hacia abajo:
 
 | Relleno bandeja | Aro | Riel mm | Nodo sin lastre g | Desplaza cm³ | Peso aparente sin lastre g | Acero para la ventana g | Pletinas por lado | Peso aparente final g | Total en aire g |
 |---|---|---|---|---|---|---|---|---|---|
-| 40 % | Ø100 | 140 | 1302 | 1598 | -336 | 616 a 961 | 3 | +334 | 2072 |
-| 40 % | Ø200 | 340 | 1407 | 1681 | -316 | 593 a 937 | 3 | +355 | 2178 |
-| 40 % | Ø300 | 340 | 1407 | 1681 | -316 | 593 a 937 | 3 | +355 | 2178 |
-| 40 % | Ø500 | 540 | 1513 | 1764 | -295 | 569 a 914 | 3 | +375 | 2283 |
-| 100 % | Ø100 | 140 | 1306 | 1598 | -332 | 611 a 956 | 3 | +338 | 2076 |
-| 100 % | Ø200 | 340 | 1411 | 1681 | -312 | 588 a 933 | 3 | +359 | 2182 |
-| 100 % | Ø300 | 340 | 1411 | 1681 | -312 | 588 a 933 | 3 | +359 | 2182 |
-| 100 % | Ø500 | 540 | 1517 | 1764 | -291 | 565 a 909 | 3 | +379 | 2287 |
+| 40 % | Ø100 | 140 | 1263 | 1532 | -308 | 583 a 928 | 3 | +208 | 1855 |
+| 40 % | Ø200 | 340 | 1368 | 1615 | -287 | 560 a 904 | 3 | +228 | 1961 |
+| 40 % | Ø300 | 340 | 1368 | 1615 | -287 | 560 a 904 | 3 | +228 | 1961 |
+| 40 % | Ø500 | 540 | 1474 | 1698 | -267 | 536 a 881 | 3 | +249 | 2067 |
+| 100 % | Ø100 | 140 | 1267 | 1532 | -304 | 579 a 923 | 3 | +212 | 1859 |
+| 100 % | Ø200 | 340 | 1372 | 1615 | -283 | 555 a 900 | 3 | +232 | 1965 |
+| 100 % | Ø300 | 340 | 1372 | 1615 | -283 | 555 a 900 | 3 | +232 | 1965 |
+| 100 % | Ø500 | 540 | 1478 | 1698 | -263 | 532 a 876 | 3 | +253 | 2071 |
 
 Estabilidad del nodo completo (aproximada; bandeja al 40 %, cápsulas y extensiones a la altura del riel):
 
-- Ø100: centro de masa z = -8.9, centro de empuje z = -0.7 → el de masa queda 8.2 mm debajo: no se voltea.
-- Ø500: centro de masa z = -13.6, centro de empuje z = -4.4 → el de masa queda 9.1 mm debajo: no se voltea.
+- Ø100: centro de masa z = -7.2, centro de empuje z = 1.7 → el de masa queda 8.9 mm debajo: no se voltea.
+- Ø500: centro de masa z = -12.2, centro de empuje z = -2.4 → el de masa queda 9.8 mm debajo: no se voltea.
 
 El cálculo completo (momentos, metacentro) es la Fase E.

@@ -166,6 +166,22 @@ COMB_TEXT_H = p("peine.texto_alto", 4.5, EST, VER, "engraved text height")
 COMB_TEXT_DEPTH = p("peine.texto_prof", 0.6, EST, VER, "engraved text depth")
 PIN_L = p("peine.pin_L", 8.0, EST, VER, "comb pin length")
 
+# ---------------------------------------------------------------- piezas de la Fase C (formas propuestas, por verificar)
+HOOK_FLANGE = p("gancho.brida", (50.0, 6.0), EST, VER,
+                "Largo (a lo largo del riel) x espesor de la placa que apoya bajo el riel; el M4 de la perilla "
+                "va en un extremo, fuera del alma, para que la perilla quede al alcance")
+HOOK_DROP = p("gancho.caida", 40.0, EST, VER, "Fondo del riel al centro de la varilla del aro; medir con el aro real")
+CARRIAGE_L = p("carro.largo", 60.0, EST, VER,
+                "M10 a lo largo del riel: perilla atras (cilindro libre de 34) + 25 de quilla abulonada adelante", 40.0)
+CARRIAGE_WALL = p("carro.pared", 4.0, EST, VER, "Manga en U invertida que abraza el tramo; la perilla aprieta en la T")
+RAIL_EXIT_SLOT = p("riel.salida_cable", (8.0, 20.0, 10.0), EST, VER,
+                   "Ranura lateral de salida del Cat5e en cada extension: alto x largo x distancia a la punta "
+                   "exterior (prompt: sale junto al carro con bucle de 40)")
+LENS_D = p("camara.lente_D", 16.0, EST, VER, "Porta-lente de la Arducam Mega; medir")
+LED_SEPARATOR = p("aro_led.separador", (1.2, 3.0), EST, VER,
+                  "Tubo opaco entre LED y lente: pared x alto sobre el aro. Con 1.5 el tubo (r 9.7) chocaba con el "
+                  "agujero supuesto del anillo LED (r 9.5); el p1 de 1.19 es teselado sobre una pared de 1.2 exacta")
+
 # ---------------------------------------------------------------- caja central (M1, M2)
 ESP32_BASE = p("esp32.base", "sin_base", "equipo", OK, "Por defecto sin KIT A; 'kit_a' es la alternativa")
 BOX_WALL = p("caja.pared", 4.0, "equipo", OK, "A 1 m la presion no manda (0.0101 MPa)", 5.0)
@@ -267,10 +283,14 @@ POCKET_IN_BOX = p("lastre.bolsillos_caja", False, "equipo", OK,
                   "Reemplazados por la pletina de inox bajo el tramo central (revision 28/10)", True)
 PLATE_BAR = p("lastre.pletina", (25.0, 5.0), EST, VER,
               "Pletina de inox comercial (ancho x espesor); se apilan. Medir la comprada")
-PLATE_L = p("lastre.pletina_largo", 130.0, EST, VER, "Largo de cada trozo; cabe bajo la brida de 140")
+PLATE_L = p("lastre.pletina_largo", 100.0, EST, VER,
+            "Largo de cada trozo: el bolsillo (|x| <= 53.5) deja libre la zona de la union (|x| > 55) para que la "
+            "extension entre de costado", 130.0)
 PLATE_SIDES = p("lastre.pletina_lados", 2, EST, VER, "Una pila a cada lado de la camara, simetricas")
 PLATE_POCKET_WALL = p("lastre.bolsillo_pletina_pared", 3.0, EST, VER, "Pared y tapa del bolsillo de la pletina")
 PLATE_CLR = p("lastre.holgura_pletina", 0.5, EST, VER, "Holgura de la pletina en su bolsillo")
+PLATE_POCKET_LAYERS = p("lastre.bolsillo_capacidad", 4, EST, VER,
+                        "Pletinas por lado que entran en cada bolsillo (fase_a.py verifica que alcance en todos los aros)")
 PLATE_LEVEL = p("lastre.pletina_nivel", "abajo", EST, VER,
                 "'abajo': bolsillos pegados a los costados de la camara, al nivel del fondo del riel (baja el "
                 "centro de masa); 'brida': colgados de la brida, justo bajo la caja")
@@ -287,10 +307,10 @@ WIN_T = p("ventana.espesor", 3.0, EST, VER, "", 3.0)
 CAP_WALL = p("capsula.pared", 4.0, "equipo", OK, "", 4.0)
 HINGE_TEETH = p("bisagra.dientes", 36, "equipo", OK, "Bisagra dentada M4 se conserva", 36)
 CAM_TILT_DEG = p("bisagra.inclinacion", 40.0, EST, VER, "Multiplo de 10", 40.0)
-CAPSULE_SET_G = p("masa.capsula_set", 104.0, EST, VER,
-                  "M4+M5+M6 (100 %) + ventana, de cad/reporte_verificacion.md (P4 rev. B vieja)")
-CAPSULE_SET_DISP_CM3 = p("volumen.capsula_set", 154.0, EST, VER,
-                         "PETG 79.5 + aire 72 + ventana 2.1 cm3 por capsula (P4 rev. B vieja)")
+CAPSULE_SET_G = p("masa.capsula_set", 93.1, EST, VER,
+                  "M4+M5 al 100 % + M6 + ventana, de capsula.py (Fase C, cavidad 38 x 38 x 38)", 104.0)
+CAPSULE_SET_DISP_CM3 = p("volumen.capsula_set", 127.8, EST, VER,
+                         "PETG 71.5 + aire 54.2 + ventana 2.1 cm3 por capsula, de capsula.py (Fase C)", 154.0)
 CAPSULE_CONTENT_G = p("masa.capsula_contenido", 35.0, EST, VER, "Camara 20 + LED + cable + PG7")
 OTHER_NODE_G = p("masa.otras_piezas", 200.0, EST, VER,
                  "Ganchos, carros, perillas, casquillos, pestillos, tornilleria del riel (sin modelar)")
@@ -319,3 +339,55 @@ UMBILICAL = p("umbilical", (6.0, 3000.0), EST, VER, "Ø x largo; medir el cable 
 def nut_corner_r():
     """Locknut circumradius from the across-flats size."""
     return PG7_NUT_AF / math.sqrt(3)
+
+
+# capsula y carro (Fase C)
+CAP_FRONT = p("capsula.frente", 6.0, EST, VER, "Pared frontal (ventana + hombro de 2.8)", 6.0)
+CAP_FLANGE = p("capsula.brida_ancho", 9.0, EST, VER, "Brida alrededor de la apertura trasera", 9.0)
+CAP_FLANGE_T = p("capsula.brida_espesor", 6.0, EST, VER, "", 6.0)
+CAP_LID_T = p("capsula.tapa", 5.0, EST, VER, "Espesor de la tapa M5", 5.0)
+CAP_GLAND_X = p("capsula.pg7_x", 10.0, EST, VER, "Centro del PG7 desde la apertura trasera (pared inferior)", 10.0)
+CAP_SIDE_GAP = p("capsula.holgura_lateral", 2.5, EST, VER, "Camara 33 + 2 x 2.5 por lado = cavidad 38", 2.5)
+CAP_REAR_ZONE = p("capsula.zona_trasera", 23.0, EST, VER,
+                  "Detras de la placa: curva del cable + contratuerca PG7 (50 - 25 - 2 de la P4 rev. B)", 23.0)
+CAP_LENS_GAP = p("capsula.holgura_lente", 0.5, EST, VER, "Punta del lente a la cara trasera de la ventana", 1.0)
+WIN_SEAT_DEPTH = p("ventana.asiento", 3.2, EST, VER, "Rebaje desde fuera; el agua empuja el disco al hombro", 3.2)
+LENS_APERTURE = p("ventana.apertura", 26.0, EST, VER,
+                  "Apertura libre tras la ventana: deja pasar el anillo LED (Ø30) con 2.2 de hombro para el acrilico", 22.0)
+LED_RING_HOLE = p("aro_led.agujero", 19.0, EST, VER, "Ø interior supuesto del anillo LED; medir el comprado")
+LED_SPOKES = p("aro_led.radios", (3, 2.0), EST, VER,
+               "Radios (cantidad, ancho) que sujetan el tubo separador al frente; tapan algo de luz del LED")
+BEZEL_OD = p("bisel.diametro", 42.0, EST, VER, "", 42.0)
+BEZEL_T = p("bisel.espesor", 2.5, EST, VER, "", 2.5)
+BEZEL_SCREWS = p("bisel.tornillos", 3, EST, VER, "M2 autorroscante en la pared frontal", 3)
+M2_PILOT = p("m2.piloto", 1.8, EST, VER, "", 1.8)
+HINGE_DISC_D = p("bisagra.disco_D", 24.0, "equipo", OK, "CONTEXTO_SESION_CHAT s4", 24.0)
+HINGE_TOOTH_H = p("bisagra.diente_alto", 1.2, "equipo", OK, "CONTEXTO_SESION_CHAT s4", 1.2)
+HINGE_TEETH_RIN = p("bisagra.anillo_dientes_rin", 7.0, EST, VER, "Anillo 7-12; el M4 de 4.2 queda libre", 7.0)
+HINGE_EAR_T = p("bisagra.oreja", 5.0, "equipo", OK, "CONTEXTO_SESION_CHAT s4: orejas de 5", 5.0)
+HINGE_GAP = p("bisagra.hueco", 8.4, "equipo", OK, "CONTEXTO_SESION_CHAT s4", 8.4)
+TONGUE_LEN = p("bisagra.lengua_largo", 16.0, EST, VER, "Eje a cara exterior de la tapa (fuera del sello)", 16.0)
+CARRIAGE_EAR_H = p("carro.oreja_alto", 25.0, EST, VER, "Alto de las orejas de la horquilla del M10", 25.0)
+CARRIAGE_EAR_REACH = p("carro.oreja_alcance", 36.0, EST, VER,
+                       "Placa de tope a eje: la tapa (semiancho 32) a 90 grados queda 4 mm detras de la placa")
+CARRIAGE_END_T = p("carro.placa_tope", 4.0, EST, VER, "Placa que cierra la manga en el extremo exterior y lleva las orejas")
+CARRIAGE_LIP_EDGE = p("carro.labio_borde", 6.0, EST, VER,
+                      "|y| del borde interior de los labios: deja libre la abertura de la ranura T (2.3) y el perno")
+CARRIAGE_MODE = p("carro.modo", "deslizante", EST, VER,
+                  "deslizante: manga abierta en los dos extremos, perilla abajo en la T, bisagra bajo el riel (+-50). "
+                  "tope: version del agente con placa de tope sobre el eje del riel (solo a ras de la punta)", "tope")
+CARRIAGE_AXIS_CLR = p("carro.eje_holgura", 2.0, EST, VER,
+                      "Aire entre la cara superior de la capsula a 0 grados y el fondo del riel; fija la caida del eje")
+CARRIAGE_KEEL_CLR = p("carro.quilla_holgura", 1.0, EST, VER, "Aire radial entre el disco de la lengua y la quilla")
+CARRIAGE_SLIT_CLR = p("carro.rendija_holgura", 1.0, EST, VER,
+                      "Margen por lado de la rendija lateral de la manga sobre el alto de la ranura de salida del cable")
+CARRIAGE_STEPS = p("carro.posiciones", 5, EST, VER, "Posiciones del barrido de 0 a 2 x recorrido desde la punta del riel")
+
+# gancho y riel (Fase C, antes constantes de modulo)
+KNOB_FREE_EXTRA = p("perilla.cilindro_libre_extra", 4.0, EST, VER, "Cilindro libre bajo la perilla = KNOB_D + esto (guante)")
+KNOB_WEB_GAP = p("perilla.aire_alma", 1.0, EST, VER, "Aire entre el cilindro libre y el alma o la quilla")
+KNOB_FLANGE_GAP = p("perilla.aire_brida", 0.5, EST, VER, "Aire entre la cara donde sale el perno y la perilla")
+BUSHING_TIP_MARGIN = p("casquillo.margen_punta", 0.3, EST, VER,
+                       "Puntas de la C recortadas a MIN_WALL + esto; tambien el buje del pivote del pestillo")
+WEB_OVERLAP = p("gancho.solape_alma", 0.5, EST, VER, "El alma entra en la brida para que la union sea un solido")
+XFER_STEP = p("riel.paso_deslizamiento", 10.0, EST, VER, "Paso del barrido del macho deslizando de costado (verificacion)")

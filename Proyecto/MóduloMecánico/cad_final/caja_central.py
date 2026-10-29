@@ -58,8 +58,11 @@ def box_body(lay):
     flange = (cq.Workplane("XY").workplane(offset=out_h - BOX_FLANGE_T)
               .rect(out_l + 2 * BOX_FLANGE, out_w + 2 * BOX_FLANGE).extrude(BOX_FLANGE_T).edges("|Z").fillet(6))
     z_sk = out_h - BOX_FLANGE_T
-    skirt = (cq.Workplane("XY").workplane(offset=z_sk - BOX_FLANGE).rect(out_l, out_w)
-             .workplane(offset=BOX_FLANGE).rect(out_l + 2 * BOX_FLANGE, out_w + 2 * BOX_FLANGE).loft())
+    # rounded like the body (r5) and the flange (r6): sharp loft corners left knife edges outside both fillets
+    s0 = cq.Sketch().rect(out_l, out_w).vertices().fillet(5)
+    s1 = cq.Sketch().rect(out_l + 2 * BOX_FLANGE, out_w + 2 * BOX_FLANGE).vertices().fillet(6)
+    skirt = (cq.Workplane("XY").workplane(offset=z_sk - BOX_FLANGE)
+             .placeSketch(s0, s1.moved(cq.Location(cq.Vector(0, 0, BOX_FLANGE)))).loft())
     body = body.union(flange).union(skirt).cut(cavity_tool(lay))
     # M3 heat-set inserts for the lid
     for (x, y) in screw_pts(lay):

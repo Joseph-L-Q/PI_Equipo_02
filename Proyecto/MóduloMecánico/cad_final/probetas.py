@@ -10,6 +10,7 @@ from pathlib import Path
 
 import cadquery as cq
 
+import gancho
 from checks import brep_check, export_part, mesh_checks, sanitize
 from params import (BOX_FLOOR, BOX_LID_T, BOX_WALL, BUSHING_DIAMETERS, BUSHING_FLANGE, BUSHING_PRESS,
                     BUSHING_ROD_CLR, COMB_CLEARANCES, COMB_PIN_D, FIT_CLEAR, GROOVE_DEPTH, GROOVE_WIDTH,
@@ -28,6 +29,7 @@ from params import (COUPON_L, JAW_WALL, JAW_LIP_H, STRAP_SLOT_T, STEM_H, LATCH_T
                     COMB_T, COMB_W, COMB_TEXT_H, COMB_TEXT_DEPTH, PIN_L)  # noqa: E402
 
 WARNINGS = []
+_jaw_dims = gancho.jaw_dims
 
 
 # ------------------------------------------------------------------ helpers
@@ -74,70 +76,14 @@ assert TS_W / 2 + RAIL_TSLOT_RIB < CON_HALF and TS_W / 2 < LAP_HALF, "T-slot cha
 
 
 # ------------------------------------------------------------------ PB1 hook seat + 4 bushings, PB4 latch
-def _jaw_dims():
-    R = JAW_BORE / 2
-    mouth = max(BUSHING_DIAMETERS) + BUSHING_ROD_CLR
-    x0 = -(R + JAW_WALL)
-    x_end = x0 + STRAP_W + 2 * JAW_WALL
-    z_top = mouth / 2 + JAW_LIP_H
-    z_strap1 = -(R + JAW_WALL)
-    z_strap0 = z_strap1 - STRAP_SLOT_T
-    z_bot = z_strap0 - JAW_WALL
-    xp = x_end - (0.6 + LATCH_RIDGE_W + 0.1 + LATCH_BUMP + LATCH_ARM_W / 2)
-    zp = mouth / 2 + JAW_LIP_H / 2
-    return dict(R=R, mouth=mouth, x0=x0, x_end=x_end, z_top=z_top, z_strap0=z_strap0, z_strap1=z_strap1,
-                z_bot=z_bot, xp=xp, zp=zp, slot_w=LATCH_T + 2 * FIT_CLEAR)
-
-
 def pb1():
-    d = _jaw_dims()
-    R, mouth, x0, xe = d["R"], d["mouth"], d["x0"], d["x_end"]
-    hw = HOOK_CONTACT_W / 2
-    assert JAW_BORE > max(BUSHING_DIAMETERS), "seat smaller than rod"
-    jaw = _box(x0, xe, -hw, hw, d["z_bot"], d["z_top"]).edges("|Y").fillet(HOOK_EDGE_R)
-    stem_w = R + JAW_WALL
-    jaw = jaw.union(_box(x0, x0 + stem_w, -hw, hw, d["z_top"] - HOOK_EDGE_R, d["z_top"] + STEM_H))
-    jaw = jaw.cut(_cyl_y(0, 0, JAW_BORE, -hw - 1, hw + 1))
-    jaw = jaw.cut(_box(0, xe + 1, -hw - 1, hw + 1, -mouth / 2, mouth / 2))
-    lip_x = math.sqrt(R * R - (mouth / 2) ** 2)
-    try:
-        jaw = jaw.edges(cq.selectors.BoxSelector((lip_x - 0.5, -1, -mouth / 2 - 0.5), (lip_x + 0.5, 1, mouth / 2 + 0.5))
-                        ).fillet(HOOK_EDGE_R)
-    except Exception as e:  # noqa: BLE001
-        WARNINGS.append(f"PB1: el redondeo R{HOOK_EDGE_R} del labio de la J fallo ({e}); queda en arista viva")
-    jaw = jaw.cut(_box(-STRAP_W / 2 + (x0 + xe) / 2, STRAP_W / 2 + (x0 + xe) / 2, -hw - 1, hw + 1,
-                       d["z_strap0"], d["z_strap1"]))
-    jaw = jaw.cut(_cyl_y(d["xp"], d["zp"], M3_CLEAR, -hw - 1, hw + 1))
-    jaw = jaw.cut(_box(d["xp"] - LATCH_SWING, xe + 1, -d["slot_w"] / 2, d["slot_w"] / 2, mouth / 2 - 0.5,
-                       d["z_top"] + 1))
-    jaw = jaw.cut(_cyl_z(x0 + stem_w / 2, 0, M4_CLEAR, R * 0.5, d["z_top"] + STEM_H + 1))
-    xr0 = d["xp"] + LATCH_ARM_W / 2 + LATCH_BUMP + 0.1
-    zl = -mouth / 2
-    ridge = _xz_prism([(xr0, zl - 0.01), (xr0 + 0.3, zl + LATCH_BUMP), (xr0 + LATCH_RIDGE_W - 0.3, zl + LATCH_BUMP),
-                       (xr0 + LATCH_RIDGE_W, zl - 0.01)], -hw, hw)
-    jaw = jaw.union(ridge)
-    out = {"PB1_garra": jaw}
-    od = JAW_BORE + BUSHING_PRESS
-    for dia in BUSHING_DIAMETERS:
-        idia = dia + BUSHING_ROD_CLR
-        b = _cyl_y(0, 0, od, -hw, hw).union(_cyl_y(0, 0, BUSHING_FLANGE[0], hw - 0.01, hw + BUSHING_FLANGE[1]))
-        b = b.cut(_cyl_y(0, 0, idia, -hw - 1, hw + BUSHING_FLANGE[1] + 1))
-        b = b.cut(_box(0, od, -hw - 1, hw + BUSHING_FLANGE[1] + 1, -idia / 2, idia / 2))
-        out[f"M13_casquillo_D{int(dia)}"] = b
+    out = {"PB1_garra": gancho.jaw_body(STEM_H, True, WARNINGS)}
+    out.update(gancho.bushings())
     return out
 
 
 def pb4():
-    d = _jaw_dims()
-    tip = -(d["zp"] + d["mouth"] / 2 - LATCH_TIP_GAP)
-    aw = LATCH_ARM_W / 2
-    zn = d["z_top"] + 1 - d["zp"]
-    tab_l, tab_w = LATCH_TAB
-    pts = [(-aw, tip), (aw + LATCH_BUMP, tip), (aw + LATCH_BUMP, tip + 0.7), (aw, tip + 1.3), (aw, zn),
-           (tab_w / 2, zn), (tab_w / 2, tab_l), (-tab_w / 2, tab_l), (-tab_w / 2, zn), (-aw, zn)]
-    latch = _xz_prism(pts, -LATCH_T / 2, LATCH_T / 2)
-    latch = latch.cut(_cyl_y(0, 0, LATCH_PIVOT + 0.4, -LATCH_T, LATCH_T))   # M3 + 0.4 pivot clearance
-    return {"M14_pestillo": latch}
+    return {"M14_pestillo": gancho.latch()}
 
 
 # ------------------------------------------------------------------ PB2 T-slot with M4 nut
@@ -212,16 +158,7 @@ def pb3_assembled(m, f):
 
 # ------------------------------------------------------------------ PB5 knob
 def pb5():
-    r_base = KNOB_D / 2 - KNOB_LOBE_R
-    k = cq.Workplane("XY").circle(r_base).extrude(KNOB_H)
-    for i in range(KNOB_LOBES):
-        a = 2 * math.pi * i / KNOB_LOBES
-        k = k.union(_cyl_z(r_base * math.cos(a), r_base * math.sin(a), 2 * KNOB_LOBE_R, 0, KNOB_H))
-    pocket_h = M4_HEX_HEAD[1] + HOLE_COMP
-    z_top = KNOB_H - KNOB_CAP
-    k = k.cut(_hex(0, 0, M4_HEX_HEAD[0] + HOLE_COMP, z_top - pocket_h, pocket_h))
-    k = k.cut(_cyl_z(0, 0, M4_CLEAR, -1, z_top - pocket_h + 0.1))
-    return {"M12_perilla": k}
+    return {"M12_perilla": gancho.knob()}
 
 
 # ------------------------------------------------------------------ PB6 seal coupon

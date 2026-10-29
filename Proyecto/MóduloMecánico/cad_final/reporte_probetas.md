@@ -5,14 +5,14 @@ Generado por `cad_final/probetas.py`. STL en `../salida/probetas/`; render `prob
 | pieza | STL | BRep/BOP | estanco | volumen cm3 | bbox en orientacion (mm) | voladizo mm2 | que medir/probar |
 |---|---|---|---|---|---|---|---|
 | PB1_garra | PB1_garra.stl | ok | si | 10.49 | 33.0 x 55.2 x 12.0 (X 90) | 185 | Orientacion: eje del asiento vertical (X 90). Medir con dinamometro de equipaje la fuerza de entrada y salida de cada varilla real por casquillo; probar la correa en la ranura 25 x 3; comprobar que el casquillo entra a presion en el asiento de 16. |
-| M13_casquillo_D6 | M13_casquillo_D6.stl | ok | si | 2.01 | 19.5 x 20.0 x 13.5 (X -90) | 0 | Fuerza de entrada/salida de la varilla D6 (dinamometro); apriete del ajuste a presion en el asiento. |
-| M13_casquillo_D8 | M13_casquillo_D8.stl | ok | si | 1.66 | 19.1 x 20.0 x 13.5 (X -90) | 0 | Fuerza de entrada/salida de la varilla D8 (dinamometro); apriete del ajuste a presion en el asiento. |
-| M13_casquillo_D10 | M13_casquillo_D10.stl | ok | si | 1.27 | 18.5 x 20.0 x 13.5 (X -90) | 0 | Fuerza de entrada/salida de la varilla D10 (dinamometro); apriete del ajuste a presion en el asiento. |
-| M13_casquillo_D12 | M13_casquillo_D12.stl | ok | si | 0.87 | 17.8 x 20.0 x 13.5 (X -90) | 0 | Fuerza de entrada/salida de la varilla D12 (dinamometro); apriete del ajuste a presion en el asiento. |
+| M13_casquillo_D6 | M13_casquillo_D6.stl | ok | si | 1.97 | 16.6 x 20.0 x 13.5 (X -90) | 0 | Fuerza de entrada/salida de la varilla D6 (dinamometro); apriete del ajuste a presion en el asiento. |
+| M13_casquillo_D8 | M13_casquillo_D8.stl | ok | si | 1.61 | 15.7 x 20.0 x 13.5 (X -90) | 0 | Fuerza de entrada/salida de la varilla D8 (dinamometro); apriete del ajuste a presion en el asiento. |
+| M13_casquillo_D10 | M13_casquillo_D10.stl | ok | si | 1.21 | 14.5 x 20.0 x 13.5 (X -90) | 0 | Fuerza de entrada/salida de la varilla D10 (dinamometro); apriete del ajuste a presion en el asiento. |
+| M13_casquillo_D12 | M13_casquillo_D12.stl | ok | si | 0.78 | 12.4 x 20.0 x 13.5 (X -90) | 0 | Fuerza de entrada/salida de la varilla D12 (dinamometro); apriete del ajuste a presion en el asiento. |
 | PB2_ranura_T | PB2_ranura_T.stl | ok | si | 16.48 | 40.0 x 30.0 x 30.0 (X 90) | 1328 | Que la tuerca M4 AF7 entre por la punta y deslice sin holgura excesiva; que el perno pase por la abertura de 4.6; fuerza de extraccion. Calibra RAIL_TSLOT (abertura, ancho, alto). |
 | PB3_macho | PB3_macho.stl | ok | si | 15.26 | 40.0 x 30.0 x 30.0 (X 90) | 1226 | Imprimir macho y hembra, deslizar la llave de costado (eje Y); holgura de la cola de milano; ajuste de los 2 M4 y de la tuerca en la bolsa; ranura T continua en el macho. |
 | PB3_hembra | PB3_hembra.stl | ok | si | 13.98 | 40.0 x 30.0 x 30.0 (X 90) | 1044 | Par del macho; revisar el avellanado de la cabeza M4 y la piel de la bolsa de tuerca. |
-| M14_pestillo | M14_pestillo.stl | ok | si | 0.91 | 12.0 x 35.2 x 3.6 (X 90) | 0 | Montar sobre PB1 con un M3: el resalte de 0.6 debe dar un clic sin trabarse ni soltarse solo; calibra LATCH_BUMP; probar con guante. |
+| M14_pestillo | M14_pestillo.stl | ok | si | 0.92 | 12.0 x 35.2 x 3.6 (X 90) | 0 | Montar sobre PB1 con un M3: el resalte de 0.6 debe dar un clic sin trabarse ni soltarse solo; calibra LATCH_BUMP; probar con guante. |
 | M12_perilla | M12_perilla.stl | ok | si | 6.71 | 30.0 x 30.0 x 12.0 (plano) | 45 | PAUSAR la impresion al llegar a la altura del bolsillo hexagonal, colocar la cabeza del perno M4, reanudar para cerrar la tapa de 1.2. Verificar torque con guante y que no gire la cabeza. |
 | PB6_base | PB6_base.stl | ok | si | 31.07 | 60.0 x 60.0 x 20.0 (plano) | 0 | Insertos termicos M3 en las 4 esquinas; prueba de estanqueidad con la tapa y el o-ring de 2 mm a 1 m. |
 | PB6_tapa | PB6_tapa.stl | ok | si | 17.04 | 60.0 x 60.0 x 5.0 (plano) | 511 | Ranura 2.6 x 1.5: comprobar compresion del o-ring (25 %) y que el cordon no se salga; sumergir. |

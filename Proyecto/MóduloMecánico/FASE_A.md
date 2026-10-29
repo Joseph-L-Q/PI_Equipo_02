@@ -95,7 +95,7 @@ Siguen estimados y sin medir: DevKitC-1, XY-017, HW-517, microSD, MPU-6050 (alto
 |---|---|
 | D1: 5 mm alrededor de cada contratuerca; se aprietan con la caja vacía | `holgura.contratuerca = 5`. Como se aprietan antes de meter la bandeja, la zona de la llave va solo del fondo a la cara de la bandeja. Arriba de la bandeja queda una columna libre de 15 mm para el cable que sube (radio 13.66), y la bandeja lleva un agujero de ese radio sobre cada contratuerca |
 | Comparar 1 y 2 pisos y quedarse con el de menor aire | **1 piso: 484 cm³; 2 pisos: 485 cm³.** Es un empate: 1 cm³ está por debajo de lo que el modelo puede distinguir. Gana 1 piso por la regla, y además es 30 mm más bajo, lleva una sola bandeja y baja el centro de masa. 2 pisos queda a un switch (`caja.pisos = 2`) |
-| C13: M1, M2, M4, M5 y tramos al 100 % con 5 perímetros; pletina de inox bajo el tramo central | `impresion.relleno_sellado = 1.0` y `impresion.perimetros_sellado = 5`. Pletina de inox de 25 × 5 × 130 (128 g): **3 por lado**, en dos bolsillos paramétricos fuera del sello. Se eliminan los bolsillos de la caja (D7): `lastre.bolsillos_caja = False` |
+| C13: M1, M2, M4, M5 y tramos al 100 % con 5 perímetros; pletina de inox bajo el tramo central | `impresion.relleno_sellado = 1.0` y `impresion.perimetros_sellado = 5`. Pletina de inox de 25 × 5 × 100 (99 g): **4 por lado** (3 en Ø500), en dos bolsillos paramétricos fuera del sello. Se eliminan los bolsillos de la caja (D7): `lastre.bolsillos_caja = False` |
 | C12: el tramo central como cámara de unos 50 mm con rampa al conducto de 22; R ≥ 25; PG7 normal con el domo en la cámara | `camara.py`. Alto interior **53.4** (derivado). El cable baja del domo, dobla 90° con R25 y queda sobre los nervios de la ranura T, ya a la altura del conducto. La rampa a 45° llega al conducto antes de la unión. Holgura mínima del cable al techo: 12.9 mm |
 
 ### 7.2 Números nuevos (1 piso, sin KIT A)
@@ -109,16 +109,16 @@ Siguen estimados y sin medir: DevKitC-1, XY-017, HW-517, microSD, MPU-6050 (alto
 | Desplaza la caja | 1400 cm³ (empuje 1435 g) | **935 cm³ (empuje 958 g)** |
 | Caja en aire | 594 a 770 g | **573 g** (M1 y M2 al 100 %) |
 | Peso aparente de la caja sola | −841 a −665 g | **−385 g** (flota) |
-| Peso aparente del nodo sin lastre | −609 a −917 g | **−336 g (Ø100) a −295 g (Ø500)** |
-| Lastre | 930 a 1630 g, no cabía | **6 pletinas (770 g), 3 por lado, en todos los aros** |
-| Peso aparente final | | **+334 g (Ø100) a +375 g (Ø500)**, dentro de 0.2 a 0.5 kgf |
-| Total en aire | 2.30 a 2.85 kg | **2.07 a 2.28 kg** (≤ 3) |
-| Estabilidad | | Centro de masa 8.2 mm (Ø100) y 9.1 mm (Ø500) bajo el de empuje: no se voltea, pero con poco margen |
+| Peso aparente del nodo sin lastre | −609 a −917 g | **−338 g (Ø100) a −297 g (Ø500)** |
+| Lastre | 930 a 1630 g, no cabía | **8 pletinas (790 g), 4 por lado, de Ø100 a Ø300; 6 (593 g) en Ø500** |
+| Peso aparente final | | **+349 g (Ø100), +370 g (Ø200 y Ø300), +218 g (Ø500)**, dentro de 0.2 a 0.5 kgf |
+| Total en aire | 2.30 a 2.85 kg | **2.08 a 2.19 kg** (≤ 3) |
+| Estabilidad | | Centro de masa 6.7 mm (Ø100) y 9.0 mm (Ø500) bajo el de empuje: no se voltea, pero con poco margen |
 | Con KIT A | no cabía (286.6) | Ahora **cabe**: 159.6 × 170 × 67 (1 piso) |
 
 El relleno de la bandeja (40 % o 100 %) cambia el total en solo 4 g. La incertidumbre que queda son las masas estimadas de la electrónica y de las piezas sin modelar (200 g).
 
-Cada pletina hunde 112 g. Como la ventana mide 300 g, siempre hay una cantidad de pletinas que cae adentro. Si el nodo real pesa distinto en el agua, se ajusta quitando o agregando un par.
+Cada pletina hunde 86 g y se ponen de a dos (172 g por par). Como la ventana mide 300 g, siempre hay una cantidad de pares que cae adentro. Si el nodo real pesa distinto en el agua, se ajusta quitando o agregando un par.
 
 ### 7.3 Decisiones nuevas tomadas sin consultarte
 
@@ -130,7 +130,7 @@ Cada pletina hunde 112 g. Como la ventana mide 300 g, siempre hay una cantidad d
 | D11 | Umbilical en la tapa, en (−53.2, 17.5) | Es el lugar libre más cercano al preferido, fuera de la franja del asa (\|y\| ≥ 17.5). Si no hubiera lugar, iría a la pared −X | Tapa en (−20, 16): ahí la contratuerca chocaba con la ESP32 | `caja.pg7_umbilical` = `tapa` / `pared` |
 | D12 | Cámara **abierta arriba** en \|x\| ≤ 27.6: el fondo de la caja hace de techo y los domos entran por ahí. Alto interior derivado de 53.4, no de 50 | Domo PG7 de 22 (estimado) + R25 + medio cable + nervio de la ranura T. Con 50 el cable no llega sobre los nervios | Alto fijo de 50 | `riel.camara_*`, `pg7.domo` |
 | D13 | Los 4 M4 de la caja al riel pasan a la **brida de la cámara**, en (±40, ±20). La cabeza queda fuera de la cámara y se aprietan desde abajo | Dentro de una cámara de 53 de alto la llave no llega | Insertos en (±51.5, ±6) | `caja.base_m4` |
-| D14 | Pletinas **a los costados de la cámara, al nivel del fondo del riel**, con la tapa atornillada al ras del fondo. No debajo del riel | La ranura T del fondo tiene que quedar libre en todo el tramo central, porque en Ø100 los ganchos van a ±50, dentro del tramo. Colgadas justo bajo la caja, el centro de masa quedaba 11 mm **sobre** el de empuje | Bajo el riel (tapa la ranura T); colgadas de la brida | `lastre.pletina_nivel` = `abajo` / `brida` |
+| D14 | Pletinas **a los costados de la cámara, al nivel del fondo del riel**, con la tapa atornillada al ras del fondo. No debajo del riel | La ranura T del fondo tiene que quedar libre en todo el tramo central, porque en Ø100 los ganchos van a ±50, dentro del tramo. Colgadas justo bajo la caja, el centro de masa quedaba 11 mm **sobre** el de empuje | Bajo el riel (tapa la ranura T); colgadas de la brida; pletinas de 130 (el bolsillo invadía la unión y la extensión no entraba de costado: ahora miden 100 y el bolsillo llega a \|x\| = 53.5) | `lastre.pletina_nivel` = `abajo` / `brida`; `lastre.pletina_largo` |
 | D15 | Unión de tramos (Fase B): media madera de 15, llave en cola de milano vista de lado (entra deslizando de costado) y 2 M4 verticales **dentro de las paredes**, que en la unión se engrosan a 10 | Los M4 no cruzan el conducto. Cada lado del riel lleva un solo Cat5e (5.5), así que un conducto de 10 en la unión alcanza | Tornillos que cruzan el conducto | `riel.union_*` |
 
 ### 7.4 Conflictos y pendientes
@@ -141,10 +141,12 @@ Cada pletina hunde 112 g. Como la ventana mide 300 g, siempre hay una cantidad d
 | C16 (nuevo) | El alto de la cámara sale del largo del domo del PG7 (22, **estimado**). Si el real mide 25, la cámara crece 3 mm | Medir el prensaestopas comprado antes de cerrar la Fase C |
 | C17 (nuevo) | El fondo del riel queda 57.4 mm bajo el fondo de la caja (antes 30). El nodo es más alto, pero la estabilidad mejora | Fase D: revisar ganchos y cuerdas con la nueva altura |
 | C15 (sigue) | En Ø100 las cuerdas suben desde el radio 50, dentro de la huella de la caja (cuerpo ±69.8 × ±53) y cerca de los bolsillos (\|y\| hasta 44) | Fase D |
-| Nota | El margen de estabilidad es de 8 a 9 mm | Fase E, con momentos y metacentro |
+| Nota | El margen de estabilidad es de 6.7 a 9 mm | Fase E, con momentos y metacentro |
 
 ### 7.5 Cierre de la revisión
 
-- **Qué cambió:** la caja se achicó a 159.6 × 126 × 55, con una sola bandeja, y el aire sellado bajó de 797 a 484 cm³. El tramo central es ahora una cámara de 53.4 de alto. El lastre son 6 pletinas de inox de 25 × 5 × 130. El nodo queda entre +334 y +375 g en el agua y entre 2.07 y 2.28 kg en el aire.
+> **Actualizado en la Fase C** con la cápsula real (93.1 g y 127.8 cm³ por unidad, antes 104 y 154): 3 pletinas por lado en todos los aros, peso aparente final de +208 (Ø100), +228 (Ø200 y Ø300) y +249 g (Ø500), total en aire de 1.86 a 2.07 kg, centro de masa 8.9 (Ø100) y 9.8 mm (Ø500) bajo el de empuje. Detalle en `FASE_C.md`.
+
+- **Qué cambió:** la caja se achicó a 159.6 × 126 × 55, con una sola bandeja, y el aire sellado bajó de 797 a 484 cm³. El tramo central es ahora una cámara de 53.4 de alto. El lastre son pletinas de inox de 25 × 5 × 100: 4 por lado (3 en Ø500). El nodo queda entre +218 y +370 g en el agua y entre 2.08 y 2.19 kg en el aire.
 - **Qué chequeos pasaron:** M1, M2, M11, la cámara y las tapas de los bolsillos pasan BRepCheck y BOPAlgo. El layout tiene 0 choques en 1 y en 2 pisos, y todas las interferencias dan 0 mm³. El recorrido del Cat5e con R25 cumple los 6 chequeos, y el centro de masa queda debajo del de empuje.
 - **Qué quedó pendiente:** medir el domo del PG7 (C16), la estabilidad completa (Fase E), las cuerdas en Ø100 (C15) y todas las medidas de la electrónica.
