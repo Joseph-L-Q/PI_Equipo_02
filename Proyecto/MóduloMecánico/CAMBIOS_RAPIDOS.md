@@ -3,6 +3,13 @@
 Todas las medidas viven en un solo archivo: `cad_final/params.py`. Nada se cambia en los STL, los STEP ni Onshape a
 mano: se cambia el número en `params.py` y se regenera.
 
+## Qué versión se regenera
+
+`version` en `params.py`: `"simple"` (por defecto, el prototipo en el aro Ø200: `cad_final/simple.py`, salida en
+`salida/simple/` y números en `cad_final/reporte_simple.md`) o `"modular"` (riel por tramos de Ø100 a Ø500). Con
+`simple`, `build.py --rapido` tarda menos de 1.5 min y no toca las piezas de la modular. En la simple se cambian sobre
+todo `capsula.angulo`, `aro.seccion`, `lastre.pletinas`, `separador.*`, `apice.altura` y `linterna.*`.
+
 ## Cómo cambiar una medida
 
 1. Abre `cad_final/params.py` (con cualquier editor de texto; VS Code o el Bloc de notas sirven).

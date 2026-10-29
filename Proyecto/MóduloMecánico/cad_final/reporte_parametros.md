@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-298 parámetros. Por origen y estado: equipo / confirmado: 62; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 217; fabricante / confirmado: 4; fabricante / por_verificar: 9.
+324 parámetros. Por origen y estado: equipo / confirmado: 71; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 234; fabricante / confirmado: 4; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
@@ -72,7 +72,7 @@
 | `boya.rtc_reserva` | 40 × 25 × 15 | DS3231, montaje sin confirmar |
 | `ensamble.cuerda_azimut` | 45 × 135 × 225 × 315 | Cuerdas entre los dos lados de la barra: la barra cruza el aro por el centro, orientada entre dos cuerdas |
 
-### Origen estimado (217)
+### Origen estimado (234)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -293,4 +293,21 @@
 | `boya.ojal_oreja_ancho` | 24 | Ancho de la oreja de amarre del casco (extremo +X) |
 | `boya.oreja_agujero_punta` | 7.5 | Del agujero M5 a la punta de oreja y lengueta |
 | `boya.flotador_radio` | 8 | Radio de las aristas verticales del flotador |
+| `simple.union_oreja` | 10 × 8 | Orejas de la union plana a cada lado de la camara, sobre el bolsillo del lastre: ancho en y fuera de la pared, espesor en x de cada mitad. 2 M3 por oreja (4 en total) con tuerca, a lo largo del riel |
+| `aro.seccion` | 8 | Diametro de la varilla del aro Ø200 real: fija la C de M9s; medir |
+| `gancho.c` | 0.4 × 4 × 12 | M9s: holgura sobre la varilla, pared de la C y largo del asiento sobre la varilla (la curva del aro Ø200 corre la varilla 0.18 mm en 12, 1.4 mm en 33) |
+| `gancho.m4_x` | 15 | /x/ de los 2 M4 de la brida de M9s a tuercas en la ranura T |
+| `capsula.angulo` | 30 | Inclinacion fija de las capsulas hacia abajo (version simple); se cambia reimprimiendo solo M5s |
+| `capsula.pie` | 50 × 6 × 5 | Pie de M5s en silla sobre el riel: largo, espesor de la placa bajo el riel, espesor de las mejillas |
+| `capsula.pie_alma` | 20 | Ancho en y del alma que une la silla con la tapa |
+| `capsula.pie_m4` | 30 × 20 | 2 M4 horizontales que cruzan el riel y las mejillas: separacion en x y altura sobre el fondo del riel (sobre el Cat5e) |
+| `capsula.pie_aire` | 2 | Aire entre lo mas alto de la capsula inclinada y la placa de la silla |
+| `lastre.pletinas` | 3 | Pletinas por bolsillo (hay 2) en la version simple; simple.py verifica que el peso aparente quede en la ventana y dice cuantas hacen falta |
+| `masa.tornilleria_simple` | 40 | 4 M3 de la union, 4 M4 + tuercas T de los ganchos, 4 M4 de los pies, 4 M3 de las tapas del bolsillo y 2 correas; pesar |
+| `separador.seccion` | 12 × 6 | Ancho x espesor del anillo o de los rayos (se imprime plano) |
+| `separador.agujero` | 4.5 | Agujero por donde pasa cada cuerda (cuerda de Ø4) |
+| `linterna.alto` | 200 | Alto de la red de la linterna de referencia |
+| `linterna.pisos` | 3 | Pisos (bandejas) dentro de la red; solo renders y STEP |
+| `linterna.cabo_largo` | 300 | Largo del cabo central que se dibuja |
+| `umbilical.comba` | 80 | Cuanto cuelga el umbilical bajo la recta boya-nodo (sin tension; render) |
 

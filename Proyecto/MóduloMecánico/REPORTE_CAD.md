@@ -1,8 +1,12 @@
 # Reporte CAD, versión final del nodo LanternGuard
 
-Rama `cad/version-final`. Fuente única de medidas: `cad_final/params.py` (294 parámetros, cada uno con origen y
+Rama `cad/version-final`. Fuente única de medidas: `cad_final/params.py` (324 parámetros, cada uno con origen y
 estado). Todo se regenera con `python cad_final/build.py` (ver `README.md`). Medidas por pieza para el equipo en
 `MEDIDAS.md`; planos por pieza en `planos/cad_final/`. Detalle por fase en `FASE_A.md` a `FASE_G.md`.
+
+> **Desde el 29/10 hay dos versiones** (`version` en `params.py`): **simple** (por defecto, el prototipo real en el aro
+> Ø200, sección 9 y `cad_final/reporte_simple.md`) y **modular** (el riel por tramos de Ø100 a Ø500, secciones 1 a 8).
+> `build.py --rapido` regenera la que esté elegida; la otra queda como está.
 
 ## 1. Estado en una línea por cosa
 
@@ -150,3 +154,54 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
 | STEP deterministas | La fecha del encabezado de cada STEP queda fija (2026-01-01) | Mismo modelo, mismos bytes: git solo muestra lo que cambió de verdad | Fijarla desde OCP al escribir | `STEP_STAMP` en `cad_final/checks.py` |
 
 **Alternativa más simple para la tapa (propuesta, no hecha):** una tapa que entra deslizando por dos ranuras en las paredes del bolsillo y se traba con un solo tornillo M3 en un extremo. Ahorra 2 insertos y 2 tornillos por nodo, pero pide ranuras de 1 mm en paredes de 3, que conviene probar en una probeta antes. Con 2 o 3 pletinas por lado la tapa carga de 1.7 a 2.5 N dentro del agua, así que cualquiera de las dos alcanza.
+
+## 9. Versión simple para el prototipo en el aro Ø200 y suspensión propia de la linterna (29/10)
+
+Generada por `cad_final/simple.py` (`build.py --rapido` con `version = "simple"`, unos 40 a 65 s). Números completos y
+verificación en `cad_final/reporte_simple.md`; piezas en `salida/simple/` (STL y STEP por pieza, ensamble con la
+linterna `ensamble_simple_D200.step`, riel fusionado para SimScale en `simscale/`), separador en `salida/linterna_prueba/`.
+
+**Piezas (9 tipos impresos + ventana, 15 piezas impresas por nodo; la modular tenía 16 tipos y 28 piezas en Ø200):**
+M1, M2, M11, M4, M6 y M7 iguales; **M3s** mitad del riel (2, la misma pieza girada; media cámara de cables, bolsillo
+del lastre, unión plana en x = 0 bajo la caja con 4 M3 en orejas, sin varilla M8); M3t tapa del bolsillo (2, igual);
+**M9s** gancho en C fijo con ranura de correa de 25 (2; reemplaza a M9, M12, M13 y M14); **M5s** tapa de la cápsula con
+pie en silla a ángulo fijo (2; `capsula.angulo` = 30; reemplaza a M5 y M10, sin bisagra dentada).
+
+**Suspensión nueva:** la linterna cuelga de su brida: 4 cuerdas a 60/120/240/300 (`linterna.cuerda_azimut`) suben
+verticales del aro al separador LR1 (`separador.tipo` aro, a 250 sobre el aro) y de ahí al ápice (`apice.altura` 150
+sobre el separador = **400 sobre el aro**), y un cabo vertical va al punto fijo (`linterna.punto_fijo` = estructura).
+El nodo no carga la linterna: va enganchado al aro con los ganchos y la correa; el ojal del asa queda solo para izar.
+El umbilical baja de la boya con comba. A 45 grados (el azimut de la modular) no había ápice posible en Ø200: la brida
+de la caja llega a r = 103, fuera del aro.
+
+| Resultado (bandeja al 40 %) | Valor |
+|---|---|
+| Peso en aire | **2079 g** (≤ 3 kg) |
+| Peso aparente | **+265 g** con 3 pletinas por bolsillo (`lastre.pletinas`; 3 o 4 entran en la ventana de +200 a +500) |
+| Sin pletinas | −251 g: el nodo flota; sin la varilla M8 hace falta 1 pletina más por bolsillo que en la modular Ø200 |
+| Estabilidad | BG = 17.4 mm con las cápsulas a 30 grados (la modular Ø200: 20.2 a 0 grados) |
+| Aire mínimo cuerdas/separador contra el nodo | **21.6 mm** (cuerdas verticales; exigido 10), con cápsulas y ganchos puestos |
+| Separador | 250 sobre el aro; el mínimo calculado es 165 (aro); con cruceta sube porque pasa sobre el asa |
+| Cable por cámara | 420 mm: requiere la prueba SPI (C6 sigue) |
+
+**¿Cambia el peso aparente por la suspensión?** No: el peso aparente es masa del nodo menos agua desplazada y no
+depende de quién cargue la linterna. Lo que cambió (de +225 a −251 sin pletinas) es por el modo simple: sin la varilla
+M8 (unos 167 g de acero) ni las piezas chicas. Se corrige con las pletinas.
+
+**Chequeos de este reporte que cambian en la versión simple:**
+
+| Chequeo | Modular | Simple |
+|---|---|---|
+| §2 de `reporte_verificacion.md`, riel con 150 N | Caso A (colgado del asa) mandaba | En el agua manda el caso B (apoyado en los ganchos): σ 6.5 MPa, FS 6.9 / 3.4 |
+| §3, §3b, §3c, unión de tramos y varilla M8 (C19) | FS 1.3 / 0.6 sin varilla en Ø200, varilla obligatoria | **No aplican**: una sola unión, bajo la caja (que la puentea con 4 M4); sin contar la caja, 61 N por M3 |
+| §4, insertos M4 del fondo | 251 N por inserto (Ø200) | 254 N, solo al izar por el asa fuera del agua; se prueba con PB8 |
+| §5, gancho con 75 N | J con casquillo, pestillo y perilla | C fija: σ 7.5 MPa, FS 6.0 |
+| §6b, linterna colgada del ojal (C15) | 180 N en el asa | **Desaparece**: el asa solo iza el nodo (§6, 150 N, sigue) |
+| §7, bisagra dentada | Precarga del M4 contra el salto de dientes | **Desaparece**. Nuevo: pie de la cápsula, 602 N por M4 y 17.9 MPa en las paredes del riel, **FS 1.2 a través de las capas**: es el punto débil, probar con la mano antes del agua |
+| §9, flotabilidad y estabilidad | +225 g con 2 pletinas por lado | +265 g con 3 por lado, BG 17.4 mm |
+| C6, cable | 300 o más, prueba SPI | 420, prueba SPI |
+| C15, C20, C21 | Cuerdas al asa; pestillo contra perilla; grillete para las cuerdas | C15 se revierte (cuerdas a la brida propia); C20 no existe; C21 queda solo para izar |
+
+**Por verificar en la versión simple:** `aro.seccion` (8, la varilla del aro real), el alma del pie de la cápsula
+(sin cálculo: SimScale o prueba a mano), el apriete de los M4 del pie en el PETG impreso a través de las capas, y que
+el umbilical salga entre las cuerdas del ápice sin rozarlas (en el render pasa por dentro de la brida).

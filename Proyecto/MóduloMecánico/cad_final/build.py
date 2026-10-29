@@ -1,5 +1,7 @@
 """Single entry point to regenerate the CAD outputs after changing params.py.
 
+With version = "simple" in params.py (default), --rapido runs simple.py (salida/simple/, reporte_simple.md, ~1 min)
+plus the parameter table and MEDIDAS.md; the plain build and --todo add the modular steps. With version = "modular":
     python cad_final/build.py --rapido      riel, lastre, cables, verificacion, tabla de parametros y MEDIDAS.md (~1.5 min)
     python cad_final/build.py --medidas     solo MEDIDAS.md
     python cad_final/build.py --planos      solo los planos de planos/cad_final/
@@ -34,6 +36,7 @@ STEPS = {
     "tabla_parametros": ["reporte_parametros.py"],
     "medidas": ["medidas.py"],
     "planos": ["planos_piezas.py"],
+    "simple": ["simple.py"],
 }
 PLANS = {
     "rapido": ["parametros", "riel", "lastre", "cables", "verificacion", "tabla_parametros", "medidas"],
@@ -43,6 +46,20 @@ PLANS = {
                "simscale", "tabla_parametros", "medidas", "planos"],
 }
 CASES = ("100", "200", "300", "500")
+
+
+def version():
+    """params.VERSION read in a child process, so build.py itself does not import CadQuery."""
+    out = subprocess.run([PY, "-c", "import params; print(params.VERSION)"], cwd=HERE, env=ENV, capture_output=True,
+                         text=True)
+    return out.stdout.strip() or "modular"
+
+
+def plans(ver):
+    if ver != "simple":
+        return PLANS
+    return {**PLANS, "rapido": ["parametros", "simple", "tabla_parametros", "medidas"],
+            "normal": PLANS["normal"] + ["simple"]}
 
 
 def run(name, args, log_dir):
@@ -79,9 +96,11 @@ def main():
     plan = "rapido" if a.rapido else "medidas" if a.medidas else "planos" if a.planos else "normal"
     log_dir = HERE.parent / "salida" / "_logs_build"
     log_dir.mkdir(parents=True, exist_ok=True)
-    print(f"Python {sys.version.split()[0]} - plan '{plan}{' + ensambles' if a.todo else ''}' - logs en {log_dir}", flush=True)
+    ver = version()
+    print(f"Python {sys.version.split()[0]} - version '{ver}' - plan '{plan}{' + ensambles' if a.todo else ''}' - "
+          f"logs en {log_dir}", flush=True)
     t0 = time.time()
-    ok = all([run(s, STEPS[s], log_dir) for s in PLANS[plan]])
+    ok = all([run(s, STEPS[s], log_dir) for s in plans(ver)[plan]])
     if a.todo:
         ok = ensambles(log_dir) and ok
     print(f"{'TODO BIEN' if ok else 'HUBO FALLAS (ver los logs)'} en {time.time() - t0:.0f} s", flush=True)

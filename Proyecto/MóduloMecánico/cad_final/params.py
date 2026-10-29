@@ -517,3 +517,56 @@ BUOY_EYE = p("boya.ojal", (24.0, 12.0, 6.0, 32.0), EST, VER, "B6: aro exterior, 
 BUOY_EYE_EAR_W = p("boya.ojal_oreja_ancho", 24.0, EST, VER, "Ancho de la oreja de amarre del casco (extremo +X)")
 BUOY_EAR_HOLE_TIP = p("boya.oreja_agujero_punta", 7.5, EST, VER, "Del agujero M5 a la punta de oreja y lengueta")
 BUOY_FLOAT_R = p("boya.flotador_radio", 8.0, EST, VER, "Radio de las aristas verticales del flotador")
+
+
+# =====================================================================================
+# VERSION SIMPLE (prototipo real en el aro Ø200, simple.py -> salida/simple/)
+# =====================================================================================
+VERSION = p("version", "simple", "equipo", OK,
+            "simple: nodo del prototipo para el aro Ø200 (simple.py, salida/simple/). modular: riel por tramos de la "
+            "decision del 29/10 (salida/preliminar/ y ensambles por aro). Cambia lo que regenera build.py")
+SIMPLE_RING_D = p("simple.aro_D", 200.0, "equipo", OK, "Aro de la linterna del prototipo real")
+SIMPLE_RAIL_L = p("simple.riel_L", 430.0, "equipo", OK,
+                  "Riel de una pieza partido en 2 mitades iguales (M3s) con union plana en x = 0 bajo la caja; sin varilla M8")
+SIMPLE_JOINT_EAR = p("simple.union_oreja", (10.0, 8.0), EST, VER,
+                     "Orejas de la union plana a cada lado de la camara, sobre el bolsillo del lastre: ancho en y fuera de "
+                     "la pared, espesor en x de cada mitad. 2 M3 por oreja (4 en total) con tuerca, a lo largo del riel")
+RING_SECTION = p("aro.seccion", 8.0, EST, VER, "Diametro de la varilla del aro Ø200 real: fija la C de M9s; medir")
+SIMPLE_HOOK_C = p("gancho.c", (0.4, 4.0, 12.0), EST, VER,
+                  "M9s: holgura sobre la varilla, pared de la C y largo del asiento sobre la varilla (la curva del aro "
+                  "Ø200 corre la varilla 0.18 mm en 12, 1.4 mm en 33)")
+SIMPLE_HOOK_BOLT_X = p("gancho.m4_x", 15.0, EST, VER, "|x| de los 2 M4 de la brida de M9s a tuercas en la ranura T")
+SIMPLE_CAP_TILT = p("capsula.angulo", 30.0, EST, VER,
+                    "Inclinacion fija de las capsulas hacia abajo (version simple); se cambia reimprimiendo solo M5s")
+SIMPLE_FOOT = p("capsula.pie", (50.0, 6.0, 5.0), EST, VER,
+                "Pie de M5s en silla sobre el riel: largo, espesor de la placa bajo el riel, espesor de las mejillas")
+SIMPLE_FOOT_WEB = p("capsula.pie_alma", 20.0, EST, VER, "Ancho en y del alma que une la silla con la tapa")
+SIMPLE_FOOT_BOLTS = p("capsula.pie_m4", (30.0, 20.0), EST, VER,
+                      "2 M4 horizontales que cruzan el riel y las mejillas: separacion en x y altura sobre el fondo del "
+                      "riel (sobre el Cat5e)")
+SIMPLE_FOOT_GAP = p("capsula.pie_aire", 2.0, EST, VER, "Aire entre lo mas alto de la capsula inclinada y la placa de la silla")
+SIMPLE_PLATES = p("lastre.pletinas", 3, EST, VER,
+                  "Pletinas por bolsillo (hay 2) en la version simple; simple.py verifica que el peso aparente quede en "
+                  "la ventana y dice cuantas hacen falta")
+SIMPLE_HARDWARE_G = p("masa.tornilleria_simple", 40.0, EST, VER,
+                      "4 M3 de la union, 4 M4 + tuercas T de los ganchos, 4 M4 de los pies, 4 M3 de las tapas del "
+                      "bolsillo y 2 correas; pesar")
+
+# linterna de prueba de la version simple (suspension propia, el nodo no la carga)
+SEP_TYPE = p("separador.tipo", "aro", "equipo", OK,
+             "LR1 sobre el nodo: 'aro' (anillo del diametro del aro) o 'cruceta' (rayos al centro). Las cuerdas suben "
+             "verticales del aro al separador y de ahi al apice")
+SEP_H = p("separador.altura", 250.0, "equipo", OK, "Plano medio del separador sobre el centro de la varilla del aro")
+SEP_SECTION = p("separador.seccion", (12.0, 6.0), EST, VER, "Ancho x espesor del anillo o de los rayos (se imprime plano)")
+SEP_HOLE = p("separador.agujero", 4.5, EST, VER, "Agujero por donde pasa cada cuerda (cuerda de Ø4)")
+SIMPLE_CORD_AZ = p("linterna.cuerda_azimut", (60.0, 120.0, 240.0, 300.0), "equipo", OK,
+                   "Version simple: a 45 grados la brida de la caja corta la cuerda vertical (decision 29/10). "
+                   "ensamble.cuerda_azimut queda en 45 para la modular")
+APEX_H = p("apice.altura", 150.0, "equipo", OK, "Apice de las cuerdas sobre el separador; de ahi sube el cabo central")
+LANTERN_FIXED_POINT = p("linterna.punto_fijo", "estructura", "equipo", OK,
+                        "Donde termina el cabo central: 'estructura' (punto fijo del banco) o 'boya'")
+LANTERN_NET_H = p("linterna.alto", 200.0, EST, VER, "Alto de la red de la linterna de referencia")
+LANTERN_FLOORS = p("linterna.pisos", 3, EST, VER, "Pisos (bandejas) dentro de la red; solo renders y STEP")
+LANTERN_CENTRAL_LINE = p("linterna.cabo_central", True, "equipo", OK, "Dibuja el cabo del apice al punto fijo")
+LANTERN_LINE_L = p("linterna.cabo_largo", 300.0, EST, VER, "Largo del cabo central que se dibuja")
+UMB_SAG = p("umbilical.comba", 80.0, EST, VER, "Cuanto cuelga el umbilical bajo la recta boya-nodo (sin tension; render)")

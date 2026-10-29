@@ -127,7 +127,8 @@ def capsule_body():
     return body
 
 
-def capsule_lid():
+def lid_plate():
+    """M5 without the hinge tongue: plate, 4 M3 holes and the O-ring groove (the simple version adds a fixed foot)."""
     out_w, out_h, fl_w, fl_h, x_lid0, x0, _ = cap_dims()
     lid = cq.Workplane("YZ").workplane(offset=x_lid0).rect(fl_w, fl_h).extrude(CAP_LID_T).edges("|X").fillet(4)
     for (y, z) in cap_screw_pts():
@@ -135,7 +136,12 @@ def capsule_lid():
     # O-ring groove on the inner face: centreline midway between cavity and screw circle
     cl_w = (CAP_CAV_W + (fl_w - CAP_FLANGE)) / 2
     cl_h = (CAP_CAV_H + (fl_h - CAP_FLANGE)) / 2
-    lid = lid.cut(_ring_yz(cl_w, cl_h, 4.0, GROOVE_WIDTH, x0 - GROOVE_DEPTH, GROOVE_DEPTH))
+    return lid.cut(_ring_yz(cl_w, cl_h, 4.0, GROOVE_WIDTH, x0 - GROOVE_DEPTH, GROOVE_DEPTH))
+
+
+def capsule_lid():
+    x_lid0 = cap_dims()[4]
+    lid = lid_plate()
     # tongue: plate in XZ (normal Y), from the hinge disc to the lid outer face
     t = TONGUE_CORE
     disc = cq.Workplane("XZ").circle(HINGE_DISC_D / 2).extrude(t / 2, both=True)
