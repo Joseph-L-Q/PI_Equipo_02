@@ -1,5 +1,5 @@
 """Central box, Fase A level: M1 body and M2 lid as PRELIMINARY envelopes sized from layout.py, the M11
-tray (split der/izq) and the module dummies. Detailing (rail seat, gaskets at the cable passes, final
+tray(s) (one or two floors, split der/izq only above 150) and the module dummies. Detailing (rail seat, gaskets at the cable passes, final
 handle) is Fase C.
 
 Frame as layout.py: X along the rail, box centred on x = y = 0, outer bottom z = 0.
@@ -13,9 +13,9 @@ import layout as LY
 from params import (BASE_M4_BOSS, BASE_M4_PTS, BOX_FLANGE, BOX_FLANGE_T, BOX_FLOOR, BOX_LID_T, BOX_SCREW_PITCH,
                     BOX_WALL, COMPONENTS, GAP_WALL, GROOVE_DEPTH, GROOVE_WIDTH, HANDLE_GRIP, HANDLE_H,
                     M3_CLEAR, M3_INSERT_DEPTH, M3_INSERT_HOLE, M4_INSERT_DEPTH, M4_INSERT_HOLE, PG7_HOLE,
-                    PG7_INNER_H, PG7_NUT_AF, POCKET_DEPTH, POCKET_L, POCKET_RAIL_GAP, POCKET_WALL,
-                    RAIL_CENTRAL_L, RAIL_SECTION, RAIL_WALL, TRAY_BOSS_D, TRAY_BOSS_INSET, TRAY_CRADLE_T,
-                    TRAY_STANDOFF, TRAY_T)
+                    PG7_INNER_H, PG7_NUT_AF, POCKET_DEPTH, POCKET_IN_BOX, POCKET_L, POCKET_RAIL_GAP, POCKET_WALL,
+                    RAIL_SECTION, TRAY2_POST_D, TRAY_BOSS_D, TRAY_STANDOFF, TRAY_T)
+from layout import tray_boss_pts
 
 
 # ------------------------------------------------------------------ positions
@@ -28,16 +28,6 @@ def screw_pts(lay):
     pts = [(-a + 2 * a * k / nx, s * b) for k in range(nx + 1) for s in (1, -1)]
     pts += [(s * a, -b + 2 * b * k / ny) for k in range(1, ny) for s in (1, -1)]
     return pts
-
-
-def tray_boss_pts(lay):
-    """Four per tray half: two at the outer corners, two near the split line."""
-    out = []
-    for x0, x1, y0, y1 in lay.tray_halves().values():
-        for x in (x0 + TRAY_BOSS_INSET, x1 - TRAY_BOSS_INSET):
-            for y in (y0 + TRAY_BOSS_INSET, y1 - TRAY_BOSS_INSET):
-                out.append((x, y))
-    return out
 
 
 def pocket_rects(lay):
@@ -89,8 +79,13 @@ def box_body(lay):
                           .circle(TRAY_BOSS_D / 2).extrude(TRAY_STANDOFF))
         body = body.cut(cq.Workplane("XY").workplane(offset=BOX_FLOOR + TRAY_STANDOFF - M3_INSERT_DEPTH)
                         .center(x, y).circle(M3_INSERT_HOLE / 2).extrude(M3_INSERT_DEPTH))
-    # ballast pockets, open at the bottom (cover plate in Fase C), outside the seal
-    for (x0, x1, y0, y1) in pocket_rects(lay):
+    # umbilical PG7 on the -X wall when it is not on the lid
+    if lay.wall_gland:
+        xw, yw, zw = lay.wall_gland
+        body = body.cut(cq.Workplane("YZ").workplane(offset=xw - 1).center(yw, zw).circle(PG7_HOLE / 2)
+                        .extrude(BOX_WALL + 2))
+    # ballast pockets, open at the bottom, outside the seal (replaced by the plate under the rail: POCKET_IN_BOX)
+    for (x0, x1, y0, y1) in (pocket_rects(lay) if POCKET_IN_BOX else []):
         outer = _box(x0, x1, y0, y1, -POCKET_DEPTH, 0.0)
         inner = _box(x0 + POCKET_WALL, x1 - POCKET_WALL, y0 + POCKET_WALL, y1 - POCKET_WALL, -POCKET_DEPTH, 0.0)
         body = body.union(outer.cut(inner))
@@ -98,6 +93,8 @@ def box_body(lay):
 
 
 def pocket_volume_cm3(lay):
+    if not POCKET_IN_BOX:
+        return 0.0
     return sum((x1 - x0 - 2 * POCKET_WALL) * (y1 - y0 - 2 * POCKET_WALL) * POCKET_DEPTH
                for x0, x1, y0, y1 in pocket_rects(lay)) / 1000.0
 
@@ -119,8 +116,9 @@ def box_lid(lay):
     inner = (cq.Workplane("XY").workplane(offset=z0).rect(cl_l - GROOVE_WIDTH, cl_w - GROOVE_WIDTH)
              .extrude(GROOVE_DEPTH).edges("|Z").fillet(3.5))
     lid = lid.cut(outer.cut(inner))
-    gx, gy = lay.lid_gland
-    lid = lid.cut(cq.Workplane("XY").workplane(offset=z0).center(gx, gy).circle(PG7_HOLE / 2).extrude(BOX_LID_T))
+    if lay.lid_gland:
+        gx, gy = lay.lid_gland
+        lid = lid.cut(cq.Workplane("XY").workplane(offset=z0).center(gx, gy).circle(PG7_HOLE / 2).extrude(BOX_LID_T))
     # handle: arch over y = 0, glove-sized opening, anchor eye on top (cad/parts.py box_lid)
     zt = z0 + BOX_LID_T
     leg = 12.0
@@ -138,10 +136,12 @@ def box_lid(lay):
 
 # ------------------------------------------------------------------ M11 tray + dummies
 def trays(lay):
-    """{name: Workplane} for each tray piece, with the access holes around the floor glands."""
+    """{name: Workplane}: lower tray piece(s) with the holes over the floor glands, and with 2 floors the
+    upper tray; the posts belong to the lower piece they stand on. Cradle ledges come from the layout items."""
     out = {}
     zt = lay.z_tray
-    esp = next(b for n, k, b in lay.modules if n == "esp32")
+    ledges = [it for it in lay.items if it.name.startswith("esp32:cuna")]
+    posts = [it for it in lay.items if it.name.startswith("poste_")]
     for name, (x0, x1, y0, y1) in lay.tray_halves().items():
         t = _box(x0, x1, y0, y1, zt - TRAY_T, zt).edges("|Z").fillet(2)
         for (gx, gy) in lay.floor_glands:
@@ -151,12 +151,24 @@ def trays(lay):
             if x0 <= x <= x1:
                 t = t.cut(cq.Workplane("XY").workplane(offset=zt - TRAY_T).center(x, y)
                           .circle(M3_CLEAR / 2).extrude(TRAY_T))
-        ex0, ex1, ey0, ey1 = esp.xy
-        if lay.base == "sin_base" and x0 <= ex0 and ex1 <= x1:
-            # cradle: two ledges under the short ends of the DevKit, raising it CLR_PINS for the duponts
-            for ya, yb in ((ey0, ey0 + TRAY_CRADLE_T), (ey1 - TRAY_CRADLE_T, ey1)):
-                t = t.union(_box(ex0, ex1, ya, yb, zt, esp.z[0]))
+        for it in ledges + posts:
+            a0, a1, b0, b1 = it.bbox2()
+            if x0 <= a0 and a1 <= x1 and abs(it.z[0] - zt) < 1e-6:
+                t = t.union(_box(a0, a1, b0, b1, zt, it.z[1]) if it.shape == "box" else
+                            cq.Workplane("XY").workplane(offset=zt).center(*it.xy[:2]).circle(it.xy[2])
+                            .extrude(it.z[1] - zt).faces(">Z").workplane().hole(M3_CLEAR, 6.0))
         out[name] = t
+    if lay.floors == 2:
+        x0, x1, y0, y1 = lay.tray_upper
+        z2 = lay.z_tray2
+        t = _box(x0, x1, y0, y1, z2 - TRAY_T, z2).edges("|Z").fillet(2)
+        for it in posts:
+            t = t.cut(cq.Workplane("XY").workplane(offset=z2 - TRAY_T).center(*it.xy[:2]).circle(M3_CLEAR / 2)
+                      .extrude(TRAY_T))
+        for it in ledges:
+            if abs(it.z[0] - z2) < 1e-6:
+                t = t.union(_box(*it.bbox2(), z2, it.z[1]))
+        out["M11_bandeja_sup"] = t
     return out
 
 
@@ -180,16 +192,13 @@ def keepout_solids(lay):
 
 
 def gland_nuts(lay):
-    """Locknuts as hex prisms: two on the floor, the umbilical one hanging from the lid."""
+    """Locknuts as hex prisms: two on the floor, the umbilical one hanging from the lid or on the -X wall."""
     nuts = [_hex(x, y, PG7_NUT_AF, BOX_FLOOR, PG7_INNER_H) for (x, y) in lay.floor_glands]
-    zl = BOX_FLOOR + lay.cav[2]
-    nuts.append(_hex(*lay.lid_gland, PG7_NUT_AF, zl - PG7_INNER_H, PG7_INNER_H))
+    if lay.lid_gland:
+        zl = BOX_FLOOR + lay.cav[2]
+        nuts.append(_hex(*lay.lid_gland, PG7_NUT_AF, zl - PG7_INNER_H, PG7_INNER_H))
+    else:
+        xw, yw, zw = lay.wall_gland
+        nuts.append(cq.Workplane("YZ").workplane(offset=xw + BOX_WALL).center(yw, zw)
+                    .polygon(6, PG7_NUT_AF / math.cos(math.pi / 6)).extrude(PG7_INNER_H))
     return nuts
-
-
-def rail_reference():
-    """Central rail as a plain hollow bar (context only; the real M3_riel_central is Fase C)."""
-    s, t = RAIL_SECTION, RAIL_WALL
-    bar = cq.Workplane("YZ").workplane(offset=-RAIL_CENTRAL_L / 2).center(0, -s / 2).rect(s, s).extrude(RAIL_CENTRAL_L)
-    return bar.cut(cq.Workplane("YZ").workplane(offset=-RAIL_CENTRAL_L / 2).center(0, -s / 2)
-                   .rect(s - 2 * t, s - 2 * t).extrude(RAIL_CENTRAL_L))

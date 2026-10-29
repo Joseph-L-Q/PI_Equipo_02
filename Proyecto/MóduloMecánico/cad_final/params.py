@@ -49,7 +49,13 @@ PIECE_MAX_L = p("pieza.largo_max", 150.0, "equipo", OK,
 MIN_WALL = p("impresion.espesor_min", 1.2, "equipo", OK, "3 perimetros de 0.4", 1.2)
 SHELL_T = p("impresion.cascara", 1.2, EST, VER,
             "Perimetros + capas sup/inf macizos, para la masa con relleno", None)
-INFILL_CASES = p("impresion.relleno", (0.40, 1.00), "equipo", OK, "Prompt v2 Fase E: 40 % y 100 %")
+INFILL_CASES = p("impresion.relleno", (0.40, 1.00), "equipo", OK,
+                 "Piezas no selladas (bandeja, ganchos, carros...): se reportan 40 % y 100 %")
+INFILL_SEALED = p("impresion.relleno_sellado", 1.0, "equipo", OK,
+                  "M1, M2, M4, M5 y tramos del riel al 100 % (revision 28/10, C13)", 0.4)
+SEALED_PIECES = p("impresion.piezas_selladas", ("M1", "M2", "M4", "M5", "M3_riel_central", "M3_riel_ext"),
+                  "equipo", OK, "Piezas que van al 100 % con 5 perimetros")
+SEALED_PERIMETERS = p("impresion.perimetros_sellado", 5, "equipo", OK, "5 perimetros (2.0 mm con boquilla 0.4)")
 FIT_CLEAR = p("impresion.holgura", 0.3, EST, VER, "Handoff; probar con el peine de la Fase B", 1.0)
 HOLE_COMP = p("impresion.comp_agujero", 0.2, EST, VER, "Handoff; probar en impresora real")
 
@@ -88,8 +94,15 @@ RAIL_DOVETAIL = p("riel.cola_milano", 15.0, "equipo", OK, "Macho/hembra 15 + 2 M
 RAIL_TSLOT = p("riel.ranura_T", {"abertura": 4.6, "ancho": 8.0, "alto": 3.6}, EST, VER,
                "Para tuerca M4 (AF7 x 3.2); se ajusta con la probeta de la Fase B")
 RAIL_ROD_M8 = p("riel.varilla_M8", False, "equipo", OK, "Refuerzo opcional por dentro")
+# tramo central = camara de cables bajo la caja (revision 28/10, C12)
+CHAMBER_H_TARGET = p("riel.camara_alto", 50.0, "equipo", OK,
+                     "'Unos 50' de alto interior; el valor real se deriva (domo + radio + cable + nervio)")
+CHAMBER_RAMP_DEG = p("riel.camara_rampa", 45.0, EST, VER, "Techo en rampa hacia el conducto de 22 (imprimible)")
+CHAMBER_FLANGE_W = p("riel.camara_brida", (56.0, 4.0), EST, VER,
+                     "Brida superior (ancho minimo x espesor): lleva los 4 M4 a la caja y cuelga los bolsillos "
+                     "de la pletina; el ancho real lo fijan los bolsillos")
 RAIL_WINDOW = p("riel.ventana_cable", (24.0, 14.0), EST, VER,
-                "Ventana en la cara superior del tramo central, bajo cada PG7 del fondo")
+                "OBSOLETO desde la revision del 28/10: el tramo central es una camara de cables (riel.camara_*)")
 
 # ---------------------------------------------------------------- ganchos y pequenas piezas
 HOOK_CONTACT_W = p("gancho.contacto", 12.0, "equipo", OK, "Asiento de 12 con bordes R3")
@@ -101,6 +114,57 @@ LATCH_BUMP = p("pestillo.resalte", 0.6, "equipo", VER, "Traba del M14; probar en
 STRAP_W = p("correa.ancho", 25.0, "equipo", OK, "Correa textil de seguridad", 26.0)
 CARRIAGE_TRAVEL = p("carro.recorrido", 50.0, "equipo", OK, "M10_carro_capsula, +-50")
 HANDLING_LOAD_N = p("carga.manipulacion_N", 150.0, "equipo", OK, "Caso de diseno a 1 m")
+
+# ---------------------------------------------------------------- detalle de uniones (probetas Fase B)
+M4_NUT = p("m4.tuerca", (7.0, 3.2), "fabricante", VER, "AF x espesor, DIN 934")
+M4_HEAD = p("m4.cabeza", (7.0, 4.0), "fabricante", VER, "Allen DIN 912: Ø x alto")
+M4_HEX_HEAD = p("m4.cabeza_hex", (7.0, 2.8), "fabricante", VER, "Perno hexagonal DIN 933: AF x alto (perilla)")
+M3_NUT = p("m3.tuerca", (5.5, 2.4), "fabricante", VER, "AF x espesor, DIN 934")
+RAIL_TSLOT_RIB = p("riel.ranura_T_nervio", 2.0, EST, VER,
+                   "Nervios que encierran el canal de la tuerca sobre el fondo; la tuerca entra por la punta del tramo")
+RAIL_LAP_Z = p("riel.union_z", 15.0, EST, VER,
+               "Media madera: el macho conserva la mitad de abajo (con la ranura T), la hembra la de arriba")
+RAIL_DOVETAIL_KEY = p("riel.cola_llave", (8.0, 11.0, 4.0), EST, VER,
+                      "Llave en cola de milano vista de lado (base, punta, alto) en la cara de la media madera; "
+                      "entra deslizando de costado")
+RAIL_LAP_WALL = p("riel.union_pared", 10.0, EST, VER,
+                  "Paredes engrosadas hacia adentro en la union para la tuerca M4 con 1.4 de piel; conducto local "
+                  "10 de ancho: cada lado del riel lleva un solo Cat5e (5.5)")
+RAIL_JOINT_BOLT_Y = p("riel.union_m4_y", 10.0, EST, VER,
+                      "2 M4 verticales dentro de las paredes (y = +-10): no cruzan el conducto de cables")
+JAW_BORE = p("gancho.alojamiento", 16.0, EST, VER, "Ø del asiento del casquillo en la J (varilla max 12 + pared)")
+BUSHING_PRESS = p("casquillo.interferencia", 0.15, EST, VER, "Exceso de Ø del casquillo sobre el asiento")
+BUSHING_ROD_CLR = p("casquillo.holgura_varilla", 0.4, EST, VER, "Ø interior = varilla + holgura")
+BUSHING_FLANGE = p("casquillo.pestana", (20.0, 1.5), EST, VER, "Ø x espesor de la pestana de tope")
+LATCH_PIVOT = p("pestillo.pivote", 3.0, "equipo", OK, "Pivote M3")
+LATCH_TAB = p("pestillo.lengueta", (18.0, 12.0), EST, VER, "Largo x ancho de la lengueta para el pulgar con guante")
+KNOB_H = p("perilla.alto", 12.0, EST, VER, "Alto de la perilla")
+KNOB_LOBES = p("perilla.lobulos", 8, EST, VER, "Moleteado grueso para guante")
+COMB_CLEARANCES = p("peine.holguras", (0.2, 0.3, 0.4, 0.5), "equipo", OK, "Peine de holguras de la Fase B")
+COMB_PIN_D = p("peine.pin_D", 8.0, EST, VER, "Pin de prueba")
+SEAL_COUPON = p("probeta.junta", (60.0, 60.0), "equipo", OK, "Cuadrado de 60 x 60 con ranura y 4 M3")
+
+# probetas (Fase B): constantes de forma que propuso el modelado; Fase C reutiliza las del gancho/pestillo/perilla
+COUPON_L = p("probeta.tramo_L", 40.0, EST, VER, "PB2/PB3 rail length per segment")
+JAW_WALL = p("gancho.pared", 4.0, EST, VER, "minimum wall around the hook seat")
+JAW_LIP_H = p("gancho.labio_alto", 10.0, EST, VER, "height of the upper lip that carries the latch pivot")
+STRAP_SLOT_T = p("correa.ranura_t", 3.0, EST, VER, "strap slot thickness (slot is STRAP_W x this)")
+STEM_H = p("gancho.vastago_alto", 20.0, EST, VER, "stem above the jaw, carries the M4 hole to bolt PB1 to PB2")
+LATCH_T = p("pestillo.espesor", 3.6, EST, VER, "latch plate thickness (Y)")
+LATCH_ARM_W = p("pestillo.brazo_ancho", 5.0, EST, VER, "latch arm width (X)")
+LATCH_RIDGE_W = p("pestillo.cresta_ancho", 1.2, EST, VER, "catch ridge width on the jaw lip")
+LATCH_TIP_GAP = p("pestillo.holgura_punta", 0.2, EST, VER, "closed latch tip to lip clearance")
+LATCH_SWING = p("pestillo.giro_media_ranura", 4.5, EST, VER, "half width of the latch slot in the upper lip (swing room)")
+KNOB_LOBE_R = p("perilla.lobulo_r", 3.5, EST, VER, "radius of each grip lobe")
+KNOB_CAP = p("perilla.tapa_cabeza", 1.2, EST, VER, "roof over the embedded bolt head (print pause)")
+SEAL_CAV_CORNER = p("probeta.junta_radio_cavidad", 14.0, EST, VER, "inner corner radius of the seal base cavity (land follows the groove path)")
+SEAL_FILLET = p("probeta.junta_radio_ext", 2.0, EST, VER, "outer corner radius of the 60 x 60 seal parts")
+COMB_PITCH = p("peine.paso", 18.0, EST, VER, "spacing of the comb holes")
+COMB_T = p("peine.espesor", 6.0, EST, VER, "comb plate thickness")
+COMB_W = p("peine.ancho", 26.0, EST, VER, "comb plate width")
+COMB_TEXT_H = p("peine.texto_alto", 4.5, EST, VER, "engraved text height")
+COMB_TEXT_DEPTH = p("peine.texto_prof", 0.6, EST, VER, "engraved text depth")
+PIN_L = p("peine.pin_L", 8.0, EST, VER, "comb pin length")
 
 # ---------------------------------------------------------------- caja central (M1, M2)
 ESP32_BASE = p("esp32.base", "sin_base", "equipo", OK, "Por defecto sin KIT A; 'kit_a' es la alternativa")
@@ -121,9 +185,11 @@ M3_INSERT_DEPTH = p("m3.inserto_prof", 6.0, EST, VER, "", 6.0)
 M4_CLEAR = p("m4.paso", 4.2, EST, VER, "", 4.2)
 M4_INSERT_HOLE = p("m4.inserto_agujero", 5.6, EST, VER, "Inserto termico M4 x 8.1")
 M4_INSERT_DEPTH = p("m4.inserto_prof", 8.5, EST, VER, "")
-BASE_M4_PTS = p("caja.base_m4", ((51.5, 6.0), (51.5, -6.0), (-51.5, 6.0), (-51.5, -6.0)), EST, VER,
-                "4 M4 desde el riel a insertos ciegos en el fondo (no perforan el sello); "
-                "|x| < 55 para no caer en la cola de milano del tramo central")
+BASE_M4_PTS = p("caja.base_m4", ((40.0, 20.0), (40.0, -20.0), (-40.0, 20.0), (-40.0, -20.0)), EST, VER,
+                "4 M4 desde la brida superior de la camara a insertos ciegos en el fondo (no perforan el sello); "
+                "|y| = 20: la cabeza (Ø7) queda entre la camara (|y| 15) y el bolsillo de la pletina; "
+                "se aprieta desde abajo",
+                ((51.5, 6.0), (51.5, -6.0), (-51.5, 6.0), (-51.5, -6.0)))
 BASE_M4_BOSS = p("caja.base_m4_boss", (10.0, 6.0), EST, VER, "Ø x alto del refuerzo interior del inserto M4")
 HANDLE_H = p("asa.alto", 42.0, "equipo", OK, "Asa con ojal para el cabo", 42.0)
 HANDLE_GRIP = p("asa.agarre", 90.0, EST, VER, "Ancho de mano con guante", 90.0)
@@ -132,17 +198,23 @@ HANDLE_GRIP = p("asa.agarre", 90.0, EST, VER, "Ancho de mano con guante", 90.0)
 PG7_HOLE = p("pg7.agujero", 12.6, EST, VER, "Rosca PG7 12.5", 12.6)
 PG7_NUT_AF = p("pg7.contratuerca_AF", 15.0, EST, VER, "Comprar y medir", 15.0)
 PG7_INNER_H = p("pg7.alto_interior", 9.0, EST, VER, "Rosca que asoma + contratuerca por dentro")
+PG7_DOME = p("pg7.domo", (19.0, 22.0), EST, VER,
+             "Cuerpo + domo bajo el fondo: Ø maximo x largo desde la cara exterior. Comprar y medir")
 FLOOR_GLANDS = p("caja.pg7_fondo", 2, "equipo", OK, "2 x PG7 en el fondo hacia el riel (camaras)", 2)
-UMB_GLAND = p("caja.pg7_umbilical", "tapa", EST, VER,
-              "En la tapa, sobre la zona libre central; el umbilical sube a la boya", "PG9 en la tapa")
+UMB_GLAND = p("caja.pg7_umbilical", "auto", EST, VER,
+              "'auto': en la tapa si la contratuerca colgada no choca con nada; si no, en la pared -X "
+              "(el prompt admite 'de costado o arriba'). 'tapa' / 'pared' lo fuerzan", "tapa")
 UMB_GLAND_XY = p("caja.pg7_umbilical_xy", (-20.0, 16.0), EST, VER,
-                 "Fuera del asa (y = +-6) y de la zona de cables del MPU-6050", (0.0, 18.0))
+                 "Posicion preferida en la tapa; se busca la libre mas cercana", (0.0, 18.0))
+HANDLE_KEEP_Y = p("asa.franja_libre_y", 17.5, EST, VER,
+                  "|y| minimo del PG7 de la tapa: asa de 12 de ancho + radio del domo + 2")
 
 # holguras del layout (Prompt v2 punto 5)
 CLR_PINS = p("holgura.pines", 15.0, "equipo", OK, "Dupont + curva del cable sobre los pines")
 CLR_CONN = p("holgura.conector", 10.0, "equipo", OK, "Lateral en el lado de cada conector")
-CLR_NUT = p("holgura.contratuerca", 20.0, "equipo", OK,
-            "Libre alrededor de cada contratuerca PG7, medido desde sus esquinas (lectura literal)", 20.0)
+CLR_NUT = p("holgura.contratuerca", 5.0, "equipo", OK,
+            "Libre alrededor de cada contratuerca PG7 desde sus esquinas. Los prensaestopas se aprietan con la "
+            "caja vacia, antes de meter las bandejas", 20.0)
 CLR_USB = p("holgura.usb", 35.0, EST, VER, "Enchufe USB-C con su moldeado + curva, sin sacar la bandeja")
 CLR_SD = p("holgura.microsd", 15.0, EST, VER, "Dedo para sacar la tarjeta")
 GAP_MOD = p("holgura.entre_modulos", 2.0, EST, VER, "Cuerpo a cuerpo o cuerpo a zona de acceso")
@@ -151,8 +223,11 @@ GAP_WALL = p("holgura.pared", 2.0, EST, VER, "Cuerpo o bandeja a la pared interi
 # bandeja M11
 TRAY_T = p("bandeja.espesor", 3.0, EST, VER, "")
 TRAY_STANDOFF = p("bandeja.apoyo", 8.0, EST, VER, "Por encima de los refuerzos M4 (6) del fondo")
-TRAY_SPLIT = p("bandeja.partir", True, EST, VER,
-               "La bandeja entera pasa de 150: se parte en der/izq; False = una sola pieza")
+TRAY_SPLIT = p("bandeja.partir", "auto", EST, VER,
+               "'auto': se parte en der/izq solo si pasa de 150; True / False fuerzan", True)
+LAYOUT_FLOORS = p("caja.pisos", "auto", "equipo", OK,
+                  "Se comparan 1 y 2 pisos y se usa el de menor aire sellado; 1 o 2 lo fuerzan")
+TRAY2_POST_D = p("bandeja.poste_D", 8.0, EST, VER, "Postes del piso superior (2 pisos), con M3")
 TRAY_CRADLE_T = p("bandeja.cuna_apoyo", 4.0, EST, VER, "Repisas de la cuna bajo los extremos cortos de la ESP32")
 TRAY_BOSS_D = p("bandeja.boss_D", 8.0, EST, VER, "Refuerzo del fondo con inserto M3 que sujeta la bandeja")
 TRAY_BOSS_INSET = p("bandeja.boss_margen", 6.0, EST, VER, "Centro del refuerzo al borde de la bandeja")
@@ -188,6 +263,19 @@ POCKET_DEPTH = p("lastre.bolsillo_prof", 20.0, EST, VER, "Menor que el alto del 
 POCKET_WALL = p("lastre.bolsillo_pared", 2.0, EST, VER, "")
 POCKET_RAIL_GAP = p("lastre.holgura_riel", 1.0, EST, VER, "Bolsillos al lado del riel, no debajo")
 POCKET_L = p("lastre.bolsillo_largo", 140.0, EST, VER, "Igual al tramo central")
+POCKET_IN_BOX = p("lastre.bolsillos_caja", False, "equipo", OK,
+                  "Reemplazados por la pletina de inox bajo el tramo central (revision 28/10)", True)
+PLATE_BAR = p("lastre.pletina", (25.0, 5.0), EST, VER,
+              "Pletina de inox comercial (ancho x espesor); se apilan. Medir la comprada")
+PLATE_L = p("lastre.pletina_largo", 130.0, EST, VER, "Largo de cada trozo; cabe bajo la brida de 140")
+PLATE_SIDES = p("lastre.pletina_lados", 2, EST, VER, "Una pila a cada lado de la camara, simetricas")
+PLATE_POCKET_WALL = p("lastre.bolsillo_pletina_pared", 3.0, EST, VER, "Pared y tapa del bolsillo de la pletina")
+PLATE_CLR = p("lastre.holgura_pletina", 0.5, EST, VER, "Holgura de la pletina en su bolsillo")
+PLATE_LEVEL = p("lastre.pletina_nivel", "abajo", EST, VER,
+                "'abajo': bolsillos pegados a los costados de la camara, al nivel del fondo del riel (baja el "
+                "centro de masa); 'brida': colgados de la brida, justo bajo la caja")
+PLATE_POCKET_Y0 = p("lastre.bolsillo_pletina_y", 24.5, EST, VER,
+                    "Cara interior del bolsillo: deja libre la cabeza del M4 de la caja (y 20 + 3.5 + 1)")
 
 # ---------------------------------------------------------------- capsulas (M4..M7), base P4 rev. B
 CAMERA = p("camara.envolvente", (33.0, 33.0, 17.0, 20.0), "fabricante", OK,
@@ -210,6 +298,7 @@ OTHER_NODE_G = p("masa.otras_piezas", 200.0, EST, VER,
 # ---------------------------------------------------------------- cables (C6)
 CAT5E_D = p("cable.cat5e_D", 5.5, EST, VER, "Cat5e de exterior, entra en PG7")
 CABLE_BEND_K = p("cable.radio_curva_xD", 4.0, EST, VER, "Radio minimo = 4 x diametro")
+CABLE_BEND_R_MIN = p("cable.radio_curva_min", 25.0, "equipo", OK, "Revision 28/10: radio del Cat5e >= 25")
 CABLE_ALLOW = p("cable.holguras", {"caja": 60.0, "prensaestopas": 25.0, "bucle": 40.0,
                                     "capsula": 30.0, "holgura": 30.0}, "equipo", OK, "Prompt v2 punto 7")
 SPI_TEST_LIMIT = p("cable.limite_sin_prueba", 300.0, "equipo", OK, "> 300: prueba SPI a 8 y 4 MHz")
