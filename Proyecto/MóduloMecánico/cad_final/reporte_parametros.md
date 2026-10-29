@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-327 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 233; fabricante / confirmado: 7; fabricante / por_verificar: 9.
+330 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 236; fabricante / confirmado: 7; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
@@ -73,7 +73,7 @@
 | `boya.rtc_reserva` | 40 × 25 × 15 | DS3231, montaje sin confirmar |
 | `ensamble.cuerda_azimut` | 45 × 135 × 225 × 315 | Cuerdas entre los dos lados de la barra: la barra cruza el aro por el centro, orientada entre dos cuerdas |
 
-### Origen estimado (233)
+### Origen estimado (236)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -81,6 +81,9 @@
 | `impresion.holgura` | 0.3 | Handoff; probar con el peine de la Fase B |
 | `impresion.comp_agujero` | 0.2 | Handoff; probar en impresora real |
 | `petg.densidad` | 1.27 | Sustituir por el dato del slicer |
+| `costo.factor_relleno` | 0.45 | Bitacora: masa impresa = volumen solido x densidad x este factor (paredes + relleno); el slicer lo reemplaza |
+| `costo.g_por_h` | 15 | Bitacora: gramos por hora de la impresora; el slicer lo reemplaza |
+| `costo.filamento_soles_kg` | 90 | Bitacora: precio del PETG en soles por kg; confirmar con la boleta |
 | `petg.E` | 1700 | PETG manual para SimScale |
 | `petg.nu` | 0.38 | PETG manual |
 | `petg.sigma_y` | 45 | Macizo, a lo largo de las capas |

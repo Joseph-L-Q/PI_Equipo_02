@@ -594,12 +594,47 @@ def main():
     calc = hand_calcs(c, half, x_load, x_front, layers)
     cab = cable_run(c, lay, ax, az)
     secs = time.time() - t0
+    save_results(rows + [lr], bal, k, zg, zb, airs, h_sep_min, z_rod, z_apex, calc, cab, c, lay, cp)
     write_report(rows, lr, bal, k, plate_g, zg, zb, airs, h_sep_min, z_rod, z_sep, z_apex, z_top_node, pairs,
                  slivers, ring_hits, net_hits, calc, cab, n_sol, bolt_gap, fails, c, layers, secs)
     print(f"peso aparente {bal[0.4]['app']:+.0f} g, total {bal[0.4]['total']:.0f} g, apice {z_apex - z_rod:.0f} mm sobre el aro, "
           f"aire min {worst:.1f} mm, {secs:.0f}s")
     print("FALLAS:", fails if fails else "ninguna")
     return 1 if fails else 0
+
+
+SUPPORT_MM2 = 300.0       # overhang area above which the piece is printed with supports (bitacora)
+
+
+def save_results(rows, bal, k, zg, zb, airs, h_sep_min, z_rod, z_apex, calc, cab, c, lay, cp):
+    """salida/simple/resultados.json: the numbers the bitacora (bitacora.py) reads instead of parsing the report."""
+    import json
+    ol, ow, oh = lay.box_outer()
+    out_w, out_h, *_ = CP.cap_dims()
+    _, _, _, _, _, x0, x_front = CP.cap_dims()
+    data = {
+        "piezas": {r["stem"]: dict(nombre=r["name"], orient=r["orient"], bbox=list(r["mc"]["bbox"]),
+                                   voladizo_mm2=r["mc"]["overhang_mm2"], soportes=r["mc"]["overhang_mm2"] > SUPPORT_MM2,
+                                   volumen_cm3=r["shape"].Volume() / 1000) for r in rows},
+        "soporte_umbral_mm2": SUPPORT_MM2,
+        "riel": dict(largo=P.SIMPLE_RAIL_L, seccion=S, pared=W, fondo_z=c.z_rail),
+        "caja": dict(exterior=[ol, ow, oh], interior=list(lay.cav), con_brida=[ol + 2 * P.BOX_FLANGE, ow + 2 * P.BOX_FLANGE],
+                     pared=P.BOX_WALL, fondo=P.BOX_FLOOR),
+        "capsula": dict(exterior=[x_front - x0, out_w, out_h], cavidad=[CP.CAP_CAV_L, CP.CAP_CAV_W, CP.CAP_CAV_H],
+                        angulo=P.SIMPLE_CAP_TILT),
+        "ventana": dict(diametro=P.WIN_DIA, espesor=P.WIN_T),
+        "gancho": dict(c_interior=P.RING_SECTION + 2 * P.SIMPLE_HOOK_C[0], pared=P.SIMPLE_HOOK_C[1],
+                       asiento=P.SIMPLE_HOOK_C[2], caida=P.HOOK_DROP, correa=P.SIMPLE_HOOK_STRAP),
+        "separador": dict(tipo=P.SEP_TYPE, seccion=list(P.SEP_SECTION), altura=P.SEP_H, altura_min=h_sep_min),
+        "pletinas": dict(por_bolsillo=k, bolsillos=2, medida=[*P.PLATE_BAR, P.PLATE_L]),
+        "peso": {f"{int(f * 100)}": dict(aire_g=b["total"], aparente_g=b["app"], sin_pletinas_g=b["app0"],
+                                          pletinas_min=b["k_need"], pletinas_max=b["k_max"]) for f, b in bal.items()},
+        "bg_mm": zb - zg, "apice_sobre_aro": z_apex - z_rod, "aire_min": min(airs.values()),
+        "fs": dict(riel=calc["riel"]["fs"], riel_capas=calc["riel"]["fs_z"], pie=calc["pie"]["fs"],
+                   pie_capas=calc["pie"]["fs_z"], gancho=calc["gancho"]["fs"]),
+        "insertos_N": calc["insertos"], "cable_mm": cab["total"],
+    }
+    (OUT / "resultados.json").write_text(json.dumps(data, indent=1, ensure_ascii=False), encoding="utf-8")
 
 
 def cable_run(c, lay, ax, az):

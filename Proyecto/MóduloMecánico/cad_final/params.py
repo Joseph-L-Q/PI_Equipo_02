@@ -62,6 +62,10 @@ FIT_CLEAR = p("impresion.holgura", 0.3, EST, VER, "Handoff; probar con el peine 
 HOLE_COMP = p("impresion.comp_agujero", 0.2, EST, VER, "Handoff; probar en impresora real")
 
 PETG_DENSITY = p("petg.densidad", 1.27, EST, VER, "Sustituir por el dato del slicer", 1.27)   # g/cm3
+FILL_FACTOR = p("costo.factor_relleno", 0.45, EST, VER,
+                "Bitacora: masa impresa = volumen solido x densidad x este factor (paredes + relleno); el slicer lo reemplaza")
+PRINT_RATE_GH = p("costo.g_por_h", 15.0, EST, VER, "Bitacora: gramos por hora de la impresora; el slicer lo reemplaza")
+FILAMENT_PRICE = p("costo.filamento_soles_kg", 90.0, EST, VER, "Bitacora: precio del PETG en soles por kg; confirmar con la boleta")
 PETG_E = p("petg.E", 1700.0, EST, VER, "PETG manual para SimScale")                            # MPa
 PETG_NU = p("petg.nu", 0.38, EST, VER, "PETG manual")
 PETG_YIELD = p("petg.sigma_y", 45.0, EST, VER, "Macizo, a lo largo de las capas", 45.0)        # MPa

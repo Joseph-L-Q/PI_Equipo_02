@@ -32,6 +32,8 @@ todo `capsula.angulo`, `aro.seccion`, `lastre.pletinas`, `separador.*`, `apice.a
    | El largo del riel, el aro o algo que puede chocar | `python cad_final/build.py --todo` | ~18 min, usa todos los núcleos |
    | Solo quieres actualizar `MEDIDAS.md` | `python cad_final/build.py --medidas` | ~15 s |
    | Solo los planos | `python cad_final/build.py --planos` | ~40 s |
+   | Bitácora: `salida/simple/BITACORA.xlsx` y `cad_final/BOM.md` (masa, horas, costo; después de `--rapido`) | `python cad_final/build.py --bitacora` | ~15 s |
+   | Masa y tiempo reales con OrcaSlicer, y la bitácora | `python cad_final/build.py --slicer` | varios min |
 
    En Windows, si no activaste el entorno, usa `.venv\Scripts\python.exe` en lugar de `python`.
 5. Mira la última línea: `TODO BIEN` o `HUBO FALLAS`. Si falla, el detalle está en `salida/_logs_build/<paso>.log`.
