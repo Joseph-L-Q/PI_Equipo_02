@@ -80,4 +80,4 @@ Por camara: 60 + 25 + conducto 152 (recto, sin curva) + bucle 84 + 30 + 30 = **3
 ## 8. Constantes de modulo
 
 - `PAD_BORE` = 30: agujero del cojin para la llave de vaso del PG7. `POCKET_END` = 8: paredes extremas de los bolsillos con los insertos M3 de M3t. `TIP_HOLE` = 8: salida del cable en la punta. `HOOK_CLR` = 10: aire entre el gancho y la capsula.
-- Tiempo de `simple.py`: 31 s.
+- Tiempo de `simple.py`: 30 s.

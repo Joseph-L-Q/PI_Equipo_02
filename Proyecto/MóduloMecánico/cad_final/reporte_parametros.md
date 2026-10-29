@@ -93,7 +93,7 @@
 | `impresion.holgura` | 0.3 | Handoff; probar con el peine de la Fase B |
 | `impresion.comp_agujero` | 0.2 | Handoff; probar en impresora real |
 | `petg.densidad` | 1.27 | Sustituir por el dato del slicer |
-| `costo.factor_relleno` | 0.45 | Bitacora: masa impresa = volumen solido x densidad x este factor (paredes + relleno); el slicer lo reemplaza |
+| `costo.factor_relleno` | 0.45 | EN DESUSO desde el 29/10 (bloque J): la bitacora usa la masa por pieza del calculo de flotacion (piel + relleno de cada pieza) |
 | `costo.g_por_h` | 15 | Bitacora: gramos por hora de la impresora; el slicer lo reemplaza |
 | `costo.filamento_soles_kg` | 90 | Bitacora: precio del PETG en soles por kg; confirmar con la boleta |
 | `petg.E` | 1700 | PETG manual para SimScale |

@@ -1,11 +1,12 @@
-"""Bitacora of the simple prototype: dimensions, weight and cost (modular D200 and the buoy for comparison).
+"""Bitacora of the simple prototype: dimensions, weight and cost (node V2, test lantern, our buoy; modular D200 to
+compare).
 
-    python bitacora.py          (from cad_final/; or: python build.py --bitacora)
+    python bitacora.py          (from cad_final/; or: python build.py --bitacora; run simple.py and boya_simple.py first)
 Writes salida/simple/BITACORA.xlsx (copy in Downloads/LanternGuard_simple_para_Drive/) and cad_final/BOM.md from the
-same data. Sheets: MEDIDAS (the team template filled with what params.py uses today), DISENO (outputs of simple.py),
-PIEZAS, HARDWARE, RESUMEN (formulas, not pasted values). Inputs in yellow, formulas in black, Arial.
-Reads: params.py, salida/simple/resultados.json (run simple.py first), the STEP/STL of every piece, and
-salida/simple/slicer.json if slicer.py ran (its mass and time replace the estimate and are marked "slicer").
+same data. Sheets: RESUMEN, PIEZAS, HARDWARE, DISENO, MEDIDAS (the team template filled with what params.py uses today).
+The printed mass of each piece is the SAME one the buoyancy uses (simple.py and boya_simple.py): solid skin of
+impresion.cascara plus the infill of the piece (relleno_%), written as volume x density x solid fraction. If slicer.py
+ran, its grams and hours replace the estimate and are marked "slicer". Inputs in yellow, formulas in black, Arial.
 """
 import datetime as dt
 import json
@@ -24,21 +25,13 @@ DRIVE_COPY = Path.home() / "Downloads" / "LanternGuard_simple_para_Drive" / "BIT
 TEMPLATE = Path.home() / "Downloads" / "LanternGuard_MEDIDAS.xlsx"
 TODAY = dt.date.today().isoformat()
 
-# (group, stem, folder of the STEP, quantity per node, description)
-SIMPLE = [("M1_caja_cuerpo", 1, "Caja, cuerpo"), ("M2_caja_tapa", 1, "Caja, tapa con asa"), ("M11_bandeja", 1, "Bandeja"),
-          ("M3s_riel_mitad", 2, "Riel, mitad"), ("M3t_tapa_bolsillo", 2, "Tapa del bolsillo del lastre"),
-          ("M5s_capsula_tapa_pie", 2, "Capsula, tapa con pie"), ("M9s_gancho", 2, "Gancho en C"),
-          ("M4_capsula_cuerpo", 2, "Capsula, cuerpo"), ("M6_capsula_bisel", 2, "Bisel de la ventana")]
+QTY_SIMPLE = {"M3s_riel_gancho": 2, "M3t_tapa_bolsillo": 2, "M5s_capsula_tapa_pie": 2, "M4_capsula_cuerpo": 2, "M6_capsula_bisel": 2}
 MODULAR = [("M1_caja_cuerpo", 1, "Caja, cuerpo"), ("M2_caja_tapa", 1, "Caja, tapa con asa"), ("M11_bandeja", 1, "Bandeja"),
            ("M3_riel_central", 1, "Riel, tramo central"), ("M3_riel_ext", 2, "Riel, extension"), ("M3_riel_punta", 2, "Riel, punta"),
            ("M3_tapa_bolsillo", 2, "Tapa del bolsillo"), ("M4_capsula_cuerpo", 2, "Capsula, cuerpo"), ("M5_capsula_tapa", 2, "Capsula, tapa con bisagra"),
            ("M6_capsula_bisel", 2, "Bisel"), ("M9_gancho", 2, "Gancho al aro"), ("M10_carro_capsula", 2, "Carro"),
            ("M12_perilla", 4, "Perilla"), ("M13_casquillo_D8", 2, "Casquillo Ø8"), ("M14_pestillo", 2, "Pestillo")]
-BOYA = [("B1_casco_central", 1, "Casco"), ("B1b_bandeja", 1, "Bandeja"), ("B2_tapa", 1, "Tapa"), ("B3_larguero_panel", 2, "Larguero del panel"),
-        ("B4_mastil_antena", 1, "Mastil de la antena"), ("B5_flotador", 4, "Flotador"), ("B5b_tapa_flotador", 4, "Tapa del flotador"),
-        ("B6_ojal_amarre", 1, "Ojal de amarre")]
-GROUPS = [("nodo simple", SAL / "simple", SIMPLE), ("linterna de prueba", SAL / "linterna_prueba", [("LR1_separador", 1, "Separador LR1")]),
-          ("boya", SAL / "boya", BOYA), ("modular D200", SAL / "preliminar", MODULAR)]
+MODULAR_SEALED = ("M1_", "M2_", "M4_", "M5_", "M3_riel_central", "M3_riel_ext")
 
 # MEDIDAS template name -> (params key, index in the tuple or None, note)
 MAP = {"aro.diametro": ("simple.aro_D", None, ""), "aro.seccion": ("aro.seccion", None, ""),
@@ -57,7 +50,7 @@ MAP = {"aro.diametro": ("simple.aro_D", None, ""), "aro.seccion": ("aro.seccion"
        "waveshare.largo": ("boya.waveshare_D", 0, ""), "waveshare.ancho": ("boya.waveshare_D", 1, ""),
        "waveshare.alto": ("boya.waveshare_D", 2, ""),
        "panel.largo": ("boya.panel", 0, ""), "panel.ancho": ("boya.panel", 1, ""), "panel.espesor": ("boya.panel", 2, ""),
-       "umbilical.diametro": ("umbilical", 0, ""), "umbilical.longitud": ("umbilical", 1, ""),
+       "umbilical.diametro": ("umbilical", 0, ""), "umbilical.longitud": ("umbilical.longitud", None, ""),
        "oring.seccion": ("junta.cordon", None, ""),
        "impresora.modelo": ("impresora.modelo", None, ""), "impresora.cama_x": ("impresora.cama", 0, ""),
        "impresora.cama_y": ("impresora.cama", 1, ""), "impresora.cama_z": ("impresora.cama", 2, ""),
@@ -72,36 +65,43 @@ NOT_IN_CAD = {"camara.agujero_diametro": "el CAD no usa los agujeros de la placa
 
 
 def piece_rows():
-    """[(group, stem, qty, description, volume cm3, bbox in the print orientation, orientation, supports)]."""
-    from checks import mesh_checks
+    """[(group, stem, qty, description, volume cm3, bbox, orientation, supports, infill text, mass g per piece)]."""
+    import fase_a as FA
     from capsula import ORIENTS
+    from checks import mesh_checks
     res = json.loads((SAL / "simple" / "resultados.json").read_text(encoding="utf-8"))
+    rb = json.loads((SAL / "simple" / "boya" / "resultados_boya.json").read_text(encoding="utf-8"))
+    thr = res["soporte_umbral_mm2"]
     rows = []
-    for group, folder, pieces in GROUPS:
-        step_dir = folder / "step" if (folder / "step").exists() else folder
-        stl_dir = folder / "stl" if (folder / "stl").exists() else folder
-        for stem, qty, desc in pieces:
-            vol = cq.importers.importStep(str(step_dir / f"{stem}.step")).val().Volume() / 1000
-            info = res["piezas"].get(stem) if group in ("nodo simple", "linterna de prueba") else None
-            if info:
-                bb, orient, sup = info["bbox"], info["orient"], info["soportes"]
-            else:
-                best = None
-                for on, o in ORIENTS.items():
-                    mc = mesh_checks(str(stl_dir / f"{stem}.stl"), P.PRINT_BED, o)
-                    if mc["fits_bed"] and (best is None or mc["overhang_mm2"] < best[1]["overhang_mm2"]):
-                        best = (on, mc)
-                bb, orient, sup = best[1]["bbox"], best[0], best[1]["overhang_mm2"] > res["soporte_umbral_mm2"]
-            rows.append((group, stem, qty, desc, vol, bb, orient, sup))
-    return rows, res
+    for stem, p in res["piezas"].items():
+        if stem.startswith("M7"):
+            continue
+        group = "linterna de prueba" if stem.startswith("LR1") else "nodo simple"
+        rel = p["relleno"] if isinstance(p["relleno"], str) else f"{p['relleno'] * 100:.0f} %"
+        rows.append((group, stem, QTY_SIMPLE.get(stem, 1), p["nombre"], p["volumen_cm3"], p["bbox"], p["orient"], p["soportes"], rel, p["masa_g"]))
+    for stem, p in rb["piezas"].items():
+        rows.append(("boya simple", stem, p["qty"], p["nombre"], p["volumen_cm3"], p["bbox"], p["orient"], p["voladizo_mm2"] > thr,
+                     f"{p['relleno'] * 100:.0f} %", p["masa_g"]))
+    for stem, qty, desc in MODULAR:
+        sh = cq.importers.importStep(str(SAL / "preliminar" / "step" / f"{stem}.step")).val()
+        inf = 1.0 if stem.startswith(MODULAR_SEALED) else 0.4
+        best = None
+        for on, o in ORIENTS.items():
+            mc = mesh_checks(str(SAL / "preliminar" / "stl" / f"{stem}.stl"), P.PRINT_BED, o)
+            if mc["fits_bed"] and (best is None or mc["overhang_mm2"] < best[1]["overhang_mm2"]):
+                best = (on, mc)
+        rows.append(("modular D200", stem, qty, desc, sh.Volume() / 1000, best[1]["bbox"], best[0], best[1]["overhang_mm2"] > thr,
+                     f"{inf * 100:.0f} %", FA.mass_g(sh, inf)))
+    return rows, res, rb
 
 
-def hardware(res):
-    """[(group, item, size, quantity)] counted from the layout where the CAD fixes them."""
+def hardware(res, rb):
+    """[(group, item, size, quantity)] counted from the models where they fix them."""
+    import boya_simple as BS
     import caja_central as CC
     import capsula as CP
     import layout
-    lay = layout.build(floors=1)
+    lay = layout.build(P.SIMPLE_ESP32_BASE, floors=P.SIMPLE_FLOORS)
     n_lid, n_tray = len(CC.screw_pts(lay)), len(layout.tray_boss_pts(lay))
     ol, ow, _ = lay.box_outer()
     L, Wd, _ = lay.cav
@@ -111,74 +111,94 @@ def hardware(res):
     cord = round((box_cord + 2 * cap_cord) * 1.1 / 10) * 10
     k = res["pletinas"]["por_bolsillo"] * res["pletinas"]["bolsillos"]
     common = [("Tornillo M3 x 12 + inserto termico M3 (tapa de la caja)", "M3", n_lid),
-              ("Tornillo M3 x 8 + inserto termico M3 (bandeja)", "M3", n_tray),
+              ("Tornillo M3 x 8 + inserto termico M3 (bandejas)", "M3", n_tray),
               ("Tornillo M3 x 16 + tuerca (capsulas)", "M3", 8),
-              ("Tornillo M4 x 12 + inserto termico M4 (riel a la caja)", "M4", 4),
               ("Tornillo M2 autorroscante (bisel)", "M2 x 6", 6),
               ("Cordon de junta torica Ø2 (caja + 2 capsulas, +10 %)", f"{cord:.0f} mm", 1),
               ("Prensaestopas PG7 con contratuerca (3 caja + 2 capsulas)", "PG7", 5),
               ("Disco de acrilico de la ventana", f"Ø{P.WIN_DIA:g} x {P.WIN_T:g}", 2),
               ("Grillete o argolla de inox (izado)", "M6", 1)]
-    simple = common + [("Tornillo M3 x 20 + tuerca (union del riel)", "M3", 4),
-                       ("Tornillo M3 x 8 avellanado + inserto M3 (tapa del bolsillo)", "M3", 4),
-                       ("Tornillo M4 x 12 + tuerca M4 en la ranura T (ganchos)", "M4", 4),
+    simple = common + [("Tornillo M4 x 20 + inserto termico M4 (bridas del riel a la caja)", "M4", 8),
+                       ("Tornillo M3 x 8 avellanado + inserto M3 (tapas del bolsillo)", "M3", 4),
                        ("Tornillo M4 x 45 + tuerca (pie de las capsulas)", "M4", 4),
-                       ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2),
-                       ("Pletina de inox", "25 x 5 x 100", k)]
-    modular = common + [("Varilla roscada M8 (8.8)", "451 mm", 1), ("Tuerca M8", "M8", 2), ("Arandela ancha DIN 9021", "M8", 2),
+                       ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Pletina de inox", "25 x 5 x 100", k)]
+    bl = 2 * ((BS.LI + BS.L) / 2 + (BS.WI + BS.Wd) / 2) * 1.1
+    boya = [("Tornillo M3 x 12 + inserto M3 (tapa de la boya)", "M3", len(BS.screw_pts())),
+            ("Tornillo M3 + inserto M3 (portabaterias y bandeja)", "M3", 8),
+            ("Tornillo M3 x 30 + inserto M3 (largueros a la tapa)", "M3", 4),
+            ("Tornillo M3 + inserto M3 (panel a los largueros)", "M3", 4),
+            ("Perno M5 x 120 inox + inserto M5 (flotadores)", "M5", 8),
+            ("Tornillo M5 + inserto M5 (ojal de amarre)", "M5", 1),
+            ("Cordon de junta torica Ø2 (tapa de la boya, +10 %)", f"{round(bl / 10) * 10:.0f} mm", 1),
+            ("Prensaestopas PG7 (umbilical y panel)", "PG7", 2),
+            ("Tapon de la boca de llenado de los flotadores (o sello con PETG)", "Ø10", 4),
+            ("Manguera flexible U1 de referencia", f"Ø{P.UMB_HOSE_D:g}", 1),
+            ("Cabo de amarre C1 boya-linterna", "Ø4", 1)]
+    modular = common + [("Tornillo M4 x 12 + inserto termico M4 (riel a la caja)", "M4", 4),
+                        ("Varilla roscada M8 (8.8)", "451 mm", 1), ("Tuerca M8", "M8", 2), ("Arandela ancha DIN 9021", "M8", 2),
                         ("Tornillo M4 x 14 + tuerca (uniones de tramos)", "M4", 8),
                         ("Tornillo M3 x 8 avellanado + inserto M3 (tapa del bolsillo)", "M3", 4),
                         ("Perno M4 hexagonal (perillas) + tuerca en la ranura T", "M4", 4),
                         ("Perno M4 x 20 + tuerca mariposa (bisagras)", "M4", 2), ("Pivote M3 del pestillo", "M3", 2),
                         ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Pletina de inox", "25 x 5 x 100", 4)]
-    return [("nodo simple", *h) for h in simple] + [("modular D200", *h) for h in modular]
+    return ([("nodo simple", *h) for h in simple] + [("boya simple", *h) for h in boya]
+            + [("modular D200", *h) for h in modular])
 
 
-def design_rows(res):
+def design_rows(res, rb):
     r = res
     w4, w1 = r["peso"]["40"], r["peso"]["100"]
     cx = r["caja"]
-    return [("Riel: largo", r["riel"]["largo"], "mm", "params.py simple.riel_L"),
-            ("Riel: seccion x pared", f"{r['riel']['seccion']:g} x {r['riel']['pared']:g}", "mm", "params.py riel.seccion, riel.pared"),
+    fem_f = SAL / "simple" / "fem" / "fem.json"
+    rows = [("Riel: largo / seccion x pared", f"{r['riel']['largo']:g} / {r['riel']['seccion']:g} x {r['riel']['pared']:g}", "mm", "params.py simple.riel_L, riel.*"),
+            ("Caja: ESP32 y pisos", f"{cx['esp32']}, {cx['pisos']} pisos", "-", "params.py simple.esp32_base (equipo), simple.caja_pisos"),
             ("Caja: exterior (sin brida)", " x ".join(f"{v:.1f}" for v in cx["exterior"]), "mm", "layout.py (derivado de la electronica)"),
             ("Caja: con brida", " x ".join(f"{v:.1f}" for v in cx["con_brida"]), "mm", "layout.py + caja.brida_ancho"),
             ("Caja: interior (cavidad)", " x ".join(f"{v:.1f}" for v in cx["interior"]), "mm", "layout.py"),
             ("Caja: pared / fondo", f"{cx['pared']:g} / {cx['fondo']:g}", "mm", "params.py caja.pared, caja.fondo"),
-            ("Capsula: exterior (largo x ancho x alto)", " x ".join(f"{v:.1f}" for v in r["capsula"]["exterior"]), "mm", "capsula.py cap_dims"),
-            ("Capsula: cavidad", " x ".join(f"{v:.1f}" for v in r["capsula"]["cavidad"]), "mm", "capsula.py (camara + holguras)"),
-            ("Capsula: angulo fijo", r["capsula"]["angulo"], "grados", "params.py capsula.angulo"),
+            ("Nodo sobre el aro (de / a)", f"{r['zmin_sobre_aro']:.0f} / {r['zmax_sobre_aro']:.0f}", "mm", "simple.py, nube de puntos del CAD"),
+            ("Capsula: exterior", " x ".join(f"{v:.1f}" for v in r["capsula"]["exterior"]), "mm", "capsula.py cap_dims"),
+            ("Capsula: angulo y acimut", f"{r['capsula']['angulo']:g} grados, {r['capsula']['acimut']}", "-", "params.py capsula.angulo, capsula.acimut (equipo)"),
             ("Ventana: diametro x espesor", f"{r['ventana']['diametro']:g} x {r['ventana']['espesor']:g}", "mm", "params.py ventana.*"),
-            ("Gancho: C interior / pared / asiento", f"{r['gancho']['c_interior']:g} / {r['gancho']['pared']:g} / {r['gancho']['asiento']:g}", "mm", "params.py aro.seccion, gancho.c"),
-            ("Gancho: fondo del riel al centro de la varilla", r["gancho"]["caida"], "mm", "params.py gancho.caida"),
-            ("Separador LR1: tipo, seccion", f"{r['separador']['tipo']}, {r['separador']['seccion'][0]:g} x {r['separador']['seccion'][1]:g}", "mm", "params.py separador.*"),
-            ("Separador: altura (minima calculada)", f"{r['separador']['altura']:g} ({r['separador']['altura_min']:.0f})", "mm", "simple.py min_separator_h"),
+            ("Gancho en C (fusionado al riel): C interior / pared / asiento", f"{r['gancho']['c_interior']:g} / {r['gancho']['pared']:g} / {r['gancho']['asiento']:g}", "mm", "params.py aro.seccion, gancho.c"),
+            ("Separador LR1: tipo, seccion, altura (minima)", f"{r['separador']['tipo']}, {r['separador']['seccion'][0]:g} x {r['separador']['seccion'][1]:g}, {r['separador']['altura']:g} ({r['separador']['altura_min']:.0f})", "mm", "params.py separador.*, simple.py"),
             ("Pletinas de lastre", f"{r['pletinas']['por_bolsillo']} x {r['pletinas']['bolsillos']} de {' x '.join(f'{v:g}' for v in r['pletinas']['medida'])}", "mm", "params.py lastre.pletinas"),
-            ("Peso en aire (bandeja 40 % / 100 %)", f"{w4['aire_g']:.0f} / {w1['aire_g']:.0f}", "g", "simple.py, volumenes del CAD"),
-            ("Peso aparente en el agua (40 % / 100 %)", f"{w4['aparente_g']:+.0f} / {w1['aparente_g']:+.0f}", "g", "simple.py (ventana +200 a +500)"),
-            ("Estabilidad BG", f"{r['bg_mm']:.1f}", "mm", "simple.py centros de masa y empuje"),
+            ("Nodo: peso en aire (bandeja 40 % / 100 %)", f"{w4['aire_g']:.0f} / {w1['aire_g']:.0f}", "g", "simple.py, masas por pieza con su relleno"),
+            ("Nodo: peso aparente (40 % / 100 %)", f"{w4['aparente_g']:+.0f} / {w1['aparente_g']:+.0f}", "g", "simple.py (ventana +200 a +500)"),
+            ("Nodo: BG", f"{r['bg_mm']:.1f}", "mm", "simple.py"),
             ("Apice sobre el aro", f"{r['apice_sobre_aro']:.0f}", "mm", "separador.altura + apice.altura"),
-            ("Aire minimo suspension-nodo", f"{r['aire_min']:.1f}", "mm", "simple.py, nube de puntos del CAD (exigido 10)"),
-            ("FS del riel (a lo largo / entre capas)", f"{r['fs']['riel']:.1f} / {r['fs']['riel_capas']:.1f}", "-", "simple.py §5"),
-            ("FS del pie de capsula (a lo largo / entre capas)", f"{r['fs']['pie']:.1f} / {r['fs']['pie_capas']:.1f}", "-", "simple.py §5 (punto debil)"),
-            ("Traccion por inserto M4 al izar", f"{r['insertos_N']:.0f}", "N", "simple.py §5"),
-            ("Cable por camara", f"{r['cable_mm']:.0f}", "mm", "simple.py §6 (> 300: prueba SPI)")]
+            ("Aire minimo suspension-nodo", f"{r['aire_min']:.1f}", "mm", "simple.py (exigido 10)"),
+            ("FS riel (capas / entre capas)", f"{r['fs']['riel']:.1f} / {r['fs']['riel_capas']:.1f}", "-", "simple.py §5, a mano"),
+            ("FS pie de capsula (capas / entre capas)", f"{r['fs']['pie']:.1f} / {r['fs']['pie_capas']:.1f}", "-", "simple.py §5, a mano"),
+            ("FS gancho (capas / entre capas)", f"{r['fs']['gancho']:.1f} / {r['fs']['gancho_capas']:.1f}", "-", "simple.py §5, a mano"),
+            ("Traccion por inserto M4 de las bridas al izar", f"{r['insertos_N']:.0f}", "N", "simple.py §5 (probar con PB8)"),
+            ("Cable por camara", f"{r['cable_mm']:.0f}", "mm", "simple.py §6 (> 300: prueba SPI)"),
+            ("Boya: masa / calado / francobordo", f"{rb['masa_g']:.0f} / {rb['calado']:.1f} / {rb['francobordo']:.1f}", "g / mm / mm", "boya_simple.py (agua de mar 1025)"),
+            ("Boya: reserva / GM balanceo y cabeceo", f"{rb['reserva'] * 100:.0f} % / {rb['GM'][0]:.0f} y {rb['GM'][1]:.0f}", "- / mm", "boya_simple.py"),
+            ("Nodo + boya en aire (limite 3000)", f"{rb['total_g']:.0f}", "g", "simple.py + boya_simple.py")]
+    for cam in r.get("camaras", []):
+        rows.append((f"Camara en Ø{cam['D']:g}: lente a la red", f"{cam['dist']:.0f}" if cam["dist"] else "no corta la red", "mm",
+                     "simple.py camera_view (FOV y enfoque estimados)"))
+    if fem_f.exists():
+        fem = json.loads(fem_f.read_text(encoding="utf-8"))
+        for k, v in fem.get("casos", {}).items():
+            rows.append((f"FEM {k}: desplazamiento max / tension max / FS", f"{v['umax']:.2f} / {v['smax']:.1f} / {v['fs']:.1f}", "mm / MPa / -", "fem"))
+    return rows
 
 
-def build_book(rows, hw, res, slicer):
+def build_book(rows, hw, res, rb, slicer):
     import openpyxl
     from openpyxl.styles import Alignment, Font, PatternFill
     from openpyxl.utils import get_column_letter
     yellow = PatternFill("solid", fgColor="FFF2CC")
     head = Font(name="Arial", bold=True)
     wb = openpyxl.load_workbook(TEMPLATE) if TEMPLATE.exists() else openpyxl.Workbook()
-
-    # MEDIDAS: the team template filled with today's params.py values (simple mode)
     ws = wb["MEDIDAS"] if "MEDIDAS" in wb.sheetnames else wb.create_sheet("MEDIDAS")
     ws.cell(1, 10, "nombre_en_params").font = head
     ws.cell(1, 11, "nota").font = head
     for r in range(3, ws.max_row + 1):
         name = ws.cell(r, 1).value
-        if not name or name not in MAP and name not in NOT_IN_CAD:
+        if not name or (name not in MAP and name not in NOT_IN_CAD):
             continue
         if name in NOT_IN_CAD:
             ws.cell(r, 11, NOT_IN_CAD[name])
@@ -191,65 +211,63 @@ def build_book(rows, hw, res, slicer):
         ws.cell(r, 10, key + (f"[{idx}]" if idx is not None else ""))
         ws.cell(r, 11, note)
 
-    # RESUMEN first (PIEZAS and HARDWARE point at its parameter cells)
     rs = wb.create_sheet("RESUMEN", 0)
-    rs["A1"] = "LanternGuard, prototipo simple Ø200: masa impresa, horas y costo"
+    rs["A1"] = "LanternGuard, prototipo simple Ø200 (nodo V2 + boya): masa impresa, horas y costo"
     rs["A1"].font = Font(name="Arial", bold=True, size=14)
-    params = [("Densidad del PETG g/cm³ (estimado)", P.PETG_DENSITY, "petg.densidad"),
-              ("Factor de relleno (estimado)", P.FILL_FACTOR, "costo.factor_relleno"),
-              ("Impresora g/h (estimado)", P.PRINT_RATE_GH, "costo.g_por_h"),
-              ("Filamento soles/kg (estimado)", P.FILAMENT_PRICE, "costo.filamento_soles_kg")]
     rs["A2"], rs["C2"] = "Parametros (amarillo = entrada; vienen de params.py)", "nombre en params.py"
-    for i, (lab, v, key) in enumerate(params):
+    for i, (lab, v, key) in enumerate([("Densidad del PETG g/cm³ (estimado)", P.PETG_DENSITY, "petg.densidad"),
+                                       ("Impresora g/h (estimado)", P.PRINT_RATE_GH, "costo.g_por_h"),
+                                       ("Filamento soles/kg (estimado)", P.FILAMENT_PRICE, "costo.filamento_soles_kg")]):
         rs.cell(3 + i, 1, lab)
         rs.cell(3 + i, 2, v).fill = yellow
         rs.cell(3 + i, 3, key)
-    hdr = ["grupo", "masa impresa g (estimado o slicer)", "horas (estimado o slicer)", "costo filamento S/",
-           "costo hardware S/", "total S/"]
+    hdr = ["grupo", "masa impresa g (estimado o slicer)", "horas (estimado o slicer)", "costo filamento S/", "costo hardware S/", "total S/"]
     for j, h in enumerate(hdr):
         rs.cell(9, 1 + j, h).font = head
-    for i, (g, *_x) in enumerate(GROUPS):
+    groups = ["nodo simple", "linterna de prueba", "boya simple", "modular D200"]
+    for i, g in enumerate(groups):
         r = 10 + i
         rs.cell(r, 1, g)
-        rs.cell(r, 2, f"=SUMIF(PIEZAS!$B:$B,$A{r},PIEZAS!$L:$L)")
-        rs.cell(r, 3, f"=SUMIF(PIEZAS!$B:$B,$A{r},PIEZAS!$N:$N)")
-        rs.cell(r, 4, f"=SUMIF(PIEZAS!$B:$B,$A{r},PIEZAS!$O:$O)")
+        rs.cell(r, 2, f"=SUMIF(PIEZAS!$B:$B,$A{r},PIEZAS!$N:$N)")
+        rs.cell(r, 3, f"=SUMIF(PIEZAS!$B:$B,$A{r},PIEZAS!$P:$P)")
+        rs.cell(r, 4, f"=SUMIF(PIEZAS!$B:$B,$A{r},PIEZAS!$Q:$Q)")
         rs.cell(r, 5, f"=SUMIF(HARDWARE!$A:$A,$A{r},HARDWARE!$F:$F)")
         rs.cell(r, 6, f"=D{r}+E{r}")
-    r = 10 + len(GROUPS)
+    r = 10 + len(groups)
     rs.cell(r, 1, "nodo simple + linterna + boya").font = head
     for col in "BCDEF":
         rs[f"{col}{r}"] = f"=SUM({col}10:{col}12)"
-    rs.cell(r + 2, 1, "Costo de hardware: llenar los precios amarillos de HARDWARE. La fila modular D200 es para comparar.")
+    rs.cell(r + 2, 1, "Masa por pieza = la misma del calculo de flotacion (piel + relleno de cada pieza). Llenar los precios "
+                      "amarillos de HARDWARE para el costo total. La fila modular D200 es para comparar.")
 
-    # PIEZAS
     ps = wb.create_sheet("PIEZAS", 1)
     hdr = ["pieza", "grupo", "descripcion", "cantidad", "X mm (orientacion de impresion)", "Y mm", "Z mm",
-           "volumen solido cm³ (CadQuery)", "orientacion", "soportes", "masa por pieza g (estimado)",
-           "masa total g", "horas por pieza (estimado)", "horas total", "costo S/", "fuente masa y horas"]
+           "volumen solido cm³ (CadQuery)", "orientacion", "soportes", "relleno_%", "fraccion maciza (piel + relleno)",
+           "masa por pieza g (estimado o slicer)", "masa total g", "horas por pieza (estimado o slicer)", "horas total",
+           "costo S/", "fuente masa y horas"]
     for j, h in enumerate(hdr):
         ps.cell(1, 1 + j, h).font = head
-    for i, (g, stem, q, desc, vol, bb, orient, sup) in enumerate(rows):
+    for i, (g, stem, q, desc, vol, bb, orient, sup, rel, m) in enumerate(rows):
         r = 2 + i
+        frac = m / (vol * P.PETG_DENSITY) if vol else 0
         for j, v in enumerate([stem, g, desc, q, round(bb[0], 1), round(bb[1], 1), round(bb[2], 1), round(vol, 2), orient,
-                               "si" if sup else "no"]):
+                               "si" if sup else "no", rel, round(frac, 3)]):
             ps.cell(r, 1 + j, v)
         sl = slicer.get(stem) if g in ("nodo simple", "linterna de prueba") else None
         if sl:
-            ps.cell(r, 11, round(sl["g"], 1))
-            ps.cell(r, 13, round(sl["h"], 2))
-            ps.cell(r, 16, "slicer")
+            ps.cell(r, 13, round(sl["g"], 1))
+            ps.cell(r, 15, round(sl["h"], 2))
+            ps.cell(r, 18, "slicer")
         else:
-            ps.cell(r, 11, f"=H{r}*RESUMEN!$B$3*RESUMEN!$B$4")
-            ps.cell(r, 13, f"=K{r}/RESUMEN!$B$5")
-            ps.cell(r, 16, "estimado")
-        ps.cell(r, 12, f"=K{r}*D{r}")
+            ps.cell(r, 13, f"=H{r}*RESUMEN!$B$3*L{r}")
+            ps.cell(r, 15, f"=M{r}/RESUMEN!$B$4")
+            ps.cell(r, 18, "estimado")
         ps.cell(r, 14, f"=M{r}*D{r}")
-        ps.cell(r, 15, f"=L{r}/1000*RESUMEN!$B$6")
-    ps.cell(len(rows) + 3, 1, f"Soportes: si el voladizo en la orientacion de impresion pasa de {res['soporte_umbral_mm2']:g} mm². "
-            "Masa estimada = volumen x densidad x factor de relleno; horas = masa / g por hora (RESUMEN).")
+        ps.cell(r, 16, f"=O{r}*D{r}")
+        ps.cell(r, 17, f"=N{r}/1000*RESUMEN!$B$5")
+    ps.cell(len(rows) + 3, 1, f"Soportes: voladizo en la orientacion de impresion > {res['soporte_umbral_mm2']:g} mm². Masa = volumen x "
+            "densidad x fraccion maciza (piel de impresion.cascara + relleno); horas = masa / g por hora (RESUMEN).")
 
-    # HARDWARE
     hs = wb.create_sheet("HARDWARE", 2)
     for j, h in enumerate(["grupo", "item", "medida", "cantidad", "precio unitario S/ (llenar)", "subtotal S/"]):
         hs.cell(1, 1 + j, h).font = head
@@ -260,11 +278,10 @@ def build_book(rows, hw, res, slicer):
         hs.cell(r, 5).fill = yellow
         hs.cell(r, 6, f"=D{r}*E{r}")
 
-    # DISENO
     ds = wb.create_sheet("DISEÑO", 3)
     for j, h in enumerate(["concepto", "valor", "unidad", "de donde sale"]):
         ds.cell(1, 1 + j, h).font = head
-    for i, row in enumerate(design_rows(res)):
+    for i, row in enumerate(design_rows(res, rb)):
         for j, v in enumerate(row):
             ds.cell(2 + i, 1 + j, v)
 
@@ -282,16 +299,16 @@ def build_book(rows, hw, res, slicer):
     return wb
 
 
-def totals(rows, hw, slicer):
-    """Same numbers as the RESUMEN formulas, for BOM.md (hardware prices are empty: cost 0 until filled)."""
+def totals(rows, slicer):
+    """Same numbers as the RESUMEN formulas (hardware prices are empty: cost 0 until filled)."""
     out = {}
-    for g, *_x in GROUPS:
+    for g in ("nodo simple", "linterna de prueba", "boya simple", "modular D200"):
         m = h = 0.0
-        for gg, stem, q, desc, vol, *_r in rows:
+        for gg, stem, q, desc, vol, bb, orient, sup, rel, mu in rows:
             if gg != g:
                 continue
             sl = slicer.get(stem) if g in ("nodo simple", "linterna de prueba") else None
-            mu = sl["g"] if sl else vol * P.PETG_DENSITY * P.FILL_FACTOR
+            mu = sl["g"] if sl else mu
             hu = sl["h"] if sl else mu / P.PRINT_RATE_GH
             m += mu * q
             h += hu * q
@@ -299,42 +316,42 @@ def totals(rows, hw, slicer):
     return out
 
 
-def write_md(rows, hw, res, slicer):
-    t = totals(rows, hw, slicer)
+def write_md(rows, hw, res, rb, slicer):
+    t = totals(rows, slicer)
     L = ["# BOM y bitacora del prototipo simple (generado por `bitacora.py`)", "",
          f"No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `salida/simple/BITACORA.xlsx`. "
-         f"Parametros de costo (estimados, `params.py`): densidad {P.PETG_DENSITY:g} g/cm³, factor de relleno {P.FILL_FACTOR:g}, "
-         f"{P.PRINT_RATE_GH:g} g/h, {P.FILAMENT_PRICE:g} soles/kg. Fuente de masa y horas: "
-         f"{'slicer (OrcaSlicer) en las piezas del nodo simple' if slicer else 'estimado (sin slicer todavia)'}.", "",
+         f"Masa por pieza = la del calculo de flotacion (piel + relleno de cada pieza: 100 % cajas estancas, tapas con junta y "
+         f"ganchos; 40 % riel, bandejas y bisel). Parametros de costo (estimados): densidad {P.PETG_DENSITY:g} g/cm³, "
+         f"{P.PRINT_RATE_GH:g} g/h, {P.FILAMENT_PRICE:g} soles/kg. Fuente: "
+         f"{'slicer (OrcaSlicer) en el nodo' if slicer else 'estimado (sin slicer todavia)'}.", "",
          "## Resumen", "", "| Grupo | Masa impresa g | Horas | Costo filamento S/ |", "|---|---|---|---|"]
     for g, v in t.items():
         L.append(f"| {g} | {v['masa']:.0f} | {v['horas']:.1f} | {v['costo']:.2f} |")
     L += ["", "El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).", "",
-          "## Piezas", "", "| Pieza | Grupo | Cant. | X × Y × Z mm | Volumen cm³ | Orientacion | Soportes | Masa por pieza g | Fuente |",
-          "|---|---|---|---|---|---|---|---|---|"]
-    for g, stem, q, desc, vol, bb, orient, sup in rows:
+          "## Piezas", "", "| Pieza | Grupo | Cant. | X × Y × Z mm | Volumen cm³ | Orientacion | Soportes | Relleno | Masa por pieza g | Fuente |",
+          "|---|---|---|---|---|---|---|---|---|---|"]
+    for g, stem, q, desc, vol, bb, orient, sup, rel, mu in rows:
         sl = slicer.get(stem) if g in ("nodo simple", "linterna de prueba") else None
-        mu = sl["g"] if sl else vol * P.PETG_DENSITY * P.FILL_FACTOR
         L.append(f"| {stem} | {g} | {q} | {bb[0]:.1f} × {bb[1]:.1f} × {bb[2]:.1f} | {vol:.1f} | {orient} | {'si' if sup else 'no'} | "
-                 f"{mu:.0f} | {'slicer' if sl else 'estimado'} |")
+                 f"{rel} | {sl['g'] if sl else mu:.0f} | {'slicer' if sl else 'estimado'} |")
     L += ["", "## Hardware", "", "| Grupo | Item | Medida | Cantidad |", "|---|---|---|---|"]
     L += [f"| {g} | {it} | {sz} | {q} |" for g, it, sz, q in hw]
-    L += ["", "## Diseño (salidas de `simple.py`)", "", "| Concepto | Valor | Unidad | De donde sale |", "|---|---|---|---|"]
-    L += [f"| {a} | {b} | {c} | {d} |" for a, b, c, d in design_rows(res)]
+    L += ["", "## Diseño", "", "| Concepto | Valor | Unidad | De donde sale |", "|---|---|---|---|"]
+    L += [f"| {a} | {b} | {c} | {d} |" for a, b, c, d in design_rows(res, rb)]
     (HERE / "BOM.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     return t
 
 
 def main():
-    rows, res = piece_rows()
-    hw = hardware(res)
+    rows, res, rb = piece_rows()
+    hw = hardware(res, rb)
     sf = SAL / "simple" / "slicer.json"
     slicer = json.loads(sf.read_text(encoding="utf-8")) if sf.exists() else {}
-    wb = build_book(rows, hw, res, slicer)
+    wb = build_book(rows, hw, res, rb, slicer)
     wb.save(OUT_XLSX)
     if DRIVE_COPY.parent.exists():
         shutil.copy2(OUT_XLSX, DRIVE_COPY)
-    t = write_md(rows, hw, res, slicer)
+    t = write_md(rows, hw, res, rb, slicer)
     for g, v in t.items():
         print(f"{g:20s} masa {v['masa']:7.0f} g  horas {v['horas']:6.1f}  filamento S/ {v['costo']:7.2f}")
     print("written", OUT_XLSX, "and BOM.md", "(slicer)" if slicer else "(estimado)")
