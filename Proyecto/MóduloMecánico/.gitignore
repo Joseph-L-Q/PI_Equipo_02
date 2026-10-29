@@ -15,3 +15,6 @@ salida/_logs_build/
 # Claves de la API de Onshape (cad_final/onshape_sync.py) y su contador local de llamadas
 .env
 cad_final/onshape_calls.log
+
+# Configuracion local de rclone (tiene el token de Google Drive)
+rclone.conf
