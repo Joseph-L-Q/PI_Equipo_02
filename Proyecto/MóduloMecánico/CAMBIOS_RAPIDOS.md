@@ -29,7 +29,16 @@ mano: se cambia el número en `params.py` y se regenera.
    En Windows, si no activaste el entorno, usa `.venv\Scripts\python.exe` en lugar de `python`.
 5. Mira la última línea: `TODO BIEN` o `HUBO FALLAS`. Si falla, el detalle está en `salida/_logs_build/<paso>.log`.
    Lo normal es que una medida nueva haga chocar dos piezas: el log dice cuáles.
-6. Actualiza Onshape con los STEP nuevos (`ONSHAPE.md`).
+6. Actualiza Onshape con los STEP nuevos (detalle en `ONSHAPE.md`):
+
+   ```
+   python cad_final/onshape_sync.py --actualizar M9 --dry-run   # qué subiría y cuántas llamadas gasta
+   python cad_final/onshape_sync.py --actualizar M9             # sube el STEP nuevo de M9 al documento
+   ```
+
+   - `M3` sube las cuatro piezas del riel. Si el STEP no cambió, no gasta llamadas.
+   - Después, **a mano en Onshape**: clic derecho en la pestaña del Part Studio de esa pieza → **Update...** y eliges el
+     mismo STEP. La API no tiene ese paso; sin él el Part Studio sigue con la forma vieja.
 
 ## Los cambios más comunes
 

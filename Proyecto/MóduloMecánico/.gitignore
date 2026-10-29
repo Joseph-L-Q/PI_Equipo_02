@@ -11,3 +11,7 @@ salida/ensambles/*.step
 # Entorno local y logs de cad_final/build.py
 .venv/
 salida/_logs_build/
+
+# Claves de la API de Onshape (cad_final/onshape_sync.py) y su contador local de llamadas
+.env
+cad_final/onshape_calls.log
