@@ -11,7 +11,7 @@ import cadquery as cq
 
 import layout as LY
 from params import (BASE_M4_BOSS, BASE_M4_PTS, BOX_FLANGE, BOX_FLANGE_T, BOX_FLOOR, BOX_LID_T, BOX_SCREW_PITCH,
-                    BOX_WALL, COMPONENTS, GAP_WALL, GROOVE_DEPTH, GROOVE_WIDTH, HANDLE_GRIP, HANDLE_H,
+                    BOX_WALL, COMPONENTS, GAP_WALL, GROOVE_DEPTH, GROOVE_WIDTH, HANDLE_EYE, HANDLE_GRIP, HANDLE_H,
                     M3_CLEAR, M3_INSERT_DEPTH, M3_INSERT_HOLE, M4_INSERT_DEPTH, M4_INSERT_HOLE, PG7_HOLE,
                     PG7_INNER_H, PG7_NUT_AF, POCKET_DEPTH, POCKET_IN_BOX, POCKET_L, POCKET_RAIL_GAP, POCKET_WALL,
                     RAIL_SECTION, TRAY2_POST_D, TRAY_BOSS_D, TRAY_STANDOFF, TRAY_T)
@@ -133,8 +133,14 @@ def box_lid(lay):
               .polyline([(-hw, zt), (hw, zt), (hw, zt + wall_h), (hw - roof, zt + wall_h + roof),
                          (-hw + roof, zt + wall_h + roof), (-hw, zt + wall_h)]).close().extrude(12))
     handle = handle.cut(window).edges("|Y").fillet(3)
-    eye = cq.Workplane("XZ").workplane(offset=-6).center(0, zt + HANDLE_H + 6).circle(10).circle(5).extrude(12)
+    eo, ei, _ = HANDLE_EYE
+    eye = cq.Workplane("XZ").workplane(offset=-6).center(0, eye_center(lay)[2]).circle(eo / 2).circle(ei / 2).extrude(12)
     return lid.union(handle).union(eye)
+
+
+def eye_center(lay):
+    """Centre of the anchor eye on top of the handle (box frame); the eye axis runs along Y."""
+    return (0.0, 0.0, lay.box_outer()[2] + BOX_LID_T + HANDLE_H + HANDLE_EYE[2])
 
 
 # ------------------------------------------------------------------ M11 tray + dummies

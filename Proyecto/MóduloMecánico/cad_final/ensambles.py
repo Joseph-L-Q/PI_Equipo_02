@@ -3,7 +3,7 @@
 python ensambles.py build            -> construye cada pieza una vez y la guarda como BREP en salida/ensambles/_cache
 python ensambles.py case <caso>      -> interferencias, barrido de bisagra, apice minimo, renders y STEP de un caso
 python ensambles.py report           -> une los JSON de los casos en reporte_ensambles.md
-Casos: 100, 100e1 (variante con 1 extension por lado), 200, 300, 500.
+Casos: 100, 200, 300, 500 (riel de la decision del 29/10: punta + extensiones a paso 100, varilla M8).
 Marco comun: el de la caja (fondo exterior z = 0); el fondo del riel queda en z_rail.
 """
 import json
@@ -22,6 +22,7 @@ import capsula
 import gancho
 import layout
 import riel
+from params import (BOX_FLANGE, BOX_LID_T, CORD_WRAP_GAP, HANDLE_EYE, LANTERN_HANG, LANTERN_WATER_N)
 from params import (CAM_TILT_DEG, CARRIAGE_L, CARRIAGE_TRAVEL, CORD_CLEAR, HOOK_DROP, INTERF_TOL, LANTERN_APEX_H,
                     LANTERN_CORD_AZ, LANTERN_CORD_D, LANTERN_NET_K, LANTERN_NET_T, LANTERN_ROD_D,
                     PLATE_POCKET_LAYERS, RAIL_CENTRAL_L, RAIL_EXT_L, RAIL_EXT_PER_RING, RING_DIAMETERS, SWEEP_S,
@@ -32,8 +33,8 @@ OUT = HERE.parent / "salida" / "ensambles"
 CACHE = OUT / "_cache"
 LAP = riel.LAP
 Z0, Z1 = cq.Vector(0, 0, 0), cq.Vector(0, 0, 1)
-CASES = {"100": (100.0, None), "100e1": (100.0, 1), "200": (200.0, None), "300": (300.0, None), "500": (500.0, None)}
-S_NOM = CARRIAGE_TRAVEL
+CASES = {"100": (100.0, None), "200": (200.0, None), "300": (300.0, None), "500": (500.0, None)}
+S_NOM = SWEEP_S[0]            # carriage flush with the tip: with the rail of 29/10 the only position free of the hook in Ø100/300/500
 TILTS = [int(t) for t in np.arange(0, 90 + 1e-9, SWEEP_TILT_STEP)]
 
 
@@ -63,13 +64,17 @@ def cache_pieces():
     pc, c = build_pieces()
     for k, v in pc.items():
         v.exportBrep(str(CACHE / f"{k}.brep"))
-    (CACHE / "dims.json").write_text(json.dumps({"z_rail": c.z_rail, "x_joint": c.x_joint}))
+    lay = layout.build(floors=1)
+    ol, ow, oh = lay.box_outer()
+    (CACHE / "dims.json").write_text(json.dumps({"z_rail": c.z_rail, "x_joint": c.x_joint, "eye": CC.eye_center(lay),
+                                                 "foot": (ol / 2 + BOX_FLANGE, ow / 2 + BOX_FLANGE, oh + BOX_LID_T)}))
     print("pieces cached:", len(pc), f"{time.time() - t0:.0f}s", "z_rail", c.z_rail, "x_joint", c.x_joint)
 
 
 def load_pieces():
     pc = {p.stem: cq.Shape.importBrep(str(p)) for p in CACHE.glob("*.brep")}
     d = json.loads((CACHE / "dims.json").read_text())
+    load_pieces.dims = d
     return pc, d["z_rail"], d["x_joint"]
 
 
@@ -118,6 +123,7 @@ def node_parts(pc, z_rail, xj, D, n, s, tilt):
             out[k] = (v, "riel")
         elif k.startswith("pletina_"):
             out["lastre " + k] = (v, "lastre")
+    out.update({k: (v.val(), "riel") for k, v in riel.rod_parts(n, z_rail).items()})
     for side in (1, -1):
         sg = "+X" if side > 0 else "-X"
         for k, (name, x0) in enumerate(riel.placements(n)):
@@ -134,7 +140,7 @@ def node_parts(pc, z_rail, xj, D, n, s, tilt):
 def lantern(D, z_rod, apex_h):
     R = D / 2
     ring = cq.Solid.makeTorus(R, LANTERN_ROD_D / 2, cq.Vector(0, 0, z_rod), Z1)
-    cords = cords_at(D, z_rod, apex_h)
+    cords = cords_to_eye(D, z_rod)[0] if D in LANTERN_HANG else cords_at(D, z_rod, apex_h)
     h = LANTERN_NET_K * D
     net = cq.Solid.makeCylinder(R, h, cq.Vector(0, 0, z_rod - h), Z1).cut(
         cq.Solid.makeCylinder(R - LANTERN_NET_T, h + 2, cq.Vector(0, 0, z_rod - h - 1), Z1))
@@ -149,6 +155,41 @@ def cords_at(D, z_rod, apex_h, extra_r=0.0):
         v = q - p
         out.append(cq.Solid.makeCylinder(LANTERN_CORD_D / 2 + extra_r, v.Length, p, v))
     return out
+
+
+def cord_path(D, z_rod, a):
+    """Cord tied to the handle eye (D in LANTERN_HANG): ring -> under the box rim -> up the side -> over the lid rim ->
+    the eye. It goes round the box outline at CORD_WRAP_GAP (in reality it rests on the rim). Ends at the eye surface."""
+    d = load_pieces.dims
+    hx, hy, z_top = d["foot"]
+    ex, ey, ez = d["eye"]
+    u = (math.cos(math.radians(a)), math.sin(math.radians(a)))
+    t = min(hx / abs(u[0]) if abs(u[0]) > 1e-9 else math.inf, hy / abs(u[1]) if abs(u[1]) > 1e-9 else math.inf)
+    off = LANTERN_CORD_D / 2 + CORD_WRAP_GAP
+    rr = t + off * math.sqrt(2)
+    p0 = cq.Vector(D / 2 * u[0], D / 2 * u[1], z_rod)
+    p1 = cq.Vector(rr * u[0], rr * u[1], -off)
+    p2 = cq.Vector(rr * u[0], rr * u[1], z_top + off)
+    eye = cq.Vector(ex, ey, ez)
+    v = p2 - eye
+    p3 = eye + v * ((HANDLE_EYE[0] / 2 + off) / v.Length)
+    return [p0, p1, p2, p3]
+
+
+def cords_to_eye(D, z_rod):
+    out, lengths = [], []
+    for a in LANTERN_CORD_AZ:
+        pts = cord_path(D, z_rod, a)
+        segs = []
+        for p, q in zip(pts, pts[1:]):
+            v = q - p
+            segs.append(cq.Solid.makeCylinder(LANTERN_CORD_D / 2, v.Length, p, v))
+        c = segs[0]
+        for sg in segs[1:]:
+            c = c.fuse(sg)
+        out.append(c)
+        lengths.append(sum((q - p).Length for p, q in zip(pts, pts[1:])))
+    return out, lengths
 
 
 # ------------------------------------------------------------------ boolean helpers
@@ -335,7 +376,11 @@ def run_case(case):
 
     # minimum apex height
     solids = [v[0] for k, v in nodes.items() if v[1] not in ("gancho_libre", "carro_libre")]
-    res["apex"] = min_apex(D, z_rod, solids)
+    if D in LANTERN_HANG:
+        res["apex"] = dict(min_H=None, mode="asa", lengths=cords_to_eye(D, z_rod)[1], eye=load_pieces.dims["eye"],
+                           note="cuerdas amarradas al ojal del asa")
+    else:
+        res["apex"] = min_apex(D, z_rod, solids)
     print(case, "apice minimo", res["apex"], f"{time.time() - t0:.0f}s", flush=True)
 
     # renders and STEP
@@ -357,16 +402,17 @@ def run_case(case):
 def report():
     L = ["# Ensambles (Fase D)", "",
          "Nodo completo sobre la linterna de referencia (esquematica: aro Ø8 en el plano horizontal a la altura del centro de la varilla, "
-         "4 cuerdas Ø4 a 45/135/225/315 grados, red cilindro de 1 mm de espesor y alto D). Todos los valores de la linterna son "
+         "4 cuerdas Ø4 a 45/135/225/315 grados, red cilindro de 1 mm de espesor y alto D). En Ø100 y Ø200 las cuerdas se "
+         "amarran al ojal del asa del nodo; en Ø300 y Ø500 van a un apice sobre el aro. Todos los valores de la linterna son "
          "`estimado / por_verificar` (ver `params.py`, bloque `# ensambles (Fase D)`). Umbral de interferencia: volumen comun > 0.01 mm3.",
-         "Posicion nominal: carro con s = 50 (punta del riel 50 mm pasada la manga), capsula a 40 grados. "
+         f"Posicion nominal: carro con s = {S_NOM:g} (manga a ras de la punta del riel), capsula a 40 grados. "
          "El lado -X es la misma pieza girada 180 grados sobre Z (como `riel.py`). El barrido de bisagra se calcula en el lado +X.", ""]
     data = {c: json.loads((OUT / f"_res_{c}.json").read_text()) for c in CASES if (OUT / f"_res_{c}.json").exists()}
     L += ["## Resumen", "", "| Caso | Ext/lado | Largo del riel | Bbox X | Bbox Y | Bbox Z | Pares con interferencia | Nodo vs linterna | Apice minimo (10 mm) |",
           "|---|---|---|---|---|---|---|---|---|"]
     for c, r in data.items():
         a = r["apex"]
-        ap = f"{a['min_H']:.0f} mm" if a["min_H"] else "no existe"
+        ap = "al ojal del asa" if a.get("mode") == "asa" else (f"{a['min_H']:.0f} mm" if a["min_H"] else "no existe")
         b = r["bbox"]
         L.append(f"| D{c} | {r['n_ext']} | {r['rail_L']:.0f} | {b['x'][0]:.0f} a {b['x'][1]:.0f} | {b['y'][0]:.0f} a {b['y'][1]:.0f} | "
                  f"{b['z'][0]:.0f} a {b['z'][1]:.0f} | {len(r['pairs'])} | {len(r['lantern'])} | {ap} |")
@@ -386,7 +432,7 @@ def report():
                 L.append(f"| {k} | " + " | ".join(f"{d.get(str(int(s)), 0):.2f}" for s in SWEEP_S) + " |")
         else:
             L.append("Ninguna.")
-        L += ["", "### Nodo contra la linterna (apice 400)", ""]
+        L += ["", "### Nodo contra la linterna" + (" (cuerdas al ojal del asa)" if r["apex"].get("mode") == "asa" else " (apice 400)"), ""]
         if r["lantern"]:
             L += ["| Pieza | Linterna | mm3 |", "|---|---|---|"] + [f"| {a} | {b} | {v:.2f} |" for a, b, v in sorted(r["lantern"], key=lambda x: -x[2])]
         else:
@@ -404,6 +450,14 @@ def report():
             txt = "; ".join(f"{k} {v:.1f} mm3 (tilt {t})" for k, (v, t) in sorted(targets.items(), key=lambda x: -x[1][0])) or "ninguno"
             L.append(f"| {int(s)} | {free if free else 'ninguno'} | {bad if bad else 'ninguno'} | {txt} |")
         a = r["apex"]
+        if a.get("mode") == "asa":
+            L += ["", "### Cuerdas amarradas al ojal del asa (decision del 29/10)", "",
+                  f"La linterna cuelga del nodo: las 4 cuerdas suben del aro, rodean el borde de la caja y la tapa, y se amarran al "
+                  f"ojal del asa (centro a z = {a['eye'][2]:.0f}). Largo de cada cuerda del aro al ojal: "
+                  f"{', '.join(f'{x:.0f}' for x in a['lengths'])} mm. Las interferencias de las cuerdas con el nodo estan en la "
+                  "tabla \"Nodo contra la linterna\": el modelo deja la cuerda a 0.5 mm del borde, en la realidad apoya. "
+                  f"Asa verificada con 150 N + {LANTERN_WATER_N:g} N de la linterna en `reporte_verificacion.md` §6."]
+            continue
         L += ["", "### Apice minimo de las cuerdas", ""]
         if a["min_H"]:
             L.append(f"Altura minima del apice sobre el aro para 10 mm de aire entre cuerda y cualquier pieza del nodo: **{a['min_H']:.0f} mm** "

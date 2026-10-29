@@ -236,6 +236,9 @@ BASE_M4_PTS = p("caja.base_m4", ((40.0, 20.0), (40.0, -20.0), (-40.0, 20.0), (-4
 BASE_M4_BOSS = p("caja.base_m4_boss", (10.0, 6.0), EST, VER, "Ø x alto del refuerzo interior del inserto M4")
 HANDLE_H = p("asa.alto", 42.0, "equipo", OK, "Asa con ojal para el cabo", 42.0)
 HANDLE_GRIP = p("asa.agarre", 90.0, EST, VER, "Ancho de mano con guante", 90.0)
+HANDLE_EYE = p("asa.ojal", (20.0, 10.0, 6.0), EST, VER,
+               "Ojal del cabo sobre el asa: Ø exterior, Ø interior, altura del centro sobre el asa (de cad/parts.py). "
+               "En Ø100 y Ø200 tambien se amarran ahi las 4 cuerdas de la linterna")
 
 # prensaestopas
 PG7_HOLE = p("pg7.agujero", 12.6, EST, VER, "Rosca PG7 12.5", 12.6)
@@ -443,6 +446,8 @@ RAIL_EXT_RULE = p("riel.regla_extensiones", "equipo", "equipo", OK,
 LANTERN_HANG = p("ensamble.cuerdas_al_asa", (100.0, 200.0), "equipo", OK,
                  "Aros en los que las cuerdas de la linterna se amarran al ojal del asa del nodo (la linterna cuelga del "
                  "nodo); en los demas van al apice sobre el aro (29/10)")
+CORD_WRAP_GAP = p("ensamble.cuerda_aire_borde", 0.5, EST, VER,
+                  "Aire del modelo entre la cuerda y el borde de la caja por donde la rodea (en la realidad apoya)")
 LANTERN_WATER_N = p("ensamble.linterna_peso_agua_N", 30.0, EST, VER,
                     "Peso en el agua de la linterna (aro, red, cuerdas y carga) que cuelga del asa; pesarla")
 RAIL_LAYOUT_GAP = p("riel.holgura_gancho_carro", 1.0, EST, VER, "Aire a lo largo del riel entre la brida del gancho y la manga del carro")

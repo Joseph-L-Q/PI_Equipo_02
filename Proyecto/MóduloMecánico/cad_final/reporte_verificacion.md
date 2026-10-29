@@ -99,6 +99,17 @@ Varilla en x = 0; alma de 12 × 12 de x = −12 a 0 (excentricidad e = 6); M4 de
 - Patas del asa: tracción a través de las capas, F/2 sobre 12 × 12: 0.52 MPa → FS 42 (22).
 - 10 tornillos M3 con inserto en la brida: si sólo los tornillos llevan el izado, **15.0 N por inserto**, más la reacción de la junta tórica comprimida (sin dato: depende de la dureza del cordón).
 
+### 6b. Linterna colgada del ojal del asa (Ø100, Ø200, decisión del 29/10)
+
+Las 4 cuerdas de la linterna se amarran al ojal del asa. Carga: 150 N de manipulación + 30 N de la linterna en el agua (estimado, `ensamble.linterna_peso_agua_N`) = **180 N** en el asa.
+
+- Barra del asa: σ = 20.2 MPa → FS 2.2 (45).
+- Patas: 0.62 MPa a través de las capas → FS 35 (22).
+- Ojal (Ø20 / Ø10, 12 de ancho): dos secciones de 5 × 12 = 120 mm² → 1.5 MPa de tracción; con la flexión de un anillo cargado por un cabo (factor 3 típico) unos 4.5 MPa → FS 5 aun entre capas.
+- Cuello del ojal sobre la barra (192 mm², a través de las capas): 0.94 MPa → FS 23 (22).
+- Insertos M3 de la tapa si el izado pasa por ellos: 18.0 N por inserto.
+- **Espacio en el ojal:** el agujero de Ø10 (79 mm²) tiene que recibir el cabo del nodo y las 4 cuerdas de Ø4 (50 mm²): no entran los nudos. Conviene un grillete o una argolla de acero en el ojal y amarrar las cuerdas a la argolla.
+
 ## 7. Bisagra dentada
 
 - Peso de la cápsula con contenido en aire: 128 g, centro a 43 del eje → par T = 54 N·mm (en el agua casi neutra: desplaza 128 cm³).

@@ -26,7 +26,8 @@ from params import (BASE_M4_PTS, BOX_FLOOR, BOX_LID_T, BOX_WALL, CAP_WALL, CAPSU
                     KNOB_FREE_EXTRA, LENS_APERTURE, M4_CLEAR, M4_NUT, PETG_E, PETG_NU, PETG_YIELD, PETG_YIELD_Z,
                     RAIL_DOVETAIL, RAIL_DOVETAIL_KEY, RAIL_CENTRAL_L, RAIL_EXT_L, RAIL_EXT_PER_RING, RAIL_LAP_Z,
                     RAIL_SECTION, RAIL_TSLOT, RING_DIAMETERS, DESIGN_PRESSURE, WIN_T, M8_ROD, RAIL_ROD_M8,
-                    RAIL_TIP_END_T, RAIL_TSLOT_RIB, RAIL_WALL, ROD_GRADE, ROD_HOLE, ROD_PRELOAD_N, ROD_WASHER)
+                    RAIL_TIP_END_T, RAIL_TSLOT_RIB, RAIL_WALL, ROD_GRADE, ROD_HOLE, ROD_PRELOAD_N, ROD_WASHER,
+                    HANDLE_EYE, LANTERN_CORD_D, LANTERN_HANG, LANTERN_WATER_N, RING_CORDS as LANTERN_CORDS_N)
 
 HERE = Path(__file__).resolve().parent
 F = HANDLING_LOAD_N
@@ -305,6 +306,26 @@ def main():
           f"- Patas del asa: tracción a través de las capas, F/2 sobre 12 × 12: {F / 2 / 144:.2f} MPa → FS {fs(F / 2 / 144)[1]:.0f} (22).",
           f"- {len(pts)} tornillos M3 con inserto en la brida: si sólo los tornillos llevan el izado, **{F / len(pts):.1f} N por inserto**, "
           "más la reacción de la junta tórica comprimida (sin dato: depende de la dureza del cordón)."]
+    # 6b. lantern hanging from the handle eye (decision 29/10, D in LANTERN_HANG)
+    Fh = F + LANTERN_WATER_N
+    s_h2 = Fh * HANDLE_GRIP / 4 / (12.0 * bar_t ** 2 / 6)
+    eo, ei, rise = HANDLE_EYE
+    A_eye = 2 * (eo - ei) / 2 * 12.0
+    neck = 2 * math.sqrt((eo / 2) ** 2 - (rise) ** 2) * 12.0          # eye ring cut by the top of the handle bar
+    cords_A = LANTERN_CORDS_N * math.pi / 4 * LANTERN_CORD_D ** 2
+    r += ["", f"### 6b. Linterna colgada del ojal del asa (Ø{', Ø'.join(f'{d:g}' for d in LANTERN_HANG)}, decisión del 29/10)", "",
+          f"Las 4 cuerdas de la linterna se amarran al ojal del asa. Carga: {F:g} N de manipulación + {LANTERN_WATER_N:g} N de la "
+          f"linterna en el agua (estimado, `ensamble.linterna_peso_agua_N`) = **{Fh:g} N** en el asa.", "",
+          f"- Barra del asa: σ = {s_h2:.1f} MPa → FS {fs(s_h2)[0]:.1f} (45).",
+          f"- Patas: {Fh / 2 / 144:.2f} MPa a través de las capas → FS {fs(Fh / 2 / 144)[1]:.0f} (22).",
+          f"- Ojal (Ø{eo:g} / Ø{ei:g}, {12:g} de ancho): dos secciones de {(eo - ei) / 2:g} × 12 = {A_eye:.0f} mm² → "
+          f"{Fh / A_eye:.1f} MPa de tracción; con la flexión de un anillo cargado por un cabo (factor 3 típico) unos "
+          f"{3 * Fh / A_eye:.1f} MPa → FS {fs(3 * Fh / A_eye)[1]:.0f} aun entre capas.",
+          f"- Cuello del ojal sobre la barra ({neck:.0f} mm², a través de las capas): {Fh / neck:.2f} MPa → FS {fs(Fh / neck)[1]:.0f} (22).",
+          f"- Insertos M3 de la tapa si el izado pasa por ellos: {Fh / len(pts):.1f} N por inserto.",
+          f"- **Espacio en el ojal:** el agujero de Ø{ei:g} ({math.pi / 4 * ei ** 2:.0f} mm²) tiene que recibir el cabo del nodo y las "
+          f"4 cuerdas de Ø{LANTERN_CORD_D:g} ({cords_A:.0f} mm²): no entran los nudos. Conviene un grillete o una argolla de acero "
+          "en el ojal y amarrar las cuerdas a la argolla."]
 
     # 7. hinge
     m_cap = CAPSULE_SET_G + CAPSULE_CONTENT_G
