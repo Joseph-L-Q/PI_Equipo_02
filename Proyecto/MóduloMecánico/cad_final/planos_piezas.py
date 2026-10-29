@@ -8,7 +8,7 @@ table of important dimensions from piezas.py (value, params.py name, estado). Th
 """
 import logging
 import sys
-from datetime import date
+import textwrap
 from pathlib import Path
 
 import cadquery as cq
@@ -82,6 +82,32 @@ def load(pz):
     raise FileNotFoundError(pz.step)
 
 
+def notes(pz):
+    """Sheet notes for the new design, every number from params.py (the cad/ notes for 15 m do not apply)."""
+    n = ["Cotas en mm. Tolerancias generales según ISO 2768-m.",
+         "Tornillería M3/M4 de acero inoxidable A4 (AISI 316); la varilla M8 según riel.varilla_grado."]
+    if pz.code in ("M1", "M2", "M4", "M5"):
+        kpa = P.SEAWATER_DENSITY * 9.81 * P.DESIGN_DEPTH_M          # g/cm3 * m/s2 * m = kPa
+        comp = (P.ORING_CORD - P.GROOVE_DEPTH) / P.ORING_CORD * 100
+        n += [f"Junta tórica: cordón Ø{P.ORING_CORD:g} en ranura {P.GROOVE_WIDTH:g} × {P.GROOVE_DEPTH:g} "
+              f"(compresión {comp:.0f} %).",
+              f"Pared diseñada a {P.DESIGN_DEPTH_M:g} m ({kpa:.0f} kPa); manda la manipulación con "
+              f"{P.HANDLING_LOAD_N:g} N."]
+    if pz.code in ("M5", "M10"):
+        n.append(f"Bisagra de {P.HINGE_TEETH} dientes: de 0° a 90° en pasos de {360 / P.HINGE_TEETH:g}°.")
+    if pz.code == "M2":
+        n.append(f"Asa y ojal Ø{P.HANDLE_EYE[1]:g} verificados a {P.HANDLING_LOAD_N + P.LANTERN_WATER_N:g} N "
+                 f"({P.HANDLING_LOAD_N:g} N + {P.LANTERN_WATER_N:g} N de la linterna); grillete o argolla inox M6 en el ojal.")
+    return n
+
+
+def mass_max_g(pz, shape):
+    """Solid (100 %) mass: the upper bound for any infill."""
+    m = pz.material.lower()
+    rho = P.ACRYLIC_DENSITY if "acr" in m else P.PETG_DENSITY if "petg" in m else None
+    return None if rho is None else shape.Volume() / 1000.0 * rho
+
+
 def sheet(pz, shape):
     fig = plt.figure(figsize=(297 / 25.4, 210 / 25.4))
     ax = fig.add_axes([0, 0, 1, 1])
@@ -131,21 +157,32 @@ def sheet(pz, shape):
         ax.text(x0 + 3, y - 3.2, k + (f" ({idx})" if isinstance(idx, str) else (f" [{idx + 1}]" if idx is not None else "")),
                 fontsize=5.2, va="top", color="#555", family="monospace")
         y -= 7.4
-        if y < 62:
+        if y < 100:
             ax.text(x0, y, "... (sigue en MEDIDAS.md)", fontsize=6, va="top")
             break
-    ax.text(x0, 60, "* por confirmar (estimado o del fabricante)", fontsize=5.8, va="top", color="#444")
+    ax.text(x0, 93, "* por confirmar (estimado o del fabricante)", fontsize=5.8, va="top", color="#444")
+    # notes for the new design
+    y = 87
+    ax.text(x0, y, "Notas", fontsize=7, weight="bold", va="top")
+    y -= 4.2
+    for i, t in enumerate(notes(pz), 1):
+        for j, line in enumerate(textwrap.wrap(t, 72)):
+            ax.text(x0 + (0 if j == 0 else 3), y, (f"{i}. " if j == 0 else "") + line, fontsize=5.5, va="top")
+            y -= 3.1
+    assert y > 53, f"{pz.code}: notes overflow into the title block"
     # title block
     tx, ty, tw, th = 192, 10, 95, 42
     ax.add_patch(Rectangle((tx, ty), tw, th, fill=False, lw=0.9))
     for yy in (ty + 30, ty + 20, ty + 10):
         ax.plot([tx, tx + tw], [yy, yy], color="black", lw=LW_THIN)
     ax.text(tx + 2, ty + 36, f"{pz.code} · {pz.name}", fontsize=8.5, weight="bold", va="center")
-    ax.text(tx + 2, ty + 25, f"Material: {pz.material}   Relleno: {pz.infill.split(',')[0]}", fontsize=6.3, va="center")
+    mm = mass_max_g(pz, shape)
+    ax.text(tx + 2, ty + 25, f"Material: {pz.material}   Relleno: {pz.infill.split(',')[0]}   "
+            f"Masa máx. g: {'—' if mm is None else f'{mm:.0f}'}", fontsize=6.3, va="center")
     q = [pz.n(D) for D in P.RING_DIAMETERS]
     qt = f"{q[0]} por nodo" if len(set(q)) == 1 else "según el aro (ver MEDIDAS.md)"
     ax.text(tx + 2, ty + 15, f"Escala {('%g:1' % s) if s >= 1 else ('1:%g' % (1 / s))} (A4)   Cantidad: {qt}", fontsize=6.3, va="center")
-    ax.text(tx + 2, ty + 5, f"LanternGuard · Equipo 02 · {date.today():%d/%m/%Y} · desde el modelo (cad_final)", fontsize=5.6,
+    ax.text(tx + 2, ty + 5, "LanternGuard · Equipo 02 · desde el modelo (cad_final); revisión = commit de git", fontsize=5.6,
             va="center")
     ax.text(16, 12, "Proyección ISO-E (primer diedro). Medidas generales leídas del modelo. NO LISTO PARA IMPRIMIR "
             "mientras haya cotas por confirmar.", fontsize=5.8, color="#444")
