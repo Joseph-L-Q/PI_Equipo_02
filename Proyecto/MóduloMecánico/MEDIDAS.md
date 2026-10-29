@@ -9,7 +9,7 @@
 - **decisión del equipo**: lo decidimos nosotros (por ejemplo, el largo del riel).
 - **estimado**: es una suposición o una propuesta de diseño; se confirma midiendo o con una probeta.
 
-Hoy hay 325 medidas en `params.py`: 0 medidas a mano y 248 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
+Hoy hay 327 medidas en `params.py`: 0 medidas a mano y 247 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
 
 ## 1. Medidas por confirmar, de la más importante a la menos
 
@@ -39,7 +39,7 @@ Hoy hay 325 medidas en `params.py`: 0 medidas a mano y 248 por confirmar. Las pi
 | 22 | Peso de cada componente de la boya, sobre todo el panel y las baterías | balanza | celda_18650: 47, portabaterias: 25, pcb_heltec: 35, waveshare: 15, rtc: 8, panel: 350, antena: 20, cables_fusible: 40, prensaestopas: 20, tornilleria: 60 | `boya.masas` | estimado | francobordo: con unos 40 g más en el panel baja de 50 mm |
 | 23 | Peso de la cámara + LED + cable + PG7 de una cápsula | balanza | 35 | `masa.capsula_contenido` | estimado | peso en el agua |
 | 24 | Peso de ganchos, carros, perillas y tornillería del riel ya impresos | balanza | 200 | `masa.otras_piezas` | estimado | peso en el agua |
-| 25 | Tamaño de la cama de la impresora que se use | manual de la impresora | 220 × 220 × 250 | `impresora.cama` | estimado | si cada pieza entra |
+| 25 | Tamaño de la cama de la impresora que se use | manual de la impresora | 256 × 256 × 256 | `impresora.cama` | dato del fabricante | si cada pieza entra |
 | 26 | Diámetro y largo del cable umbilical | calibrador + cinta métrica | 6 × 3000 | `umbilical` | estimado | prensaestopas y boya |
 | 27 | Que el pestillo haga clic sin trabarse (probeta PB4 sobre PB1) | probeta + guante | 0.6 | `pestillo.resalte` | decisión del equipo | cierre del gancho |
 | 28 | Que el casquillo entre a presión en el gancho (probeta PB1) | probeta | 0.15 | `casquillo.interferencia` | estimado | casquillo firme |

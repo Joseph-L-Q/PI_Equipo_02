@@ -54,15 +54,15 @@ La linterna cuelga de su propia brida: 4 cuerdas a 60, 120, 240, 300 grados sube
 | Apice sobre el separador, `apice.altura` | 150 mm |
 | **Apice sobre el aro** | **400 mm** |
 | Aire minimo suspension-nodo (exigido 10) | **21.6 mm** |
-| aire cuerda vertical 300 | 21.6 mm |
 | aire cuerda vertical 240 | 21.6 mm |
-| aire cuerda vertical 60 | 21.6 mm |
 | aire cuerda vertical 120 | 21.6 mm |
+| aire cuerda vertical 60 | 21.6 mm |
+| aire cuerda vertical 300 | 21.6 mm |
 | aire LR1 separador | 65.2 mm |
-| aire cuerda al apice 240 | 96.0 mm |
-| aire cuerda al apice 120 | 96.0 mm |
 | aire cuerda al apice 60 | 96.0 mm |
 | aire cuerda al apice 300 | 96.0 mm |
+| aire cuerda al apice 120 | 96.0 mm |
+| aire cuerda al apice 240 | 96.0 mm |
 | aire cabo central | 187.7 mm |
 | Aro contra el nodo (ganchos con holgura 0.4) | sin contacto |
 | Red contra el nodo | sin contacto |
@@ -94,4 +94,4 @@ Por camara: 60 + 25 + riel 198 + bucle 77 + 30 + 30 = **420 mm** (requiere prueb
 ## 8. Constantes de modulo
 
 - `SLOT_MARGIN` = 2: aire en x entre la silla del pie y la ranura de salida del cable.
-- Tiempo de `simple.py`: 45 s.
+- Tiempo de `simple.py`: 39 s.

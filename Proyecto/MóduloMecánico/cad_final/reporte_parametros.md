@@ -1,11 +1,12 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-325 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 234; fabricante / confirmado: 4; fabricante / por_verificar: 9.
+327 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 233; fabricante / confirmado: 7; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
 | Parámetro | Anterior | Nuevo | Origen | Estado | Razón |
 |---|---|---|---|---|---|
+| `impresora.cama` | 220 × 220 × 250 | 256 × 256 × 256 | fabricante | confirmado | Bambu Lab P1P (volumen de impresion de la hoja del fabricante) |
 | `impresion.relleno_sellado` | 0.4 | 1 | equipo | confirmado | M1, M2, M4, M5 y tramos del riel al 100 % (revision 28/10, C13) |
 | `impresion.holgura` | 1 | 0.3 | estimado | por_verificar | Handoff; probar con el peine de la Fase B |
 | `profundidad_m` | 15 | 1 | equipo | confirmado | Prueba real: 1 m varios dias. No se afirma 15 m |
@@ -72,11 +73,10 @@
 | `boya.rtc_reserva` | 40 × 25 × 15 | DS3231, montaje sin confirmar |
 | `ensamble.cuerda_azimut` | 45 × 135 × 225 × 315 | Cuerdas entre los dos lados de la barra: la barra cruza el aro por el centro, orientada entre dos cuerdas |
 
-### Origen estimado (234)
+### Origen estimado (233)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
-| `impresora.cama` | 220 × 220 × 250 | Impresora real desconocida |
 | `impresion.cascara` | 1.2 | Perimetros + capas sup/inf macizos, para la masa con relleno |
 | `impresion.holgura` | 0.3 | Handoff; probar con el peine de la Fase B |
 | `impresion.comp_agujero` | 0.2 | Handoff; probar en impresora real |

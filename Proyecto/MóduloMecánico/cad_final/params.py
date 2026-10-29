@@ -42,8 +42,10 @@ EST, VER, OK = "estimado", "por_verificar", "confirmado"
 # =====================================================================================
 # COMUN (lo leen nodo y boya; si una fase necesita cambiarlo, lo reporta, no lo edita)
 # =====================================================================================
-PRINT_BED = p("impresora.cama", (220.0, 220.0, 250.0), EST, VER,
-              "Impresora real desconocida", (220.0, 220.0, 250.0))
+PRINT_BED = p("impresora.cama", (256.0, 256.0, 256.0), "fabricante", OK,
+              "Bambu Lab P1P (volumen de impresion de la hoja del fabricante)", (220.0, 220.0, 250.0))
+PRINTER = p("impresora.modelo", "Bambu Lab P1P", "fabricante", OK, "Impresora del equipo")
+NOZZLE = p("impresora.boquilla", 0.4, "fabricante", OK, "Boquilla de 0.4 (la de serie)")
 PIECE_MAX_L = p("pieza.largo_max", 150.0, "equipo", OK,
                 "Prompt v2: ninguna pieza > 150 salvo la caja")
 MIN_WALL = p("impresion.espesor_min", 1.2, "equipo", OK, "3 perimetros de 0.4", 1.2)

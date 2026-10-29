@@ -46,7 +46,11 @@ estado). Todo se regenera con `python cad_final/build.py` (ver `README.md`). Med
 | PB8 probeta de inserto M4 | `probetas.py` | 1 | 100 %, igual que el fondo de la caja | plana | no |
 | B1 a B6 boya | `boya.py` | ver `FASE_G.md` | 100 % casco y tapa | ver `reporte_boya.md` | lengüeta de B5 y casco |
 
-Ninguna pieza pasa de 150 mm salvo la caja (159.6) y el casco de la boya (209), que caben en la cama de 220 × 220.
+**Cama (actualizado 29/10, impresora real Bambu Lab P1P, boquilla 0.4, 256 × 256 × 256):** las 53 piezas de
+`salida/` (simple, modular, boya, probetas y LR1) caben, cada una en al menos una orientación de impresión. Las más
+largas: M3s mitad del riel 215 (simple, con la brida abajo), LR1 separador 211.9, casco de la boya B1 209, tapa B2 197,
+caja y tapa 159.6. Todas cabían también en la cama supuesta de 220 × 220 × 250; con la P1P queda un margen de 41 mm
+en la pieza más larga. Ninguna pieza de la modular pasa de 150 salvo la caja y la boya (regla `pieza.largo_max`).
 
 ## 3. Qué cambió respecto del diseño anterior
 
