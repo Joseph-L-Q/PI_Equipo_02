@@ -6,9 +6,9 @@ Armado (decision del 29/10, C18): tramo central + 0 / 1 / 2 extensiones de paso 
 
 | pieza | STL | BRep/BOP | estanco | cuerpos | bbox en orientacion (mm) | voladizo mm2 | espesor minimo p1 (mm) | masa al 100 % (g) | volumen cm3 |
 |---|---|---|---|---|---|---|---|---|---|
-| M3_riel_central | M3_riel_central.stl | ok | si | 1 | 140.0 x 88.0 x 69.8 (X 180) | 9140 | 1.30 (min absoluto 1.21) | 209.3 | 164.82 |
+| M3_riel_central | M3_riel_central.stl | ok | si | 1 | 140.0 x 100.0 x 69.8 (X 180) | 9380 | 1.35 (min absoluto 1.21) | 216.0 | 170.11 |
 | M3_riel_ext | M3_riel_ext.stl | ok | si | 1 | 115.0 x 30.0 x 30.0 (X 90) | 3407 | 1.24 (min absoluto 1.21) | 56.8 | 44.76 |
-| M3_tapa_bolsillo | M3_tapa_bolsillo.stl | ok | si | 1 | 107.0 x 29.0 x 3.0 (plana) | 0 | 3.00 (min absoluto 3.00) | 11.8 | 9.31 |
+| M3_tapa_bolsillo | M3_tapa_bolsillo.stl | ok | si | 1 | 107.0 x 35.0 x 3.0 (plana) | 18 | 2.11 (min absoluto 1.87) | 12.2 | 9.58 |
 | M3_riel_punta | M3_riel_punta.stl | ok | si | 1 | 60.0 x 30.0 x 30.0 (X 90) | 1638 | 1.28 (min absoluto 1.21) | 32.2 | 25.32 |
 
 ## Interferencias de ensamble
@@ -36,7 +36,7 @@ Las tuercas del canal pasan bajo los tabiques; un M4 que asome sobre su tuerca d
 ## Orientacion de impresion
 
 - M3_riel_central: brida abajo (X 180). La ventana de acceso sobre la union evita puentes largos; el voladizo de la tabla es el de los techos de la camara y de los bolsillos de lastre, con soportes locales. El central es la pieza que mas soporte necesita.
-- M3_tapa_bolsillo (2 por nodo): plana; cierra por abajo el bolsillo de las pletinas de inox.
+- M3_tapa_bolsillo (2 por nodo): plana; cierra por abajo el bolsillo de las pletinas de inox. Se fija con 2 M3 x 8 avellanados a insertos M3 en bosses de la pared exterior del bolsillo; la cabeza queda al ras del fondo del riel.
 - M3_riel_punta: acostada sobre una cara lateral (X 90), como la extension.
 - M3_riel_ext: acostada sobre una cara lateral (X 90), como las probetas PB2/PB3. La llave de cola de milano y la ranura T quedan de perfil; la ranura de salida del cable (+Y) queda en la cara lateral.
 

@@ -16,7 +16,8 @@ from dataclasses import dataclass
 import cadquery as cq
 
 from params import (BASE_M4_PTS, CABLE_BEND_K, CABLE_BEND_R_MIN, CAT5E_D, CHAMBER_FLANGE_W, CHAMBER_RAMP_DEG,
-                    M4_CLEAR, PG7_DOME, RAIL_ROD_M8, ROD_BOSS_WALL, ROD_BULKHEAD_T, ROD_CABLE_GAP, ROD_CHANNEL_GAP,
+                    M3_CLEAR, M3_CSK_HEAD, M3_INSERT_DEPTH, M3_INSERT_HOLE, M4_CLEAR, PG7_DOME, PLATE_COVER_BOSS,
+                    PLATE_COVER_SCREW_X, RAIL_ROD_M8, ROD_BOSS_WALL, ROD_BULKHEAD_T, ROD_CABLE_GAP, ROD_CHANNEL_GAP,
                     ROD_HOLE, PLATE_BAR, PLATE_CLR, PLATE_L, PLATE_LEVEL, PLATE_POCKET_WALL, PLATE_POCKET_Y0,
                     PLATE_SIDES, RAIL_CENTRAL_L, RAIL_DOVETAIL, RAIL_SECTION, RAIL_TSLOT, RAIL_TSLOT_RIB,
                     RAIL_WALL)
@@ -181,7 +182,25 @@ def chamber_solid(lay, layers):
             outer = _box(-px - w, px + w, y0, y1, zc + w, zr)
             inner = _box(-px, px, (ya if sg > 0 else -yb + w), (yb - w if sg > 0 else -ya), zc + w - 1, zr - w)
             body = body.union(outer.cut(inner))
-            out[f"tapa_bolsillo_{side}"] = _box(-px - w, px + w, y0, y1, zc, zc + w)
+            cover = _box(-px - w, px + w, y0, y1, zc, zc + w)
+            # 2 countersunk M3 per cover into inserts: the 3 mm outer wall cannot take a 4 mm insert hole, so a boss
+            # grows outward under each screw and the cover gets a tab under it (decision 29/10)
+            bw, bo = PLATE_COVER_BOSS
+            yw0, yw1 = yb - w / 2, yb + bo                                   # boss overlaps half the wall
+            yh = sg * (yb - w + yw1) / 2                                      # hole centred in wall + boss
+            dk = M3_CSK_HEAD[0]
+            for x in (-PLATE_COVER_SCREW_X, PLATE_COVER_SCREW_X):
+                yy0, yy1 = (yw0, yw1) if sg > 0 else (-yw1, -yw0)
+                body = body.union(_box(x - bw / 2, x + bw / 2, yy0, yy1, zc + w, zr))
+                body = body.cut(cq.Workplane("XY").workplane(offset=zc + w - 0.01).center(x, yh)
+                                .circle(M3_INSERT_HOLE / 2).extrude(M3_INSERT_DEPTH + 1.0))
+                ty0, ty1 = (yb - w, yw1) if sg > 0 else (-yw1, -yb + w)
+                cover = cover.union(_box(x - bw / 2, x + bw / 2, ty0, ty1, zc, zc + w))
+                cone = cq.Solid.makeCone(dk / 2 + 0.01, M3_CLEAR / 2, (dk - M3_CLEAR) / 2 + 0.01,
+                                         cq.Vector(x, yh, zc - 0.01), cq.Vector(0, 0, 1))
+                cover = cover.cut(cq.Workplane().add(cone)).cut(
+                    cq.Workplane("XY").workplane(offset=zc - 1).center(x, yh).circle(M3_CLEAR / 2).extrude(w + 2))
+            out[f"tapa_bolsillo_{side}"] = cover
     out["M3_riel_central"] = body
     return out
 

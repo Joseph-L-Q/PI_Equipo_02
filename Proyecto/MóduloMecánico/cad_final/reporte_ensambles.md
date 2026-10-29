@@ -1,7 +1,7 @@
 # Ensambles (Fase D)
 
 Nodo completo sobre la linterna de referencia (esquematica: aro Ø8 en el plano horizontal a la altura del centro de la barra de la linterna donde engancha M9, 4 cuerdas Ø4 a 45/135/225/315 grados, red cilindro de 1 mm de espesor y alto D). En Ø100 y Ø200 las cuerdas se amarran al ojal del asa del nodo; en Ø300 y Ø500 van a un apice sobre el aro. Todos los valores de la linterna son `estimado / por_verificar` (ver `params.py`, bloque `# ensambles (Fase D)`). Umbral de interferencia: volumen comun > 0.01 mm3.
-Posicion nominal: carro con s = 0 (manga a ras de la punta del riel), capsula a 40 grados. El lado -X es la misma pieza girada 180 grados sobre Z (como `riel.py`). El barrido de bisagra se calcula en el lado +X.
+Posicion nominal: carro con s = 0 (manga a ras de la punta del riel), capsula a 40 grados. El lado -X es la misma pieza girada 180 grados sobre Z (como `riel.py`). El barrido de bisagra se calcula en el lado +X. Gancho con la boca hacia afuera (`gancho.boca`).
 
 ## Resumen
 

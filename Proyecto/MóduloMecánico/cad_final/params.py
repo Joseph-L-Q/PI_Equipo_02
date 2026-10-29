@@ -329,6 +329,14 @@ PLATE_LEVEL = p("lastre.pletina_nivel", "abajo", EST, VER,
                 "centro de masa); 'brida': colgados de la brida, justo bajo la caja")
 PLATE_POCKET_Y0 = p("lastre.bolsillo_pletina_y", 24.5, EST, VER,
                     "Cara interior del bolsillo: deja libre la cabeza del M4 de la caja (y 20 + 3.5 + 1)")
+PLATE_COVER_SCREW_X = p("lastre.tapa_tornillo_x", 30.0, EST, VER,
+                        "|x| de los 2 tornillos M3 avellanados de cada tapa del bolsillo (decision 29/10: 2 M3 a insertos); "
+                        "en Ø100 las cuerdas al asa pasan cerca de x = 40 (a 40 rozan la orejeta, a 30 quedan a 9 mm)", 40.0)
+PLATE_COVER_BOSS = p("lastre.tapa_boss", (10.0, 6.0), EST, VER,
+                     "Boss del inserto M3 en la pared exterior del bolsillo (3 de pared no alcanzan para el inserto de 4): "
+                     "ancho en x y saliente hacia afuera; deja 2.5 de pared hacia las pletinas y 2.5 hacia afuera, y aire para el avellanado de la tapa")
+M3_CSK_HEAD = p("m3.cabeza_avellanada", (6.72, 1.86), "fabricante", VER,
+                "ISO 10642 M3 (cabeza a 90 grados): diametro y alto; la tapa queda al ras del fondo del riel")
 
 # ---------------------------------------------------------------- capsulas (M4..M7), base P4 rev. B
 CAMERA = p("camara.envolvente", (33.0, 33.0, 17.0, 20.0), "fabricante", OK,
@@ -453,6 +461,11 @@ CORD_WRAP_GAP = p("ensamble.cuerda_aire_borde", 0.5, EST, VER,
                   "Aire del modelo entre la cuerda y el borde de la caja por donde la rodea (en la realidad apoya)")
 LANTERN_WATER_N = p("ensamble.linterna_peso_agua_N", 30.0, EST, VER,
                     "Peso en el agua de la linterna (aro, red, cuerdas y carga) que cuelga del asa; pesarla")
+HOOK_MOUTH = p("gancho.boca", "afuera", "equipo", OK,
+               "afuera: la J abre hacia la punta del riel y la lengueta del pestillo se empuja hacia la caja para abrir. "
+               "adentro: el juego del gancho girado 180 grados sobre la varilla del aro (mismas piezas impresas), el "
+               "pestillo abre hacia el otro lado. Solo ensambles: hoy adentro cabe en Ø200; en Ø100, Ø300 y Ø500 la "
+               "brida y la perilla del gancho chocan con el carro, porque el largo del riel supone la brida hacia adentro (C20)")
 RAIL_LAYOUT_GAP = p("riel.holgura_gancho_carro", 1.0, EST, VER, "Aire a lo largo del riel entre la brida del gancho y la manga del carro")
 M8_ROD = p("riel.varilla_M8_datos", {"d": 8.0, "d_nucleo": 6.47, "A_s": 36.6, "E": 200000.0, "fy_8.8": 640.0, "fy_4.6": 240.0},
            "fabricante", VER,

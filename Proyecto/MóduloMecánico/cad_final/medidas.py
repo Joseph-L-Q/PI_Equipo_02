@@ -173,7 +173,7 @@ def main():
     r += ["## 4. Tornillería y compras que fija el modelo", "",
           "| Qué | Medida | Nombre en params.py | Estado |", "|---|---|---|---|"]
     for label, k in (("Tuerca M4 (ranura T)", "m4.tuerca"), ("Cabeza Allen M4", "m4.cabeza"), ("Tuerca M3", "m3.tuerca"),
-                     ("Inserto térmico M3: agujero", "m3.inserto_agujero"), ("Inserto térmico M4: agujero", "m4.inserto_agujero"),
+                     ("Inserto térmico M3: agujero", "m3.inserto_agujero"), ("Tornillo M3 avellanado (tapa del bolsillo)", "m3.cabeza_avellanada"), ("Inserto térmico M4: agujero", "m4.inserto_agujero"),
                      ("Varilla roscada M8 (datos)", "riel.varilla_M8_datos"), ("Arandela ancha M8 DIN 9021", "riel.varilla_arandela"),
                      ("Tuerca M8", "riel.varilla_tuerca"), ("Cordón de junta tórica", "junta.cordon"),
                      ("Pletina de inox", "lastre.pletina"), ("Cat5e", "cable.cat5e_D")):

@@ -181,6 +181,9 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `lastre.bolsillo_capacidad` | nuevo | 4 | Pletinas por lado que entran en cada bolsillo (fase_a.py verifica que alcance en todos los aros) | estimado | por_verificar |
 | `lastre.pletina_nivel` | nuevo | abajo | 'abajo': bolsillos pegados a los costados de la camara, al nivel del fondo del riel (baja el centro de masa); 'brida': colgados de la brida, justo bajo la caja | estimado | por_verificar |
 | `lastre.bolsillo_pletina_y` | nuevo | 24.5 | Cara interior del bolsillo: deja libre la cabeza del M4 de la caja (y 20 + 3.5 + 1) | estimado | por_verificar |
+| `lastre.tapa_tornillo_x` | 40 | 30 | |x| de los 2 tornillos M3 avellanados de cada tapa del bolsillo (decision 29/10: 2 M3 a insertos); en Ø100 las cuerdas al asa pasan cerca de x = 40 (a 40 rozan la orejeta, a 30 quedan a 9 mm) | estimado | por_verificar |
+| `lastre.tapa_boss` | nuevo | 10 × 6 | Boss del inserto M3 en la pared exterior del bolsillo (3 de pared no alcanzan para el inserto de 4): ancho en x y saliente hacia afuera; deja 2.5 de pared hacia las pletinas y 2.5 hacia afuera, y aire para el avellanado de la tapa | estimado | por_verificar |
+| `m3.cabeza_avellanada` | nuevo | 6.72 × 1.86 | ISO 10642 M3 (cabeza a 90 grados): diametro y alto; la tapa queda al ras del fondo del riel | fabricante | por_verificar |
 | `camara.envolvente` | 33 × 33 × 25 × 20 | 33 × 33 × 17 × 20 | Arducam Mega 5MP AF, 33 x 33 x 17 | fabricante | confirmado |
 | `camara.cable_incluido` | nuevo | 300 | Medir el recibido | fabricante | por_verificar |
 | `aro_led.envolvente` | nuevo | 30 × 3 | Ø exterior x espesor, sin comprar | estimado | por_verificar |
@@ -258,6 +261,7 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `ensamble.cuerdas_al_asa` | nuevo | 100 × 200 | Aros en los que las cuerdas de la linterna se amarran al ojal del asa del nodo (la linterna cuelga del nodo); en los demas van al apice sobre el aro (29/10) | equipo | confirmado |
 | `ensamble.cuerda_aire_borde` | nuevo | 0.5 | Aire del modelo entre la cuerda y el borde de la caja por donde la rodea (en la realidad apoya) | estimado | por_verificar |
 | `ensamble.linterna_peso_agua_N` | nuevo | 30 | Peso en el agua de la linterna (aro, red, cuerdas y carga) que cuelga del asa; pesarla | estimado | por_verificar |
+| `gancho.boca` | nuevo | afuera | afuera: la J abre hacia la punta del riel y la lengueta del pestillo se empuja hacia la caja para abrir. adentro: el juego del gancho girado 180 grados sobre la varilla del aro (mismas piezas impresas), el pestillo abre hacia el otro lado. Solo ensambles: hoy adentro cabe en Ø200; en Ø100, Ø300 y Ø500 la brida y la perilla del gancho chocan con el carro, porque el largo del riel supone la brida hacia adentro (C20) | equipo | confirmado |
 | `riel.holgura_gancho_carro` | nuevo | 1 | Aire a lo largo del riel entre la brida del gancho y la manga del carro | estimado | por_verificar |
 | `riel.varilla_M8_datos` | d_nucleo: 6.47, E: 200000 | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 | fabricante | por_verificar |
 | `boya.masas` | nuevo | celda_18650: 47, portabaterias: 25, pcb_heltec: 35, waveshare: 15, rtc: 8, panel: 350, antena: 20, cables_fusible: 40, prensaestopas: 20, tornilleria: 60 | Masas de componentes en g, tipicas; pesar cada una. Celda 18650 ~47 g | estimado | por_verificar |
@@ -360,9 +364,9 @@ Prensaestopas del fondo en x = ±11.16, y = 0. Agujero de la bandeja sobre cada 
 | M1_caja_cuerpo (preliminar) | ok | ok | 1 | 4.00 | 12.57 | ok |
 | M2_caja_tapa (preliminar) | ok | ok | 1 | 1.50 | 8.25 | ok |
 | M11_bandeja | ok | ok | 1 | 3.00 | 9.42 | ok |
-| tapa_bolsillo_n (referencia) | ok | ok | 1 | 3.00 | 87.03 | ok |
-| tapa_bolsillo_s (referencia) | ok | ok | 1 | 3.00 | 87.03 | ok |
-| M3_riel_central (referencia) | ok | ok | 1 | 1.70 | 52.78 | ok |
+| tapa_bolsillo_n (referencia) | ok | ok | 1 | 1.34 | 14.31 | ok |
+| tapa_bolsillo_s (referencia) | ok | ok | 1 | 1.34 | 14.31 | ok |
+| M3_riel_central (referencia) | ok | ok | 1 | 1.70 | 12.57 | ok |
 
 | Par | Interferencia con M1 mm³ | con la bandeja mm³ |
 |---|---|---|
@@ -383,7 +387,7 @@ M1, M2, M4, M5 y los tramos del riel al 100 % con 5 perímetros. Bandeja y pieza
 |---|---|
 | Aire sellado (cavidad − bandejas − módulos − contratuercas) | 484 cm³ |
 | Volumen desplazado por la caja | 935 cm³ → empuje 958 g |
-| Cámara + tapas de bolsillo (100 %) | 215 cm³, 273 g |
+| Cámara + tapas de bolsillo (100 %) | 220 cm³, 279 g |
 | Electrónica + 3 PG7 + tornillería + cables (estimado) | 94 g |
 | Pletina de inox 25 × 5 × 100 | 99 g cada una, hunde 86 g; se ponen de a 2 (una por lado) |
 | Bolsillos (uno por lado, fuera del sello, pegados a la cámara al nivel del fondo del riel) | 3 pletinas por lado, 15.5 de hondo |
@@ -392,18 +396,18 @@ M1, M2, M4, M5 y los tramos del riel al 100 % con 5 perímetros. Bandeja y pieza
 
 | Relleno bandeja | Aro | Riel mm | Varilla M8 con tuercas g | Nodo sin pletinas g | Desplaza cm³ | Peso aparente sin lastre g | Acero para la ventana g | Pletinas por lado | Peso aparente final g | Total en aire g |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 40 % | Ø100 | 230 | 103 | 1469 | 1626 | -198 | 457 a 802 | 3 | +318 | 2062 |
-| 40 % | Ø200 | 430 | 167 | 1647 | 1724 | -120 | 368 a 713 | 2 | +224 | 2042 |
-| 40 % | Ø300 | 430 | 167 | 1647 | 1724 | -120 | 368 a 713 | 2 | +224 | 2042 |
-| 40 % | Ø500 | 630 | 231 | 1825 | 1822 | -42 | 279 a 623 | 2 | +301 | 2220 |
-| 100 % | Ø100 | 230 | 103 | 1473 | 1626 | -194 | 452 a 797 | 3 | +322 | 2066 |
-| 100 % | Ø200 | 430 | 167 | 1651 | 1724 | -116 | 363 a 708 | 2 | +228 | 2046 |
-| 100 % | Ø300 | 430 | 167 | 1651 | 1724 | -116 | 363 a 708 | 2 | +228 | 2046 |
-| 100 % | Ø500 | 630 | 231 | 1829 | 1822 | -38 | 274 a 619 | 2 | +305 | 2224 |
+| 40 % | Ø100 | 230 | 103 | 1475 | 1631 | -197 | 456 a 800 | 3 | +319 | 2068 |
+| 40 % | Ø200 | 430 | 167 | 1653 | 1729 | -119 | 366 a 711 | 2 | +225 | 2048 |
+| 40 % | Ø300 | 430 | 167 | 1653 | 1729 | -119 | 366 a 711 | 2 | +225 | 2048 |
+| 40 % | Ø500 | 630 | 231 | 1831 | 1826 | -41 | 277 a 622 | 2 | +302 | 2226 |
+| 100 % | Ø100 | 230 | 103 | 1479 | 1631 | -193 | 451 a 796 | 3 | +323 | 2072 |
+| 100 % | Ø200 | 430 | 167 | 1657 | 1729 | -115 | 362 a 707 | 2 | +229 | 2052 |
+| 100 % | Ø300 | 430 | 167 | 1657 | 1729 | -115 | 362 a 707 | 2 | +229 | 2052 |
+| 100 % | Ø500 | 630 | 231 | 1835 | 1826 | -37 | 273 a 617 | 2 | +306 | 2230 |
 
 Estabilidad del nodo completo (aproximada; bandeja al 40 %, cápsulas a 0° con el eje bajo el riel, extensiones a media altura del riel):
 
-- Ø100: centro de masa z = -34.8, centro de empuje z = -12.7 → el de masa queda 22.1 mm debajo: no se voltea.
-- Ø500: centro de masa z = -36.3, centro de empuje z = -16.5 → el de masa queda 19.7 mm debajo: no se voltea.
+- Ø100: centro de masa z = -34.9, centro de empuje z = -12.8 → el de masa queda 22.0 mm debajo: no se voltea.
+- Ø500: centro de masa z = -36.3, centro de empuje z = -16.6 → el de masa queda 19.7 mm debajo: no se voltea.
 
 El cálculo completo (momentos, metacentro) es la Fase E.

@@ -386,7 +386,8 @@ def write_report(rows, inter, free, worst, fails, c, lanes):
     L += ["## Orientacion de impresion", "",
           "- M3_riel_central: brida abajo (X 180). La ventana de acceso sobre la union evita puentes largos; el voladizo de la tabla es el de los techos de la camara y de los bolsillos de lastre, con soportes locales. "
           "El central es la pieza que mas soporte necesita.",
-          "- M3_tapa_bolsillo (2 por nodo): plana; cierra por abajo el bolsillo de las pletinas de inox.",
+          "- M3_tapa_bolsillo (2 por nodo): plana; cierra por abajo el bolsillo de las pletinas de inox. Se fija con 2 M3 x 8 "
+          "avellanados a insertos M3 en bosses de la pared exterior del bolsillo; la cabeza queda al ras del fondo del riel.",
           "- M3_riel_punta: acostada sobre una cara lateral (X 90), como la extension.",
           "- M3_riel_ext: acostada sobre una cara lateral (X 90), como las probetas PB2/PB3. La llave de cola de milano y la ranura T quedan de perfil; la ranura de salida del cable (+Y) queda en la cara lateral.", "",
           "## Orden de montaje", "",

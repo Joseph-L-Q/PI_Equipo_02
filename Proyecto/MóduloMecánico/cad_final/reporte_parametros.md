@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-294 parámetros. Por origen y estado: equipo / confirmado: 61; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 215; fabricante / confirmado: 4; fabricante / por_verificar: 8.
+298 parámetros. Por origen y estado: equipo / confirmado: 62; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 217; fabricante / confirmado: 4; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
@@ -36,6 +36,7 @@
 | `masa.cables_caja` | 40 | 20 | estimado | por_verificar | Dupont + Cat5e dentro de la caja |
 | `lastre.bolsillos_caja` | True | False | equipo | confirmado | Reemplazados por la pletina de inox bajo el tramo central (revision 28/10) |
 | `lastre.pletina_largo` | 130 | 100 | estimado | por_verificar | Largo de cada trozo: el bolsillo (/x/ <= 53.5) deja libre la zona de la union (/x/ > 55) para que la extension entre de costado |
+| `lastre.tapa_tornillo_x` | 40 | 30 | estimado | por_verificar | /x/ de los 2 tornillos M3 avellanados de cada tapa del bolsillo (decision 29/10: 2 M3 a insertos); en Ø100 las cuerdas al asa pasan cerca de x = 40 (a 40 rozan la orejeta, a 30 quedan a 9 mm) |
 | `camara.envolvente` | 33 × 33 × 25 × 20 | 33 × 33 × 17 × 20 | fabricante | confirmado | Arducam Mega 5MP AF, 33 x 33 x 17 |
 | `masa.capsula_set` | 104 | 93.1 | estimado | por_verificar | M4+M5 al 100 % + M6 + ventana, de capsula.py (Fase C, cavidad 38 x 38 x 38) |
 | `volumen.capsula_set` | 154 | 127.8 | estimado | por_verificar | PETG 71.5 + aire 54.2 + ventana 2.1 cm3 por capsula, de capsula.py (Fase C) |
@@ -47,7 +48,7 @@
 
 ## 2. Qué hay que medir o confirmar (estado por_verificar)
 
-### Origen fabricante (8)
+### Origen fabricante (9)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -57,6 +58,7 @@
 | `m4.cabeza` | 7 × 4 | Allen DIN 912: Ø x alto |
 | `m4.cabeza_hex` | 7 × 2.8 | Perno hexagonal DIN 933: AF x alto (perilla) |
 | `m3.tuerca` | 5.5 × 2.4 | AF x espesor, DIN 934 |
+| `m3.cabeza_avellanada` | 6.72 × 1.86 | ISO 10642 M3 (cabeza a 90 grados): diametro y alto; la tapa queda al ras del fondo del riel |
 | `camara.cable_incluido` | 300 | Medir el recibido |
 | `riel.varilla_M8_datos` | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 |
 
@@ -70,7 +72,7 @@
 | `boya.rtc_reserva` | 40 × 25 × 15 | DS3231, montaje sin confirmar |
 | `ensamble.cuerda_azimut` | 45 × 135 × 225 × 315 | Cuerdas entre los dos lados de la barra: la barra cruza el aro por el centro, orientada entre dos cuerdas |
 
-### Origen estimado (215)
+### Origen estimado (217)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -193,6 +195,8 @@
 | `lastre.bolsillo_capacidad` | 4 | Pletinas por lado que entran en cada bolsillo (fase_a.py verifica que alcance en todos los aros) |
 | `lastre.pletina_nivel` | abajo | 'abajo': bolsillos pegados a los costados de la camara, al nivel del fondo del riel (baja el centro de masa); 'brida': colgados de la brida, justo bajo la caja |
 | `lastre.bolsillo_pletina_y` | 24.5 | Cara interior del bolsillo: deja libre la cabeza del M4 de la caja (y 20 + 3.5 + 1) |
+| `lastre.tapa_tornillo_x` | 30 | /x/ de los 2 tornillos M3 avellanados de cada tapa del bolsillo (decision 29/10: 2 M3 a insertos); en Ø100 las cuerdas al asa pasan cerca de x = 40 (a 40 rozan la orejeta, a 30 quedan a 9 mm) |
+| `lastre.tapa_boss` | 10 × 6 | Boss del inserto M3 en la pared exterior del bolsillo (3 de pared no alcanzan para el inserto de 4): ancho en x y saliente hacia afuera; deja 2.5 de pared hacia las pletinas y 2.5 hacia afuera, y aire para el avellanado de la tapa |
 | `aro_led.envolvente` | 30 × 3 | Ø exterior x espesor, sin comprar |
 | `ventana.diametro` | 30 | Acrilico, cubre lente + LED |
 | `ventana.espesor` | 3 |  |

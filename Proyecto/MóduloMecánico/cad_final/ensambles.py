@@ -22,7 +22,8 @@ import capsula
 import gancho
 import layout
 import riel
-from params import (BOX_FLANGE, BOX_LID_T, CORD_WRAP_GAP, HANDLE_EYE, LANTERN_HANG, LANTERN_WATER_N)
+from checks import fix_step_stamp
+from params import (BOX_FLANGE, BOX_LID_T, CORD_WRAP_GAP, HANDLE_EYE, HOOK_MOUTH, LANTERN_HANG, LANTERN_WATER_N)
 from params import (CAM_TILT_DEG, CARRIAGE_L, CARRIAGE_TRAVEL, CORD_CLEAR, HOOK_DROP, INTERF_TOL, LANTERN_APEX_H,
                     LANTERN_CORD_AZ, LANTERN_CORD_D, LANTERN_NET_K, LANTERN_NET_T, LANTERN_ROD_D,
                     PLATE_POCKET_LAYERS, RAIL_CENTRAL_L, RAIL_EXT_L, RAIL_EXT_PER_RING, RING_DIAMETERS, SWEEP_S,
@@ -105,11 +106,13 @@ def hook_set(pc, D, z_rail, side):
     b = pc["casquillo"].moved(cq.Location(cq.Vector(0, 0, -HOOK_DROP)))
     sg = "+X" if side > 0 else "-X"
     x0, dz = D / 2, z_rail
-    return {f"M9 gancho {sg}": (put(pc["gancho"], x0, side, dz), "gancho"),
-            f"M14 pestillo {sg}": (put(lat, x0, side, dz), "gancho"),
-            f"M12 perilla {sg}": (put(kn, x0, side, dz), "gancho"),
-            f"M13 casquillo {sg}": (put(b, x0, side, dz), "gancho"),
-            f"cilindro libre perilla gancho {sg}": (put(free, x0, side, dz), "gancho_libre")}
+    # gancho.boca = "adentro": the same printed set turned 180 deg about the ring-rod axis (C20)
+    flip = (lambda s: s.rotate(Z0, Z1, 180)) if HOOK_MOUTH == "adentro" else (lambda s: s)
+    return {f"M9 gancho {sg}": (put(flip(pc["gancho"]), x0, side, dz), "gancho"),
+            f"M14 pestillo {sg}": (put(flip(lat), x0, side, dz), "gancho"),
+            f"M12 perilla {sg}": (put(flip(kn), x0, side, dz), "gancho"),
+            f"M13 casquillo {sg}": (put(flip(b), x0, side, dz), "gancho"),
+            f"cilindro libre perilla gancho {sg}": (put(flip(free), x0, side, dz), "gancho_libre")}
 
 
 def node_parts(pc, z_rail, xj, D, n, s, tilt):
@@ -393,6 +396,7 @@ def run_case(case):
         render(items, OUT / f"ensamble_D{case}_{tag}.png", view, f"Ensamble D{case}: {n} ext/lado, carro s={int(S_NOM)}, tilt {int(CAM_TILT_DEG)}")
     comp([v[0] for v in nodes.values() if v[1] not in ("gancho_libre", "carro_libre")] + [ring, net] + cords).exportStep(
         str(OUT / f"ensamble_D{case}.step"))
+    fix_step_stamp(OUT / f"ensamble_D{case}.step")
     res["seconds"] = time.time() - t0
     (OUT / f"_res_{case}.json").write_text(json.dumps(res, indent=1, default=float))
     print(case, "listo", f"{res['seconds']:.0f}s", flush=True)
@@ -406,7 +410,8 @@ def report():
          "amarran al ojal del asa del nodo; en Ø300 y Ø500 van a un apice sobre el aro. Todos los valores de la linterna son "
          "`estimado / por_verificar` (ver `params.py`, bloque `# ensambles (Fase D)`). Umbral de interferencia: volumen comun > 0.01 mm3.",
          f"Posicion nominal: carro con s = {S_NOM:g} (manga a ras de la punta del riel), capsula a 40 grados. "
-         "El lado -X es la misma pieza girada 180 grados sobre Z (como `riel.py`). El barrido de bisagra se calcula en el lado +X.", ""]
+         "El lado -X es la misma pieza girada 180 grados sobre Z (como `riel.py`). El barrido de bisagra se calcula en el lado +X. "
+         f"Gancho con la boca hacia {HOOK_MOUTH} (`gancho.boca`).", ""]
     data = {c: json.loads((OUT / f"_res_{c}.json").read_text()) for c in CASES if (OUT / f"_res_{c}.json").exists()}
     L += ["## Resumen", "", "| Caso | Ext/lado | Largo del riel | Bbox X | Bbox Y | Bbox Z | Pares con interferencia | Nodo vs linterna | Apice minimo (10 mm) |",
           "|---|---|---|---|---|---|---|---|---|"]

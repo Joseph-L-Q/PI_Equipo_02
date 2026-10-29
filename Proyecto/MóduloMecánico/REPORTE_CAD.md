@@ -13,7 +13,7 @@ estado). Todo se regenera con `python cad_final/build.py` (ver `README.md`). Med
 | Riel, gancho, casquillos, pestillo, perilla | Preliminar; largo del riel decidido (C18) y varilla M8 tensada (C19) | `salida/preliminar/` |
 | Cápsula y carro | Preliminar; el carro depende del largo del riel | `salida/preliminar/` |
 | Boya | Preliminar: masas de componentes estimadas, francobordo con 4 mm de margen | `salida/boya/` |
-| Ensambles por aro | Rehechos con el riel nuevo; quedan el pestillo contra la perilla del carro (C20) | `salida/ensambles/` (renders; STEP se regeneran) |
+| Ensambles por aro | Rehechos con el riel nuevo; el pestillo contra la perilla del carro (C20) se prueba con guante | `salida/ensambles/` (renders; STEP se regeneran) |
 | SimScale | 4 STEP simplificados y la guía con el resultado a mano esperado; las simulaciones las corre el equipo | `SIMSCALE.md`, `salida/simscale/` |
 | `salida/final/` | **Vacía a propósito**: ningún parámetro está medido todavía (0 de 294 con origen "medido") | `salida/final/LEEME.md` |
 
@@ -77,8 +77,8 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
 | C17 (riel 57 bajo la caja) | Revisado: los ganchos no tocan la caja |
 | C18 (largo del riel) | **Cerrado (decisión del 29/10):** pieza de punta de 45 + 15 de unión y extensiones a paso 100. Riel de 230 / 430 / 630; la punta queda a 1 mm de R + 64 en Ø100, Ø300 y Ø500, y a 51 en Ø200 |
 | C19 (unión de tramos) | **Cerrado (decisión del 29/10):** varilla M8 obligatoria, tensada con tuerca y arandela en las dos puntas. Ø500 con 150 N en la punta: pared de PETG a FS 1.4 en fluencia y 2.0 a rotura (sin varilla 0.8); varilla FS 7.3 en 8.8 y 2.7 en 4.6. Para alojarla la cámara de cables crece 12.4 mm (fondo del riel a −69.75) y la rampa pasa a 60°. Detalle en `cad_final/reporte_verificacion.md` §3c |
-| **C20 (nuevo)** | El pestillo M14 entra 259 mm³ en el espacio de la mano para la perilla del carro con s = 0 (Ø100, Ø300, Ø500; en Ø200 con s = 50). Las piezas no chocan, pero hay menos lugar para los dedos. Además, en Ø100, Ø300 y Ø500 el carro solo puede ir a ras de la punta: no hay recorrido de ±50. Probar con guante en la probeta del pestillo |
-| **C21 (nuevo)** | Ojal del asa Ø10: con 180 N la pieza aguanta (FS 2.2 en la barra), pero no entran una cuerda gruesa y 4 cuerdas con nudo. Se recomienda un grillete o una argolla de acero en el ojal. La tapa del bolsillo M3 todavía no tiene forma de fijarse |
+| C20 (pestillo y perilla del carro) | **Se deja así (decisión del 29/10)**: se prueba con guante en la probeta del pestillo. El pestillo M14 entra 259 mm³ en el espacio de la mano de la perilla del carro con s = 0 (Ø100, Ø300, Ø500; en Ø200 con s = 50); las piezas no chocan. En Ø100, Ø300 y Ø500 el carro solo va a ras de la punta. **Si molesta:** `gancho.boca = "adentro"` gira 180 grados el juego del gancho sobre la varilla del aro (mismas piezas impresas) y el pestillo abre hacia el otro lado; hoy solo cabe en Ø200, porque en Ø100, Ø300 y Ø500 la brida y la perilla del gancho chocan con el carro (5148 y 505 mm³; el largo del riel supone la brida hacia adentro). Espejar solo el pestillo dentro de la garra no sirve: al abrir, su brazo entra en la varilla del aro a partir de 38 a 50 grados. Lo que sí achica el choque es acortar la lengüeta (`pestillo.lengueta`) |
+| C21 (ojal y tapa del bolsillo) | **Cerrado (decisión del 29/10):** grillete o argolla de inox M6 en el ojal Ø10 (ver Compras); las cuerdas se amarran al grillete. La tapa del bolsillo se fija con 2 M3 × 8 avellanados por tapa a insertos M3, en bosses que salen 6 mm de la pared exterior del bolsillo; la cabeza queda al ras del fondo del riel. El tramo central pasa de 88 a 100 de ancho en los bolsillos |
 
 ## 5. Verificación
 
@@ -92,6 +92,23 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
   de los sólidos reales, relleno como parámetro (40 % y 100 %), empuje con agua de mar de 1025 kg/m³; estabilidad con G
   y B del nodo completo (sumergido no hay metacentro, el número es BG).
 - **Peso:** nodo de 2.04 a 2.22 kg con la varilla (≤ 3), peso aparente de +224 a +318 g (ventana de +200 a +500).
+
+## 5b. Compras (no se imprimen)
+
+| Qué | Cantidad por nodo | Nota |
+|---|---|---|
+| Varilla roscada M8 (8.8; si no hay, 4.6) | 1 tramo de 251 / 451 / 651 mm según el aro | Largo en `MEDIDAS.md` §2 |
+| Tuerca M8 y arandela ancha M8 DIN 9021 (Ø24) | 2 y 2 | |
+| Pletina de inox 25 × 5, trozos de 100 | 4 a 6 | `MEDIDAS.md` §2 |
+| Grillete o argolla de inox M6 | 1 | En el ojal Ø10 del asa (Ø100 y Ø200); las cuerdas se amarran ahí |
+| Tornillo M3 × 8 avellanado (ISO 10642) | 4 | 2 por tapa del bolsillo |
+| Inserto térmico M3 | 4 para las tapas, más los de la caja y la bandeja | |
+| Inserto térmico M4 | 4 (riel a la caja) | Probar antes con PB8 |
+| Tornillos M4, tuercas M4 de la ranura T, perno M4 de las perillas | ver `MEDIDAS.md` §4 | |
+| Prensaestopas PG7 | ver `MEDIDAS.md` | Medir antes de imprimir la caja |
+| Cordón de junta tórica Ø2 | | Caja y cápsulas |
+| Cable Cat5e | según el aro | `cad_final/reporte_cables.md` |
+| Correa de 25 × 3 | 2 | Ganchos |
 
 ## 6. Pruebas físicas recomendadas, en orden
 
@@ -113,7 +130,7 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
   la bandeja, prensaestopas PG7 (contratuerca y domo), varilla del aro, agujero del anillo LED, cámara, panel solar,
   baterías y la densidad del PETG del slicer.
 - **Siguiente paso:** imprimir las probetas (PB1 a PB8), medir lo de la tabla de `MEDIDAS.md`, cargar los valores en
-  `params.py` y regenerar. Después, probar el pestillo con guante (C20) y elegir el grillete del ojal (C21).
+  `params.py` y regenerar. Después, probar el pestillo con guante (C20) y comprar el grillete del ojal (C21).
 
 ## 8. Decisiones tomadas sin el equipo en la ronda C18/C19 (29/10)
 
@@ -128,3 +145,8 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
 | Ensambles | Se quitó el caso `100e1` (Ø100 con una extensión) | Con la regla del equipo Ø100 no lleva extensiones | Mantenerlo | Agregarlo a `CASES` en `ensambles.py` |
 | Planos por pieza | Script propio `planos_piezas.py` (misma técnica que `cad/planos.py`) | `cad/planos.py` lee los parámetros viejos de `cad/` al importarse y tiene cambios sin commitear del autor | Modificar `cad/planos.py` | Borrar `planos/cad_final/` |
 | Instalación | `requirements.txt` con las dependencias directas fijadas, no un `pip freeze` completo | El Python de esta máquina tiene muchos paquetes que el CAD no usa | `pip freeze` | Agregar líneas a `requirements.txt` |
+| Fijación de la tapa del bolsillo (C21) | 2 M3 avellanados a insertos en bosses hacia afuera, a x = ±30 | La pared de 3 no aguanta un inserto de 4; hacia los extremos el boss chocaría con el carro en Ø100 y adentro están las pletinas. A x = ±40 las cuerdas de Ø100 que suben al asa rozaban la orejeta (0.6 mm³); a ±30 quedan a 9 mm | Pegarla; correa alrededor del tramo; tapa deslizante con 1 tornillo (más simple, ver abajo) | `lastre.tapa_tornillo_x`, `lastre.tapa_boss` en `params.py` |
+| Pestillo hacia el otro lado (C20) | Parámetro de ensamble `gancho.boca` (gira el juego del gancho), por defecto "afuera" | Espejar solo el pestillo lo deja sin poder abrir | Rediseñar la garra | Volver a "afuera" |
+| STEP deterministas | La fecha del encabezado de cada STEP queda fija (2026-01-01) | Mismo modelo, mismos bytes: git solo muestra lo que cambió de verdad | Fijarla desde OCP al escribir | `STEP_STAMP` en `cad_final/checks.py` |
+
+**Alternativa más simple para la tapa (propuesta, no hecha):** una tapa que entra deslizando por dos ranuras en las paredes del bolsillo y se traba con un solo tornillo M3 en un extremo. Ahorra 2 insertos y 2 tornillos por nodo, pero pide ranuras de 1 mm en paredes de 3, que conviene probar en una probeta antes. Con 2 o 3 pletinas por lado la tapa carga de 1.7 a 2.5 N dentro del agua, así que cualquiera de las dos alcanza.

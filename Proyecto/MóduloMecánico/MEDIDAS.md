@@ -9,7 +9,7 @@
 - **decisión del equipo**: lo decidimos nosotros (por ejemplo, el largo del riel).
 - **estimado**: es una suposición o una propuesta de diseño; se confirma midiendo o con una probeta.
 
-Hoy hay 294 medidas en `params.py`: 0 medidas a mano y 228 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
+Hoy hay 298 medidas en `params.py`: 0 medidas a mano y 231 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
 
 ## 1. Medidas por confirmar, de la más importante a la menos
 
@@ -44,16 +44,16 @@ Hoy hay 294 medidas en `params.py`: 0 medidas a mano y 228 por confirmar. Las pi
 | 27 | Que el pestillo haga clic sin trabarse (probeta PB4 sobre PB1) | probeta + guante | 0.6 | `pestillo.resalte` | decisión del equipo | cierre del gancho |
 | 28 | Que el casquillo entre a presión en el gancho (probeta PB1) | probeta | 0.15 | `casquillo.interferencia` | estimado | casquillo firme |
 
-Además hay 200 valores de diseño propuestos (formas, holguras, espesores) que se confirman con las probetas y la prueba en el agua. Están en las secciones de cada pieza y todos juntos en `cad_final/reporte_parametros.md` §2.
+Además hay 203 valores de diseño propuestos (formas, holguras, espesores) que se confirman con las probetas y la prueba en el agua. Están en las secciones de cada pieza y todos juntos en `cad_final/reporte_parametros.md` §2.
 
 ## 2. Qué se arma para cada aro
 
 | Aro | Largo del riel | Extensiones por lado | Varilla M8 | Pletinas de inox por lado | Peso en el aire | Peso dentro del agua (hacia abajo) |
 |---|---|---|---|---|---|---|
-| Ø100 | 230 mm | 0 | 251 mm, con 2 tuercas y 2 arandelas | 3 | 2.06 kg | 318 g |
-| Ø200 | 430 mm | 1 | 451 mm, con 2 tuercas y 2 arandelas | 2 | 2.04 kg | 224 g |
-| Ø300 | 430 mm | 1 | 451 mm, con 2 tuercas y 2 arandelas | 2 | 2.04 kg | 224 g |
-| Ø500 | 630 mm | 2 | 651 mm, con 2 tuercas y 2 arandelas | 2 | 2.22 kg | 301 g |
+| Ø100 | 230 mm | 0 | 251 mm, con 2 tuercas y 2 arandelas | 3 | 2.07 kg | 319 g |
+| Ø200 | 430 mm | 1 | 451 mm, con 2 tuercas y 2 arandelas | 2 | 2.05 kg | 225 g |
+| Ø300 | 430 mm | 1 | 451 mm, con 2 tuercas y 2 arandelas | 2 | 2.05 kg | 225 g |
+| Ø500 | 630 mm | 2 | 651 mm, con 2 tuercas y 2 arandelas | 2 | 2.23 kg | 302 g |
 
 El peso dentro del agua tiene que quedar entre 200 y 500 g y el peso en el aire bajo 3 kg. Bandeja al 40 %.
 
@@ -162,9 +162,9 @@ Para cada pieza: el plano (generado desde el modelo, en `planos/cad_final/`), la
 ![M3c](planos/cad_final/M3c.png)
 
 - **Para qué sirve:** Va atornillado bajo la caja; por dentro bajan los cables desde los PG7 y pasa la varilla M8.
-- **Medidas generales:** 140.0 × 88.0 × 69.8 mm.
+- **Medidas generales:** 140.0 × 100.0 × 69.8 mm.
 - **Material:** PETG. **Relleno:** 100 %, 5 perímetros (pieza sellada o tramo del riel). **Cómo se imprime:** brida abajo (dada vuelta); necesita soportes en el techo de la cámara y los bolsillos.
-- **Cantidad:** 1 por nodo. **Masa:** 209 g.
+- **Cantidad:** 1 por nodo. **Masa:** 216 g.
 - **Archivos:** `salida/preliminar/stl/M3_riel_central.stl`, `salida/preliminar/step/M3_riel_central.step`.
 
 | Medida | Valor (mm) | Nombre en params.py | Origen | Estado |
@@ -187,6 +187,8 @@ Para cada pieza: el plano (generado desde el modelo, en `planos/cad_final/`), la
 | Pletina de lastre: espesor | 5 | `lastre.pletina` [2.º valor] | estimado | **por confirmar** |
 | Pletina de lastre: largo | 100 | `lastre.pletina_largo` | estimado | **por confirmar** |
 | Holgura de la pletina en su bolsillo | 0.5 | `lastre.holgura_pletina` | estimado | **por confirmar** |
+| Boss del inserto M3 de la tapa: saliente | 6 | `lastre.tapa_boss` [2.º valor] | estimado | **por confirmar** |
+| Inserto térmico M3: agujero | 4 | `m3.inserto_agujero` | estimado | **por confirmar** |
 
 ### M3e · Riel, extensión
 
@@ -238,15 +240,20 @@ Para cada pieza: el plano (generado desde el modelo, en `planos/cad_final/`), la
 ![M3t](planos/cad_final/M3t.png)
 
 - **Para qué sirve:** Cierra por abajo el bolsillo de las pletinas de inox.
-- **Medidas generales:** 107.0 × 29.0 × 3.0 mm.
+- **Medidas generales:** 107.0 × 35.0 × 3.0 mm.
 - **Material:** PETG. **Relleno:** 40 % (se informa también al 100 %), 3 perímetros. **Cómo se imprime:** plana.
-- **Cantidad:** 2 por nodo. **Masa:** 11 g al 40 % (12 g al 100 %).
+- **Cantidad:** 2 por nodo. **Masa:** 12 g al 40 % (12 g al 100 %).
 - **Archivos:** `salida/preliminar/stl/M3_tapa_bolsillo.stl`, `salida/preliminar/step/M3_tapa_bolsillo.step`.
-- **Ojo:** Todavía no tiene cómo fijarse (tornillos o pegado): está por definir.
+- **Ojo:** Se fija con 2 tornillos M3 x 8 avellanados (ISO 10642) a insertos térmicos M3 en el bolsillo; la cabeza queda al ras.
 
 | Medida | Valor (mm) | Nombre en params.py | Origen | Estado |
 |---|---|---|---|---|
 | Espesor | 3 | `lastre.bolsillo_pletina_pared` | estimado | **por confirmar** |
+| Tornillos M3: distancia al centro (x) | 30 | `lastre.tapa_tornillo_x` | estimado | **por confirmar** |
+| Orejeta bajo el tornillo: ancho | 10 | `lastre.tapa_boss` [1.º valor] | estimado | **por confirmar** |
+| Orejeta: saliente | 6 | `lastre.tapa_boss` [2.º valor] | estimado | **por confirmar** |
+| Agujero de paso M3 | 3.4 | `m3.paso` | estimado | **por confirmar** |
+| Avellanado: Ø de la cabeza | 6.72 | `m3.cabeza_avellanada` [1.º valor] | dato del fabricante | **por confirmar** |
 
 ### M4 · Cápsula de la cámara, cuerpo
 
@@ -577,6 +584,7 @@ Para cada pieza: el plano (generado desde el modelo, en `planos/cad_final/`), la
 | Cabeza Allen M4 | 7 × 4 | `m4.cabeza` | **por confirmar** |
 | Tuerca M3 | 5.5 × 2.4 | `m3.tuerca` | **por confirmar** |
 | Inserto térmico M3: agujero | 4 | `m3.inserto_agujero` | **por confirmar** |
+| Tornillo M3 avellanado (tapa del bolsillo) | 6.72 × 1.86 | `m3.cabeza_avellanada` | **por confirmar** |
 | Inserto térmico M4: agujero | 5.6 | `m4.inserto_agujero` | **por confirmar** |
 | Varilla roscada M8 (datos) | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | `riel.varilla_M8_datos` | **por confirmar** |
 | Arandela ancha M8 DIN 9021 | 24 × 2 × 8.4 | `riel.varilla_arandela` | **por confirmar** |
