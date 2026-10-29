@@ -561,6 +561,39 @@ SIMPLE_HARDWARE_G = p("masa.tornilleria_simple", 40.0, EST, VER,
                       "4 M3 de la union, 4 M4 + tuercas T de los ganchos, 4 M4 de los pies, 4 M3 de las tapas del "
                       "bolsillo y 2 correas; pesar")
 
+# decisiones del equipo (chat de Melissa, 29/10); solo la version simple las usa
+MATERIAL = p("material", "PETG opaco", "equipo", VER, "Melissa 29/10: PETG opaco en todas las piezas, no ASA")
+SIMPLE_ESP32_BASE = p("simple.esp32_base", "kit_a", "equipo", VER,
+                      "Melissa 29/10: ESP32-S3 N16R8 sobre KIT A + modulos sueltos (acelerometro, microSD) en la caja. "
+                      "esp32.base sigue en sin_base para la modular")
+SIMPLE_FLOORS = p("simple.caja_pisos", 2, EST, VER,
+                  "Con KIT A en 1 piso la caja mide 159.6 x 170 con brida y la brida queda a 1.6 mm de las cuerdas a 60 "
+                  "grados; en 2 pisos mide 147 x 146 y deja unos 11 mm")
+SIMPLE_CAP_AZ = p("capsula.acimut", "adentro", "equipo", VER,
+                  "Melissa 29/10: camaras inclinadas hacia la malla. adentro: miran al eje de la linterna; afuera: hacia "
+                  "las puntas del riel (version V1)")
+WINDOW_COATING = p("ventana.antibiofouling", "spray", "equipo", VER, "Melissa 29/10: antibiofouling en spray sobre las ventanas (no cambia la geometria)")
+NODE_LINK = p("enlace.nodo_boya", "RS-485 en el umbilical", "equipo", VER, "Melissa 29/10: modulo XY-017 en la caja, par trenzado del umbilical")
+CAM_FOV_DIAG = p("camara.fov_diagonal", 70.0, EST, VER, "Arducam Mega 5MP: sin ficha a mano; 70 grados diagonal estimado")
+CAM_FOCUS = p("camara.enfoque", (80.0, 1e6), EST, VER, "Rango de enfoque del autofoco (mm): 8 cm a infinito, estimado; confirmar con la ficha")
+SIMPLE_GLAND_PAD = p("simple.cojin_riel", (10.0, 6.0, 25.0), EST, VER,
+                     "Version simple, caja baja: cojin en cada pared extrema de M1 con 4 insertos M4 (sale 10 de la pared), "
+                     "brida del riel de 6 y semiancho 25. El PG7 de cada camara pasa por la pared extrema y su domo entra "
+                     "en el conducto del riel: sin camara de cables")
+BUOY_BOX = p("boya.caja_exterior", (220.0, 200.0, 120.0), "equipo", VER,
+             "Melissa 29/10: caja central hermetica de la boya ~220 x 200 x 120 exterior (cuerpo; la brida de la tapa sale aparte)")
+BUOY_BOX_IN = p("boya.caja_interior", (210.0, 190.0), "equipo", VER, "Melissa 29/10: 210 x 190 interior (pared de 5)")
+BUOY_CORNER_FLOATS = p("boya.flotadores_esquinas", 4, "equipo", VER, "Melissa 29/10: flotadores modulares en las 4 esquinas")
+BUOY_FLOAT_S = p("boya.flotador_esquina", (100.0, 100.0, 60.0), EST, VER, "Flotador de esquina (simple): largo x ancho x alto, hueco y sellado")
+BUOY_ANT_INSIDE = p("boya.antena_interior", True, "equipo", VER,
+                    "Melissa 29/10: antena LoRa pequena de la Heltec dentro de la carcasa, despejada de metal y del panel: sin mastil")
+BUOY_SMA_BLIND = p("boya.sma_ciego", True, "equipo", VER,
+                   "Melissa 29/10: agujero ciego reservado para un SMA de panel (antena externa futura), lejos de los cables")
+UMB_HOSE_D = p("umbilical.diametro_manguera", 10.0, EST, VER, "U1: manguera flexible de referencia alrededor del cable")
+UMB_LEN = p("umbilical.longitud", 3000.0, EST, VER, "Largo del umbilical comprado (igual que umbilical[1])")
+UMB_BEND_R = p("umbilical.radio_min", 60.0, EST, VER, "Radio minimo de la manguera Ø10 (6 x D)")
+LANTERN_DEPTH = p("linterna.profundidad", 1000.0, "equipo", VER, "Aro de la linterna a 1 m bajo la superficie (prueba real)")
+
 # linterna de prueba de la version simple (suspension propia, el nodo no la carga)
 SEP_TYPE = p("separador.tipo", "aro", "equipo", OK,
              "LR1 sobre el nodo: 'aro' (anillo del diametro del aro) o 'cruceta' (rayos al centro). Las cuerdas suben "
