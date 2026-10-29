@@ -150,7 +150,7 @@ def sheet(pz, shape):
     ax.text(16, 12, "Proyección ISO-E (primer diedro). Medidas generales leídas del modelo. NO LISTO PARA IMPRIMIR "
             "mientras haya cotas por confirmar.", fontsize=5.8, color="#444")
     OUT.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT / f"{pz.code}.pdf")
+    fig.savefig(OUT / f"{pz.code}.pdf", metadata={"CreationDate": None})  # same model, same bytes
     fig.savefig(OUT / f"{pz.code}.png", dpi=150, facecolor="white")
     plt.close(fig)
     return s

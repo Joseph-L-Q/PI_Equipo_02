@@ -4,7 +4,7 @@
     python cad_final/build.py --medidas     solo MEDIDAS.md
     python cad_final/build.py --planos      solo los planos de planos/cad_final/
     python cad_final/build.py               todo menos los ensambles por aro (~6 min)
-    python cad_final/build.py --todo        todo, con los 4 ensambles en paralelo (~25 min, mucha CPU)
+    python cad_final/build.py --todo        todo, con los 4 ensambles en paralelo (~18 min, mucha CPU)
 
 Each step is the existing script run in its own process (same Python), from cad_final/. Exit code 1 if any step fails.
 """

@@ -22,7 +22,7 @@ mano: se cambia el número en `params.py` y se regenera.
    |---|---|---|
    | Cualquier cosa, para ver si sigue todo bien | `python cad_final/build.py --rapido` | ~1.5 min |
    | Una medida de pieza que se imprime | `python cad_final/build.py` | ~6 min |
-   | El largo del riel, el aro o algo que puede chocar | `python cad_final/build.py --todo` | ~25 min, usa todos los núcleos |
+   | El largo del riel, el aro o algo que puede chocar | `python cad_final/build.py --todo` | ~18 min, usa todos los núcleos |
    | Solo quieres actualizar `MEDIDAS.md` | `python cad_final/build.py --medidas` | ~15 s |
    | Solo los planos | `python cad_final/build.py --planos` | ~40 s |
 

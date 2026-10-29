@@ -1,7 +1,7 @@
 # Módulo mecánico: LanternGuard (prototipo a escala de laboratorio)
 
 > **Empieza aquí (versión final, `cad_final/`)**
-> 1. Clonar: `git clone https://github.com/Joseph-L-Q/PI_Equipo_02.git` y `git checkout cad/version-final`.
+> 1. Clonar en una carpeta de ruta corta: `git clone -c core.longpaths=true -b cad/version-final https://github.com/Joseph-L-Q/PI_Equipo_02.git` (en Windows, sin `core.longpaths` fallan los archivos de los talleres).
 > 2. Instalar (una vez): en `Proyecto/MóduloMecánico`, `powershell -ExecutionPolicy Bypass -File .\setup_laptop.ps1` (Mac: `bash setup_mac.sh`). Pide Python 3.12.
 > 3. Medidas de cada pieza, qué falta medir y qué se imprime por aro: [`MEDIDAS.md`](MEDIDAS.md). Planos: [`planos/cad_final/`](planos/cad_final/).
 > 4. Cambiar una medida: edita el número en [`cad_final/params.py`](cad_final/params.py) (el nombre está en `MEDIDAS.md`).
