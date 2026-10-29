@@ -71,8 +71,8 @@ def rail_sections(lay, c):
 
 # ------------------------------------------------------------------ geometry of the node along the rail
 def rail_tip(n):
-    """Outer end of the rail with n extensions per side (riel.py places each one overlapping the previous by LAP)."""
-    return RAIL_CENTRAL_L / 2 + n * (RAIL_EXT_L - RAIL_DOVETAIL)
+    """Outer end of the rail with n extensions per side (riel.py)."""
+    return R.tip_x(n)
 
 
 def load_x(n):
@@ -128,8 +128,7 @@ def main():
         note = " (la carga queda dentro del aro)" if Lb < 0 else ""
         r.append(f"| Ø{D:g} | {n} | {rail_tip(n):.0f} | {xl:.1f} | {Ma:.0f} | {sa:.1f} | {sh:.1f} | {fa[0]:.1f} / {fa[1]:.1f} | "
                  f"{da:.1f} | {Mb:.0f}{note} | {sb:.1f} | {fb[0]:.1f} / {fb[1]:.1f} |")
-    r += ["", "En Ø100 no hay posición válida del carro sobre el tramo central (C15, ver la Fase D); la fila usa la punta del "
-          "tramo central igual, como referencia."]
+    r += ["", "Con la punta (C18) el carro entra a ras de la punta en todos los aros; la fila usa esa posición (palanca máxima)."]
 
     # 3. joint
     Mj = max(v["Ma"] for v in rail_rows.values())
@@ -154,14 +153,14 @@ def main():
     # 3b. the joint and the rail-length decision are one decision (largo_riel.py)
     nd, lrows = LR.table()
     from params import M8_ROD
-    r += ["", "### 3b. La unión depende del largo del riel (decisión pendiente, ver `FASE_D.md`)", "",
-          "Mismo caso A con la punta del riel en cada configuración posible: la actual, la mínima que deja armar gancho + carro "
-          f"(R + {nd['need0']:.0f}, que coincide con la tabla del equipo) y la regla automática con extensiones solapadas.", "",
+    r += ["", "### 3b. La unión según el largo del riel", "",
+          "Mismo caso A con la punta del riel en cada configuración: la decidida el 29/10 (C18), la mínima que deja armar "
+          f"gancho + carro (R + {nd['need0']:.0f}) y la anterior.", "",
           "| Aro | Configuración | Punta mm | M en la unión N·mm | σ media madera MPa | FS 45 / 22 |", "|---|---|---|---|---|---|"]
     worst = 0.0
     for lr in lrows:
-        for name, t in (("actual", lr["solape"]["tip"]), ("mínima para armar", lr["need0"]),
-                        (f"auto solapada (n = {lr['solape']['n_auto']})", lr["solape"]["tip_auto"])):
+        for name, t in (("decisión 29/10 (paso 100 + punta)", lr["paso_100"]["tip"]), ("mínima para armar", lr["need0"]),
+                        ("anterior (extensiones solapadas, sin punta)", lr["solape"]["tip"])):
             M_ = F * (t + CP.carriage_axis()[0] - RAIL_CENTRAL_L / 2)
             worst = max(worst, M_)
             r.append(f"| Ø{lr['D']:g} | {name} | {t:.0f} | {M_:.0f} | {M_ / z_half:.1f} | {fs(M_ / z_half)[0]:.1f} / {fs(M_ / z_half)[1]:.1f} |")

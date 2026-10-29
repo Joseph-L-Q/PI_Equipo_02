@@ -33,8 +33,10 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `riel.seccion` | 30 × 25 | 30 | Cuadrado 30 x 30, hueco = conducto inundado | equipo | confirmado |
 | `riel.pared` | 3 | 4 | Prompt v2 | equipo | confirmado |
 | `riel.central_L` | 190 | 140 | M3_riel_central bajo la caja | equipo | confirmado |
-| `riel.ext_L` | nuevo | 100 | M3_riel_ext intercambiable | equipo | confirmado |
-| `riel.extensiones` | nuevo | 100.0: 0, 200.0: 1, 300.0: 1, 500.0: 2 | 0 / 1 / 2 extensiones por lado | equipo | confirmado |
+| `riel.ext_L` | nuevo | 100 | Paso de M3_riel_ext: cada extension suma 100; la pieza mide 100 + 15 de lengueta macho (decision 29/10, C18) | equipo | confirmado |
+| `riel.extensiones` | nuevo | 100.0: 0, 200.0: 1, 300.0: 1, 500.0: 2 | 0 / 1 / 2 extensiones por lado: riel de 230 (Ø100), 430 (Ø200-300), 630 (Ø400-500) | equipo | confirmado |
+| `riel.punta_L` | nuevo | 45 | M3_riel_punta: 45 de cuerpo + 15 de union (pieza de 60), una por lado en todos los aros (29/10, C18) | equipo | confirmado |
+| `riel.punta_tapa` | nuevo | 5 | Pared del extremo de la punta donde apoyan la arandela y la tuerca de la varilla M8; deja abierta la ranura T para meter las tuercas | estimado | por_verificar |
 | `riel.cola_milano` | nuevo | 15 | Macho/hembra 15 + 2 M4 pasantes | equipo | confirmado |
 | `riel.ranura_T` | nuevo | abertura: 4.6, ancho: 8, alto: 3.6 | Para tuerca M4 (AF7 x 3.2); se ajusta con la probeta de la Fase B | estimado | por_verificar |
 | `riel.varilla_M8` | nuevo | False | Refuerzo opcional por dentro | equipo | confirmado |
@@ -238,6 +240,52 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `ensamble.tol_interferencia` | nuevo | 0.01 | Volumen comun (mm3) por encima del cual se marca interferencia | estimado | por_verificar |
 | `ensamble.barrido_s` | nuevo | 0 × 50 × 100 | Posiciones del carro (punta del riel pasada la manga) del barrido de la bisagra | estimado | por_verificar |
 | `ensamble.barrido_paso` | nuevo | 10 | Paso de inclinacion (grados) del barrido de la bisagra, de 0 a 90 | estimado | por_verificar |
+| `riel.paso_extension` | solape | paso_100 | paso_100 (decision 29/10): la lengueta macho sale fuera del cuerpo de 100 (pieza de 115) y cada extension suma 100. solape: la version anterior, extension de 100 solapada 15 (suma 85), sin punta | equipo | confirmado |
+| `riel.regla_extensiones` | nuevo | equipo | equipo: RAIL_EXT_PER_RING. auto: el menor n con la punta >= lo que piden gancho + carro (largo_riel.py) | equipo | confirmado |
+| `ensamble.cuerdas_al_asa` | nuevo | 100 × 200 | Aros en los que las cuerdas de la linterna se amarran al ojal del asa del nodo (la linterna cuelga del nodo); en los demas van al apice sobre el aro (29/10) | equipo | confirmado |
+| `ensamble.linterna_peso_agua_N` | nuevo | 30 | Peso en el agua de la linterna (aro, red, cuerdas y carga) que cuelga del asa; pesarla | estimado | por_verificar |
+| `riel.holgura_gancho_carro` | nuevo | 1 | Aire a lo largo del riel entre la brida del gancho y la manga del carro | estimado | por_verificar |
+| `riel.varilla_M8_datos` | nuevo | d_nucleo: 6.47, E: 200000 | Varilla roscada M8 de acero: diametro de nucleo (ISO 898) y modulo; solo para estimar el refuerzo opcional | fabricante | por_verificar |
+| `boya.masas` | nuevo | celda_18650: 47, portabaterias: 25, pcb_heltec: 35, waveshare: 15, rtc: 8, panel: 350, antena: 20, cables_fusible: 40, prensaestopas: 20, tornilleria: 60 | Masas de componentes en g, tipicas; pesar cada una. Celda 18650 ~47 g | estimado | por_verificar |
+| `boya.celdas` | nuevo | 3 | 3 x 18650 en el portabaterias | equipo | confirmado |
+| `boya.sma_pasamuros_g` | nuevo | 5 | Opcional, solo suma si boya.sma_pasamuros es True | estimado | por_verificar |
+| `boya.antena_largo` | nuevo | 110 | Antena LoRa incluida con la Heltec; medir | estimado | por_verificar |
+| `boya.sma_pasamuros` | nuevo | False | Pasamuros SMA exterior opcional y desactivado | equipo | confirmado |
+| `boya.sma_agujero` | nuevo | 6.5 | Agujero del pasamuros SMA en la tapa del mastil | estimado | por_verificar |
+| `boya.holgura_modulos` | nuevo | 5 | Aire entre modulos sobre la bandeja | estimado | por_verificar |
+| `boya.alto_pcb_conectores` | nuevo | 25 | PCB con Heltec en cabezal y conectores sobre la bandeja | estimado | por_verificar |
+| `boya.apoyo_bateria` | nuevo | 6 | Refuerzo M3 bajo el portabaterias (inserto de 6 sin tocar el fondo) | estimado | por_verificar |
+| `boya.aire_bateria_bandeja` | nuevo | 3 | Aire entre el portabaterias y la bandeja | estimado | por_verificar |
+| `boya.portabaterias_agujeros` | nuevo | 66 × 56 | Paso de los 4 agujeros del portabaterias; medir | estimado | por_verificar |
+| `boya.bandeja_borde` | nuevo | 2 | Margen de la bandeja alrededor de los modulos | estimado | por_verificar |
+| `boya.poste_D` | nuevo | 8 | Postes de la bandeja con inserto M3 | estimado | por_verificar |
+| `boya.poste_aire_pared` | nuevo | 1 | Aire entre poste y pared interior | estimado | por_verificar |
+| `boya.umbilical_margen` | nuevo | 3 | Del borde de la contratuerca a la pared, ademas de GAP_WALL | estimado | por_verificar |
+| `boya.cable_aire` | nuevo | 1 | Aire entre el codo del umbilical y la bandeja | estimado | por_verificar |
+| `boya.pg7_solar` | nuevo | 25 × 55 | (y, z) del PG7 del cable solar en la pared -X | estimado | por_verificar |
+| `boya.panel_elevacion_usada` | nuevo | 25 | Dentro de 20..30 | estimado | por_verificar |
+| `boya.riel_panel` | nuevo | 24 × 140 × 8 | B3: ancho x largo x espesor del larguero; largo <= PIECE_MAX_L | estimado | por_verificar |
+| `boya.pata_D` | nuevo | 14 | Patas del larguero sobre los tornillos M3 de la tapa (sin perforar) | estimado | por_verificar |
+| `boya.avellanado` | nuevo | 6.5 × 3 | Cabeza del M3 largo en el larguero: diametro, profundidad | estimado | por_verificar |
+| `boya.panel_agujeros_y` | nuevo | 20 | Dos insertos M3 por larguero a +-y; medir los agujeros del panel real | estimado | por_verificar |
+| `boya.mastil` | nuevo | 14 × 8 × 140 | B4: diametro exterior, interior, alto sobre la placa | estimado | por_verificar |
+| `boya.mastil_placa` | nuevo | 30 × 4 | Ancho en X y espesor; usa los tornillos de la tapa del extremo +X | estimado | por_verificar |
+| `boya.mastil_desfase` | nuevo | 11 | Eje del mastil a la linea de tornillos del extremo | estimado | por_verificar |
+| `boya.flotador` | nuevo | 150 × 90 × 50 | B5: largo x ancho x alto de cada modulo (4 modulos) | estimado | por_verificar |
+| `boya.flotador_pared` | nuevo | 1.6 | Pared de PETG del flotador, 4 perimetros | estimado | por_verificar |
+| `boya.flotador_pared_interior` | nuevo | 3 | Cara hacia el casco, donde nace la lengueta | estimado | por_verificar |
+| `boya.flotador_separacion` | nuevo | 26 | Pared del casco a la cara interior del flotador | estimado | por_verificar |
+| `boya.flotador_boca` | nuevo | 10 | Boca de llenado de espuma, se tapa y sella | estimado | por_verificar |
+| `boya.espuma_densidad` | nuevo | 0.03 | g/cm3, celda cerrada; sin absorcion de agua (supuesto) | estimado | por_verificar |
+| `boya.oreja` | nuevo | 22 × 12 × 7 | Oreja del casco: saliente, ancho, espesor (al fondo, sin voladizo) | estimado | por_verificar |
+| `boya.oreja_x` | nuevo | 55 | x de las 4 orejas; el flotador tiene agujeros en x = 55 y 95 (simetrico) | estimado | por_verificar |
+| `boya.lengueta` | nuevo | 19 × 70 × 5 | Lengueta del flotador: saliente, largo, espesor; apoya sobre la oreja | estimado | por_verificar |
+| `boya.lengueta_agujeros` | nuevo | 55 × 95 | x local de los 2 agujeros (el flotador es simetrico) | estimado | por_verificar |
+| `boya.m5` | nuevo | 5.4 × 8 × 4.2 | Paso, tuerca AF y bolsillo de tuerca; tornillo M5 x 25 de acero inox | estimado | por_verificar |
+| `boya.ojal` | nuevo | 24 × 12 × 6 × 32 | B6: aro exterior, aro interior, espesor, distancia del tornillo al centro del aro | estimado | por_verificar |
+| `boya.ojal_oreja_ancho` | nuevo | 24 | Ancho de la oreja de amarre del casco (extremo +X) | estimado | por_verificar |
+| `boya.oreja_agujero_punta` | nuevo | 7.5 | Del agujero M5 a la punta de oreja y lengueta | estimado | por_verificar |
+| `boya.flotador_radio` | nuevo | 8 | Radio de las aristas verticales del flotador | estimado | por_verificar |
 
 ## 2. 1 piso contra 2 pisos (holgura de contratuerca 5 mm, relleno de bandeja 40 %)
 
@@ -326,22 +374,22 @@ M1, M2, M4, M5 y los tramos del riel al 100 % con 5 perímetros. Bandeja y pieza
 | Pletina de inox 25 × 5 × 100 | 99 g cada una, hunde 86 g; se ponen de a 2 (una por lado) |
 | Bolsillos (uno por lado, fuera del sello, pegados a la cámara al nivel del fondo del riel) | 3 pletinas por lado, 15.5 de hondo |
 
-**Nodo completo** (extensiones por sección al 100 %, cápsulas P4 rev. B viejas, 200 g de ganchos/carros/perillas sin modelar). Objetivo: 0.2 a 0.5 kgf hacia abajo:
+**Nodo completo** (extensiones y puntas con su volumen CAD al 100 %, 200 g de ganchos/carros/perillas sin modelar). Objetivo: 0.2 a 0.5 kgf hacia abajo:
 
 | Relleno bandeja | Aro | Riel mm | Nodo sin lastre g | Desplaza cm³ | Peso aparente sin lastre g | Acero para la ventana g | Pletinas por lado | Peso aparente final g | Total en aire g |
 |---|---|---|---|---|---|---|---|---|---|
-| 40 % | Ø100 | 140 | 1263 | 1532 | -308 | 583 a 928 | 3 | +208 | 1855 |
-| 40 % | Ø200 | 340 | 1368 | 1615 | -287 | 560 a 904 | 3 | +228 | 1961 |
-| 40 % | Ø300 | 340 | 1368 | 1615 | -287 | 560 a 904 | 3 | +228 | 1961 |
-| 40 % | Ø500 | 540 | 1474 | 1698 | -267 | 536 a 881 | 3 | +249 | 2067 |
-| 100 % | Ø100 | 140 | 1267 | 1532 | -304 | 579 a 923 | 3 | +212 | 1859 |
-| 100 % | Ø200 | 340 | 1372 | 1615 | -283 | 555 a 900 | 3 | +232 | 1965 |
-| 100 % | Ø300 | 340 | 1372 | 1615 | -283 | 555 a 900 | 3 | +232 | 1965 |
-| 100 % | Ø500 | 540 | 1478 | 1698 | -263 | 532 a 876 | 3 | +253 | 2071 |
+| 40 % | Ø100 | 230 | 1321 | 1578 | -296 | 570 a 915 | 3 | +219 | 1913 |
+| 40 % | Ø200 | 430 | 1432 | 1665 | -275 | 546 a 890 | 3 | +241 | 2024 |
+| 40 % | Ø300 | 430 | 1432 | 1665 | -275 | 546 a 890 | 3 | +241 | 2024 |
+| 40 % | Ø500 | 630 | 1543 | 1752 | -254 | 521 a 866 | 3 | +262 | 2135 |
+| 100 % | Ø100 | 230 | 1325 | 1578 | -292 | 566 a 910 | 3 | +223 | 1917 |
+| 100 % | Ø200 | 430 | 1436 | 1665 | -271 | 541 a 886 | 3 | +245 | 2028 |
+| 100 % | Ø300 | 430 | 1436 | 1665 | -271 | 541 a 886 | 3 | +245 | 2028 |
+| 100 % | Ø500 | 630 | 1547 | 1752 | -250 | 517 a 861 | 3 | +266 | 2139 |
 
 Estabilidad del nodo completo (aproximada; bandeja al 40 %, cápsulas a 0° con el eje bajo el riel, extensiones a media altura del riel):
 
-- Ø100: centro de masa z = -25.2, centro de empuje z = -6.1 → el de masa queda 19.1 mm debajo: no se voltea.
-- Ø500: centro de masa z = -26.9, centro de empuje z = -9.5 → el de masa queda 17.4 mm debajo: no se voltea.
+- Ø100: centro de masa z = -25.7, centro de empuje z = -7.1 → el de masa queda 18.6 mm debajo: no se voltea.
+- Ø500: centro de masa z = -27.4, centro de empuje z = -10.5 → el de masa queda 16.9 mm debajo: no se voltea.
 
 El cálculo completo (momentos, metacentro) es la Fase E.

@@ -8,12 +8,15 @@ the current assembly and of the prepared switches (RAIL_EXT_PITCH_MODE, RAIL_EXT
 import capsula as CP
 import gancho as G
 from params import (CARRIAGE_L, CARRIAGE_TRAVEL, FIT_CLEAR, LANTERN_ROD_D, RAIL_CENTRAL_L, RAIL_DOVETAIL, RAIL_EXT_L,
-                    RAIL_EXT_PER_RING, RAIL_LAYOUT_GAP, RING_DIAMETERS)
+                    RAIL_EXT_PER_RING, RAIL_LAYOUT_GAP, RAIL_TIP_L, RING_DIAMETERS)
 
 
 def tip(n, mode):
-    step = RAIL_EXT_L if mode == "paso_100" else RAIL_EXT_L - RAIL_DOVETAIL
-    return RAIL_CENTRAL_L / 2 + n * step
+    """Rail tip with n extensions: 'paso_100' = extensions at pitch 100 plus the tip piece (decision 29/10, riel.py);
+    'solape' = the previous layout, extensions overlapped 15, no tip piece."""
+    if mode == "paso_100":
+        return RAIL_CENTRAL_L / 2 + n * RAIL_EXT_L + RAIL_TIP_L
+    return RAIL_CENTRAL_L / 2 + n * (RAIL_EXT_L - RAIL_DOVETAIL)
 
 
 def needs():

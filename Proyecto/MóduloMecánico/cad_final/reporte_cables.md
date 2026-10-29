@@ -4,9 +4,9 @@ Por cámara: 60 de holgura en la caja + 25 de prensaestopas + tramo por el riel 
 
 | Aro | Extensiones por lado | Tramo por el riel mm | Bucle mm | Total por cámara mm | Cable de fábrica (300) alcanza | Nota |
 |---|---|---|---|---|---|---|
-| Ø100 | 0 | 73 | 134 | 352 | no | requiere prueba en banco SPI a 8 y 4 MHz |
-| Ø200 | 1 | 153 | 119 | 417 | no | requiere prueba en banco SPI a 8 y 4 MHz |
-| Ø300 | 1 | 153 | 119 | 417 | no | requiere prueba en banco SPI a 8 y 4 MHz |
-| Ø500 | 2 | 253 | 119 | 517 | no | requiere prueba en banco SPI a 8 y 4 MHz |
+| Ø100 | 0 | 98 | 119 | 362 | no | requiere prueba en banco SPI a 8 y 4 MHz |
+| Ø200 | 1 | 198 | 119 | 462 | no | requiere prueba en banco SPI a 8 y 4 MHz |
+| Ø300 | 1 | 198 | 119 | 462 | no | requiere prueba en banco SPI a 8 y 4 MHz |
+| Ø500 | 2 | 298 | 119 | 562 | no | requiere prueba en banco SPI a 8 y 4 MHz |
 
 Medidas estimadas: diámetro del Cat5e, radio de curvatura (se usa el mayor entre 4 × D y 25) y largo del domo del PG7, que fija dónde empieza la curva.

@@ -1,4 +1,6 @@
-"""Fase C rail pieces: M3_riel_central (female half-lap at both ends) and M3_riel_ext (male inner end, female outer end).
+"""Rail pieces: M3_riel_central (female half-lap at both ends), M3_riel_ext (male inner end, female outer end) and
+M3_riel_punta (male inner end, closed outer end with the cable exit). Decision 29/10 (C18): extensions at a pitch of
+100 (piece 100 + 15 male tongue) and one tip piece per side, so the rail is 230 / 430 / 630 with 0 / 1 / 2 extensions.
 
 Joint and T-slot geometry reproduce probetas.py pb2/pb3 (validated as coupons PB2/PB3). Every dimension comes from
 params.py; module constants below are design values missing there (listed in reporte_riel.md).
@@ -15,8 +17,9 @@ import layout
 from checks import brep_check, export_part, mesh_checks, min_thickness, sanitize
 from params import (XFER_STEP, CAT5E_D, CHAMBER_FLANGE_W, FIT_CLEAR, HOLE_COMP, M4_CLEAR, M4_HEAD, M4_NUT, MIN_WALL,
                     PETG_DENSITY, PLATE_CLR, PLATE_L, PLATE_POCKET_LAYERS, PLATE_POCKET_WALL, PRINT_BED,
-                    RAIL_CENTRAL_L, RAIL_DOVETAIL, RAIL_DOVETAIL_KEY, RAIL_EXIT_SLOT, RAIL_EXT_L,
-                    RAIL_JOINT_BOLT_Y, RAIL_LAP_WALL, RAIL_LAP_Z, RAIL_SECTION, RAIL_TSLOT, RAIL_TSLOT_RIB, RAIL_WALL)
+                    RAIL_CENTRAL_L, RAIL_DOVETAIL, RAIL_DOVETAIL_KEY, RAIL_EXIT_SLOT, RAIL_EXT_L, RAIL_EXT_PITCH_MODE,
+                    RAIL_JOINT_BOLT_Y, RAIL_LAP_WALL, RAIL_LAP_Z, RAIL_SECTION, RAIL_TIP_L, RAIL_TSLOT, RAIL_TSLOT_RIB,
+                    RAIL_WALL)
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "salida" / "preliminar"
@@ -93,6 +96,32 @@ def _tslot(p, z0, x0, x1):
     return p
 
 
+# ------------------------------------------------------------------ layout along the rail
+PASO_100 = RAIL_EXT_PITCH_MODE == "paso_100"
+EXT_PIECE_L = RAIL_EXT_L + LAP if PASO_100 else RAIL_EXT_L     # 115 with the male tongue outside the 100 pitch
+TIP_PIECE_L = RAIL_TIP_L + LAP
+X_JOINT = RAIL_CENTRAL_L / 2 - LAP                               # = camara.dims().x_joint
+
+
+def ext_step():
+    return RAIL_EXT_L if PASO_100 else RAIL_EXT_L - LAP
+
+
+def placements(n):
+    """[(piece, x of its inner end)] on the +X side with n extensions; the -X side is the same turned 180 deg about Z."""
+    out = [("ext", X_JOINT + k * ext_step()) for k in range(n)]
+    if PASO_100:
+        out.append(("punta", X_JOINT + n * ext_step()))
+    return out
+
+
+def tip_x(n):
+    """Outer end of the rail (x) with n extensions per side."""
+    if PASO_100:
+        return X_JOINT + n * ext_step() + TIP_PIECE_L
+    return RAIL_CENTRAL_L / 2 + n * ext_step()
+
+
 # ------------------------------------------------------------------ pieces
 def central(lay, c):
     z0 = c.z_rail
@@ -114,7 +143,7 @@ def central(lay, c):
 def ext(c, z0=None):
     """Extension in its own frame: x = 0 inner (male) end, x = L outer (female) end, z from z_rail."""
     z0 = c.z_rail if z0 is None else z0
-    L = RAIL_EXT_L
+    L = EXT_PIECE_L
     e = _box(0, L, -S / 2, S / 2, z0, z0 + S)
     e = e.cut(_box(LAP, L - LAP, -CON_HALF, CON_HALF, z0 + W, z0 + S - W))
     e = e.cut(_box(-0.1, LAP, -LAP_HALF, LAP_HALF, z0 + W, z0 + S - W))
@@ -122,14 +151,32 @@ def ext(c, z0=None):
     e = _tslot(e, z0, 0, L - LAP)                       # continuous through the male, ends where the female starts
     e = _male_cuts(e, LAP / 2, z0, -0.1, LAP)
     e = _female_cuts(e, L - LAP / 2, z0, L - LAP, L + 0.1)
-    h, ln, dist = RAIL_EXIT_SLOT
-    x1 = L - dist
-    e = e.cut(_box(x1 - ln, x1, CON_HALF - 0.5, S / 2 + 1, z0 + EXIT_SLOT_ZC - h / 2, z0 + EXIT_SLOT_ZC + h / 2))
+    if not PASO_100:      # without a tip piece the cable leaves through the last extension
+        e = _exit_slot(e, z0, L)
     return e
 
 
+def _exit_slot(e, z0, L):
+    h, ln, dist = RAIL_EXIT_SLOT
+    x1 = L - dist
+    return e.cut(_box(x1 - ln, x1, CON_HALF - 0.5, S / 2 + 1, z0 + EXIT_SLOT_ZC - h / 2, z0 + EXIT_SLOT_ZC + h / 2))
+
+
+def punta(c, z0=None):
+    """Tip piece in its own frame: x = 0 inner (male) end, x = TIP_PIECE_L outer end, z from z_rail. The T-slot stays
+    open at the outer end (nuts of the hooks and of the carriage go in there); cable exit slot on +Y."""
+    z0 = c.z_rail if z0 is None else z0
+    L = TIP_PIECE_L
+    e = _box(0, L, -S / 2, S / 2, z0, z0 + S)
+    e = e.cut(_box(LAP, L + 0.1, -CON_HALF, CON_HALF, z0 + W, z0 + S - W))
+    e = e.cut(_box(-0.1, LAP, -LAP_HALF, LAP_HALF, z0 + W, z0 + S - W))
+    e = _tslot(e, z0, 0, L)
+    e = _male_cuts(e, LAP / 2, z0, -0.1, LAP)
+    return _exit_slot(e, z0, L)
+
+
 # ------------------------------------------------------------------ run
-ORIENT = {"M3_riel_central": ("X", 180), "M3_riel_ext": ("X", 90)}
+ORIENT = {"M3_riel_central": ("X", 180), "M3_riel_ext": ("X", 90), "M3_riel_punta": ("X", 90)}
 
 
 def vol(s):
@@ -143,6 +190,8 @@ def main():
     lay = layout.build(floors=1)
     c = camara.dims(lay)
     builds = {"M3_riel_central": lambda: central(lay, c), "M3_riel_ext": lambda: ext(c)}
+    if PASO_100:
+        builds["M3_riel_punta"] = lambda: punta(c)
     shapes, rows, fails = {}, [], []
     for stem, fn in builds.items():
         try:
@@ -166,18 +215,23 @@ def main():
         print(f"{stem:18s} brep_ok={bc['ok']} {bc} wt={mc['watertight']} bodies={mc['bodies']} fits={mc['fits_bed']} "
               f"vol={mc['vol_cm3']:.2f} bbox={tuple(round(b, 1) for b in mc['bbox'])} oh={mc['overhang_mm2']:.0f} "
               f"p1={p1:.2f} min={pmin:.2f}")
-    if len(shapes) < 2:
+    if len(shapes) < len(builds):
         raise SystemExit("STOP: pieza(s) fallaron: " + "; ".join(fails))
 
     cen, ex = shapes["M3_riel_central"], shapes["M3_riel_ext"]
     xj = c.x_joint
+    assert abs(xj - X_JOINT) < 1e-9, (xj, X_JOINT)
     ex_p = ex.moved(cq.Location(cq.Vector(xj, 0, 0)))
     ex_m = ex_p.rotate(cq.Vector(0, 0, 0), cq.Vector(0, 0, 1), 180)
-    ex2 = ex.moved(cq.Location(cq.Vector(xj + RAIL_EXT_L - LAP, 0, 0)))
     ex1 = ex.moved(cq.Location(cq.Vector(xj, 0, 0)))
-    ex2 = ex2.moved(cq.Location(cq.Vector(0, 0, 0)))
+    ex2 = ex.moved(cq.Location(cq.Vector(xj + ext_step(), 0, 0)))
+    pairs = {"central+ext(+X)": (cen, ex_p), "central+ext(-X)": (cen, ex_m), "ext+ext": (ex1, ex2)}
+    if PASO_100:
+        pu = shapes["M3_riel_punta"]
+        pairs["central+punta (0 ext.)"] = (cen, pu.moved(cq.Location(cq.Vector(xj, 0, 0))))
+        pairs["ext+punta"] = (ex1, pu.moved(cq.Location(cq.Vector(xj + ext_step(), 0, 0))))
     inter = {}
-    for name, (a, b) in {"central+ext(+X)": (cen, ex_p), "central+ext(-X)": (cen, ex_m), "ext+ext": (ex1, ex2)}.items():
+    for name, (a, b) in pairs.items():
         inter[name] = a.intersect(b).Volume()
         print("interferencia", name, round(inter[name], 4), "mm3")
         if inter[name] > 0.5:
@@ -203,21 +257,29 @@ def main():
 
     from render import render
     gap, off = 35.0, 130.0
-    items = [(cen, "#3a9d7a", 1.0, True, None), (ex_p, "#4f81bd", 1.0, True, None), (ex_m, "#4f81bd", 1.0, True, None)]
+    items = [(cen, "#3a9d7a", 1.0, True, None)]
     ce = cen.moved(cq.Location(cq.Vector(0, -off, 0)))
     items.append((ce, "#3a9d7a", 1.0, True, None))
-    for sg, e in ((1, ex_p), (-1, ex_m)):
-        items.append((e.moved(cq.Location(cq.Vector(sg * gap, -off, 0))), "#4f81bd", 1.0, True, None))
-    render(items, OUT / "riel_iso.png", "iso", "Riel Fase C: montado y explotado")
+    for name, x0 in placements(1):
+        sh = shapes["M3_riel_ext" if name == "ext" else "M3_riel_punta"].moved(cq.Location(cq.Vector(x0, 0, 0)))
+        col = "#4f81bd" if name == "ext" else "#c9a227"
+        for sg in (1, -1):
+            e = sh if sg > 0 else sh.rotate(cq.Vector(0, 0, 0), cq.Vector(0, 0, 1), 180)
+            items.append((e, col, 1.0, True, None))
+            k = 1 if name == "ext" else 2
+            items.append((e.moved(cq.Location(cq.Vector(sg * k * gap, -off, 0))), col, 1.0, True, None))
+    render(items, OUT / "riel_iso.png", "iso", f"Riel con 1 extension por lado ({2 * tip_x(1):.0f} mm): montado y explotado")
     write_report(rows, inter, free, worst, fails, c)
     print("FALLAS:", fails if fails else "ninguna")
     return 1 if len(fails) >= 2 else 0
 
 
 def write_report(rows, inter, free, worst, fails, c):
-    L = ["# Piezas del riel, Fase C", "",
+    L = ["# Piezas del riel", "",
          "Generado por `cad_final/riel.py`. STL en `../salida/preliminar/stl/`, STEP en `step/`, render `riel_iso.png`. "
          "Todas las cotas salen de `params.py`; la union y la ranura T reproducen las probetas PB2/PB3.", "",
+         f"Armado (decision del 29/10, C18): tramo central + {'0 / 1 / 2 extensiones de paso ' + format(RAIL_EXT_L, 'g') + ' (pieza de ' + format(EXT_PIECE_L, 'g') + ') + una punta de ' + format(TIP_PIECE_L, 'g') + ' por lado' if PASO_100 else 'extensiones solapadas'}: "
+         f"riel de {2 * tip_x(0):.0f} / {2 * tip_x(1):.0f} / {2 * tip_x(2):.0f} mm.", "",
          "| pieza | STL | BRep/BOP | estanco | cuerpos | bbox en orientacion (mm) | voladizo mm2 | espesor minimo p1 (mm) | masa al 100 % (g) | volumen cm3 |",
          "|---|---|---|---|---|---|---|---|---|---|"]
     for stem, bc, mc, p1, pmin, v in rows:
@@ -241,7 +303,7 @@ def write_report(rows, inter, free, worst, fails, c):
           "1. Cargar las tuercas M4 en la ranura T por las puntas ANTES de unir una extension: en el central la ranura queda abierta en las caras |x| = 55 (frente a la media madera vacia); en la extension queda abierta por la punta macho.",
           "2. Deslizar el macho de la extension de costado (eje Y) en la media madera inferior de la hembra hasta que la llave entre en el nido de cola de milano.",
           "3. Los 2 M4 verticales de la union (y = +-10) van por las paredes engrosadas: cabeza en el avellanado de la hembra (por la ventana de acceso en el central) y tuerca en la bolsa hexagonal del macho.",
-          "4. Un cable Cat5e por lado, en el conducto local de 10 mm. En una extension encadenada la ranura de salida (+Y) solo se usa en la ultima: la hembra exterior queda cubierta por el macho de la siguiente.", ""]
+          "4. Un cable Cat5e por lado, en el conducto local de 10 mm. " + ("Sale por la ranura lateral (+Y) de la punta, junto al carro." if PASO_100 else "En una extension encadenada la ranura de salida (+Y) solo se usa en la ultima: la hembra exterior queda cubierta por el macho de la siguiente."), ""]
     L += ["## Chequeos que fallaron", ""] + ([f"- {f}" for f in fails] if fails else ["- ninguno"])
     L += ["", "## Params que faltan (constantes de modulo en riel.py)", "",
           f"- `EXIT_SLOT_ZC` = {EXIT_SLOT_ZC:.2f}: altura del centro de la ranura de salida sobre el fondo del riel (cable sobre las costillas).",

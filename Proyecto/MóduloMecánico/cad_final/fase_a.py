@@ -86,7 +86,19 @@ def analyse_box(lay):
 
 
 # ------------------------------------------------------------------ node balance with plates
-A_EXT = P.RAIL_SECTION ** 2 - (P.RAIL_SECTION - 2 * P.RAIL_WALL) ** 2     # extension section, mm2
+A_EXT = P.RAIL_SECTION ** 2 - (P.RAIL_SECTION - 2 * P.RAIL_WALL) ** 2     # extension section, mm2 (old layout)
+
+
+def outer_rail_cm3(lay, n):
+    """PETG volume of the rail pieces outboard of the central, both sides (CAD volumes of riel.py)."""
+    import riel
+    if not riel.PASO_100:
+        return A_EXT * 2 * n * P.RAIL_EXT_L / 1000.0
+    c = CH.dims(lay)
+    if "v" not in outer_rail_cm3.__dict__:
+        outer_rail_cm3.v = (riel.ext(c).val().Volume() / 1000.0, riel.punta(c).val().Volume() / 1000.0)
+    v_ext, v_tip = outer_rail_cm3.v
+    return 2 * (n * v_ext + v_tip)
 
 
 def node_rows(an, f, layers):
@@ -101,7 +113,7 @@ def node_rows(an, f, layers):
     rows = []
     for D in P.RING_DIAMETERS:
         n = P.RAIL_EXT_PER_RING[D]
-        v_ext = A_EXT * 2 * n * P.RAIL_EXT_L / 1000.0
+        v_ext = outer_rail_cm3(lay, n)
         ext_g = P.PETG_DENSITY * P.INFILL_SEALED * v_ext
         cap_g = 2 * (P.CAPSULE_SET_G + P.CAPSULE_CONTENT_G)
         node_g = box_g + ch_g + ext_g + cap_g + P.OTHER_NODE_G
@@ -112,12 +124,17 @@ def node_rows(an, f, layers):
         while app0 + k * P.PLATE_SIDES * plate_g * NET_STEEL < lo:
             k += 1
         app = app0 + k * P.PLATE_SIDES * plate_g * NET_STEEL
-        rows.append(dict(D=D, n=n, L=P.RAIL_CENTRAL_L + 2 * n * P.RAIL_EXT_L, node_g=node_g, disp=disp, app0=app0,
+        rows.append(dict(D=D, n=n, L=2 * rail_tip(n), node_g=node_g, disp=disp, app0=app0,
                          layers=k, steel_g=k * P.PLATE_SIDES * plate_g, app=app, in_window=lo <= app <= hi,
                          total=node_g + k * P.PLATE_SIDES * plate_g,
                          need_g=max(0.0, (lo - app0) / NET_STEEL), need_hi_g=max(0.0, (hi - app0) / NET_STEEL)))
     return dict(f=f, layers=layers, ch=ch, ch_g=ch_g, ch_v=ch_v, box_g=box_g,
                 box_app=box_g - RHO_W * an["v_disp"], rows=rows)
+
+
+def rail_tip(n):
+    import riel
+    return riel.tip_x(n)
 
 
 def balance(an, f):
@@ -352,7 +369,7 @@ def main():
           f"{'pegados a la cámara al nivel del fondo del riel' if P.PLATE_LEVEL == 'abajo' else 'colgados de la brida'}) | "
           f"{bal40['layers']} pletinas por lado, "
           f"{CH.pocket_depth(bal40['layers']):.1f} de hondo |", "",
-          f"**Nodo completo** (extensiones por sección al 100 %, cápsulas P4 rev. B viejas, {P.OTHER_NODE_G:g} g de "
+          f"**Nodo completo** (extensiones y puntas con su volumen CAD al 100 %, {P.OTHER_NODE_G:g} g de "
           "ganchos/carros/perillas sin modelar). Objetivo: "
           f"{P.BALLAST_TARGET_KGF[0]:g} a {P.BALLAST_TARGET_KGF[1]:g} kgf hacia abajo:", "",
           "| Relleno bandeja | Aro | Riel mm | Nodo sin lastre g | Desplaza cm³ | Peso aparente sin lastre g | "

@@ -87,9 +87,15 @@ RING_CORDS = p("aro.cuerdas", 4, "equipo", VER, "3 o 4 cuerdas desde el borde; s
 RAIL_SECTION = p("riel.seccion", 30.0, "equipo", OK, "Cuadrado 30 x 30, hueco = conducto inundado", (30.0, 25.0))
 RAIL_WALL = p("riel.pared", 4.0, "equipo", OK, "Prompt v2", 3.0)
 RAIL_CENTRAL_L = p("riel.central_L", 140.0, "equipo", OK, "M3_riel_central bajo la caja", 190.0)
-RAIL_EXT_L = p("riel.ext_L", 100.0, "equipo", OK, "M3_riel_ext intercambiable")
+RAIL_EXT_L = p("riel.ext_L", 100.0, "equipo", OK,
+               "Paso de M3_riel_ext: cada extension suma 100; la pieza mide 100 + 15 de lengueta macho (decision 29/10, C18)")
 RAIL_EXT_PER_RING = p("riel.extensiones", {100.0: 0, 200.0: 1, 300.0: 1, 500.0: 2}, "equipo", OK,
-                      "0 / 1 / 2 extensiones por lado")
+                      "0 / 1 / 2 extensiones por lado: riel de 230 (Ø100), 430 (Ø200-300), 630 (Ø400-500)")
+RAIL_TIP_L = p("riel.punta_L", 45.0, "equipo", OK,
+               "M3_riel_punta: 45 de cuerpo + 15 de union (pieza de 60), una por lado en todos los aros (29/10, C18)")
+RAIL_TIP_END_T = p("riel.punta_tapa", 5.0, EST, VER,
+                   "Pared del extremo de la punta donde apoyan la arandela y la tuerca de la varilla M8; deja abierta la "
+                   "ranura T para meter las tuercas")
 RAIL_DOVETAIL = p("riel.cola_milano", 15.0, "equipo", OK, "Macho/hembra 15 + 2 M4 pasantes")
 RAIL_TSLOT = p("riel.ranura_T", {"abertura": 4.6, "ancho": 8.0, "alto": 3.6}, EST, VER,
                "Para tuerca M4 (AF7 x 3.2); se ajusta con la probeta de la Fase B")
@@ -407,12 +413,17 @@ SWEEP_S = p("ensamble.barrido_s", (0.0, 50.0, 100.0), EST, VER, "Posiciones del 
 SWEEP_TILT_STEP = p("ensamble.barrido_paso", 10.0, EST, VER, "Paso de inclinacion (grados) del barrido de la bisagra, de 0 a 90")
 
 # largo del riel (Fase D, decision pendiente del equipo; los valores por defecto reproducen la geometria actual)
-RAIL_EXT_PITCH_MODE = p("riel.paso_extension", "solape", EST, VER,
-                        "solape: cada extension de 100 se monta solapando 15 con la anterior (suma 85, riel.py actual). "
-                        "paso_100: la lengüeta macho sale fuera del cuerpo de 100 (pieza de 115) y cada extension suma 100. "
-                        "Solo lo usan largo_riel.py y verificacion.py; riel.py no tiene aun la variante paso_100")
-RAIL_EXT_RULE = p("riel.regla_extensiones", "equipo", EST, VER,
+RAIL_EXT_PITCH_MODE = p("riel.paso_extension", "paso_100", "equipo", OK,
+                        "paso_100 (decision 29/10): la lengueta macho sale fuera del cuerpo de 100 (pieza de 115) y cada "
+                        "extension suma 100. solape: la version anterior, extension de 100 solapada 15 (suma 85), sin punta",
+                        "solape")
+RAIL_EXT_RULE = p("riel.regla_extensiones", "equipo", "equipo", OK,
                   "equipo: RAIL_EXT_PER_RING. auto: el menor n con la punta >= lo que piden gancho + carro (largo_riel.py)")
+LANTERN_HANG = p("ensamble.cuerdas_al_asa", (100.0, 200.0), "equipo", OK,
+                 "Aros en los que las cuerdas de la linterna se amarran al ojal del asa del nodo (la linterna cuelga del "
+                 "nodo); en los demas van al apice sobre el aro (29/10)")
+LANTERN_WATER_N = p("ensamble.linterna_peso_agua_N", 30.0, EST, VER,
+                    "Peso en el agua de la linterna (aro, red, cuerdas y carga) que cuelga del asa; pesarla")
 RAIL_LAYOUT_GAP = p("riel.holgura_gancho_carro", 1.0, EST, VER, "Aire a lo largo del riel entre la brida del gancho y la manga del carro")
 M8_ROD = p("riel.varilla_M8_datos", {"d_nucleo": 6.47, "E": 200000.0}, "fabricante", VER,
            "Varilla roscada M8 de acero: diametro de nucleo (ISO 898) y modulo; solo para estimar el refuerzo opcional")

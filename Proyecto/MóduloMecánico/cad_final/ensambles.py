@@ -43,7 +43,7 @@ def build_pieces():
     c = camara.dims(lay)
     ch = camara.chamber_solid(lay, PLATE_POCKET_LAYERS)
     pc = {"caja": CC.box_body(lay).val(), "tapa": CC.box_lid(lay).val(), "riel_central": riel.central(lay, c).val(),
-          "riel_ext": riel.ext(c).val(), "gancho": gancho.gancho().val(), "carro": capsula.carriage().val(),
+          "riel_ext": riel.ext(c).val(), "riel_punta": riel.punta(c).val(), "gancho": gancho.gancho().val(), "carro": capsula.carriage().val(),
           "carro_perilla_libre": capsula.knob_free().val(), "cap_M4": capsula.capsule_body().val(),
           "cap_M5": capsula.capsule_lid().val(), "cap_M6": capsula.bezel().val(), "cap_M7": capsula.window_disc().val(),
           "casquillo": gancho.bushings()[f"M13_casquillo_D{int(LANTERN_ROD_D)}"].val()}
@@ -81,7 +81,8 @@ def put(shape, x0, side, dz):
 
 
 def tip_x(n, xj):
-    return RAIL_CENTRAL_L / 2 if n == 0 else xj + n * RAIL_EXT_L - (n - 1) * LAP
+    assert abs(xj - riel.X_JOINT) < 1e-9
+    return riel.tip_x(n)
 
 
 def comp(shapes):
@@ -119,8 +120,9 @@ def node_parts(pc, z_rail, xj, D, n, s, tilt):
             out["lastre " + k] = (v, "lastre")
     for side in (1, -1):
         sg = "+X" if side > 0 else "-X"
-        for k in range(n):
-            out[f"M3 riel ext {sg} {k + 1}"] = (put(pc["riel_ext"], xj + k * (RAIL_EXT_L - LAP), side, 0), "riel")
+        for k, (name, x0) in enumerate(riel.placements(n)):
+            label = f"M3 riel ext {sg} {k + 1}" if name == "ext" else f"M3 riel punta {sg}"
+            out[label] = (put(pc[f"riel_{name}"], x0, side, 0), "riel")
         out.update(hook_set(pc, D, z_rail, side))
         xo = tip_x(n, xj) - s
         out[f"M10 carro {sg}"] = (put(pc["carro"], xo, side, z_rail), "carro")

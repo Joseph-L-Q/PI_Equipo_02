@@ -14,6 +14,7 @@ import camara as CH
 import layout as LY
 from params import (CABLE_ALLOW, CAMERA_CABLE, CAP_GLAND_X, CARRIAGE_STEPS, CARRIAGE_TRAVEL, RAIL_CENTRAL_L,
                     RAIL_EXIT_SLOT, RAIL_EXT_L, RAIL_EXT_PER_RING, RAIL_SECTION, RING_DIAMETERS, SPI_TEST_LIMIT)
+import riel
 from riel import EXIT_SLOT_ZC
 
 HERE = Path(__file__).resolve().parent
@@ -46,9 +47,11 @@ def runs(lay):
     out = []
     for D in RING_DIAMETERS:
         n = RAIL_EXT_PER_RING[D]
-        # with extensions the cable leaves through the side slot of the last one; without, through the open end
-        rail = bend + straight + (n * RAIL_EXT_L - (slot_tip + slot_l / 2) if n else 0.0)
-        loop = max(a["bucle"], loop_distance(n > 0))
+        # with the tip piece the cable always leaves through its side slot; in the old layout (no tip) through the
+        # side slot of the last extension, or the open end of the central without extensions
+        side = riel.PASO_100 or n > 0
+        rail = bend + straight + (riel.tip_x(n) - (slot_tip + slot_l / 2) - RAIL_CENTRAL_L / 2 if side else 0.0)
+        loop = max(a["bucle"], loop_distance(side))
         total = a["caja"] + a["prensaestopas"] + rail + loop + a["capsula"] + a["holgura"]
         out.append(dict(D=D, n=n, rail=rail, loop=loop, total=total, spi=total > SPI_TEST_LIMIT,
                         stock=total <= CAMERA_CABLE))
