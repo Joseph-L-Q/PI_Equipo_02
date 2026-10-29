@@ -30,7 +30,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
-ENV_FILE = ROOT / ".env"
+ENV_FILE = next((p for p in (HERE / ".env", ROOT / ".env") if p.exists()), HERE / ".env")
 CONFIG = HERE / "onshape_config.json"
 MAP = HERE / "onshape_map.json"
 CALLS_LOG = HERE / "onshape_calls.log"

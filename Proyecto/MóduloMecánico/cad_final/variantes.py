@@ -3,7 +3,8 @@
     python variantes.py [salida_combinada.png]     (from cad_final/)
 V1: capsules at 30 deg, C hook with strap.  V2: capsules at 45 deg, C hook with strap.
 V3: capsules at 30 deg, C hook without strap slot and with a flared mouth (lifts off the ring without the strap).
-Outputs: salida/variantes/V1.png, V2.png, V3.png and the combined image (default salida/variantes/variantes.png).
+Outputs: salida/variantes/V1..V3.png and .step (node + test lantern, like ensamble_simple_D200.step) and the combined
+image (default salida/variantes/variantes.png).
 Only renders: params.py keeps the chosen version; the variant values are set here for each render.
 """
 import sys
@@ -43,7 +44,13 @@ def build(lay, c, an, ch, tilt, strap):
         col, op = COLOURS.get(g, ("#c9a227", 1.0) if g.startswith("gancho") else ("#3a7ca5", 1.0))
         items.append((sh, col, op, True, None))
     items.append((ring, "#8a8a8a", 0.8, False, None))
-    return items
+    # full assembly for the STEP, same content as ensamble_simple_D200.step (lantern, LR1, umbilical)
+    z_sep = z_rod + P.SEP_H
+    lant, _, buoy_end = SM.lantern(z_rod, z_sep, z_sep + P.APEX_H)
+    gland = (lay.lid_gland[0], lay.lid_gland[1], lay.box_outer()[2] + P.BOX_LID_T) if lay.lid_gland else lay.wall_gland
+    asm = [sh for sh, _ in node.values()] + list(lant.values()) + [SM.solid(SM.separator(z_sep))]
+    asm += SM.umbilical(gland, buoy_end)
+    return items, asm
 
 
 def piece_corners(shape):
@@ -80,7 +87,13 @@ def main():
     c = camara.dims(lay)
     an = FA.analyse_box(lay)
     ch = camara.chamber_solid(lay, P.PLATE_POCKET_LAYERS)
-    built = {tag: build(lay, c, an, ch, tilt, strap) for tag, _, tilt, strap in VARIANTS}
+    built = {}
+    for tag, _, tilt, strap in VARIANTS:
+        built[tag], asm = build(lay, c, an, ch, tilt, strap)
+        step = OUT / f"{tag}.step"
+        SM.E.comp(asm).exportStep(str(step))
+        SM.fix_step_stamp(step)
+        print("written", step)
     # one framing for all: the corners of every piece of the three variants (the corners of one global box project
     # far outside the node in ISO and leave it small)
     frame = np.vstack([piece_corners(it[0]) for items in built.values() for it in items])

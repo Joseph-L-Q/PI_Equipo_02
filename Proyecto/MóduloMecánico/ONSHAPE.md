@@ -61,6 +61,24 @@ python cad_final/onshape_sync.py --cuenta
 
 Cualquiera de esos comandos acepta `--dry-run`, que dice qué haría y cuántas llamadas gastaría, sin llamar.
 
+### Subir una versión nueva sin tocar las anteriores: `onshape_push.py` (versión simple)
+
+```
+python cad_final/onshape_push.py salida/simple/ensamble_simple_D200.step --nombre simple_D200_V1
+python cad_final/build.py --rapido --onshape        # regenera y sube el ensamble simple como simple_D200_vN
+```
+
+- Siempre crea pestañas **nuevas**: si ya hay una con ese nombre usa `_v2`, `_v3`... Nunca borra ni reemplaza.
+- Sube el STEP con traducción, espera a que termine (consulta cada 5 s) e imprime el link de cada pestaña nueva. Gasta
+  4 llamadas por archivo. `--plano` aplana el ensamble.
+- Claves en `cad_final/.env` (o `Proyecto/MóduloMecánico/.env`), nunca en el repo.
+- Hoy los ensambles se exportan como un compuesto de sólidos: Onshape los convierte en **un Part Studio con todas las
+  piezas**, sin pestaña de Assembly. Para tener un Assembly con mates hay que exportar el STEP con árbol de ensamble
+  (pendiente).
+
+Subidos el 29/10: `LR1_separador`, `simple_D200_V1` (cápsula a 30°), `simple_D200_V2_45grados` y
+`simple_D200_V3_sin_correa` (los STEP de V2 y V3 salen de `cad_final/variantes.py`, en `salida/variantes/`).
+
 ### Lo que la API no hace: el "Update..."
 
 Probado el 29/10 con M7:

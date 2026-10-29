@@ -92,6 +92,8 @@ def main():
     g.add_argument("--medidas", action="store_true", help="solo MEDIDAS.md")
     g.add_argument("--planos", action="store_true", help="solo los planos por pieza")
     g.add_argument("--todo", action="store_true", help="todo, incluidos los ensambles por aro")
+    ap.add_argument("--onshape", action="store_true",
+                    help="al terminar, sube el ensamble simple a Onshape como pestanas nuevas (simple_D200_vN)")
     a = ap.parse_args()
     plan = "rapido" if a.rapido else "medidas" if a.medidas else "planos" if a.planos else "normal"
     log_dir = HERE.parent / "salida" / "_logs_build"
@@ -103,6 +105,13 @@ def main():
     ok = all([run(s, STEPS[s], log_dir) for s in plans(ver)[plan]])
     if a.todo:
         ok = ensambles(log_dir) and ok
+    if a.onshape and ok:
+        if ver == "simple":
+            ok = run("onshape", ["onshape_push.py", str(HERE.parent / "salida" / "simple" / "ensamble_simple_D200.step"),
+                                 "--nombre", "simple_D200"], log_dir)
+            print((log_dir / "onshape.log").read_text(encoding="utf-8").strip(), flush=True)
+        else:
+            print("--onshape: en la modular se usa onshape_sync.py (ONSHAPE.md)", flush=True)
     print(f"{'TODO BIEN' if ok else 'HUBO FALLAS (ver los logs)'} en {time.time() - t0:.0f} s", flush=True)
     return 0 if ok else 1
 
