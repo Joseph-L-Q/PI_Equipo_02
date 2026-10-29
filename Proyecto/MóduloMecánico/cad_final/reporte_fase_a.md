@@ -228,6 +228,16 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `casquillo.margen_punta` | nuevo | 0.3 | Puntas de la C recortadas a MIN_WALL + esto; tambien el buje del pivote del pestillo | estimado | por_verificar |
 | `gancho.solape_alma` | nuevo | 0.5 | El alma entra en la brida para que la union sea un solido | estimado | por_verificar |
 | `riel.paso_deslizamiento` | nuevo | 10 | Paso del barrido del macho deslizando de costado (verificacion) | estimado | por_verificar |
+| `ensamble.aro_varilla_D` | nuevo | 8 | Diametro de la varilla del aro de la linterna de referencia (esquematica) | estimado | por_verificar |
+| `ensamble.cuerda_D` | nuevo | 4 | Diametro de las cuerdas de la linterna de referencia | estimado | por_verificar |
+| `ensamble.cuerda_azimut` | nuevo | 45 × 135 × 225 × 315 | Cuerdas entre los dos lados de la barra: la barra cruza el aro por el centro, orientada entre dos cuerdas | equipo | por_verificar |
+| `ensamble.apice_alto` | nuevo | 400 | Altura del apice de las cuerdas sobre el aro; desconocida, se calcula el minimo | estimado | por_verificar |
+| `ensamble.red_alto_k` | nuevo | 1 | Alto de la red = k x diametro del aro | estimado | por_verificar |
+| `ensamble.red_espesor` | nuevo | 1 | Espesor de la cascara cilindrica que representa la red | estimado | por_verificar |
+| `ensamble.holgura_cuerda` | nuevo | 10 | Distancia libre minima entre cuerda y cualquier pieza del nodo | estimado | por_verificar |
+| `ensamble.tol_interferencia` | nuevo | 0.01 | Volumen comun (mm3) por encima del cual se marca interferencia | estimado | por_verificar |
+| `ensamble.barrido_s` | nuevo | 0 × 50 × 100 | Posiciones del carro (punta del riel pasada la manga) del barrido de la bisagra | estimado | por_verificar |
+| `ensamble.barrido_paso` | nuevo | 10 | Paso de inclinacion (grados) del barrido de la bisagra, de 0 a 90 | estimado | por_verificar |
 
 ## 2. 1 piso contra 2 pisos (holgura de contratuerca 5 mm, relleno de bandeja 40 %)
 
@@ -329,9 +339,9 @@ M1, M2, M4, M5 y los tramos del riel al 100 % con 5 perímetros. Bandeja y pieza
 | 100 % | Ø300 | 340 | 1372 | 1615 | -283 | 555 a 900 | 3 | +232 | 1965 |
 | 100 % | Ø500 | 540 | 1478 | 1698 | -263 | 532 a 876 | 3 | +253 | 2071 |
 
-Estabilidad del nodo completo (aproximada; bandeja al 40 %, cápsulas y extensiones a la altura del riel):
+Estabilidad del nodo completo (aproximada; bandeja al 40 %, cápsulas a 0° con el eje bajo el riel, extensiones a media altura del riel):
 
-- Ø100: centro de masa z = -7.2, centro de empuje z = 1.7 → el de masa queda 8.9 mm debajo: no se voltea.
-- Ø500: centro de masa z = -12.2, centro de empuje z = -2.4 → el de masa queda 9.8 mm debajo: no se voltea.
+- Ø100: centro de masa z = -25.2, centro de empuje z = -6.1 → el de masa queda 19.1 mm debajo: no se voltea.
+- Ø500: centro de masa z = -26.9, centro de empuje z = -9.5 → el de masa queda 17.4 mm debajo: no se voltea.
 
 El cálculo completo (momentos, metacentro) es la Fase E.

@@ -77,13 +77,13 @@ perilla y contra el riel en 5 posiciones (punta del riel de 0 a 100 más allá d
 | Ø200 y Ø300 | 3 | +228 | 1961 |
 | Ø500 | 3 | +249 | 2067 |
 
-Todos dentro de 0.2 a 0.5 kgf. Estabilidad aproximada: centro de masa 8.9 mm (Ø100) y 9.8 mm (Ø500) bajo el de empuje.
-Ese cálculo todavía pone las cápsulas a la altura del riel; con el eje 34 bajo el riel quedan más abajo, lo que
-ayuda. La Fase E lo rehace con la posición real.
+Todos dentro de 0.2 a 0.5 kgf. Estabilidad: en la Fase E se corrigió el cálculo (el acero de las pletinas no sumaba a la masa y las cápsulas iban a
+la altura del riel). Con eso el centro de masa queda 19.1 mm (Ø100) y 17.4 mm (Ø500) bajo el de empuje; ver
+`FASE_E.md`.
 
 ## Cierre
 
-- **Qué cambió:** 14 piezas finales en `salida/preliminar/` (caja, tapa, bandeja, dos tramos de riel, gancho, cuatro
+- **Qué cambió:** 17 piezas finales en `salida/preliminar/` (caja, tapa, bandeja, dos tramos de riel, gancho, cuatro
   casquillos, pestillo, perilla, cápsula de cuatro piezas y carro). El carro pasó a deslizante con la bisagra bajo el
   riel, la cápsula bajó a 93 g, el lastre a 3 pletinas por lado y el cable ya no alcanza con el de fábrica.
 - **Qué chequeos pasaron:** BRep, BOP, STL estanco de un cuerpo, cama y voladizo en todas; espesor ≥ 1.2 en todas salvo

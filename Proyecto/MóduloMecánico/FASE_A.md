@@ -145,7 +145,7 @@ Cada pletina hunde 86 g y se ponen de a dos (172 g por par). Como la ventana mid
 
 ### 7.5 Cierre de la revisión
 
-> **Actualizado en la Fase C** con la cápsula real (93.1 g y 127.8 cm³ por unidad, antes 104 y 154): 3 pletinas por lado en todos los aros, peso aparente final de +208 (Ø100), +228 (Ø200 y Ø300) y +249 g (Ø500), total en aire de 1.86 a 2.07 kg, centro de masa 8.9 (Ø100) y 9.8 mm (Ø500) bajo el de empuje. Detalle en `FASE_C.md`.
+> **Actualizado en la Fase C** con la cápsula real (93.1 g y 127.8 cm³ por unidad, antes 104 y 154): 3 pletinas por lado en todos los aros, peso aparente final de +208 (Ø100), +228 (Ø200 y Ø300) y +249 g (Ø500), total en aire de 1.86 a 2.07 kg, centro de masa 19.1 (Ø100) y 17.4 mm (Ø500) bajo el de empuje (corregido en la Fase E). Detalle en `FASE_C.md`.
 
 - **Qué cambió:** la caja se achicó a 159.6 × 126 × 55, con una sola bandeja, y el aire sellado bajó de 797 a 484 cm³. El tramo central es ahora una cámara de 53.4 de alto. El lastre son pletinas de inox de 25 × 5 × 100: 4 por lado (3 en Ø500). El nodo queda entre +218 y +370 g en el agua y entre 2.08 y 2.19 kg en el aire.
 - **Qué chequeos pasaron:** M1, M2, M11, la cámara y las tapas de los bolsillos pasan BRepCheck y BOPAlgo. El layout tiene 0 choques en 1 y en 2 pisos, y todas las interferencias dan 0 mm³. El recorrido del Cat5e con R25 cumple los 6 chequeos, y el centro de masa queda debajo del de empuje.

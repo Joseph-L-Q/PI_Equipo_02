@@ -132,25 +132,37 @@ def balance(an, f):
     raise SystemExit("plate pocket sizing did not converge")
 
 
-def stability(an, res, D):
-    """Centre of mass and centre of buoyancy (z) of the whole node with its plates, approximate."""
+def capsule_z(lay, tilt=0.0):
+    """z of the capsule centre (mass and volume, taken equal) in the box frame, carriage geometry of capsula.py."""
+    import capsula as CP
+    _, _, _, _, _, x0, x_front = CP.cap_dims()
+    xc = (x0 + x_front) / 2
+    return CH.dims(lay).z_rail + CP.carriage_axis()[1] - xc * math.sin(math.radians(tilt))
+
+
+def stability(an, res, D, tilt=0.0):
+    """Centre of mass and centre of buoyancy (z) of the whole node with its plates, approximate. Capsules at their real
+    height (hinge below the rail, tilt in degrees); extensions and other parts at rail mid-height."""
     lay = an["lay"]
     row = next(r for r in res["rows"] if r["D"] == D)
     c = CH.dims(lay)
     z_rail_c = c.z_rail + P.RAIL_SECTION / 2
     f = res["f"]
+    z_cap = capsule_z(lay, tilt)
     mass = [(an["m1"].Center().z, solid_g(an["m1"])), (an["m2"].Center().z, solid_g(an["m2"]))]
     mass += [(t.Center().z, mass_g(t, f)) for t in an["trays"].values()]
     mass += [((b.z[0] + b.z[1]) / 2, P.COMPONENTS[key][3]) for _, key, b in lay.modules]
     mass.append((P.BOX_FLOOR + lay.cav[2] / 2, an["fixed_g"] - sum(P.COMPONENTS[k][3] for _, k, _ in lay.modules)))
     mass += [(s.Center().z, solid_g(s)) for s in res["ch"].values()]
-    plates = CH.plates_solid(lay, row["layers"])
-    mass += [(pl.val().Center().z, CH.plate_mass_g()) for pl in plates]
-    rest_g = row["node_g"] - sum(m for _, m in mass)            # extensions, capsules, other parts at rail level
+    mass.append((z_cap, 2 * (P.CAPSULE_SET_G + P.CAPSULE_CONTENT_G)))
+    rest_g = row["node_g"] - sum(m for _, m in mass)            # extensions and other parts at rail level
     mass.append((z_rail_c, rest_g))
+    plates = CH.plates_solid(lay, row["layers"])                # steel is not in node_g: added on top
+    mass += [(pl.val().Center().z, CH.plate_mass_g()) for pl in plates]
     buoy = [(an["filled"].Center().z, an["filled"].Volume() / 1000), (an["m2"].Center().z, an["m2"].Volume() / 1000)]
     buoy += [(s.Center().z, s.Volume() / 1000) for s in res["ch"].values()]
     buoy += [(pl.val().Center().z, pl.val().Volume() / 1000) for pl in plates]
+    buoy.append((z_cap, 2 * P.CAPSULE_SET_DISP_CM3))
     rest_v = row["disp"] - sum(v for _, v in buoy) + row["steel_g"] / P.STEEL_DENSITY
     buoy.append((z_rail_c, rest_v))
     zg = sum(z * m for z, m in mass) / sum(m for _, m in mass)
@@ -351,7 +363,7 @@ def main():
             r.append(f"| {f * 100:.0f} % | Ø{row['D']:g} | {row['L']:g} | {row['node_g']:.0f} | {row['disp']:.0f} | "
                      f"{row['app0']:+.0f} | {row['need_g']:.0f} a {row['need_hi_g']:.0f} | {row['layers']} | "
                      f"{row['app']:+.0f}{'' if row['in_window'] else ' (fuera de la ventana)'} | {row['total']:.0f} |")
-    r += ["", "Estabilidad del nodo completo (aproximada; bandeja al 40 %, cápsulas y extensiones a la altura del riel):", ""]
+    r += ["", "Estabilidad del nodo completo (aproximada; bandeja al 40 %, cápsulas a 0° con el eje bajo el riel, extensiones a media altura del riel):", ""]
     for D, (zg, zb) in stab.items():
         r.append(f"- Ø{D:g}: centro de masa z = {zg:.1f}, centro de empuje z = {zb:.1f} → "
                  f"{'el de masa queda {:.1f} mm debajo: no se voltea'.format(zb - zg) if zg < zb else 'centro de masa ARRIBA del de empuje: revisar'}.")
