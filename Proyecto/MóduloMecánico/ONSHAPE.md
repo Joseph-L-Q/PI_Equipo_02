@@ -78,6 +78,10 @@ python cad_final/build.py --rapido --onshape        # regenera y sube el ensambl
 
 Subidos el 29/10: `LR1_separador`, `simple_D200_V1` (cápsula a 30°), `simple_D200_V2_45grados` y
 `simple_D200_V3_sin_correa` (los STEP de V2 y V3 salen de `cad_final/variantes.py`, en `salida/variantes/`).
+Después: `nodo_simple_V2` (caja baja, KIT A, cámaras hacia la malla), `boya_simple_V1`, `boya_referencia_V1` (maqueta
+del ejemplo del equipo) y `sistema_simple_V1` (nodo + boya + U1 + C1). Los STEP de estos ya llevan las piezas con nombre
+(M*, B*, LR*, U1, C1); Onshape igual crea un solo Part Studio. El Part Studio huérfano de M7 sigue ahí: la clave no tiene
+permiso de borrar (403), se borra a mano.
 
 ### Lo que la API no hace: el "Update..."
 

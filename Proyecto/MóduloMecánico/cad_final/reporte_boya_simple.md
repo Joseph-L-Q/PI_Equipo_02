@@ -53,7 +53,7 @@ Interferencias (piezas y maquetas de bateria, PCB, Waveshare, RTC, antena y pane
 | BM balanceo / cabeceo | 142 / 518 mm |
 | **GM balanceo / cabeceo** | **92 / 467 mm** |
 
-**Peso total nodo + boya: 5155 g** (nodo 2450 g, boya 2705 g) contra 3 kg: **se pasa por 2155 g**.
+**Peso total nodo + boya: 5168 g** (nodo 2462 g, boya 2705 g) contra 3 kg: **se pasa por 2168 g**.
 
 Estimacion de geometria, no certificacion: masas de componentes estimadas (`boya.masas`, el panel es la mayor incertidumbre), sin oleaje, viento ni tension del umbilical.
 

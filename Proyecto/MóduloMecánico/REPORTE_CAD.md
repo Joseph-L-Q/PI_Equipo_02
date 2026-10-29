@@ -161,6 +161,8 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
 
 ## 9. Versión simple para el prototipo en el aro Ø200 y suspensión propia de la linterna (29/10)
 
+> **Esta sección describe la V1.** La versión vigente es la V2 (caja baja, KIT A, cámaras hacia la malla): ver la sección 10.
+
 Generada por `cad_final/simple.py` (`build.py --rapido` con `version = "simple"`, unos 40 a 65 s). Números completos y
 verificación en `cad_final/reporte_simple.md`; piezas en `salida/simple/` (STL y STEP por pieza, ensamble con la
 linterna `ensamble_simple_D200.step`, riel fusionado para SimScale en `simscale/`), separador en `salida/linterna_prueba/`.
@@ -209,3 +211,88 @@ M8 (unos 167 g de acero) ni las piezas chicas. Se corrige con las pletinas.
 **Por verificar en la versión simple:** `aro.seccion` (8, la varilla del aro real), el alma del pie de la cápsula
 (sin cálculo: SimScale o prueba a mano), el apriete de los M4 del pie en el PETG impreso a través de las capas, y que
 el umbilical salga entre las cuerdas del ápice sin rozarlas (en el render pasa por dentro de la brida).
+
+## 10. Observaciones y medidas del equipo (29/10) y versión simple V2
+
+Fuente: decisiones del chat de Melissa del 29/10. `chatgpt_boya_medidas.md` no existía en Downloads, así que no hay
+más medidas que esas. Todas entraron en `params.py` como origen **equipo**, estado **por_verificar**, solo para la
+versión simple (la modular no cambia).
+
+### 10.1 Equipo contra CAD
+
+| Parámetro | Valor del equipo | Valor que tenía el CAD | Diferencia | Qué se hizo / estado |
+|---|---|---|---|---|
+| `material` | PETG opaco, no ASA | PETG (`petg.*`) | ninguna | Registrado. **Aplicado** |
+| `simple.esp32_base` | ESP32-S3 N16R8 sobre KIT A + módulos sueltos | sin_base (DevKit suelto) | caja más grande: 127 × 126 × 77 (antes 139.6 × 106 × 50) | **Aplicado** en 2 pisos: con 1 piso la brida (170) quedaba a 1.6 mm de las cuerdas a 60°. `esp32.base` sigue en sin_base para la modular |
+| `camara.envolvente` | Arducam Mega 5MP 33 × 33 × 17, fabricante | 33 × 33 × 17, fabricante, confirmado | ninguna | Sin cambio |
+| `capsula.acimut` | cámaras inclinadas hacia la malla | hacia afuera (V1) | 180° | **Aplicado** (adentro, 30°). Ver 10.3: en Ø200 la red queda a 38 mm del lente |
+| `ventana.antibiofouling` | spray en las ventanas | no estaba | ninguna en la geometría | Registrado |
+| `enlace.nodo_boya` | RS-485 dentro del umbilical | XY-017 RS-485 ya estaba en la caja | ninguna | Registrado |
+| `boya.caja_exterior` / `boya.caja_interior` | ~220 × 200 × 120 / 210 × 190 | casco 177 × 97 × 76 (derivado del layout) | +43 / +103 / +44 mm | **Aplicado** en la boya propia (cuerpo; la brida de la tapa da 240 × 220). Hace que nodo + boya pase de 3 kg (10.4) |
+| `boya.panel` | 170 × 170 encima | 170 × 170 × 3 | ninguna | Sin cambio (corrido a −X para dejar libre la antena) |
+| `boya.flotadores_esquinas` | 4 flotadores modulares en las esquinas | 2 pontones de 2 módulos a los lados | forma | **Aplicado**: 4 flotadores huecos de 100 × 100 × 60 atornillados con M5 a cojines |
+| `boya.antena_interior` | antena LoRa pequeña dentro, despejada de metal y del panel | mástil B4 exterior | sin mástil | **Aplicado**: antena dentro en el extremo +X, fuera de la proyección del panel |
+| `boya.sma_ciego` | agujero ciego para SMA de panel, lejos de los cables | pasamuros desactivado | nuevo | **Aplicado** en la pared +X (los PG7 están en −X) |
+| PG7 del umbilical abajo, ojal independiente | | ya era así | ninguna | Mantenido |
+
+**No apliqué:** nada quedó afuera, pero dos decisiones del equipo chocan con exigencias: la caja de la boya de
+220 × 200 × 120 con el KIT A en el nodo lleva el total a **5168 g contra 3 kg** (10.4), y las cámaras hacia la malla
+quedan **más cerca de la red que el enfoque mínimo estimado** en Ø200 (10.3). Hay que decidirlas con el equipo.
+
+### 10.2 Nodo: antes (V1) y después (V2)
+
+Alturas sobre el centro de la varilla del aro. V2 = KIT A en 2 pisos + caja baja + cámaras hacia la malla.
+
+| Concepto | V1 | V2 |
+|---|---|---|
+| Nodo de / a | −40 / +210 mm | −40 / +181 mm |
+| Altura total | 250 mm | **221 mm** |
+| Centro de masa | +66.5 mm | **+45.9 mm** |
+| BG (estabilidad) | 17.4 mm | 18.2 mm |
+| Separador / ápice sobre el aro | 250 / 400 mm | 140 (mínimo 136) / **290 mm** |
+| Peso en aire | 2079 g | 2462 g (caja con KIT A y 5 pletinas por bolsillo) |
+| Peso aparente | +265 g | +205 g (ventana +200 a +500) |
+| Aire mínimo suspensión-nodo | 21.6 mm | 11.6 mm (exigido 10) |
+| Piezas impresas por nodo | 15 (9 tipos) | 14 (9 tipos, con 2 bandejas) |
+| FS del pie entre capas | 1.2 | 2.2 a mano, 2.5 FEM |
+| Cable por cámara | 420 mm | 379 mm (sigue la prueba SPI) |
+
+Cambios de V2: los PG7 de las cámaras pasan por las paredes extremas de M1 y el domo entra en el conducto del riel
+(no hay cámara de cables ni bloque bajo la caja); el riel son 2 mitades M3s atornilladas a cojines de la caja con el
+gancho en C **fusionado** (alma de 20 y pared de la C de 6, por el FEM); los bolsillos del lastre van moldeados bajo
+M1; el pie de la cápsula cumple FS ≥ 2 entre capas sin inserto ni pared de 6 porque con la cápsula mirando adentro la
+palanca es corta. Tapas, cápsulas y bandejas siguen desmontables.
+
+### 10.3 Cámaras hacia la malla
+
+FOV 70° diagonal y enfoque desde 8 cm (los dos estimados, sin ficha). En Ø200 el eje óptico corta la red a **38 mm**
+del lente (campo diagonal 53 mm): **fuera del enfoque estimado**. Opciones: alargar el riel unos 50 mm por lado (la
+cápsula queda más afuera), inclinar a 70° o más, o confirmar con la ficha que enfoca a 4 cm. En Ø500 (mismo nodo) el
+eje no corta la red dentro de su alto. El aro LED ilumina el encuadre si su haz es al menos igual al FOV (dato por
+confirmar).
+
+### 10.4 Boya propia y peso del sistema
+
+Boya B1s..B6s (`cad_final/reporte_boya_simple.md`): **2705 g**, calado 31.6 mm, francobordo **88.4 mm** (≥ 50),
+reserva 194 %, GM 92 / 467 mm. **Nodo + boya = 5168 g: 2168 g sobre los 3 kg.** Lo que más pesa: el casco al 100 %
+(957 g), la tapa (331 g), el panel (350 g, estimado) y los 4 flotadores (464 g). Para bajar: casco y tapa a 5
+perímetros con 40 % de relleno (la boya está seca), flotadores de espuma con cáscara fina, y pesar el panel real.
+
+### 10.5 Sistema, FEM y slicer
+
+- `ENSAMBLE_sistema_simple.step`: nodo + LR1 + cuerdas + linterna a 1 m + boya, piezas nombradas. U1 (manguera Ø10
+  de referencia) mide 950 mm: con el umbilical de 3 m sobran 2050; radio mínimo 61 (exigido 60), 7.5 mm de la
+  suspensión. C1 del ápice al ojal de la boya (648 mm) carga la linterna; el cable no.
+- FEM local (Gmsh + CalculiX 2.22, `salida/simple/fem/`), 150 N en una cápsula, PETG estimado e isótropo:
+  riel en el agua 8.4 MPa (FS 5.4 / 2.6 entre capas), riel al izar 4.2 MPa (FS 10.9 / 5.3), pie 8.9 MPa (FS 5.0 / 2.5).
+  El FEM mostró que en el agua un solo gancho lleva los 150 N (el cálculo a mano suponía 75): de ahí el alma de 20.
+  SimScale: pasos manuales en `salida/simscale/SIMSCALE.md`. No se afirma estanqueidad por simulación.
+- Slicer (OrcaSlicer, P1P 0.4, 0.20 mm, 3 paredes, giroide con el relleno de cada pieza; corrido en otra sesión):
+  nodo 1307 g / 47.1 h / S/ 117.59, LR1 37 g / 1.6 h, boya 2179 g / 72.5 h / S/ 196.10. Las piezas impresas pesan
+  más que lo que supone la flotación (nodo +79 g, boya +236 g): el peso aparente real será algo mayor.
+
+### 10.6 Chequeos de este reporte
+
+Ninguno se rompió: insertos M4 de las bridas 339 N al izar (§4 exige 345 N: probar con PB8), peso aparente en la
+ventana, BG positivo, aire ≥ 10, FS ≥ 2 entre capas en riel, gancho y pie. Cambian de forma: §3 (uniones) y §6b
+(linterna en el asa) no aplican en la simple; el gancho se verifica con 150 N.

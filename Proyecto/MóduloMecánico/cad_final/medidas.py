@@ -101,6 +101,57 @@ def configs():
     return lay, rows
 
 
+SIMPLE_CONFIRM = [
+    ("aro.seccion", "Diámetro de la varilla del aro Ø200 real", "calibrador", "fija la C del gancho fusionado al riel"),
+    ("comp.kit_a", "Largo, ancho y alto del KIT A con la ESP32-S3 puesta", "calibrador", "fija el tamaño de la caja (2 pisos)"),
+    ("pg7.contratuerca_AF", "Entrecaras de la contratuerca PG7", "calibrador", "la contratuerca va en la pared extrema, sobre la bandeja"),
+    ("pg7.domo", "Diámetro y largo del domo del PG7", "calibrador", "el domo entra en el conducto del riel (22 × 22)"),
+    ("petg.densidad", "Densidad real del PETG (pesar una probeta)", "balanza + slicer", "peso en el agua y pletinas"),
+    ("gancho.caida", "Del fondo del riel al centro de la varilla del aro", "regla", "alto del gancho"),
+    ("lastre.pletina", "Ancho y espesor de la pletina de inox", "calibrador", "bolsillos bajo la caja (5 por bolsillo)"),
+    ("camara.fov_diagonal", "Campo de visión de la Arducam Mega 5MP (ficha)", "ficha", "qué ve la cámara de la malla"),
+    ("camara.enfoque", "Distancia mínima de enfoque de la Arducam Mega 5MP", "ficha o prueba", "hoy la red queda a 38 mm del lente en Ø200"),
+    ("boya.masas", "Peso del panel solar, las 18650 y la PCB", "balanza", "peso total nodo + boya (hoy se pasa de 3 kg)"),
+    ("boya.caja_exterior", "Medidas finales de la caja de la boya (equipo, ~220 × 200 × 120)", "decisión del equipo", "es lo que más pesa en la boya"),
+]
+
+
+def simple_section(reg):
+    """Section 0 for the simple version (version = "simple"): pieces, key numbers and what to measure first."""
+    import json
+    res = json.loads((MOD / "salida" / "simple" / "resultados.json").read_text(encoding="utf-8"))
+    rb = json.loads((MOD / "salida" / "simple" / "boya" / "resultados_boya.json").read_text(encoding="utf-8"))
+    qty = {"M3s_riel_gancho": 2, "M3t_tapa_bolsillo": 2, "M5s_capsula_tapa_pie": 2, "M4_capsula_cuerpo": 2,
+           "M6_capsula_bisel": 2, "M7_capsula_ventana": 2}
+    w = res["peso"]["40"]
+    r = ["## 0. Versión simple (prototipo en el aro Ø200, la que se imprime)", "",
+         f"`version = \"simple\"` en `params.py`. Nodo V2: ESP32 sobre {res['caja']['esp32'].upper()} en {res['caja']['pisos']} pisos, "
+         f"caja baja con los PG7 de las cámaras en las paredes extremas, riel de {res['riel']['largo']:g} en 2 mitades con el gancho "
+         f"fusionado, cápsulas a {res['capsula']['angulo']:g}° mirando {res['capsula']['acimut']}. Peso en el aire "
+         f"{w['aire_g']:.0f} g, en el agua {w['aparente_g']:+.0f} g, ápice a {res['apice_sobre_aro']:.0f} mm sobre el aro. "
+         f"Boya: {rb['masa_g']:.0f} g, calado {rb['calado']:.0f} mm, francobordo {rb['francobordo']:.0f} mm. "
+         f"Nodo + boya: **{rb['total_g']:.0f} g** (límite 3000). Detalle: `cad_final/reporte_simple.md`, "
+         "`cad_final/reporte_boya_simple.md`, `cad_final/BOM.md`. Las secciones 1 a 4 de abajo describen la versión modular.", "",
+         "| Pieza | Archivo STL | Cant. | Medidas en la orientación de impresión (mm) | Relleno | Masa g | Soportes |",
+         "|---|---|---|---|---|---|---|"]
+    for stem, p in res["piezas"].items():
+        folder = "salida/linterna_prueba" if stem.startswith("LR1") else "salida/simple/stl"
+        rel = p["relleno"] if isinstance(p["relleno"], str) else ("acrílico" if p["relleno"] is None else f"{p['relleno'] * 100:.0f} %")
+        m = f"{p['masa_g']:.0f}" if p["masa_g"] else "-"
+        r.append(f"| {p['nombre']} | `{folder}/{stem}.stl` | {qty.get(stem, 1)} | {' × '.join(f'{v:.1f}' for v in p['bbox'])} | "
+                 f"{rel} | {m} | {'sí' if p['soportes'] else 'no'} |")
+    for stem, p in rb["piezas"].items():
+        r.append(f"| {p['nombre']} | `salida/simple/boya/stl/{stem}.stl` | {p['qty']} | {' × '.join(f'{v:.1f}' for v in p['bbox'])} | "
+                 f"{p['relleno'] * 100:.0f} % | {p['masa_g']:.0f} | {'sí' if p['voladizo_mm2'] > res['soporte_umbral_mm2'] else 'no'} |")
+    r += ["", "Lo primero que hay que medir para la versión simple:", "",
+          "| # | Qué medir | Con qué | Valor que usa hoy el modelo | Nombre en params.py | Origen | Por qué importa |",
+          "|---|---|---|---|---|---|---|"]
+    for i, (k, what, tool, why) in enumerate(SIMPLE_CONFIRM, 1):
+        x = reg[k]
+        r.append(f"| {i} | {what} | {tool} | {Z.fmt(x.value)} | `{k}` | {ORIGEN[x.origen]} | {why} |")
+    return r + [""]
+
+
 def main():
     lay, rows = configs()
     reg = P.REGISTRO
@@ -116,6 +167,9 @@ def main():
          f"Hoy hay {len(reg)} medidas en `params.py`: {sum(1 for x in reg.values() if x.origen == 'medido')} medidas a mano y "
          f"{n_ver} por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que "
          "se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.", ""]
+
+    if P.VERSION == "simple":
+        r += simple_section(reg)
 
     # 1. what to measure
     r += ["## 1. Medidas por confirmar, de la más importante a la menos", "",

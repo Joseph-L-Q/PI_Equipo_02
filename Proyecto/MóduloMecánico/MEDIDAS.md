@@ -11,6 +11,46 @@
 
 Hoy hay 352 medidas en `params.py`: 0 medidas a mano y 272 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
 
+## 0. Versión simple (prototipo en el aro Ø200, la que se imprime)
+
+`version = "simple"` en `params.py`. Nodo V2: ESP32 sobre KIT_A en 2 pisos, caja baja con los PG7 de las cámaras en las paredes extremas, riel de 430 en 2 mitades con el gancho fusionado, cápsulas a 30° mirando adentro. Peso en el aire 2462 g, en el agua +205 g, ápice a 290 mm sobre el aro. Boya: 2705 g, calado 32 mm, francobordo 88 mm. Nodo + boya: **5168 g** (límite 3000). Detalle: `cad_final/reporte_simple.md`, `cad_final/reporte_boya_simple.md`, `cad_final/BOM.md`. Las secciones 1 a 4 de abajo describen la versión modular.
+
+| Pieza | Archivo STL | Cant. | Medidas en la orientación de impresión (mm) | Relleno | Masa g | Soportes |
+|---|---|---|---|---|---|---|
+| M1 caja baja con bolsillos | `salida/simple/stl/M1s_caja_cuerpo.stl` | 1 | 147.0 × 146.0 × 102.5 | 100 % | 444 | sí |
+| M2 caja, tapa con asa | `salida/simple/stl/M2_caja_tapa.stl` | 1 | 63.0 × 146.0 × 147.0 | 100 % | 173 | sí |
+| M3s riel con gancho, mitad | `salida/simple/stl/M3s_riel_gancho.stl` | 2 | 141.5 × 79.4 × 50.0 | riel 40 %, gancho 100 % | 98 | sí |
+| M3t tapa del bolsillo | `salida/simple/stl/M3t_tapa_bolsillo.stl` | 2 | 117.0 × 32.0 × 3.0 | 100 % | 14 | no |
+| M5s tapa con pie | `salida/simple/stl/M5s_capsula_tapa_pie.stl` | 2 | 55.2 × 64.0 × 95.9 | 100 % | 94 | sí |
+| M11 bandeja (M11_bandeja) | `salida/simple/stl/M11_bandeja.stl` | 1 | 115.0 × 114.0 × 30.0 | 40 % | 46 | no |
+| M11 bandeja (M11_bandeja_sup) | `salida/simple/stl/M11_bandeja_sup.stl` | 1 | 115.0 × 114.0 × 3.0 | 40 % | 44 | no |
+| M4 capsula, cuerpo | `salida/simple/stl/M4_capsula_cuerpo.stl` | 2 | 64.0 × 64.0 × 44.0 | 100 % | 58 | sí |
+| M6 bisel | `salida/simple/stl/M6_capsula_bisel.stl` | 2 | 42.0 × 42.0 × 2.5 | 40 % | 2 | no |
+| M7 ventana (acrilico) | `salida/simple/stl/M7_capsula_ventana.stl` | 2 | 30.0 × 30.0 × 3.0 | acrílico | 3 | no |
+| LR1 separador | `salida/linterna_prueba/LR1_separador.stl` | 1 | 211.9 × 211.9 × 6.0 | 40 % | 44 | no |
+| B1s casco | `salida/simple/boya/stl/B1s_casco.stl` | 1 | 240.0 × 220.0 × 125.0 | 100 % | 957 | sí |
+| B2s tapa | `salida/simple/boya/stl/B2s_tapa.stl` | 1 | 9.0 × 220.0 × 240.0 | 100 % | 331 | sí |
+| B1bs bandeja | `salida/simple/boya/stl/B1bs_bandeja.stl` | 1 | 206.0 × 186.0 × 3.0 | 40 % | 129 | no |
+| B3s larguero del panel | `salida/simple/boya/stl/B3s_larguero.stl` | 2 | 24.0 × 170.0 × 21.0 | 40 % | 26 | no |
+| B5s flotador de esquina | `salida/simple/boya/stl/B5s_flotador.stl` | 4 | 60.0 × 100.0 × 100.0 | 100 % | 116 | sí |
+| B6s ojal de amarre | `salida/simple/boya/stl/B6s_ojal.stl` | 1 | 30.0 × 24.0 × 26.0 | 100 % | 11 | no |
+
+Lo primero que hay que medir para la versión simple:
+
+| # | Qué medir | Con qué | Valor que usa hoy el modelo | Nombre en params.py | Origen | Por qué importa |
+|---|---|---|---|---|---|---|
+| 1 | Diámetro de la varilla del aro Ø200 real | calibrador | 8 | `aro.seccion` | estimado | fija la C del gancho fusionado al riel |
+| 2 | Largo, ancho y alto del KIT A con la ESP32-S3 puesta | calibrador | 80 × 70 × 12 × 25 | `comp.kit_a` | estimado | fija el tamaño de la caja (2 pisos) |
+| 3 | Entrecaras de la contratuerca PG7 | calibrador | 15 | `pg7.contratuerca_AF` | estimado | la contratuerca va en la pared extrema, sobre la bandeja |
+| 4 | Diámetro y largo del domo del PG7 | calibrador | 19 × 22 | `pg7.domo` | estimado | el domo entra en el conducto del riel (22 × 22) |
+| 5 | Densidad real del PETG (pesar una probeta) | balanza + slicer | 1.27 | `petg.densidad` | estimado | peso en el agua y pletinas |
+| 6 | Del fondo del riel al centro de la varilla del aro | regla | 40 | `gancho.caida` | estimado | alto del gancho |
+| 7 | Ancho y espesor de la pletina de inox | calibrador | 25 × 5 | `lastre.pletina` | estimado | bolsillos bajo la caja (5 por bolsillo) |
+| 8 | Campo de visión de la Arducam Mega 5MP (ficha) | ficha | 70 | `camara.fov_diagonal` | estimado | qué ve la cámara de la malla |
+| 9 | Distancia mínima de enfoque de la Arducam Mega 5MP | ficha o prueba | 80 × 1e+06 | `camara.enfoque` | estimado | hoy la red queda a 38 mm del lente en Ø200 |
+| 10 | Peso del panel solar, las 18650 y la PCB | balanza | celda_18650: 47, portabaterias: 25, pcb_heltec: 35, waveshare: 15, rtc: 8, panel: 350, antena: 20, cables_fusible: 40, prensaestopas: 20, tornilleria: 60 | `boya.masas` | estimado | peso total nodo + boya (hoy se pasa de 3 kg) |
+| 11 | Medidas finales de la caja de la boya (equipo, ~220 × 200 × 120) | decisión del equipo | 220 × 200 × 120 | `boya.caja_exterior` | decisión del equipo | es lo que más pesa en la boya |
+
 ## 1. Medidas por confirmar, de la más importante a la menos
 
 | # | Qué hay que medir | Con qué | Valor que usa hoy el modelo | Nombre en params.py | Origen | Por qué importa |
