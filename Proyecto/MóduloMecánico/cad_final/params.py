@@ -99,11 +99,32 @@ RAIL_TIP_END_T = p("riel.punta_tapa", 5.0, EST, VER,
 RAIL_DOVETAIL = p("riel.cola_milano", 15.0, "equipo", OK, "Macho/hembra 15 + 2 M4 pasantes")
 RAIL_TSLOT = p("riel.ranura_T", {"abertura": 4.6, "ancho": 8.0, "alto": 3.6}, EST, VER,
                "Para tuerca M4 (AF7 x 3.2); se ajusta con la probeta de la Fase B")
-RAIL_ROD_M8 = p("riel.varilla_M8", False, "equipo", OK, "Refuerzo opcional por dentro")
+RAIL_ROD_M8 = p("riel.varilla_M8", True, "equipo", OK,
+                "Varilla roscada M8 obligatoria en todo el riel, tensada con tuerca + arandela en las dos puntas (29/10, C19)",
+                False)
+ROD_HOLE = p("riel.varilla_agujero", 8.5, "equipo", OK, "Agujero pasante de la varilla en cada tramo, alineado")
+ROD_GRADE = p("riel.varilla_grado", "8.8", EST, VER, "8.8 o 4.6 (la que se compre); el calculo se hace con las dos")
+ROD_CHANNEL_GAP = p("riel.varilla_aire_ranura", 1.0, EST, VER,
+                    "Aire entre el techo del canal de tuercas (nervios) y el refuerzo de la varilla: pasan las tuercas y la "
+                    "punta de un M4 x 14")
+ROD_BOSS_WALL = p("riel.varilla_pared", 1.2, EST, VER, "Pared del refuerzo alrededor del agujero de 8.5 (minimo de impresion)")
+ROD_CABLE_GAP = p("riel.varilla_aire_cable", 0.5, EST, VER, "Aire entre el refuerzo de la varilla y el Cat5e que va encima")
+ROD_BULKHEAD_T = p("riel.varilla_tabique", 3.0, EST, VER,
+                   "Espesor (a lo largo del riel) del tabique con el agujero de 8.5; uno en cada extremo del cuerpo de cada tramo")
+ROD_WASHER = p("riel.varilla_arandela", (24.0, 2.0, 8.4), "fabricante", VER,
+               "Arandela ancha DIN 9021 M8: Ø ext x espesor x Ø int (reparte el apriete sobre el PETG)")
+ROD_NUT = p("riel.varilla_tuerca", (13.0, 6.5), "fabricante", VER, "Tuerca M8 DIN 934: entrecaras x alto")
+ROD_PROTRUSION = p("riel.varilla_sobrante", 2.0, EST, VER, "Rosca que asoma pasada la tuerca en cada punta")
+ROD_PRELOAD_N = p("riel.varilla_precarga", 500.0, EST, VER,
+                  "Tension de apriete; con T = 0.2 d F son unos 0.8 N m. Reapretar tras unos dias (fluencia del PETG)")
+ROD_PARTS_G = p("riel.varilla_masas", {"g_por_mm": 0.32, "tuerca": 5.0, "arandela": 6.5}, EST, VER,
+                "Varilla M8 de acero cincado o inox, por mm; tuerca y arandela DIN 9021. Pesar")
 # tramo central = camara de cables bajo la caja (revision 28/10, C12)
 CHAMBER_H_TARGET = p("riel.camara_alto", 50.0, "equipo", OK,
                      "'Unos 50' de alto interior; el valor real se deriva (domo + radio + cable + nervio)")
-CHAMBER_RAMP_DEG = p("riel.camara_rampa", 45.0, EST, VER, "Techo en rampa hacia el conducto de 22 (imprimible)")
+CHAMBER_RAMP_DEG = p("riel.camara_rampa", 60.0, EST, VER,
+                     "Techo en rampa hacia el conducto de 22. Con la varilla (C19) la camara crece 12.4 y a 45 grados la "
+                     "rampa tapaba el domo del PG7; el central se imprime boca abajo, asi que la rampa queda como piso", 45.0)
 CHAMBER_FLANGE_W = p("riel.camara_brida", (56.0, 4.0), EST, VER,
                      "Brida superior (ancho minimo x espesor): lleva los 4 M4 a la caja y cuelga los bolsillos "
                      "de la pletina; el ancho real lo fijan los bolsillos")
@@ -425,8 +446,10 @@ LANTERN_HANG = p("ensamble.cuerdas_al_asa", (100.0, 200.0), "equipo", OK,
 LANTERN_WATER_N = p("ensamble.linterna_peso_agua_N", 30.0, EST, VER,
                     "Peso en el agua de la linterna (aro, red, cuerdas y carga) que cuelga del asa; pesarla")
 RAIL_LAYOUT_GAP = p("riel.holgura_gancho_carro", 1.0, EST, VER, "Aire a lo largo del riel entre la brida del gancho y la manga del carro")
-M8_ROD = p("riel.varilla_M8_datos", {"d_nucleo": 6.47, "E": 200000.0}, "fabricante", VER,
-           "Varilla roscada M8 de acero: diametro de nucleo (ISO 898) y modulo; solo para estimar el refuerzo opcional")
+M8_ROD = p("riel.varilla_M8_datos", {"d": 8.0, "d_nucleo": 6.47, "A_s": 36.6, "E": 200000.0, "fy_8.8": 640.0, "fy_4.6": 240.0},
+           "fabricante", VER,
+           "Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6",
+           {"d_nucleo": 6.47, "E": 200000.0})
 
 
 # boya (Fase G)

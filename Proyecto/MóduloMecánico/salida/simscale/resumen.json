@@ -1,5 +1,5 @@
 {
- "z_rail": -57.35,
+ "z_rail": -69.75,
  "x_joint": 55.0,
  "eje_bisagra_carro": [
   12.5,
@@ -8,8 +8,8 @@
  "simscale_1_union_riel": {
   "archivo": "simscale_1_union_riel.step",
   "volumen_ok": true,
-  "solidos_leidos": 2,
-  "solidos_esperados": 2,
+  "solidos_leidos": 3,
+  "solidos_esperados": 3,
   "piezas": {
    "riel_central_x10a70": {
     "ok": true,
@@ -18,14 +18,14 @@
     "solidos": 1,
     "min_edge": 0.1,
     "min_face": 29.154,
-    "vol_cm3": 62.768,
-    "caras": 69,
+    "vol_cm3": 72.088,
+    "caras": 72,
     "bbox": [
      10.0,
      70.0,
      -44.0,
      44.0,
-     -57.35,
+     -69.75,
      0.0
     ]
    },
@@ -34,17 +34,35 @@
     "brep": true,
     "bop": true,
     "solidos": 1,
-    "min_edge": 0.65,
-    "min_face": 2.6,
-    "vol_cm3": 36.998,
-    "caras": 80,
+    "min_edge": 1.0,
+    "min_face": 14.134,
+    "vol_cm3": 44.756,
+    "caras": 83,
     "bbox": [
      55.0,
-     155.0,
+     170.0,
      -15.0,
      15.0,
-     -57.35,
-     -27.35
+     -69.75,
+     -39.75
+    ]
+   },
+   "varilla_M8_acero": {
+    "ok": true,
+    "brep": true,
+    "bop": true,
+    "solidos": 1,
+    "min_edge": 25.133,
+    "min_face": 50.265,
+    "vol_cm3": 8.042,
+    "caras": 3,
+    "bbox": [
+     10.0,
+     170.0,
+     -4.0,
+     4.0,
+     -59.7,
+     -51.7
     ]
    }
   }

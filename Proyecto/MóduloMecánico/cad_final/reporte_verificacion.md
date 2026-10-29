@@ -9,8 +9,8 @@ Corte de 0.05 mm del sólido real; I respecto del eje horizontal que pasa por el
 | Sección | A mm² | I mm⁴ | c mm | Z mm³ |
 |---|---|---|---|---|
 | ext_medio | 412 | 46051 | 15.3 | 3018 |
-| ext_ranura_salida | 412 | 46051 | 15.3 | 3018 |
-| union_hembra | 361 | 80087 | 24.5 | 3267 |
+| punta_ranura_salida | 380 | 43882 | 15.4 | 2853 |
+| union_hembra | 361 | 157248 | 32.2 | 4883 |
 | union_macho | 229 | 6716 | 9.6 | 697 |
 
 ## 2. Riel con 150 N en la cápsula
@@ -23,10 +23,10 @@ Carga en el eje de la bisagra con el carro a ras de la punta (palanca máxima). 
 
 | Aro | Ext. | Punta mm | x carga mm | A: M N·mm | A: σ llena MPa | A: σ media madera MPa | A: FS 45 / 22 (media madera) | A: flecha mm | B: M N·mm | B: σ MPa | B: FS 45 / 22 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Ø100 | 0 | 115 | 127.5 | 8625 | 2.9 | 12.4 | 3.6 / 1.8 | 0.1 | 11625 | 3.9 | 11.7 / 5.7 |
-| Ø200 | 1 | 215 | 227.5 | 23625 | 7.8 | 33.9 | 1.3 / 0.6 | 2.5 | 19125 | 6.3 | 7.1 / 3.5 |
-| Ø300 | 1 | 215 | 227.5 | 23625 | 7.8 | 33.9 | 1.3 / 0.6 | 2.5 | 11625 | 3.9 | 11.7 / 5.7 |
-| Ø500 | 2 | 315 | 327.5 | 38625 | 12.8 | 55.4 | 0.8 / 0.4 | 10.9 | 11625 | 3.9 | 11.7 / 5.7 |
+| Ø100 | 0 | 115 | 127.5 | 8625 | 3.0 | 12.4 | 3.6 / 1.8 | 0.1 | 11625 | 4.1 | 11.0 / 5.4 |
+| Ø200 | 1 | 215 | 227.5 | 23625 | 8.3 | 33.9 | 1.3 / 0.6 | 2.5 | 19125 | 6.7 | 6.7 / 3.3 |
+| Ø300 | 1 | 215 | 227.5 | 23625 | 8.3 | 33.9 | 1.3 / 0.6 | 2.5 | 11625 | 4.1 | 11.0 / 5.4 |
+| Ø500 | 2 | 315 | 327.5 | 38625 | 13.5 | 55.4 | 0.8 / 0.4 | 10.9 | 11625 | 4.1 | 11.0 / 5.4 |
 
 Con la punta (C18) el carro entra a ras de la punta en todos los aros; la fila usa esa posición (palanca máxima).
 
@@ -58,7 +58,17 @@ Mismo caso A con la punta del riel en cada configuración: la decidida el 29/10 
 | Ø500 | mínima para armar | 314 | 38475 | 55.2 | 0.8 / 0.4 |
 | Ø500 | anterior (extensiones solapadas, sin punta) | 240 | 27375 | 39.2 | 1.1 / 0.6 |
 
-Refuerzo opcional `riel.varilla_M8` (equipo) en el peor caso, M = 38625 N·mm, sección compuesta con la media madera macho (n = E_acero/E_PETG = 118, núcleo Ø6.47 en el centro del conducto, z = 15): I transformada 139394 mm⁴ contra 6716 sin varilla. PETG σ ≈ M·c/I = 4.2 MPa; acero σ ≈ n·M·y/I = 289 MPa. Sólo vale si la varilla pasa ajustada por la unión (agujeros o bujes) para que se curve junto con el riel; suelta en el conducto no ayuda. Estimación gruesa.
+### 3c. Con la varilla M8 tensada (decisión 29/10, C19), M = 38625 N·mm
+
+La varilla pasa por agujeros de Ø8.5 en todos los tramos, con su eje a z = 14.05 sobre el fondo del riel (bajo el Cat5e, sobre el canal de tuercas), y se aprieta a unos 500 N con tuerca y arandela ancha en las dos puntas. Las caras de PETG de la unión sólo pueden empujar: cuando el momento abre la unión, la tracción la toma la varilla y la compresión la cara de tope de la media madera. Es un par de fuerzas, como una viga de hormigón pretensado por tramos. Los 2 M4 y la llave siguen ahí y ayudan; no se cuentan.
+
+- **Caso A (150 N hacia abajo, como el resto de la verificación):** compresión abajo. Conservador, sólo la pared del fondo (102 mm², centro a z = 2.0): brazo 12.05, varilla T = M / brazo = **3205 N**, PETG σ = T / A = **31.5 MPa** → FS 1.4 (45; los tramos se imprimen acostados o boca abajo y la compresión va a lo largo de las capas).
+- Rotura con bloque uniforme a 45 MPa (el bloque más favorable llega a z = 13.5, 192 mm²): M_u = 78565 N·mm → **FS 2.0** contra el momento de diseño. Sin la varilla eran 0.8.
+- **Caso inverso (150 N hacia arriba, por ejemplo levantar el nodo por una cápsula):** compresión en la pared de arriba (120 mm²), brazo 13.95: T = 2769 N, PETG 23.1 MPa → FS 2.0.
+- **Varilla:** área resistente 36.6 mm². Con la mayor tracción (3205 N): σ = 88 MPa → FS 7.3 en grado 8.8 (640 MPa) y 2.7 en 4.6 (240 MPa). Grado `8.8` estimado: confirmar el comprado.
+- **Arandela DIN 9021** (Ø24) contra la pared de la punta (5 de espesor): área útil 353 mm² (sin la boca del canal de tuercas) → 9.1 MPa → FS 4.9. Corte de la pared en el contorno del conducto (4 × 22 × 5): 7.3 MPa.
+- **Rigidez:** varilla de 651 mm (Ø500), k = E·A/L = 11244 N/mm. De 500 a 3205 N se estira 0.24 mm: la unión se abre menos de eso a la altura de la varilla. El PETG apretado fluye con los días: reapretar la tuerca después de la primera semana en el agua.
+- Todo es estimado (PETG, grado del acero, precarga) y la unión real además tiene holguras: la prueba a flexión de la unión con la varilla sigue siendo la que manda.
 
 ## 4. Insertos M4 del fondo de la caja (caso A)
 
@@ -118,26 +128,26 @@ Exigencias: peso aparente de +0.2 a +0.5 kgf, total en aire ≤ 3 kg.
 
 | Relleno bandeja | Aro | Nodo sin acero g | Desplaza cm³ | Aparente sin acero g | Pletinas por lado | Aparente final g | En ventana | Total en aire g | ≤ 3 kg |
 |---|---|---|---|---|---|---|---|---|---|
-| 40 % | Ø100 | 1321 | 1578 | -296 | 3 | **+219** | sí | 1913 | sí |
-| 40 % | Ø200 | 1432 | 1665 | -275 | 3 | **+241** | sí | 2024 | sí |
-| 40 % | Ø300 | 1432 | 1665 | -275 | 3 | **+241** | sí | 2024 | sí |
-| 40 % | Ø500 | 1543 | 1752 | -254 | 3 | **+262** | sí | 2135 | sí |
-| 100 % | Ø100 | 1325 | 1578 | -292 | 3 | **+223** | sí | 1917 | sí |
-| 100 % | Ø200 | 1436 | 1665 | -271 | 3 | **+245** | sí | 2028 | sí |
-| 100 % | Ø300 | 1436 | 1665 | -271 | 3 | **+245** | sí | 2028 | sí |
-| 100 % | Ø500 | 1547 | 1752 | -250 | 3 | **+266** | sí | 2139 | sí |
+| 40 % | Ø100 | 1469 | 1626 | -198 | 3 | **+318** | sí | 2062 | sí |
+| 40 % | Ø200 | 1647 | 1724 | -120 | 2 | **+224** | sí | 2042 | sí |
+| 40 % | Ø300 | 1647 | 1724 | -120 | 2 | **+224** | sí | 2042 | sí |
+| 40 % | Ø500 | 1825 | 1822 | -42 | 2 | **+301** | sí | 2220 | sí |
+| 100 % | Ø100 | 1473 | 1626 | -194 | 3 | **+322** | sí | 2066 | sí |
+| 100 % | Ø200 | 1651 | 1724 | -116 | 2 | **+228** | sí | 2046 | sí |
+| 100 % | Ø300 | 1651 | 1724 | -116 | 2 | **+228** | sí | 2046 | sí |
+| 100 % | Ø500 | 1829 | 1822 | -38 | 2 | **+305** | sí | 2224 | sí |
 
 Totalmente sumergido no hay plano de flotación ni metacentro: el par adrizante al inclinarse un ángulo θ es B·BG·sen θ, con B el empuje y BG la distancia vertical del centro de masa (G) bajo el centro de empuje (B). BG > 0 quiere decir que no se voltea; el número que importa es BG. Las placas de acero ya están en G y en B.
 
 | Aro | Inclinación de las cápsulas | z G mm | z B mm | BG mm | B N | Par adrizante a 10° N·mm |
 |---|---|---|---|---|---|---|
-| Ø100 | 0° | -25.7 | -7.1 | **18.6** | 16.6 | 54 |
-| Ø100 | 90° | -31.5 | -13.8 | **17.7** | 16.6 | 51 |
-| Ø200 | 0° | -26.6 | -8.9 | **17.7** | 17.5 | 54 |
-| Ø200 | 90° | -32.1 | -15.2 | **16.9** | 17.5 | 51 |
-| Ø300 | 0° | -26.6 | -8.9 | **17.7** | 17.5 | 54 |
-| Ø300 | 90° | -32.1 | -15.2 | **16.9** | 17.5 | 51 |
-| Ø500 | 0° | -27.4 | -10.5 | **16.9** | 18.4 | 54 |
-| Ø500 | 90° | -32.6 | -16.5 | **16.1** | 18.4 | 51 |
+| Ø100 | 0° | -34.8 | -12.7 | **22.1** | 17.1 | 66 |
+| Ø100 | 90° | -40.1 | -19.2 | **21.0** | 17.1 | 62 |
+| Ø200 | 0° | -34.6 | -14.4 | **20.2** | 17.8 | 63 |
+| Ø200 | 90° | -40.0 | -20.6 | **19.4** | 17.8 | 60 |
+| Ø300 | 0° | -34.6 | -14.4 | **20.2** | 17.8 | 63 |
+| Ø300 | 90° | -40.0 | -20.6 | **19.4** | 17.8 | 60 |
+| Ø500 | 0° | -36.3 | -16.5 | **19.7** | 18.8 | 64 |
+| Ø500 | 90° | -41.2 | -22.4 | **18.8** | 18.8 | 62 |
 
 Las cápsulas son casi neutras (128 g contra 128 cm³), así que bajarlas mueve G y B casi igual. El margen lo dan las pletinas bajo el riel contra el aire de la caja arriba.

@@ -19,13 +19,15 @@ from params import (XFER_STEP, CAT5E_D, CHAMBER_FLANGE_W, FIT_CLEAR, HOLE_COMP, 
                     PETG_DENSITY, PLATE_CLR, PLATE_L, PLATE_POCKET_LAYERS, PLATE_POCKET_WALL, PRINT_BED,
                     RAIL_CENTRAL_L, RAIL_DOVETAIL, RAIL_DOVETAIL_KEY, RAIL_EXIT_SLOT, RAIL_EXT_L, RAIL_EXT_PITCH_MODE,
                     RAIL_JOINT_BOLT_Y, RAIL_LAP_WALL, RAIL_LAP_Z, RAIL_SECTION, RAIL_TIP_L, RAIL_TSLOT, RAIL_TSLOT_RIB,
-                    RAIL_WALL)
+                    M8_ROD, WEB_OVERLAP, RAIL_TIP_END_T, RAIL_WALL, RAIL_ROD_M8, ROD_BULKHEAD_T, ROD_HOLE, ROD_NUT, ROD_PROTRUSION, ROD_WASHER)
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "salida" / "preliminar"
 
 # design values missing in params.py
-EXIT_SLOT_ZC = RAIL_WALL + RAIL_TSLOT["alto"] + CAT5E_D / 2   # centre height of the exit slot over the rail bottom (cable on the rib tops)
+LANES = camara.lanes()                    # rod axis and cable centreline over the rail bottom (C19)
+EXIT_SLOT_ZC = LANES["cable_z"]           # centre height of the exit slot over the rail bottom = cable lane
+ROD_Z, BOSS_R = LANES["rod_z"], LANES["boss_r"]
 
 S, W = RAIL_SECTION, RAIL_WALL
 CON_HALF = S / 2 - W
@@ -96,6 +98,24 @@ def _tslot(p, z0, x0, x1):
     return p
 
 
+def _cyl_x(x0, x1, y, z, d):
+    return cq.Workplane("YZ").workplane(offset=x0).center(y, z).circle(d / 2).extrude(x1 - x0)
+
+
+def _bulkhead(p, z0, x0, x1, half_w):
+    """Rod bulkhead across the duct: a web from wall to wall at the rod height (cable passes over it, nuts under it)."""
+    if not RAIL_ROD_M8:
+        return p
+    return p.union(_box(x0, x1, -half_w - WEB_OVERLAP, half_w + WEB_OVERLAP, z0 + ROD_Z - BOSS_R, z0 + ROD_Z + BOSS_R))
+
+
+def _rod_bore(p, z0, x0, x1):
+    """Through hole of the rod, aligned in every piece (y = 0, z = ROD_Z)."""
+    if not RAIL_ROD_M8:
+        return p
+    return p.cut(_cyl_x(x0 - 1, x1 + 1, 0.0, z0 + ROD_Z, ROD_HOLE))
+
+
 # ------------------------------------------------------------------ layout along the rail
 PASO_100 = RAIL_EXT_PITCH_MODE == "paso_100"
 EXT_PIECE_L = RAIL_EXT_L + LAP if PASO_100 else RAIL_EXT_L     # 115 with the male tongue outside the 100 pitch
@@ -137,7 +157,9 @@ def central(lay, c):
             body = body.union(_box(xa, xb, ya, yb, z0 + W - 0.01, z0 + S - W + 0.01))
         body = body.cut(_box(xa, xb + sg * 0.1, -S / 2 - 1, S / 2 + 1, z0 + S, -ft))   # access window above the rail top
         body = _female_cuts(body, xc, z0, xa - 0.1, xb + 0.1)
-    return body
+        xa, xb = sorted((sg * (xj - 0.1 - ROD_BULKHEAD_T), sg * (xj - 0.1)))     # 0.1 = edge of the female cut
+        body = _bulkhead(body, z0, xa, xb, CON_HALF)
+    return _rod_bore(body, z0, -L2, L2)
 
 
 def ext(c, z0=None):
@@ -153,7 +175,9 @@ def ext(c, z0=None):
     e = _female_cuts(e, L - LAP / 2, z0, L - LAP, L + 0.1)
     if not PASO_100:      # without a tip piece the cable leaves through the last extension
         e = _exit_slot(e, z0, L)
-    return e
+    e = _bulkhead(e, z0, LAP, LAP + ROD_BULKHEAD_T, CON_HALF)
+    e = _bulkhead(e, z0, L - LAP - ROD_BULKHEAD_T, L - LAP, CON_HALF)
+    return _rod_bore(e, z0, 0, L)
 
 
 def _exit_slot(e, z0, L):
@@ -172,7 +196,38 @@ def punta(c, z0=None):
     e = e.cut(_box(-0.1, LAP, -LAP_HALF, LAP_HALF, z0 + W, z0 + S - W))
     e = _tslot(e, z0, 0, L)
     e = _male_cuts(e, LAP / 2, z0, -0.1, LAP)
-    return _exit_slot(e, z0, L)
+    e = _exit_slot(e, z0, L)
+    if RAIL_ROD_M8:
+        # end wall where the washer and nut bear; the nut channel stays open under the rod lane
+        e = e.union(_box(L - RAIL_TIP_END_T, L, -CON_HALF - 0.01, CON_HALF + 0.01, z0 + W - 0.01, z0 + S - W + 0.01)
+                    .cut(_box(L - RAIL_TIP_END_T - 1, L + 1, -TS_W / 2, TS_W / 2, z0 + W - 1, z0 + W + TS_H)))
+        e = _bulkhead(e, z0, LAP, LAP + ROD_BULKHEAD_T, CON_HALF)
+    return _rod_bore(e, z0, 0, L)
+
+
+def rod_parts(n, z_rail):
+    """M8 rod, wide washers and nuts in the box frame (both tips), for assemblies and checks."""
+    if not RAIL_ROD_M8:
+        return {}
+    xt = tip_x(n)
+    wd, wt, wi = ROD_WASHER
+    af, nh = ROD_NUT
+    zr = z_rail + ROD_Z
+    half = xt + wt + nh + ROD_PROTRUSION
+    out = {"varilla M8": _cyl_x(-half, half, 0.0, zr, M8_ROD["d"])}
+    for sg, tag in ((1, "+X"), (-1, "-X")):
+        xa, xb = sorted((sg * xt, sg * (xt + wt)))
+        out[f"arandela M8 {tag}"] = _cyl_x(xa, xb, 0.0, zr, wd).cut(_cyl_x(xa - 1, xb + 1, 0.0, zr, wi))
+        xa, xb = sorted((sg * (xt + wt), sg * (xt + wt + nh)))
+        nut = (cq.Workplane("YZ").workplane(offset=xa).center(0.0, zr).polygon(6, af / math.cos(math.pi / 6))
+               .extrude(xb - xa).cut(_cyl_x(xa - 1, xb + 1, 0.0, zr, M8_ROD["d"])))
+        out[f"tuerca M8 {tag}"] = nut
+    return out
+
+
+def rod_length(n):
+    wd, wt, wi = ROD_WASHER
+    return 2 * (tip_x(n) + wt + ROD_NUT[1] + ROD_PROTRUSION)
 
 
 # ------------------------------------------------------------------ run
@@ -236,6 +291,26 @@ def main():
         print("interferencia", name, round(inter[name], 4), "mm3")
         if inter[name] > 0.5:
             fails.append(f"interferencia {name}: {inter[name]:.2f} mm3")
+    # rod and cable lanes through the whole rail with 2 extensions per side (every kind of joint)
+    lanes = {}
+    if RAIL_ROD_M8:
+        chain = [cen]
+        for name, x0 in placements(2):
+            sh = shapes["M3_riel_ext" if name == "ext" else "M3_riel_punta"].moved(cq.Location(cq.Vector(x0, 0, 0)))
+            chain += [sh, sh.rotate(cq.Vector(0, 0, 0), cq.Vector(0, 0, 1), 180)]
+        rod = rod_parts(2, c.z_rail)
+        h, ln, dist = RAIL_EXIT_SLOT
+        x_exit = tip_x(2) - dist - ln / 2
+        cable = _cyl_x(xj - ROD_BULKHEAD_T - 1, x_exit, 0.0, c.z_rail + EXIT_SLOT_ZC, CAT5E_D).val()
+        lanes["varilla M8 contra los tramos (2 ext.)"] = sum(rod["varilla M8"].val().intersect(t).Volume() for t in chain)
+        lanes["Cat5e (+X, del tabique del central a la salida) contra los tramos"] = sum(cable.intersect(t).Volume() for t in chain)
+        lanes["Cat5e contra la varilla"] = cable.intersect(rod["varilla M8"].val()).Volume()
+        for k in ("arandela M8 +X", "tuerca M8 +X"):
+            lanes[f"{k} contra la punta"] = rod[k].val().intersect(chain[-2]).Volume()
+        for k, v in lanes.items():
+            print("carril", k, round(v, 4), "mm3")
+            if v > 0.5:
+                fails.append(f"carril {k}: {v:.2f} mm3")
     # ballast pockets leave the joint zone free: nothing of the central in the bottom half over the lap
     px = PLATE_L / 2 + PLATE_CLR + PLATE_POCKET_WALL
     zone = _box(xj, xj + LAP, -60, 60, c.z_rail - 1, c.z_rail + RAIL_LAP_Z).val()
@@ -269,12 +344,12 @@ def main():
             k = 1 if name == "ext" else 2
             items.append((e.moved(cq.Location(cq.Vector(sg * k * gap, -off, 0))), col, 1.0, True, None))
     render(items, OUT / "riel_iso.png", "iso", f"Riel con 1 extension por lado ({2 * tip_x(1):.0f} mm): montado y explotado")
-    write_report(rows, inter, free, worst, fails, c)
+    write_report(rows, inter, free, worst, fails, c, lanes)
     print("FALLAS:", fails if fails else "ninguna")
     return 1 if len(fails) >= 2 else 0
 
 
-def write_report(rows, inter, free, worst, fails, c):
+def write_report(rows, inter, free, worst, fails, c, lanes):
     L = ["# Piezas del riel", "",
          "Generado por `cad_final/riel.py`. STL en `../salida/preliminar/stl/`, STEP en `step/`, render `riel_iso.png`. "
          "Todas las cotas salen de `params.py`; la union y la ranura T reproducen las probetas PB2/PB3.", "",
@@ -295,6 +370,17 @@ def write_report(rows, inter, free, worst, fails, c):
     L += [f"- Bolsillos de lastre: llegan hasta |x| = {PLATE_L / 2 + PLATE_CLR + PLATE_POCKET_WALL}, la zona de union empieza en |x| = {c.x_joint}; "
           f"volumen del central dentro de la media madera inferior de la union: {free:.3f} mm3. El macho entra de costado (eje Y) sin tocar los bolsillos.",
           f"- Deslizamiento lateral del macho, barrido cada {XFER_STEP:.0f} mm fuera del riel: interferencia maxima {worst:.3f} mm3.", ""]
+    if lanes:
+        L += ["## Varilla M8 y cable en el conducto (C19)", "",
+              f"Desde el fondo del riel: canal de tuercas hasta {RAIL_WALL + RAIL_TSLOT['alto']:g}, varilla con su eje a {ROD_Z:.2f} "
+              f"(agujero Ø{ROD_HOLE:g} en tabiques de {ROD_BULKHEAD_T:g} en cada extremo de cada tramo y en la pared del extremo de la "
+              f"punta), Cat5e con su eje a {EXIT_SLOT_ZC:.2f}. En la union el conducto mide {2 * LAP_HALF:g} de ancho: pasan la varilla "
+              f"(Ø{M8_ROD['d']:g}) y un Cat5e encima; dos Cat5e no entran ni lado a lado ({2 * CAT5E_D:g} > {2 * LAP_HALF:g}) ni uno "
+              f"sobre otro (quedan {S - W - (ROD_Z + M8_ROD['d'] / 2):.1f} de alto sobre la varilla). Cada lado lleva un solo cable, "
+              "el de su capsula, asi que alcanza.", ""]
+        L += [f"- {k}: {v:.3f} mm3" for k, v in lanes.items()]
+        L += ["", "Las tuercas del canal pasan bajo los tabiques; un M4 que asome sobre su tuerca debe quedar a menos de "
+              f"{ROD_Z - BOSS_R - (RAIL_WALL + RAIL_TSLOT['alto']):.1f} sobre el canal (M4 x 14 con la brida del gancho de 6).", ""]
     L += ["## Orientacion de impresion", "",
           "- M3_riel_central: brida abajo (X 180). La ventana de acceso sobre la union evita puentes largos; el voladizo de la tabla es el de los techos de la camara y de los bolsillos de lastre, con soportes locales. "
           "El central es la pieza que mas soporte necesita.",

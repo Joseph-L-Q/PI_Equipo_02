@@ -87,7 +87,10 @@ def case_union(lay, c):
         (CENTRAL_X0, -200, zr - 100))
     cen = cen.intersect(keep)
     ext = riel.ext(c).translate((xj, 0, 0))
-    return {"riel_central_x10a70": S(cen), "riel_ext": S(ext)}
+    out = {"riel_central_x10a70": S(cen), "riel_ext": S(ext)}
+    if riel.RAIL_ROD_M8:   # C19: M8 rod segment over the same length (steel, preloaded in the real node)
+        out["varilla_M8_acero"] = S(riel._cyl_x(CENTRAL_X0, xj + riel.EXT_PIECE_L, 0.0, zr + riel.ROD_Z, riel.M8_ROD["d"]))
+    return out
 
 
 def case_gancho():

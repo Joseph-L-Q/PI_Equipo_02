@@ -116,15 +116,17 @@ def node_rows(an, f, layers):
         v_ext = outer_rail_cm3(lay, n)
         ext_g = P.PETG_DENSITY * P.INFILL_SEALED * v_ext
         cap_g = 2 * (P.CAPSULE_SET_G + P.CAPSULE_CONTENT_G)
-        node_g = box_g + ch_g + ext_g + cap_g + P.OTHER_NODE_G
-        disp = an["v_disp"] + ch_v + v_ext + 2 * P.CAPSULE_SET_DISP_CM3 + P.OTHER_NODE_G / P.PETG_DENSITY
+        rod = rod_g(n)
+        node_g = box_g + ch_g + ext_g + cap_g + P.OTHER_NODE_G + rod
+        disp = (an["v_disp"] + ch_v + v_ext + 2 * P.CAPSULE_SET_DISP_CM3 + P.OTHER_NODE_G / P.PETG_DENSITY
+                + rod / P.STEEL_DENSITY)
         app0 = node_g - RHO_W * disp
         lo, hi = (t * 1000 for t in P.BALLAST_TARGET_KGF)
         k = 0
         while app0 + k * P.PLATE_SIDES * plate_g * NET_STEEL < lo:
             k += 1
         app = app0 + k * P.PLATE_SIDES * plate_g * NET_STEEL
-        rows.append(dict(D=D, n=n, L=2 * rail_tip(n), node_g=node_g, disp=disp, app0=app0,
+        rows.append(dict(D=D, n=n, L=2 * rail_tip(n), rod_g=rod, node_g=node_g, disp=disp, app0=app0,
                          layers=k, steel_g=k * P.PLATE_SIDES * plate_g, app=app, in_window=lo <= app <= hi,
                          total=node_g + k * P.PLATE_SIDES * plate_g,
                          need_g=max(0.0, (lo - app0) / NET_STEEL), need_hi_g=max(0.0, (hi - app0) / NET_STEEL)))
@@ -135,6 +137,15 @@ def node_rows(an, f, layers):
 def rail_tip(n):
     import riel
     return riel.tip_x(n)
+
+
+def rod_g(n):
+    """M8 rod with its 2 wide washers and 2 nuts (C19), steel."""
+    import riel
+    if not P.RAIL_ROD_M8:
+        return 0.0
+    m = P.ROD_PARTS_G
+    return riel.rod_length(n) * m["g_por_mm"] + 2 * (m["tuerca"] + m["arandela"])
 
 
 def balance(an, f):
@@ -370,14 +381,15 @@ def main():
           f"{bal40['layers']} pletinas por lado, "
           f"{CH.pocket_depth(bal40['layers']):.1f} de hondo |", "",
           f"**Nodo completo** (extensiones y puntas con su volumen CAD al 100 %, {P.OTHER_NODE_G:g} g de "
-          "ganchos/carros/perillas sin modelar). Objetivo: "
+          "ganchos/carros/perillas sin modelar; la varilla M8 obligatoria (C19) ya está dentro y es lastre: las pletinas se "
+          "cuentan con ella). Objetivo: "
           f"{P.BALLAST_TARGET_KGF[0]:g} a {P.BALLAST_TARGET_KGF[1]:g} kgf hacia abajo:", "",
-          "| Relleno bandeja | Aro | Riel mm | Nodo sin lastre g | Desplaza cm³ | Peso aparente sin lastre g | "
+          "| Relleno bandeja | Aro | Riel mm | Varilla M8 con tuercas g | Nodo sin pletinas g | Desplaza cm³ | Peso aparente sin lastre g | "
           "Acero para la ventana g | Pletinas por lado | Peso aparente final g | Total en aire g |",
-          "|---|---|---|---|---|---|---|---|---|---|"]
+          "|---|---|---|---|---|---|---|---|---|---|---|"]
     for f, b in an["bal"].items():
         for row in b["rows"]:
-            r.append(f"| {f * 100:.0f} % | Ø{row['D']:g} | {row['L']:g} | {row['node_g']:.0f} | {row['disp']:.0f} | "
+            r.append(f"| {f * 100:.0f} % | Ø{row['D']:g} | {row['L']:g} | {row['rod_g']:.0f} | {row['node_g']:.0f} | {row['disp']:.0f} | "
                      f"{row['app0']:+.0f} | {row['need_g']:.0f} a {row['need_hi_g']:.0f} | {row['layers']} | "
                      f"{row['app']:+.0f}{'' if row['in_window'] else ' (fuera de la ventana)'} | {row['total']:.0f} |")
     r += ["", "Estabilidad del nodo completo (aproximada; bandeja al 40 %, cápsulas a 0° con el eje bajo el riel, extensiones a media altura del riel):", ""]

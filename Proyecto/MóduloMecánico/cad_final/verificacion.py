@@ -25,7 +25,8 @@ from params import (BASE_M4_PTS, BOX_FLOOR, BOX_LID_T, BOX_WALL, CAP_WALL, CAPSU
                     HINGE_GAP, HINGE_TEETH, HINGE_TEETH_RIN, HINGE_TOOTH_H, HOOK_CONTACT_W, HOOK_FLANGE, HOOK_LOAD_N, KNOB_D,
                     KNOB_FREE_EXTRA, LENS_APERTURE, M4_CLEAR, M4_NUT, PETG_E, PETG_NU, PETG_YIELD, PETG_YIELD_Z,
                     RAIL_DOVETAIL, RAIL_DOVETAIL_KEY, RAIL_CENTRAL_L, RAIL_EXT_L, RAIL_EXT_PER_RING, RAIL_LAP_Z,
-                    RAIL_SECTION, RAIL_TSLOT, RING_DIAMETERS, DESIGN_PRESSURE, WIN_T)
+                    RAIL_SECTION, RAIL_TSLOT, RING_DIAMETERS, DESIGN_PRESSURE, WIN_T, M8_ROD, RAIL_ROD_M8,
+                    RAIL_TIP_END_T, RAIL_TSLOT_RIB, RAIL_WALL, ROD_GRADE, ROD_HOLE, ROD_PRELOAD_N, ROD_WASHER)
 
 HERE = Path(__file__).resolve().parent
 F = HANDLING_LOAD_N
@@ -59,8 +60,9 @@ def rail_sections(lay, c):
     ext = R.ext(c, 0.0).val()
     cen = R.central(lay, c).val()
     lap = RAIL_DOVETAIL
+    tip = R.punta(c, 0.0).val()
     out = {"ext_medio": section_props(ext, RAIL_EXT_L / 2),
-           "ext_ranura_salida": section_props(ext, RAIL_EXT_L - R.RAIL_EXIT_SLOT[2] - R.RAIL_EXIT_SLOT[1] / 2)}
+           "punta_ranura_salida": section_props(tip, R.TIP_PIECE_L - R.RAIL_EXIT_SLOT[2] - R.RAIL_EXIT_SLOT[1] / 2)}
     # half sections in the lap: female (central end, top half) and male (ext inner end, bottom half), worst over the lap
     xs = [c.x_joint + lap * k / 6 for k in range(1, 6)]
     cen0 = cen.moved(cq.Location(cq.Vector(0, 0, -c.z_rail)))
@@ -80,6 +82,82 @@ def load_x(n):
     return rail_tip(n) + CP.carriage_axis()[0]
 
 
+# ------------------------------------------------------------------ M8 rod through the joint (C19)
+def block(a):
+    """Compression contact at the butt face of the male half-lap (x = x_joint), up to a height a over the rail bottom:
+    bottom wall minus the T-slot opening, the two 4 mm side walls that the central meets, and the two ribs.
+    Returns (area, centroid height)."""
+    W, S = RAIL_WALL, RAIL_SECTION
+    ts = RAIL_TSLOT
+    parts = [((S - ts["abertura"]) * min(a, W), min(a, W) / 2)]
+    if a > W:
+        h = min(a, RAIL_LAP_Z) - W
+        parts.append((2 * W * h, W + h / 2))
+        hr = min(a - W, ts["alto"])
+        parts.append((2 * RAIL_TSLOT_RIB * hr, W + hr / 2))
+    A = sum(x for x, _ in parts)
+    return A, sum(x * z for x, z in parts) / A
+
+
+def rod_joint(M, rail_rows):
+    """Tie rod + PETG compression couple at the joint. The PETG faces only push; the rod takes the tension."""
+    if not RAIL_ROD_M8:
+        return []
+    zr = CH.lanes()["rod_z"]
+    As = M8_ROD["A_s"]
+    L_rod = R.rod_length(max(RAIL_EXT_PER_RING.values()))
+    k_rod = M8_ROD["E"] * As / L_rod
+    # hogging (150 N down on the capsule): compression at the bottom, rod above it
+    A4, z4 = block(RAIL_WALL)
+    j_el = zr - z4
+    T_el = M / j_el
+    s_el = T_el / A4
+    best = max(((a, *block(a)) for a in [RAIL_WALL + 0.5 * k for k in range(int((zr - RAIL_WALL) / 0.5))]),
+               key=lambda t: t[1] * (zr - t[2]))
+    a_u, A_u, z_u = best
+    M_u = PETG_YIELD * A_u * (zr - z_u)
+    # reverse case (150 N up): compression in the top wall of the female, rod below it
+    j_rev = RAIL_SECTION - RAIL_WALL / 2 - zr
+    T_rev = M / j_rev
+    A_top = RAIL_SECTION * RAIL_WALL
+    wd, wt, wi = ROD_WASHER
+    A_w = math.pi / 4 * (wd ** 2 - wi ** 2)
+    A_w -= max(0.0, RAIL_TSLOT["ancho"] * ((RAIL_WALL + RAIL_TSLOT["alto"]) - (zr - wd / 2)))   # washer over the nut channel
+    T_max = max(T_el, T_rev)
+    dL = max(0.0, T_el - ROD_PRELOAD_N) / k_rod
+    r = ["", f"### 3c. Con la varilla M8 tensada (decisión 29/10, C19), M = {M:.0f} N·mm", "",
+         f"La varilla pasa por agujeros de Ø{ROD_HOLE:g} en todos los tramos, con su eje a z = {zr:.2f} sobre el fondo del riel "
+         f"(bajo el Cat5e, sobre el canal de tuercas), y se aprieta a unos {ROD_PRELOAD_N:g} N con tuerca y arandela ancha en "
+         "las dos puntas. Las caras de PETG de la unión sólo pueden empujar: cuando el momento abre la unión, la tracción la "
+         "toma la varilla y la compresión la cara de tope de la media madera. Es un par de fuerzas, como una viga de hormigón "
+         "pretensado por tramos. Los 2 M4 y la llave siguen ahí y ayudan; no se cuentan.", "",
+         f"- **Caso A (150 N hacia abajo, como el resto de la verificación):** compresión abajo. Conservador, sólo la pared "
+         f"del fondo ({A4:.0f} mm², centro a z = {z4:.1f}): brazo {j_el:.2f}, varilla T = M / brazo = **{T_el:.0f} N**, PETG "
+         f"σ = T / A = **{s_el:.1f} MPa** → FS {fs(s_el)[0]:.1f} (45; los tramos se imprimen acostados o boca abajo y la "
+         "compresión va a lo largo de las capas).",
+         f"- Rotura con bloque uniforme a 45 MPa (el bloque más favorable llega a z = {a_u:.1f}, {A_u:.0f} mm²): "
+         f"M_u = {M_u:.0f} N·mm → **FS {M_u / M:.1f}** contra el momento de diseño. Sin la varilla eran "
+         f"{fs(M / rail_rows_zhalf(rail_rows))[0]:.1f}.",
+         f"- **Caso inverso (150 N hacia arriba, por ejemplo levantar el nodo por una cápsula):** compresión en la pared de "
+         f"arriba ({A_top:.0f} mm²), brazo {j_rev:.2f}: T = {T_rev:.0f} N, PETG {T_rev / A_top:.1f} MPa → FS {fs(T_rev / A_top)[0]:.1f}.",
+         f"- **Varilla:** área resistente {As:g} mm². Con la mayor tracción ({T_max:.0f} N): σ = {T_max / As:.0f} MPa → FS "
+         f"{M8_ROD['fy_8.8'] / (T_max / As):.1f} en grado 8.8 ({M8_ROD['fy_8.8']:g} MPa) y {M8_ROD['fy_4.6'] / (T_max / As):.1f} "
+         f"en 4.6 ({M8_ROD['fy_4.6']:g} MPa). Grado `{ROD_GRADE}` estimado: confirmar el comprado.",
+         f"- **Arandela DIN 9021** (Ø{wd:g}) contra la pared de la punta ({RAIL_TIP_END_T:g} de espesor): área útil {A_w:.0f} mm² "
+         f"(sin la boca del canal de tuercas) → {T_max / A_w:.1f} MPa → FS {fs(T_max / A_w)[0]:.1f}. Corte de la pared en el "
+         f"contorno del conducto (4 × {2 * R.CON_HALF:g} × {RAIL_TIP_END_T:g}): {T_max / (4 * 2 * R.CON_HALF * RAIL_TIP_END_T):.1f} MPa.",
+         f"- **Rigidez:** varilla de {L_rod:.0f} mm (Ø500), k = E·A/L = {k_rod:.0f} N/mm. De {ROD_PRELOAD_N:g} a {T_el:.0f} N se "
+         f"estira {dL:.2f} mm: la unión se abre menos de eso a la altura de la varilla. El PETG apretado fluye con los días: "
+         "reapretar la tuerca después de la primera semana en el agua.",
+         "- Todo es estimado (PETG, grado del acero, precarga) y la unión real además tiene holguras: la prueba a flexión de "
+         "la unión con la varilla sigue siendo la que manda."]
+    return r
+
+
+def rail_rows_zhalf(rail_rows):
+    return rail_rows["_z_half"]
+
+
 # ------------------------------------------------------------------ main
 def main():
     lay = LY.build(floors=1)
@@ -96,7 +174,7 @@ def main():
           "| Sección | A mm² | I mm⁴ | c mm | Z mm³ |", "|---|---|---|---|---|"]
     for k, d in sec.items():
         r.append(f"| {k} | {d['A']:.0f} | {d['I']:.0f} | {d['c']:.1f} | {d['Z']:.0f} |")
-    z_full = min(sec["ext_medio"]["Z"], sec["ext_ranura_salida"]["Z"])
+    z_full = min(sec["ext_medio"]["Z"], sec["punta_ranura_salida"]["Z"])
     I_full = sec["ext_medio"]["I"]
     z_half = min(sec["union_hembra"]["Z"], sec["union_macho"]["Z"])
 
@@ -132,6 +210,7 @@ def main():
 
     # 3. joint
     Mj = max(v["Ma"] for v in rail_rows.values())
+    rail_rows["_z_half"] = z_half
     T = Mj / RAIL_LAP_Z
     d_b = M4_CLEAR - 0.2                                    # M4 shank, bearing diameter
     a_s = math.pi * 4.0 ** 2 / 4
@@ -164,18 +243,7 @@ def main():
             M_ = F * (t + CP.carriage_axis()[0] - RAIL_CENTRAL_L / 2)
             worst = max(worst, M_)
             r.append(f"| Ø{lr['D']:g} | {name} | {t:.0f} | {M_:.0f} | {M_ / z_half:.1f} | {fs(M_ / z_half)[0]:.1f} / {fs(M_ / z_half)[1]:.1f} |")
-    n_e = M8_ROD["E"] / PETG_E
-    dc = M8_ROD["d_nucleo"]
-    A_r, I_r = math.pi * dc ** 2 / 4, math.pi * dc ** 4 / 64
-    zr = RAIL_SECTION / 2
-    hm = sec["union_macho"]
-    I_tr = hm["I"] + n_e * (I_r + A_r * (zr - hm["zc"]) ** 2)
-    yb = max(hm["c"], 0.0)
-    r += ["", f"Refuerzo opcional `riel.varilla_M8` (equipo) en el peor caso, M = {worst:.0f} N·mm, sección compuesta con la "
-          f"media madera macho (n = E_acero/E_PETG = {n_e:.0f}, núcleo Ø{dc:g} en el centro del conducto, z = {zr:g}): I transformada "
-          f"{I_tr:.0f} mm⁴ contra {hm['I']:.0f} sin varilla. PETG σ ≈ M·c/I = {worst * (yb + abs(zr - hm['zc'])) / I_tr:.1f} MPa; "
-          f"acero σ ≈ n·M·y/I = {n_e * worst * (abs(zr - hm['zc']) + dc / 2) / I_tr:.0f} MPa. Sólo vale si la varilla pasa ajustada por "
-          "la unión (agujeros o bujes) para que se curve junto con el riel; suelta en el conducto no ayuda. Estimación gruesa."]
+    r += rod_joint(worst, rail_rows)
 
     # 4. box-floor M4 inserts (rail moment into the box)
     xs = sorted({abs(x) for x, _ in BASE_M4_PTS})
@@ -185,7 +253,7 @@ def main():
           f"Pivote en la línea de tornillos del lado opuesto (conservador): T_par = F·(x_carga + {xs[0]:g}) / {arm:g}, la mitad por inserto.", "",
           "| Aro | x carga mm | Tracción por inserto N |", "|---|---|---|"]
     ins = {}
-    for D, v in rail_rows.items():
+    for D, v in ((D, v) for D, v in rail_rows.items() if D != "_z_half"):
         t_ins = F * (v["xl"] + xs[0]) / arm / 2
         ins[D] = t_ins
         r.append(f"| Ø{D:g} | {v['xl']:.1f} | **{t_ins:.0f}** |")
@@ -330,7 +398,7 @@ def main():
     for k_, v in sec.items():
         print(k_, {a: round(b, 1) for a, b in v.items()})
     for D, v in rail_rows.items():
-        print(D, {a: round(b, 1) for a, b in v.items()})
+        print(D, v if D == "_z_half" else {a: round(b, 1) for a, b in v.items()})
 
 
 if __name__ == "__main__":

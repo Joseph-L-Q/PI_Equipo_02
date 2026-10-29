@@ -39,9 +39,20 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `riel.punta_tapa` | nuevo | 5 | Pared del extremo de la punta donde apoyan la arandela y la tuerca de la varilla M8; deja abierta la ranura T para meter las tuercas | estimado | por_verificar |
 | `riel.cola_milano` | nuevo | 15 | Macho/hembra 15 + 2 M4 pasantes | equipo | confirmado |
 | `riel.ranura_T` | nuevo | abertura: 4.6, ancho: 8, alto: 3.6 | Para tuerca M4 (AF7 x 3.2); se ajusta con la probeta de la Fase B | estimado | por_verificar |
-| `riel.varilla_M8` | nuevo | False | Refuerzo opcional por dentro | equipo | confirmado |
+| `riel.varilla_M8` | False | True | Varilla roscada M8 obligatoria en todo el riel, tensada con tuerca + arandela en las dos puntas (29/10, C19) | equipo | confirmado |
+| `riel.varilla_agujero` | nuevo | 8.5 | Agujero pasante de la varilla en cada tramo, alineado | equipo | confirmado |
+| `riel.varilla_grado` | nuevo | 8.8 | 8.8 o 4.6 (la que se compre); el calculo se hace con las dos | estimado | por_verificar |
+| `riel.varilla_aire_ranura` | nuevo | 1 | Aire entre el techo del canal de tuercas (nervios) y el refuerzo de la varilla: pasan las tuercas y la punta de un M4 x 14 | estimado | por_verificar |
+| `riel.varilla_pared` | nuevo | 1.2 | Pared del refuerzo alrededor del agujero de 8.5 (minimo de impresion) | estimado | por_verificar |
+| `riel.varilla_aire_cable` | nuevo | 0.5 | Aire entre el refuerzo de la varilla y el Cat5e que va encima | estimado | por_verificar |
+| `riel.varilla_tabique` | nuevo | 3 | Espesor (a lo largo del riel) del tabique con el agujero de 8.5; uno en cada extremo del cuerpo de cada tramo | estimado | por_verificar |
+| `riel.varilla_arandela` | nuevo | 24 × 2 × 8.4 | Arandela ancha DIN 9021 M8: Ø ext x espesor x Ø int (reparte el apriete sobre el PETG) | fabricante | por_verificar |
+| `riel.varilla_tuerca` | nuevo | 13 × 6.5 | Tuerca M8 DIN 934: entrecaras x alto | fabricante | por_verificar |
+| `riel.varilla_sobrante` | nuevo | 2 | Rosca que asoma pasada la tuerca en cada punta | estimado | por_verificar |
+| `riel.varilla_precarga` | nuevo | 500 | Tension de apriete; con T = 0.2 d F son unos 0.8 N m. Reapretar tras unos dias (fluencia del PETG) | estimado | por_verificar |
+| `riel.varilla_masas` | nuevo | g_por_mm: 0.32, tuerca: 5, arandela: 6.5 | Varilla M8 de acero cincado o inox, por mm; tuerca y arandela DIN 9021. Pesar | estimado | por_verificar |
 | `riel.camara_alto` | nuevo | 50 | 'Unos 50' de alto interior; el valor real se deriva (domo + radio + cable + nervio) | equipo | confirmado |
-| `riel.camara_rampa` | nuevo | 45 | Techo en rampa hacia el conducto de 22 (imprimible) | estimado | por_verificar |
+| `riel.camara_rampa` | 45 | 60 | Techo en rampa hacia el conducto de 22. Con la varilla (C19) la camara crece 12.4 y a 45 grados la rampa tapaba el domo del PG7; el central se imprime boca abajo, asi que la rampa queda como piso | estimado | por_verificar |
 | `riel.camara_brida` | nuevo | 56 × 4 | Brida superior (ancho minimo x espesor): lleva los 4 M4 a la caja y cuelga los bolsillos de la pletina; el ancho real lo fijan los bolsillos | estimado | por_verificar |
 | `riel.ventana_cable` | nuevo | 24 × 14 | OBSOLETO desde la revision del 28/10: el tramo central es una camara de cables (riel.camara_*) | estimado | por_verificar |
 | `gancho.contacto` | nuevo | 12 | Asiento de 12 con bordes R3 | equipo | confirmado |
@@ -245,7 +256,7 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `ensamble.cuerdas_al_asa` | nuevo | 100 × 200 | Aros en los que las cuerdas de la linterna se amarran al ojal del asa del nodo (la linterna cuelga del nodo); en los demas van al apice sobre el aro (29/10) | equipo | confirmado |
 | `ensamble.linterna_peso_agua_N` | nuevo | 30 | Peso en el agua de la linterna (aro, red, cuerdas y carga) que cuelga del asa; pesarla | estimado | por_verificar |
 | `riel.holgura_gancho_carro` | nuevo | 1 | Aire a lo largo del riel entre la brida del gancho y la manga del carro | estimado | por_verificar |
-| `riel.varilla_M8_datos` | nuevo | d_nucleo: 6.47, E: 200000 | Varilla roscada M8 de acero: diametro de nucleo (ISO 898) y modulo; solo para estimar el refuerzo opcional | fabricante | por_verificar |
+| `riel.varilla_M8_datos` | d_nucleo: 6.47, E: 200000 | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 | fabricante | por_verificar |
 | `boya.masas` | nuevo | celda_18650: 47, portabaterias: 25, pcb_heltec: 35, waveshare: 15, rtc: 8, panel: 350, antena: 20, cables_fusible: 40, prensaestopas: 20, tornilleria: 60 | Masas de componentes en g, tipicas; pesar cada una. Celda 18650 ~47 g | estimado | por_verificar |
 | `boya.celdas` | nuevo | 3 | 3 x 18650 en el portabaterias | equipo | confirmado |
 | `boya.sma_pasamuros_g` | nuevo | 5 | Opcional, solo suma si boya.sma_pasamuros es True | estimado | por_verificar |
@@ -299,7 +310,7 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | Empuje de la caja g | 958 | 935 |
 | Caja en aire g (M1+M2 al 100 %, bandejas 40 %, electrónica) | 572 | 541 |
 | Peso aparente de la caja sola g (+ hunde) | -385 | -394 |
-| Pletinas por lado (Ø100 / Ø500) | 3 / 3 | 3 / 3 |
+| Pletinas por lado (Ø100 / Ø500) | 3 / 2 | 3 / 2 |
 | Bandejas | M11_bandeja: 127.6 × 94 | M11_bandeja: 104 × 70 |
 | Choques | 0 | 0 |
 
@@ -332,12 +343,12 @@ Prensaestopas del fondo en x = ±11.16, y = 0. Agujero de la bandeja sobre cada 
 | Concepto | Valor |
 |---|---|
 | Radio de curvatura usado | 25 (máx de 4 × Ø5.5 y 25) |
-| Alto interior (domo 22 + radio 25 + medio cable 2.75 + nervio 3.6) | 53.4 |
-| Fondo del riel bajo la caja | z = -57.4 (el tramo cuelga 57.4 bajo el fondo de la caja) |
-| Conducto de 22 | z -53.4 a -31.4; el cable corre a z = -47.0 |
-| Zona abierta bajo la caja | |x| ≤ 27.6; rampa a 45° hasta |x| = 55 (empieza la unión) |
+| Alto interior (domo 22 + radio 25 + medio cable 2.75 + nervio 3.6) | 65.8 |
+| Fondo del riel bajo la caja | z = -69.8 (el tramo cuelga 69.8 bajo el fondo de la caja) |
+| Conducto de 22 | z -65.8 a -43.8; el cable corre a z = -47.0 |
+| Zona abierta bajo la caja | |x| ≤ 29.1; rampa a 60° hasta |x| = 55 (empieza la unión) |
 | Brida superior | 140 × 56.0 × 4, con los 4 M4 a la caja en 40 × 20; 40 × -20; -40 × 20; -40 × -20 |
-| Chequeos del recorrido | radio_curva_ok: sí, cable_sobre_nervios: sí, cable_en_conducto: sí, tramo_recto_antes_de_la_union: sí, holgura_min_techo: 12.9 mm, domo_en_la_abertura: sí, m4_fuera_de_la_camara: sí |
+| Chequeos del recorrido | radio_curva_ok: sí, cable_sobre_nervios: sí, cable_sobre_varilla: sí, tabique_en_el_conducto: sí, cable_en_conducto: sí, tramo_recto_antes_de_la_union: sí, holgura_min_techo: 0.5 mm, domo_en_la_abertura: sí, m4_fuera_de_la_camara: sí |
 
 ## 5. Chequeos de sólidos
 
@@ -369,27 +380,27 @@ M1, M2, M4, M5 y los tramos del riel al 100 % con 5 perímetros. Bandeja y pieza
 |---|---|
 | Aire sellado (cavidad − bandejas − módulos − contratuercas) | 484 cm³ |
 | Volumen desplazado por la caja | 935 cm³ → empuje 958 g |
-| Cámara + tapas de bolsillo (100 %) | 184 cm³, 234 g |
+| Cámara + tapas de bolsillo (100 %) | 215 cm³, 273 g |
 | Electrónica + 3 PG7 + tornillería + cables (estimado) | 94 g |
 | Pletina de inox 25 × 5 × 100 | 99 g cada una, hunde 86 g; se ponen de a 2 (una por lado) |
 | Bolsillos (uno por lado, fuera del sello, pegados a la cámara al nivel del fondo del riel) | 3 pletinas por lado, 15.5 de hondo |
 
-**Nodo completo** (extensiones y puntas con su volumen CAD al 100 %, 200 g de ganchos/carros/perillas sin modelar). Objetivo: 0.2 a 0.5 kgf hacia abajo:
+**Nodo completo** (extensiones y puntas con su volumen CAD al 100 %, 200 g de ganchos/carros/perillas sin modelar; la varilla M8 obligatoria (C19) ya está dentro y es lastre: las pletinas se cuentan con ella). Objetivo: 0.2 a 0.5 kgf hacia abajo:
 
-| Relleno bandeja | Aro | Riel mm | Nodo sin lastre g | Desplaza cm³ | Peso aparente sin lastre g | Acero para la ventana g | Pletinas por lado | Peso aparente final g | Total en aire g |
-|---|---|---|---|---|---|---|---|---|---|
-| 40 % | Ø100 | 230 | 1321 | 1578 | -296 | 570 a 915 | 3 | +219 | 1913 |
-| 40 % | Ø200 | 430 | 1432 | 1665 | -275 | 546 a 890 | 3 | +241 | 2024 |
-| 40 % | Ø300 | 430 | 1432 | 1665 | -275 | 546 a 890 | 3 | +241 | 2024 |
-| 40 % | Ø500 | 630 | 1543 | 1752 | -254 | 521 a 866 | 3 | +262 | 2135 |
-| 100 % | Ø100 | 230 | 1325 | 1578 | -292 | 566 a 910 | 3 | +223 | 1917 |
-| 100 % | Ø200 | 430 | 1436 | 1665 | -271 | 541 a 886 | 3 | +245 | 2028 |
-| 100 % | Ø300 | 430 | 1436 | 1665 | -271 | 541 a 886 | 3 | +245 | 2028 |
-| 100 % | Ø500 | 630 | 1547 | 1752 | -250 | 517 a 861 | 3 | +266 | 2139 |
+| Relleno bandeja | Aro | Riel mm | Varilla M8 con tuercas g | Nodo sin pletinas g | Desplaza cm³ | Peso aparente sin lastre g | Acero para la ventana g | Pletinas por lado | Peso aparente final g | Total en aire g |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 40 % | Ø100 | 230 | 103 | 1469 | 1626 | -198 | 457 a 802 | 3 | +318 | 2062 |
+| 40 % | Ø200 | 430 | 167 | 1647 | 1724 | -120 | 368 a 713 | 2 | +224 | 2042 |
+| 40 % | Ø300 | 430 | 167 | 1647 | 1724 | -120 | 368 a 713 | 2 | +224 | 2042 |
+| 40 % | Ø500 | 630 | 231 | 1825 | 1822 | -42 | 279 a 623 | 2 | +301 | 2220 |
+| 100 % | Ø100 | 230 | 103 | 1473 | 1626 | -194 | 452 a 797 | 3 | +322 | 2066 |
+| 100 % | Ø200 | 430 | 167 | 1651 | 1724 | -116 | 363 a 708 | 2 | +228 | 2046 |
+| 100 % | Ø300 | 430 | 167 | 1651 | 1724 | -116 | 363 a 708 | 2 | +228 | 2046 |
+| 100 % | Ø500 | 630 | 231 | 1829 | 1822 | -38 | 274 a 619 | 2 | +305 | 2224 |
 
 Estabilidad del nodo completo (aproximada; bandeja al 40 %, cápsulas a 0° con el eje bajo el riel, extensiones a media altura del riel):
 
-- Ø100: centro de masa z = -25.7, centro de empuje z = -7.1 → el de masa queda 18.6 mm debajo: no se voltea.
-- Ø500: centro de masa z = -27.4, centro de empuje z = -10.5 → el de masa queda 16.9 mm debajo: no se voltea.
+- Ø100: centro de masa z = -34.8, centro de empuje z = -12.7 → el de masa queda 22.1 mm debajo: no se voltea.
+- Ø500: centro de masa z = -36.3, centro de empuje z = -16.5 → el de masa queda 19.7 mm debajo: no se voltea.
 
 El cálculo completo (momentos, metacentro) es la Fase E.

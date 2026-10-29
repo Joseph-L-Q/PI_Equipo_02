@@ -19,52 +19,42 @@ Los STEP salen de `cad_final/simscale.py` (se regeneran con `python simscale.py`
 
 | Archivo | Cuerpos | Marco de coordenadas |
 |---|---|---|
-| `simscale_1_union_riel.step` | `riel_central_x10a70`, `riel_ext` | Marco de la caja: X a lo largo del riel, Z arriba, fondo exterior de la caja en z = 0. Fondo del riel en z_rail = -57.35; el riel ocupa z de -57.35 a -27.35 (sección 30). |
+| `simscale_1_union_riel.step` | `riel_central_x10a70`, `riel_ext`, `varilla_M8_acero` | Marco de la caja: X a lo largo del riel, Z arriba, fondo exterior de la caja en z = 0. Fondo del riel en z_rail = -69.75; el riel ocupa z de -69.75 a -39.75 (sección 30). Eje de la varilla en y = 0, z = -55.70. |
 | `simscale_2_gancho.step` | `gancho` | Marco del gancho: cara inferior del riel (= cara superior de la brida) en z = 0; eje de la varilla en x = 0, z = -40. |
 | `simscale_3_caja_tapa.step` | `caja_cuerpo`, `caja_tapa` | Marco de la caja: centrada en x = y = 0, fondo en z = 0, tapa de z = 50 a 113 (con el asa). |
 | `simscale_4_carro_capsula.step` | `carro`, `cap_cuerpo_M4`, `cap_tapa_M5`, `cap_bisel_M6`, `cap_ventana_M7`, `pasador_M4_acero` | Marco del carro: fondo del riel en z = 0, manga de x = -60 a 0, eje de la bisagra en x = 12.5, z = -34, cápsula a 0 grados (eje óptico +X). |
 
 ---
 
-## Caso 1: unión de tramos (media madera + cola de milano)
+## Caso 1: unión de tramos (media madera + cola de milano + varilla M8)
 
-**Geometría.** Central recortado a su tramo exterior (x de 10 a 70, 60 mm) y una extensión colocada como en `riel.main()` y `ensambles.py` (macho interior en x = 55, punta en x = 155). Zona de la media madera: x de 55 a 70.
+**Geometría (decisión del 29/10, C18 y C19).** Central recortado a su tramo exterior (x de 10 a 70) y una extensión de 115 colocada como en `riel.main()` y `ensambles.py` (macho interior en x = 55, extremo en x = 170). Zona de la media madera: x de 55 a 70. La varilla M8 (Ø8 de acero, sin rosca) va de x = 10 a 170 por los agujeros de Ø8.5 de los tabiques (central: x de 51.9 a 54.9; extensión: x de 70 a 73 y de 152 a 155).
 
-**Simplificado.** Sólo el recorte del central en x = 10 (se quita el resto de la cámara, que no influye en la unión). No se quitó ningún detalle: la unión, los 2 M4 (agujero de paso, avellanado y bolsa hexagonal), la ranura T con sus nervios y la ranura de salida del cable se conservan porque son más grandes que 1 mm. Roscas: no existen en el CAD. Arista mínima del central: 0.10 mm (pasa el criterio, pero pide tamaño de malla local o desactivar ese detalle en SimScale si molesta). **Los tornillos M4 no están modelados** (los agujeros quedan vacíos).
+**Simplificado.** Sólo el recorte del central en x = 10 (se quita el resto de la cámara, que no influye en la unión). No se quitó ningún detalle de la unión: los 2 M4 (agujero de paso, avellanado y bolsa hexagonal), la ranura T con sus nervios y los tabiques de la varilla se conservan. Roscas: no existen en el CAD. Arista mínima del central: 0.10 mm (pide malla local). **Los tornillos M4 no están modelados** (los agujeros quedan vacíos).
 
-**Apoyo.** Cara plana de corte del central en x = 10 (todo el contorno de la sección, incluida la brida), empotrada. Es más rígido que la realidad: el riel entra a la caja por 4 M4 de la brida de la cámara.
+**Apoyo.** Cara plana de corte del central en x = 10 (todo el contorno, incluida la brida) y la cara x = 10 de la varilla, empotradas. Es más rígido que la realidad: el riel entra a la caja por 4 M4 de la brida de la cámara.
 
-**Carga: dos casos, porque el brazo depende de la decisión pendiente del largo del riel (`FASE_D.md`).** Fuerza remota (acoplamiento rígido) a la cara de extremo de la extensión (x = 155), de 150 N en Z, aplicada en el punto (x_carga, 0, -91.35) (eje de la bisagra; la caída bajo el riel no suma momento con carga vertical). El momento en la unión es M = F·(x_carga - 70), de modo que la extensión modelada (sólo 100 mm) transmite el mismo momento que el riel completo.
-
-| Caso | Configuración (aro) | Punta mm | x_carga mm | Momento en la unión |
-|---|---|---|---|---|
-| 1A, geometría actual (la más cargada) | Ø500, 2 extensiones | 240 | 252.5 | **27375 N·mm** |
-| 1B, "mínima para armar" (la más cargada) | Ø500 | 314 | 326.5 | **38475 N·mm** |
-
-Sentido: la mano (§3) pone "la mitad de arriba apoyada en el hombro y abajo tracción T", que corresponde a la punta empujada **hacia arriba (+Z)**. Correr +Z como principal y -Z como segunda corrida. Otras filas del mismo cuadro, por si se quiere barrer: actual Ø100/Ø200/Ø300 = 1875 / 14625 / 14625 N·mm; mínima para armar Ø100/Ø200/Ø300 = 8475 / 15975 / 23475 N·mm (x_carga = M/150 + 70).
+**Carga.** Fuerza remota (acoplamiento rígido) a la cara de extremo de la extensión (x = 170) **y** a la cara x = 170 de la varilla (en el nodo real la varilla sigue hasta la tuerca de la punta, más allá de la unión), de 150 N hacia abajo (−Z), aplicada en el punto (327.5, 0, −103.75): eje de la bisagra con el carro a ras de la punta de Ø500 (punta en 315). Momento en la unión M = 150·(327.5 − 70) = **38625 N·mm**. Segunda corrida con la carga hacia arriba (+Z).
 
 **Contactos.**
-- Corrida 1 (comparar con la mano): todas las caras de contacto unidas (bonded).
-- Corrida 2: contacto con fricción μ 0.3 en el plano de la media madera (z = -42.35, x de 55 a 70), en las caras inclinadas de la cola de milano (llave 8 × 11 × 4) y en la cara de tope x = 70 (extremo del central contra el hombro de la extensión). Como los M4 no están, la unión puede abrirse; el resultado dice cuánto toman los M4 (comparar con T).
+- Corrida 1 (comparar con la mano sin varilla): varilla suprimida, todas las caras de contacto unidas (bonded).
+- Corrida 2 (la que importa): contacto con fricción μ 0.3 (estimado) en el plano de la media madera (z = −54.75, x de 55 a 70), en las caras de la cola de milano (llave 8 × 11 × 4) y en las caras de tope x = 55 (macho contra el hombro del central) y x = 70. Varilla sin contacto con los agujeros (pasa suelta). Precarga de la varilla: 500 N (en SimScale, como precarga de perno en el cuerpo de la varilla o deformación térmica equivalente); si no se puede, correr sin precarga: cambia poco el resultado con la unión abierta.
 
-**Malla sugerida.** Global 4 mm. Refinar a 1.5 mm en toda la media madera (x de 55 a 70) de las dos piezas, en la llave de cola de milano y en la raíz de los nervios de la ranura T cercanos. 2 elementos mínimo en las paredes engrosadas de la unión (`RAIL_LAP_WALL`).
+**Malla sugerida.** Global 4 mm. Refinar a 1.5 mm en toda la media madera (x de 55 a 70) de las dos piezas, en la llave y en las caras de tope. Varilla: 2 mm.
 
-**Material y orientación de impresión.** PETG manual. Central: brida abajo (giro X 180), capas perpendiculares a Z. Extensión: acostada sobre una cara lateral (giro X 90), capas perpendiculares a Y. La flexión del riel da σxx, que va **en el plano de las capas**: aplica 45 MPa. Lo que cae a través de las capas son tracciones en Z (en el central, junto a los avellanados) o en Y (en la extensión): esas se comparan con 22.
+**Material y orientación de impresión.** PETG manual; varilla de acero E 200000 MPa, ν 0.3. Central: brida abajo (giro X 180), capas perpendiculares a Z. Extensión: acostada sobre una cara lateral (giro X 90), capas perpendiculares a Y. La flexión y la compresión de tope van **en el plano de las capas**: aplica 45 MPa.
 
-**Resultado a mano (`reporte_verificacion.md` §2, §3, §3b).**
+**Resultado a mano (`reporte_verificacion.md` §3, §3b, §3c).**
 
-| Magnitud | Caso 1A (27375 N·mm) | Caso 1B (38475 N·mm) |
-|---|---|---|
-| σ en la sección llena, M/Z (Z 3018 mm³) | 9.5 MPa | no está en el reporte |
-| σ en la media madera, M/Z_mitad (Z_mitad 697 mm³, sección macho) | **39.2 MPa**, FS 1.1 (45) / 0.6 (22) | **55.2 MPa**, FS 0.8 / 0.4 |
-| Tracción entre mitades T = M/15 | **1825 N** | no está en el reporte |
-| M4 en corte (2 × 12.6 mm²) | 73 MPa | no está en el reporte |
-| Aplastamiento del PETG por los M4 | 15.2 MPa, FS 3.0 / 1.4 | no está en el reporte |
-| Llave, aplastamiento en 8 × 4 | 57.0 MPa, FS 0.8 / 0.4 | no está en el reporte |
-| Llave, corte en la base 11 × 8 | 20.7 MPa | no está en el reporte |
-| Flecha de la punta (sección llena, sin uniones) | 3.9 mm (a la punta de 240) | no está en el reporte |
+| Magnitud | Mano |
+|---|---|
+| σ en la media madera sin varilla, M/Z_mitad (697 mm³) | **55.4 MPa**, FS 0.8 (45) |
+| Tracción en la varilla, M / brazo (12.05) | **3205 N**, σ 88 MPa en el área resistente de 36.6 mm² |
+| Compresión en la cara de tope x = 55, sólo pared del fondo (102 mm²) | **31.5 MPa**, FS 1.4 |
+| Rotura con bloque uniforme a 45 MPa | M_u 78565 N·mm, FS 2.0 |
+| Carga hacia arriba: tracción en la varilla / compresión en la pared de arriba | 2769 N / 23.1 MPa |
 
-Comparar en SimScale: esfuerzo normal σxx en la fibra extrema de la media madera macho (corrida 1) contra 39.2 / 55.2 MPa; presión de contacto en la llave y fuerza de reacción entre mitades (corrida 2) contra 57.0 MPa y 1825 N. La mano ignora la concentración en los hombros, así que SimScale puede dar más.
+Comparar en SimScale (corrida 2): fuerza axial en la varilla contra 3205 N, presión de contacto en la cara de tope x = 55 contra 31.5 MPa, y abertura de la unión en x = 70 arriba. La mano ignora la concentración en los hombros, así que SimScale puede dar más.
 
 ---
 

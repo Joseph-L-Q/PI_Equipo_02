@@ -2,9 +2,11 @@
 
 Frame as layout.py: X along the rail, box centred on x = y = 0, box outer bottom z = 0 (the chamber hangs below).
 Every height is derived:
-  interior height (floor to box underside) = PG7 dome + bend radius + cable radius + T-slot rib,
-so the Cat5e leaves the dome downward, turns 90 deg with R >= CABLE_BEND_R_MIN and lands on the rib tops at
-the conduit height of the extensions. Toward each end the roof ramps down to the 22 mm conduit before the
+  interior height (floor to box underside) = PG7 dome + bend radius + cable lane height over the floor,
+so the Cat5e leaves the dome downward, turns 90 deg with R >= CABLE_BEND_R_MIN and lands in its lane at the
+conduit height of the extensions. With the M8 rod (C19, 29/10) the lanes are, from the floor up: nut channel
+(ribs), rod with its bulkhead boss, Cat5e. The rod goes under the cable because a cable coming down from the
+dome on the axis cannot get past a rod above it with R >= 25 (it would have to shift 7 mm sideways in 9 mm). Toward each end the roof ramps down to the 22 mm conduit before the
 dovetail zone. Level of detail: reference for mass, volume and the cable check; joints and T-slot detail are
 Fase C.
 """
@@ -14,7 +16,8 @@ from dataclasses import dataclass
 import cadquery as cq
 
 from params import (BASE_M4_PTS, CABLE_BEND_K, CABLE_BEND_R_MIN, CAT5E_D, CHAMBER_FLANGE_W, CHAMBER_RAMP_DEG,
-                    M4_CLEAR, PG7_DOME, PLATE_BAR, PLATE_CLR, PLATE_L, PLATE_LEVEL, PLATE_POCKET_WALL, PLATE_POCKET_Y0,
+                    M4_CLEAR, PG7_DOME, RAIL_ROD_M8, ROD_BOSS_WALL, ROD_BULKHEAD_T, ROD_CABLE_GAP, ROD_CHANNEL_GAP,
+                    ROD_HOLE, PLATE_BAR, PLATE_CLR, PLATE_L, PLATE_LEVEL, PLATE_POCKET_WALL, PLATE_POCKET_Y0,
                     PLATE_SIDES, RAIL_CENTRAL_L, RAIL_DOVETAIL, RAIL_SECTION, RAIL_TSLOT, RAIL_TSLOT_RIB,
                     RAIL_WALL)
 
@@ -37,19 +40,30 @@ def bend_radius():
     return max(CABLE_BEND_K * CAT5E_D, CABLE_BEND_R_MIN)
 
 
+def lanes():
+    """Heights over the rail bottom: rod axis (None without rod), outer radius of its bulkhead boss, cable centreline."""
+    floor = RAIL_WALL + RAIL_TSLOT["alto"]                  # top of the nut channel ribs
+    if not RAIL_ROD_M8:
+        return dict(rod_z=None, boss_r=0.0, cable_z=floor + CAT5E_D / 2)
+    boss_r = ROD_HOLE / 2 + ROD_BOSS_WALL
+    rod_z = floor + ROD_CHANNEL_GAP + boss_r
+    return dict(rod_z=rod_z, boss_r=boss_r, cable_z=rod_z + boss_r + ROD_CABLE_GAP + CAT5E_D / 2)
+
+
 def dims(lay):
     s, t = RAIL_SECTION, RAIL_WALL
     ft = CHAMBER_FLANGE_W[1]
     dome_d, dome_l = PG7_DOME
     R = bend_radius()
     rib = RAIL_TSLOT["alto"]
-    h_int = dome_l + R + CAT5E_D / 2 + rib
+    ln = lanes()
+    h_int = dome_l + R + ln["cable_z"] - t
     z_floor = -h_int
     z_rail = z_floor - t
     z_ct = z_rail + s - t
     x_joint = RAIL_CENTRAL_L / 2 - RAIL_DOVETAIL
     drop = (-ft) - z_ct
-    x_high = x_joint - drop / math.tan(math.radians(CHAMBER_RAMP_DEG))
+    x_high = x_joint - (ROD_BULKHEAD_T if RAIL_ROD_M8 else 0.0) - drop / math.tan(math.radians(CHAMBER_RAMP_DEG))
     z_cable = -dome_l - R
     gx = max(abs(x) for x, _ in lay.floor_glands)
 
@@ -72,8 +86,10 @@ def dims(lay):
     checks = {
         "radio_curva_ok": R >= CABLE_BEND_R_MIN,
         "cable_sobre_nervios": z_cable - CAT5E_D / 2 >= z_floor + rib - 1e-9,
+        "cable_sobre_varilla": ln["rod_z"] is None or z_cable - CAT5E_D / 2 >= z_rail + ln["rod_z"] + ln["boss_r"] + ROD_CABLE_GAP - 1e-9,
+        "tabique_en_el_conducto": ln["rod_z"] is None or xr_ct(x_high, ft, z_ct) <= x_joint - ROD_BULKHEAD_T,
         "cable_en_conducto": z_cable + CAT5E_D / 2 <= z_ct + 1e-9,
-        "tramo_recto_antes_de_la_union": gx + R <= x_joint,
+        "tramo_recto_antes_de_la_union": gx + R <= x_joint - (ROD_BULKHEAD_T if RAIL_ROD_M8 else 0.0),
         "holgura_min_techo": worst,
         "domo_en_la_abertura": gx + dome_d / 2 <= x_high and dome_d / 2 <= s / 2 - t,
         "m4_fuera_de_la_camara": all(abs(y) - M4_CLEAR / 2 >= s / 2 for _, y in pts),
@@ -81,6 +97,11 @@ def dims(lay):
     checks["ok"] = all(v for k, v in checks.items() if k != "holgura_min_techo") and worst >= 0
     flange_w = CHAMBER_FLANGE_W[0] if PLATE_LEVEL == "abajo" else max(CHAMBER_FLANGE_W[0], 2 * pocket_y1())
     return Chamber(R, h_int, z_floor, z_rail, z_ct, x_high, x_joint, z_cable, flange_w, checks)
+
+
+def xr_ct(x_high, ft, z_ct):
+    """|x| where the ramped roof reaches the conduit top."""
+    return x_high + (-ft - z_ct) / math.tan(math.radians(CHAMBER_RAMP_DEG))
 
 
 # ------------------------------------------------------------------ ballast plates
@@ -133,7 +154,7 @@ def chamber_solid(lay, layers):
     body = body.union(_box(-L2, L2, -c.flange_w / 2, c.flange_w / 2, -ft, 0.0))
     # interior profile (XZ), extruded over the conduit width
     tan = math.tan(math.radians(CHAMBER_RAMP_DEG))
-    xr = c.x_high + (-ft - c.z_conduit_top) / tan
+    xr = xr_ct(c.x_high, ft, c.z_conduit_top)
     prof = [(-L2 - 1, c.z_floor), (L2 + 1, c.z_floor), (L2 + 1, c.z_conduit_top), (xr, c.z_conduit_top),
             (c.x_high, -ft), (c.x_high, 1.0), (-c.x_high, 1.0), (-c.x_high, -ft), (-xr, c.z_conduit_top),
             (-L2 - 1, c.z_conduit_top)]
