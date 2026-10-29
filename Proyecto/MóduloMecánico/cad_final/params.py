@@ -391,3 +391,28 @@ BUSHING_TIP_MARGIN = p("casquillo.margen_punta", 0.3, EST, VER,
                        "Puntas de la C recortadas a MIN_WALL + esto; tambien el buje del pivote del pestillo")
 WEB_OVERLAP = p("gancho.solape_alma", 0.5, EST, VER, "El alma entra en la brida para que la union sea un solido")
 XFER_STEP = p("riel.paso_deslizamiento", 10.0, EST, VER, "Paso del barrido del macho deslizando de costado (verificacion)")
+
+
+# ensambles (Fase D)
+LANTERN_ROD_D = p("ensamble.aro_varilla_D", 8.0, EST, VER, "Diametro de la varilla del aro de la linterna de referencia (esquematica)")
+LANTERN_CORD_D = p("ensamble.cuerda_D", 4.0, EST, VER, "Diametro de las cuerdas de la linterna de referencia")
+LANTERN_CORD_AZ = p("ensamble.cuerda_azimut", (45.0, 135.0, 225.0, 315.0), "equipo", VER,
+                    "Cuerdas entre los dos lados de la barra: la barra cruza el aro por el centro, orientada entre dos cuerdas")
+LANTERN_APEX_H = p("ensamble.apice_alto", 400.0, EST, VER, "Altura del apice de las cuerdas sobre el aro; desconocida, se calcula el minimo")
+LANTERN_NET_K = p("ensamble.red_alto_k", 1.0, EST, VER, "Alto de la red = k x diametro del aro")
+LANTERN_NET_T = p("ensamble.red_espesor", 1.0, EST, VER, "Espesor de la cascara cilindrica que representa la red")
+CORD_CLEAR = p("ensamble.holgura_cuerda", 10.0, EST, VER, "Distancia libre minima entre cuerda y cualquier pieza del nodo")
+INTERF_TOL = p("ensamble.tol_interferencia", 0.01, EST, VER, "Volumen comun (mm3) por encima del cual se marca interferencia")
+SWEEP_S = p("ensamble.barrido_s", (0.0, 50.0, 100.0), EST, VER, "Posiciones del carro (punta del riel pasada la manga) del barrido de la bisagra")
+SWEEP_TILT_STEP = p("ensamble.barrido_paso", 10.0, EST, VER, "Paso de inclinacion (grados) del barrido de la bisagra, de 0 a 90")
+
+# largo del riel (Fase D, decision pendiente del equipo; los valores por defecto reproducen la geometria actual)
+RAIL_EXT_PITCH_MODE = p("riel.paso_extension", "solape", EST, VER,
+                        "solape: cada extension de 100 se monta solapando 15 con la anterior (suma 85, riel.py actual). "
+                        "paso_100: la lengüeta macho sale fuera del cuerpo de 100 (pieza de 115) y cada extension suma 100. "
+                        "Solo lo usan largo_riel.py y verificacion.py; riel.py no tiene aun la variante paso_100")
+RAIL_EXT_RULE = p("riel.regla_extensiones", "equipo", EST, VER,
+                  "equipo: RAIL_EXT_PER_RING. auto: el menor n con la punta >= lo que piden gancho + carro (largo_riel.py)")
+RAIL_LAYOUT_GAP = p("riel.holgura_gancho_carro", 1.0, EST, VER, "Aire a lo largo del riel entre la brida del gancho y la manga del carro")
+M8_ROD = p("riel.varilla_M8_datos", {"d_nucleo": 6.47, "E": 200000.0}, "fabricante", VER,
+           "Varilla roscada M8 de acero: diametro de nucleo (ISO 898) y modulo; solo para estimar el refuerzo opcional")

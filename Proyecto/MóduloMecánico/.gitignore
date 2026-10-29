@@ -1,3 +1,9 @@
 # Personal working notes: kept on disk, out of the group repo
 HANDOFF_CAD_LANTERNGUARD.md
 PROMPT_CC_CAD_FINAL.md
+
+# Fase D: auxiliares y STEP de ensamble (42 MB, se regeneran con cad_final/ensambles.py)
+salida/ensambles/_cache/
+salida/ensambles/_logs/
+salida/ensambles/_res_*.json
+salida/ensambles/*.step
