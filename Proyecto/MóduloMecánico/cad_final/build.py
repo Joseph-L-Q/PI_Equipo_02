@@ -39,6 +39,7 @@ STEPS = {
     "simple": ["simple.py"],
     "bitacora": ["bitacora.py"],
     "slicer": ["slicer.py"],
+    "fem": ["fem.py"],
 }
 PLANS = {
     "rapido": ["parametros", "riel", "lastre", "cables", "verificacion", "tabla_parametros", "medidas"],
@@ -46,6 +47,7 @@ PLANS = {
     "planos": ["planos"],
     "bitacora": ["bitacora"],
     "slicer": ["slicer", "bitacora"],
+    "fem": ["fem", "bitacora"],
     "normal": ["parametros", "caja", "riel", "gancho", "capsula", "lastre", "probetas", "boya", "cables", "verificacion",
                "simscale", "tabla_parametros", "medidas", "planos"],
 }
@@ -98,11 +100,12 @@ def main():
     g.add_argument("--todo", action="store_true", help="todo, incluidos los ensambles por aro")
     g.add_argument("--bitacora", action="store_true", help="BITACORA.xlsx y BOM.md (masa, horas y costo)")
     g.add_argument("--slicer", action="store_true", help="masa y tiempo reales con OrcaSlicer, luego la bitacora")
+    g.add_argument("--fem", action="store_true", help="FEM local (Gmsh + CalculiX) del riel y del pie, luego la bitacora")
     ap.add_argument("--onshape", action="store_true",
                     help="al terminar, sube el ensamble simple a Onshape como pestanas nuevas (simple_D200_vN)")
     a = ap.parse_args()
     plan = ("rapido" if a.rapido else "medidas" if a.medidas else "planos" if a.planos else "bitacora" if a.bitacora
-            else "slicer" if a.slicer else "normal")
+            else "slicer" if a.slicer else "fem" if a.fem else "normal")
     log_dir = HERE.parent / "salida" / "_logs_build"
     log_dir.mkdir(parents=True, exist_ok=True)
     ver = version()

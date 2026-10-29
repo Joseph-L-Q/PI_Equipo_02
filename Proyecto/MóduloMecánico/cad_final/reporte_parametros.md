@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-350 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 16; estimado / confirmado: 1; estimado / por_verificar: 245; fabricante / confirmado: 7; fabricante / por_verificar: 9.
+352 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 16; estimado / confirmado: 1; estimado / por_verificar: 247; fabricante / confirmado: 7; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
@@ -46,6 +46,8 @@
 | `carro.modo` | tope | deslizante | estimado | por_verificar | deslizante: manga abierta en los dos extremos, perilla abajo en la T, bisagra bajo el riel (+-50). tope: version del agente con placa de tope sobre el eje del riel (solo a ras de la punta) |
 | `riel.paso_extension` | solape | paso_100 | equipo | confirmado | paso_100 (decision 29/10): la lengueta macho sale fuera del cuerpo de 100 (pieza de 115) y cada extension suma 100. solape: la version anterior, extension de 100 solapada 15 (suma 85), sin punta |
 | `riel.varilla_M8_datos` | d_nucleo: 6.47, E: 200000 | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | fabricante | por_verificar | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 |
+| `gancho.c` | 0.4 × 4 × 12 | 0.4 × 6 × 12 | estimado | por_verificar | M9s: holgura sobre la varilla, pared de la C y largo del asiento sobre la varilla (la curva del aro Ø200 corre la varilla 0.18 mm en 12, 1.4 mm en 33). Pared 6 (antes 4): con la capsula junto al gancho, en el agua un solo gancho lleva los 150 N y el FEM daba FS 1.25 entre capas con 4 |
+| `gancho.alma` | 12 | 20 | estimado | por_verificar | Ancho en X del alma del gancho en C (version simple); con 12 el FEM daba 17.6 MPa junto a la ranura de la correa (FS 1.25 entre capas) con los 150 N en un solo gancho |
 | `separador.altura` | 250 | 140 | equipo | confirmado | Plano medio del separador sobre el centro de la varilla del aro. V2 (caja baja): el minimo calculado con 10 mm de aire es 136, se usa 140 (antes 250) |
 
 ## 2. Qué hay que medir o confirmar (estado por_verificar)
@@ -85,7 +87,7 @@
 | `boya.sma_ciego` | True | Melissa 29/10: agujero ciego reservado para un SMA de panel (antena externa futura), lejos de los cables |
 | `linterna.profundidad` | 1000 | Aro de la linterna a 1 m bajo la superficie (prueba real) |
 
-### Origen estimado (245)
+### Origen estimado (247)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -310,7 +312,8 @@
 | `boya.flotador_radio` | 8 | Radio de las aristas verticales del flotador |
 | `simple.union_oreja` | 10 × 8 | Orejas de la union plana a cada lado de la camara, sobre el bolsillo del lastre: ancho en y fuera de la pared, espesor en x de cada mitad. 2 M3 por oreja (4 en total) con tuerca, a lo largo del riel |
 | `aro.seccion` | 8 | Diametro de la varilla del aro Ø200 real: fija la C de M9s; medir |
-| `gancho.c` | 0.4 × 4 × 12 | M9s: holgura sobre la varilla, pared de la C y largo del asiento sobre la varilla (la curva del aro Ø200 corre la varilla 0.18 mm en 12, 1.4 mm en 33) |
+| `gancho.c` | 0.4 × 6 × 12 | M9s: holgura sobre la varilla, pared de la C y largo del asiento sobre la varilla (la curva del aro Ø200 corre la varilla 0.18 mm en 12, 1.4 mm en 33). Pared 6 (antes 4): con la capsula junto al gancho, en el agua un solo gancho lleva los 150 N y el FEM daba FS 1.25 entre capas con 4 |
+| `gancho.alma` | 20 | Ancho en X del alma del gancho en C (version simple); con 12 el FEM daba 17.6 MPa junto a la ranura de la correa (FS 1.25 entre capas) con los 150 N en un solo gancho |
 | `gancho.m4_x` | 15 | /x/ de los 2 M4 de la brida de M9s a tuercas en la ranura T |
 | `capsula.angulo` | 30 | Inclinacion fija de las capsulas hacia abajo (version simple); se cambia reimprimiendo solo M5s |
 | `capsula.pie` | 50 × 6 × 5 | Pie de M5s en silla sobre el riel: largo, espesor de la placa bajo el riel, espesor de las mejillas |
@@ -328,6 +331,7 @@
 | `umbilical.diametro_manguera` | 10 | U1: manguera flexible de referencia alrededor del cable |
 | `umbilical.longitud` | 3000 | Largo del umbilical comprado (igual que umbilical[1]) |
 | `umbilical.radio_min` | 60 | Radio minimo de la manguera Ø10 (6 x D) |
+| `fem.malla` | 2.5 | Tamano de elemento de Gmsh (mm) para fem.py; tetraedros de 10 nodos |
 | `separador.seccion` | 12 × 6 | Ancho x espesor del anillo o de los rayos (se imprime plano) |
 | `separador.agujero` | 4.5 | Agujero por donde pasa cada cuerda (cuerda de Ø4) |
 | `linterna.alto` | 200 | Alto de la red de la linterna de referencia |

@@ -538,12 +538,16 @@ SIMPLE_JOINT_EAR = p("simple.union_oreja", (10.0, 8.0), EST, VER,
                      "Orejas de la union plana a cada lado de la camara, sobre el bolsillo del lastre: ancho en y fuera de "
                      "la pared, espesor en x de cada mitad. 2 M3 por oreja (4 en total) con tuerca, a lo largo del riel")
 RING_SECTION = p("aro.seccion", 8.0, EST, VER, "Diametro de la varilla del aro Ø200 real: fija la C de M9s; medir")
-SIMPLE_HOOK_C = p("gancho.c", (0.4, 4.0, 12.0), EST, VER,
+SIMPLE_HOOK_C = p("gancho.c", (0.4, 6.0, 12.0), EST, VER,
                   "M9s: holgura sobre la varilla, pared de la C y largo del asiento sobre la varilla (la curva del aro "
-                  "Ø200 corre la varilla 0.18 mm en 12, 1.4 mm en 33)")
+                  "Ø200 corre la varilla 0.18 mm en 12, 1.4 mm en 33). Pared 6 (antes 4): con la capsula junto al gancho, en el agua un "
+                  "solo gancho lleva los 150 N y el FEM daba FS 1.25 entre capas con 4", (0.4, 4.0, 12.0))
 SIMPLE_HOOK_STRAP = p("gancho.correa", True, "equipo", OK,
                       "M9s con ranura de correa (la correa evita que el nodo se levante del aro). False: sin ranura y con "
                       "la boca abocinada, se saca levantando (variante V3)")
+SIMPLE_HOOK_WEB = p("gancho.alma", 20.0, EST, VER,
+                    "Ancho en X del alma del gancho en C (version simple); con 12 el FEM daba 17.6 MPa junto a la ranura de la correa "
+                    "(FS 1.25 entre capas) con los 150 N en un solo gancho", 12.0)
 SIMPLE_HOOK_BOLT_X = p("gancho.m4_x", 15.0, EST, VER, "|x| de los 2 M4 de la brida de M9s a tuercas en la ranura T")
 SIMPLE_CAP_TILT = p("capsula.angulo", 30.0, EST, VER,
                     "Inclinacion fija de las capsulas hacia abajo (version simple); se cambia reimprimiendo solo M5s")
@@ -595,6 +599,8 @@ UMB_HOSE_D = p("umbilical.diametro_manguera", 10.0, EST, VER, "U1: manguera flex
 UMB_LEN = p("umbilical.longitud", 3000.0, EST, VER, "Largo del umbilical comprado (igual que umbilical[1])")
 UMB_BEND_R = p("umbilical.radio_min", 60.0, EST, VER, "Radio minimo de la manguera Ø10 (6 x D)")
 LANTERN_DEPTH = p("linterna.profundidad", 1000.0, "equipo", VER, "Aro de la linterna a 1 m bajo la superficie (prueba real)")
+
+FEM_MESH = p("fem.malla", 2.5, EST, VER, "Tamano de elemento de Gmsh (mm) para fem.py; tetraedros de 10 nodos")
 
 # linterna de prueba de la version simple (suspension propia, el nodo no la carga)
 SEP_TYPE = p("separador.tipo", "aro", "equipo", OK,

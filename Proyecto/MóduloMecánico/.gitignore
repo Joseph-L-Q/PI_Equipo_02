@@ -21,3 +21,12 @@ rclone.conf
 
 # G-code del slicer (se regenera con build.py --slicer)
 salida/simple/gcode/
+
+# Archivos del solver del FEM local (se regeneran con build.py --fem)
+salida/simple/fem/*.inp
+salida/simple/fem/*.dat
+salida/simple/fem/*.frd
+salida/simple/fem/*.sta
+salida/simple/fem/*.cvg
+salida/simple/fem/*.12d
+salida/simple/fem/spooles.out

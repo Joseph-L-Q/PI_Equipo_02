@@ -183,7 +183,7 @@ def hook(strap=None, holes=True):
     fl_l, fl_t = P.HOOK_FLANGE
     zt = P.HOOK_DROP
     wy = P.STRAP_W / 2 + P.JAW_WALL
-    wx = P.HOOK_CONTACT_W / 2
+    wx = P.SIMPLE_HOOK_WEB / 2
     fy = max(S / 2, wy)
     h = _box(-fl_l / 2, fl_l / 2, -fy, fy, zt - fl_t, zt)
     h = h.union(_box(-wx, wx, -wy, wy, ro - wall / 2, zt - fl_t + 0.01))
@@ -269,7 +269,7 @@ def capsule_pose(lay, parts):
     lo = R_RING + P.HOOK_FLANGE[0] / 2 + 2.0 + fl / 2           # saddle centre range on the rail
     hi = XT - P.RAIL_TIP_END_T - fl / 2
     if P.SIMPLE_CAP_AZ == "adentro":
-        ax = R_RING + P.HOOK_CONTACT_W / 2 + HOOK_CLR - xmin
+        ax = R_RING + P.SIMPLE_HOOK_WEB / 2 + HOOK_CLR - xmin
         cfx, cfz = ax + cap_pt(xl, 0)[0], az + cap_pt(xl, 0)[1]
         nx, nz = math.cos(th), math.sin(th)                     # back normal of the lid: outward and up
         xs = cfx + nx * (z_pb - cfz) / nz if nz > 1e-6 else hi
@@ -522,7 +522,7 @@ def hand_calcs(lay, rail, x_load, x_front, foot):
     out["insertos_agua"] = r_far * (R_RING - x_f) / arm / 2 if R_RING > x_f else 0.0
     clr, wall, seat = P.SIMPLE_HOOK_C
     rm = P.RING_SECTION / 2 + clr + wall / 2
-    Mh = P.HOOK_LOAD_N * rm / 2
+    Mh = F * rm / 2                       # the capsule hangs next to its hook: one hook takes the 150 N (FEM)
     sh = 6 * Mh / (seat * wall ** 2)
     out["gancho"] = dict(M=Mh, sigma=sh, fs=P.PETG_YIELD / sh, fs_z=P.PETG_YIELD_Z / sh)
     sp = P.SIMPLE_FOOT_BOLTS[0]
@@ -884,7 +884,7 @@ def write_report(rows, lr, bal, k, plate_g, zg, zb, airs, h_sep_min, z_rod, z_se
           f"I = {rr['I']:.0f} mm⁴, c = {rr['c']:.1f}; σ = {rr['sigma']:.1f} MPa → FS {rr['fs']:.1f} / {rr['fs_z']:.1f} entre capas.",
           f"- **Brida del riel a la caja, izado por el asa:** M = {ins['M']:.0f} N·mm sobre 4 insertos M4 con {ins['arm']:.0f} de "
           f"brazo: **{ins['por_inserto']:.0f} N por inserto** (PB8). En el agua, sobre los ganchos: {calc['insertos_agua']:.0f} N.",
-          f"- **Gancho en C (fusionado) con {P.HOOK_LOAD_N:g} N:** σ = {gh['sigma']:.1f} MPa → FS {gh['fs']:.1f} / {gh['fs_z']:.1f} entre capas.",
+          f"- **Gancho en C (fusionado) con {P.HANDLING_LOAD_N:g} N** (la capsula cuelga junto a su gancho: uno solo lleva la carga):** σ = {gh['sigma']:.1f} MPa → FS {gh['fs']:.1f} / {gh['fs_z']:.1f} entre capas.",
           f"- **Pie de la capsula:** M = {pie['M']:.0f} N·mm, {pie['por_m4']:.0f} N por M4 sobre las paredes de {W:g} del riel: "
           f"{pie['aplast']:.1f} MPa → FS {pie['fs']:.1f} / **{pie['fs_z']:.1f}** entre capas "
           + ("(cumple FS ≥ 2 sin inserto ni pared de 6: la capsula mirando adentro queda bajo la silla y la palanca es corta)."
