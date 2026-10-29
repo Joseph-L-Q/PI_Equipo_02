@@ -18,3 +18,6 @@ cad_final/onshape_calls.log
 
 # Configuracion local de rclone (tiene el token de Google Drive)
 rclone.conf
+
+# G-code del slicer (se regenera con build.py --slicer)
+salida/simple/gcode/
