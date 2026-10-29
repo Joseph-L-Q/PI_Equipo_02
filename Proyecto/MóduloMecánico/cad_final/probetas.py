@@ -1,4 +1,4 @@
-"""Fase B test coupons (probetas PB1..PB7) for the PETG underwater node. Every dimension comes from params.py;
+"""Fase B test coupons (probetas PB1..PB8; PB8 added 29/10) for the PETG underwater node. Every dimension comes from params.py;
 module constants below are design values still missing there (listed in reporte_probetas.md).
 
 Frame as the rest of cad_final: X along the rail, Y across, Z up, rail bottom at z = 0. Hook parts (PB1, PB4) use the
@@ -12,6 +12,7 @@ import cadquery as cq
 
 import gancho
 from checks import brep_check, export_part, mesh_checks, sanitize
+from params import (BASE_M4_BOSS, INSERT_COUPON, M4_INSERT_DEPTH, M4_INSERT_HOLE)
 from params import (BOX_FLOOR, BOX_LID_T, BOX_WALL, BUSHING_DIAMETERS, BUSHING_FLANGE, BUSHING_PRESS,
                     BUSHING_ROD_CLR, COMB_CLEARANCES, COMB_PIN_D, FIT_CLEAR, GROOVE_DEPTH, GROOVE_WIDTH,
                     HOLE_COMP, HOOK_CONTACT_W, HOOK_EDGE_R, JAW_BORE, KNOB_D, KNOB_H, KNOB_LOBES, LATCH_BUMP,
@@ -207,6 +208,20 @@ def pb7(with_text=True):
     return {"PB7_peine": plate, "PB7_pines": pins}
 
 
+def pb8():
+    """M4 heat-set insert pull-out: the box floor (BOX_FLOOR) with the inner boss of the rail M4 (BASE_M4_BOSS) and the
+    blind insert hole entering from the outer face, as in caja_central.box_body. Outer face on the bed, as M1."""
+    a, pitch = INSERT_COUPON
+    bd, bh = BASE_M4_BOSS
+    plate = _box(-a / 2, a / 2, -a / 2, a / 2, 0, BOX_FLOOR).edges("|Z").fillet(SEAL_FILLET)
+    plate = plate.union(_cyl_z(0, 0, bd, BOX_FLOOR - 0.01, BOX_FLOOR + bh))
+    plate = plate.cut(_cyl_z(0, 0, M4_INSERT_HOLE, -0.1, M4_INSERT_DEPTH))
+    for sx in (1, -1):
+        for sy in (1, -1):
+            plate = plate.cut(_cyl_z(sx * pitch / 2, sy * pitch / 2, M4_CLEAR, -0.1, BOX_FLOOR + 0.1))
+    return {"PB8_inserto_M4": plate}
+
+
 # ------------------------------------------------------------------ run
 RAIL_O, FLAT = ("X", 90), None
 ORIENT = {"PB1_garra": ("X", 90), "M14_pestillo": ("X", 90), "PB2_ranura_T": RAIL_O, "PB3_macho": RAIL_O,
@@ -236,12 +251,17 @@ NOTES = {
     "PB7_peine": ("Probar que pin entra en cada agujero: la holgura que ajusta sin juego fija FIT_CLEAR y HOLE_COMP "
                   "(sin texto: de izquierda a derecha 0.2, 0.3, 0.4, 0.5)."),
     "PB7_pines": "Cortar los pines del sprue; se prueban en los 4 agujeros del peine.",
+    "PB8_inserto_M4": ("Imprimir como M1 (100 %, 5 perimetros, cara de afuera en la cama). Colocar el inserto M4 en caliente "
+                       "desde la cara de afuera, atornillar la placa por las 4 esquinas a un marco con hueco central y "
+                       "colgar peso o tirar con el dinamometro de un perno M4 en el inserto hasta que salga. El fondo "
+                       "real pide 274 N por inserto (Ø500): imprimir 3 y anotar la fuerza de cada una."),
 }
 
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    groups = [("PB1", pb1), ("PB2", pb2), ("PB3", pb3), ("PB4", pb4), ("PB5", pb5), ("PB6", pb6), ("PB7", pb7)]
+    groups = [("PB1", pb1), ("PB2", pb2), ("PB3", pb3), ("PB4", pb4), ("PB5", pb5), ("PB6", pb6), ("PB7", pb7),
+              ("PB8", pb8)]
     shapes, rows, fails = {}, [], []
     for name, fn in groups:
         try:
@@ -288,7 +308,7 @@ def main():
     # render: all coupons laid out in a row, modelled orientation
     from render import render
     colours = {"PB1": "#c9a227", "M13": "#d98c3a", "PB2": "#4f81bd", "PB3": "#3a9d7a", "M14": "#c0504d",
-               "M12": "#8064a2", "PB6": "#7f7f7f", "PB7": "#2e9fb8"}
+               "M12": "#8064a2", "PB6": "#7f7f7f", "PB7": "#2e9fb8", "PB8": "#b04a7a"}
     items, cur = [], 0.0
     for stem, shp in shapes.items():
         if stem == "PB3_hembra":
@@ -327,6 +347,8 @@ def write_report(rows, fails):
               "- Pestillo (PB4) sobre la garra (PB1): fija el resalte `LATCH_BUMP` de 0.6.",
               "- Garra y casquillos (PB1, M13): el usuario mide con dinamometro de equipaje la fuerza de entrada y salida "
               "por casquillo (varillas reales de 6, 8, 10 y 12).",
+              "- Inserto M4 (PB8): la fuerza de arranque se compara con los 274 N por inserto del fondo de la caja "
+              "(`reporte_verificacion.md` §4).",
               "", "## Decisiones de diseno", "",
               "- PB1: la garra mide 12 en Y (contacto). La ranura de correa 25 x 3 atraviesa en Y la parte baja, bajo el "
               "asiento. El pestillo gira en un M3 en el labio superior y se aloja en una ranura central de "

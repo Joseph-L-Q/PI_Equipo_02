@@ -170,6 +170,9 @@ KNOB_LOBES = p("perilla.lobulos", 8, EST, VER, "Moleteado grueso para guante")
 COMB_CLEARANCES = p("peine.holguras", (0.2, 0.3, 0.4, 0.5), "equipo", OK, "Peine de holguras de la Fase B")
 COMB_PIN_D = p("peine.pin_D", 8.0, EST, VER, "Pin de prueba")
 SEAL_COUPON = p("probeta.junta", (60.0, 60.0), "equipo", OK, "Cuadrado de 60 x 60 con ranura y 4 M3")
+INSERT_COUPON = p("probeta.inserto_M4", (40.0, 30.0), EST, VER,
+                  "PB8: placa de 40 x 40 con el espesor del fondo de la caja y el refuerzo del inserto; 4 agujeros M4 a 30 "
+                  "para atornillarla a un marco con hueco central y tirar del inserto (29/10)")
 
 # probetas (Fase B): constantes de forma que propuso el modelado; Fase C reutiliza las del gancho/pestillo/perilla
 COUPON_L = p("probeta.tramo_L", 40.0, EST, VER, "PB2/PB3 rail length per segment")

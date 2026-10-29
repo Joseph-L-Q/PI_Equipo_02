@@ -18,6 +18,7 @@ Generado por `cad_final/probetas.py`. STL en `../salida/probetas/`; render `prob
 | PB6_tapa | PB6_tapa.stl | ok | si | 17.04 | 60.0 x 60.0 x 5.0 (plano) | 511 | Ranura 2.6 x 1.5: comprobar compresion del o-ring (25 %) y que el cordon no se salga; sumergir. |
 | PB7_peine | PB7_peine.stl | ok | si | 10.52 | 76.0 x 26.0 x 6.0 (plano) | 0 | Probar que pin entra en cada agujero: la holgura que ajusta sin juego fija FIT_CLEAR y HOLE_COMP (sin texto: de izquierda a derecha 0.2, 0.3, 0.4, 0.5). |
 | PB7_pines | PB7_pines.stl | ok | si | 1.76 | 62.0 x 8.0 x 8.0 (plano) | 0 | Cortar los pines del sprue; se prueban en los 4 agujeros del peine. |
+| PB8_inserto_M4 | PB8_inserto_M4.stl | ok | si | 6.43 | 40.0 x 40.0 x 10.0 (plano) | 25 | Imprimir como M1 (100 %, 5 perimetros, cara de afuera en la cama). Colocar el inserto M4 en caliente desde la cara de afuera, atornillar la placa por las 4 esquinas a un marco con hueco central y colgar peso o tirar con el dinamometro de un perno M4 en el inserto hasta que salga. El fondo real pide 274 N por inserto (Ø500): imprimir 3 y anotar la fuerza de cada una. |
 
 ## Como alimentan los parametros
 
@@ -25,6 +26,7 @@ Generado por `cad_final/probetas.py`. STL en `../salida/probetas/`; render `prob
 - Ranura T con tuerca (PB2): fija `RAIL_TSLOT` (abertura, ancho, alto) y `RAIL_TSLOT_RIB`.
 - Pestillo (PB4) sobre la garra (PB1): fija el resalte `LATCH_BUMP` de 0.6.
 - Garra y casquillos (PB1, M13): el usuario mide con dinamometro de equipaje la fuerza de entrada y salida por casquillo (varillas reales de 6, 8, 10 y 12).
+- Inserto M4 (PB8): la fuerza de arranque se compara con los 274 N por inserto del fondo de la caja (`reporte_verificacion.md` §4).
 
 ## Decisiones de diseno
 
