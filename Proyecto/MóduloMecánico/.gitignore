@@ -7,3 +7,7 @@ salida/ensambles/_cache/
 salida/ensambles/_logs/
 salida/ensambles/_res_*.json
 salida/ensambles/*.step
+
+# Entorno local y logs de cad_final/build.py
+.venv/
+salida/_logs_build/

@@ -1,0 +1,2 @@
+# setup_mac.sh has to keep LF line endings or bash on macOS fails with $'\r'
+*.sh text eol=lf

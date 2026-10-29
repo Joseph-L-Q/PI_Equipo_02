@@ -1,20 +1,21 @@
 # Reporte CAD, versión final del nodo LanternGuard
 
-Rama local `cad/version-final` (sin push). Fuente única de medidas: `cad_final/params.py` (276 parámetros, cada uno
-con origen y estado). Todo se regenera con los scripts de `cad_final/`. Detalle por fase en `FASE_A.md` a `FASE_G.md`.
+Rama `cad/version-final`. Fuente única de medidas: `cad_final/params.py` (294 parámetros, cada uno con origen y
+estado). Todo se regenera con `python cad_final/build.py` (ver `README.md`). Medidas por pieza para el equipo en
+`MEDIDAS.md`; planos por pieza en `planos/cad_final/`. Detalle por fase en `FASE_A.md` a `FASE_G.md`.
 
 ## 1. Estado en una línea por cosa
 
 | Qué | Estado | Dónde |
 |---|---|---|
-| Probetas (gancho, ranura T, unión, pestillo, perilla, junta, peine) | **Listas para imprimir.** Son lo primero: sirven para medir holguras | `salida/probetas/` |
+| Probetas (gancho, ranura T, unión, pestillo, perilla, junta, peine, inserto M4 en PETG) | **Listas para imprimir.** Son lo primero: sirven para medir holguras | `salida/probetas/` |
 | Caja, tapa y bandeja del nodo | Preliminar: falta medir la electrónica y los PG7 | `salida/preliminar/` |
-| Riel, gancho, casquillos, pestillo, perilla | Preliminar; **el largo del riel tiene una decisión pendiente del equipo** | `salida/preliminar/` |
+| Riel, gancho, casquillos, pestillo, perilla | Preliminar; largo del riel decidido (C18) y varilla M8 tensada (C19) | `salida/preliminar/` |
 | Cápsula y carro | Preliminar; el carro depende del largo del riel | `salida/preliminar/` |
 | Boya | Preliminar: masas de componentes estimadas, francobordo con 4 mm de margen | `salida/boya/` |
-| Ensambles por aro | Hechos, con conflictos de largo de riel | `salida/ensambles/` (renders; STEP se regeneran) |
+| Ensambles por aro | Rehechos con el riel nuevo; quedan el pestillo contra la perilla del carro (C20) | `salida/ensambles/` (renders; STEP se regeneran) |
 | SimScale | 4 STEP simplificados y la guía con el resultado a mano esperado; las simulaciones las corre el equipo | `SIMSCALE.md`, `salida/simscale/` |
-| `salida/final/` | **Vacía a propósito**: ningún parámetro está medido todavía (0 de 276 con origen "medido") | `salida/final/LEEME.md` |
+| `salida/final/` | **Vacía a propósito**: ningún parámetro está medido todavía (0 de 294 con origen "medido") | `salida/final/LEEME.md` |
 
 ## 2. Inventario de piezas
 
@@ -24,7 +25,10 @@ con origen y estado). Todo se regenera con los scripts de `cad_final/`. Detalle 
 | M2 caja, tapa | `fase_c_caja.py` | 1 | 100 %, 5 perímetros | cara de la ranura en la cama, asa arriba | no |
 | M11 bandeja | `fase_c_caja.py` | 1 | 40 % | plana | no |
 | M3 tramo central (cámara de cables) | `riel.py` | 1 | 100 %, 5 perímetros | brida abajo | **sí** (8958 mm² de voladizo) |
-| M3 extensión | `riel.py` | 0 a 2 por lado | 100 %, 5 perímetros | acostada (capas a lo largo) | casi nada |
+| M3 extensión (115, paso 100) | `riel.py` | 0 a 2 por lado | 100 %, 5 perímetros | acostada (capas a lo largo) | casi nada |
+| M3 punta (60) | `riel.py` | 2 | 100 %, 5 perímetros | acostada | casi nada |
+| M3 tapa del bolsillo | `riel.py` | 2 | 100 % | plana | no |
+| Varilla roscada M8, 2 tuercas, 2 arandelas DIN 9021 | `riel.py` | 1 juego | acero 8.8 (o 4.6) | | |
 | M9 gancho | `gancho.py` | 2 | 40 % | de costado (capas en planos XZ) | bajo el escalón brida/alma |
 | M13 casquillo Ø6/8/10/12 | `gancho.py` | 2 del Ø de la varilla | 100 % | de pie | no |
 | M14 pestillo | `gancho.py` | 2 | 100 % | plano | no |
@@ -34,7 +38,8 @@ con origen y estado). Todo se regenera con los scripts de `cad_final/`. Detalle 
 | M5 cápsula, tapa | `capsula.py` | 2 | 100 %, 5 perímetros | de canto | 499 mm² |
 | M6 bisel | `capsula.py` | 2 | 40 % | plano | no |
 | M7 ventana | `capsula.py` | 2 | acrílico de 3, no se imprime | | |
-| Pletina de inox 25 × 5 × 100 | `camara.py` | 3 por lado | acero | | |
+| Pletina de inox 25 × 5 × 100 | `camara.py` | 2 o 3 por lado (ver `MEDIDAS.md` §2) | acero | | |
+| PB8 probeta de inserto M4 | `probetas.py` | 1 | 100 %, igual que el fondo de la caja | plana | no |
 | B1 a B6 boya | `boya.py` | ver `FASE_G.md` | 100 % casco y tapa | ver `reporte_boya.md` | lengüeta de B5 y casco |
 
 Ninguna pieza pasa de 150 mm salvo la caja (159.6) y el casco de la boya (209), que caben en la cama de 220 × 220.
@@ -45,7 +50,8 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
 `cad_final/reporte_parametros.md` (§1). Lo grande:
 
 - La caja se dimensionó desde la bandeja: 159.6 × 126 × 55 con brida, un piso, 484 cm³ de aire (antes 797).
-- El brazo M3 pasó a un riel modular: tramo central que es una cámara de cables bajo la caja + extensiones de 100.
+- El brazo M3 pasó a un riel modular: tramo central que es una cámara de cables bajo la caja + 2 puntas + 0, 1 o 2
+  extensiones por lado (230 / 430 / 630), atravesado por una varilla M8 tensada.
 - La horquilla de la cápsula pasó a un carro deslizante con la bisagra bajo el riel.
 - Ganchos al aro con casquillo intercambiable, pestillo y correa.
 - Lastre en pletinas de inox bajo el tramo central, fuera del sello.
@@ -66,11 +72,13 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
 | C10 (brazo impreso de pie) | Cerrado: el riel se imprime acostado |
 | C11 (rojo de M3 en Onshape) | Cerrado por reemplazo: **hay que volver a importar el ensamble en Onshape**, las referencias al M3 viejo se rompen |
 | C12, C13, C14 | Cerrados en la revisión de la Fase A |
-| C15 (cuerdas en Ø100) | Sigue y se extiende a Ø200: las cuerdas a 45° atraviesan la caja con cualquier ápice. Ø300 pide ápice ≥ 535, Ø500 ≥ 273 |
+| C15 (cuerdas en Ø100) | Cerrado en Ø100 y Ø200: las cuerdas se amarran al ojal del asa (la linterna cuelga del nodo). En Ø300 y Ø500 siguen al ápice: con la cámara 12.4 más honda, Ø300 pide ápice ≥ 578 y Ø500 ≥ 294 |
 | C16 (domo del PG7) | Sigue: medir el prensaestopas; fija el alto de la cámara |
 | C17 (riel 57 bajo la caja) | Revisado: los ganchos no tocan la caja |
-| **C18 (nuevo, Fase D)** | **El riel no llega**: la punta debe estar en R + 64 y faltan de 9 a 74 mm. La tabla del equipo (230 / 430 / 630) no sale de un central de 140 + extensiones de 100. Decide el equipo; tres salidas en `FASE_D.md` |
-| **C19 (nuevo, Fase E)** | La media madera de la unión queda con FS 1.1 (Ø500) y bajo 1 si se alarga el riel. Va junto con C18 |
+| C18 (largo del riel) | **Cerrado (decisión del 29/10):** pieza de punta de 45 + 15 de unión y extensiones a paso 100. Riel de 230 / 430 / 630; la punta queda a 1 mm de R + 64 en Ø100, Ø300 y Ø500, y a 51 en Ø200 |
+| C19 (unión de tramos) | **Cerrado (decisión del 29/10):** varilla M8 obligatoria, tensada con tuerca y arandela en las dos puntas. Ø500 con 150 N en la punta: pared de PETG a FS 1.4 en fluencia y 2.0 a rotura (sin varilla 0.8); varilla FS 7.3 en 8.8 y 2.7 en 4.6. Para alojarla la cámara de cables crece 12.4 mm (fondo del riel a −69.75) y la rampa pasa a 60°. Detalle en `cad_final/reporte_verificacion.md` §3c |
+| **C20 (nuevo)** | El pestillo M14 entra 259 mm³ en el espacio de la mano para la perilla del carro con s = 0 (Ø100, Ø300, Ø500; en Ø200 con s = 50). Las piezas no chocan, pero hay menos lugar para los dedos. Además, en Ø100, Ø300 y Ø500 el carro solo puede ir a ras de la punta: no hay recorrido de ±50. Probar con guante en la probeta del pestillo |
+| **C21 (nuevo)** | Ojal del asa Ø10: con 180 N la pieza aguanta (FS 2.2 en la barra), pero no entran una cuerda gruesa y 4 cuerdas con nudo. Se recomienda un grillete o una argolla de acero en el ojal. La tapa del bolsillo M3 todavía no tiene forma de fijarse |
 
 ## 5. Verificación
 
@@ -83,13 +91,13 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
 - **Cálculo a mano:** `cad_final/reporte_verificacion.md` (`FASE_E.md` tiene el resumen). Método de flotabilidad: volúmenes
   de los sólidos reales, relleno como parámetro (40 % y 100 %), empuje con agua de mar de 1025 kg/m³; estabilidad con G
   y B del nodo completo (sumergido no hay metacentro, el número es BG).
-- **Peso:** nodo de 1.86 a 2.07 kg (≤ 3), peso aparente de +208 a +253 g (ventana de +200 a +500).
+- **Peso:** nodo de 2.04 a 2.22 kg con la varilla (≤ 3), peso aparente de +224 a +318 g (ventana de +200 a +500).
 
 ## 6. Pruebas físicas recomendadas, en orden
 
 1. Imprimir las probetas: peine de holguras, encaje de los casquillos en varilla real (fuerza de entrada y salida),
    tuerca M4 en la ranura T, unión de tramos, pestillo con guante, perilla y junta.
-2. Arranque de los insertos M4 en PETG (el fondo de la caja pide 274 N cada uno).
+2. Arranque de los insertos M4 en PETG con la probeta PB8 (el fondo de la caja pide 274 N cada uno).
 3. Unión de tramos a flexión hasta la falla, con y sin varilla M8.
 4. Estanqueidad de la caja y de la cápsula: 24 h, 72 h y 7 días a 1 m.
 5. Cable Cat5e de la longitud real con la cámara a 8 y 4 MHz.
@@ -97,11 +105,26 @@ La tabla completa anterior → nuevo → origen → razón la genera `cad_final/
 
 ## 7. Resumen simple
 
-- **Listo para imprimir:** las probetas de `salida/probetas/`. Nada más todavía.
+- **Listo para imprimir:** las probetas de `salida/probetas/` (PB1 a PB8). Nada más todavía.
 - **Preliminar:** el resto de las piezas del nodo, la cápsula y la boya. Están completas y chequeadas, pero las medidas
   de la electrónica, los prensaestopas, el domo del PG7, el anillo LED y las masas son estimadas.
-- **Qué hay que medir:** la lista completa está en `cad_final/reporte_parametros.md` §2. Lo crítico: DevKit y módulos de
+- **Qué hay que medir:** la lista ordenada por importancia está arriba de `MEDIDAS.md`; la completa, en
+  `cad_final/reporte_parametros.md` §2. Lo crítico: DevKit y módulos de
   la bandeja, prensaestopas PG7 (contratuerca y domo), varilla del aro, agujero del anillo LED, cámara, panel solar,
   baterías y la densidad del PETG del slicer.
-- **Siguiente paso:** que el equipo decida el largo del riel (C18). Con eso se rehacen los ensambles y la unión, y se
-  imprimen las probetas.
+- **Siguiente paso:** imprimir las probetas (PB1 a PB8), medir lo de la tabla de `MEDIDAS.md`, cargar los valores en
+  `params.py` y regenerar. Después, probar el pestillo con guante (C20) y elegir el grillete del ojal (C21).
+
+## 8. Decisiones tomadas sin el equipo en la ronda C18/C19 (29/10)
+
+| Tarea | Qué se eligió | Por qué | Qué se descartó | Cómo revertir |
+|---|---|---|---|---|
+| Varilla M8 | La varilla pasa **bajo** el cable (eje a 14.05 del fondo del riel) y la cámara crece 12.4 mm; rampa de 45 a 60 grados | Un Cat5e que baja del domo del PG7 con R ≥ 25 no pasa por encima de una varilla alta | Varilla sobre el cable; cámara del mismo alto | `ROD_CHANNEL_GAP`, `ROD_BOSS_WALL`, `CHAMBER_RAMP_DEG` en `params.py` |
+| Varilla M8 | Arandela ancha DIN 9021 (24 × 2), precarga de 500 N, 2 mm de sobrante | Reparte la carga en 2.7 veces más área que la arandela común de Ø16 (9.1 MPa en el PETG con la carga de diseño) | Arandela DIN 125 | `ROD_WASHER`, `ROD_PRELOAD_N`, `ROD_PROTRUSION` |
+| Conducto | En la unión de tramos (10 de ancho) pasa un solo Cat5e por lado | Cada lado lleva el cable de una sola cámara; dos Cat5e no entran ni lado a lado (11 > 10) ni uno sobre otro (7.9 de alto sobre la varilla) | Agrandar la sección del riel | `RAIL_SECTION` y volver a correr `--todo` |
+| Cuerdas al asa | Recorrido de la cuerda: aro, bajo el borde de la caja, sobre el borde de la tapa, al ojal | Es el camino más corto sin atravesar la caja | Cuerda recta al ojal (atraviesa la caja) | `cords_to_eye()` en `ensambles.py` |
+| Ojal del asa | Se deja Ø10 y se recomienda grillete o argolla | La pieza aguanta 180 N; lo que no entra son los nudos | Agrandar el ojal (cambia el asa y la tapa) | `HANDLE_EYE` |
+| PB8 | Placa de 40 × 40 con el espesor del fondo de la caja, inserto desde abajo y 4 agujeros M4 para apoyarla | Reproduce el fondo de la caja tal como se imprime | Probeta de pared vertical | `INSERT_COUPON`, `pb8()` en `probetas.py` |
+| Ensambles | Se quitó el caso `100e1` (Ø100 con una extensión) | Con la regla del equipo Ø100 no lleva extensiones | Mantenerlo | Agregarlo a `CASES` en `ensambles.py` |
+| Planos por pieza | Script propio `planos_piezas.py` (misma técnica que `cad/planos.py`) | `cad/planos.py` lee los parámetros viejos de `cad/` al importarse y tiene cambios sin commitear del autor | Modificar `cad/planos.py` | Borrar `planos/cad_final/` |
+| Instalación | `requirements.txt` con las dependencias directas fijadas, no un `pip freeze` completo | El Python de esta máquina tiene muchos paquetes que el CAD no usa | `pip freeze` | Agregar líneas a `requirements.txt` |

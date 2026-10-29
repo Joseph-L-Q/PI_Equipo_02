@@ -1,5 +1,17 @@
 # Módulo mecánico: LanternGuard (prototipo a escala de laboratorio)
 
+> **Empieza aquí (versión final, `cad_final/`)**
+> 1. Clonar: `git clone https://github.com/Joseph-L-Q/PI_Equipo_02.git` y `git checkout cad/version-final`.
+> 2. Instalar (una vez): en `Proyecto/MóduloMecánico`, `powershell -ExecutionPolicy Bypass -File .\setup_laptop.ps1` (Mac: `bash setup_mac.sh`). Pide Python 3.12.
+> 3. Medidas de cada pieza, qué falta medir y qué se imprime por aro: [`MEDIDAS.md`](MEDIDAS.md). Planos: [`planos/cad_final/`](planos/cad_final/).
+> 4. Cambiar una medida: edita el número en [`cad_final/params.py`](cad_final/params.py) (el nombre está en `MEDIDAS.md`).
+> 5. Regenerar: `.venv\Scripts\python.exe cad_final/build.py --rapido` (Mac: `.venv/bin/python ...`); `--todo` rehace también los ensambles.
+> 6. Paso a paso y cambios más comunes: [`CAMBIOS_RAPIDOS.md`](CAMBIOS_RAPIDOS.md).
+> 7. Actualizar Onshape con los STEP nuevos: [`ONSHAPE.md`](ONSHAPE.md).
+> 8. Estado, conflictos abiertos y pruebas pendientes: [`REPORTE_CAD.md`](REPORTE_CAD.md).
+> 9. Lo que se imprime primero: las probetas de `salida/probetas/` (PB1 a PB8).
+> 10. Lo que sigue abajo describe el diseño anterior (`cad/`), que queda como referencia.
+
 Carcasa estanca y soporte para las dos cámaras y la electrónica sumergida del concepto elegido (**Solución 1**): una barra prismática que se apoya sobre el aro superior de la linterna, con una caja central y una cápsula de cámara en cada extremo. La bisagra dentada fija el ángulo de cada cápsula.
 
 El diseño es **CAD paramétrico en código** (CadQuery, Python). Todas las medidas están en un solo archivo, [`cad/params.py`](cad/params.py), en mm. Cada pieza se exporta a **STEP** (para Onshape) y **STL** (para imprimir).
