@@ -554,7 +554,9 @@ SIMPLE_FOOT_BOLTS = p("capsula.pie_m4", (30.0, 20.0), EST, VER,
                       "2 M4 horizontales que cruzan el riel y las mejillas: separacion en x y altura sobre el fondo del "
                       "riel (sobre el Cat5e)")
 SIMPLE_FOOT_GAP = p("capsula.pie_aire", 2.0, EST, VER, "Aire entre lo mas alto de la capsula inclinada y la placa de la silla")
-SIMPLE_PLATES = p("lastre.pletinas", 3, EST, VER,
+SIMPLE_POCKET_LAYERS = p("simple.bolsillo_capacidad", 5, EST, VER,
+                           "Pletinas que entran en cada bolsillo bajo la caja (V2: la caja con KIT A en 2 pisos encierra mas aire)")
+SIMPLE_PLATES = p("lastre.pletinas", 5, EST, VER,
                   "Pletinas por bolsillo (hay 2) en la version simple; simple.py verifica que el peso aparente quede en "
                   "la ventana y dice cuantas hacen falta")
 SIMPLE_HARDWARE_G = p("masa.tornilleria_simple", 40.0, EST, VER,
@@ -598,7 +600,8 @@ LANTERN_DEPTH = p("linterna.profundidad", 1000.0, "equipo", VER, "Aro de la lint
 SEP_TYPE = p("separador.tipo", "aro", "equipo", OK,
              "LR1 sobre el nodo: 'aro' (anillo del diametro del aro) o 'cruceta' (rayos al centro). Las cuerdas suben "
              "verticales del aro al separador y de ahi al apice")
-SEP_H = p("separador.altura", 250.0, "equipo", OK, "Plano medio del separador sobre el centro de la varilla del aro")
+SEP_H = p("separador.altura", 140.0, "equipo", OK,
+          "Plano medio del separador sobre el centro de la varilla del aro. V2 (caja baja): el minimo calculado con 10 mm de aire es 136, se usa 140 (antes 250)", 250.0)
 SEP_SECTION = p("separador.seccion", (12.0, 6.0), EST, VER, "Ancho x espesor del anillo o de los rayos (se imprime plano)")
 SEP_HOLE = p("separador.agujero", 4.5, EST, VER, "Agujero por donde pasa cada cuerda (cuerda de Ø4)")
 SIMPLE_CORD_AZ = p("linterna.cuerda_azimut", (60.0, 120.0, 240.0, 300.0), "equipo", OK,

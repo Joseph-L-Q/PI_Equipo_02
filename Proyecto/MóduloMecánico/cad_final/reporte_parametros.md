@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-330 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 236; fabricante / confirmado: 7; fabricante / por_verificar: 9.
+350 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 16; estimado / confirmado: 1; estimado / por_verificar: 245; fabricante / confirmado: 7; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
@@ -46,6 +46,7 @@
 | `carro.modo` | tope | deslizante | estimado | por_verificar | deslizante: manga abierta en los dos extremos, perilla abajo en la T, bisagra bajo el riel (+-50). tope: version del agente con placa de tope sobre el eje del riel (solo a ras de la punta) |
 | `riel.paso_extension` | solape | paso_100 | equipo | confirmado | paso_100 (decision 29/10): la lengueta macho sale fuera del cuerpo de 100 (pieza de 115) y cada extension suma 100. solape: la version anterior, extension de 100 solapada 15 (suma 85), sin punta |
 | `riel.varilla_M8_datos` | d_nucleo: 6.47, E: 200000 | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | fabricante | por_verificar | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 |
+| `separador.altura` | 250 | 140 | equipo | confirmado | Plano medio del separador sobre el centro de la varilla del aro. V2 (caja baja): el minimo calculado con 10 mm de aire es 136, se usa 140 (antes 250) |
 
 ## 2. Qué hay que medir o confirmar (estado por_verificar)
 
@@ -63,7 +64,7 @@
 | `camara.cable_incluido` | 300 | Medir el recibido |
 | `riel.varilla_M8_datos` | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 |
 
-### Origen equipo (5)
+### Origen equipo (16)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -72,8 +73,19 @@
 | `boya.pcb` | 70 × 73.5 × 1.6 | Placa fabricada; agujeros por verificar |
 | `boya.rtc_reserva` | 40 × 25 × 15 | DS3231, montaje sin confirmar |
 | `ensamble.cuerda_azimut` | 45 × 135 × 225 × 315 | Cuerdas entre los dos lados de la barra: la barra cruza el aro por el centro, orientada entre dos cuerdas |
+| `material` | PETG opaco | Melissa 29/10: PETG opaco en todas las piezas, no ASA |
+| `simple.esp32_base` | kit_a | Melissa 29/10: ESP32-S3 N16R8 sobre KIT A + modulos sueltos (acelerometro, microSD) en la caja. esp32.base sigue en sin_base para la modular |
+| `capsula.acimut` | adentro | Melissa 29/10: camaras inclinadas hacia la malla. adentro: miran al eje de la linterna; afuera: hacia las puntas del riel (version V1) |
+| `ventana.antibiofouling` | spray | Melissa 29/10: antibiofouling en spray sobre las ventanas (no cambia la geometria) |
+| `enlace.nodo_boya` | RS-485 en el umbilical | Melissa 29/10: modulo XY-017 en la caja, par trenzado del umbilical |
+| `boya.caja_exterior` | 220 × 200 × 120 | Melissa 29/10: caja central hermetica de la boya ~220 x 200 x 120 exterior (cuerpo; la brida de la tapa sale aparte) |
+| `boya.caja_interior` | 210 × 190 | Melissa 29/10: 210 x 190 interior (pared de 5) |
+| `boya.flotadores_esquinas` | 4 | Melissa 29/10: flotadores modulares en las 4 esquinas |
+| `boya.antena_interior` | True | Melissa 29/10: antena LoRa pequena de la Heltec dentro de la carcasa, despejada de metal y del panel: sin mastil |
+| `boya.sma_ciego` | True | Melissa 29/10: agujero ciego reservado para un SMA de panel (antena externa futura), lejos de los cables |
+| `linterna.profundidad` | 1000 | Aro de la linterna a 1 m bajo la superficie (prueba real) |
 
-### Origen estimado (236)
+### Origen estimado (245)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -305,8 +317,17 @@
 | `capsula.pie_alma` | 20 | Ancho en y del alma que une la silla con la tapa |
 | `capsula.pie_m4` | 30 × 20 | 2 M4 horizontales que cruzan el riel y las mejillas: separacion en x y altura sobre el fondo del riel (sobre el Cat5e) |
 | `capsula.pie_aire` | 2 | Aire entre lo mas alto de la capsula inclinada y la placa de la silla |
-| `lastre.pletinas` | 3 | Pletinas por bolsillo (hay 2) en la version simple; simple.py verifica que el peso aparente quede en la ventana y dice cuantas hacen falta |
+| `simple.bolsillo_capacidad` | 5 | Pletinas que entran en cada bolsillo bajo la caja (V2: la caja con KIT A en 2 pisos encierra mas aire) |
+| `lastre.pletinas` | 5 | Pletinas por bolsillo (hay 2) en la version simple; simple.py verifica que el peso aparente quede en la ventana y dice cuantas hacen falta |
 | `masa.tornilleria_simple` | 40 | 4 M3 de la union, 4 M4 + tuercas T de los ganchos, 4 M4 de los pies, 4 M3 de las tapas del bolsillo y 2 correas; pesar |
+| `simple.caja_pisos` | 2 | Con KIT A en 1 piso la caja mide 159.6 x 170 con brida y la brida queda a 1.6 mm de las cuerdas a 60 grados; en 2 pisos mide 147 x 146 y deja unos 11 mm |
+| `camara.fov_diagonal` | 70 | Arducam Mega 5MP: sin ficha a mano; 70 grados diagonal estimado |
+| `camara.enfoque` | 80 × 1e+06 | Rango de enfoque del autofoco (mm): 8 cm a infinito, estimado; confirmar con la ficha |
+| `simple.cojin_riel` | 10 × 6 × 25 | Version simple, caja baja: cojin en cada pared extrema de M1 con 4 insertos M4 (sale 10 de la pared), brida del riel de 6 y semiancho 25. El PG7 de cada camara pasa por la pared extrema y su domo entra en el conducto del riel: sin camara de cables |
+| `boya.flotador_esquina` | 100 × 100 × 60 | Flotador de esquina (simple): largo x ancho x alto, hueco y sellado |
+| `umbilical.diametro_manguera` | 10 | U1: manguera flexible de referencia alrededor del cable |
+| `umbilical.longitud` | 3000 | Largo del umbilical comprado (igual que umbilical[1]) |
+| `umbilical.radio_min` | 60 | Radio minimo de la manguera Ø10 (6 x D) |
 | `separador.seccion` | 12 × 6 | Ancho x espesor del anillo o de los rayos (se imprime plano) |
 | `separador.agujero` | 4.5 | Agujero por donde pasa cada cuerda (cuerda de Ø4) |
 | `linterna.alto` | 200 | Alto de la red de la linterna de referencia |

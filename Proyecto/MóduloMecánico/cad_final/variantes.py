@@ -28,16 +28,17 @@ VARIANTS = [("V1", "Capsula a 30°, gancho con correa", 30.0, True),
 COLOURS = {"caja": ("#5b8fb9", 0.55), "riel": ("#3a9d7a", 1.0), "lastre": ("#777777", 1.0), "correa": ("#c0504d", 1.0)}
 
 
-def build(lay, c, an, ch, tilt, strap):
+def build(lay, an, tilt, strap):
     P.SIMPLE_CAP_TILT = tilt
-    half = SM.solid(SM.rail_half(lay, c, P.PLATE_POCKET_LAYERS))
-    hk = SM.solid(SM.hook(strap))
+    layers = P.SIMPLE_POCKET_LAYERS
     cp = {"M4": CP.capsule_body(), "M6": CP.bezel(), "M7": CP.window_disc(), "lid": CP.lid_plate()}
-    ax, az = SM.capsule_pose(c, cp)
-    m5s = SM.solid(SM.lid_with_foot(c, cp["lid"], ax, az))
-    plates = [SM.solid(p) for p in camara.plates_solid(lay, P.SIMPLE_PLATES)]
-    z_rod = c.z_rail - P.HOOK_DROP
-    node = SM.assemble(an, ch, half, hk, m5s, SM.solid(ch["tapa_bolsillo_n"]), cp, ax, az, z_rod, plates, strap=strap)
+    ax, az, foot = SM.capsule_pose(lay, cp)
+    half = SM.solid(SM.rail_half(lay, foot, strap))
+    m5s = SM.solid(SM.lid_with_foot(cp["lid"], ax, az, foot))
+    m1, trays = SM.box_body_low(lay, layers), SM.trays_low(lay)
+    z_rod = SM.Z_RAIL - P.HOOK_DROP
+    node = SM.assemble(an, half, m5s, SM.pocket_cover(layers), cp, ax, az, SM.plates(layers, P.SIMPLE_PLATES), m1, trays,
+                       strap=strap)
     ring = cq.Solid.makeTorus(SM.R_RING, P.RING_SECTION / 2, cq.Vector(0, 0, z_rod), SM.ZAX)
     items = []
     for sh, g in node.values():
@@ -47,9 +48,8 @@ def build(lay, c, an, ch, tilt, strap):
     # full assembly for the STEP, same content as ensamble_simple_D200.step (lantern, LR1, umbilical)
     z_sep = z_rod + P.SEP_H
     lant, _, buoy_end = SM.lantern(z_rod, z_sep, z_sep + P.APEX_H)
-    gland = (lay.lid_gland[0], lay.lid_gland[1], lay.box_outer()[2] + P.BOX_LID_T) if lay.lid_gland else lay.wall_gland
     asm = [sh for sh, _ in node.values()] + list(lant.values()) + [SM.solid(SM.separator(z_sep))]
-    asm += SM.umbilical(gland, buoy_end)
+    asm += SM.umbilical(SM.lid_gland_point(lay), buoy_end)
     return items, asm
 
 
@@ -83,13 +83,11 @@ def combine(paths, labels, out):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    lay = layout.build(floors=1)
-    c = camara.dims(lay)
+    lay = layout.build(P.SIMPLE_ESP32_BASE, floors=P.SIMPLE_FLOORS)
     an = FA.analyse_box(lay)
-    ch = camara.chamber_solid(lay, P.PLATE_POCKET_LAYERS)
     built = {}
     for tag, _, tilt, strap in VARIANTS:
-        built[tag], asm = build(lay, c, an, ch, tilt, strap)
+        built[tag], asm = build(lay, an, tilt, strap)
         step = OUT / f"{tag}.step"
         SM.E.comp(asm).exportStep(str(step))
         SM.fix_step_stamp(step)

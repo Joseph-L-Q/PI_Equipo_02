@@ -1,91 +1,77 @@
-# Version simple del nodo, aro Ø200 (generado por `simple.py`)
+# Version simple del nodo V2, aro Ø200 (generado por `simple.py`)
 
-No editar a mano: se regenera con `python cad_final/build.py --rapido` cuando `version = "simple"` en `params.py`. La version modular (`version = "modular"`) no cambia. mm, g, N, MPa.
+No editar a mano: se regenera con `python cad_final/build.py --rapido` cuando `version = "simple"` en `params.py`. La version modular no cambia. mm, g, N, MPa.
 
-Riel de una pieza de 430 en 2 mitades iguales M3s (union plana en x = 0 bajo la caja, 4 M3 en orejas), sin varilla M8, extensiones ni puntas. Ganchos en C fijos M9s a x = ±100 con ranura para correa de 25, sin casquillo, pestillo ni perilla. Capsulas fijas a 30 grados: la tapa M5s trae un pie en silla que se atornilla con 2 M4 horizontales que cruzan el riel (sin bisagra dentada). Caja, tapa, bandeja, capsula, bisel y ventana iguales a la modular. Los cables van por dentro del riel y salen por la ranura lateral junto a la capsula.
+**V2 (29/10, decisiones del equipo):** ESP32-S3 sobre KIT_A en 2 pisos (caja 127.0 × 126.0 × 77.0). **Caja baja:** el PG7 de cada camara atraviesa la pared extrema de M1 a z = 13.7, el eje del conducto del riel, y el domo entra en el conducto: no hay camara de cables. Cada mitad del riel (M3s, con el gancho en C fusionado) se atornilla con una brida a un cojin de la pared extrema (4 M4 a insertos). Los bolsillos del lastre van moldeados bajo el piso de M1, fuera del sello, cerrados por M3t. Capsulas fijas a 30 grados mirando **adentro** (a la malla); la tapa M5s trae el pie en silla con 2 M4 que cruzan el riel.
 
 ## 1. Piezas
 
 | Pieza | Archivo (`salida/simple/stl`, `step`) | Cant. | BRep/BOP | Estanco | Cuerpos | Bbox en la orientacion (mm) | Voladizo mm² | Espesor p1 | Masa al 100 % g |
 |---|---|---|---|---|---|---|---|---|---|
-| M3s riel, mitad | M3s_riel_mitad | 2 | ok | si | 1 | 215.0 x 100.0 x 57.3 (X180) | 11296 | 2.54 | 189 |
-| M9s gancho en C | M9s_gancho | 2 | ok | si | 1 | 50.0 x 47.2 x 33.0 (X+90) | 182 | 2.12 | 27 |
-| M5s tapa con pie | M5s_capsula_tapa_pie | 2 | ok | si | 1 | 96.8 x 64.0 x 95.9 (X180) | 2880 | 2.83 | 120 |
-| M3t tapa del bolsillo | M3t_tapa_bolsillo | 2 | ok | si | 1 | 107.0 x 35.0 x 3.0 (X180) | 0 |  | 12 |
-| M1 caja, cuerpo | M1_caja_cuerpo | 1 | ok | si | 1 | 159.6 x 126.0 x 50.0 (sin girar) | 651 |  | 273 |
-| M2 caja, tapa con asa | M2_caja_tapa | 1 | ok | si | 1 | 63.0 x 126.0 x 159.6 (Y+90) | 1375 |  | 164 |
-| M11 bandeja (M11_bandeja) | M11_bandeja | 1 | ok | si | 1 | 127.6 x 94.0 x 18.0 (sin girar) | 0 |  | 45 |
+| M1 caja baja con bolsillos | M1s_caja_cuerpo | 1 | ok | si | 1 | 147.0 x 146.0 x 102.5 (X180) | 15793 |  | 444 |
+| M2 caja, tapa con asa | M2_caja_tapa | 1 | ok | si | 1 | 63.0 x 146.0 x 147.0 (Y+90) | 1461 |  | 173 |
+| M3s riel con gancho, mitad | M3s_riel_gancho | 2 | ok | si | 1 | 141.5 x 77.2 x 50.0 (X+90) | 7898 | 2.91 | 108 |
+| M3t tapa del bolsillo | M3t_tapa_bolsillo | 2 | ok | si | 1 | 117.0 x 32.0 x 3.0 (X180) | 0 |  | 14 |
+| M5s tapa con pie | M5s_capsula_tapa_pie | 2 | ok | si | 1 | 59.2 x 64.0 x 95.9 (sin girar) | 1571 | 2.83 | 97 |
+| M11 bandeja (M11_bandeja) | M11_bandeja | 1 | ok | si | 1 | 115.0 x 114.0 x 30.0 (sin girar) | 36 |  | 51 |
+| M11 bandeja (M11_bandeja_sup) | M11_bandeja_sup | 1 | ok | si | 1 | 115.0 x 114.0 x 3.0 (sin girar) | 0 |  | 48 |
 | M4 capsula, cuerpo | M4_capsula_cuerpo | 2 | ok | si | 1 | 64.0 x 64.0 x 44.0 (Y-90) | 1038 |  | 58 |
 | M6 bisel | M6_capsula_bisel | 2 | ok | si | 1 | 42.0 x 42.0 x 2.5 (Y+90) | 0 |  | 2 |
 | M7 ventana (acrilico) | M7_capsula_ventana | 2 | ok | si | 1 | 30.0 x 30.0 x 3.0 (Y+90) | 0 |  | 3 |
 
-Tipos impresos: 9 (M1, M2, M11, M3s, M3t, M9s, M4, M5s, M6) mas la ventana M7 de acrilico. Piezas impresas por nodo: 15. El espesor p1 se mide en las piezas nuevas; las demas son las de la modular, ya medidas.
-STEP del riel como un solo solido para SimScale: `salida/simple/simscale/M3s_riel_fusionado.step` (1 solido).
+Piezas impresas por nodo: 14 de 9 tipos, mas las 2 ventanas M7 de acrilico. Fusionado respecto de V1: el gancho M9s dentro de cada mitad del riel (se imprimen de costado, la C y el riel en el plano de las capas) y la camara de cables dentro de la caja; los bolsillos del lastre dentro de M1. Quedan aparte, para desmontar: tapas (M2, M3t, M5s), capsulas y bandeja.
+STEP del riel para SimScale y el FEM local: `salida/simple/simscale/M3s_riel_fusionado.step` (2 solido(s); dos mitades separadas por la caja: el STEP tiene las 2 mitades con sus ganchos).
 
 ## 2. Peso y peso aparente
 
-Pletinas de inox 25 × 5 × 100 (99 g, hunde 86 g cada una), 3 por bolsillo (`lastre.pletinas`), 2 bolsillos. Ventana: 200 a 500 g hacia abajo; en aire ≤ 3 kg. Desplazamiento con los volumenes reales de los solidos (las piezas con relleno parcial cuentan su volumen entero: la piel cierra el aire) y el aire sellado de la caja y de las capsulas.
+Masa por pieza con su relleno (100 % cajas estancas, tapas con junta y ganchos; 40 % riel y bandeja; piel de 1.2): la misma que usa la bitacora. Pletinas de inox 25 × 5 × 100 (99 g), 5 por bolsillo, 2 bolsillos bajo la caja.
 
 | Concepto | Bandeja 40 % | Bandeja 100 % |
 |---|---|---|
-| caja (M1 + M2 + bandeja + electronica) | 572 | 576 |
-| riel (2 M3s al 100 %) | 377 | 377 |
-| tapas del bolsillo (2 M3t) | 24 | 24 |
-| ganchos (2 M9s al 40 %) | 36 | 36 |
-| capsulas (M4 + M5s al 100 %, M6 al 40 %, M7, contenido) | 436 | 436 |
+| caja (M1 con bolsillos + M2 + bandejas + electronica) | 825 | 834 |
+| riel con ganchos (2 M3s) | 179 | 179 |
+| tapas del bolsillo (2 M3t) | 28 | 28 |
+| capsulas (M4, M5s, M6, M7, contenido) | 390 | 390 |
 | tornilleria y correas | 40 | 40 |
-| Nodo sin pletinas g | 1486 | 1490 |
-| Desplaza cm³ | 1695 | 1695 |
-| Peso aparente sin pletinas g | -251 | -247 |
-| Pletinas por bolsillo para entrar en la ventana | 3 a 4 | 3 a 4 |
-| **Peso aparente con 3 por bolsillo g** | **+265** | **+269** |
-| **Peso en aire g** | **2079** | **2083** |
+| Nodo sin pletinas g | 1462 | 1471 |
+| Desplaza cm³ | 2067 | 2067 |
+| Peso aparente sin pletinas g | -657 | -648 |
+| Pletinas por bolsillo para entrar en la ventana | 5 a 6 | 5 a 6 |
+| **Peso aparente con 5 por bolsillo g** | **+203** | **+211** |
+| **Peso en aire g** | **2450** | **2458** |
 
-Estabilidad (bandeja al 40 %, capsulas a 30 grados): centro de masa z = -30.8, centro de empuje z = -13.4, BG = **17.4 mm** (no se voltea).
+Estabilidad: centro de masa a 46.0 y de empuje a 64.3 sobre el aro, BG = **18.3 mm**.
 
-## 3. Linterna de prueba y suspension
-
-La linterna cuelga de su propia brida: 4 cuerdas a 60, 120, 240, 300 grados suben verticales del aro al separador LR1 (aro, 12 × 6) y de ahi al apice; del apice sube el cabo central al punto fijo (`linterna.punto_fijo` = estructura). El nodo no carga la linterna: va enganchado al aro con los ganchos y la correa; el ojal del asa queda solo para izarlo. El umbilical baja de la boya al PG7 de la tapa con 80 mm de comba (sin tension).
+## 3. Linterna, suspension y camaras
 
 | Concepto | Valor |
 |---|---|
-| Techo del nodo sobre el centro de la varilla del aro | 210 mm |
-| Separador (plano medio) sobre el aro, `separador.altura` | 250 mm (minimo calculado con 10 mm de aire: **165 mm**) |
-| Apice sobre el separador, `apice.altura` | 150 mm |
-| **Apice sobre el aro** | **400 mm** |
-| Aire minimo suspension-nodo (exigido 10) | **21.6 mm** |
-| aire cuerda vertical 120 | 21.6 mm |
-| aire cuerda vertical 240 | 21.6 mm |
-| aire cuerda vertical 300 | 21.6 mm |
-| aire cuerda vertical 60 | 21.6 mm |
-| aire LR1 separador | 65.2 mm |
-| aire cuerda al apice 60 | 96.0 mm |
-| aire cuerda al apice 120 | 96.0 mm |
-| aire cuerda al apice 300 | 96.0 mm |
-| aire cuerda al apice 240 | 96.0 mm |
-| aire cabo central | 187.7 mm |
-| Aro contra el nodo (ganchos con holgura 0.4) | sin contacto |
-| Red contra el nodo | sin contacto |
+| Nodo sobre el centro de la varilla del aro | de -40 a 181 mm |
+| Separador `separador.altura` | 140 mm (minimo calculado: **136**) |
+| **Apice sobre el aro** | **290 mm** |
+| Aire minimo suspension-nodo (exigido 10) | **11.6 mm** |
+| Aro y red contra el nodo | sin contacto |
+| Camara en Ø200: lente a la red | 34 mm, campo diagonal 47 mm, FUERA del enfoque (80 mm a infinito, estimado) |
+| Camara en Ø500 | el eje optico no corta la red |
 
-LR1 (`salida/linterna_prueba/LR1_separador.stl` y `.step`): pieza de referencia de la linterna, no del nodo; se imprime plana en PETG si hace falta. Bbox 211.9 x 211.9 x 6.0 (sin girar), cabe en la cama: si. Con `separador.tipo` = cruceta son rayos al centro y la altura minima sube (pasa sobre el asa).
+FOV 70 grados diagonal (estimado, sin ficha). El aro LED rodea el lente: ilumina el encuadre si su haz es al menos tan ancho como el FOV (dato del LED por confirmar).
 
-## 4. Interferencias del nodo
+## 4. Interferencias y recorridos
 
-Ninguna (umbral 0.01 mm³; las caras en contacto dan 0).
-Solapes de modelado de 0.01 mm, no son choques (las tapas del bolsillo entran 0.01 en la pared para unirse, igual que en la modular): M3t tapa bolsillo n / M3s riel +X 1.6 mm³; M3t tapa bolsillo n / M3s riel -X 1.6 mm³; M3t tapa bolsillo s / M3s riel +X 1.6 mm³; M3t tapa bolsillo s / M3s riel -X 1.6 mm³.
-Los M4 del pie cruzan el conducto 4.8 mm por encima del Cat5e.
+Ninguna (umbral 0.01 mm³).
+
+Contratuercas de los PG7 de las paredes contra bandeja, modulos y caja: 0.00 mm³ (la bandeja tiene una muesca en cada extremo). Los M4 del pie pasan 8.4 mm sobre el Cat5e.
 
 ## 5. Verificacion a mano (150 N de manipulacion en una capsula)
 
-- **Riel apoyado en los ganchos (en el agua, caso normal):** voladizo desde el gancho, M = F·(x_capsula − 100) = 19619 N·mm. Seccion del tubo en x = 129 (corte del CAD): A = 412 mm², I = 46051 mm⁴, c = 15.3. σ = 6.5 MPa → FS 6.9 (45, flexion a lo largo de las capas) / 3.4 (22). Flecha de la capsula ≈ 1.4 mm.
-- **Union plana sin contar la caja:** el gancho del otro lado tira hacia abajo (correa) y en x = 0 queda M = 9809 N·mm con traccion arriba. Brazo de los M3 al fondo del riel 39.9: T = 246 N, 61 N por M3 → 12 MPa en el acero (A2-70 del orden de 450) y 3.6 MPa bajo la tuerca en el PETG. La caja, atornillada a las dos mitades con 4 M4, hace de puente: en la realidad la union carga menos.
-- **Izado por el asa fuera del agua (150 N en una capsula):** traccion por inserto M4 del fondo de la caja **254 N** (la modular pedia 251 en Ø200): se prueba con PB8.
-- **Gancho M9s con 75 N:** C como viga curva, M = F·r/2 = 240 N·mm sobre 12 × 4: σ = 7.5 MPa → FS 6.0 (se imprime de costado, carga en el plano de las capas). Tuerca M4 contra los labios de la ranura T: 2.2 MPa. La correa solo toma el levantamiento.
-- **Pie de la capsula:** M = 15810 N·mm desde el frente de la capsula al centro de la silla; con 2 M4 a 30 la mayor fuerza por perno es 602 N y aplasta las 2 paredes del riel (Ø4.2 × 4) a 17.9 MPa → FS 2.5 (45) / **1.2** (22: el riel se imprime con la brida abajo y la carga del perno va a traves de las capas). El alma del pie no se calculo: conviene llevar M5s a SimScale o probarla con la mano antes del agua.
+- **Riel en los ganchos (en el agua):** M = F·|x_capsula − 100| = 7466 N·mm; seccion en x = 142: I = 47979 mm⁴, c = 15.0; σ = 2.3 MPa → FS 19.3 / 9.4 entre capas.
+- **Brida del riel a la caja, izado por el asa:** M = 11441 N·mm sobre 4 insertos M4 con 20 de brazo: **324 N por inserto** (PB8). En el agua, sobre los ganchos: 25 N.
+- **Gancho en C (fusionado) con 75 N:** σ = 7.5 MPa → FS 6.0 / 2.9 entre capas.
+- **Pie de la capsula:** M = 8450 N·mm, 357 N por M4 sobre las paredes de 4 del riel: 10.6 MPa → FS 4.2 / **2.1** entre capas (cumple FS ≥ 2 sin inserto ni pared de 6: la capsula mirando adentro queda bajo la silla y la palanca es corta).
 
 ## 6. Cable
 
-Por camara: 60 + 25 + riel 198 + bucle 77 + 30 + 30 = **420 mm** (requiere prueba SPI a 8 y 4 MHz).
+Por camara: 60 + 25 + conducto 152 (recto, sin curva) + bucle 84 + 30 + 30 = **381 mm** (requiere prueba SPI a 8 y 4 MHz).
 
 ## 7. Chequeos que fallaron
 
@@ -93,5 +79,5 @@ Por camara: 60 + 25 + riel 198 + bucle 77 + 30 + 30 = **420 mm** (requiere prueb
 
 ## 8. Constantes de modulo
 
-- `SLOT_MARGIN` = 2: aire en x entre la silla del pie y la ranura de salida del cable.
-- Tiempo de `simple.py`: 34 s.
+- `PAD_BORE` = 30: agujero del cojin para la llave de vaso del PG7. `POCKET_END` = 8: paredes extremas de los bolsillos con los insertos M3 de M3t. `TIP_HOLE` = 8: salida del cable en la punta. `HOOK_CLR` = 10: aire entre el gancho y la capsula.
+- Tiempo de `simple.py`: 31 s.
