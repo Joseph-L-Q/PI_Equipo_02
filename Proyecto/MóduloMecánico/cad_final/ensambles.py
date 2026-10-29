@@ -401,7 +401,7 @@ def run_case(case):
 # ------------------------------------------------------------------ report
 def report():
     L = ["# Ensambles (Fase D)", "",
-         "Nodo completo sobre la linterna de referencia (esquematica: aro Ø8 en el plano horizontal a la altura del centro de la varilla, "
+         "Nodo completo sobre la linterna de referencia (esquematica: aro Ø8 en el plano horizontal a la altura del centro de la barra de la linterna donde engancha M9, "
          "4 cuerdas Ø4 a 45/135/225/315 grados, red cilindro de 1 mm de espesor y alto D). En Ø100 y Ø200 las cuerdas se "
          "amarran al ojal del asa del nodo; en Ø300 y Ø500 van a un apice sobre el aro. Todos los valores de la linterna son "
          "`estimado / por_verificar` (ver `params.py`, bloque `# ensambles (Fase D)`). Umbral de interferencia: volumen comun > 0.01 mm3.",
@@ -419,7 +419,7 @@ def report():
     for c, r in data.items():
         title = {"100e1": "Ø100 con 1 extension por lado (variante)", "100": "Ø100 (sin extensiones, RAIL_EXT_PER_RING = 0)"}.get(c, f"Ø{c}")
         L += ["", f"## {title}", "",
-              f"Largo ensamblado del riel: {r['rail_L']:.1f} mm (punta a punta, x = ±{r['tip']:.1f}). Centro de la varilla a z = {r['z_rod']:.2f}, fondo del riel z = {r['z_rail']:.2f}.",
+              f"Largo ensamblado del riel: {r['rail_L']:.1f} mm (punta a punta, x = ±{r['tip']:.1f}). Centro de la barra de la linterna (enganche M9) a z = {r['z_rod']:.2f}, fondo del riel z = {r['z_rail']:.2f}.",
               "", "### Interferencias entre piezas del nodo (nominal)", ""]
         if r["pairs"]:
             L += ["| Pieza A | Pieza B | mm3 |", "|---|---|---|"] + [f"| {a} | {b} | {v:.2f} |" for a, b, v in sorted(r["pairs"], key=lambda x: -x[2])]

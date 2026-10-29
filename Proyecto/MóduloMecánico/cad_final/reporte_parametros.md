@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-276 parámetros. Por origen y estado: equipo / confirmado: 56; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 204; fabricante / confirmado: 4; fabricante / por_verificar: 6.
+294 parámetros. Por origen y estado: equipo / confirmado: 61; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 215; fabricante / confirmado: 4; fabricante / por_verificar: 8.
 
 ## 1. Qué cambió (tienen valor anterior)
 
@@ -14,6 +14,8 @@
 | `riel.seccion` | 30 × 25 | 30 | equipo | confirmado | Cuadrado 30 x 30, hueco = conducto inundado |
 | `riel.pared` | 3 | 4 | equipo | confirmado | Prompt v2 |
 | `riel.central_L` | 190 | 140 | equipo | confirmado | M3_riel_central bajo la caja |
+| `riel.varilla_M8` | False | True | equipo | confirmado | Varilla roscada M8 obligatoria en todo el riel, tensada con tuerca + arandela en las dos puntas (29/10, C19) |
+| `riel.camara_rampa` | 45 | 60 | estimado | por_verificar | Techo en rampa hacia el conducto de 22. Con la varilla (C19) la camara crece 12.4 y a 45 grados la rampa tapaba el domo del PG7; el central se imprime boca abajo, asi que la rampa queda como piso |
 | `correa.ancho` | 26 | 25 | equipo | confirmado | Correa textil de seguridad |
 | `carro.largo` | 40 | 60 | estimado | por_verificar | M10 a lo largo del riel: perilla atras (cilindro libre de 34) + 25 de quilla abulonada adelante |
 | `caja.pared` | 5 | 4 | equipo | confirmado | A 1 m la presion no manda (0.0101 MPa) |
@@ -40,19 +42,23 @@
 | `capsula.holgura_lente` | 1 | 0.5 | estimado | por_verificar | Punta del lente a la cara trasera de la ventana |
 | `ventana.apertura` | 22 | 26 | estimado | por_verificar | Apertura libre tras la ventana: deja pasar el anillo LED (Ø30) con 2.2 de hombro para el acrilico |
 | `carro.modo` | tope | deslizante | estimado | por_verificar | deslizante: manga abierta en los dos extremos, perilla abajo en la T, bisagra bajo el riel (+-50). tope: version del agente con placa de tope sobre el eje del riel (solo a ras de la punta) |
+| `riel.paso_extension` | solape | paso_100 | equipo | confirmado | paso_100 (decision 29/10): la lengueta macho sale fuera del cuerpo de 100 (pieza de 115) y cada extension suma 100. solape: la version anterior, extension de 100 solapada 15 (suma 85), sin punta |
+| `riel.varilla_M8_datos` | d_nucleo: 6.47, E: 200000 | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | fabricante | por_verificar | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 |
 
 ## 2. Qué hay que medir o confirmar (estado por_verificar)
 
-### Origen fabricante (6)
+### Origen fabricante (8)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
+| `riel.varilla_arandela` | 24 × 2 × 8.4 | Arandela ancha DIN 9021 M8: Ø ext x espesor x Ø int (reparte el apriete sobre el PETG) |
+| `riel.varilla_tuerca` | 13 × 6.5 | Tuerca M8 DIN 934: entrecaras x alto |
 | `m4.tuerca` | 7 × 3.2 | AF x espesor, DIN 934 |
 | `m4.cabeza` | 7 × 4 | Allen DIN 912: Ø x alto |
 | `m4.cabeza_hex` | 7 × 2.8 | Perno hexagonal DIN 933: AF x alto (perilla) |
 | `m3.tuerca` | 5.5 × 2.4 | AF x espesor, DIN 934 |
 | `camara.cable_incluido` | 300 | Medir el recibido |
-| `riel.varilla_M8_datos` | d_nucleo: 6.47, E: 200000 | Varilla roscada M8 de acero: diametro de nucleo (ISO 898) y modulo; solo para estimar el refuerzo opcional |
+| `riel.varilla_M8_datos` | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 |
 
 ### Origen equipo (5)
 
@@ -64,7 +70,7 @@
 | `boya.rtc_reserva` | 40 × 25 × 15 | DS3231, montaje sin confirmar |
 | `ensamble.cuerda_azimut` | 45 × 135 × 225 × 315 | Cuerdas entre los dos lados de la barra: la barra cruza el aro por el centro, orientada entre dos cuerdas |
 
-### Origen estimado (204)
+### Origen estimado (215)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -78,8 +84,17 @@
 | `petg.sigma_y` | 45 | Macizo, a lo largo de las capas |
 | `petg.sigma_capas` | 22 | Entre capas, mitad del macizo |
 | `aro.varilla_D` | 6 × 8 × 10 × 12 | Varilla real sin medir: un casquillo por diametro |
+| `riel.punta_tapa` | 5 | Pared del extremo de la punta donde apoyan la arandela y la tuerca de la varilla M8; deja abierta la ranura T para meter las tuercas |
 | `riel.ranura_T` | abertura: 4.6, ancho: 8, alto: 3.6 | Para tuerca M4 (AF7 x 3.2); se ajusta con la probeta de la Fase B |
-| `riel.camara_rampa` | 45 | Techo en rampa hacia el conducto de 22 (imprimible) |
+| `riel.varilla_grado` | 8.8 | 8.8 o 4.6 (la que se compre); el calculo se hace con las dos |
+| `riel.varilla_aire_ranura` | 1 | Aire entre el techo del canal de tuercas (nervios) y el refuerzo de la varilla: pasan las tuercas y la punta de un M4 x 14 |
+| `riel.varilla_pared` | 1.2 | Pared del refuerzo alrededor del agujero de 8.5 (minimo de impresion) |
+| `riel.varilla_aire_cable` | 0.5 | Aire entre el refuerzo de la varilla y el Cat5e que va encima |
+| `riel.varilla_tabique` | 3 | Espesor (a lo largo del riel) del tabique con el agujero de 8.5; uno en cada extremo del cuerpo de cada tramo |
+| `riel.varilla_sobrante` | 2 | Rosca que asoma pasada la tuerca en cada punta |
+| `riel.varilla_precarga` | 500 | Tension de apriete; con T = 0.2 d F son unos 0.8 N m. Reapretar tras unos dias (fluencia del PETG) |
+| `riel.varilla_masas` | g_por_mm: 0.32, tuerca: 5, arandela: 6.5 | Varilla M8 de acero cincado o inox, por mm; tuerca y arandela DIN 9021. Pesar |
+| `riel.camara_rampa` | 60 | Techo en rampa hacia el conducto de 22. Con la varilla (C19) la camara crece 12.4 y a 45 grados la rampa tapaba el domo del PG7; el central se imprime boca abajo, asi que la rampa queda como piso |
 | `riel.camara_brida` | 56 × 4 | Brida superior (ancho minimo x espesor): lleva los 4 M4 a la caja y cuelga los bolsillos de la pletina; el ancho real lo fijan los bolsillos |
 | `riel.ventana_cable` | 24 × 14 | OBSOLETO desde la revision del 28/10: el tramo central es una camara de cables (riel.camara_*) |
 | `riel.ranura_T_nervio` | 2 | Nervios que encierran el canal de la tuerca sobre el fondo; la tuerca entra por la punta del tramo |
@@ -95,6 +110,7 @@
 | `perilla.alto` | 12 | Alto de la perilla |
 | `perilla.lobulos` | 8 | Moleteado grueso para guante |
 | `peine.pin_D` | 8 | Pin de prueba |
+| `probeta.inserto_M4` | 40 × 30 | PB8: placa de 40 x 40 con el espesor del fondo de la caja y el refuerzo del inserto; 4 agujeros M4 a 30 para atornillarla a un marco con hueco central y tirar del inserto (29/10) |
 | `probeta.tramo_L` | 40 | PB2/PB3 rail length per segment |
 | `gancho.pared` | 4 | minimum wall around the hook seat |
 | `gancho.labio_alto` | 10 | height of the upper lip that carries the latch pivot |
@@ -136,6 +152,7 @@
 | `caja.base_m4` | 40 × 20 × 40 × -20 × -40 × 20 × -40 × -20 | 4 M4 desde la brida superior de la camara a insertos ciegos en el fondo (no perforan el sello); /y/ = 20: la cabeza (Ø7) queda entre la camara (/y/ 15) y el bolsillo de la pletina; se aprieta desde abajo |
 | `caja.base_m4_boss` | 10 × 6 | Ø x alto del refuerzo interior del inserto M4 |
 | `asa.agarre` | 90 | Ancho de mano con guante |
+| `asa.ojal` | 20 × 10 × 6 | Ojal del cabo sobre el asa: Ø exterior, Ø interior, altura del centro sobre el asa (de cad/parts.py). En Ø100 y Ø200 tambien se amarran ahi las 4 cuerdas de la linterna |
 | `pg7.agujero` | 12.6 | Rosca PG7 12.5 |
 | `pg7.contratuerca_AF` | 15 | Comprar y medir |
 | `pg7.alto_interior` | 9 | Rosca que asoma + contratuerca por dentro |
@@ -231,8 +248,8 @@
 | `ensamble.tol_interferencia` | 0.01 | Volumen comun (mm3) por encima del cual se marca interferencia |
 | `ensamble.barrido_s` | 0 × 50 × 100 | Posiciones del carro (punta del riel pasada la manga) del barrido de la bisagra |
 | `ensamble.barrido_paso` | 10 | Paso de inclinacion (grados) del barrido de la bisagra, de 0 a 90 |
-| `riel.paso_extension` | solape | solape: cada extension de 100 se monta solapando 15 con la anterior (suma 85, riel.py actual). paso_100: la lengüeta macho sale fuera del cuerpo de 100 (pieza de 115) y cada extension suma 100. Solo lo usan largo_riel.py y verificacion.py; riel.py no tiene aun la variante paso_100 |
-| `riel.regla_extensiones` | equipo | equipo: RAIL_EXT_PER_RING. auto: el menor n con la punta >= lo que piden gancho + carro (largo_riel.py) |
+| `ensamble.cuerda_aire_borde` | 0.5 | Aire del modelo entre la cuerda y el borde de la caja por donde la rodea (en la realidad apoya) |
+| `ensamble.linterna_peso_agua_N` | 30 | Peso en el agua de la linterna (aro, red, cuerdas y carga) que cuelga del asa; pesarla |
 | `riel.holgura_gancho_carro` | 1 | Aire a lo largo del riel entre la brida del gancho y la manga del carro |
 | `boya.masas` | celda_18650: 47, portabaterias: 25, pcb_heltec: 35, waveshare: 15, rtc: 8, panel: 350, antena: 20, cables_fusible: 40, prensaestopas: 20, tornilleria: 60 | Masas de componentes en g, tipicas; pesar cada una. Celda 18650 ~47 g |
 | `boya.sma_pasamuros_g` | 5 | Opcional, solo suma si boya.sma_pasamuros es True |

@@ -155,7 +155,7 @@ def central(lay, c):
         for sy in (1, -1):   # thickened walls: duct 2 * LAP_HALF wide
             ya, yb = sorted((sy * LAP_HALF, sy * CON_HALF))
             body = body.union(_box(xa, xb, ya, yb, z0 + W - 0.01, z0 + S - W + 0.01))
-        body = body.cut(_box(xa, xb + sg * 0.1, -S / 2 - 1, S / 2 + 1, z0 + S, -ft))   # access window above the rail top
+        body = body.cut(_box(xa - 0.1, xb + 0.1, -S / 2 - 1, S / 2 + 1, z0 + S, -ft))   # access window above the rail top
         body = _female_cuts(body, xc, z0, xa - 0.1, xb + 0.1)
         xa, xb = sorted((sg * (xj - 0.1 - ROD_BULKHEAD_T), sg * (xj - 0.1)))     # 0.1 = edge of the female cut
         body = _bulkhead(body, z0, xa, xb, CON_HALF)
@@ -231,7 +231,8 @@ def rod_length(n):
 
 
 # ------------------------------------------------------------------ run
-ORIENT = {"M3_riel_central": ("X", 180), "M3_riel_ext": ("X", 90), "M3_riel_punta": ("X", 90)}
+ORIENT = {"M3_riel_central": ("X", 180), "M3_riel_ext": ("X", 90), "M3_riel_punta": ("X", 90),
+          "M3_tapa_bolsillo": None}
 
 
 def vol(s):
@@ -244,7 +245,8 @@ def main():
     (OUT / "step").mkdir(exist_ok=True)
     lay = layout.build(floors=1)
     c = camara.dims(lay)
-    builds = {"M3_riel_central": lambda: central(lay, c), "M3_riel_ext": lambda: ext(c)}
+    builds = {"M3_riel_central": lambda: central(lay, c), "M3_riel_ext": lambda: ext(c),
+              "M3_tapa_bolsillo": lambda: camara.chamber_solid(lay, PLATE_POCKET_LAYERS)["tapa_bolsillo_n"]}
     if PASO_100:
         builds["M3_riel_punta"] = lambda: punta(c)
     shapes, rows, fails = {}, [], []
@@ -270,7 +272,7 @@ def main():
         print(f"{stem:18s} brep_ok={bc['ok']} {bc} wt={mc['watertight']} bodies={mc['bodies']} fits={mc['fits_bed']} "
               f"vol={mc['vol_cm3']:.2f} bbox={tuple(round(b, 1) for b in mc['bbox'])} oh={mc['overhang_mm2']:.0f} "
               f"p1={p1:.2f} min={pmin:.2f}")
-    if len(shapes) < len(builds):
+    if "M3_tapa_bolsillo" not in shapes or len(shapes) < len(builds):
         raise SystemExit("STOP: pieza(s) fallaron: " + "; ".join(fails))
 
     cen, ex = shapes["M3_riel_central"], shapes["M3_riel_ext"]
@@ -362,7 +364,7 @@ def write_report(rows, inter, free, worst, fails, c, lanes):
         bb = " x ".join(f"{b:.1f}" for b in mc["bbox"])
         flag = "" if p1 >= MIN_WALL else " (BAJO EL MINIMO)"
         L.append(f"| {stem} | {stem}.stl | {'ok' if bc['ok'] else 'FALLA'} | {'si' if mc['watertight'] else 'NO'} | "
-                 f"{mc['bodies']} | {bb} (X {o[1]}) | {mc['overhang_mm2']:.0f} | {p1:.2f}{flag} (min absoluto {pmin:.2f}) | "
+                 f"{mc['bodies']} | {bb} ({f'X {o[1]}' if o else 'plana'}) | {mc['overhang_mm2']:.0f} | {p1:.2f}{flag} (min absoluto {pmin:.2f}) | "
                  f"{v * PETG_DENSITY:.1f} | {v:.2f} |")
     L += ["", "## Interferencias de ensamble", ""]
     for k, v in inter.items():
@@ -384,6 +386,8 @@ def write_report(rows, inter, free, worst, fails, c, lanes):
     L += ["## Orientacion de impresion", "",
           "- M3_riel_central: brida abajo (X 180). La ventana de acceso sobre la union evita puentes largos; el voladizo de la tabla es el de los techos de la camara y de los bolsillos de lastre, con soportes locales. "
           "El central es la pieza que mas soporte necesita.",
+          "- M3_tapa_bolsillo (2 por nodo): plana; cierra por abajo el bolsillo de las pletinas de inox.",
+          "- M3_riel_punta: acostada sobre una cara lateral (X 90), como la extension.",
           "- M3_riel_ext: acostada sobre una cara lateral (X 90), como las probetas PB2/PB3. La llave de cola de milano y la ranura T quedan de perfil; la ranura de salida del cable (+Y) queda en la cara lateral.", "",
           "## Orden de montaje", "",
           "1. Cargar las tuercas M4 en la ranura T por las puntas ANTES de unir una extension: en el central la ranura queda abierta en las caras |x| = 55 (frente a la media madera vacia); en la extension queda abierta por la punta macho.",

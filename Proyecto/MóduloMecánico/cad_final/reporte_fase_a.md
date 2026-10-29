@@ -84,6 +84,7 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `peine.holguras` | nuevo | 0.2 × 0.3 × 0.4 × 0.5 | Peine de holguras de la Fase B | equipo | confirmado |
 | `peine.pin_D` | nuevo | 8 | Pin de prueba | estimado | por_verificar |
 | `probeta.junta` | nuevo | 60 × 60 | Cuadrado de 60 x 60 con ranura y 4 M3 | equipo | confirmado |
+| `probeta.inserto_M4` | nuevo | 40 × 30 | PB8: placa de 40 x 40 con el espesor del fondo de la caja y el refuerzo del inserto; 4 agujeros M4 a 30 para atornillarla a un marco con hueco central y tirar del inserto (29/10) | estimado | por_verificar |
 | `probeta.tramo_L` | nuevo | 40 | PB2/PB3 rail length per segment | estimado | por_verificar |
 | `gancho.pared` | nuevo | 4 | minimum wall around the hook seat | estimado | por_verificar |
 | `gancho.labio_alto` | nuevo | 10 | height of the upper lip that carries the latch pivot | estimado | por_verificar |
@@ -132,6 +133,7 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `caja.base_m4_boss` | nuevo | 10 × 6 | Ø x alto del refuerzo interior del inserto M4 | estimado | por_verificar |
 | `asa.alto` | 42 | 42 | Asa con ojal para el cabo | equipo | confirmado |
 | `asa.agarre` | 90 | 90 | Ancho de mano con guante | estimado | por_verificar |
+| `asa.ojal` | nuevo | 20 × 10 × 6 | Ojal del cabo sobre el asa: Ø exterior, Ø interior, altura del centro sobre el asa (de cad/parts.py). En Ø100 y Ø200 tambien se amarran ahi las 4 cuerdas de la linterna | estimado | por_verificar |
 | `pg7.agujero` | 12.6 | 12.6 | Rosca PG7 12.5 | estimado | por_verificar |
 | `pg7.contratuerca_AF` | 15 | 15 | Comprar y medir | estimado | por_verificar |
 | `pg7.alto_interior` | nuevo | 9 | Rosca que asoma + contratuerca por dentro | estimado | por_verificar |
@@ -254,6 +256,7 @@ No editar a mano: se regenera. mm, cm³, g. Todo valor `estimado` sigue por veri
 | `riel.paso_extension` | solape | paso_100 | paso_100 (decision 29/10): la lengueta macho sale fuera del cuerpo de 100 (pieza de 115) y cada extension suma 100. solape: la version anterior, extension de 100 solapada 15 (suma 85), sin punta | equipo | confirmado |
 | `riel.regla_extensiones` | nuevo | equipo | equipo: RAIL_EXT_PER_RING. auto: el menor n con la punta >= lo que piden gancho + carro (largo_riel.py) | equipo | confirmado |
 | `ensamble.cuerdas_al_asa` | nuevo | 100 × 200 | Aros en los que las cuerdas de la linterna se amarran al ojal del asa del nodo (la linterna cuelga del nodo); en los demas van al apice sobre el aro (29/10) | equipo | confirmado |
+| `ensamble.cuerda_aire_borde` | nuevo | 0.5 | Aire del modelo entre la cuerda y el borde de la caja por donde la rodea (en la realidad apoya) | estimado | por_verificar |
 | `ensamble.linterna_peso_agua_N` | nuevo | 30 | Peso en el agua de la linterna (aro, red, cuerdas y carga) que cuelga del asa; pesarla | estimado | por_verificar |
 | `riel.holgura_gancho_carro` | nuevo | 1 | Aire a lo largo del riel entre la brida del gancho y la manga del carro | estimado | por_verificar |
 | `riel.varilla_M8_datos` | d_nucleo: 6.47, E: 200000 | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 | fabricante | por_verificar |

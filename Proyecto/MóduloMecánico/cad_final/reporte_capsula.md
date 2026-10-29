@@ -43,7 +43,7 @@ Ajuste de las maquetas (mm3, debe ser 0): camara-cuerpo 0.00; camara-tapa 0.00; 
 - PETG M4+M5+M6: 71.3 cm3.
 - Aire encerrado (cavidad menos tubo y radios): 54.3 cm3.
 - Ventana: 2.12 cm3.
-- Volumen desplazado total: 127.8 cm3 (antes 154).
-- Masa con M4 y M5 al 100 % y M6 al 40 % (piel 1.2): M4 58.4 + M5 29.8 + M6 2.4 + ventana 2.5 = **93.1 g** (antes 104 g). Con M6 al 100 %: 93.1 g.
+- Volumen desplazado total: 127.8 cm3 (antes 127.8).
+- Masa con M4 y M5 al 100 % y M6 al 40 % (piel 1.2): M4 58.4 + M5 29.8 + M6 2.4 + ventana 2.5 = **93.1 g** (antes 93.1 g). Con M6 al 100 %: 93.1 g.
 - Con contenido (CAPSULE_CONTENT_G) no incluido. Empuje: 131.0 g contra 93.1 g de la pieza.
 - M10 aparte: 69.2 g al 100 %, 49.2 g al 40 %.
