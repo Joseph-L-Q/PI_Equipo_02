@@ -104,9 +104,11 @@ def rail_half(lay, c, layers):
 
 
 # ------------------------------------------------------------------ hook M9s
-def hook():
+def hook(strap=None):
     """M9s in its own frame: ring rod centre at the origin, rod along Y, rail bottom at z = HOOK_DROP. Open C seat
-    (drops onto the rod), web with the strap slot along X, flange with 2 M4 to nuts in the T-slot."""
+    (drops onto the rod), web with the strap slot along X, flange with 2 M4 to nuts in the T-slot. strap = False
+    (gancho.correa): no slot and a flared mouth, so the node lifts off the ring without undoing anything."""
+    strap = P.SIMPLE_HOOK_STRAP if strap is None else strap
     clr, wall, seat = P.SIMPLE_HOOK_C
     ri = P.RING_SECTION / 2 + clr
     ro = ri + wall
@@ -120,11 +122,48 @@ def hook():
     h = h.union(_cyl((0, -seat / 2, 0), (0, 1, 0), ro, seat))
     h = h.cut(_cyl((0, -wy - 1, 0), (0, 1, 0), ri, 2 * wy + 2))
     h = h.cut(_box(-ri, ri, -wy - 1, wy + 1, -ro - 1, 0))
-    zs = (ro + zt - fl_t) / 2
-    h = h.cut(_box(-wx - 1, wx + 1, -P.STRAP_W / 2, P.STRAP_W / 2, zs - P.STRAP_SLOT_T / 2, zs + P.STRAP_SLOT_T / 2))
+    if strap:
+        zs = strap_z()
+        h = h.cut(_box(-wx - 1, wx + 1, -P.STRAP_W / 2, P.STRAP_W / 2, zs - P.STRAP_SLOT_T / 2, zs + P.STRAP_SLOT_T / 2))
+    else:
+        flare = ri + 0.6 * wall                 # mouth opens from ri at the rod centre to this at the tips
+        h = h.cut(cq.Workplane("XZ").workplane(offset=-wy - 1).polyline(
+            [(-ri, 0.01), (ri, 0.01), (flare, -ro - 1), (-flare, -ro - 1)]).close().extrude(2 * wy + 2))
     for x in (-P.SIMPLE_HOOK_BOLT_X, P.SIMPLE_HOOK_BOLT_X):
         h = h.cut(_cyl((x, 0, zt - fl_t - 1), (0, 0, 1), P.M4_CLEAR / 2, fl_t + 2))
     return h
+
+
+def strap_z():
+    clr, wall, _ = P.SIMPLE_HOOK_C
+    return (P.RING_SECTION / 2 + clr + wall + P.HOOK_DROP - P.HOOK_FLANGE[1]) / 2
+
+
+def strap_band(t=1.5):
+    """Strap loop in the hook frame (render only): through the web slot, down both sides of the C, under the rod."""
+    clr, wall, _ = P.SIMPLE_HOOK_C
+    ro = P.RING_SECTION / 2 + clr + wall
+    zs, w = strap_z(), P.STRAP_W / 2
+    xo, zb = ro + 1.0 + t, -ro - 1.0 - t
+    return _box(-xo, xo, -w, w, zb, zs + t / 2).cut(_box(-xo + t, xo - t, -w - 1, w + 1, zb + t, zs - t / 2))
+
+
+def assemble(an, ch, half, hk, m5s, cover, cp, ax, az, z_rod, plates, strap=False):
+    """name -> (shape, group) of the whole node in the box frame; strap=True adds the strap loops (render only)."""
+    cap_w = {kk: place_cap(cp[kk], ax, az) for kk in ("M4", "M6", "M7")}
+    node = {"M1 caja": (an["m1"], "caja"), "M2 tapa": (an["m2"], "caja")}
+    node.update({f"M11 {kk}": (t, "caja") for kk, t in an["trays"].items()})
+    node.update({"M3t tapa bolsillo n": (cover, "riel"), "M3t tapa bolsillo s": (solid(ch["tapa_bolsillo_s"]), "riel")})
+    node.update({f"pletina {i + 1}": (p, "lastre") for i, p in enumerate(plates)})
+    for side, sg in ((1, "+X"), (-1, "-X")):
+        node[f"M3s riel {sg}"] = (put(half, side), "riel")
+        node[f"M9s gancho {sg}"] = (put(hk.translate(cq.Vector(R_RING, 0, z_rod)), side), "gancho" + sg)
+        if strap:
+            node[f"correa {sg}"] = (put(solid(strap_band()).translate(cq.Vector(R_RING, 0, z_rod)), side), "correa")
+        node[f"M5s tapa con pie {sg}"] = (put(m5s, side), "capsula" + sg)
+        for kk, nm in (("M4", "M4 capsula"), ("M6", "M6 bisel"), ("M7", "M7 ventana")):
+            node[f"{nm} {sg}"] = (put(cap_w[kk], side), "capsula" + sg)
+    return node
 
 
 # ------------------------------------------------------------------ capsule with the fixed foot (M5s)
@@ -408,17 +447,7 @@ def main():
 
     # node in the box frame
     plates = [solid(p) for p in camara.plates_solid(lay, k)]
-    cap_w = {kk: place_cap(cp[kk], ax, az) for kk in ("M4", "M6", "M7")}
-    node = {"M1 caja": (an["m1"], "caja"), "M2 tapa": (an["m2"], "caja")}
-    node.update({f"M11 {kk}": (t, "caja") for kk, t in an["trays"].items()})
-    node.update({"M3t tapa bolsillo n": (cover, "riel"), "M3t tapa bolsillo s": (solid(ch["tapa_bolsillo_s"]), "riel")})
-    node.update({f"pletina {i + 1}": (p, "lastre") for i, p in enumerate(plates)})
-    for side, sg in ((1, "+X"), (-1, "-X")):
-        node[f"M3s riel {sg}"] = (put(half, side), "riel")
-        node[f"M9s gancho {sg}"] = (put(hk.translate(cq.Vector(R_RING, 0, z_rod)), side), "gancho" + sg)
-        node[f"M5s tapa con pie {sg}"] = (put(m5s, side), "capsula" + sg)
-        for kk, nm in (("M4", "M4 capsula"), ("M6", "M6 bisel"), ("M7", "M7 ventana")):
-            node[f"{nm} {sg}"] = (put(cap_w[kk], side), "capsula" + sg)
+    node = assemble(an, ch, half, hk, m5s, cover, cp, ax, az, z_rod, plates)
 
     # interferences inside the node (touching faces give ~0)
     bbs = {kk: E.bbox(v[0]) for kk, v in node.items()}

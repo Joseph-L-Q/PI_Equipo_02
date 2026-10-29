@@ -535,6 +535,9 @@ RING_SECTION = p("aro.seccion", 8.0, EST, VER, "Diametro de la varilla del aro Ã
 SIMPLE_HOOK_C = p("gancho.c", (0.4, 4.0, 12.0), EST, VER,
                   "M9s: holgura sobre la varilla, pared de la C y largo del asiento sobre la varilla (la curva del aro "
                   "Ã˜200 corre la varilla 0.18 mm en 12, 1.4 mm en 33)")
+SIMPLE_HOOK_STRAP = p("gancho.correa", True, "equipo", OK,
+                      "M9s con ranura de correa (la correa evita que el nodo se levante del aro). False: sin ranura y con "
+                      "la boca abocinada, se saca levantando (variante V3)")
 SIMPLE_HOOK_BOLT_X = p("gancho.m4_x", 15.0, EST, VER, "|x| de los 2 M4 de la brida de M9s a tuercas en la ranura T")
 SIMPLE_CAP_TILT = p("capsula.angulo", 30.0, EST, VER,
                     "Inclinacion fija de las capsulas hacia abajo (version simple); se cambia reimprimiendo solo M5s")

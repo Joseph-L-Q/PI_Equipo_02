@@ -32,7 +32,8 @@ def to_edges(shape):
     return pv.PolyData(np.array(pts), lines=np.hstack(lines))
 
 
-def render(items, out, view="iso", title=None):
+def render(items, out, view="iso", title=None, frame=None):
+    """frame: optional points (N x 3) to fit the camera on instead of the items, so several renders share one framing."""
     pl = pv.Plotter(off_screen=True, window_size=SIZE)
     pl.set_background("white")
     pl.enable_anti_aliasing("ssaa")
@@ -63,7 +64,7 @@ def render(items, out, view="iso", title=None):
     right = np.cross(up, d)
     right /= np.linalg.norm(right)
     up = np.cross(d, right)
-    pts = np.vstack(all_pts)
+    pts = np.vstack(all_pts) if frame is None else np.asarray(frame, float)
     u, v = pts @ right, pts @ up
     centre = right * (u.min() + u.max()) / 2 + up * (v.min() + v.max()) / 2
     pl.camera_position = [tuple(centre + d * 3000), tuple(centre), tuple(up)]

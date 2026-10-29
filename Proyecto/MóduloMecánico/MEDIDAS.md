@@ -9,7 +9,7 @@
 - **decisión del equipo**: lo decidimos nosotros (por ejemplo, el largo del riel).
 - **estimado**: es una suposición o una propuesta de diseño; se confirma midiendo o con una probeta.
 
-Hoy hay 324 medidas en `params.py`: 0 medidas a mano y 248 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
+Hoy hay 325 medidas en `params.py`: 0 medidas a mano y 248 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
 
 ## 1. Medidas por confirmar, de la más importante a la menos
 

@@ -47,6 +47,24 @@ todo `capsula.angulo`, `aro.seccion`, `lastre.pletinas`, `separador.*`, `apice.a
    - Después, **a mano en Onshape**: clic derecho en la pestaña del Part Studio de esa pieza → **Update...** y eliges el
      mismo STEP. La API no tiene ese paso; sin él el Part Studio sigue con la forma vieja.
 
+## Subir los STEP a Drive (rclone)
+
+Una vez por computador: instalar (`winget install -e --id Rclone.Rclone`, después cerrar y abrir la terminal) y
+crear el remoto `lgdrive`, que apunta a la carpeta `LanternGuard_CAD` del Drive. Abre el navegador para autorizar:
+
+```
+rclone config create lgdrive drive scope=drive root_folder_id=1T8cv6NW7W2cESde3SLp9HgS4VRJMWwCO
+```
+
+Cada vez que cambian STEP de la versión simple (desde `Proyecto/MóduloMecánico`):
+
+```
+rclone copy salida/simple/step lgdrive:01_Onshape_importar/simple --progress
+```
+
+`copy` agrega y reemplaza los archivos que cambiaron, nunca borra nada en Drive (no usar `sync` ni `--delete`). El
+ensamble va aparte: `rclone copyto salida/simple/ensamble_simple_D200.step lgdrive:01_Onshape_importar/simple/ENSAMBLE_simple_D200.step`.
+
 ## Los cambios más comunes
 
 | Quiero... | Nombre en `params.py` | Qué se mueve |

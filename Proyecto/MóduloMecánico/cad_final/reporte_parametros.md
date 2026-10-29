@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-324 parámetros. Por origen y estado: equipo / confirmado: 71; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 234; fabricante / confirmado: 4; fabricante / por_verificar: 9.
+325 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 5; estimado / confirmado: 1; estimado / por_verificar: 234; fabricante / confirmado: 4; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
