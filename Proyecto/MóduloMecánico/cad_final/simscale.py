@@ -14,7 +14,7 @@ import capsula
 import gancho
 import layout
 import riel
-from checks import brep_check, sanitize
+from checks import brep_check, fix_step_stamp, sanitize
 from params import (HINGE_DISC_D, HINGE_EAR_T, HINGE_GAP, HINGE_TEETH_RIN, HINGE_TOOTH_H, LATCH_BUMP, RAIL_CENTRAL_L,
                     RAIL_EXT_L)
 
@@ -125,6 +125,7 @@ def export(name, parts, log):
     comp = cq.Compound.makeCompound(list(parts.values()))
     path = OUT / f"{name}.step"
     cq.exporters.export(cq.Workplane().add(comp), str(path))
+    fix_step_stamp(path)
     back = cq.importers.importStep(str(path)).val()
     v0, v1 = comp.Volume(), back.Volume()
     n_back = len(back.Solids())

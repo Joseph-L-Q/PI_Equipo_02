@@ -36,12 +36,27 @@ def brep_check(shape):
     return c
 
 
+STEP_STAMP = "2026-01-01T00:00:00"   # fixed FILE_NAME time stamp: same model, same bytes, clean git status
+
+
+def fix_step_stamp(path):
+    """Replace the export time in the STEP header (FILE_NAME second field) by STEP_STAMP."""
+    import re
+    from pathlib import Path
+    p = Path(path)
+    txt = p.read_text(encoding="utf-8", errors="surrogateescape")
+    new, n = re.subn(r"(FILE_NAME\('[^']*',')[^']*(')", rf"\g<1>{STEP_STAMP}\g<2>", txt, count=1)
+    if n:
+        p.write_text(new, encoding="utf-8", errors="surrogateescape", newline="")
+
+
 def export_part(shape, stem, stl_dir, step_dir=None):
     """STL (and STEP if step_dir) of an already sanitized shape; the STEP must read back as the same solid."""
     out = cq.Workplane().add(shape)
     cq.exporters.export(out, str(stl_dir / f"{stem}.stl"), tolerance=0.05, angularTolerance=0.2)
     if step_dir is not None:
         cq.exporters.export(out, str(step_dir / f"{stem}.step"))
+        fix_step_stamp(step_dir / f"{stem}.step")
         back = cq.importers.importStep(str(step_dir / f"{stem}.step")).val()
         if not (BRepCheck_Analyzer(back.wrapped, True).IsValid()
                 and abs(back.Volume() - shape.Volume()) < 1e-3 * shape.Volume()):
