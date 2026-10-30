@@ -36,6 +36,12 @@ en `params.py`, se corre `--rapido` (1.5 min) y se reexporta **antes** de mandar
 **Total (a): 1185 g, 39.9 h** (con las cantidades; 13 placas sueltas). Sin M5s: 992 g, 33.5 h.
 No se imprime: **M7 ventana**, acrílico de 3 mm comprado y cortado (2 discos Ø30).
 
+**Probetas que no van hoy** (están en `salida/probetas/`; misma configuración, una por placa): PB1_garra (9.2 g, 0.49 h),
+M13_casquillo_D6/D8/D10/D12 (1.0 a 2.0 g, 0.35 h c/u), M14_pestillo (1.0 g, 0.18 h), M12_perilla (5.3 g, 0.39 h),
+PB2_ranura_T (19.9 g, 0.77 h), PB3_macho y PB3_hembra (18.4 y 16.8 g, 0.79 h c/u). Son del riel modular (garra con
+casquillo, pestillo, perilla, ranura T y unión de tramos), que la versión simple no usa. Si el equipo quiere probar el
+ajuste del gancho sobre la varilla real, eso va con el grupo (b).
+
 ## (b) Espera medida: `aro.seccion`
 
 Hoy `aro.seccion` = 8 mm, estimado. Hay que medir con calibrador la varilla del aro Ø200 real (MEDIDAS.md, fila 1),
@@ -52,8 +58,10 @@ Orca un modificador de 40 % en el tramo del riel: así pesa y tarda menos que lo
 ## (c) No imprimir aún: boya simple
 
 Falta la decisión de peso y flotación. Nodo + boya = **5168 g contra la exigencia de 3 kg** (REPORTE_CAD §10.4). Si la
-decisión es bajar el casco y la tapa a 40 % o cambiar los flotadores, cambian las piezas. Gramos de la bitácora
-(volumen × densidad, sin slicer) y horas a 15 g/h, los dos **estimados**:
+decisión es bajar el casco y la tapa a 40 % o cambiar los flotadores, cambian las piezas. La tabla trae los gramos de
+la bitácora (volumen × densidad) y las horas a 15 g/h, el valor por defecto de la bitácora. Los dos son
+**estimados** y las horas quedan altas: en el nodo, el slicer dio unos 29 g/h. La única corrida de slicer de la boya
+(REPORTE_CAD §10.5, en la laptop) dio **2179 g / 72.5 h** en total:
 
 | STL (en `salida/simple/boya/stl/`) | Cant. | Orientación | Soportes | Relleno | g c/u | h c/u |
 |---|---|---|---|---|---|---|
@@ -64,7 +72,7 @@ decisión es bajar el casco y la tapa a 40 % o cambiar los flotadores, cambian l
 | `B5s_flotador.stl` | 4 | Y+90 | sí | 100 % | 116 | 7.7 |
 | `B6s_ojal.stl` | 1 | X180 | no | 100 % | 11 | 0.7 |
 
-Total (c): 1943 g, ~130 h estimadas.
+Total (c): 1943 g y ~130 h según la bitácora; según el slicer de §10.5, 2179 g y 72.5 h.
 
 ## Si cambia una medida
 

@@ -29,3 +29,17 @@ Nada se subió a GitHub: los commits están solo en la rama local `yoichi/diseno
 | 2026-10-05 | Taller 03.1 | Columna CBSA vacía en el CSV | El archivo masivo de la EPA no trae el código numérico; no se inventó | Rellenarla a mano | Completar desde la tabla CBSA de la EPA |
 | 2026-10-05 | Taller 04 | TrashNet vidrio/plástico a 144 × 192 en CPU (~10 min) | Sin GPU; con el tamaño original pasaba de 20 min | Imagen completa | Cambiar el tamaño en el notebook y reejecutar |
 | 2026-10-05 | Taller 05 | Act. 05 (LED desde la web) documentada con Ubidots | La consigna no fija plataforma | Arduino Cloud o ThingSpeak | Editar la sección Act. 05 del readme y el sketch |
+
+## Sesión del 30 oct 2026 (PC de casa: entorno, slicer y lista para imprimir)
+
+| Fecha | Tarea | Qué se eligió | Por qué | Qué se descartó | Cómo revertir |
+|---|---|---|---|---|---|
+| 2026-10-30 | Perfiles de Orca | Los 3 JSON de `cad_final/orca/` aplanados (inherits + include) desde `resources/profiles/BBL/` del repo de OrcaSlicer, commit 304924a | La nightly portable trae los presets BBL empaquetados en `BBL.opc`, no en disco, y la 2.4.2 no corta por CLI | Exportarlos desde la GUI (no hay GUI configurada en esta PC) | Reemplazar los JSON por los exportados de la laptop |
+| 2026-10-30 | Filamento | El preset `Bambu PETG Basic @BBL X1C` | Es el que Bambu usa para la P1P 0.4 (su lista `compatible_printers` la incluye); no existe uno "@BBL P1P" | Generic PETG | Cambiar el nombre en `jobs` del script de aplanado y regenerar |
+| 2026-10-30 | slicer.py | Además de `read_gcode()`: las piezas salen de `resultados.json` y cada una se corta con su relleno (el mixto de M3s al mayor, 100 %) | Los nombres fijos eran de la V1 (`M1_caja_cuerpo`, `M3s_riel_mitad`, `M9s_gancho`) y `--slicer` fallaba; REPORTE_CAD §10.5 ya decía "el relleno de cada pieza" | 20 % para todas (el nodo pasa de 1307 g en §10.5 a 1358 g) | `git revert` del commit 20ea93d en `slicer.py` |
+| 2026-10-30 | Lista de impresión | En (a), M11 bandejas (2) y M3t tapas del bolsillo (2), además de lo pedido | No dependen de `aro.seccion` ni de la flotación | Dejarlas para después | Sacarlas de `salida/imprimir_hoy/` |
+| 2026-10-30 | Lista de impresión | M5s en (a) pero al final y **condicional** | Trae fijo `capsula.angulo` = 30°, y §10.3 deja abierto pasar a 70° | Meterla en (b) | Mover la fila en el README |
+| 2026-10-30 | Lista de impresión | Solo PB6, PB7 y PB8 en (a); las otras 10 probetas, fuera | Son del riel modular; PB7 y PB8 calibran holgura e insertos que usan M1, M2 y M4, por eso van primero | Imprimir las 15 | Agregar sus STL a la carpeta |
+| 2026-10-30 | Regeneración | Los STEP, STL, PNG y JSON que reescribieron `--rapido`, `boya_simple.py`, `sistema.py` y `--fem` se devolvieron al commit | Las diferencias eran fin de línea, teselado, 1e-5 en números y el tiempo de corrida | Hacer commit del ruido | Volver a correr los mismos comandos |
+| 2026-10-30 | Pendiente | `--rapido` con `version = "simple"` no corre `boya_simple.py` ni `sistema.py`; se corrieron a mano, sin fallas (5168 g, igual que §10.4) | Proponer agregarlos al plan `rapido` de `build.py`; no se hizo | — | — |
+| 2026-10-30 | Pendiente | OrcaSlicer deja un `00000.log` en la carpeta desde donde se corre `--slicer` | Proponer `00000.log` en `.gitignore`; no se agregó | — | — |
