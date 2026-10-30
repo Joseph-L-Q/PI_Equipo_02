@@ -1,13 +1,13 @@
 # BOM y bitacora del prototipo simple (generado por `bitacora.py`)
 
-No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `salida/simple/BITACORA.xlsx`. Masa por pieza = la del calculo de flotacion (piel + relleno de cada pieza: 100 % cajas estancas, tapas con junta y ganchos; 40 % riel, bandejas y bisel). Parametros de costo (estimados): densidad 1.27 g/cm³, 15 g/h, 90 soles/kg. Fuente: estimado (sin slicer todavia).
+No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `salida/simple/BITACORA.xlsx`. Masa por pieza = la del calculo de flotacion (piel + relleno de cada pieza: 100 % cajas estancas, tapas con junta y ganchos; 40 % riel, bandejas y bisel). Parametros de costo (estimados): densidad 1.27 g/cm³, 15 g/h, 90 soles/kg. Fuente: slicer (OrcaSlicer) en el nodo.
 
 ## Resumen
 
 | Grupo | Masa impresa g | Horas | Costo filamento S/ |
 |---|---|---|---|
-| nodo simple | 1228 | 81.9 | 110.52 |
-| linterna de prueba | 44 | 2.9 | 3.93 |
+| nodo simple | 1358 | 47.0 | 122.26 |
+| linterna de prueba | 37 | 1.6 | 3.33 |
 | boya simple | 1943 | 129.5 | 174.89 |
 | modular D200 | 1229 | 82.0 | 110.64 |
 
@@ -17,16 +17,16 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 
 | Pieza | Grupo | Cant. | X × Y × Z mm | Volumen cm³ | Orientacion | Soportes | Relleno | Masa por pieza g | Fuente |
 |---|---|---|---|---|---|---|---|---|---|
-| M1s_caja_cuerpo | nodo simple | 1 | 147.0 × 146.0 × 102.5 | 349.4 | X180 | si | 100 % | 444 | estimado |
-| M2_caja_tapa | nodo simple | 1 | 63.0 × 146.0 × 147.0 | 136.0 | Y+90 | si | 100 % | 173 | estimado |
-| M3s_riel_gancho | nodo simple | 2 | 141.5 × 77.2 × 50.0 | 85.3 | X+90 | si | riel 40 %, gancho 100 % | 89 | estimado |
-| M3t_tapa_bolsillo | nodo simple | 2 | 117.0 × 32.0 × 3.0 | 11.1 | X180 | no | 100 % | 14 | estimado |
-| M5s_capsula_tapa_pie | nodo simple | 2 | 59.2 × 64.0 × 95.9 | 76.0 | sin girar | si | 100 % | 97 | estimado |
-| M11_bandeja | nodo simple | 1 | 115.0 × 114.0 × 30.0 | 39.9 | sin girar | no | 40 % | 46 | estimado |
-| M11_bandeja_sup | nodo simple | 1 | 115.0 × 114.0 × 3.0 | 38.1 | sin girar | no | 40 % | 44 | estimado |
-| M4_capsula_cuerpo | nodo simple | 2 | 64.0 × 64.0 × 44.0 | 46.0 | Y-90 | si | 100 % | 58 | estimado |
-| M6_capsula_bisel | nodo simple | 2 | 42.0 × 42.0 × 2.5 | 1.9 | Y+90 | no | 40 % | 2 | estimado |
-| LR1_separador | linterna de prueba | 1 | 211.9 × 211.9 × 6.0 | 44.9 | sin girar | no | 40 % | 44 | estimado |
+| M1s_caja_cuerpo | nodo simple | 1 | 147.0 × 146.0 × 102.5 | 349.4 | X180 | si | 100 % | 498 | slicer |
+| M2_caja_tapa | nodo simple | 1 | 63.0 × 146.0 × 147.0 | 136.0 | Y+90 | si | 100 % | 181 | slicer |
+| M3s_riel_gancho | nodo simple | 2 | 141.5 × 79.4 × 50.0 | 92.3 | X+90 | si | riel 40 %, gancho 100 % | 132 | slicer |
+| M3t_tapa_bolsillo | nodo simple | 2 | 117.0 × 32.0 × 3.0 | 11.1 | X180 | no | 100 % | 13 | slicer |
+| M5s_capsula_tapa_pie | nodo simple | 2 | 55.2 × 64.0 × 95.9 | 74.1 | sin girar | si | 100 % | 96 | slicer |
+| M11_bandeja | nodo simple | 1 | 115.0 × 114.0 × 30.0 | 39.9 | sin girar | no | 40 % | 38 | slicer |
+| M11_bandeja_sup | nodo simple | 1 | 115.0 × 114.0 × 3.0 | 38.1 | sin girar | no | 40 % | 34 | slicer |
+| M4_capsula_cuerpo | nodo simple | 2 | 64.0 × 64.0 × 44.0 | 46.0 | Y-90 | si | 100 % | 60 | slicer |
+| M6_capsula_bisel | nodo simple | 2 | 42.0 × 42.0 × 2.5 | 1.9 | Y+90 | no | 40 % | 2 | slicer |
+| LR1_separador | linterna de prueba | 1 | 211.9 × 211.9 × 6.0 | 44.9 | sin girar | no | 40 % | 37 | slicer |
 | B1s_casco | boya simple | 1 | 240.0 × 220.0 × 125.0 | 753.5 | X180 | si | 100 % | 957 | estimado |
 | B2s_tapa | boya simple | 1 | 9.0 × 220.0 × 240.0 | 260.5 | Y+90 | si | 100 % | 331 | estimado |
 | B1bs_bandeja | boya simple | 1 | 206.0 × 186.0 × 3.0 | 113.0 | sin girar | no | 40 % | 129 | estimado |
@@ -111,21 +111,24 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | Capsula: exterior | 44.0 x 46.0 x 46.0 | mm | capsula.py cap_dims |
 | Capsula: angulo y acimut | 30 grados, adentro | - | params.py capsula.angulo, capsula.acimut (equipo) |
 | Ventana: diametro x espesor | 30 x 3 | mm | params.py ventana.* |
-| Gancho en C (fusionado al riel): C interior / pared / asiento | 8.8 / 4 / 12 | mm | params.py aro.seccion, gancho.c |
+| Gancho en C (fusionado al riel): C interior / pared / asiento | 8.8 / 6 / 12 | mm | params.py aro.seccion, gancho.c |
 | Separador LR1: tipo, seccion, altura (minima) | aro, 12 x 6, 140 (136) | mm | params.py separador.*, simple.py |
 | Pletinas de lastre | 5 x 2 de 25 x 5 x 100 | mm | params.py lastre.pletinas |
-| Nodo: peso en aire (bandeja 40 % / 100 %) | 2450 / 2458 | g | simple.py, masas por pieza con su relleno |
-| Nodo: peso aparente (40 % / 100 %) | +203 / +211 | g | simple.py (ventana +200 a +500) |
-| Nodo: BG | 18.3 | mm | simple.py |
+| Nodo: peso en aire (bandeja 40 % / 100 %) | 2462 / 2471 | g | simple.py, masas por pieza con su relleno |
+| Nodo: peso aparente (40 % / 100 %) | +205 / +214 | g | simple.py (ventana +200 a +500) |
+| Nodo: BG | 18.2 | mm | simple.py |
 | Apice sobre el aro | 290 | mm | separador.altura + apice.altura |
 | Aire minimo suspension-nodo | 11.6 | mm | simple.py (exigido 10) |
-| FS riel (capas / entre capas) | 19.3 / 9.4 | - | simple.py §5, a mano |
-| FS pie de capsula (capas / entre capas) | 4.2 / 2.1 | - | simple.py §5, a mano |
-| FS gancho (capas / entre capas) | 6.0 / 2.9 | - | simple.py §5, a mano |
-| Traccion por inserto M4 de las bridas al izar | 324 | N | simple.py §5 (probar con PB8) |
-| Cable por camara | 381 | mm | simple.py §6 (> 300: prueba SPI) |
+| FS riel (capas / entre capas) | 17.8 / 8.7 | - | simple.py §5, a mano |
+| FS pie de capsula (capas / entre capas) | 4.5 / 2.2 | - | simple.py §5, a mano |
+| FS gancho (capas / entre capas) | 5.8 / 2.9 | - | simple.py §5, a mano |
+| Traccion por inserto M4 de las bridas al izar | 339 | N | simple.py §5 (probar con PB8) |
+| Cable por camara | 379 | mm | simple.py §6 (> 300: prueba SPI) |
 | Boya: masa / calado / francobordo | 2705 / 31.6 / 88.4 | g / mm / mm | boya_simple.py (agua de mar 1025) |
 | Boya: reserva / GM balanceo y cabeceo | 194 % / 92 y 467 | - / mm | boya_simple.py |
-| Nodo + boya en aire (limite 3000) | 5155 | g | simple.py + boya_simple.py |
-| Camara en Ø200: lente a la red | 34 | mm | simple.py camera_view (FOV y enfoque estimados) |
+| Nodo + boya en aire (limite 3000) | 5168 | g | simple.py + boya_simple.py |
+| Camara en Ø200: lente a la red | 38 | mm | simple.py camera_view (FOV y enfoque estimados) |
 | Camara en Ø500: lente a la red | no corta la red | mm | simple.py camera_view (FOV y enfoque estimados) |
+| FEM riel_agua: desplazamiento max / tension max / FS | 2.51 / 8.4 / 5.4 | mm / MPa / - | fem |
+| FEM riel_izado: desplazamiento max / tension max / FS | 0.25 / 4.1 / 10.9 | mm / MPa / - | fem |
+| FEM pie: desplazamiento max / tension max / FS | 0.48 / 8.9 / 5.0 | mm / MPa / - | fem |

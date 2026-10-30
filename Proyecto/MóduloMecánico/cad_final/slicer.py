@@ -2,17 +2,19 @@
 
     python slicer.py            (from cad_final/; or: python build.py --slicer, which then rebuilds the bitacora)
 
-Profiles: the three JSON exported from the OrcaSlicer GUI in cad_final/orca/ (printer Bambu Lab P1P 0.4 nozzle, process
-0.20mm Standard @BBL P1P, filament Generic PETG or Bambu PETG Basic); each file is recognised by its "type" key.
-Same settings for every piece: 0.2 mm layers, 3 walls, 20 % gyroid, supports only where the bitacora says so (overhang
-over simple.SUPPORT_MM2 in the print orientation). Each STL is turned to its print orientation (resultados.json) and
-sliced alone; the G-code goes to salida/simple/gcode/ (ignored by git) and "; filament used [g]" and the estimated time
-are read from it into salida/simple/slicer.json. ORCA_EXE overrides the slicer path.
+Profiles: three flat JSON in cad_final/orca/ (printer Bambu Lab P1P 0.4 nozzle with the Textured PEI Plate, process
+0.20mm Standard @BBL P1P, filament Bambu PETG Basic); each file is recognised by its "type" key and its "_origen" key
+says where it came from. Every piece: 0.2 mm layers, 3 walls, gyroid with the infill of the piece (resultados.json;
+a mixed "riel 40 %, gancho 100 %" is sliced at the highest), supports only where the bitacora says so (overhang over
+simple.SUPPORT_MM2 in the print orientation). Each printed piece of resultados.json (not the bought acrylic M7) is turned
+to its print orientation and sliced alone; the G-code goes to salida/simple/gcode/ (ignored by git) and
+"; filament used [g]" and the estimated time are read from it into salida/simple/slicer.json. ORCA_EXE overrides the
+slicer path.
 
-Tested 29/10 with hand-made flat profiles: the CLI slices (M6: 1.96 g, 0.26 h). Presets that keep an "inherits" to a
-Bambu system preset do NOT resolve with the nightly portable (it has no resources/profiles/BBL/machine on disk:
-"can not resolve preset ... system"): use the stable OrcaSlicer (ORCA_EXE) or presets saved with every value.
-If cad_final/orca/ is empty, the JSON of Downloads/orca_perfiles/ are copied there first.
+The nightly portable has no BBL machine/process presets on disk (they are packed in resources/profiles/BBL.opc), so a
+preset that keeps an "inherits" does not resolve ("can not resolve preset ... system"). The JSON in orca/ are flattened
+from the OrcaSlicer repo (resources/profiles/BBL/, inherits and include merged, commit 304924a, 30/10). The stable 2.4.2
+does not slice from the CLI. If cad_final/orca/ is empty, the JSON of Downloads/orca_perfiles/ are copied there first.
 """
 import json
 import os
@@ -29,10 +31,20 @@ PROFILES = HERE / "orca"
 ORCA = Path(os.environ.get("ORCA_EXE", Path.home() / "Downloads" / "OrcaSlicer_Windows_x64_nightly_portable"
                            / "OrcaSlicer" / "orca-slicer.exe"))
 OVERRIDES = {"layer_height": "0.2", "wall_loops": "3", "sparse_infill_density": "20%", "sparse_infill_pattern": "gyroid"}
-PIECES = [(SAL / "simple" / "stl", s) for s in ("M1_caja_cuerpo", "M2_caja_tapa", "M11_bandeja", "M3s_riel_mitad",
-                                                "M3t_tapa_bolsillo", "M5s_capsula_tapa_pie", "M9s_gancho",
-                                                "M4_capsula_cuerpo", "M6_capsula_bisel")]
-PIECES.append((SAL / "linterna_prueba", "LR1_separador"))
+STL_DIRS = (SAL / "simple" / "stl", SAL / "linterna_prueba")
+
+
+def pieces(res):
+    """(folder, stem) of every printed piece in resultados.json (relleno None = bought, e.g. the acrylic window M7)."""
+    out = []
+    for stem, info in res["piezas"].items():
+        if info.get("relleno") is None:
+            continue
+        folder = next((d for d in STL_DIRS if (d / f"{stem}.stl").exists()), None)
+        if folder is None:
+            raise SystemExit(f"no encuentro {stem}.stl en {', '.join(str(d) for d in STL_DIRS)}")
+        out.append((folder, stem))
+    return out
 
 
 def profiles(folder=PROFILES):
@@ -68,19 +80,31 @@ def oriented_stl(src, orient, dst):
     m.export(dst)
 
 
-def process_for(base, supports, dst):
+def infill_pct(relleno):
+    """Infill of the piece from resultados.json: 1.0 / 0.4, or a mixed text ("riel 40 %, gancho 100 %") -> the highest,
+    so the mass and time stay on the safe side."""
+    if isinstance(relleno, (int, float)):
+        return round(relleno * 100)
+    vals = [int(v) for v in re.findall(r"(\d+)\s*%", str(relleno))]
+    return max(vals) if vals else None
+
+
+def process_for(base, supports, dst, infill=None):
     data = json.loads(Path(base).read_text(encoding="utf-8"))
     data.update(OVERRIDES)
+    if infill is not None:
+        data["sparse_infill_density"] = f"{infill}%"
     data["enable_support"] = "1" if supports else "0"
     data["name"] = f"{data.get('name', 'proceso')} LanternGuard {'con' if supports else 'sin'} soportes"
     Path(dst).write_text(json.dumps(data, indent=1), encoding="utf-8")
 
 
 def read_gcode(path):
-    """(grams, hours) from the G-code comments; None if missing."""
+    """(grams, hours) from the G-code comments; None if missing. Time from "; estimated printing time (normal mode) = ..."
+    or from the nightly header "; model printing time: ...; total estimated time: ..."."""
     txt = Path(path).read_text(encoding="utf-8", errors="replace")
     g = re.search(r";\s*filament used \[g\]\s*=\s*([\d.]+)", txt)
-    t = re.search(r";\s*(?:total )?estimated printing time(?: \(normal mode\))?\s*=\s*([^\n]+)", txt)
+    t = re.search(r";[^\n]*?(?:total estimated time|estimated printing time(?: \(normal mode\))?)\s*[:=]\s*([^;\n]+)", txt)
     if not (g and t):
         return None
     secs = 0
@@ -117,12 +141,13 @@ def main(profile_dir=PROFILES):
     work = GCODE / "_trabajo"
     work.mkdir(parents=True, exist_ok=True)
     out, fails = {}, []
-    for folder, stem in PIECES:
+    for folder, stem in pieces(res):
         info = res["piezas"][stem]
         stl = work / f"{stem}.stl"
         oriented_stl(folder / f"{stem}.stl", info["orient"], stl)
         proc = work / f"proceso_{stem}.json"
-        process_for(prof["process"], info["soportes"], proc)
+        infill = infill_pct(info.get("relleno"))
+        process_for(prof["process"], info["soportes"], proc, infill)
         rc, gc, log = slice_one(prof, stl, proc, work / stem)
         got = read_gcode(gc) if gc else None
         if not got:
@@ -131,8 +156,10 @@ def main(profile_dir=PROFILES):
             continue
         dst = GCODE / f"{stem}.gcode"
         gc.replace(dst)
-        out[stem] = dict(g=got[0], h=got[1], soportes=info["soportes"], gcode=dst.relative_to(MOD).as_posix())
-        print(f"OK    {stem:24s} {got[0]:7.1f} g  {got[1]:5.2f} h  soportes {'si' if info['soportes'] else 'no'}", flush=True)
+        out[stem] = dict(g=got[0], h=got[1], soportes=info["soportes"], relleno_pct=infill,
+                         gcode=dst.relative_to(MOD).as_posix())
+        print(f"OK    {stem:24s} {got[0]:7.1f} g  {got[1]:5.2f} h  relleno {infill} %  "
+              f"soportes {'si' if info['soportes'] else 'no'}", flush=True)
     if out:
         (SAL / "simple" / "slicer.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     print("FALLAS:", fails if fails else "ninguna")
