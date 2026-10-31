@@ -1,14 +1,20 @@
 """Simple drawing per piece (A4, PNG + PDF) projected from its STEP with OCCT hidden-line removal.
 
     python planos_piezas.py [M1 M3p ...]      (or: python build.py --planos)   -> ../planos/cad_final/<code>.{png,pdf}
+    python planos_piezas.py --carpeta ../salida/prototipos/P4_estetico --prefijo P4 [--titulo "P4 estetico"]
+        -> ../planos/cad_final/P4/<code>.{png,pdf}: one sheet per STEP of the folder's step/ (name, infill and print
+           orientation from its resultados.json; quantity from its slicer.json "cant", else the pair rule)
+    python planos_piezas.py --unir [--portada portada.pdf] P1 P4 BP   -> ../planos/PLANOS_LanternGuard.pdf
 
 Three first-angle views (front, top, side) with the overall dimensions measured on the projected outline, plus the
 table of important dimensions from piezas.py (value, params.py name, estado). The projection helpers follow
 ../cad/planos.py, which is not imported because it loads the old cad/ params at import time.
 """
+import json
 import logging
 import sys
 import textwrap
+from types import SimpleNamespace
 from pathlib import Path
 
 import cadquery as cq
@@ -35,6 +41,10 @@ plt.rcParams.update({"font.family": ["Arial", "Liberation Sans", "DejaVu Sans"],
 # view name -> (normal toward the viewer, paper right); first angle: top view below the front, the view from the
 # left (-X) on the right of the front
 VIEWS = {"frente": ((0, -1, 0), (1, 0, 0)), "planta": ((0, 0, 1), (1, 0, 0)), "lado": ((-1, 0, 0), (0, -1, 0))}
+ISO = ((1, -1, 1), (1, 1, 0))       # isometric from front-right-top, drawn under the side view
+ORIENT_TXT = {"sin girar": "como en el modelo", "X180": "X180 (dada vuelta)", "X+90": "X+90 (de costado)",
+              "X-90": "X-90 (de costado)", "Y+90": "Y+90 (de canto)", "Y-90": "Y-90 (de canto)"}
+PAIRS = ("M3", "M4", "M5", "M6", "M7", "M9", "M10", "M13", "M14")   # one per rail side (folder mode, no "cant")
 
 
 def project(shape, n, vx):
@@ -108,7 +118,7 @@ def mass_max_g(pz, shape):
     return None if rho is None else shape.Volume() / 1000.0 * rho
 
 
-def sheet(pz, shape):
+def sheet(pz, shape, out=OUT):
     fig = plt.figure(figsize=(297 / 25.4, 210 / 25.4))
     ax = fig.add_axes([0, 0, 1, 1])
     ax.set_xlim(0, 297)
@@ -117,12 +127,15 @@ def sheet(pz, shape):
     ax.axis("off")
     ax.add_patch(Rectangle((8, 8), 281, 194, fill=False, lw=1.2))
     raw = {k: project(shape, n, vx) for k, (n, vx) in VIEWS.items()}
+    iso = project(shape, *ISO)
     ext = {k: extent(v) for k, v in raw.items()}
     size = {k: e[1] - e[0] for k, e in ext.items()}
     # drawing area: x 16..185, y 16..194; front top-left, top below it, side to the right of the front
     w_need = size["frente"][0] + size["lado"][0]
     h_need = size["frente"][1] + size["planta"][1]
-    s = next((sc for sc in SCALES if w_need * sc <= 125 and h_need * sc <= 140), SCALES[-1])
+    side_iso = not pz.keys                      # folder mode: no table, so the isometric takes the right column
+    wmax, hmax = (160, 150) if side_iso else (125, 140)
+    s = next((sc for sc in SCALES if w_need * sc <= wmax and h_need * sc <= hmax), SCALES[-1])
     gap = 22
     fx0 = 26
     fy0 = 194 - 18 - size["frente"][1] * s
@@ -137,6 +150,21 @@ def sheet(pz, shape):
         lo, hi = extent(paper[k])
         ax.text((lo[0] + hi[0]) / 2, lo[1] - 4.5 if k != "planta" else lo[1] - 4.5, k.upper(), ha="center", va="top",
                 fontsize=6.5, color="#444")
+    # isometric: right column in folder mode, else under the side view; at the sheet scale if it fits
+    ilo, ihi = extent(iso)
+    isz = ihi - ilo
+    if side_iso:
+        box = (192, 104, 93, 72)                  # x0, y0, w, h on paper
+    else:
+        lo_l = extent(paper["lado"])[0]
+        box = (lo_l[0], 26, 185 - lo_l[0], lo_l[1] - 36)
+    si = min(s * 2, box[2] / max(isz[0], 1e-6), box[3] / max(isz[1], 1e-6))
+    io = np.array([box[0] + (box[2] - isz[0] * si) / 2, box[1] + box[3] - isz[1] * si]) - ilo * si
+    for pl in iso:
+        q = io + si * pl
+        ax.plot(q[:, 0], q[:, 1], color="#333", lw=LW_THIN, solid_capstyle="round")
+    ax.text(box[0] + box[2] / 2, box[1] + box[3] - isz[1] * si - 2, "ISOMÉTRICA (sin escala)", ha="center", va="top",
+            fontsize=6.5, color="#444")
     # overall dimensions (true size = paper / s)
     lo, hi = extent(paper["frente"])
     pa, pb = dim(ax, (lo[0], hi[1]), (hi[0], hi[1]), hi[1] + 7)
@@ -148,7 +176,12 @@ def sheet(pz, shape):
     ax.text(pa[0] - 0.8, (pa[1] + pb[1]) / 2, f"{size['planta'][1]:.1f}", ha="right", va="center", rotation=90, fontsize=7)
     # important dimensions table
     x0, y = 192, 194
-    ax.text(x0, y, "Cotas importantes (mm)", fontsize=8, weight="bold", va="top")
+    if side_iso:
+        bb = shape.BoundingBox()
+        ax.text(x0, y, "Medidas generales del modelo (mm)", fontsize=8, weight="bold", va="top")
+        ax.text(x0, y - 6, f"{bb.xlen:.1f} × {bb.ylen:.1f} × {bb.zlen:.1f}  (X × Y × Z del CAD)", fontsize=6.5, va="top")
+    else:
+        ax.text(x0, y, "Cotas importantes (mm)", fontsize=8, weight="bold", va="top")
     y -= 6
     reg = P.REGISTRO
     for label, k, idx in pz.keys:
@@ -160,12 +193,13 @@ def sheet(pz, shape):
         if y < 100:
             ax.text(x0, y, "... (sigue en MEDIDAS.md)", fontsize=6, va="top")
             break
-    ax.text(x0, 93, "* por confirmar (estimado o del fabricante)", fontsize=5.8, va="top", color="#444")
+    if not side_iso:
+        ax.text(x0, 93, "* por confirmar (estimado o del fabricante)", fontsize=5.8, va="top", color="#444")
     # notes for the new design
     y = 87
     ax.text(x0, y, "Notas", fontsize=7, weight="bold", va="top")
     y -= 4.2
-    for i, t in enumerate(notes(pz), 1):
+    for i, t in enumerate(getattr(pz, "extra_notes", None) or notes(pz), 1):
         for j, line in enumerate(textwrap.wrap(t, 72)):
             ax.text(x0 + (0 if j == 0 else 3), y, (f"{i}. " if j == 0 else "") + line, fontsize=5.5, va="top")
             y -= 3.1
@@ -180,17 +214,80 @@ def sheet(pz, shape):
     ax.text(tx + 2, ty + 25, f"Material: {pz.material}   Relleno: {pz.infill.split(',')[0]}   "
             f"Masa máx. g: {'—' if mm is None else f'{mm:.0f}'}", fontsize=6.3, va="center")
     q = [pz.n(D) for D in P.RING_DIAMETERS]
-    qt = f"{q[0]} por nodo" if len(set(q)) == 1 else "según el aro (ver MEDIDAS.md)"
+    qt = getattr(pz, "qty_txt", None) or (f"{q[0]} por nodo" if len(set(q)) == 1 else "según el aro (ver MEDIDAS.md)")
     ax.text(tx + 2, ty + 15, f"Escala {('%g:1' % s) if s >= 1 else ('1:%g' % (1 / s))} (A4)   Cantidad: {qt}", fontsize=6.3, va="center")
     ax.text(tx + 2, ty + 5, "LanternGuard · Equipo 02 · desde el modelo (cad_final); revisión = commit de git", fontsize=5.6,
             va="center")
     ax.text(16, 12, "Proyección ISO-E (primer diedro). Medidas generales leídas del modelo. NO LISTO PARA IMPRIMIR "
             "mientras haya cotas por confirmar.", fontsize=5.8, color="#444")
-    OUT.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUT / f"{pz.code}.pdf", metadata={"CreationDate": None})  # same model, same bytes
-    fig.savefig(OUT / f"{pz.code}.png", dpi=150, facecolor="white")
+    if getattr(pz, "orient_txt", None):
+        ax.text(16, 16, f"Orientación de impresión: {pz.orient_txt}", fontsize=6.3)
+    out.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out / f"{pz.code}.pdf", metadata={"CreationDate": None})  # same model, same bytes
+    fig.savefig(out / f"{pz.code}.png", dpi=150, facecolor="white")
     plt.close(fig)
     return s
+
+
+def infill_txt(r):
+    return "no se imprime (acrílico)" if r is None else f"{round(r * 100)} %" if isinstance(r, (int, float)) else str(r)
+
+
+def folder_pieces(folder, prefix, title=None):
+    """Pieza-like entries for sheet() from a prototype folder: step/<stem>.step + resultados.json (+ slicer.json)."""
+    folder = Path(folder)
+    res = json.loads((folder / "resultados.json").read_text(encoding="utf-8"))["piezas"]
+    sl = folder / "slicer.json"
+    sl = json.loads(sl.read_text(encoding="utf-8")) if sl.exists() else {}
+    out = []
+    for stem, info in res.items():
+        step = folder / "step" / f"{stem}.step"
+        if not step.exists():
+            continue
+        head = stem.split("_")[0]
+        qty = sl.get(stem, {}).get("cant") or info.get("cant") or (2 if head.rstrip("stbe").startswith(PAIRS) else 1)
+        pct = sl.get(stem, {}).get("relleno_pct")
+        r = info.get("relleno", pct / 100 if pct else 0.4)      # old folders keep the infill only in slicer.json
+        g = sl.get(stem, {}).get("g")
+        extra = [f"{title or prefix}: pieza {stem}.", "Cotas en mm. Tolerancias generales según ISO 2768-m.",
+                 f"Impresión: P1P, PETG, 0.20 mm, 3 paredes, giroide {infill_txt(r)}, "
+                 f"{'con' if info.get('soportes') else 'sin'} soportes."]
+        if g:
+            extra.append(f"Slicer (OrcaSlicer): {g:.1f} g y {sl[stem].get('h', 0):.2f} h por pieza.")
+        extra.append("Para imprimir se usa el STL o el 3MF, no este plano: el plano sirve para verificar y para el informe.")
+        out.append(SimpleNamespace(code=f"{prefix}_{head}", stem=stem, name=info.get("nombre", stem), step=step,
+                                   material="Acrílico" if r is None else "PETG", infill=infill_txt(r), keys=[],
+                                   n=lambda D, q=qty: q, qty_txt=f"{qty} por nodo", extra_notes=extra,
+                                   orient_txt=ORIENT_TXT.get(info.get("orient"), info.get("orient"))))
+    return out
+
+
+def merge(prefixes, cover=None, out=None):
+    """One PDF: the cover (if any) and the sheets of planos/cad_final/<prefix>/, prefix by prefix."""
+    from pypdf import PdfReader, PdfWriter
+    out = Path(out or OUT.parent / "PLANOS_LanternGuard.pdf")
+    w = PdfWriter()
+    if cover:
+        w.append(PdfReader(str(cover)))
+    for pre in prefixes:
+        for f in sorted((OUT / pre).glob("*.pdf")):
+            w.append(PdfReader(str(f)))
+    with open(out, "wb") as fh:
+        w.write(fh)
+    return out
+
+
+def main_folder(folder, prefix, title=None):
+    fails = []
+    for pz in folder_pieces(folder, prefix, title):
+        try:
+            s = sheet(pz, cq.importers.importStep(str(pz.step)).val(), OUT / prefix)
+            print("plano", pz.code, "escala", s)
+        except Exception as e:  # noqa: BLE001
+            fails.append(f"{pz.code}: {e}")
+            print("FALLA", pz.code, e)
+    print("FALLAS:", fails if fails else "ninguna")
+    return 1 if fails else 0
 
 
 def main(codes=None):
@@ -209,4 +306,12 @@ def main(codes=None):
 
 
 if __name__ == "__main__":
-    raise SystemExit(main(sys.argv[1:]))
+    a = sys.argv[1:]
+    if "--carpeta" in a:
+        kw = {k: a[a.index(f"--{k}") + 1] for k in ("carpeta", "prefijo", "titulo") if f"--{k}" in a}
+        raise SystemExit(main_folder(kw["carpeta"], kw["prefijo"], kw.get("titulo")))
+    if a[:1] == ["--unir"]:
+        cover = a[a.index("--portada") + 1] if "--portada" in a else None
+        print("written", merge([x for x in a[1:] if x not in ("--portada", cover)], cover))
+        raise SystemExit(0)
+    raise SystemExit(main(a))

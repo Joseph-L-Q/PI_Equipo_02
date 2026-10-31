@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-361 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 16; estimado / confirmado: 1; estimado / por_verificar: 256; fabricante / confirmado: 7; fabricante / por_verificar: 9.
+392 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 25; estimado / confirmado: 1; estimado / por_verificar: 277; fabricante / confirmado: 8; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
@@ -66,7 +66,7 @@
 | `camara.cable_incluido` | 300 | Medir el recibido |
 | `riel.varilla_M8_datos` | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 |
 
-### Origen equipo (16)
+### Origen equipo (25)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -86,8 +86,17 @@
 | `boya.antena_interior` | True | Melissa 29/10: antena LoRa pequena de la Heltec dentro de la carcasa, despejada de metal y del panel: sin mastil |
 | `boya.sma_ciego` | True | Melissa 29/10: agujero ciego reservado para un SMA de panel (antena externa futura), lejos de los cables |
 | `linterna.profundidad` | 1000 | Aro de la linterna a 1 m bajo la superficie (prueba real) |
+| `flotacion.botella` | 1L | '500ml' / '1L' / '2L'; elegida porque cumple francobordo y reserva (docs/BOYA.md) |
+| `flotacion.cantidad` | 2 | Botellas en una fila (3 de 500 ml o 4 no caben con el canal central, ver docs/BOYA.md) |
+| `flotacion.relleno` | espuma_PU | 'espuma_PU' (vacios entre botellas y cubierta) / 'vacio' |
+| `boya_pet.pared` | 2.4 | Pared de 6 perimetros de 0.4 |
+| `boya_pet.panel_elevacion` | 25 | Panel 25 mm sobre la tapa de la caja |
+| `boya_pet.caja_margen` | 5 | La caja seca mide componentes + 5 mm |
+| `boya_pet.caja_pared` | 2.4 | Pared y piso de la caja seca |
+| `boya_pet.masa_objetivo_g` | 700 | Masa impresa maxima del conjunto |
+| `boya_pet.tiempo_objetivo_h` | 25 | Horas de impresion maximas del conjunto |
 
-### Origen estimado (256)
+### Origen estimado (277)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -347,4 +356,25 @@
 | `proto.redondeos` | caja: 3, riel: 3, capsula: 3 | P4: radios (mm) de los redondeos: borde superior de la tapa y bajo la brida de la caja, aristas largas del conducto del riel, borde frontal de la capsula (no se aplica: parte el cuerpo en el asiento del bisel). Las esquinas verticales de la caja y las aristas largas de la capsula ya son redondeadas en el diseno base |
 | `proto.logo` | texto: LanternGuard, relieve: 0.6, alto: 9 | P4: texto en relieve sobre la tapa M2 |
 | `costo.petg_soles_kg` | 90 | Precio del PETG por kg (soles); costo = gramos reales del slicer x precio |
+| `flotacion.botellas` | 500ml: D: 65, L: 210, V: 500, neck_D: 30, neck_len: 25, m_g: 25, 1L: D: 80, L: 270, V: 1000, neck_D: 30, neck_len: 25, m_g: 25, 2L: D: 105, L: 330, V: 2000, neck_D: 30, neck_len: 25, m_g: 45 | Botellas PET tipicas de agua/refresco (D cuerpo, L total, V nominal cm3, D cuello, largo cuello, masa vacia g). Valores de catalogo de envases; medir las botellas reales |
+| `flotacion.espuma_densidad` | 30 | kg/m3, PU de celda cerrada en spray; solo reserva |
+| `flotacion.espuma_llenado` | 0.5 | Fraccion del vacio entre ranura y botella que la espuma llena de verdad |
+| `flotacion.holgura_botella` | 1.5 | Holgura radial de la botella en la ranura de la costilla |
+| `flotacion.canal` | 50 | Ancho libre entre botellas: umbilical, domo del PG7 y brazo de estabilidad |
+| `flotacion.cuello_fuera` | 20 | Cuanto del cuello/tapon asoma fuera de la costilla del cuello |
+| `boya_pet.costilla` | 3 | Espesor de las costillas que sujetan la botella |
+| `boya_pet.casco_largo_max` | 254 | Largo maximo del casco: cama de 256 |
+| `boya_pet.cubierta_espesor` | 4 | Barras de la cubierta atornillada (no estanca) |
+| `boya_pet.barra_ancho` | 14 | Ancho de las barras de la cubierta |
+| `boya_pet.cubierta_tornillo_y` | 1 | Los 8 tornillos M3 cubierta-casco quedan a /y/ = canal/2 - este valor (sobre las aletas del canal) |
+| `boya_pet.pilar` | 10 × 6 | Pilares de la cubierta bajo las orejas de la caja: diametro, alto (francobordo y domo PG7) |
+| `boya_pet.columna_D` | 12 | 4 columnas del panel, integradas a la cubierta |
+| `boya_pet.mastil` | 14 × 8 × 20 | Diametro exterior, interior y cuanto sobresale sobre la cara superior del panel |
+| `boya_pet.tapa_espesor` | 4 | Ranura de 1.5 deja 2.5 bajo la junta |
+| `boya_pet.brida` | 10 × 7 | Ancho y espesor de la brida de la caja (chaflan de 45 grados abajo) |
+| `boya_pet.caja_reserva_pg7` | 14 | Largo interior reservado junto al PG7 del umbilical (contratuerca + cable) |
+| `boya_pet.oreja` | 14 × 14 × 4 | Orejas de la caja sobre los pilares: ancho, salida, espesor |
+| `boya_pet.ojal` | 28 × 8 × 10.5 | Parche de amarre en el fondo del casco: ancho en x, espesor, agujero; independiente del umbilical |
+| `boya_pet.paso_cable` | 14 | Agujero del umbilical en la costilla del extremo de la base |
+| `boya_pet.soporte_umbral` | 300 | Voladizo (mm2) por encima del cual se imprime con soportes |
 

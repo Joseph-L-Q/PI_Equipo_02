@@ -9,7 +9,7 @@
 - **decisión del equipo**: lo decidimos nosotros (por ejemplo, el largo del riel).
 - **estimado**: es una suposición o una propuesta de diseño; se confirma midiendo o con una probeta.
 
-Hoy hay 361 medidas en `params.py`: 0 medidas a mano y 281 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
+Hoy hay 392 medidas en `params.py`: 0 medidas a mano y 311 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
 
 ## 0. Versión simple (prototipo en el aro Ø200, la que se imprime)
 
@@ -84,7 +84,7 @@ Lo primero que hay que medir para la versión simple:
 | 27 | Que el pestillo haga clic sin trabarse (probeta PB4 sobre PB1) | probeta + guante | 0.6 | `pestillo.resalte` | decisión del equipo | cierre del gancho |
 | 28 | Que el casquillo entre a presión en el gancho (probeta PB1) | probeta | 0.15 | `casquillo.interferencia` | estimado | casquillo firme |
 
-Además hay 254 valores de diseño propuestos (formas, holguras, espesores) que se confirman con las probetas y la prueba en el agua. Están en las secciones de cada pieza y todos juntos en `cad_final/reporte_parametros.md` §2.
+Además hay 284 valores de diseño propuestos (formas, holguras, espesores) que se confirman con las probetas y la prueba en el agua. Están en las secciones de cada pieza y todos juntos en `cad_final/reporte_parametros.md` §2.
 
 ## 2. Qué se arma para cada aro
 
