@@ -47,3 +47,6 @@ salida/prototipos/*/fem/*.sta
 salida/prototipos/*/fem/*.cvg
 salida/prototipos/*/fem/*.12d
 salida/prototipos/*/fem/spooles.out
+
+# 3MF por placa (39 MB, traen el G-code): van a Drive, se regeneran con cad_final/placas.py
+salida/imprimir_hoy/3mf/*.3mf

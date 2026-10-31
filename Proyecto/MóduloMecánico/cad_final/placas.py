@@ -9,7 +9,7 @@ plan.json: {"salida": "salida/imprimir_hoy/3mf", "capturas": "salida/capturas_sl
                         "piezas": [["salida/imprimir_hoy/01_PB7_peine_holguras_x1.stl", 1], ...]}, ...]}
 (paths relative to the module folder). One plate = one infill and one support setting (the CLI cannot set them per
 object), so pieces are grouped by those. Orca arranges the copies (--arrange 1); a plate that does not fit fails and is
-reported. Per plate: <salida>/<nombre>.3mf; in <capturas>/: <nombre>_placa.png and <nombre>_arriba.png (the 512 px
+reported. "fijo": true (one big piece) moves the piece out of the excluded corner of the bed and skips the arrange. Per plate: <salida>/<nombre>.3mf; in <capturas>/: <nombre>_placa.png and <nombre>_arriba.png (the 512 px
 thumbnails Orca stores in Metadata/) and <nombre>_trayectoria.png (the toolpaths of the G-code by feature type, side and
 top views, supports in red). Totals in <salida>/placas.json. Profiles and executable as in slicer.py.
 """
@@ -80,6 +80,25 @@ def draw_paths(segs, title, dst):
     plt.close(fig)
 
 
+def placed_out_of_exclusion(src, work):
+    """Copy of a big single piece moved so that it clears the excluded front-left corner of the P1P bed
+    (bed_exclude_area 0..18 x 0..28 of the machine profile): Orca refuses to arrange such a piece by itself."""
+    import trimesh
+    import params as P
+    ex = json.loads(SL.profiles()["machine"].read_text(encoding="utf-8")).get("bed_exclude_area", ["0x0", "18x28"])
+    ey = max(float(v.split("x")[1]) for v in ex) + 1.0
+    m = trimesh.load(src)
+    lo, hi = m.bounds
+    w, d = hi[0] - lo[0], hi[1] - lo[1]
+    y0 = ey + max(0.0, (P.PRINT_BED[1] - ey - d) / 2)
+    if y0 + d > P.PRINT_BED[1]:
+        raise SystemExit(f"{src.name}: {d:.1f} de fondo no cabe fuera de la zona excluida")
+    m.apply_translation([(P.PRINT_BED[0] - w) / 2 - lo[0], y0 - lo[1], -lo[2]])
+    dst = work / src.name
+    m.export(dst)
+    return dst
+
+
 def slice_plate(prof, plate, out_dir, cap_dir):
     work = Path(tempfile.mkdtemp(prefix="placa_"))
     proc = work / "proceso.json"
@@ -90,10 +109,14 @@ def slice_plate(prof, plate, out_dir, cap_dir):
         proc.write_text(json.dumps(d, indent=1), encoding="utf-8")
     stls = []
     for path, n in plate["piezas"]:
-        stls += [str(MOD / path)] * int(n)
+        src = MOD / path
+        if plate.get("fijo"):
+            src = placed_out_of_exclusion(src, work)
+        stls += [str(src)] * int(n)
     name = plate["nombre"]
     cmd = [str(SL.ORCA), "--load-settings", f"{prof['machine']};{proc}", "--load-filaments", str(prof["filament"]),
-           "--arrange", "1", "--slice", "0", "--export-3mf", f"{name}.3mf", "--outputdir", str(work)] + stls
+           "--arrange", "0" if plate.get("fijo") else "1", "--slice", "0", "--export-3mf", f"{name}.3mf",
+           "--outputdir", str(work)] + stls
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=3600, cwd=work)   # Orca drops 00000.log in cwd
     mf = work / f"{name}.3mf"
     if r.returncode != 0 or not mf.exists():

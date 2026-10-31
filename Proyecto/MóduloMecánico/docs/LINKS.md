@@ -7,17 +7,32 @@
 
 ## Drive
 - LanternGuard_CAD: https://drive.google.com/drive/folders/1T8cv6NW7W2cESde3SLp9HgS4VRJMWwCO
-  (`07_Documentos` tiene ESTADO.md y el documento para el equipo)
+  (`07_Documentos` tiene ESTADO.md, el documento para el equipo y los planos)
 
-## Onshape
-La API pública de Onshape no tiene un endpoint para crear carpetas, así que los documentos nuevos quedan en la raíz de
-la cuenta. Para ordenarlos: en Onshape, *Create > Folder* "LanternGuard" y arrastrar los documentos `LG_*` adentro.
-Los ids quedan en `cad_final/onshape_docs.json`; se suben con
-`python cad_final/onshape_push.py --carpeta <carpeta> --documento <nombre>`.
+## Onshape: carpeta "LanternGuard"
+Todos los documentos `LG_*` ya están dentro de la carpeta "LanternGuard" y tienen su descripción de una línea. Se movieron
+por API con `updateDocumentAttributes` (`POST /documents/{did}` con `parentId`); el código está en
+`cad_final/onshape_push.py`, función `organize`. Los ids quedan en `cad_final/onshape_docs.json`; se sube una carpeta
+con `python cad_final/onshape_push.py --carpeta <carpeta> --documento <nombre> --ensamble <ensamble.step>`.
 
-| Documento | Qué tiene | Link |
+| Documento | Qué es | Link |
 |---|---|---|
-| LanternGuard CAD final (el de antes) | Pestañas simple_D200_V1/V2/V3, LR1, nodo_simple_V2, boya_simple_V1, boya_referencia_V1, sistema_simple_V1 y la modular vieja | https://cad.onshape.com/documents/cf6f0f08630e1b23677101ac/w/53ecc7142a15110b1fe8e8d1 |
-| LG_probetas | Las 15 probetas (STL, una pestaña por probeta) | https://cad.onshape.com/documents/dfcea0e1fd7d960062f6631e/w/7030967448e32d98d4462131 |
-| LG_P0_original | P0 simple V1: una pestaña por pieza + ENSAMBLE; la modular como ENSAMBLE_modular | https://cad.onshape.com/documents/95702b685c4703a1812f1cd5/w/22e05e9a953df1fd6ec5ee2a |
-| LG_sistema | ENSAMBLE del sistema (nodo V2, linterna de prueba, umbilical U1, cabo C1 y la boya plataforma, ya descartada) | https://cad.onshape.com/documents/add9a482719cd49ae97ca226/w/bc4e69d2a95cf63d59e5dc97 |
+| LG_00_LEER_PRIMERO | Resumen: qué es cada documento, cuál se recomienda, qué se imprime primero | (se crea al cerrar la entrega) |
+| LG_probetas | Probetas de calibración (PB6, PB7, PB8 y las del riel modular) | https://cad.onshape.com/documents/dfcea0e1fd7d960062f6631e/w/7030967448e32d98d4462131 |
+| LG_P0_original | Referencia: simple V1 y la modular (ENSAMBLE_modular) | https://cad.onshape.com/documents/95702b685c4703a1812f1cd5/w/22e05e9a953df1fd6ec5ee2a |
+| LG_P1_minimo | Riel en celosía, gancho snap, caja mínima (descartado) | https://cad.onshape.com/documents/78580e61be69350e3e1577c4/w/e8effc28aa305039dd6d79cb |
+| **LG_P2_robusto** | **Recomendado para la piscina** | https://cad.onshape.com/documents/999b4e78fb31ffdeaf864392/w/5004d17b81ec1ab1c916dc78 |
+| LG_P3_monocasco | Caja y riel en una pieza (base de P4) | https://cad.onshape.com/documents/a3f5a3445acf709539d118a1/w/6bec4bfed0a0cd181c80b6d6 |
+| **LG_P4_estetico** | **Recomendado para presentar** | https://cad.onshape.com/documents/d8e4b0f024f7efcb8f94ed99/w/fabae97231abb068b21c50e6 |
+| LG_boya_PET | Boya, primera vuelta: 2 botellas de 1 L (descartada para pruebas) | https://cad.onshape.com/documents/9bef1aea8cb725d8b9ef74ea/w/e0a2bb379713e51552ccdaf9 |
+| LG_sistema | Sistema completo con la boya plataforma vieja (referencia) | https://cad.onshape.com/documents/add9a482719cd49ae97ca226/w/bc4e69d2a95cf63d59e5dc97 |
+
+Documentos viejos, que **no se tocaron** y que Yoichi mueve a `LanternGuard/_historico`:
+- LanternGuard CAD final: https://cad.onshape.com/documents/cf6f0f08630e1b23677101ac/w/53ecc7142a15110b1fe8e8d1
+- LanternGuard - Módulo mecánico
+
+## Pasos a mano en Onshape (la API pública no los permite)
+- **Orden de pestañas:** no hay llamada para reordenarlas. En LG_P0_original, LG_P1 a LG_P4 y LG_boya_PET hay que
+  arrastrar la pestaña ENSAMBLE al primer lugar. Los documentos que se crean desde ahora ya suben el ENSAMBLE primero,
+  así que queda primero solo.
+- Mover los 2 documentos viejos a `LanternGuard/_historico`.

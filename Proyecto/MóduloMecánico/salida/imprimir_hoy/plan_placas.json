@@ -1,0 +1,234 @@
+{
+ "salida": "salida/imprimir_hoy/3mf",
+ "capturas": "salida/capturas_slicer",
+ "placas": [
+  {
+   "nombre": "P01_probetas_calibracion",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 1,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/01_PB7_peine_holguras_x1.stl",
+     1
+    ],
+    [
+     "salida/imprimir_hoy/02_PB7_pines_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P02_probeta_inserto_M4",
+   "relleno": 100,
+   "soportes": false,
+   "paredes": 5,
+   "grupo": 1,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/03_PB8_inserto_M4_x3.stl",
+     3
+    ]
+   ]
+  },
+  {
+   "nombre": "P03_probeta_junta",
+   "relleno": 100,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 1,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/04_PB6_junta_base_x1.stl",
+     1
+    ],
+    [
+     "salida/imprimir_hoy/05_PB6_junta_tapa_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P04_probeta_gancho",
+   "relleno": 100,
+   "soportes": true,
+   "paredes": 3,
+   "grupo": 1,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/06_PB10_gancho_tramo_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P05_probeta_bahia_botella",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 1,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/07_PB9_bahia_botella_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P06_bisel_y_bandejas",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 2,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/08_M6_bisel_x2.stl",
+     2
+    ],
+    [
+     "salida/imprimir_hoy/09_M11_bandeja_x1.stl",
+     1
+    ],
+    [
+     "salida/imprimir_hoy/10_M11_bandeja_sup_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P07_tapas_bolsillo",
+   "relleno": 100,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 2,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/11_M3t_tapa_bolsillo_x2.stl",
+     2
+    ]
+   ]
+  },
+  {
+   "nombre": "P08_capsulas",
+   "relleno": 100,
+   "soportes": true,
+   "paredes": 3,
+   "grupo": 2,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/12_M4_capsula_cuerpo_x2.stl",
+     2
+    ]
+   ]
+  },
+  {
+   "nombre": "P09_tapa_caja",
+   "relleno": 100,
+   "soportes": true,
+   "paredes": 3,
+   "grupo": 2,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/13_M2_caja_tapa_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P10_caja",
+   "relleno": 100,
+   "soportes": true,
+   "paredes": 3,
+   "grupo": 2,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/14_M1s_caja_cuerpo_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P11_tapas_capsula_con_pie",
+   "relleno": 100,
+   "soportes": true,
+   "paredes": 3,
+   "grupo": 2,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/15_M5s_capsula_tapa_pie_x2.stl",
+     2
+    ]
+   ]
+  },
+  {
+   "nombre": "P12_rieles_con_gancho",
+   "relleno": 100,
+   "soportes": true,
+   "paredes": 3,
+   "grupo": 3,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/16_M3s_riel_gancho_x2.stl",
+     2
+    ]
+   ]
+  },
+  {
+   "nombre": "P13_separador_LR1",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 3,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/17_LR1_separador_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P14_boya_casco",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 4,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/18_B1_casco_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P15_boya_cubierta",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 4,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/19_B2_cubierta_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P16_boya_caja_y_tapa",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 4,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/20_B3_caja_x1.stl",
+     1
+    ],
+    [
+     "salida/imprimir_hoy/21_B4_tapa_x1.stl",
+     1
+    ]
+   ]
+  }
+ ]
+}

@@ -16,6 +16,7 @@ Endpoints (official OpenAPI spec, also valid under v6):
     POST /blobelements/d/{did}/w/{wid}                uploadFileCreateElement, multipart, translate=true
     GET  /translations/{tid}                          requestState ACTIVE / DONE / FAILED, resultElementIds
     POST /documents                                   createDocument {name, isPublic} -> id, defaultWorkspace.id
+    POST /documents/{did}                             updateDocumentAttributes {parentId, description}
 """
 import argparse
 import re
@@ -55,6 +56,17 @@ def ensure_document(client, name):
     return reg[name]
 
 
+FOLDER = "bf32e5647856cd2677198b89"     # carpeta "LanternGuard" que Yoichi creo a mano (30/10)
+
+
+def organize(client, name, description, folder=FOLDER):
+    """Moves the document into the LanternGuard folder and sets its one-line description (updateDocumentAttributes,
+    POST /documents/{did} with parentId / description). The public API has no call to reorder tabs."""
+    doc = OS.read_json(DOCS, {})[name]
+    client.call("POST", f"/documents/{doc['did']}", {"parentId": folder, "description": description})
+    return doc
+
+
 def push_folder(folder, doc_name, assembly=None, dry=False):
     """One tab per STEP (or STL, when a piece has no STEP) of folder, named after the file, plus an ENSAMBLE tab from
     the assembly STEP. Files whose tab already exists are skipped, so the call can be repeated after a failure."""
@@ -68,11 +80,11 @@ def push_folder(folder, doc_name, assembly=None, dry=False):
     doc = ensure_document(client, doc_name)
     have = {e["name"].rsplit(".", 1)[0] for e in tabs(client, doc["did"], doc["wid"])}
     done = []
+    if assembly and "ENSAMBLE" not in have:      # first, so it is the first tab (tabs cannot be reordered by API)
+        done += push(assembly, "ENSAMBLE", did=doc["did"], wid=doc["wid"], client=client)[1]
     for stem, f in files.items():
         if stem not in have:
             done += push(f, stem, did=doc["did"], wid=doc["wid"], client=client)[1]
-    if assembly and "ENSAMBLE" not in have:
-        done += push(assembly, "ENSAMBLE", did=doc["did"], wid=doc["wid"], client=client)[1]
     return doc, done
 
 
