@@ -239,13 +239,14 @@ def folder_pieces(folder, prefix, title=None):
     res = json.loads((folder / "resultados.json").read_text(encoding="utf-8"))["piezas"]
     sl = folder / "slicer.json"
     sl = json.loads(sl.read_text(encoding="utf-8")) if sl.exists() else {}
+    heads = [k.split("_")[0] for k in res]
     out = []
     for stem, info in res.items():
         step = folder / "step" / f"{stem}.step"
         if not step.exists():
             continue
         head = stem.split("_")[0]
-        qty = sl.get(stem, {}).get("cant") or info.get("cant") or (2 if head.rstrip("stbe").startswith(PAIRS) else 1)
+        qty = sl.get(stem, {}).get("cant") or info.get("cant") or info.get("qty") or (2 if head.rstrip("stbe").startswith(PAIRS) else 1)
         pct = sl.get(stem, {}).get("relleno_pct")
         r = info.get("relleno", pct / 100 if pct else 0.4)      # old folders keep the infill only in slicer.json
         g = sl.get(stem, {}).get("g")
@@ -255,9 +256,9 @@ def folder_pieces(folder, prefix, title=None):
         if g:
             extra.append(f"Slicer (OrcaSlicer): {g:.1f} g y {sl[stem].get('h', 0):.2f} h por pieza.")
         extra.append("Para imprimir se usa el STL o el 3MF, no este plano: el plano sirve para verificar y para el informe.")
-        out.append(SimpleNamespace(code=f"{prefix}_{head}", stem=stem, name=info.get("nombre", stem), step=step,
+        out.append(SimpleNamespace(code=f"{prefix}_{head if heads.count(head) == 1 else stem}", stem=stem, name=info.get("nombre", stem), step=step,
                                    material="Acrílico" if r is None else "PETG", infill=infill_txt(r), keys=[],
-                                   n=lambda D, q=qty: q, qty_txt=f"{qty} por nodo", extra_notes=extra,
+                                   n=lambda D, q=qty: q, qty_txt=f"{qty} por {'boya' if 'boya' in folder.name else 'nodo'}", extra_notes=extra,
                                    orient_txt=ORIENT_TXT.get(info.get("orient"), info.get("orient"))))
     return out
 
