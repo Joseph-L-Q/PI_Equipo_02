@@ -1,0 +1,65 @@
+{
+ "M1m_caja_riel": {
+  "g": 677.09,
+  "h": 23.245277777777776,
+  "soportes": true,
+  "relleno_pct": 100,
+  "gcode": "salida/prototipos/P3_monocasco/gcode/M1m_caja_riel.gcode"
+ },
+ "M2_caja_tapa": {
+  "g": 171.62,
+  "h": 4.896944444444444,
+  "soportes": true,
+  "relleno_pct": 100,
+  "gcode": "salida/prototipos/P3_monocasco/gcode/M2_caja_tapa.gcode"
+ },
+ "M3t_tapa_bolsillo": {
+  "g": 23.72,
+  "h": 0.5533333333333333,
+  "soportes": false,
+  "relleno_pct": 100,
+  "gcode": "salida/prototipos/P3_monocasco/gcode/M3t_tapa_bolsillo.gcode"
+ },
+ "M5m_extremo_pie": {
+  "g": 131.52,
+  "h": 4.362777777777778,
+  "soportes": true,
+  "relleno_pct": 100,
+  "gcode": "salida/prototipos/P3_monocasco/gcode/M5m_extremo_pie.gcode"
+ },
+ "M9c_abrazadera": {
+  "g": 3.32,
+  "h": 0.3352777777777778,
+  "soportes": false,
+  "relleno_pct": 100,
+  "gcode": "salida/prototipos/P3_monocasco/gcode/M9c_abrazadera.gcode"
+ },
+ "M11_bandeja": {
+  "g": 35.25,
+  "h": 1.6394444444444445,
+  "soportes": false,
+  "relleno_pct": 40,
+  "gcode": "salida/prototipos/P3_monocasco/gcode/M11_bandeja.gcode"
+ },
+ "M11_bandeja_sup": {
+  "g": 31.06,
+  "h": 1.0552777777777778,
+  "soportes": false,
+  "relleno_pct": 40,
+  "gcode": "salida/prototipos/P3_monocasco/gcode/M11_bandeja_sup.gcode"
+ },
+ "M4_capsula_cuerpo": {
+  "g": 59.64,
+  "h": 2.0544444444444445,
+  "soportes": true,
+  "relleno_pct": 100,
+  "gcode": "salida/prototipos/P3_monocasco/gcode/M4_capsula_cuerpo.gcode"
+ },
+ "M6_capsula_bisel": {
+  "g": 2.04,
+  "h": 0.19666666666666666,
+  "soportes": false,
+  "relleno_pct": 40,
+  "gcode": "salida/prototipos/P3_monocasco/gcode/M6_capsula_bisel.gcode"
+ }
+}

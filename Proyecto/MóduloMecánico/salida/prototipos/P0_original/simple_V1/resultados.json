@@ -1,0 +1,231 @@
+{
+ "piezas": {
+  "M3s_riel_mitad": {
+   "nombre": "M3s riel, mitad",
+   "orient": "X180",
+   "bbox": [
+    215.0,
+    100.0,
+    57.349998474121094
+   ],
+   "voladizo_mm2": 11295.593147820775,
+   "soportes": true,
+   "volumen_cm3": 148.45002902072085
+  },
+  "M9s_gancho": {
+   "nombre": "M9s gancho en C",
+   "orient": "X+90",
+   "bbox": [
+    50.0,
+    47.15541744232178,
+    33.0
+   ],
+   "voladizo_mm2": 182.0085100547999,
+   "soportes": false,
+   "volumen_cm3": 21.035134480072838
+  },
+  "M5s_capsula_tapa_pie": {
+   "nombre": "M5s tapa con pie",
+   "orient": "X180",
+   "bbox": [
+    96.79423522949219,
+    64.0,
+    95.92562675476074
+   ],
+   "voladizo_mm2": 2880.2908299384176,
+   "soportes": true,
+   "volumen_cm3": 94.26468003581633
+  },
+  "M3t_tapa_bolsillo": {
+   "nombre": "M3t tapa del bolsillo",
+   "orient": "X180",
+   "bbox": [
+    107.0,
+    35.010000228881836,
+    3.000000000000007
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 9.578720693012267
+  },
+  "M1_caja_cuerpo": {
+   "nombre": "M1 caja, cuerpo",
+   "orient": "sin girar",
+   "bbox": [
+    159.64102172851562,
+    126.0,
+    50.0
+   ],
+   "voladizo_mm2": 650.8558562478372,
+   "soportes": true,
+   "volumen_cm3": 214.8236666732019
+  },
+  "M2_caja_tapa": {
+   "nombre": "M2 caja, tapa con asa",
+   "orient": "Y+90",
+   "bbox": [
+    62.987899780273445,
+    126.0,
+    159.64102172851562
+   ],
+   "voladizo_mm2": 1375.4618885585974,
+   "soportes": true,
+   "volumen_cm3": 129.40980988036222
+  },
+  "M11_bandeja": {
+   "nombre": "M11 bandeja (M11_bandeja)",
+   "orient": "sin girar",
+   "bbox": [
+    127.6410140991211,
+    94.0,
+    18.0
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 35.638814962091274
+  },
+  "M4_capsula_cuerpo": {
+   "nombre": "M4 capsula, cuerpo",
+   "orient": "Y-90",
+   "bbox": [
+    64.0,
+    64.0,
+    44.0
+   ],
+   "voladizo_mm2": 1038.1701115344997,
+   "soportes": true,
+   "volumen_cm3": 45.95447669322407
+  },
+  "M6_capsula_bisel": {
+   "nombre": "M6 bisel",
+   "orient": "Y+90",
+   "bbox": [
+    41.98694610595703,
+    41.97389602661133,
+    2.5
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 1.8902962996649781
+  },
+  "M7_capsula_ventana": {
+   "nombre": "M7 ventana (acrilico)",
+   "orient": "Y+90",
+   "bbox": [
+    29.99067497253418,
+    29.981353759765625,
+    3.0000038146972656
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 2.1205750411731086
+  },
+  "LR1_separador": {
+   "nombre": "LR1 separador",
+   "orient": "sin girar",
+   "bbox": [
+    211.86823272705078,
+    211.93411254882812,
+    6.0
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 44.85723070428181
+  }
+ },
+ "soporte_umbral_mm2": 300.0,
+ "riel": {
+  "largo": 430.0,
+  "seccion": 30.0,
+  "pared": 4.0,
+  "fondo_z": -57.35
+ },
+ "caja": {
+  "exterior": [
+   139.64101615137756,
+   106.0,
+   50.0
+  ],
+  "interior": [
+   131.64101615137756,
+   98.0,
+   46.0
+  ],
+  "con_brida": [
+   159.64101615137756,
+   126.0
+  ],
+  "pared": 4.0,
+  "fondo": 4.0
+ },
+ "capsula": {
+  "exterior": [
+   44.0,
+   46.0,
+   46.0
+  ],
+  "cavidad": [
+   38.0,
+   38.0,
+   38.0
+  ],
+  "angulo": 30.0
+ },
+ "ventana": {
+  "diametro": 30.0,
+  "espesor": 3.0
+ },
+ "gancho": {
+  "c_interior": 8.8,
+  "pared": 4.0,
+  "asiento": 12.0,
+  "caida": 40.0,
+  "correa": true
+ },
+ "separador": {
+  "tipo": "aro",
+  "seccion": [
+   12.0,
+   6.0
+  ],
+  "altura": 250.0,
+  "altura_min": 165.35
+ },
+ "pletinas": {
+  "por_bolsillo": 3,
+  "bolsillos": 2,
+  "medida": [
+   25.0,
+   5.0,
+   100.0
+  ]
+ },
+ "peso": {
+  "40": {
+   "aire_g": 2078.7263076727713,
+   "aparente_g": 264.5734420715153,
+   "sin_pletinas_g": -251.05155792848473,
+   "pletinas_min": 3,
+   "pletinas_max": 4
+  },
+  "100": {
+   "aire_g": 2082.711128236719,
+   "aparente_g": 268.55826263546305,
+   "sin_pletinas_g": -247.06673736453695,
+   "pletinas_min": 3,
+   "pletinas_max": 4
+  }
+ },
+ "bg_mm": 17.40791304031827,
+ "apice_sobre_aro": 400.0,
+ "aire_min": 21.602575748304993,
+ "fs": {
+  "riel": 6.922369562227795,
+  "riel_capas": 3.3842695637558107,
+  "pie": 2.51159777643527,
+  "pie_capas": 1.227892246257243,
+  "gancho": 6.0
+ },
+ "insertos_N": 253.86746805884727,
+ "cable_mm": 419.78469083230715
+}

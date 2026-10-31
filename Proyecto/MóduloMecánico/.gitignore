@@ -1,0 +1,60 @@
+# Personal working notes: kept on disk, out of the group repo
+HANDOFF_CAD_LANTERNGUARD.md
+PROMPT_CC_CAD_FINAL.md
+HANDOFF.md
+
+# Fase D: auxiliares y STEP de ensamble (42 MB, se regeneran con cad_final/ensambles.py)
+salida/ensambles/_cache/
+salida/ensambles/_logs/
+salida/ensambles/_res_*.json
+salida/ensambles/*.step
+
+# Entorno local y logs de cad_final/build.py
+.venv/
+salida/_logs_build/
+
+# Claves de la API de Onshape (cad_final/onshape_sync.py) y su contador local de llamadas
+.env
+cad_final/onshape_calls.log
+
+# Configuracion local de rclone (tiene el token de Google Drive)
+rclone.conf
+
+# G-code del slicer (se regenera con build.py --slicer)
+salida/simple/gcode/
+
+# Archivos del solver del FEM local (se regeneran con build.py --fem)
+salida/simple/fem/*.inp
+salida/simple/fem/*.dat
+salida/simple/fem/*.frd
+salida/simple/fem/*.sta
+salida/simple/fem/*.cvg
+salida/simple/fem/*.12d
+salida/simple/fem/spooles.out
+
+# Log que OrcaSlicer deja en el directorio de trabajo
+00000.log
+
+# Ensamble de la modular (9 MB, copia de salida/ensambles/ensamble_D200.step): va a Drive, no al repo
+salida/prototipos/P0_original/modular/ensamble_modular_D200.step
+salida/prototipos/P0_original/modular/ensamble_modular_D200_v2_nombres.step
+
+# G-code y archivos del solver de los prototipos P1..P4 (se regeneran con build.py --prototipo)
+salida/prototipos/*/gcode/
+salida/prototipos/*/fem/*.inp
+salida/prototipos/*/fem/*.dat
+salida/prototipos/*/fem/*.frd
+salida/prototipos/*/fem/*.sta
+salida/prototipos/*/fem/*.cvg
+salida/prototipos/*/fem/*.12d
+salida/prototipos/*/fem/spooles.out
+
+# 3MF por placa (39 MB, traen el G-code): van a Drive, se regeneran con cad_final/placas.py
+salida/imprimir_hoy/3mf/*.3mf
+
+# Copias con nombres REF_ para Onshape (onshape_push.py --ensamble-v2): se regeneran de los STEP versionados
+salida/prototipos/P[1-4]_*/ensamble_simple_D200_v2_nombres.step
+salida/simple/ENSAMBLE_sistema_simple_v2_nombres.step
+
+# 3MF que salieron de la lista (no se suben a Drive)
+salida/imprimir_hoy/3mf/_obsoleto/

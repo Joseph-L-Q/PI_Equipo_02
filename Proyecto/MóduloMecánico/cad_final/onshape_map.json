@@ -1,0 +1,310 @@
+{
+  "M7_capsula_ventana": {
+    "file": "salida/preliminar/step/M7_capsula_ventana.step",
+    "sha256": "e91d815396429edff07bebd13d80d0707b463a65e90f3499d673e116f94cc415",
+    "blobElementId": "51e26ba2ec430fc7b509e849",
+    "partStudioIds": [
+      "cd23432d4eb0bf9118751a76"
+    ],
+    "translationId": "6ae376600c9577610e110915",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:37:58"
+  },
+  "M10_carro_capsula": {
+    "file": "salida/preliminar/step/M10_carro_capsula.step",
+    "sha256": "106f84c261407d5de75a5e69c1b93c667cc5947b185ac519abdcf06bfb674083",
+    "blobElementId": "9819b6d16891e50ac291a5e7",
+    "partStudioIds": [
+      "9cb980b8edefa8e7ddc14e16"
+    ],
+    "translationId": "6ae379ef392b1ea142d3ab90",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:53:09"
+  },
+  "M11_bandeja": {
+    "file": "salida/preliminar/step/M11_bandeja.step",
+    "sha256": "0add37ab401156fc77d4766d4d50f8bc60f6766cb42ad0ecc7cbd753c7632c32",
+    "blobElementId": "aa50afd193c2892bbb470297",
+    "partStudioIds": [
+      "eccb036ea8df55bbfc8da735"
+    ],
+    "translationId": "6ae379f616d3fe1a0f895f6d",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:53:16"
+  },
+  "M12_perilla": {
+    "file": "salida/preliminar/step/M12_perilla.step",
+    "sha256": "791eef6ce76ad99bb5c21f17b4af152127e1a3a9349df900484c4986c072bdf4",
+    "blobElementId": "d2a04398bda65f91ce38451f",
+    "partStudioIds": [
+      "e7ebf6f949003d3ce141baeb"
+    ],
+    "translationId": "6ae379fd68c40158dd4e55a4",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:53:23"
+  },
+  "M13_casquillo_D10": {
+    "file": "salida/preliminar/step/M13_casquillo_D10.step",
+    "sha256": "79312f2100024059a5c6d552237eaa97087a86eb40a4c0145fa77e85b8050220",
+    "blobElementId": "e2c83fc59f935351f0fcf39d",
+    "partStudioIds": [
+      "e463e8a61051334cc329f10a"
+    ],
+    "translationId": "6ae37a045f43ff10b9e420b3",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:53:31"
+  },
+  "M13_casquillo_D12": {
+    "file": "salida/preliminar/step/M13_casquillo_D12.step",
+    "sha256": "a4b43cbb47e6d45fc7ad1bc7d52dda0a07bfe454ba255240684d755e5c6532db",
+    "blobElementId": "9c7aaec43f934e17737e97b0",
+    "partStudioIds": [
+      "a01008f56a604c24d819349c"
+    ],
+    "translationId": "6ae37a0b5f43ff10b9e423f4",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:53:38"
+  },
+  "M13_casquillo_D6": {
+    "file": "salida/preliminar/step/M13_casquillo_D6.step",
+    "sha256": "3a4abe18ddf2094382c3c1f1fb1a6099d52715d4a94c4de22564b71ac0887073",
+    "blobElementId": "3a014b23582d567ea61814d4",
+    "partStudioIds": [
+      "59d9b7e88e8680a71436e560"
+    ],
+    "translationId": "6ae37a1362c487316eb638bb",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:53:45"
+  },
+  "M13_casquillo_D8": {
+    "file": "salida/preliminar/step/M13_casquillo_D8.step",
+    "sha256": "406f83d2ee1ef0e5f7c830a5d1136109831bc2691219c8b131c0d71f4a6d4465",
+    "blobElementId": "ac67f9137cb4725633856f41",
+    "partStudioIds": [
+      "2671f41461e53313eaf5ece1"
+    ],
+    "translationId": "6ae37a1a115f954723407957",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:53:52"
+  },
+  "M14_pestillo": {
+    "file": "salida/preliminar/step/M14_pestillo.step",
+    "sha256": "39e0130c4cf23f04fae7781f4105833fb93dc18f20eb688d301a79cd76b9af1a",
+    "blobElementId": "fff6bd3109b11b4b436f1c99",
+    "partStudioIds": [
+      "4ba587d8e8f4a26896fb0d02"
+    ],
+    "translationId": "6ae37a210c9577610e124b1e",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:53:59"
+  },
+  "M1_caja_cuerpo": {
+    "file": "salida/preliminar/step/M1_caja_cuerpo.step",
+    "sha256": "e64cf298573f20715e32ced1fea3dbb6da7c8643c5679a7cf31b3d77ceb2eda8",
+    "blobElementId": "304036cbfd190bb64d15ccfd",
+    "partStudioIds": [
+      "0bb406f3b35673b583cace3e"
+    ],
+    "translationId": "6ae37a286ae42388f044df3b",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:54:06"
+  },
+  "M2_caja_tapa": {
+    "file": "salida/preliminar/step/M2_caja_tapa.step",
+    "sha256": "eaeece1e413dc13c4e695827cd9e611df2ebb9c427d770104004243539baf375",
+    "blobElementId": "fa31e2d54ec1dd67135d56d2",
+    "partStudioIds": [
+      "35fc8b2279e01e1818e22d42"
+    ],
+    "translationId": "6ae37a2f115f954723408040",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:54:14"
+  },
+  "M3_riel_central": {
+    "file": "salida/preliminar/step/M3_riel_central.step",
+    "sha256": "962ab5bcddfce6a355bb62f312fee46401506038dc4a8a1462c191d1bdee3385",
+    "blobElementId": "f3ed807094372b719eb1c5fc",
+    "partStudioIds": [
+      "7b1add35cfc60b31e0ed87df"
+    ],
+    "translationId": "6ae37a36115f954723408439",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:54:21"
+  },
+  "M3_riel_ext": {
+    "file": "salida/preliminar/step/M3_riel_ext.step",
+    "sha256": "b9fc19507bb1327fe9bbe5b33d690e02a7f6431ff2b7999a829f30e7c330c56a",
+    "blobElementId": "3f3924def2e1f2866dc42072",
+    "partStudioIds": [
+      "8700172ae2389ca328820c10"
+    ],
+    "translationId": "6ae37a3ed5267821dd7a0efe",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:54:28"
+  },
+  "M3_riel_punta": {
+    "file": "salida/preliminar/step/M3_riel_punta.step",
+    "sha256": "b7031ce5d00667f2d6b3d9f025a7961c435cb597938a093bfdb36cb7c14d6012",
+    "blobElementId": "1bf841969618f68af1ba694f",
+    "partStudioIds": [
+      "d68e68ae119e38380f78ed29"
+    ],
+    "translationId": "6ae37a45265bf28285da2609",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:54:35"
+  },
+  "M3_tapa_bolsillo": {
+    "file": "salida/preliminar/step/M3_tapa_bolsillo.step",
+    "sha256": "ab8ce82a997591e9be7b21555220ac4ac03bbd918bdea4c11833ffc102658c0c",
+    "blobElementId": "9df0b1690313d6b900b591b1",
+    "partStudioIds": [
+      "807b70ee94f03c5c64b8d4d3"
+    ],
+    "translationId": "6ae37a4b392b1ea142d3cd53",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:54:42"
+  },
+  "M4_capsula_cuerpo": {
+    "file": "salida/preliminar/step/M4_capsula_cuerpo.step",
+    "sha256": "4da3d11768d683ba3c3309341489d1b7ee35d2bbe17677ba5af0257b5db680a5",
+    "blobElementId": "4976b23125e45e003a5196ee",
+    "partStudioIds": [
+      "8969ed62af854636b827be4d"
+    ],
+    "translationId": "6ae37a52265bf28285da2e57",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:54:49"
+  },
+  "M5_capsula_tapa": {
+    "file": "salida/preliminar/step/M5_capsula_tapa.step",
+    "sha256": "9a3d40d3f36195408e7312d20231683b1d14542d50a01d9844d958a6159e4c12",
+    "blobElementId": "68f5e4b67a87f276eb24da56",
+    "partStudioIds": [
+      "16497a66ac8696760e7d617b"
+    ],
+    "translationId": "6ae37a5ad5267821dd7a1a3e",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:54:56"
+  },
+  "M6_capsula_bisel": {
+    "file": "salida/preliminar/step/M6_capsula_bisel.step",
+    "sha256": "68c15f74859cb454eb45ecadfed30476d56894671d456a51f4110c151da98a10",
+    "blobElementId": "2a36f95afcaea45032d31f83",
+    "partStudioIds": [
+      "c50120c50506839e849cc317"
+    ],
+    "translationId": "6ae37a61265bf28285da38ea",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:55:03"
+  },
+  "M9_gancho": {
+    "file": "salida/preliminar/step/M9_gancho.step",
+    "sha256": "d80ff6ea179e1fb9febfda002a7a3945084e2654648a032ca6ff23f795338961",
+    "blobElementId": "41f3a64a6b08c6343104a28e",
+    "partStudioIds": [
+      "ef4c1d2b484af5f4e8f8ae8d"
+    ],
+    "translationId": "6ae37a6862c487316eb6650f",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:55:10"
+  },
+  "B1_casco_central": {
+    "file": "salida/boya/step/B1_casco_central.step",
+    "sha256": "691cfebcbafef2ce1485791f5ecce1e45aa2dbe740e69c1a44bdbf28788bc30b",
+    "blobElementId": "3ec1fcc4fc432e08d3e0cc83",
+    "partStudioIds": [
+      "dbe5a09c64d9d5960eef2ccb"
+    ],
+    "translationId": "6ae37a6f0c9577610e12672c",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:55:17"
+  },
+  "B1b_bandeja": {
+    "file": "salida/boya/step/B1b_bandeja.step",
+    "sha256": "00c71f3156cb26921d39b9d71436719ebe208de1ca4fdabd53a30861c828506b",
+    "blobElementId": "408bc22256e56315d2f6f3c3",
+    "partStudioIds": [
+      "84ea7d42d8d30513364b8f82"
+    ],
+    "translationId": "6ae37a76392b1ea142d3dec8",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:55:25"
+  },
+  "B2_tapa": {
+    "file": "salida/boya/step/B2_tapa.step",
+    "sha256": "a8f81c2158aa0013013ff05a84d11b14eb291dcfa59112550324b016b1a06b64",
+    "blobElementId": "0a20c72bbd942c752b237ade",
+    "partStudioIds": [
+      "f205bda3d3296f3cbbfdca10"
+    ],
+    "translationId": "6ae37a7ed5267821dd7a2892",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:55:32"
+  },
+  "B3_larguero_panel": {
+    "file": "salida/boya/step/B3_larguero_panel.step",
+    "sha256": "13e81d6d49c258fd477b54fb7647ace133e3ea7c1ca0c9f74c2903dd4ead72c3",
+    "blobElementId": "c105a933bb57bf9b758699b6",
+    "partStudioIds": [
+      "07f7c14d977fd3280ffcc844"
+    ],
+    "translationId": "6ae37a8416d3fe1a0f89946b",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:55:38"
+  },
+  "B4_mastil_antena": {
+    "file": "salida/boya/step/B4_mastil_antena.step",
+    "sha256": "e1515ed5141a75cac6ed012d5aeab160499beb30caa435b6f41dbaf2aee9b4e2",
+    "blobElementId": "1e07f7a78006573249d0a8c7",
+    "partStudioIds": [
+      "74829416dc9fc9f4b3e3ea3f"
+    ],
+    "translationId": "6ae37a8bd5267821dd7a2ea0",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:55:45"
+  },
+  "B5_flotador": {
+    "file": "salida/boya/step/B5_flotador.step",
+    "sha256": "b19c2cb013b10b9a083265a78d3b2cfc60188612f1b5cbdd534a5b7f1b188197",
+    "blobElementId": "7400346877092432ae405d1a",
+    "partStudioIds": [
+      "e8520ff69eea1bfd24562926"
+    ],
+    "translationId": "6ae37a9216d3fe1a0f899a16",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:55:52"
+  },
+  "B5b_tapa_flotador": {
+    "file": "salida/boya/step/B5b_tapa_flotador.step",
+    "sha256": "6cc78e7e14af751a065c8b75c83fcc565c76cb2fd8817cb2a4e45ebc8d1ba0c7",
+    "blobElementId": "b81375dbbfbca8b7131d70c0",
+    "partStudioIds": [
+      "0c72e458d692d196ebc0f0f3"
+    ],
+    "translationId": "6ae37a986ae42388f0450f89",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:55:58"
+  },
+  "B6_ojal_amarre": {
+    "file": "salida/boya/step/B6_ojal_amarre.step",
+    "sha256": "cfd0580cd80956eb1674db2029ac9a46e27146780ee96bd52aff164df73cbacf",
+    "blobElementId": "1ad0b32d724b733998e771ed",
+    "partStudioIds": [
+      "a99ecb8f954d8e61ee06184c"
+    ],
+    "translationId": "6ae37a9fa828111373436ead",
+    "estado": "DONE",
+    "fecha": "2026-10-29T11:56:05"
+  },
+  "ensamble_D200": {
+    "file": "salida/ensambles/ensamble_D200.step",
+    "sha256": "80856579513542a16966c0707cce2b2047f5fac2cd495fd90fed80ac9d8ac75e",
+    "blobElementId": "e70fe09ce7e72f256230fbbd",
+    "partStudioIds": [
+      "4d31a54737fe0500f49e1e05"
+    ],
+    "translationId": "6ae37c5a392b1ea142d4a65f",
+    "estado": "DONE",
+    "fecha": "2026-10-29T12:03:40"
+  }
+}
