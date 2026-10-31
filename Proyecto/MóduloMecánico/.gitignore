@@ -34,3 +34,6 @@ salida/simple/fem/spooles.out
 
 # Log que OrcaSlicer deja en el directorio de trabajo
 00000.log
+
+# Ensamble de la modular (9 MB, copia de salida/ensambles/ensamble_D200.step): va a Drive, no al repo
+salida/prototipos/P0_original/modular/ensamble_modular_D200.step

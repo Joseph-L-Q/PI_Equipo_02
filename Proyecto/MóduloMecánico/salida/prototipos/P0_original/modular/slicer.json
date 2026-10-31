@@ -1,0 +1,152 @@
+{
+ "M1_caja_cuerpo": {
+  "cant": 1,
+  "g": 255.1,
+  "h": 5.54,
+  "relleno_pct": 100,
+  "soportes": true,
+  "orient": "boca arriba, fondo en la cama; sin soportes",
+  "costo_soles": 22.96,
+  "relleno_txt": "100 %, 5 perímetros (pieza sellada o tramo del riel)"
+ },
+ "M2_caja_tapa": {
+  "cant": 1,
+  "g": 159.6,
+  "h": 4.12,
+  "relleno_pct": 100,
+  "soportes": true,
+  "orient": "cara de la ranura en la cama, asa arriba; sin soportes",
+  "costo_soles": 14.36,
+  "relleno_txt": "100 %, 5 perímetros (pieza sellada o tramo del riel)"
+ },
+ "M11_bandeja": {
+  "cant": 1,
+  "g": 34.0,
+  "h": 1.38,
+  "relleno_pct": 40,
+  "soportes": false,
+  "orient": "plana; sin soportes",
+  "costo_soles": 3.06,
+  "relleno_txt": "40 % (se informa también al 100 %), 3 perímetros"
+ },
+ "M3_riel_central": {
+  "cant": 1,
+  "g": 203.1,
+  "h": 10.6,
+  "relleno_pct": 40,
+  "soportes": true,
+  "orient": "brida abajo (dada vuelta); necesita soportes en el techo de la cámara y los bolsillos",
+  "costo_soles": 18.28,
+  "relleno_txt": "100 %, 5 perímetros (pieza sellada o tramo del riel)"
+ },
+ "M3_riel_ext": {
+  "cant": 2,
+  "g": 48.7,
+  "h": 2.52,
+  "relleno_pct": 40,
+  "soportes": true,
+  "orient": "acostada sobre una cara lateral; casi sin soportes",
+  "costo_soles": 4.38,
+  "relleno_txt": "100 %, 5 perímetros (pieza sellada o tramo del riel)"
+ },
+ "M3_riel_punta": {
+  "cant": 2,
+  "g": 26.8,
+  "h": 1.46,
+  "relleno_pct": 40,
+  "soportes": true,
+  "orient": "acostada sobre una cara lateral",
+  "costo_soles": 2.41,
+  "relleno_txt": "100 %, 5 perímetros (pieza sellada o tramo del riel)"
+ },
+ "M3_tapa_bolsillo": {
+  "cant": 2,
+  "g": 11.4,
+  "h": 0.36,
+  "relleno_pct": 100,
+  "soportes": false,
+  "orient": "plana",
+  "costo_soles": 1.03,
+  "relleno_txt": "40 % (se informa también al 100 %), 3 perímetros"
+ },
+ "M4_capsula_cuerpo": {
+  "cant": 2,
+  "g": 65.2,
+  "h": 2.84,
+  "relleno_pct": 100,
+  "soportes": true,
+  "orient": "eje de la cámara vertical; soportes chicos",
+  "costo_soles": 5.87,
+  "relleno_txt": "100 %, 5 perímetros (pieza sellada o tramo del riel)"
+ },
+ "M5_capsula_tapa": {
+  "cant": 2,
+  "g": 31.1,
+  "h": 1.6,
+  "relleno_pct": 100,
+  "soportes": true,
+  "orient": "de canto; soportes chicos",
+  "costo_soles": 2.8,
+  "relleno_txt": "100 %, 5 perímetros (pieza sellada o tramo del riel)"
+ },
+ "M6_capsula_bisel": {
+  "cant": 2,
+  "g": 2.2,
+  "h": 0.71,
+  "relleno_pct": 40,
+  "soportes": false,
+  "orient": "plano",
+  "costo_soles": 0.2,
+  "relleno_txt": "40 % (se informa también al 100 %), 3 perímetros"
+ },
+ "M9_gancho": {
+  "cant": 2,
+  "g": 32.4,
+  "h": 1.85,
+  "relleno_pct": 100,
+  "soportes": true,
+  "orient": "de costado; soporte bajo el escalón de la brida",
+  "costo_soles": 2.92,
+  "relleno_txt": "40 % (se informa también al 100 %), 3 perímetros"
+ },
+ "M10_carro_capsula": {
+  "cant": 2,
+  "g": 85.3,
+  "h": 3.74,
+  "relleno_pct": 100,
+  "soportes": true,
+  "orient": "de costado; soportes chicos",
+  "costo_soles": 7.68,
+  "relleno_txt": "40 % (se informa también al 100 %), 3 perímetros"
+ },
+ "M12_perilla": {
+  "cant": 4,
+  "g": 5.2,
+  "h": 0.39,
+  "relleno_pct": 40,
+  "soportes": false,
+  "orient": "plana; PAUSAR la impresión para meter el perno",
+  "costo_soles": 0.47,
+  "relleno_txt": "40 % (se informa también al 100 %), 3 perímetros"
+ },
+ "M13_casquillo_D8": {
+  "cant": 2,
+  "g": 1.7,
+  "h": 0.4,
+  "relleno_pct": 40,
+  "soportes": false,
+  "orient": "de pie, pestaña en la cama",
+  "costo_soles": 0.15,
+  "relleno_txt": "100 %"
+ },
+ "M14_pestillo": {
+  "cant": 2,
+  "g": 1.2,
+  "h": 0.45,
+  "relleno_pct": 100,
+  "soportes": false,
+  "orient": "plano",
+  "costo_soles": 0.11,
+  "relleno_txt": "100 %"
+ }
+}
