@@ -41,6 +41,17 @@ imprime, Part Studio aplanado y comparación de partes de Onshape contra sólido
 | LG_P0_original | ENSAMBLE_v2 (simple V1) | 53 = 53 | https://cad.onshape.com/documents/95702b685c4703a1812f1cd5/w/22e05e9a953df1fd6ec5ee2a/e/c04751805d4a14c6339f0ba7 |
 | LG_P0_original | ENSAMBLE_modular_v2 | 47 = 47 | https://cad.onshape.com/documents/95702b685c4703a1812f1cd5/w/22e05e9a953df1fd6ec5ee2a/e/8eba078f08454031fe9c9db5 |
 | LG_boya_PET_v2 | ENSAMBLE | 19 = 19 | https://cad.onshape.com/documents/f4e8ac814316f253d53d94e0/w/a972a01f232336138e011bc2/e/a7bc64699813d459a97704d7 |
+| LG_P1_minimo | ENSAMBLE_v2 | 31 = 31 | https://cad.onshape.com/documents/78580e61be69350e3e1577c4/w/e8effc28aa305039dd6d79cb/e/f4b831fc6c238ba3ce56a4a5 |
+| **LG_P2_robusto** | ENSAMBLE_v2 | 31 = 31 | https://cad.onshape.com/documents/999b4e78fb31ffdeaf864392/w/5004d17b81ec1ab1c916dc78/e/6053d9c24911602bee9c19e9 |
+| LG_P3_monocasco | **ENSAMBLE_v2_completo** (la ENSAMBLE_v2 tiene 30: le falta M1m) | 31 = 31 | https://cad.onshape.com/documents/a3f5a3445acf709539d118a1/w/6bec4bfed0a0cd181c80b6d6/e/4c6e09c580a6422899db229f |
+| **LG_P4_estetico** | **ENSAMBLE_v2_completo** (la ENSAMBLE_v2 tiene 30: le falta M1m) | 31 = 31 | https://cad.onshape.com/documents/d8e4b0f024f7efcb8f94ed99/w/fabae97231abb068b21c50e6/e/6308df11ea0d18845e969f0f |
+| LG_sistema | **ENSAMBLE_v2_completo** (la ENSAMBLE_v2 tiene 35: le falta REF_umbilical) | 36 = 36 | https://cad.onshape.com/documents/add9a482719cd49ae97ca226/w/bc4e69d2a95cf63d59e5dc97/e/37953f6387dd12b7a68db733 |
+
+`M1m_caja_riel` (P3 y P4) y el umbilical del sistema son sólidos válidos en OCCT (B-rep correcto, sin autointersecciones;
+ShapeFix no cambia nada) que Parasolid no logra curar al importar: Onshape los descartaba sin avisar (la pestaña suelta
+`M1m_caja_riel` vieja tiene 0 partes). Con `--defectuosas` (`allowFaultyParts`) entran marcados; la geometría es la misma.
+Pestaña suelta corregida: `M1m_caja_riel_v2` en LG_P3 y LG_P4. Si Onshape muestra la parte con un aviso rojo, es eso:
+para imprimir se usan los STL/3MF, que salen del CAD local.
 
 ## Pasos a mano en Onshape (la API pública no los permite)
 - **Orden de pestañas:** no hay llamada para reordenarlas. En LG_P0_original, LG_P1 a LG_P4 y LG_boya_PET hay que

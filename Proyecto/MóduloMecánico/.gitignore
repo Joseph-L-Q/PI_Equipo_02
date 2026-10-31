@@ -51,3 +51,7 @@ salida/prototipos/*/fem/spooles.out
 
 # 3MF por placa (39 MB, traen el G-code): van a Drive, se regeneran con cad_final/placas.py
 salida/imprimir_hoy/3mf/*.3mf
+
+# Copias con nombres REF_ para Onshape (onshape_push.py --ensamble-v2): se regeneran de los STEP versionados
+salida/prototipos/P[1-4]_*/ensamble_simple_D200_v2_nombres.step
+salida/simple/ENSAMBLE_sistema_simple_v2_nombres.step

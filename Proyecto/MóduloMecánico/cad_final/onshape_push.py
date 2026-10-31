@@ -155,7 +155,7 @@ def verify(doc_name, tab_prefix="ENSAMBLE", local=None, client=None):
     return out
 
 
-def push(path, nombre=None, flatten=False, did=None, wid=None, client=None):
+def push(path, nombre=None, flatten=False, did=None, wid=None, client=None, faulty=False):
     path = Path(path)
     if not path.exists():
         raise OS.OnshapeError(f"no existe {path}")
@@ -168,7 +168,8 @@ def push(path, nombre=None, flatten=False, did=None, wid=None, client=None):
     client = client or OS.Client()
     name = free_name(nombre or path.stem, tabs(client, did, wid))
     fields = {"encodedFilename": f"{name}{path.suffix}", "translate": "true", "storeInDocument": "true",
-              "importWithinDocument": "true", "yAxisIsUp": "false", "flattenAssemblies": str(flatten).lower()}
+              "importWithinDocument": "true", "yAxisIsUp": "false", "flattenAssemblies": str(flatten).lower(),
+              **({"allowFaultyParts": "true"} if faulty else {})}     # keeps a part Parasolid cannot heal, flagged
     body, ctype = OS.multipart(fields, path)
     r = client.call("POST", f"/blobelements/d/{did}/w/{wid}", body, ctype)
     t = client.wait_translation(r["translationId"])
@@ -196,6 +197,8 @@ def main():
     ap.add_argument("--ensamble-v2", metavar="DOCUMENTO",
                     help="sube --ensamble como pestana nueva ENSAMBLE_v2 (nombres REF_ en el STEP) y la verifica")
     ap.add_argument("--pestana", default="ENSAMBLE_v2", help="nombre de la pestana para --ensamble-v2")
+    ap.add_argument("--defectuosas", action="store_true",
+                    help="allowFaultyParts: Onshape guarda (marcada) la parte que Parasolid no puede curar en vez de perderla")
     a = ap.parse_args()
     try:
         n0 = OS.year_total()
@@ -211,7 +214,8 @@ def main():
             doc = OS.read_json(DOCS, {})[a.ensamble_v2]
             OS.API = API_V6
             client = OS.Client()
-            name, links = push(dst, a.pestana, flatten=True, did=doc["did"], wid=doc["wid"], client=client)
+            name, links = push(dst, a.pestana, flatten=True, did=doc["did"], wid=doc["wid"], client=client,
+                               faulty=a.defectuosas)
             print(f"STEP local: {solids} solidos, {len(names)} productos")
             for r in verify(a.ensamble_v2, name, dst, client):
                 print(f"  {r['pestana']}: Onshape {r['partes_onshape']} partes, "

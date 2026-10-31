@@ -1,14 +1,14 @@
 # Estado de la sesión LanternGuard CAD (PC de casa, 30/10/2026)
 
-Última actualización: **21:21** según el reloj de la PC (el 21:25 anterior era estimado; handoff en `docs/HANDOFF_noche.md`). Terminados: 0, A, B, D. En curso: C segunda vuelta (boya con 4 botellas de 500 ml)
+Última actualización: **21:36** según el reloj de la PC (el 21:25 anterior era estimado; handoff en `docs/HANDOFF_noche.md`). Terminados: 0, A, B, D. En curso: C segunda vuelta (boya con 4 botellas de 500 ml)
 y E (falta la parte de la boya). Siguen F (documento para el equipo) y G (cierre).
 Rama `cad/version-final`: https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/version-final
 
 | Bloque | Estado | Resultado |
 |---|---|---|
 | 0 Herramientas | listo | Orca nightly, CalculiX, Gmsh, rclone y claves de Onshape funcionan en esta PC |
-| A Onshape | listo; correcciones 3 y 4 hechas en P0, siguen P1 a P4 y la boya | 8 documentos `LG_*` en la carpeta LanternGuard. **P0: pestañas nuevas `ENSAMBLE_v2` (simple V1, 53 partes) y `ENSAMBLE_modular_v2` (47), todas con nombre y REF_ en lo que no se imprime, geometría igual.** Verificación de los ENSAMBLE viejos: P1, P2 y boya coinciden; a P3 y P4 les falta `M1m_caja_con_riel` (se arregla con su ENSAMBLE_v2). Links en `docs/LINKS.md` |
-| B Prototipos | listo | Tabla y recomendación en `docs/PROTOTIPOS.md`; fichas en `salida/prototipos/` |
+| A Onshape | listo, con las correcciones 3 y 4 | 9 documentos `LG_*` (nuevo: `LG_boya_PET_v2`). Pestañas ENSAMBLE nuevas con nombres (piezas con su código, REF_ en lo que no se imprime) y verificadas contra el STEP: P0 V1 53 = 53, P0 modular 47 = 47, P1 y P2 31 = 31, P3 y P4 31 = 31 y sistema 36 = 36 (en `ENSAMBLE_v2_completo`: M1m y el umbilical solo entran con `allowFaultyParts`), boya 19 = 19. Links en `docs/LINKS.md` |
+| B Prototipos | listo, con las correcciones 1 y 2 (tanda 3, 683ade1) | Linterna sin separador ni ápice (aro + 4 cuerdas a un nudo + cabo), brazos a 45° entre cuerdas con aire ≥ 10 mm a brazo y cápsula; lastre a granel en un bolsillo por lado (`lastre_izq`/`lastre_der`, 1020 a 1150 g para 0.35 kgf); cajas de P1, P3 y P4 más chicas. P2: 1400 g, 46.7 h, S/ 126.0, FS 5.6 / 2.7. P4: 1352 g, 46.0 h, S/ 121.7, FS 4.7 / 2.3. Recomendación igual: P2 piscina, P4 presentar |
 | C Boya PET | listo (2.ª vuelta, de1a2e3) | **Recomendada: 4 × 1 L en cruz** (casco + 2 cunas + 4 correas): 863 g, 32.0 h, S/ 77.7; calado 39.5 mm, francobordo 82 mm, GM 112 / 762 mm. Si pierde una botella vuelca sin espuma; con la espuma PU estimada queda estable a 6 a 12°. No cumple 700 g ni 25 h. 4 × 500 ml (720 g, 26.8 h) vuelca sin una botella. Onshape: `LG_boya_PET_v2`. Detalle: `docs/BOYA.md` |
 | D Planos | boya lista; P2 y P4 esperan las correcciones | Boya 4 × 1 L: 6 láminas nuevas en `planos/cad_final/BP/` (B5 cuna y B6 correa nuevas; soportes corregidos en B1 y B5). El PDF único se une al final con P2 y P4 |
 | E Lista de impresión | boya lista; nodo P2 espera las correcciones | Boya en 5 placas sin fallas: casco (213.6 g, 7.4 h), cubierta (119.0 g, 5.8 h), caja y tapa (227.8 g, 7.4 h), cuna impresa 2 veces (282.0 g, 10.0 h), 4 correas (20.1 g, 0.9 h). **Total 862.5 g, 31.1 h.** P14 y P15 ya no fallan (`"fijo": true`) |
