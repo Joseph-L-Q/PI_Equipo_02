@@ -27,6 +27,8 @@ MOD = Path(__file__).resolve().parent.parent
 RHO_W = 1.025                    # g/cm3, sea water (same as simple.py)
 LOGO_SVG = MOD / "assets" / "logo_upch.svg"
 TALL = 40.0
+LIP_W = 3.0                      # uniform width of the wavy lip band along the frame (mm)
+LIP_GAP = 2.0                    # clearance from a lobe to the rib sides: wider than a wall, so no sliver is born
 
 
 def by_volume(proto):
@@ -56,10 +58,10 @@ def lid_data(parts):
                      if e.geomType() == "CIRCLE" and abs(e.radius() - 1.7) < 0.15 and abs(e.arcCenter().z - z0) < 0.6})
     umb = parts.get("REF_umbilical")
     gland = None
-    if umb is not None:
-        foot = umb.intersect(cq.Solid.makeBox(600, 600, 4, cq.Vector(-300, -300, z0 - 0.5)))
-        if foot.Volume() > 1:
-            c = foot.Center()
+    if umb is not None:              # foot = the umbilical's flat end face resting on the lid (a boolean here took minutes)
+        feet = [f for f in umb.Faces() if f.geomType() == "PLANE" and abs(f.Center().z - z0) < 0.6]
+        if feet:
+            c = max(feet, key=lambda f: f.Area()).Center()
             gland = (c.x, c.y)
     return dict(m2=m2, z0=z0, outline=outline, handle=handle, logo=logo, screws=screws, gland=gland)
 
@@ -122,14 +124,80 @@ def rib(hx, hy, th, r0, r1, z, w, h_in, h_out):
     return prof.val().rotate(cq.Vector(0, 0, 0), cq.Vector(0, 0, 1), math.degrees(th)).moved(cq.Location(cq.Vector(hx, hy, z)))
 
 
+FONT = Path("C:/Windows/Fonts/ariblk.ttf")     # Arial Black: plain sans, no serifs, stems ~0.2 em (>= pared_min at 8 mm caps)
+CAP_MIN = 8.0                                   # minimum cap height of the lettering (mm)
+SINK = 0.05                                     # text sunk into the plate: the fuse never meets two coplanar faces
+
+
+BOLD = 0.3                                      # outline grown on each side: the thinnest diagonal of Arial Black at 11 mm
+                                                # caps is ~1.3 mm, + 2 x 0.2 clears pared_min
+
+
+def _outline(txt, size):
+    """Letters as clean shapely polygons: the font's B-spline outline (self-intersecting in OCCT's builder) sampled
+    every 0.1 mm, unioned and grown by BOLD with round joins. Polygons only: the later fuse sees planar faces."""
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    kw = dict(combine=False, halign="center", valign="center")
+    if FONT.exists():
+        kw["fontPath"] = str(FONT)
+    else:
+        kw["kind"] = "bold"
+    t = cq.Workplane("XY").text(txt, size, 1.0, **kw).val()
+
+    def pts(w):
+        out = []
+        for e in w.Edges():
+            k = max(2, int(e.Length() / 0.1) + 1)
+            out += [e.positionAt(i / k).toTuple()[:2] for i in range(k)]
+        return out
+
+    polys = [Polygon(pts(f.outerWire()), [pts(h) for h in f.innerWires()]).buffer(0)
+             for f in t.Faces() if f.normalAt().z < -0.99]
+    r = P.SKIN_WALL_MIN / 2 + 0.02             # opening: whatever is thinner than pared_min (tapered tails) goes away
+    return unary_union(polys).buffer(BOLD, quad_segs=4).buffer(-r, quad_segs=4).buffer(r, quad_segs=4).simplify(0.03)
+
+
+def sparse(pts, step=0.15):
+    """Drop ring points closer than step to the last kept one (and to the first): no edge below checks.MIN_EDGE."""
+    out = [pts[0]]
+    for x, y in pts[1:]:
+        if math.hypot(x - out[-1][0], y - out[-1][1]) >= step:
+            out.append((x, y))
+    while len(out) > 3 and math.hypot(out[-1][0] - out[0][0], out[-1][1] - out[0][1]) < step:
+        out.pop()
+    return out
+
+
+def _text(txt, size, h):
+    from shapely.geometry import MultiPolygon
+    g = _outline(txt, size)
+    solids = []
+    for poly in (g.geoms if isinstance(g, MultiPolygon) else [g]):
+        ring = lambda c: cq.Wire.makePolygon([cq.Vector(x, y, -SINK) for x, y in sparse(list(c.coords)[:-1])], close=True)
+        face = cq.Face.makeFromWires(ring(poly.exterior), [ring(i) for i in poly.interiors])
+        solids.append(cq.Solid.extrudeLinear(face, cq.Vector(0, 0, h + SINK)))
+    return cq.Compound.makeCompound(solids)
+
+
+def stroke_loss(txt, size, wall):
+    """Share of the letter area (%) thinner than wall: lost by a morphological opening of radius wall / 2."""
+    g = _outline(txt, size)
+    return 100 * (g.area - g.buffer(-wall / 2).buffer(wall / 2).area) / g.area
+
+
 def fit_text(txt, size, room, h):
-    """Raised bold text centred on the origin, base on z = 0, shrunk only if it does not fit in room (mm)."""
-    t = cq.Workplane("XY").text(txt, size, h, combine=False, halign="center", valign="center", kind="bold").val()
+    """Raised text centred on the origin, sunk SINK below z = 0, shrunk only if it does not fit in room (mm), but never
+    below CAP_MIN of cap height. Returns (solid, font size, cap height)."""
+    t = _text(txt, size, h)
     w = t.BoundingBox().xlen
     if w > room:
         size *= room / w
-        t = cq.Workplane("XY").text(txt, size, h, combine=False, halign="center", valign="center", kind="bold").val()
-    return t, size
+        t = _text(txt, size, h)
+    cap = _text(txt[0], size, h).BoundingBox().ylen - 2 * BOLD   # first letter is a capital (L, U); font height
+    if cap < CAP_MIN:
+        raise SystemExit(f"'{txt}' no cabe con {CAP_MIN} mm de alto de letra (queda {cap:.1f} mm en {room:.0f} mm)")
+    return t, size, cap
 
 
 def concha(L):
@@ -149,6 +217,7 @@ def concha(L):
         pearl = [(x0 + x1) / 2, (y0 + y1) / 2, (x1 - x0) / 2 + 4.0, (y1 - y0) / 2 + 3.0]
 
     parts = [prism(L["outline"], base, z0, -P.SKIN_INSET).cut(inner)]     # perimeter frame
+    inner_lip = prism(L["outline"], lip_h, z0, -(P.SKIN_INSET + P.SKIN_FRAME_W))
     # scallop: hinge in front of the handle, fan towards -y
     n = P.SKIN_RIBS
     a0, a1 = math.radians(196), math.radians(344)
@@ -158,31 +227,38 @@ def concha(L):
         while graze(hx, hy, angles(a0, a1, n), pearl, w) < P.SKIN_WALL_MIN:
             pearl[2] += 1.0
     parts.append(cq.Solid.makeCylinder(R, h_in + 0.5, cq.Vector(hx, hy, z0)))     # proud of the ribs: no slivers
-    for th in angles(a0, a1, n):
-        d = ray_to_rect(hx, hy, th, ix0, ix1, iy0, iy1)
-        parts.append(rib(hx, hy, th, R - 1.0, d + 1.5, z0, w, h_in, h_out))
-    # wavy lip: band between a smooth wave (spline, lobes reaching out at every rib) and the frame's inner face, so it
-    # shares that face with the frame instead of crossing it
-    e = 0.12
-    b0, b1 = a0 - e, a1 + e
-    wave = []
-    for i in range(121):
-        th = b0 + (b1 - b0) * i / 120
-        d = ray_to_rect(hx, hy, th, ix0, ix1, iy0, iy1)
-        k = (th - a0) / ((a1 - a0) / (n - 1))                             # 0 at a rib, 0.5 between ribs
-        r = d - depth * (0.5 - 0.5 * math.cos(2 * math.pi * k)) - 2.2
-        wave.append(cq.Vector(hx + r * math.cos(th), hy + r * math.sin(th), 0))
-    edges = [cq.Edge.makeSpline(wave), cq.Edge.makeLine(wave[-1], cq.Vector(hx, hy, 0)),
-             cq.Edge.makeLine(cq.Vector(hx, hy, 0), wave[0])]
-    inside = cq.Solid.extrudeLinear(cq.Face.makeFromWires(cq.Wire.assembleEdges(edges)), cq.Vector(0, 0, TALL))         .moved(cq.Location(cq.Vector(0, 0, z0 - 1)))
-    far = 400.0
-    sector = prism([(hx, hy), (hx + far * math.cos(b0), hy + far * math.sin(b0)), (-far, -far), (far, -far),
-                    (hx + far * math.cos(b1), hy + far * math.sin(b1))], lip_h, z0)
-    parts.append(prism(L["outline"], lip_h, z0, -(P.SKIN_INSET + P.SKIN_FRAME_W)).intersect(sector).cut(inside))
+    # wavy lip, on the real (rounded) inner outline of the frame, not on its bounding box: a uniform band LIP_W wide
+    # along the frame's inner face (front half only), plus one half-disc lobe between every two ribs, centred on the
+    # band's inner edge so it meets it at 90 deg (no cusp, no sliver) and kept LIP_GAP clear of the rib sides
+    edge = prism(L["outline"], 1, 0, -(P.SKIN_INSET + P.SKIN_FRAME_W + LIP_W)).Faces()
+    edge = max((f for f in edge if f.normalAt().z < -0.99), key=lambda f: f.Area()).outerWire()
+    ring = [edge.positionAt(i / 1440).toTuple()[:2] for i in range(1440)]
+
+    def on_edge(th):
+        """Point of the band's inner edge seen from the hinge at angle th (front half)."""
+        def gap(q):
+            return abs(math.remainder(math.atan2(q[1] - hy, q[0] - hx) - th, 2 * math.pi))
+        return min((q for q in ring if q[1] < hy), key=gap)
+
+    ths = angles(a0, a1, n)
+    for th in ths:
+        q = on_edge(th)
+        d = math.hypot(q[0] - hx, q[1] - hy) + LIP_W + P.SKIN_FRAME_W / 2          # into the frame
+        parts.append(rib(hx, hy, th, R - 1.0, d, z0, w, h_in, h_out))
+    front = box(-300, 300, -300, hy, z0 - 1, TALL)
+    parts.append(prism(L["outline"], lip_h, z0, -(P.SKIN_INSET + P.SKIN_FRAME_W + 0.0))
+                 .cut(prism(L["outline"], TALL, z0 - 1, -(P.SKIN_INSET + P.SKIN_FRAME_W + LIP_W))).intersect(front))
+    lobes = []
+    for t0, t1 in zip(ths, ths[1:]):
+        p0, p1, m = on_edge(t0), on_edge(t1), on_edge((t0 + t1) / 2)
+        rho = min(0.5 * math.hypot(p1[0] - p0[0], p1[1] - p0[1]) - w / 2 - LIP_GAP, depth * 2.5)
+        if rho >= P.SKIN_WALL_MIN:
+            lobes.append(cq.Solid.makeCylinder(rho, lip_h, cq.Vector(m[0], m[1], z0)))
+            parts.append(lobes[-1].intersect(inner_lip))
     # auricles (the two "ears" beside the hinge)
     for sx in (1, -1):
-        parts.append(prism([(sx * (R - 2), hy + 0.4 * R), (sx * (R + 16), hy + 0.4 * R), (sx * (R + 12), hy - 3),
-                            (sx * (R - 2), hy - 0.5 * R)], 3.0, z0))
+        parts.append(prism([(sx * (R - 4), hy + 0.4 * R), (sx * (R + 16), hy + 0.4 * R), (sx * (R + 12), hy - 3),
+                            (sx * (R - 4), hy - 0.5 * R)], 3.0, z0))       # inner corners deep in the umbo: no sliver
     # back half, L-shaped plate: a band across the width behind the handle for "LanternGuard", and the block beside
     # the umbilical gland for "UPCH"
     t1, t2 = P.SKIN_TEXT
@@ -193,11 +269,11 @@ def concha(L):
     band = box(ix0 - 2, ix1 + 2, by0, by1, z0, base)
     block = box(gx, ix1 + 2, by1 - 1, iy1 + 2, z0, base)
     parts.append(band.fuse(block).clean())
-    txt1, s1 = fit_text(t1, 16.0, (ix1 - ix0) - 10.0, P.SKIN_RELIEF)
+    txt1, s1, c1 = fit_text(t1, 16.0, (ix1 - ix0) - 10.0, P.SKIN_RELIEF)
     txt1 = txt1.moved(cq.Location(cq.Vector((ix0 + ix1) / 2, (by0 + by1) / 2, z0 + base)))
     if LOGO_SVG.exists():
         raise SystemExit(f"{LOGO_SVG.name} existe: falta importar el SVG en relieve (no estaba al construir skin.py)")
-    txt2, s2 = fit_text(t2, 20.0, (ix1 - gx) - 8.0, P.SKIN_RELIEF)
+    txt2, s2, c2 = fit_text(t2, 14.0, (ix1 - gx) - 8.0, P.SKIN_RELIEF)      # "UPCH" smaller than "LanternGuard"
     txt2 = txt2.moved(cq.Location(cq.Vector((gx + ix1) / 2, (by1 + iy1) / 2, z0 + base)))
     skin = parts[0]
     for s in parts[1:]:
@@ -219,7 +295,8 @@ def concha(L):
     skin = skin.intersect(region).clean()
     return skin, dict(bisagra=(hx, hy), umbo_r=round(R, 1), costillas=n, perla_logo=pearl and [round(v, 1) for v in pearl],
                       roce_perla_mm=pearl and round(graze(hx, hy, angles(a0, a1, n), pearl, w), 2),
-                      letra_mm=[round(s1, 1), round(s2, 1)])
+                      letra_mm=[round(s1, 1), round(s2, 1)], alto_mayuscula_mm=[round(c1, 1), round(c2, 1)],
+                      fuente=FONT.name if FONT.exists() else "CadQuery bold")
 
 
 def apparent(proto, skin_g, skin_cm3):
@@ -264,16 +341,22 @@ def build(proto, theme=None):
     bb = skin.BoundingBox()
     ob = prism(L["outline"], 1, L["z0"]).BoundingBox()
     vol = skin.Volume() / 1000
-    clash = {k: round(skin.intersect(v).Volume(), 2) for k, v in parts.items()
-             if v.BoundingBox().zmax > L["z0"] - 1 and skin.intersect(v).Volume() > 1e-3}
+    clash = {}
+    for k, v in parts.items():                                         # only parts whose box reaches the skin's box
+        vb = v.BoundingBox()
+        if vb.zmax < bb.zmin or vb.zmin > bb.zmax or vb.xmax < bb.xmin or vb.xmin > bb.xmax or vb.ymax < bb.ymin or vb.ymin > bb.ymax:
+            continue
+        iv = skin.intersect(v).Volume()
+        if iv > 1e-3:
+            clash[k] = round(iv, 2)
     rep = dict(prototipo=proto, tema=theme, volumen_cm3=round(vol, 2), masa_100_g=round(vol * P.PETG_DENSITY, 1),
-               solidos=len(skin.Solids()), brep_ok=chk["ok"], pared_p1_mm=round(p_wall, 2), pared_min_mm=round(min_wall, 2),
+               solidos=len(skin.Solids()), brep_ok=chk["ok"], brep=chk, pared_p1_mm=round(p_wall, 2), pared_min_mm=round(min_wall, 2), pared_ok=p_wall >= P.SKIN_WALL_MIN,
                bbox_mm=[round(bb.xlen, 1), round(bb.ylen, 1), round(bb.zlen, 1)],
                dentro_de_la_tapa=bb.xmin >= ob.xmin - 1e-6 and bb.xmax <= ob.xmax + 1e-6 and bb.ymin >= ob.ymin - 1e-6 and bb.ymax <= ob.ymax + 1e-6,
                margen_a_la_tapa_mm=round(min(bb.xmin - ob.xmin, ob.xmax - bb.xmax, bb.ymin - ob.ymin, ob.ymax - bb.ymax), 2),
                z_cambio_color_mm=P.SKIN_BASE, interferencias_mm3=clash, tornillos=len(L["screws"]), umbilical=L["gland"], **info)
     (out / "skin.json").write_text(json.dumps(rep, indent=1, ensure_ascii=False), encoding="utf-8")
-    print(proto, theme, json.dumps({k: rep[k] for k in ("volumen_cm3", "masa_100_g", "solidos", "brep_ok", "pared_p1_mm",
+    print(proto, theme, json.dumps({k: rep[k] for k in ("volumen_cm3", "masa_100_g", "solidos", "brep_ok", "brep", "pared_p1_mm", "pared_min_mm", "interferencias_mm3", "alto_mayuscula_mm",
                                                         "bbox_mm", "dentro_de_la_tapa", "margen_a_la_tapa_mm", "tornillos")}))
     return skin, L, rep, out
 
