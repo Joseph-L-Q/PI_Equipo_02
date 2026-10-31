@@ -88,6 +88,70 @@ def push_folder(folder, doc_name, assembly=None, dry=False):
     return doc, done
 
 
+# Correction 4 (Yoichi, 30/10): what is not printed carries REF_; printed parts keep their code.
+REF_NAMES = [(r"^LR_red$", "REF_linterna_malla"), (r"^LR_aro$", "REF_aro_superior"), (r"^LR_aro_superior$", "REF_aro_superior"),
+             (r"^LR_cabo(_central)?$", "REF_cabo"), (r"^(LR_|U1_?)umbilical.*$", "REF_umbilical"),
+             (r"^LR_boya$", "REF_boya"), (r"^M11_M11_", "M11_"), (r"^LR_", "REF_")]
+
+
+def step_parts(path):
+    """Leaf product names of a STEP and its number of solids (MANIFOLD_SOLID_BREP + BREP_WITH_VOIDS entities)."""
+    text = Path(path).read_text(encoding="utf-8", errors="replace")
+    solids = len(re.findall(r"=\s*(MANIFOLD_SOLID_BREP|BREP_WITH_VOIDS)\(", text))
+    names = re.findall(r"=\s*PRODUCT\('([^']*)'", text)
+    return names, solids
+
+
+def ref_name(name):
+    """REF_ name for a reference body; cuerdas are numbered 1..4 by the caller (ref_rename_step)."""
+    for pat, new in REF_NAMES:
+        if re.search(pat, name):
+            return re.sub(pat, new, name)
+    return name
+
+
+def ref_rename_step(src, dst):
+    """Copy of src with the PRODUCT names changed by REF_NAMES and the cuerdas renamed REF_cuerda_1..N in file
+    order. Geometry is untouched (only the name strings of PRODUCT entities change), so P0 keeps its shapes."""
+    text = Path(src).read_text(encoding="utf-8", errors="replace")
+    cuerdas = []
+
+    def sub(m):
+        old = m.group(2)
+        if old.startswith("REF_"):
+            new = old
+        elif re.search(r"cuerda", old, re.I):
+            if old not in cuerdas:
+                cuerdas.append(old)
+            new = f"REF_cuerda_{cuerdas.index(old) + 1}"
+        else:
+            new = ref_name(old)
+        return f"{m.group(1)}'{new}','{new}'"
+    out = re.sub(r"(=\s*PRODUCT\()'([^']*)','[^']*'", sub, text)
+    Path(dst).write_text(out, encoding="utf-8")
+    return step_parts(dst)
+
+
+def verify(doc_name, tab_prefix="ENSAMBLE", local=None, client=None):
+    """Parts that Onshape reports in each Part Studio whose tab name starts with tab_prefix
+    (GET /parts/d/{did}/w/{wid}?elementId=...) against the solids of the local STEP. Returns a list of dicts."""
+    OS.API = API_V6
+    client = client or OS.Client()
+    doc = OS.read_json(DOCS, {})[doc_name]
+    out = []
+    local_names, local_solids = step_parts(local) if local else ([], None)
+    for e in tabs(client, doc["did"], doc["wid"]):
+        if e.get("elementType") != "PARTSTUDIO" or not e["name"].startswith(tab_prefix):
+            continue
+        parts = client.call("GET", f"/parts/d/{doc['did']}/w/{doc['wid']}?elementId={e['id']}")
+        names = [p.get("name", "?") for p in parts]
+        out.append({"documento": doc_name, "pestana": e["name"], "partes_onshape": len(parts), "solidos_step": local_solids,
+                    "coincide": local_solids is None or len(parts) == local_solids,
+                    "sin_nombre": sum(1 for n in names if n.lower().startswith(("open cascade", "part "))),
+                    "nombres": names, "url": f"https://cad.onshape.com/documents/{doc['did']}/w/{doc['wid']}/e/{e['id']}"})
+    return out
+
+
 def push(path, nombre=None, flatten=False, did=None, wid=None, client=None):
     path = Path(path)
     if not path.exists():
@@ -125,10 +189,31 @@ def main():
     ap.add_argument("--documento", help="nombre del documento para --carpeta")
     ap.add_argument("--ensamble", help="STEP del ensamble para la pestana ENSAMBLE (--carpeta)")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--verificar", metavar="DOCUMENTO", help="compara las partes de las pestanas ENSAMBLE* con --ensamble")
+    ap.add_argument("--ensamble-v2", metavar="DOCUMENTO",
+                    help="sube --ensamble como pestana nueva ENSAMBLE_v2 (nombres REF_ en el STEP) y la verifica")
+    ap.add_argument("--pestana", default="ENSAMBLE_v2", help="nombre de la pestana para --ensamble-v2")
     a = ap.parse_args()
     try:
         n0 = OS.year_total()
-        if a.carpeta:
+        if a.verificar:
+            for r in verify(a.verificar, local=a.ensamble):
+                print(f"{r['pestana']}: Onshape {r['partes_onshape']} partes, STEP {r['solidos_step']} solidos, "
+                      f"{'coincide' if r['coincide'] else 'NO COINCIDE'}, sin nombre {r['sin_nombre']}")
+            return 0
+        if a.ensamble_v2:
+            src = Path(a.ensamble)      # a *_v2_nombres.step (nombres_p0.py) is uploaded as it is
+            dst = src if src.stem.endswith("_v2_nombres") else src.with_name(src.stem + "_v2_nombres.step")
+            names, solids = step_parts(dst) if dst == src else ref_rename_step(src, dst)
+            doc = OS.read_json(DOCS, {})[a.ensamble_v2]
+            OS.API = API_V6
+            client = OS.Client()
+            name, links = push(dst, a.pestana, flatten=True, did=doc["did"], wid=doc["wid"], client=client)
+            print(f"STEP local: {solids} solidos, {len(names)} productos")
+            for r in verify(a.ensamble_v2, name, dst, client):
+                print(f"  {r['pestana']}: Onshape {r['partes_onshape']} partes, "
+                      f"{'coincide' if r['coincide'] else 'NO COINCIDE'}, sin nombre {r['sin_nombre']}")
+        elif a.carpeta:
             doc, links = push_folder(a.carpeta, a.documento or Path(a.carpeta).name, a.ensamble, a.dry_run)
             name = doc["url"] if doc else "(dry-run)"
         else:

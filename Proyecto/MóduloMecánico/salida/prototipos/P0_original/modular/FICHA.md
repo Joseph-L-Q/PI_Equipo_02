@@ -47,3 +47,10 @@ tapas, gancho, carro y pestillo 100 %; rieles, bandeja, bisel, perilla y casquil
 
 ## Pendiente
 Nada: es referencia. Más piezas, más uniones y la varilla M8 obligatoria fueron las razones para pasar a la simple.
+
+## Onshape, pestaña ENSAMBLE_modular_v2 (30/10, noche)
+Mismo arreglo que el simple V1 (`cad_final/nombres_p0.py`): 29 piezas impresas reconocidas por volumen, más
+`lastre_+Y_pletina_1..4` y `lastre_-Y_pletina_1..4`, `REF_varilla_M8`, `REF_arandela_M8_+X/-X`, `REF_tuerca_M8_+X/-X`,
+`REF_aro_superior`, `REF_linterna_malla`, `REF_cuerda_1..4`. Geometría sin cambios (volumen y centroide de los 47 sólidos
+iguales). Subido aplanado como pestaña nueva `ENSAMBLE_modular_v2` de LG_P0_original: 47 partes = 47 sólidos, todas con
+nombre. `ensamble_modular_D200_v2_nombres.step` (9 MB) va a Drive como el original; la tabla está en el `.json`.

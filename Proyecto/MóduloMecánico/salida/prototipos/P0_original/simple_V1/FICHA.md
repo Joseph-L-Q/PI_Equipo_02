@@ -39,3 +39,13 @@ cámara con pie fijo a 30° (M5s) atornillada al riel; lastre de pletinas de ino
 
 ## Pendiente
 Nada: es referencia. Lo que se aprendió de ella (pie débil entre capas, caja alta) está aplicado en la V2 y en P1 a P4.
+
+## Onshape, pestaña ENSAMBLE_v2 (30/10, noche)
+El STEP original salió como compuesto sin nombres (53 partes "Open CASCADE" en Onshape). `cad_final/nombres_p0.py` reconoce
+cada sólido por volumen contra `step/*.step` (23 piezas impresas, con `_+X`/`_-X` o `_+Y`/`_-Y`) y el resto por su caja
+envolvente: `lastre_+Y_pletina_1..3` y `lastre_-Y_pletina_1..3`, `REF_aro_superior`, `REF_linterna_malla`,
+`REF_linterna_piso_1..3`, `REF_cuerda_1..4`, `REF_cuerda_apice_1..4`, `REF_cabo`, `REF_long_line`, `REF_boya`,
+`LR1_separador`, `REF_umbilical_1..13`. Escribe `ensamble_simple_V1_v2_nombres.step` con los mismos sólidos en el mismo
+lugar (comprobado: volumen y centroide de los 53 sólidos iguales al original). Subido aplanado como pestaña nueva
+`ENSAMBLE_v2` de LG_P0_original: 53 partes en Onshape = 53 sólidos del STEP, todas con nombre. La pestaña ENSAMBLE vieja
+no se tocó. Tabla de nombres: `ensamble_simple_V1_v2_nombres.json`.
