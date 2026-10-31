@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-352 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 16; estimado / confirmado: 1; estimado / por_verificar: 247; fabricante / confirmado: 7; fabricante / por_verificar: 9.
+361 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 16; estimado / confirmado: 1; estimado / por_verificar: 256; fabricante / confirmado: 7; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
@@ -87,7 +87,7 @@
 | `boya.sma_ciego` | True | Melissa 29/10: agujero ciego reservado para un SMA de panel (antena externa futura), lejos de los cables |
 | `linterna.profundidad` | 1000 | Aro de la linterna a 1 m bajo la superficie (prueba real) |
 
-### Origen estimado (247)
+### Origen estimado (256)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -338,4 +338,13 @@
 | `linterna.pisos` | 3 | Pisos (bandejas) dentro de la red; solo renders y STEP |
 | `linterna.cabo_largo` | 300 | Largo del cabo central que se dibuja |
 | `umbilical.comba` | 80 | Cuanto cuelga el umbilical bajo la recta boya-nodo (sin tension; render) |
+| `proto.perfiles` | simple: riel: solido, pared: 4, gancho: c, monocasco: False, estetico: False, caja: v2, capsula: v2, P1_minimo: riel: celosia, pared: 3.5, gancho: snap, monocasco: False, estetico: False, caja: minima, capsula: minima, P2_robusto: riel: celosia, pared: 5, gancho: c, monocasco: False, estetico: False, caja: v2, capsula: v2, capacidad: 6, pletinas: 6, P3_monocasco: riel: celosia, pared: 4, gancho: abrazadera, monocasco: True, estetico: False, caja: v2, capsula: v2, P4_estetico: riel: celosia, pared: 4, gancho: abrazadera, monocasco: True, estetico: True, caja: v2, capsula: v2 | Banderas por version: riel solido/celosia, pared del conducto, gancho c/snap/abrazadera, monocasco (opcional: capacidad del bolsillo y pletinas si la ventana de peso aparente lo pide) (caja+riel en una pieza), estetico (redondeos + logo), caja v2/minima, capsula v2/minima. P4 parte de P3 (ver PROTOTIPOS.md) |
+| `proto.sobreescrituras` | caja: minima: GAP_MOD: 3, GAP_WALL: 3, CLR_USB: 25, CLR_SD: 10, capsula: minima: CAP_SIDE_GAP: 1.5, CAP_REAR_ZONE: 20 | Valores de params que P1 pisa al importar (los modulos los leen por valor): holgura entre modulos y a la pared 3 mm (pedido del 30/10), zonas de acceso USB 35->25 y microSD 15->10, capsula con 1.5 mm por lado (cavidad 36 para la camara de 33) y zona trasera 23->20. Todo estimado: confirmar con el montaje de prueba |
+| `proto.celosia` | barra: 3, angulo: 65, margen_brida: 4, margen_silla: 4, margen_punta: 8, margen_gancho: 0 | Riel en celosia: ancho de barra entre ventanas triangulares (Warren, angulo de las diagonales) en las paredes laterales del conducto, y tramos macizos (mm) junto a la brida, a la silla, a la punta y al gancho. El piso y el techo del conducto no se tocan |
+| `proto.snap` | brazo: 2.4, apertura: 6.8, raiz_z: 5 | Gancho snap-fit (ENGANCHES.md): espesor del brazo flexible (la pared de la C se quita bajo la raiz), apertura entre las puntas (varilla Ø8 -> 0.6 mm de flexion por lado) y z de la raiz del brazo sobre el centro de la varilla |
+| `proto.abrazadera` | oreja: 8, oreja_t: 6 | Gancho con media luna atornillada (ENGANCHES.md): salida de la oreja mas alla de la C y espesor de cada oreja; 1 M4 vertical por lado con tuerca hexagonal en la oreja del gancho |
+| `proto.corte_x` | 125 | P3/P4: /x/ del plano de union entre la pieza central (caja + tramos de riel) y cada extremo. Debe dejar la pieza central en 2 x 125 = 250 (< 256 de la cama) y justo fuera de la brida del gancho (100 + 25) |
+| `proto.redondeos` | caja: 3, riel: 3, capsula: 3 | P4: radios (mm) de los redondeos: borde superior de la tapa y bajo la brida de la caja, aristas largas del conducto del riel, borde frontal de la capsula (no se aplica: parte el cuerpo en el asiento del bisel). Las esquinas verticales de la caja y las aristas largas de la capsula ya son redondeadas en el diseno base |
+| `proto.logo` | texto: LanternGuard, relieve: 0.6, alto: 9 | P4: texto en relieve sobre la tapa M2 |
+| `costo.petg_soles_kg` | 90 | Precio del PETG por kg (soles); costo = gramos reales del slicer x precio |
 

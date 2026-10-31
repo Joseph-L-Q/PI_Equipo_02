@@ -8,6 +8,10 @@ plus the parameter table and MEDIDAS.md; the plain build and --todo add the modu
     python cad_final/build.py               todo menos los ensambles por aro (~6 min)
     python cad_final/build.py --todo        todo, con los 4 ensambles en paralelo (~18 min, mucha CPU)
 
+Prototypes P1..P4 (bloque B): `--prototipo P1_minimo` (or LG_VERSION=P1_minimo in the environment) builds that version of the
+simple family into salida/prototipos/<version>/ and, with no other flag, runs the whole cycle: simple.py, slicer.py, fem.py and
+the ficha (prototipos.py). Combine with --rapido / --slicer / --fem to run one step.
+
 Each step is the existing script run in its own process (same Python), from cad_final/. Exit code 1 if any step fails.
 """
 import argparse
@@ -40,7 +44,9 @@ STEPS = {
     "bitacora": ["bitacora.py"],
     "slicer": ["slicer.py"],
     "fem": ["fem.py"],
+    "ficha": ["prototipos.py"],
 }
+PROTOTYPES = ("P1_minimo", "P2_robusto", "P3_monocasco", "P4_estetico")
 PLANS = {
     "rapido": ["parametros", "riel", "lastre", "cables", "verificacion", "tabla_parametros", "medidas"],
     "medidas": ["medidas"],
@@ -62,6 +68,10 @@ def version():
 
 
 def plans(ver):
+    if ver in PROTOTYPES:       # prototypes never touch the tracked tables (parametros, MEDIDAS, bitacora)
+        return {"rapido": ["parametros", "simple", "ficha"], "slicer": ["slicer", "ficha"], "fem": ["fem", "ficha"],
+                "normal": ["parametros", "simple", "slicer", "fem", "ficha"], "bitacora": ["ficha"], "medidas": ["ficha"],
+                "planos": ["ficha"]}
     if ver != "simple":
         return PLANS
     return {**PLANS, "rapido": ["parametros", "simple", "tabla_parametros", "medidas"],
@@ -101,11 +111,14 @@ def main():
     g.add_argument("--bitacora", action="store_true", help="BITACORA.xlsx y BOM.md (masa, horas y costo)")
     g.add_argument("--slicer", action="store_true", help="masa y tiempo reales con OrcaSlicer, luego la bitacora")
     g.add_argument("--fem", action="store_true", help="FEM local (Gmsh + CalculiX) del riel y del pie, luego la bitacora")
+    ap.add_argument("--prototipo", choices=PROTOTYPES, help="build this prototype (same as LG_VERSION=<name>)")
     ap.add_argument("--onshape", action="store_true",
                     help="al terminar, sube el ensamble simple a Onshape como pestanas nuevas (simple_D200_vN)")
     a = ap.parse_args()
     plan = ("rapido" if a.rapido else "medidas" if a.medidas else "planos" if a.planos else "bitacora" if a.bitacora
             else "slicer" if a.slicer else "fem" if a.fem else "normal")
+    if a.prototipo:
+        ENV["LG_VERSION"] = a.prototipo
     log_dir = HERE.parent / "salida" / "_logs_build"
     log_dir.mkdir(parents=True, exist_ok=True)
     ver = version()
@@ -116,7 +129,9 @@ def main():
     if a.todo:
         ok = ensambles(log_dir) and ok
     if a.onshape and ok:
-        if ver == "simple":
+        if ver in PROTOTYPES:
+            print("--onshape: no se sube un prototipo", flush=True)
+        elif ver == "simple":
             ok = run("onshape", ["onshape_push.py", str(HERE.parent / "salida" / "simple" / "ensamble_simple_D200.step"),
                                  "--nombre", "simple_D200"], log_dir)
             print((log_dir / "onshape.log").read_text(encoding="utf-8").strip(), flush=True)

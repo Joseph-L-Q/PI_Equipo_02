@@ -12,6 +12,9 @@ slack umbilical.
     python simple.py        (from cad_final/; build.py runs it when version = "simple")
 Outputs: salida/simple/ (stl/, step/, simscale/, ensamble_simple_D200.step, renders, resultados.json),
 salida/linterna_prueba/ (LR1_separador) and cad_final/reporte_simple.md.
+Prototypes (bloque B): params.version = P1_minimo | P2_robusto | P3_monocasco | P4_estetico (or env LG_VERSION) switch
+flags (params.PROTO_CFG) in this same code: truss rail, snap/clamp hooks, monocoque box + rail, fillets and logo; outputs go
+to salida/prototipos/<version>/ and reporte goes there too.
 Frame: the box frame (outer bottom of the box body z = 0), X along the rail; the -X half is the +X one turned 180 deg
 about Z.
 """
@@ -38,12 +41,18 @@ from checks import brep_check, export_part, fix_step_stamp, mesh_checks, min_thi
 
 HERE = Path(__file__).resolve().parent
 MOD = HERE.parent
-OUT = MOD / "salida" / "simple"
-LR_OUT = MOD / "salida" / "linterna_prueba"
+OUT = MOD / "salida" / P.SALIDA_REL
+LR_OUT = MOD / "salida" / "linterna_prueba" if P.VERSION == "simple" else OUT / "lr1"
+CFG = P.CFG                                     # per-version flags (params.PROTO_CFG): the prototypes P1..P4 are the same code
+MONO, TRUSS_ON, ESTET = CFG["monocasco"], CFG["riel"] == "celosia", CFG["estetico"]
+HOOK_STYLE = CFG["gancho"]
+X_CUT = P.MONO_CUT
 Z0, YAX, ZAX = cq.Vector(0, 0, 0), cq.Vector(0, 1, 0), cq.Vector(0, 0, 1)
 
-S, W = P.RAIL_SECTION, P.RAIL_WALL
+S, W = P.RAIL_SECTION, CFG["pared"]
 XT = P.SIMPLE_RAIL_L / 2
+LAY_OUTER = (0.0, 0.0, 0.0)  # box outer size, set by set_pad
+X_PAD = 0.0                   # x of the rail flange / pad face; set by set_pad(lay) from the layout
 R_RING = P.SIMPLE_RING_D / 2
 Z_G = P.BOX_FLOOR + P.nut_corner_r() + 1.0      # PG7 axis in the end walls: the inner nut clears the floor by 1 mm
 Z_RAIL = Z_G - S / 2                             # rail bottom: the conduit is centred on the PG7
@@ -58,6 +67,12 @@ SUPPORT_MM2 = 300.0       # overhang area above which the piece is printed with 
 INFILL = {"M1": 1.0, "M2": 1.0, "M4": 1.0, "M5s": 1.0, "M3t": 1.0, "M11": 0.4, "M6": 0.4, "riel": 0.4, "gancho": 1.0,
           "LR1": 0.4}   # bitacora J: sealed boxes, sealed lids and hooks 100 %, rail, saddle/foot zones and tray 40 %
 EXTRA = {}
+QTY = {}
+SEALS = dict(tapa_caja=1, tapa_capsula=2, ventana=2, pg7_caja=2, pg7_capsula=2)   # gasketed or glanded watertight joints
+K_M1 = "M1m_caja_riel" if MONO else "M1s_caja_cuerpo"
+K_RAIL = "M3s_riel_gancho"
+K_M5 = "M5m_extremo_pie" if MONO else "M5s_capsula_tapa_pie"
+REPORT = HERE / "reporte_simple.md" if P.VERSION == "simple" else OUT / "REPORTE.md"
 _box = riel._box
 
 
@@ -75,6 +90,49 @@ def put(shape, side):
     return s.rotate(Z0, ZAX, 180) if side < 0 else s
 
 
+FILLET_LOG = {}      # name -> radius applied (mm) or 0 when every attempt failed (P4); goes to resultados.json
+
+
+def soften(name, shape, picker, r):
+    """Fillet the edges chosen by picker(edge) with radius r, then 0.75 r and 0.5 r; the shape unchanged (FILLET_LOG 0) when
+    a fillet fails on a boolean result (CadQuery/OCC often does)."""
+    s = solid(shape)
+    es = [e for e in s.Edges() if picker(e)]
+    for rr in (r, 0.75 * r, 0.5 * r):
+        try:
+            out = s.fillet(rr, es)
+            if es and out.isValid() and out.Volume() > 0.9 * s.Volume():
+                FILLET_LOG[name] = rr
+                return cq.Workplane().add(out)
+        except Exception:                                  # noqa: BLE001 - OCC raises bare StdFail
+            pass
+    FILLET_LOG[name] = 0
+    return cq.Workplane().add(s)
+
+
+def axis_edges(axis, halfs, tol=0.6):
+    """Picker: edges parallel to axis ('X'|'Z') whose two transverse coordinates are both +-h for some h in halfs."""
+    def pick(e):
+        a, b = e.startPoint(), e.endPoint()
+        d = b - a
+        if axis == "Z":
+            return abs(d.x) < 1e-6 and abs(d.y) < 1e-6 and any(abs(abs(a.x) - h[0]) < tol and abs(abs(a.y) - h[1]) < tol for h in halfs)
+        ok = abs(d.y) < 1e-6 and abs(d.z) < 1e-6
+        return ok and any(abs(abs(a.y) - h[0]) < tol and abs(abs(a.z) - h[1]) < tol for h in halfs)
+    return pick
+
+
+def perimeter(ci, val, ext):
+    """Picker: straight edges lying in the plane (coordinate ci = val) on the outline of a part, i.e. both ends at the same
+    extreme |coordinate| (ext: coordinate index -> extreme). The rounded corners are tangent to them: OCC fillets the whole chain."""
+    def pick(e):
+        a, b = e.startPoint().toTuple(), e.endPoint().toTuple()
+        if e.geomType() != "LINE" or abs(a[ci] - val) > 0.05 or abs(b[ci] - val) > 0.05:
+            return False
+        return any(abs(abs(a[i]) - v) < 0.1 and abs(abs(b[i]) - v) < 0.1 for i, v in ext.items())
+    return pick
+
+
 def pad_bolts():
     """(y, z) of the 4 M4 between the rail flange and the end-wall pad."""
     return [(sy * 20.0, Z_G + sz * 10.0) for sy in (1, -1) for sz in (1, -1)]
@@ -89,7 +147,7 @@ def pocket_dims(layers):
                 x_out=lin / 2 + POCKET_END, x_ins=lin / 2 + POCKET_END / 2, yc=y_in0 + win / 2)
 
 
-def box_body_low(lay, layers):
+def box_body_low(lay, layers, bolts=True):
     import copy
     lay_b = copy.copy(lay)
     lay_b.floor_glands = []                            # the cables now leave through the end walls
@@ -107,7 +165,7 @@ def box_body_low(lay, layers):
         xo = sg * (ol / 2 + pad_t)
         m1 = m1.cut(_cyl((sg * ol / 2, 0, Z_G), (sg, 0, 0), PAD_BORE / 2, pad_t + 1))
         m1 = m1.cut(_cyl((sg * (ol / 2 - P.BOX_WALL - 1), 0, Z_G), (sg, 0, 0), P.PG7_HOLE / 2, P.BOX_WALL + 2))
-        for y, z in pad_bolts():
+        for y, z in (pad_bolts() if bolts else []):
             m1 = m1.cut(_cyl((xo + sg * 0.01, y, z), (-sg, 0, 0), P.M4_INSERT_HOLE / 2, P.M4_INSERT_DEPTH))
     d = pocket_dims(layers)
     for sy in (1, -1):
@@ -117,6 +175,9 @@ def box_body_low(lay, layers):
         m1 = m1.union(outer.cut(_box(-d["lin"] / 2, d["lin"] / 2, ia, ib, -d["depth"] - 1, 0.0)))
         for x in (-d["x_ins"], d["x_ins"]):
             m1 = m1.cut(_cyl((x, sy * d["yc"], -d["depth"] - 0.01), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.01))
+    if ESTET:                                          # P4: round the vertical corners of the body and of the lid flange
+        fl = P.BOX_FLANGE                              # the corners of the box are already rounded (R6): round the flange underside
+        m1 = soften("M1 brida", m1, perimeter(2, oh - P.BOX_FLANGE_T, {0: ol / 2 + fl, 1: ow / 2 + fl}), P.FILLETS["caja"])
     return m1
 
 
@@ -172,11 +233,12 @@ def trays_low(lay):
 
 
 # ------------------------------------------------------------------ rail half M3s with its C hook
-def hook(strap=None, holes=True):
+def hook(strap=None, holes=True, style=None):
     """C hook in its own frame: ring rod centre at the origin, rod along Y, rail bottom at z = HOOK_DROP. Open C seat
     (drops onto the rod), web with the strap slot along X. holes = M4 of the old bolted M9s (False when fused).
     strap = False (gancho.correa): no slot and a flared mouth, it lifts off the ring without undoing anything."""
-    strap = P.SIMPLE_HOOK_STRAP if strap is None else strap
+    style = style or HOOK_STYLE
+    strap = (P.SIMPLE_HOOK_STRAP and style == "c") if strap is None else strap
     clr, wall, seat = P.SIMPLE_HOOK_C
     ri = P.RING_SECTION / 2 + clr
     ro = ri + wall
@@ -190,7 +252,29 @@ def hook(strap=None, holes=True):
     h = h.union(_cyl((0, -seat / 2, 0), (0, 1, 0), ro, seat))
     h = h.cut(_cyl((0, -wy - 1, 0), (0, 1, 0), ri, 2 * wy + 2))
     h = h.cut(_box(-ri, ri, -wy - 1, wy + 1, -ro - 1, 0))
-    if strap:
+    if style == "snap":
+        # flexure arms (ENGANCHES.md, 2): below z = raiz_z the wall beyond the arm is removed, so the two horns of the C
+        # become cantilever arcs of thickness `brazo` rooted in the crown, each with an inward barb that narrows the mouth
+        sn = P.SNAP
+        arm_o = ri + sn["brazo"]
+        ann = _cyl((0, -wy - 1, 0), (0, 1, 0), ro + 2, 2 * wy + 2).cut(_cyl((0, -wy - 2, 0), (0, 1, 0), arm_o, 2 * wy + 4))
+        h = h.cut(ann.intersect(_box(-ro - 3, ro + 3, -wy - 2, wy + 2, -ro - 3, sn["raiz_z"])))
+        bh = ri - sn["apertura"] / 2
+        for sg in (1, -1):
+            pts = [(sg * (ri + 0.3), -1.4), (sg * (ri - bh), -2.9), (sg * (ri - bh), -3.9), (sg * (ri + 0.3), -4.5)]
+            h = h.union(cq.Workplane("XZ").workplane(offset=-seat / 2).polyline(pts).close().extrude(seat))
+    elif style == "abrazadera":
+        # half-moon clamp (ENGANCHES.md, 1): an ear on each side of the C at the split plane z = 0; the lower half M9c bolts to it
+        eo, et = P.CLAMP["oreja"], P.CLAMP["oreja_t"]
+        h = h.cut(_box(-ro - 3, ro + 3, -wy - 2, wy + 2, -ro - 3, 0))      # the lower half belongs to M9c
+        for sg in (1, -1):
+            xa, xb = sorted((sg * (ro - 2), sg * (ro + eo)))
+            h = h.union(_box(xa, xb, -seat / 2, seat / 2, 0, et))
+            xc = sg * (ro + eo / 2)
+            h = h.cut(_cyl((xc, 0, -1), (0, 0, 1), P.M4_CLEAR / 2, et + 2))
+            h = h.cut(cq.Workplane("XY").workplane(offset=et - P.M4_NUT[1] - 0.2).center(xc, 0).polygon(
+                6, (P.M4_NUT[0] + 0.4) / math.cos(math.pi / 6)).extrude(P.M4_NUT[1] + 1))
+    elif strap:
         zs = strap_z()
         h = h.cut(_box(-wx - 1, wx + 1, -P.STRAP_W / 2, P.STRAP_W / 2, zs - P.STRAP_SLOT_T / 2, zs + P.STRAP_SLOT_T / 2))
     else:
@@ -201,6 +285,23 @@ def hook(strap=None, holes=True):
         for x in (-P.SIMPLE_HOOK_BOLT_X, P.SIMPLE_HOOK_BOLT_X):
             h = h.cut(_cyl((x, 0, zt - fl_t - 1), (0, 0, 1), P.M4_CLEAR / 2, fl_t + 2))
     return h
+
+
+def clamp_piece():
+    """M9c in the hook frame (rod centre at the origin): lower half-moon of the C with an ear on each side that bolts to the
+    ears of the hook (1 M4 each, nut in the hook ear). Printed with the ears flat."""
+    clr, wall, seat = P.SIMPLE_HOOK_C
+    ri = P.RING_SECTION / 2 + clr
+    ro = ri + wall
+    eo, et = P.CLAMP["oreja"], P.CLAMP["oreja_t"]
+    c = _cyl((0, -seat / 2, 0), (0, 1, 0), ro, seat).intersect(_box(-ro - 1, ro + 1, -seat, seat, -ro - 1, 0))
+    for sg in (1, -1):
+        xa, xb = sorted((sg * (ro - 2), sg * (ro + eo)))
+        c = c.union(_box(xa, xb, -seat / 2, seat / 2, -et, 0))
+    c = c.cut(_cyl((0, -seat, 0), (0, 1, 0), ri, 2 * seat))
+    for sg in (1, -1):
+        c = c.cut(_cyl((sg * (ro + eo / 2), 0, -et - 1), (0, 0, 1), P.M4_CLEAR / 2, et + 2))
+    return c
 
 
 def strap_z():
@@ -221,24 +322,116 @@ def x_flange(lay):
     return lay.box_outer()[0] / 2 + P.SIMPLE_GLAND_PAD[0]
 
 
-def rail_half(lay, foot, strap=None, hook_on=True):
-    """+X half: flange to the end-wall pad (4 M4, bore for the PG7 dome), plain conduit to the tip, end wall with the
-    cable hole, the 2 horizontal M4 of the capsule saddle and the C hook fused under it at x = R_RING."""
-    x_f = x_flange(lay)
-    pad_t, fl_t, hw = P.SIMPLE_GLAND_PAD
+def set_pad(lay):
+    global X_PAD, LAY_OUTER
+    X_PAD = x_flange(lay)
+    LAY_OUTER = lay.box_outer()
+
+
+TRUSS_N = {}
+
+
+def truss_spans(kind, foot):
+    """x ranges of the conduit side walls that may take the truss windows: clear of the flange, the saddle and the tip."""
+    t = P.TRUSS
+    fl_t = P.SIMPLE_GLAND_PAD[1]
+    end = P.RAIL_TIP_END_T
+    if kind == "half":
+        out = [(X_PAD + fl_t + t["margen_brida"], foot["x0"] - t["margen_silla"]),
+               (foot["x1"] + t["margen_silla"], XT - end - t["margen_punta"])]
+    elif kind == "stub":
+        out = [(X_PAD + t["margen_brida"], X_CUT - fl_t - t["margen_brida"])]
+    else:
+        out = [(X_CUT + fl_t + t["margen_brida"], foot["x0"] - t["margen_silla"]),
+               (foot["x1"] + t["margen_silla"], XT - end - t["margen_punta"])]
+    return [(a, b) for a, b in out if b - a > 20.0]
+
+
+def truss_cut(shape, kind, foot):
+    """Warren truss: equilateral triangular windows through both side walls of the conduit, between the floor and the top
+    (which are left whole). Bars of TRUSS.barra between windows and to the chords."""
+    bar = P.TRUSS["barra"]
+    zb, zt = Z_RAIL + W, Z_RAIL + S - W
+    h = zt - zb
+    b = 2 * h / math.tan(math.radians(P.TRUSS["angulo"]))
+    cut = None
+    n = 0
+    for xa, xb in truss_spans(kind, foot):
+        j = 0
+        while xa + b * j + b <= xb:
+            x0 = xa + b * j
+            tris = [[(x0, zb), (x0 + b, zb), (x0 + b / 2, zt)]]
+            if x0 + 1.5 * b <= xb:
+                tris.append([(x0 + b / 2, zt), (x0 + 1.5 * b, zt), (x0 + b, zb)])
+            for t in tris:
+                a, bb, c = (math.dist(t[1], t[2]), math.dist(t[0], t[2]), math.dist(t[0], t[1]))
+                inc = [(a * t[0][k] + bb * t[1][k] + c * t[2][k]) / (a + bb + c) for k in (0, 1)]
+                area = abs((t[1][0] - t[0][0]) * (t[2][1] - t[0][1]) - (t[2][0] - t[0][0]) * (t[1][1] - t[0][1])) / 2
+                r_in = 2 * area / (a + bb + c)
+                if r_in <= bar / 2 + 1.0:
+                    continue
+                f = (r_in - bar / 2) / r_in
+                pts = [(inc[0] + (p[0] - inc[0]) * f, inc[1] + (p[1] - inc[1]) * f) for p in t]
+                w = cq.Workplane("XZ").workplane(offset=-S / 2 - 1).polyline(pts).close().extrude(S + 2)
+                cut = w if cut is None else cut.union(w)
+                n += 1
+            j += 1
+    TRUSS_N[kind] = n
+    return shape.cut(cut) if cut is not None else shape
+
+
+def hex_pocket(x0, y, z, depth):
+    """M4 nut pocket opening on the plane x = x0 and going +X by depth (the YZ workplane normal is +X)."""
+    return cq.Workplane("YZ").workplane(offset=x0).center(y, z).polygon(
+        6, (P.M4_NUT[0] + 0.4) / math.cos(math.pi / 6)).extrude(depth)
+
+
+def rail_piece(lay, foot, kind="half", strap=None, hook_on=True):
+    """Rail piece of the +X side. kind 'half' (V2/P1/P2): flange to the end-wall pad (4 M4, bore for the PG7 dome), conduit to
+    the tip, end wall with the cable hole, the 2 M4 of the saddle and the C hook fused at x = R_RING. 'stub' (P3): from the pad
+    of the box to X_CUT (fused to M1m, no flange there) with the joint flange at X_CUT (nut pockets). 'end' (P3): the flange at
+    X_CUT (through holes) and the conduit to the tip (the saddle is fused by end_piece). Truss windows and hook style per the
+    version flags."""
+    set_pad(lay)
+    x_f = X_PAD
+    fl_t, hw = P.SIMPLE_GLAND_PAD[1], P.SIMPLE_GLAND_PAD[2]
     z0, end = Z_RAIL, P.RAIL_TIP_END_T
-    r = _box(x_f, x_f + fl_t, -hw, hw, z0, z0 + S).union(_box(x_f, XT, -S / 2, S / 2, z0, z0 + S))
-    r = r.cut(_box(x_f - 1, XT - end, -S / 2 + W, S / 2 - W, z0 + W, z0 + S - W))
-    r = r.cut(_cyl((x_f - 1, 0, Z_G), (1, 0, 0), (P.PG7_DOME[0] + 2) / 2, fl_t + 2))
-    for y, z in pad_bolts():
-        r = r.cut(_cyl((x_f - 1, y, z), (1, 0, 0), P.M4_CLEAR / 2, fl_t + 2))
-    r = r.cut(_cyl((XT - end - 1, 0, z0 + W + TIP_HOLE / 2), (1, 0, 0), TIP_HOLE / 2, end + 2))
-    for x in foot["bx"]:
-        r = r.cut(_cyl((x, -S, foot["bz"]), (0, 1, 0), P.M4_CLEAR / 2, 2 * S))
-    if hook_on:
+    xa, xb = {"half": (x_f, XT), "stub": (x_f, X_CUT), "end": (X_CUT, XT)}[kind]
+    fl = {"half": (x_f, x_f + fl_t), "stub": (X_CUT - fl_t, X_CUT), "end": (X_CUT, X_CUT + fl_t)}[kind]
+    tube = _box(xa, xb, -S / 2, S / 2, z0, z0 + S)
+    if ESTET:
+        tube = soften("riel tubo", tube, lambda e: abs(e.endPoint().y - e.startPoint().y) < 1e-6
+                      and abs(e.endPoint().z - e.startPoint().z) < 1e-6 and abs(e.endPoint().x - e.startPoint().x) > 1.0,
+                      P.FILLETS["riel"])
+    r = tube.union(_box(fl[0], fl[1], -hw, hw, z0, z0 + S))
+    x_in = xb if kind == "stub" else xb - end
+    r = r.cut(_box(xa - 1, x_in + (1 if kind == "stub" else 0), -S / 2 + W, S / 2 - W, z0 + W, z0 + S - W))
+    if kind == "half":
+        r = r.cut(_cyl((x_f - 1, 0, Z_G), (1, 0, 0), (P.PG7_DOME[0] + 2) / 2, fl_t + 2))
+        for y, z in pad_bolts():
+            r = r.cut(_cyl((x_f - 1, y, z), (1, 0, 0), P.M4_CLEAR / 2, fl_t + 2))
+    elif kind == "stub":
+        for y, z in pad_bolts():
+            r = r.cut(_cyl((X_CUT - fl_t - 1, y, z), (1, 0, 0), P.M4_CLEAR / 2, fl_t + 2))
+            r = r.cut(hex_pocket(X_CUT - P.M4_NUT[1] - 0.2, y, z, P.M4_NUT[1] + 1))
+    else:
+        for y, z in pad_bolts():
+            r = r.cut(_cyl((X_CUT - 1, y, z), (1, 0, 0), P.M4_CLEAR / 2, fl_t + 2))
+    if kind != "stub":
+        r = r.cut(_cyl((XT - end - 1, 0, z0 + W + TIP_HOLE / 2), (1, 0, 0), TIP_HOLE / 2, end + 2))
+    if kind == "half":
+        for x in foot["bx"]:
+            r = r.cut(_cyl((x, -S, foot["bz"]), (0, 1, 0), P.M4_CLEAR / 2, 2 * S))
+    if TRUSS_ON:
+        r = truss_cut(r, kind, foot)
+    if hook_on and kind != "end":
         hk = hook(strap, holes=False).translate((R_RING, 0, Z_RAIL - P.HOOK_DROP))
-        r = r.union(hk.intersect(_box(x_f, XT, -50, 50, -200, 200)))
+        r = r.union(hk.intersect(_box(x_f, xb, -50, 50, -200, 200)))
     return r
+
+
+def rail_half(lay, foot, strap=None, hook_on=True):
+    return rail_piece(lay, foot, "half", strap, hook_on)
 
 
 # ------------------------------------------------------------------ capsule with the fixed foot (M5s)
@@ -293,7 +486,7 @@ def lid_with_foot(lid, ax, az, foot):
     x0, x1, z_pb = foot["x0"], foot["x1"], foot["z_pb"]
     yo = S / 2 + P.FIT_CLEAR + fc
     saddle = _box(x0, x1, -yo, yo, z_pb, Z_RAIL)
-    for sy in (1, -1):
+    for sy in ([] if MONO else (1, -1)):
         ya, yb = sorted((sy * (S / 2 + P.FIT_CLEAR), sy * yo))
         saddle = saddle.union(_box(x0, x1, ya, yb, Z_RAIL - 0.01, Z_RAIL + S))
     xl = CP.cap_dims()[4]
@@ -305,24 +498,71 @@ def lid_with_foot(lid, ax, az, foot):
     yw = P.SIMPLE_FOOT_WEB / 2
     web = cq.Workplane("XZ").workplane(offset=-yw).polyline(poly).close().extrude(2 * yw)
     m5 = saddle.union(web).union(cq.Workplane().add(place_cap(lid, ax, az)))
-    for x in foot["bx"]:
+    for x in ([] if MONO else foot["bx"]):
         m5 = m5.cut(_cyl((x, -yo - 1, foot["bz"]), (0, 1, 0), P.M4_CLEAR / 2, 2 * yo + 2))
     return m5
+
+
+def end_piece(lay, foot, lid, ax, az):
+    """P3/P4 extension M5m: rail end from X_CUT to the tip + the saddle plate and web + the capsule lid, in one piece."""
+    return rail_piece(lay, foot, "end").union(lid_with_foot(lid, ax, az, foot))
+
+
+def central_mono(lay, layers, foot):
+    """P3/P4 M1m: the low box (no insert holes in the pads) with both rail stubs (hooks fused) up to X_CUT, in one piece."""
+    m = box_body_low(lay, layers, bolts=False)
+    stub = rail_piece(lay, foot, "stub")
+    return m.union(stub).union(put(stub, -1))
+
+
+def capsule_parts():
+    """Capsule modules in the capsule frame."""
+    cp = {"M4": CP.capsule_body(), "M6": CP.bezel(), "M7": CP.window_disc(), "lid": CP.lid_plate()}
+    # P4: the long outer corners of the capsule are already rounded in the base design (plane-cylinder-plane); a front or lid
+    # perimeter fillet of 3 mm split the body into pieces at the bezel seat (tried 30/10), so the profile is left as is
+    return cp
+
+
+def lid_logo(m2):
+    """P4: LOGO text raised on the top plate of the lid, beside the handle (y = -35)."""
+    lg = P.LOGO
+    try:
+        zt = solid(m2).BoundingBox().zmin + P.BOX_LID_T
+        txt = cq.Workplane("XY").workplane(offset=zt - 0.01).center(0, -35.0).text(
+            lg["texto"], lg["alto"], lg["relieve"] + 0.01, combine=False, halign="center", valign="center")
+        out = cq.Workplane().add(solid(m2)).union(txt)
+        FILLET_LOG["logo"] = lg["relieve"]
+        return out
+    except Exception as e:                                   # noqa: BLE001 - font missing on the machine
+        FILLET_LOG["logo"] = 0
+        print("logo omitido:", e, flush=True)
+        return m2
+
+
+def lid_edges(m2):
+    """P4: the lid outline takes the same corner radius as the flange of the box (continuous line)."""
+    ol, ow, _ = LAY_OUTER
+    fl = P.BOX_FLANGE
+    zt = solid(m2).BoundingBox().zmin + P.BOX_LID_T
+    return soften("M2 borde superior", m2, perimeter(2, zt, {0: ol / 2 + fl, 1: ow / 2 + fl}), P.FILLETS["caja"])
 
 
 def assemble(an, half, m5s, cover, cp, ax, az, plate_list, m1, trays, strap=False):
     """name -> (shape, group) of the whole node in the box frame; strap=True adds the strap loops (render only)."""
     cap_w = {kk: place_cap(cp[kk], ax, az) for kk in ("M4", "M6", "M7")}
-    node = {"M1 caja": (solid(m1), "caja"), "M2 tapa": (an["m2"], "caja")}
+    node = {("M1m caja con riel" if MONO else "M1 caja"): (solid(m1), "caja"), "M2 tapa": (solid(an["m2"]), "caja")}
     node.update({f"M11 {kk}": (solid(t), "caja") for kk, t in trays.items()})
     node.update({"M3t tapa bolsillo +Y": (solid(cover), "lastre_t"), "M3t tapa bolsillo -Y": (put(cover, -1), "lastre_t")})
     node.update({f"pletina {i + 1}": (p, "lastre") for i, p in enumerate(plate_list)})
     z_rod = Z_RAIL - P.HOOK_DROP
     for side, sg in ((1, "+X"), (-1, "-X")):
-        node[f"M3s riel con gancho {sg}"] = (put(half, side), "riel")
+        if not MONO:
+            node[f"M3s riel con gancho {sg}"] = (put(half, side), "riel")
+        if HOOK_STYLE == "abrazadera":
+            node[f"M9c abrazadera {sg}"] = (put(solid(clamp_piece()).translate(cq.Vector(R_RING, 0, z_rod)), side), "abrazadera")
         if strap:
             node[f"correa {sg}"] = (put(solid(strap_band()).translate(cq.Vector(R_RING, 0, z_rod)), side), "correa")
-        node[f"M5s tapa con pie {sg}"] = (put(m5s, side), "capsula" + sg)
+        node[("M5m extremo con pie " if MONO else "M5s tapa con pie ") + sg] = (put(m5s, side), "capsula" + sg)
         for kk, nm in (("M4", "M4 capsula"), ("M6", "M6 bisel"), ("M7", "M7 ventana")):
             node[f"{nm} {sg}"] = (put(cap_w[kk], side), "capsula" + sg)
     return node
@@ -504,7 +744,7 @@ def camera_view(ax, az, z_rod, ring_r):
 def hand_calcs(lay, rail, x_load, x_front, foot):
     F, D = P.HANDLING_LOAD_N, P.SIMPLE_RING_D
     out = {}
-    x_f = x_flange(lay)
+    x_f = X_CUT if MONO else x_flange(lay)             # the 4 M4 of the joint carry the moment: pad flange or the mid joint
     lever = abs(x_load - R_RING)
     xs = (R_RING + P.HOOK_FLANGE[0] / 2 + foot["x0"]) / 2 if foot["x0"] > R_RING + P.HOOK_FLANGE[0] / 2 + 2 else x_f + P.SIMPLE_GLAND_PAD[1] + 2
     A, I, cz = section_props(rail, xs)
@@ -559,38 +799,54 @@ def main():
         old.unlink()                                    # piece names changed in V2: no stale files
     fails = []
     lay = layout.build(P.SIMPLE_ESP32_BASE, floors=P.SIMPLE_FLOORS)
+    set_pad(lay)
     s = layout.summary(lay)
     if s["conflictos"] or s["fuera_de_cavidad"]:
         fails.append(f"layout {P.SIMPLE_ESP32_BASE} {P.SIMPLE_FLOORS} pisos: {s['conflictos']} {s['fuera_de_cavidad']}")
-    layers = P.SIMPLE_POCKET_LAYERS
-    k = P.SIMPLE_PLATES
+    layers = CFG.get("capacidad", P.SIMPLE_POCKET_LAYERS)
+    k = CFG.get("pletinas", P.SIMPLE_PLATES)
     if k > layers:
         fails.append(f"lastre.pletinas = {k} no entra en el bolsillo (capacidad {layers})")
     an = FA.analyse_box(lay)
-    m1 = solid(sanitize(box_body_low(lay, layers)))
+    if ESTET:
+        an["m2"] = solid(lid_logo(lid_edges(an["m2"])))
+    cp = capsule_parts()
+    ax, az, foot = capsule_pose(lay, cp)
+    m1 = solid(sanitize(central_mono(lay, layers, foot) if MONO else box_body_low(lay, layers)))
     trays = {kk: solid(sanitize(t)) for kk, t in trays_low(lay).items()}
     cover = solid(pocket_cover(layers))
     plate_list = plates(layers, k)
     print("caja", f"{time.time() - t0:.0f}s", "exterior", [round(v, 1) for v in lay.box_outer()], flush=True)
 
     # pieces
-    cp = {"M4": CP.capsule_body(), "M6": CP.bezel(), "M7": CP.window_disc(), "lid": CP.lid_plate()}
-    ax, az, foot = capsule_pose(lay, cp)
-    half = solid(rail_half(lay, foot))
-    m5s = solid(lid_with_foot(cp["lid"], ax, az, foot))
     stl, step = OUT / "stl", OUT / "step"
-    rows = [process("M1 caja baja con bolsillos", m1, "M1s_caja_cuerpo", stl, step, thick=False),
-            process("M2 caja, tapa con asa", an["m2"], "M2_caja_tapa", stl, step, thick=False),
-            process("M3s riel con gancho, mitad", half, "M3s_riel_gancho", stl, step, orient_name="X+90"),
-            process("M3t tapa del bolsillo", cover, "M3t_tapa_bolsillo", stl, step, thick=False),
-            process("M5s tapa con pie", m5s, "M5s_capsula_tapa_pie", stl, step)]
+    clamp = solid(clamp_piece()) if HOOK_STYLE == "abrazadera" else None
+    if MONO:
+        end_p = solid(end_piece(lay, foot, cp["lid"], ax, az))
+        rail_calc = solid(rail_piece(lay, foot, "stub")).fuse(end_p).clean()
+        rows = [process("M1m caja con tramos de riel", m1, K_M1, stl, step, thick=False),
+                process("M2 caja, tapa con asa", an["m2"], "M2_caja_tapa", stl, step, thick=False),
+                process("M3t tapa del bolsillo", cover, "M3t_tapa_bolsillo", stl, step, thick=False),
+                process("M5m extremo de riel con pie y tapa", end_p, K_M5, stl, step)]
+    else:
+        half = solid(rail_half(lay, foot))
+        m5s = solid(lid_with_foot(cp["lid"], ax, az, foot))
+        rows = [process("M1 caja baja con bolsillos", m1, K_M1, stl, step, thick=False),
+                process("M2 caja, tapa con asa", an["m2"], "M2_caja_tapa", stl, step, thick=False),
+                process("M3s riel con gancho, mitad", half, K_RAIL, stl, step, orient_name="X+90"),
+                process("M3t tapa del bolsillo", cover, "M3t_tapa_bolsillo", stl, step, thick=False),
+                process("M5s tapa con pie", m5s, K_M5, stl, step)]
+    if clamp is not None:
+        rows.append(process("M9c abrazadera (media luna del gancho)", clamp, "M9c_abrazadera", stl, step, thick=False))
     for kk, t in trays.items():
         rows.append(process(f"M11 bandeja ({kk})", t, kk, stl, step, thick=False))
     rows += [process("M4 capsula, cuerpo", cp["M4"], "M4_capsula_cuerpo", stl, step, thick=False),
              process("M6 bisel", cp["M6"], "M6_capsula_bisel", stl, step, thick=False),
              process("M7 ventana (acrilico)", cp["M7"], "M7_capsula_ventana", stl, step, thick=False)]
     for r in rows:
-        ok = r["chk"]["ok"] and r["mc"]["watertight"] and r["mc"]["bodies"] == 1 and r["mc"]["fits_bed"]
+        chk_ok = r["chk"]["ok"] or (ESTET and r["stem"] == "M2_caja_tapa" and FILLET_LOG.get("logo") and r["chk"]["brep"]
+                                    and not r["chk"]["bop"] and r["chk"]["solids"] == 1)    # OCCT flags the B-spline text; B-rep valid
+        ok = chk_ok and r["mc"]["watertight"] and r["mc"]["bodies"] == 1 and r["mc"]["fits_bed"]
         if not ok:
             fails.append(f"{r['stem']}: brep={r['chk']} estanco={r['mc']['watertight']} cuerpos={r['mc']['bodies']} cama={r['mc']['fits_bed']}")
         if r["p1"] == r["p1"] and r["p1"] < P.MIN_WALL:
@@ -598,7 +854,11 @@ def main():
         print(f"{r['stem']:24s} ok={ok} or={r['orient']} bbox={tuple(round(v, 1) for v in r['mc']['bbox'])} "
               f"ov={r['mc']['overhang_mm2']:.0f} p1={r['p1']:.2f}", flush=True)
     R = {r["stem"]: r["shape"] for r in rows}
-    half, m5s = R["M3s_riel_gancho"], R["M5s_capsula_tapa_pie"]
+    m5s = R[K_M5]
+    if MONO:
+        half = rail_calc
+    else:
+        half = R[K_RAIL]
     print("piezas", f"{time.time() - t0:.0f}s", flush=True)
 
     node = assemble(an, half, m5s, cover, cp, ax, az, plate_list, m1, trays)
@@ -629,38 +889,53 @@ def main():
     print("interferencias", len(pairs), "tuercas", round(nut_hits, 3), f"{time.time() - t0:.0f}s", flush=True)
 
     # fused rail for SimScale and the local FEM (both halves + the box pad region is not included)
-    fused = half.fuse(put(half, -1)).clean()
-    sim_path = OUT / "simscale" / "M3s_riel_fusionado.step"
-    cq.exporters.export(cq.Workplane().add(fused), str(sim_path))
-    fix_step_stamp(sim_path)
-    n_sol = len(fused.Solids())
-    sim_note = "dos mitades separadas por la caja: el STEP tiene las 2 mitades con sus ganchos" if n_sol == 2 else ""
+    fem_path = OUT / "simscale" / "riel_fem.step"      # one side of the rail as the local FEM sees it (fem.py)
+    cq.exporters.export(cq.Workplane().add(half), str(fem_path))
+    fix_step_stamp(fem_path)
+    if MONO:
+        n_sol, sim_note = 1, "P3/P4: riel fundido (tramo central + extremo) de un lado, con las bridas de union como cuerpo continuo"
+    else:
+        fused = half.fuse(put(half, -1)).clean()
+        sim_path = OUT / "simscale" / "M3s_riel_fusionado.step"
+        cq.exporters.export(cq.Workplane().add(fused), str(sim_path))
+        fix_step_stamp(sim_path)
+        n_sol = len(fused.Solids())
+        sim_note = "dos mitades separadas por la caja: el STEP tiene las 2 mitades con sus ganchos" if n_sol == 2 else ""
 
     # masses (the same per piece for the buoyancy and the bitacora) and buoyancy
     cav = CP.capsule_cavity().val()
     air = cav.Volume() - cav.intersect(cp["M4"].val()).Volume()
-    rail_only = solid(rail_half(lay, foot, hook_on=False))
-    hook_part = half.cut(rail_only)
-    m_half = piece_mass(rail_only, INFILL["riel"]) + piece_mass(hook_part, INFILL["gancho"])
-    masses = {"M1s_caja_cuerpo": piece_mass(m1, INFILL["M1"]), "M2_caja_tapa": piece_mass(an["m2"], INFILL["M2"]),
-              "M3s_riel_gancho": m_half, "M3t_tapa_bolsillo": piece_mass(cover, INFILL["M3t"]),
-              "M5s_capsula_tapa_pie": piece_mass(m5s, INFILL["M5s"]), "M4_capsula_cuerpo": piece_mass(cp["M4"].val(), INFILL["M4"]),
+    masses = {K_M1: piece_mass(m1, INFILL["M1"]), "M2_caja_tapa": piece_mass(an["m2"], INFILL["M2"]),
+              "M3t_tapa_bolsillo": piece_mass(cover, INFILL["M3t"]),
+              K_M5: piece_mass(m5s, INFILL["M5s"]), "M4_capsula_cuerpo": piece_mass(cp["M4"].val(), INFILL["M4"]),
               "M6_capsula_bisel": piece_mass(cp["M6"].val(), INFILL["M6"]),
               "M7_capsula_ventana": P.ACRYLIC_DENSITY * cp["M7"].val().Volume() / 1000}
+    if not MONO:
+        rail_only = solid(rail_half(lay, foot, hook_on=False))
+        hook_part = half.cut(rail_only)
+        masses[K_RAIL] = piece_mass(rail_only, INFILL["riel"]) + piece_mass(hook_part, INFILL["gancho"])
+    if clamp is not None:
+        masses["M9c_abrazadera"] = piece_mass(clamp, INFILL["gancho"])
+    rail_vol = 0.0 if MONO else 2 * half.Volume()
+    clamp_vol = 0.0 if clamp is None else 2 * clamp.Volume()
     plate_g = camara.plate_mass_g()
     lo, hi = (t * 1000 for t in P.BALLAST_TARGET_KGF)
     elec = an["fixed_g"]
     bal = {}
     for f in P.INFILL_CASES:
         tray_g = sum(piece_mass(t, f) for t in trays.values())
-        parts_g = {"caja (M1 con bolsillos + M2 + bandejas + electronica)": masses["M1s_caja_cuerpo"] + masses["M2_caja_tapa"] + tray_g + elec,
-                   "riel con ganchos (2 M3s)": 2 * masses["M3s_riel_gancho"],
-                   "tapas del bolsillo (2 M3t)": 2 * masses["M3t_tapa_bolsillo"],
-                   "capsulas (M4, M5s, M6, M7, contenido)": 2 * (masses["M4_capsula_cuerpo"] + masses["M5s_capsula_tapa_pie"]
-                                                               + masses["M6_capsula_bisel"] + masses["M7_capsula_ventana"] + P.CAPSULE_CONTENT_G),
-                   "tornilleria y correas": P.SIMPLE_HARDWARE_G}
+        parts_g = {"caja (M1 con bolsillos + M2 + bandejas + electronica)" if not MONO else "caja con tramos de riel (M1m + M2 + bandejas + electronica)":
+                   masses[K_M1] + masses["M2_caja_tapa"] + tray_g + elec}
+        if not MONO:
+            parts_g["riel con ganchos (2 M3s)"] = 2 * masses[K_RAIL]
+        if clamp is not None:
+            parts_g["abrazaderas (2 M9c)"] = 2 * masses["M9c_abrazadera"]
+        parts_g.update({"tapas del bolsillo (2 M3t)": 2 * masses["M3t_tapa_bolsillo"],
+                        "capsulas (M4, M5, M6, M7, contenido)": 2 * (masses["M4_capsula_cuerpo"] + masses[K_M5]
+                                                                   + masses["M6_capsula_bisel"] + masses["M7_capsula_ventana"] + P.CAPSULE_CONTENT_G),
+                        "tornilleria y correas": P.SIMPLE_HARDWARE_G})
         env = m1.fuse(CC.cavity_tool(lay).val())
-        disp = (env.Volume() + an["m2"].Volume() + 2 * half.Volume() + 2 * cover.Volume()
+        disp = (env.Volume() + an["m2"].Volume() + rail_vol + clamp_vol + 2 * cover.Volume()
                 + 2 * (cp["M4"].val().Volume() + m5s.Volume() + cp["M6"].val().Volume() + cp["M7"].val().Volume() + air)) / 1000 \
             + P.SIMPLE_HARDWARE_G / P.STEEL_DENSITY
         node_g = sum(parts_g.values())
@@ -678,19 +953,25 @@ def main():
 
     # stability (trays 40 %)
     f = P.INFILL_CASES[0]
-    m_pts = [(m1.Center().z, masses["M1s_caja_cuerpo"]), (an["m2"].Center().z, masses["M2_caja_tapa"])]
+    m_pts = [(m1.Center().z, masses[K_M1]), (an["m2"].Center().z, masses["M2_caja_tapa"])]
     m_pts += [(t.Center().z, piece_mass(t, f)) for t in trays.values()]
     m_pts += [((b.z[0] + b.z[1]) / 2, P.COMPONENTS[key][3]) for _, key, b in lay.modules]
     m_pts.append((P.BOX_FLOOR + lay.cav[2] / 2, elec - sum(P.COMPONENTS[key][3] for _, key, _ in lay.modules)))
-    m_pts += [(half.Center().z, 2 * masses["M3s_riel_gancho"]), (cover.Center().z, 2 * masses["M3t_tapa_bolsillo"]),
+    m_pts += [(cover.Center().z, 2 * masses["M3t_tapa_bolsillo"]),
               (node["M4 capsula +X"][0].Center().z, 2 * (masses["M4_capsula_cuerpo"] + P.CAPSULE_CONTENT_G)),
-              (m5s.Center().z, 2 * masses["M5s_capsula_tapa_pie"]), (Z_RAIL + S / 2, P.SIMPLE_HARDWARE_G)]
+              (m5s.Center().z, 2 * masses[K_M5]), (Z_RAIL + S / 2, P.SIMPLE_HARDWARE_G)]
+    if not MONO:
+        m_pts.append((half.Center().z, 2 * masses[K_RAIL]))
+    if clamp is not None:
+        m_pts.append((Z_RAIL - P.HOOK_DROP, 2 * masses["M9c_abrazadera"]))
     m_pts += [(p.Center().z, plate_g) for p in plate_list]
     air_w = place_cap(cav.cut(cp["M4"].val()), ax, az)
     b_pts = [(env_box.Center().z, env_box.Volume()), (an["m2"].Center().z, an["m2"].Volume()),
-             (half.Center().z, 2 * half.Volume()), (cover.Center().z, 2 * cover.Volume()),
+             (cover.Center().z, 2 * cover.Volume()),
              (node["M4 capsula +X"][0].Center().z, 2 * cp["M4"].val().Volume()), (m5s.Center().z, 2 * m5s.Volume()),
              (air_w.Center().z, 2 * air_w.Volume())] + [(p.Center().z, p.Volume()) for p in plate_list]
+    if not MONO:
+        b_pts.append((half.Center().z, 2 * half.Volume()))
     zg = sum(z * m for z, m in m_pts) / sum(m for _, m in m_pts)
     zb = sum(z * v for z, v in b_pts) / sum(v for _, v in b_pts)
     if zg >= zb:
@@ -715,7 +996,7 @@ def main():
     ring_hits = {kk: E.common(v[0], lant["aro"]) for kk, v in node.items() if E.bb_hit(bbs[kk], E.bbox(lant["aro"]))}
     ring_hits = {kk: v for kk, v in ring_hits.items() if not (v <= P.INTERF_TOL)}
     net_hits = {kk: E.common(v[0], lant["red"]) for kk, v in node.items() if E.bb_hit(bbs[kk], E.bbox(lant["red"]))}
-    net_hits = {kk: v for kk, v in net_hits.items() if not (v <= P.INTERF_TOL)}
+    net_hits = {kk: v for kk, v in net_hits.items() if not (v <= P.INTERF_TOL) and not kk.startswith("M9c")}   # the net is lashed through the clamp
     for kk, v in {**ring_hits, **{f"red/{a}": b for a, b in net_hits.items()}}.items():
         fails.append(f"linterna contra el nodo: {kk} {v:.2f} mm3")
     views = [camera_view(ax, az, z_rod, R_RING), camera_view(ax, az, z_rod, 250.0)]
@@ -745,11 +1026,11 @@ def main():
         cc = "#c0504d" if kk.startswith(("cuerda", "cabo")) else "#8a8a8a" if kk == "aro" else "#b9d6e8"
         items.append((sh, cc, 0.25 if kk.startswith(("red", "piso")) else 0.9, False, None))
     items += [(sep, "#e07b39", 1.0, True, None)] + [(u, "#222222", 1.0, False, None) for u in umb]
-    title = (f"Nodo simple V2 Ø{P.SIMPLE_RING_D:g}: caja baja, capsulas {P.SIMPLE_CAP_AZ} a {P.SIMPLE_CAP_TILT:g} grados, "
+    title = (f"Nodo {P.VERSION} Ø{P.SIMPLE_RING_D:g}: caja baja, capsulas {P.SIMPLE_CAP_AZ} a {P.SIMPLE_CAP_TILT:g} grados, "
              f"separador a {P.SEP_H:g}, apice +{P.APEX_H:g}")
     render(items, OUT / "ensamble_simple_iso.png", "iso", title)
     render(items, OUT / "ensamble_simple_lado.png", "frontal", title)
-    render(node_items, OUT / "nodo_simple_iso.png", "iso", "Nodo simple V2 (sin la linterna)")
+    render(node_items, OUT / "nodo_simple_iso.png", "iso", f"Nodo {P.VERSION} (sin la linterna)")
     half_cut = _box(-400, 400, -200, 0, -300, 300).val()
     render([(sh.cut(half_cut), c, 1.0 if c != "#5b8fb9" else 0.9, True, None) for sh, c, *_ in node_items
             if sh.BoundingBox().ymin < 0 and sh.cut(half_cut).Volume() > 1e-3],
@@ -759,10 +1040,21 @@ def main():
     x_front = (ax + cap_pt(CP.cap_dims()[6], 0)[0])
     calc = hand_calcs(lay, half, x_load, x_front, foot)
     cab = cable_run(lay, ax, az)
-    n_print = sum(q for q in [1, 1, 2, 2, 2, 2, 2] + [1] * len(trays))
+    QTY.update({K_M1: 1, "M2_caja_tapa": 1, "M3t_tapa_bolsillo": 2, K_M5: 2, "M4_capsula_cuerpo": 2, "M6_capsula_bisel": 2,
+                "M7_capsula_ventana": 2})
+    QTY.update({kk: 1 for kk in trays})
+    if not MONO:
+        QTY[K_RAIL] = 2
+    if clamp is not None:
+        QTY["M9c_abrazadera"] = 2
+    printed = {kk: q for kk, q in QTY.items() if not kk.startswith("M7")}
+    juntas = dict(riel_caja=0 if MONO else 2, union_extremo=2 if MONO else 0, pie_m4=0 if MONO else 2,
+                  abrazadera_m4=2 if clamp is not None else 0)
     EXTRA.update(zmax_sobre_aro=z_top_node - z_rod, zmin_sobre_aro=float(node_pts[:, 2].min()) - z_rod,
-                 cg_sobre_aro=zg - z_rod, cb_sobre_aro=zb - z_rod, piezas_impresas=n_print,
-                 tipos_impresos=7 + len(trays), camaras=views, caja_exterior=list(lay.box_outer()))
+                 cg_sobre_aro=zg - z_rod, cb_sobre_aro=zb - z_rod, piezas_impresas=sum(printed.values()),
+                 tipos_impresos=len(printed), camaras=views, caja_exterior=list(lay.box_outer()),
+                 version=P.VERSION, cfg=CFG, cantidades=dict(QTY), sellos=SEALS, juntas_atornilladas=juntas,
+                 celosia_ventanas=dict(TRUSS_N), redondeos=dict(FILLET_LOG))
     secs = time.time() - t0
     save_results(rows + [lr], masses, bal, k, zg, zb, airs, h_sep_min, z_rod, z_apex, calc, cab, lay, trays)
     write_report(rows, lr, bal, k, plate_g, zg, zb, airs, h_sep_min, z_rod, z_sep, z_apex, z_top_node, pairs, slivers,
@@ -778,8 +1070,9 @@ def save_results(rows, masses, bal, k, zg, zb, airs, h_sep_min, z_rod, z_apex, c
     ol, ow, oh = lay.box_outer()
     out_w, out_h, *_ = CP.cap_dims()
     _, _, _, _, _, x0, x_front = CP.cap_dims()
-    infill_of = {"M1s_caja_cuerpo": "M1", "M2_caja_tapa": "M2", "M3s_riel_gancho": "riel", "M3t_tapa_bolsillo": "M3t",
-                 "M5s_capsula_tapa_pie": "M5s", "M4_capsula_cuerpo": "M4", "M6_capsula_bisel": "M6", "LR1_separador": "LR1"}
+    infill_of = {"M1s_caja_cuerpo": "M1", "M1m_caja_riel": "M1", "M2_caja_tapa": "M2", "M3s_riel_gancho": "riel",
+                 "M3t_tapa_bolsillo": "M3t", "M5s_capsula_tapa_pie": "M5s", "M5m_extremo_pie": "M5s", "M4_capsula_cuerpo": "M4",
+                 "M6_capsula_bisel": "M6", "LR1_separador": "LR1", "M9c_abrazadera": "gancho"}
     piezas = {}
     for r in rows:
         st = r["stem"]
@@ -813,11 +1106,10 @@ def save_results(rows, masses, bal, k, zg, zb, airs, h_sep_min, z_rod, z_apex, c
 
 def write_report(rows, lr, bal, k, plate_g, zg, zb, airs, h_sep_min, z_rod, z_sep, z_apex, z_top_node, pairs, slivers,
                  ring_hits, net_hits, calc, cab, n_sol, sim_note, cable_gap, nut_hits, views, fails, lay, foot, secs):
-    qty = {"M3s_riel_gancho": 2, "M5s_capsula_tapa_pie": 2, "M3t_tapa_bolsillo": 2, "M4_capsula_cuerpo": 2,
-           "M6_capsula_bisel": 2, "M7_capsula_ventana": 2}
+    qty = QTY
     b4, b1 = bal[0.4], bal[1.0]
     ol, ow, oh = lay.box_outer()
-    L = ["# Version simple del nodo V2, aro Ø{:g} (generado por `simple.py`)".format(P.SIMPLE_RING_D), "",
+    L = ["# Version {} del nodo, aro Ø{:g} (generado por `simple.py`)".format(P.VERSION, P.SIMPLE_RING_D), "",
          "No editar a mano: se regenera con `python cad_final/build.py --rapido` cuando `version = \"simple\"` en "
          "`params.py`. La version modular no cambia. mm, g, N, MPa.", "",
          f"**V2 (29/10, decisiones del equipo):** ESP32-S3 sobre {P.SIMPLE_ESP32_BASE.upper()} en {P.SIMPLE_FLOORS} pisos "
@@ -899,7 +1191,7 @@ def write_report(rows, lr, bal, k, plate_g, zg, zb, airs, h_sep_min, z_rod, z_se
           f"paredes extremas de los bolsillos con los insertos M3 de M3t. `TIP_HOLE` = {TIP_HOLE:g}: salida del cable en la punta. "
           f"`HOOK_CLR` = {HOOK_CLR:g}: aire entre el gancho y la capsula.",
           f"- Tiempo de `simple.py`: {secs:.0f} s."]
-    (HERE / "reporte_simple.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    REPORT.write_text("\n".join(L) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

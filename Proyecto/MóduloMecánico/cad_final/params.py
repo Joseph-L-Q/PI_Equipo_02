@@ -10,6 +10,7 @@ Derived quantities (cavity, box size, positions) are NOT entered here: layout.py
 The table "parametro | anterior | nuevo | razon | estado" is generated from REGISTRO.
 """
 import math
+import os
 from dataclasses import dataclass
 
 ORIGENES = ("medido", "fabricante", "equipo", "estimado")
@@ -531,6 +532,7 @@ BUOY_FLOAT_R = p("boya.flotador_radio", 8.0, EST, VER, "Radio de las aristas ver
 VERSION = p("version", "simple", "equipo", OK,
             "simple: nodo del prototipo para el aro Ø200 (simple.py, salida/simple/). modular: riel por tramos de la "
             "decision del 29/10 (salida/preliminar/ y ensambles por aro). Cambia lo que regenera build.py")
+VERSION = os.environ.get("LG_VERSION") or VERSION   # env override: build.py --prototipo / LG_VERSION=P1_minimo (see PROTOTIPOS.md)
 SIMPLE_RING_D = p("simple.aro_D", 200.0, "equipo", OK, "Aro de la linterna del prototipo real")
 SIMPLE_RAIL_L = p("simple.riel_L", 430.0, "equipo", OK,
                   "Riel de una pieza partido en 2 mitades iguales (M3s) con union plana en x = 0 bajo la caja; sin varilla M8")
@@ -621,3 +623,55 @@ LANTERN_FLOORS = p("linterna.pisos", 3, EST, VER, "Pisos (bandejas) dentro de la
 LANTERN_CENTRAL_LINE = p("linterna.cabo_central", True, "equipo", OK, "Dibuja el cabo del apice al punto fijo")
 LANTERN_LINE_L = p("linterna.cabo_largo", 300.0, EST, VER, "Largo del cabo central que se dibuja")
 UMB_SAG = p("umbilical.comba", 80.0, EST, VER, "Cuanto cuelga el umbilical bajo la recta boya-nodo (sin tension; render)")
+
+
+# =====================================================================================
+# PROTOTIPOS P1..P4 (bloque B): `version` = nombre; simple.py los trata como la familia simple y escribe en
+# salida/prototipos/<version>/. Un valor de PROTO_CFG["P.."] solo cambia lo que dice; lo demas es el nodo V2.
+# =====================================================================================
+PROTOTYPES = ("P1_minimo", "P2_robusto", "P3_monocasco", "P4_estetico")
+PROTO_CFG = p("proto.perfiles", {
+    "simple": dict(riel="solido", pared=4.0, gancho="c", monocasco=False, estetico=False, caja="v2", capsula="v2"),
+    "P1_minimo": dict(riel="celosia", pared=3.5, gancho="snap", monocasco=False, estetico=False, caja="minima", capsula="minima"),
+    "P2_robusto": dict(riel="celosia", pared=5.0, gancho="c", monocasco=False, estetico=False, caja="v2", capsula="v2",
+                       capacidad=6, pletinas=6),
+    "P3_monocasco": dict(riel="celosia", pared=4.0, gancho="abrazadera", monocasco=True, estetico=False, caja="v2", capsula="v2"),
+    "P4_estetico": dict(riel="celosia", pared=4.0, gancho="abrazadera", monocasco=True, estetico=True, caja="v2", capsula="v2"),
+}, EST, VER, "Banderas por version: riel solido|celosia, pared del conducto, gancho c|snap|abrazadera, monocasco (opcional: capacidad del bolsillo y pletinas si la ventana de peso aparente lo pide) "
+   "(caja+riel en una pieza), estetico (redondeos + logo), caja v2|minima, capsula v2|minima. P4 parte de P3 (ver PROTOTIPOS.md)")
+PROTO_OVERRIDES = p("proto.sobreescrituras", {
+    "caja": {"minima": dict(GAP_MOD=3.0, GAP_WALL=3.0, CLR_USB=25.0, CLR_SD=10.0)},
+    "capsula": {"minima": dict(CAP_SIDE_GAP=1.5, CAP_REAR_ZONE=20.0)},
+}, EST, VER, "Valores de params que P1 pisa al importar (los modulos los leen por valor): holgura entre modulos y a la "
+   "pared 3 mm (pedido del 30/10), zonas de acceso USB 35->25 y microSD 15->10, capsula con 1.5 mm por lado (cavidad 36 "
+   "para la camara de 33) y zona trasera 23->20. Todo estimado: confirmar con el montaje de prueba")
+TRUSS = p("proto.celosia", dict(barra=3.0, angulo=65.0, margen_brida=4.0, margen_silla=4.0, margen_punta=8.0, margen_gancho=0.0),
+          EST, VER, "Riel en celosia: ancho de barra entre ventanas triangulares (Warren, angulo de las diagonales) en las paredes laterales del conducto, "
+                    "y tramos macizos (mm) junto a la brida, a la silla, a la punta y al gancho. El piso y el techo del conducto no se tocan")
+SNAP = p("proto.snap", dict(brazo=2.4, apertura=6.8, raiz_z=5.0), EST, VER,
+         "Gancho snap-fit (ENGANCHES.md): espesor del brazo flexible (la pared de la C se quita bajo la raiz), apertura "
+         "entre las puntas (varilla Ø8 -> 0.6 mm de flexion por lado) y z de la raiz del brazo sobre el centro de la varilla")
+CLAMP = p("proto.abrazadera", dict(oreja=8.0, oreja_t=6.0), EST, VER,
+          "Gancho con media luna atornillada (ENGANCHES.md): salida de la oreja mas alla de la C y espesor de cada oreja; "
+          "1 M4 vertical por lado con tuerca hexagonal en la oreja del gancho")
+MONO_CUT = p("proto.corte_x", 125.0, EST, VER,
+             "P3/P4: |x| del plano de union entre la pieza central (caja + tramos de riel) y cada extremo. Debe dejar la pieza "
+             "central en 2 x 125 = 250 (< 256 de la cama) y justo fuera de la brida del gancho (100 + 25)")
+FILLETS = p("proto.redondeos", dict(caja=3.0, riel=3.0, capsula=3.0), EST, VER,
+            "P4: radios (mm) de los redondeos: borde superior de la tapa y bajo la brida de la caja, aristas largas del conducto del riel, "
+            "borde frontal de la capsula (no se aplica: parte el cuerpo en el asiento del bisel). Las esquinas verticales de la caja y las aristas largas de la capsula ya son redondeadas en el diseno base")
+LOGO = p("proto.logo", dict(texto="LanternGuard", relieve=0.6, alto=9.0), EST, VER, "P4: texto en relieve sobre la tapa M2")
+PETG_PRICE = p("costo.petg_soles_kg", 90.0, EST, VER, "Precio del PETG por kg (soles); costo = gramos reales del slicer x precio")
+PROTO_NAME = VERSION                                   # alias used in reports
+FAMILY = ("simple",) + PROTOTYPES                      # versions built by simple.py
+CFG = PROTO_CFG.get(VERSION, PROTO_CFG["simple"])
+SALIDA_REL = "simple" if VERSION in ("simple", "modular") else f"prototipos/{VERSION}"   # under salida/
+
+
+def _apply_overrides():
+    for kind in ("caja", "capsula"):
+        for k, v in PROTO_OVERRIDES[kind].get(CFG[kind], {}).items():
+            globals()[k] = v
+
+
+_apply_overrides()

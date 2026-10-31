@@ -37,3 +37,13 @@ salida/simple/fem/spooles.out
 
 # Ensamble de la modular (9 MB, copia de salida/ensambles/ensamble_D200.step): va a Drive, no al repo
 salida/prototipos/P0_original/modular/ensamble_modular_D200.step
+
+# G-code y archivos del solver de los prototipos P1..P4 (se regeneran con build.py --prototipo)
+salida/prototipos/*/gcode/
+salida/prototipos/*/fem/*.inp
+salida/prototipos/*/fem/*.dat
+salida/prototipos/*/fem/*.frd
+salida/prototipos/*/fem/*.sta
+salida/prototipos/*/fem/*.cvg
+salida/prototipos/*/fem/*.12d
+salida/prototipos/*/fem/spooles.out

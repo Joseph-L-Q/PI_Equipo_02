@@ -27,8 +27,9 @@ import params as P
 import simple as SM
 
 HERE = Path(__file__).resolve().parent
-OUT = HERE.parent / "salida" / "simple" / "fem"
-STEP = HERE.parent / "salida" / "simple" / "step"
+OUT = HERE.parent / "salida" / P.SALIDA_REL / "fem"
+STEP = HERE.parent / "salida" / P.SALIDA_REL / "step"
+RIEL_FEM = HERE.parent / "salida" / P.SALIDA_REL / "simscale" / "riel_fem.step"   # one side of the rail (fused for P3/P4)
 CCX = Path(os.environ.get("CCX_EXE", Path.home() / "Downloads" / "calculix_2.22" / "calculix_2.22_4win" / "ccx_static.exe"))
 GMSH_TO_CCX_TET10 = [0, 1, 2, 3, 4, 5, 6, 7, 9, 8]
 
@@ -38,7 +39,8 @@ def geometry():
     import capsula as CP
     import layout
     lay = layout.build(P.SIMPLE_ESP32_BASE, floors=P.SIMPLE_FLOORS)
-    cp = {"M4": CP.capsule_body(), "M6": CP.bezel(), "M7": CP.window_disc(), "lid": CP.lid_plate()}
+    SM.set_pad(lay)
+    cp = SM.capsule_parts()
     ax, az, foot = SM.capsule_pose(lay, cp)
     xf = CP.cap_dims()[6]
     front = (ax + SM.cap_pt(xf, 0)[0], 0.0, az + SM.cap_pt(xf, 0)[1])
@@ -192,18 +194,24 @@ def main():
     def lid_holes(bb):
         c = ((bb[0] + bb[3]) / 2, (bb[1] + bb[4]) / 2, (bb[2] + bb[5]) / 2)
         return any(math.dist(c, p) < P.CAP_LID_T for p in g["lid_pts"]) and max(bb[3] - bb[0], bb[4] - bb[1], bb[5] - bb[2]) <= 8.0
-    cases = {"riel_agua": (STEP / "M3s_riel_gancho.step", seat, saddle),
-             "riel_izado": (STEP / "M3s_riel_gancho.step", flange, saddle),
-             "pie": (STEP / "M5s_capsula_tapa_pie.step", saddle, lid_holes)}
+    if SM.MONO:     # P3/P4: the lid is part of the end piece, so the load goes through the 4 M3 of the lid; "pie" = the end piece alone
+        joint = lambda bb: abs(bb[0] - SM.X_CUT) < 0.05 and abs(bb[3] - SM.X_CUT) < 0.05  # noqa: E731
+        cases = {"riel_agua": (RIEL_FEM, seat, lid_holes), "riel_izado": (RIEL_FEM, flange, lid_holes),
+                 "pie": (STEP / "M5m_extremo_pie.step", joint, lid_holes)}
+    else:
+        riel = STEP / "M3s_riel_gancho.step"
+        cases = {"riel_agua": (riel, seat, saddle), "riel_izado": (riel, flange, saddle),
+                 "pie": (STEP / "M5s_capsula_tapa_pie.step", saddle, lid_holes)}
     res = {}
     for name, (step, fx, rg) in cases.items():
         res[name] = run_case(name, step, g, size, fx, rg)
         print(name, {k: (round(v, 2) if isinstance(v, float) else v) for k, v in res[name].items()}, flush=True)
-    data = dict(material=dict(E=P.PETG_E, nu=P.PETG_NU, sy=P.PETG_YIELD, sy_capas=P.PETG_YIELD_Z), malla_mm=size,
+    data = dict(version=P.VERSION, material=dict(E=P.PETG_E, nu=P.PETG_NU, sy=P.PETG_YIELD, sy_capas=P.PETG_YIELD_Z), malla_mm=size,
                 carga_N=P.HANDLING_LOAD_N, solver=str(CCX.name), casos={k: v for k, v in res.items() if "error" not in v},
                 errores={k: v["error"] for k, v in res.items() if "error" in v})
     (OUT / "fem.json").write_text(json.dumps(data, indent=1, ensure_ascii=False), encoding="utf-8")
-    simscale_md(g, data)
+    if P.VERSION == "simple":
+        simscale_md(g, data)
     return 1 if data["errores"] else 0
 
 

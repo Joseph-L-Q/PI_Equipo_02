@@ -7,8 +7,8 @@ Profiles: three flat JSON in cad_final/orca/ (printer Bambu Lab P1P 0.4 nozzle w
 says where it came from. Every piece: 0.2 mm layers, 3 walls, gyroid with the infill of the piece (resultados.json;
 a mixed "riel 40 %, gancho 100 %" is sliced at the highest), supports only where the bitacora says so (overhang over
 simple.SUPPORT_MM2 in the print orientation). Each printed piece of resultados.json (not the bought acrylic M7) is turned
-to its print orientation and sliced alone; the G-code goes to salida/simple/gcode/ (ignored by git) and
-"; filament used [g]" and the estimated time are read from it into salida/simple/slicer.json. ORCA_EXE overrides the
+to its print orientation and sliced alone; the G-code goes to salida/<version>/gcode/ (ignored by git; version = simple or prototipos/<P..>) and
+"; filament used [g]" and the estimated time are read from it into <version>/slicer.json. ORCA_EXE overrides the
 slicer path.
 
 The nightly portable has no BBL machine/process presets on disk (they are packed in resources/profiles/BBL.opc), so a
@@ -26,12 +26,14 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 MOD = HERE.parent
 SAL = MOD / "salida"
-GCODE = SAL / "simple" / "gcode"
+import params as P  # noqa: E402  (VERSION / LG_VERSION decide the output folder)
+VER = SAL / P.SALIDA_REL
+GCODE = VER / "gcode"
 PROFILES = HERE / "orca"
 ORCA = Path(os.environ.get("ORCA_EXE", Path.home() / "Downloads" / "OrcaSlicer_Windows_x64_nightly_portable"
                            / "OrcaSlicer" / "orca-slicer.exe"))
 OVERRIDES = {"layer_height": "0.2", "wall_loops": "3", "sparse_infill_density": "20%", "sparse_infill_pattern": "gyroid"}
-STL_DIRS = (SAL / "simple" / "stl", SAL / "linterna_prueba")
+STL_DIRS = (VER / "stl", SAL / "linterna_prueba" if P.VERSION == "simple" else VER / "lr1")
 
 
 def pieces(res):
@@ -137,7 +139,7 @@ def main(profile_dir=PROFILES):
             shutil.copy2(f, PROFILES / f.name)
         print(f"perfiles copiados de {EXPORTED} a {PROFILES}")
     prof = profiles(profile_dir)
-    res = json.loads((SAL / "simple" / "resultados.json").read_text(encoding="utf-8"))
+    res = json.loads((VER / "resultados.json").read_text(encoding="utf-8"))
     work = GCODE / "_trabajo"
     work.mkdir(parents=True, exist_ok=True)
     out, fails = {}, []
@@ -161,7 +163,7 @@ def main(profile_dir=PROFILES):
         print(f"OK    {stem:24s} {got[0]:7.1f} g  {got[1]:5.2f} h  relleno {infill} %  "
               f"soportes {'si' if info['soportes'] else 'no'}", flush=True)
     if out:
-        (SAL / "simple" / "slicer.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
+        (VER / "slicer.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
     print("FALLAS:", fails if fails else "ninguna")
     return 1 if fails else 0
 

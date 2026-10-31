@@ -1,0 +1,330 @@
+{
+ "piezas": {
+  "M1s_caja_cuerpo": {
+   "nombre": "M1 caja baja con bolsillos",
+   "orient": "X180",
+   "bbox": [
+    139.0,
+    148.0,
+    102.50000000000001
+   ],
+   "voladizo_mm2": 15046.340965345105,
+   "soportes": true,
+   "volumen_cm3": 341.39300997778605,
+   "relleno": 1.0,
+   "masa_g": 433.56912267178825
+  },
+  "M2_caja_tapa": {
+   "nombre": "M2 caja, tapa con asa",
+   "orient": "Y+90",
+   "bbox": [
+    62.98789978027344,
+    148.0,
+    139.0
+   ],
+   "voladizo_mm2": 1441.4622206285726,
+   "soportes": true,
+   "volumen_cm3": 131.68536963097517,
+   "relleno": 1.0,
+   "masa_g": 167.2404194313385
+  },
+  "M3s_riel_gancho": {
+   "nombre": "M3s riel con gancho, mitad",
+   "orient": "X+90",
+   "bbox": [
+    145.5,
+    75.18459129333496,
+    50.0
+   ],
+   "voladizo_mm2": 6593.593006126022,
+   "soportes": true,
+   "volumen_cm3": 81.69199708821236,
+   "relleno": "riel 40 %, gancho 100 %",
+   "masa_g": 93.15167108908841
+  },
+  "M3t_tapa_bolsillo": {
+   "nombre": "M3t tapa del bolsillo",
+   "orient": "X180",
+   "bbox": [
+    117.0,
+    32.0,
+    3.0000000000000036
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 11.13851069301227,
+   "relleno": 1.0,
+   "masa_g": 14.145908580125582
+  },
+  "M5s_capsula_tapa_pie": {
+   "nombre": "M5s tapa con pie",
+   "orient": "sin girar",
+   "bbox": [
+    57.32789611816406,
+    62.0,
+    94.19357109069824
+   ],
+   "voladizo_mm2": 1554.850204028306,
+   "soportes": true,
+   "volumen_cm3": 72.969619362229,
+   "relleno": 1.0,
+   "masa_g": 92.67141659003083
+  },
+  "M11_bandeja": {
+   "nombre": "M11 bandeja (M11_bandeja)",
+   "orient": "sin girar",
+   "bbox": [
+    105.0,
+    114.0,
+    30.0
+   ],
+   "voladizo_mm2": 36.25663036626065,
+   "soportes": false,
+   "volumen_cm3": 36.62143525871989,
+   "relleno": 0.4,
+   "masa_g": 42.31030459533988
+  },
+  "M11_bandeja_sup": {
+   "nombre": "M11 bandeja (M11_bandeja_sup)",
+   "orient": "sin girar",
+   "bbox": [
+    105.0,
+    114.0,
+    3.0
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 34.76736429098353,
+   "relleno": 0.4,
+   "masa_g": 40.253096230228145
+  },
+  "M4_capsula_cuerpo": {
+   "nombre": "M4 capsula, cuerpo",
+   "orient": "Y-90",
+   "bbox": [
+    62.0,
+    62.0,
+    41.0
+   ],
+   "voladizo_mm2": 890.1701115344998,
+   "soportes": true,
+   "volumen_cm3": 41.31935280342026,
+   "relleno": 1.0,
+   "masa_g": 52.47557806034372
+  },
+  "M6_capsula_bisel": {
+   "nombre": "M6 bisel",
+   "orient": "Y+90",
+   "bbox": [
+    41.98694610595703,
+    41.97389602661133,
+    2.5
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 1.8902962996649786,
+   "relleno": 0.4,
+   "masa_g": 2.400676300574523
+  },
+  "M7_capsula_ventana": {
+   "nombre": "M7 ventana (acrilico)",
+   "orient": "Y+90",
+   "bbox": [
+    29.99067497253418,
+    29.981353759765625,
+    3.0
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 2.1205750411731104,
+   "relleno": null,
+   "masa_g": 2.5234842989960016
+  },
+  "LR1_separador": {
+   "nombre": "LR1 separador",
+   "orient": "sin girar",
+   "bbox": [
+    211.86823272705078,
+    211.93411254882812,
+    6.0
+   ],
+   "voladizo_mm2": 0.0,
+   "soportes": false,
+   "volumen_cm3": 44.85723070428181,
+   "relleno": 0.4,
+   "masa_g": 43.66461930112607
+  }
+ },
+ "soporte_umbral_mm2": 300.0,
+ "riel": {
+  "largo": 430.0,
+  "seccion": 30.0,
+  "pared": 3.5,
+  "fondo_z": -1.3397459621556127
+ },
+ "caja": {
+  "exterior": [
+   119.0,
+   128.0,
+   77.0
+  ],
+  "interior": [
+   111.0,
+   120.0,
+   73.0
+  ],
+  "con_brida": [
+   139.0,
+   148.0
+  ],
+  "pared": 4.0,
+  "fondo": 4.0,
+  "esp32": "kit_a",
+  "pisos": 2
+ },
+ "capsula": {
+  "exterior": [
+   41.0,
+   44.0,
+   44.0
+  ],
+  "cavidad": [
+   35.0,
+   36.0,
+   36.0
+  ],
+  "angulo": 30.0,
+  "acimut": "adentro"
+ },
+ "ventana": {
+  "diametro": 30.0,
+  "espesor": 3.0
+ },
+ "gancho": {
+  "c_interior": 8.8,
+  "pared": 6.0,
+  "asiento": 12.0,
+  "caida": 40.0,
+  "correa": true,
+  "fusionado": true
+ },
+ "separador": {
+  "tipo": "aro",
+  "seccion": [
+   12.0,
+   6.0
+  ],
+  "altura": 140.0,
+  "altura_min": 136.3397459621556
+ },
+ "pletinas": {
+  "por_bolsillo": 5,
+  "bolsillos": 2,
+  "medida": [
+   25.0,
+   5.0,
+   100.0
+  ]
+ },
+ "peso": {
+  "40": {
+   "aire_g": 2414.6104127670133,
+   "aparente_g": 276.89610146685504,
+   "sin_pletinas_g": -582.478898533145,
+   "pletinas_min": 5,
+   "pletinas_max": 6
+  },
+  "100": {
+   "aire_g": 2422.7107873695686,
+   "aparente_g": 284.9964760694104,
+   "sin_pletinas_g": -574.3785239305896,
+   "pletinas_min": 5,
+   "pletinas_max": 6
+  }
+ },
+ "bg_mm": 18.86773775238205,
+ "apice_sobre_aro": 290.0,
+ "aire_min": 10.602658656222413,
+ "fs": {
+  "riel": 14.711239362955324,
+  "riel_capas": 7.1921614663337134,
+  "pie": 3.9296094091835743,
+  "pie_capas": 1.9211423778230807,
+  "gancho": 5.837837837837838,
+  "gancho_capas": 2.854054054054054
+ },
+ "insertos_N": 349.4949479305982,
+ "cable_mm": 382.51411667200955,
+ "zmax_sobre_aro": 181.32764195254734,
+ "zmin_sobre_aro": -37.23246776061094,
+ "cg_sobre_aro": 45.94671310734341,
+ "cb_sobre_aro": 64.81445085972547,
+ "piezas_impresas": 14,
+ "tipos_impresos": 9,
+ "camaras": [
+  {
+   "lens": [
+    132.6650635094611,
+    -59.18653347947321
+   ],
+   "dist": 38.0,
+   "campo_diag": 53.21577290393794,
+   "en_foco": false,
+   "D": 200.0
+  },
+  {
+   "lens": [
+    132.6650635094611,
+    -59.18653347947321
+   ],
+   "dist": null,
+   "campo_diag": null,
+   "en_foco": false,
+   "D": 500.0
+  }
+ ],
+ "caja_exterior": [
+  119.0,
+  128.0,
+  77.0
+ ],
+ "version": "P1_minimo",
+ "cfg": {
+  "riel": "celosia",
+  "pared": 3.5,
+  "gancho": "snap",
+  "monocasco": false,
+  "estetico": false,
+  "caja": "minima",
+  "capsula": "minima"
+ },
+ "cantidades": {
+  "M1s_caja_cuerpo": 1,
+  "M2_caja_tapa": 1,
+  "M3t_tapa_bolsillo": 2,
+  "M5s_capsula_tapa_pie": 2,
+  "M4_capsula_cuerpo": 2,
+  "M6_capsula_bisel": 2,
+  "M7_capsula_ventana": 2,
+  "M11_bandeja": 1,
+  "M11_bandeja_sup": 1,
+  "M3s_riel_gancho": 2
+ },
+ "sellos": {
+  "tapa_caja": 1,
+  "tapa_capsula": 2,
+  "ventana": 2,
+  "pg7_caja": 2,
+  "pg7_capsula": 2
+ },
+ "juntas_atornilladas": {
+  "riel_caja": 2,
+  "union_extremo": 0,
+  "pie_m4": 2,
+  "abrazadera_m4": 0
+ },
+ "celosia_ventanas": {
+  "half": 6
+ },
+ "redondeos": {}
+}
