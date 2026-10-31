@@ -43,3 +43,12 @@ Nada se subió a GitHub: los commits están solo en la rama local `yoichi/diseno
 | 2026-10-30 | Regeneración | Los STEP, STL, PNG y JSON que reescribieron `--rapido`, `boya_simple.py`, `sistema.py` y `--fem` se devolvieron al commit | Las diferencias eran fin de línea, teselado, 1e-5 en números y el tiempo de corrida | Hacer commit del ruido | Volver a correr los mismos comandos |
 | 2026-10-30 | Pendiente | `--rapido` con `version = "simple"` no corre `boya_simple.py` ni `sistema.py`; se corrieron a mano, sin fallas (5168 g, igual que §10.4) | Proponer agregarlos al plan `rapido` de `build.py`; no se hizo | — | — |
 | 2026-10-30 | Pendiente | OrcaSlicer deja un `00000.log` en la carpeta desde donde se corre `--slicer` | Proponer `00000.log` en `.gitignore`; no se agregó | — | — |
+
+## Sesión del 30 oct 2026, noche (HANDOFF_2026-10-30_v2, bloques 0 a G, sin Yoichi)
+
+| Fecha | Tarea | Qué se eligió | Por qué | Qué se descartó | Cómo revertir |
+|---|---|---|---|---|---|
+| 2026-10-30 | Bloque 0 | OrcaSlicer queda en `Downloads/OrcaSlicer_Windows_x64_nightly_portable/`, la ruta que ya usa `slicer.py` | Ya funciona y está probada; moverla a `OrcaSlicer_nightly/` no aporta nada | Mover la carpeta y cambiar `slicer.py` | Variable `ORCA_EXE` |
+| 2026-10-30 | Bloque 0 | `00000.log` en `.gitignore` (era la propuesta de la tarde) | Orca lo deja en el cwd en cada corrida | — | Quitar la línea |
+| 2026-10-30 | Bloque 0 | Documentos nuevos en `Proyecto/MóduloMecánico/docs/`; DECISIONES.md sigue en `docs/` de la raíz | El HANDOFF pide `docs/` en MóduloMecánico; DECISIONES ya tenía historia en la raíz | Mover DECISIONES | Mover los archivos |
+| 2026-10-30 | Orden | El bloque A se hace en dos pasadas: infraestructura y P0 ahora, el resto después de B y C | A necesita los STEP de cada prototipo, que salen de B y C | Seguir el orden literal | — |
