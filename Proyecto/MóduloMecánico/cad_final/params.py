@@ -675,3 +675,44 @@ def _apply_overrides():
 
 
 _apply_overrides()
+
+
+# =====================================================================================
+# BOYA CON BOTELLAS PET (bloque C, boya_pet.py): flotacion = botellas selladas + espuma PU, casco abierto
+# =====================================================================================
+FLOT_BOTTLES = p("flotacion.botellas",
+                 {"500ml": dict(D=65.0, L=210.0, V=500.0, neck_D=30.0, neck_len=25.0, m_g=25.0),
+                  "1L": dict(D=80.0, L=270.0, V=1000.0, neck_D=30.0, neck_len=25.0, m_g=25.0),
+                  "2L": dict(D=105.0, L=330.0, V=2000.0, neck_D=30.0, neck_len=25.0, m_g=45.0)}, EST, VER,
+                 "Botellas PET tipicas de agua/refresco (D cuerpo, L total, V nominal cm3, D cuello, largo cuello, masa vacia g). "
+                 "Valores de catalogo de envases; medir las botellas reales")
+FLOT_BOTTLE = p("flotacion.botella", "1L", "equipo", VER, "'500ml' | '1L' | '2L'; elegida porque cumple francobordo y reserva (docs/BOYA.md)")
+FLOT_COUNT = p("flotacion.cantidad", 2, "equipo", VER, "Botellas en una fila (3 de 500 ml o 4 no caben con el canal central, ver docs/BOYA.md)")
+FLOT_FILL = p("flotacion.relleno", "espuma_PU", "equipo", VER, "'espuma_PU' (vacios entre botellas y cubierta) | 'vacio'")
+FLOT_FOAM_DENSITY = p("flotacion.espuma_densidad", 30.0, EST, VER, "kg/m3, PU de celda cerrada en spray; solo reserva")
+FLOT_FOAM_FILL = p("flotacion.espuma_llenado", 0.5, EST, VER, "Fraccion del vacio entre ranura y botella que la espuma llena de verdad")
+FLOT_CLEAR = p("flotacion.holgura_botella", 1.5, EST, VER, "Holgura radial de la botella en la ranura de la costilla")
+FLOT_CHANNEL = p("flotacion.canal", 50.0, EST, VER, "Ancho libre entre botellas: umbilical, domo del PG7 y brazo de estabilidad")
+FLOT_NECK_OUT = p("flotacion.cuello_fuera", 20.0, EST, VER, "Cuanto del cuello/tapon asoma fuera de la costilla del cuello")
+PET_WALL = p("boya_pet.pared", 2.4, "equipo", VER, "Pared de 6 perimetros de 0.4")
+PET_RIB = p("boya_pet.costilla", 3.0, EST, VER, "Espesor de las costillas que sujetan la botella")
+PET_HULL_MAX = p("boya_pet.casco_largo_max", 254.0, EST, VER, "Largo maximo del casco: cama de 256")
+PET_COVER_T = p("boya_pet.cubierta_espesor", 4.0, EST, VER, "Barras de la cubierta atornillada (no estanca)")
+PET_BAR_W = p("boya_pet.barra_ancho", 14.0, EST, VER, "Ancho de las barras de la cubierta")
+PET_BOSS = p("boya_pet.cubierta_tornillo_y", 1.0, EST, VER, "Los 8 tornillos M3 cubierta-casco quedan a |y| = canal/2 - este valor (sobre las aletas del canal)")
+PET_PILLAR = p("boya_pet.pilar", (10.0, 6.0), EST, VER, "Pilares de la cubierta bajo las orejas de la caja: diametro, alto (francobordo y domo PG7)")
+PET_COLUMN_D = p("boya_pet.columna_D", 12.0, EST, VER, "4 columnas del panel, integradas a la cubierta")
+PET_PANEL_LIFT = p("boya_pet.panel_elevacion", 25.0, "equipo", VER, "Panel 25 mm sobre la tapa de la caja")
+PET_MAST = p("boya_pet.mastil", (14.0, 8.0, 20.0), EST, VER, "Diametro exterior, interior y cuanto sobresale sobre la cara superior del panel")
+PET_BOX_MARGIN = p("boya_pet.caja_margen", 5.0, "equipo", VER, "La caja seca mide componentes + 5 mm")
+PET_BOX_WALL = p("boya_pet.caja_pared", 2.4, "equipo", VER, "Pared y piso de la caja seca")
+PET_LID_T = p("boya_pet.tapa_espesor", 4.0, EST, VER, "Ranura de 1.5 deja 2.5 bajo la junta")
+PET_FLANGE = p("boya_pet.brida", (10.0, 7.0), EST, VER, "Ancho y espesor de la brida de la caja (chaflan de 45 grados abajo)")
+PET_GLAND_RES = p("boya_pet.caja_reserva_pg7", 14.0, EST, VER, "Largo interior reservado junto al PG7 del umbilical (contratuerca + cable)")
+PET_EAR = p("boya_pet.oreja", (14.0, 14.0, 4.0), EST, VER, "Orejas de la caja sobre los pilares: ancho, salida, espesor")
+PET_EYE = p("boya_pet.ojal", (28.0, 8.0, 10.5), EST, VER, "Parche de amarre en el fondo del casco: ancho en x, espesor, agujero; independiente del umbilical")
+PET_CABLE_HOLE = p("boya_pet.paso_cable", 14.0, EST, VER, "Agujero del umbilical en la costilla del extremo de la base")
+PET_EXCLUDE = p("boya_pet.zona_excluida", (18.0, 28.0), "fabricante", OK, "bed_exclude_area del perfil P1P: esquina que el slicer no deja ocupar")
+PET_SUPPORT_MM2 = p("boya_pet.soporte_umbral", 300.0, EST, VER, "Voladizo (mm2) por encima del cual se imprime con soportes")
+PET_MASS_TARGET = p("boya_pet.masa_objetivo_g", 700.0, "equipo", VER, "Masa impresa maxima del conjunto")
+PET_TIME_TARGET = p("boya_pet.tiempo_objetivo_h", 25.0, "equipo", VER, "Horas de impresion maximas del conjunto")
