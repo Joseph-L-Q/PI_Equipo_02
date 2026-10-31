@@ -686,8 +686,8 @@ FLOT_BOTTLES = p("flotacion.botellas",
                   "2L": dict(D=105.0, L=330.0, V=2000.0, neck_D=30.0, neck_len=25.0, m_g=45.0)}, EST, VER,
                  "Botellas PET tipicas de agua/refresco (D cuerpo, L total, V nominal cm3, D cuello, largo cuello, masa vacia g). "
                  "Valores de catalogo de envases; medir las botellas reales")
-FLOT_BOTTLE = p("flotacion.botella", "1L", "equipo", VER, "'500ml' | '1L' | '2L'; elegida porque cumple francobordo y reserva (docs/BOYA.md)")
-FLOT_COUNT = p("flotacion.cantidad", 2, "equipo", VER, "Botellas en una fila (3 de 500 ml o 4 no caben con el canal central, ver docs/BOYA.md)")
+FLOT_BOTTLE = p("flotacion.botella", "1L", "equipo", VER, "'500ml' | '1L' | '2L'; 1L con cantidad 4 (cruz) es la recomendada en la segunda vuelta (docs/BOYA.md)")
+FLOT_COUNT = p("flotacion.cantidad", 4, "equipo", VER, "4 = cruz (2 en el casco a lo largo de X + 2 en cunas a lo largo de Y), 2 = fila (primera vuelta); ver docs/BOYA.md")
 FLOT_FILL = p("flotacion.relleno", "espuma_PU", "equipo", VER, "'espuma_PU' (vacios entre botellas y cubierta) | 'vacio'")
 FLOT_FOAM_DENSITY = p("flotacion.espuma_densidad", 30.0, EST, VER, "kg/m3, PU de celda cerrada en spray; solo reserva")
 FLOT_FOAM_FILL = p("flotacion.espuma_llenado", 0.5, EST, VER, "Fraccion del vacio entre ranura y botella que la espuma llena de verdad")
@@ -716,3 +716,10 @@ PET_EXCLUDE = p("boya_pet.zona_excluida", (18.0, 28.0), "fabricante", OK, "bed_e
 PET_SUPPORT_MM2 = p("boya_pet.soporte_umbral", 300.0, EST, VER, "Voladizo (mm2) por encima del cual se imprime con soportes")
 PET_MASS_TARGET = p("boya_pet.masa_objetivo_g", 700.0, "equipo", VER, "Masa impresa maxima del conjunto")
 PET_TIME_TARGET = p("boya_pet.tiempo_objetivo_h", 25.0, "equipo", VER, "Horas de impresion maximas del conjunto")
+# Segunda vuelta (cantidad 4 = disposicion en cruz: 2 botellas en el casco central a lo largo de X + 2 en cunas a lo largo de Y)
+FLOT_END_CLR = p("flotacion.holgura_largo", 1.0, EST, VER, "Holgura de largo de la botella entre las dos costillas extremas")
+PET_HULL_W_MAX = p("boya_pet.casco_ancho_max", 253.0, EST, VER, "Ancho del casco central en cruz si su largo cabe en casco_largo_alt (se imprime con el lado largo en Y, corrido fuera de la esquina excluida); si no, 225.6")
+PET_HULL_L_ALT = p("boya_pet.casco_largo_alt", 236.0, EST, VER, "256 - 18 de zona excluida - 2 de margen")
+PET_TONGUE = p("boya_pet.lengueta", (12.0, 14.0, 8.0), EST, VER, "Lenguetas de la cuna atornilladas a las costillas extremas del casco: ancho, alto, largo minimo")
+PET_STRAP = p("boya_pet.correa", (14.0, 4.0), EST, VER, "Correa que cierra cada cuna sobre la botella: ancho, espesor")
+PET_UMB_Z = p("boya_pet.pg7_umbilical_z", 30.0, EST, VER, "Altura del eje del PG7 del umbilical sobre el piso interior de la caja (era 15; subido para el francobordo con el casco mas bajo)")
