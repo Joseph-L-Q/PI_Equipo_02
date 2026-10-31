@@ -191,11 +191,11 @@
   "cant": 1,
   "orient": "sin girar",
   "relleno": 40,
-  "soportes": false,
+  "soportes": true,
   "paredes": 3,
   "grupo": 4,
-  "g": 277.4,
-  "h": 7.49
+  "g": 213.6,
+  "h": 7.38
  },
  {
   "archivo": "19_B2_cubierta_x1.stl",
@@ -205,8 +205,8 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 118.8,
-  "h": 5.79
+  "g": 119.0,
+  "h": 5.8
  },
  {
   "archivo": "20_B3_caja_x1.stl",
@@ -217,7 +217,7 @@
   "paredes": 3,
   "grupo": 4,
   "g": 171.0,
-  "h": 5.49
+  "h": 5.46
  },
  {
   "archivo": "21_B4_tapa_x1.stl",
@@ -229,5 +229,27 @@
   "grupo": 4,
   "g": 57.2,
   "h": 2.1
+ },
+ {
+  "archivo": "22_B5_cuna_x2.stl",
+  "cant": 2,
+  "orient": "sin girar",
+  "relleno": 40,
+  "soportes": true,
+  "paredes": 3,
+  "grupo": 4,
+  "g": 141.0,
+  "h": 5.01
+ },
+ {
+  "archivo": "23_B6_correa_x4.stl",
+  "cant": 4,
+  "orient": "sin girar",
+  "relleno": 40,
+  "soportes": false,
+  "paredes": 3,
+  "grupo": 4,
+  "g": 5.1,
+  "h": 0.3
  }
 ]

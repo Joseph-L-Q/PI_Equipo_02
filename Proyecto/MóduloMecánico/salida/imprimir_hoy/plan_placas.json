@@ -190,9 +190,10 @@
   {
    "nombre": "P14_boya_casco",
    "relleno": 40,
-   "soportes": false,
+   "soportes": true,
    "paredes": 3,
    "grupo": 4,
+   "fijo": true,
    "piezas": [
     [
      "salida/imprimir_hoy/18_B1_casco_x1.stl",
@@ -206,6 +207,7 @@
    "soportes": false,
    "paredes": 3,
    "grupo": 4,
+   "fijo": true,
    "piezas": [
     [
      "salida/imprimir_hoy/19_B2_cubierta_x1.stl",
@@ -227,6 +229,33 @@
     [
      "salida/imprimir_hoy/21_B4_tapa_x1.stl",
      1
+    ]
+   ]
+  },
+  {
+   "nombre": "P17_boya_cunas",
+   "relleno": 40,
+   "soportes": true,
+   "paredes": 3,
+   "grupo": 4,
+   "fijo": true,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/22_B5_cuna_x2.stl",
+     2
+    ]
+   ]
+  },
+  {
+   "nombre": "P18_boya_correas",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 4,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/23_B6_correa_x4.stl",
+     4
     ]
    ]
   }

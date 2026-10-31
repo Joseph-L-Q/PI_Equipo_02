@@ -9,7 +9,8 @@ plan.json: {"salida": "salida/imprimir_hoy/3mf", "capturas": "salida/capturas_sl
                         "piezas": [["salida/imprimir_hoy/01_PB7_peine_holguras_x1.stl", 1], ...]}, ...]}
 (paths relative to the module folder). One plate = one infill and one support setting (the CLI cannot set them per
 object), so pieces are grouped by those. Orca arranges the copies (--arrange 1); a plate that does not fit fails and is
-reported. "fijo": true (one big piece) moves the piece out of the excluded corner of the bed and skips the arrange. Per plate: <salida>/<nombre>.3mf; in <capturas>/: <nombre>_placa.png and <nombre>_arriba.png (the 512 px
+reported. "fijo": true (one big piece) moves the piece out of the excluded corner of the bed and skips the arrange;
+with a quantity N > 1 one copy is sliced and the plate is printed N times ("veces", grams and hours x N). Per plate: <salida>/<nombre>.3mf; in <capturas>/: <nombre>_placa.png and <nombre>_arriba.png (the 512 px
 thumbnails Orca stores in Metadata/) and <nombre>_trayectoria.png (the toolpaths of the G-code by feature type, side and
 top views, supports in red). Totals in <salida>/placas.json. Profiles and executable as in slicer.py.
 """
@@ -107,11 +108,12 @@ def slice_plate(prof, plate, out_dir, cap_dir):
         d = json.loads(proc.read_text(encoding="utf-8"))
         d["wall_loops"] = str(plate["paredes"])
         proc.write_text(json.dumps(d, indent=1), encoding="utf-8")
-    stls = []
+    stls, times = [], 1
     for path, n in plate["piezas"]:
         src = MOD / path
         if plate.get("fijo"):
             src = placed_out_of_exclusion(src, work)
+            times, n = int(n), 1                    # copies of a fixed piece would overlap: print the plate n times
         stls += [str(src)] * int(n)
     name = plate["nombre"]
     cmd = [str(SL.ORCA), "--load-settings", f"{prof['machine']};{proc}", "--load-filaments", str(prof["filament"]),
@@ -142,8 +144,8 @@ def slice_plate(prof, plate, out_dir, cap_dir):
                f"{'con' if plate.get('soportes') else 'sin'} soportes", cap_dir / f"{name}_trayectoria.png")
     z.close()
     shutil.rmtree(work, ignore_errors=True)
-    return dict(g=round(got[0], 1), h=round(got[1], 2), relleno=plate.get("relleno"), soportes=plate.get("soportes", False),
-                piezas=plate["piezas"], tresmf=(out_dir / mf.name).relative_to(MOD).as_posix()), None
+    return dict(g=round(got[0] * times, 1), h=round(got[1] * times, 2), veces=times, relleno=plate.get("relleno"),
+                soportes=plate.get("soportes", False), piezas=plate["piezas"], tresmf=(out_dir / mf.name).relative_to(MOD).as_posix()), None
 
 
 def main(plan_path):
@@ -158,7 +160,8 @@ def main(plan_path):
             print("FALLA", plate["nombre"], err, flush=True)
             continue
         res[plate["nombre"]] = r
-        print(f"OK    {plate['nombre']:34s} {r['g']:7.1f} g  {r['h']:6.2f} h", flush=True)
+        print(f"OK    {plate['nombre']:34s} {r['g']:7.1f} g  {r['h']:6.2f} h" + (f"  ({r['veces']} veces)" if r["veces"] > 1 else ""),
+              flush=True)
     if res:
         tot = dict(g=round(sum(v["g"] for v in res.values()), 1), h=round(sum(v["h"] for v in res.values()), 2))
         (out_dir / "placas.json").write_text(json.dumps(dict(placas=res, total=tot), indent=1, ensure_ascii=False),

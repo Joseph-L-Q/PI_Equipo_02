@@ -252,7 +252,7 @@ def folder_pieces(folder, prefix, title=None):
         g = sl.get(stem, {}).get("g")
         extra = [f"{title or prefix}: pieza {stem}.", "Cotas en mm. Tolerancias generales según ISO 2768-m.",
                  f"Impresión: P1P, PETG, 0.20 mm, 3 paredes, giroide {infill_txt(r)}, "
-                 f"{'con' if info.get('soportes') else 'sin'} soportes."]
+                 f"{'con' if info.get('soportes', sl.get(stem, {}).get('soportes')) else 'sin'} soportes."]
         if g:
             extra.append(f"Slicer (OrcaSlicer): {g:.1f} g y {sl[stem].get('h', 0):.2f} h por pieza.")
         extra.append("Para imprimir se usa el STL o el 3MF, no este plano: el plano sirve para verificar y para el informe.")

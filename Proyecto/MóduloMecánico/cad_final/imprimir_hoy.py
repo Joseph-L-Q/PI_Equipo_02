@@ -35,7 +35,7 @@ NODE = [("08_M6_bisel", "M6_capsula_bisel", 2), ("09_M11_bandeja", "M11_bandeja"
         ("14_M1s_caja_cuerpo", "M1s_caja_cuerpo", 1), ("15_M5s_capsula_tapa_pie", "M5s_capsula_tapa_pie", 2)]
 WAIT = [("16_M3s_riel_gancho", "M3s_riel_gancho", 2), ("17_LR1_separador", "LR1_separador", 1)]
 BUOY = [("18_B1_casco", "B1_casco", 1), ("19_B2_cubierta", "B2_cubierta", 1), ("20_B3_caja", "B3_caja", 1),
-        ("21_B4_tapa", "B4_tapa", 1)]
+        ("21_B4_tapa", "B4_tapa", 1), ("22_B5_cuna", "B5_cuna", 2), ("23_B6_correa", "B6_correa", 4)]
 
 
 def cut(step, box, dst):
@@ -101,7 +101,10 @@ PLATES = [  # (plate name, files by number prefix): one infill, one support sett
     ("P06_bisel_y_bandejas", ["08", "09", "10"]), ("P07_tapas_bolsillo", ["11"]), ("P08_capsulas", ["12"]),
     ("P09_tapa_caja", ["13"]), ("P10_caja", ["14"]), ("P11_tapas_capsula_con_pie", ["15"]),
     ("P12_rieles_con_gancho", ["16"]), ("P13_separador_LR1", ["17"]),
-    ("P14_boya_casco", ["18"]), ("P15_boya_cubierta", ["19"]), ("P16_boya_caja_y_tapa", ["20", "21"])]
+    ("P14_boya_casco", ["18"]), ("P15_boya_cubierta", ["19"]), ("P16_boya_caja_y_tapa", ["20", "21"]),
+    ("P17_boya_cunas", ["22"]), ("P18_boya_correas", ["23"])]
+FIXED = {"P14_boya_casco", "P15_boya_cubierta", "P17_boya_cunas"}   # 254 mm pieces: out of the excluded corner, no arrange;
+# the 2 cunas do not fit side by side, so P17 is one cuna printed twice (placas.py "veces")
 
 
 def plates(rows):
@@ -112,7 +115,7 @@ def plates(rows):
         assert len(keys) == 1, f"{name}: mezcla rellenos/soportes {keys}"
         inf, sup, walls = keys.pop()
         out.append(dict(nombre=name, relleno=inf, soportes=sup, paredes=walls, grupo=rs[0]["grupo"],
-                        piezas=[[f"salida/imprimir_hoy/{r['archivo']}", r["cant"]] for r in rs]))
+                        **({"fijo": True} if name in FIXED else {}), piezas=[[f"salida/imprimir_hoy/{r['archivo']}", r["cant"]] for r in rs]))
     return out
 
 
