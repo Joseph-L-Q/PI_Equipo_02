@@ -25,11 +25,22 @@ con `python cad_final/onshape_push.py --carpeta <carpeta> --documento <nombre> -
 | LG_P3_monocasco | Caja y riel en una pieza (base de P4) | https://cad.onshape.com/documents/a3f5a3445acf709539d118a1/w/6bec4bfed0a0cd181c80b6d6 |
 | **LG_P4_estetico** | **Recomendado para presentar** | https://cad.onshape.com/documents/d8e4b0f024f7efcb8f94ed99/w/fabae97231abb068b21c50e6 |
 | LG_boya_PET | Boya, primera vuelta: 2 botellas de 1 L (descartada para pruebas) | https://cad.onshape.com/documents/9bef1aea8cb725d8b9ef74ea/w/e0a2bb379713e51552ccdaf9 |
+| **LG_boya_PET_v2** | **Boya, segunda vuelta: 4 botellas de 1 L en cruz (recomendada)**. ENSAMBLE con 19 partes, REF_ en electrónica y botellas | https://cad.onshape.com/documents/f4e8ac814316f253d53d94e0/w/a972a01f232336138e011bc2 |
 | LG_sistema | Sistema completo con la boya plataforma vieja (referencia) | https://cad.onshape.com/documents/add9a482719cd49ae97ca226/w/bc4e69d2a95cf63d59e5dc97 |
 
 Documentos viejos, que **no se tocaron** y que Yoichi mueve a `LanternGuard/_historico`:
 - LanternGuard CAD final: https://cad.onshape.com/documents/cf6f0f08630e1b23677101ac/w/53ecc7142a15110b1fe8e8d1
 - LanternGuard - Módulo mecánico
+
+## Pestañas ENSAMBLE_v2 (correcciones 3 y 4)
+Se sube con `python cad_final/onshape_push.py --ensamble-v2 <documento> --ensamble <STEP> [--pestana X]`: nombres REF_ en lo que no se
+imprime, Part Studio aplanado y comparación de partes de Onshape contra sólidos del STEP (`--verificar <documento>` solo compara).
+
+| Documento | Pestaña | Partes = sólidos | Link |
+|---|---|---|---|
+| LG_P0_original | ENSAMBLE_v2 (simple V1) | 53 = 53 | https://cad.onshape.com/documents/95702b685c4703a1812f1cd5/w/22e05e9a953df1fd6ec5ee2a/e/c04751805d4a14c6339f0ba7 |
+| LG_P0_original | ENSAMBLE_modular_v2 | 47 = 47 | https://cad.onshape.com/documents/95702b685c4703a1812f1cd5/w/22e05e9a953df1fd6ec5ee2a/e/8eba078f08454031fe9c9db5 |
+| LG_boya_PET_v2 | ENSAMBLE | 19 = 19 | https://cad.onshape.com/documents/f4e8ac814316f253d53d94e0/w/a972a01f232336138e011bc2/e/a7bc64699813d459a97704d7 |
 
 ## Pasos a mano en Onshape (la API pública no los permite)
 - **Orden de pestañas:** no hay llamada para reordenarlas. En LG_P0_original, LG_P1 a LG_P4 y LG_boya_PET hay que

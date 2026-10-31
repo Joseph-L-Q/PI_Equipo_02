@@ -1,6 +1,6 @@
 # Estado de la sesión LanternGuard CAD (PC de casa, 30/10/2026)
 
-Última actualización: **20:58** según el reloj de la PC (el 21:25 anterior era estimado; handoff en `docs/HANDOFF_noche.md`). Terminados: 0, A, B, D. En curso: C segunda vuelta (boya con 4 botellas de 500 ml)
+Última actualización: **21:13** según el reloj de la PC (el 21:25 anterior era estimado; handoff en `docs/HANDOFF_noche.md`). Terminados: 0, A, B, D. En curso: C segunda vuelta (boya con 4 botellas de 500 ml)
 y E (falta la parte de la boya). Siguen F (documento para el equipo) y G (cierre).
 Rama `cad/version-final`: https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/version-final
 
@@ -9,7 +9,7 @@ Rama `cad/version-final`: https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/ve
 | 0 Herramientas | listo | Orca nightly, CalculiX, Gmsh, rclone y claves de Onshape funcionan en esta PC |
 | A Onshape | listo; correcciones 3 y 4 hechas en P0, siguen P1 a P4 y la boya | 8 documentos `LG_*` en la carpeta LanternGuard. **P0: pestañas nuevas `ENSAMBLE_v2` (simple V1, 53 partes) y `ENSAMBLE_modular_v2` (47), todas con nombre y REF_ en lo que no se imprime, geometría igual.** Verificación de los ENSAMBLE viejos: P1, P2 y boya coinciden; a P3 y P4 les falta `M1m_caja_con_riel` (se arregla con su ENSAMBLE_v2). Links en `docs/LINKS.md` |
 | B Prototipos | listo | Tabla y recomendación en `docs/PROTOTIPOS.md`; fichas en `salida/prototipos/` |
-| C Boya PET | 1.ª vuelta lista; 2.ª vuelta en curso | 2 × 1 L: 624 g, 20.9 h, pero GM 16 mm y vuelca si pierde una botella. Se prueba 4 × 500 ml en las esquinas |
+| C Boya PET | listo (2.ª vuelta, de1a2e3) | **Recomendada: 4 × 1 L en cruz** (casco + 2 cunas + 4 correas): 863 g, 32.0 h, S/ 77.7; calado 39.5 mm, francobordo 82 mm, GM 112 / 762 mm. Si pierde una botella vuelca sin espuma; con la espuma PU estimada queda estable a 6 a 12°. No cumple 700 g ni 25 h. 4 × 500 ml (720 g, 26.8 h) vuelca sin una botella. Onshape: `LG_boya_PET_v2`. Detalle: `docs/BOYA.md` |
 | D Planos | listo | `planos/PLANOS_LanternGuard.pdf` (25 páginas: P2, P4 y boya 2 × 1 L; la boya se rehace con la 2.ª vuelta) |
 | E Lista de impresión | nodo listo; boya pendiente de la 2.ª vuelta | 21 STL en `salida/imprimir_hoy/`, 16 placas (3MF en Drive), capturas en `salida/capturas_slicer/` |
 | F Documento para el equipo | pendiente | |

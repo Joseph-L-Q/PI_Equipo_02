@@ -91,7 +91,10 @@ def push_folder(folder, doc_name, assembly=None, dry=False):
 # Correction 4 (Yoichi, 30/10): what is not printed carries REF_; printed parts keep their code.
 REF_NAMES = [(r"^LR_red$", "REF_linterna_malla"), (r"^LR_aro$", "REF_aro_superior"), (r"^LR_aro_superior$", "REF_aro_superior"),
              (r"^LR_cabo(_central)?$", "REF_cabo"), (r"^(LR_|U1_?)umbilical.*$", "REF_umbilical"),
-             (r"^LR_boya$", "REF_boya"), (r"^M11_M11_", "M11_"), (r"^LR_", "REF_")]
+             (r"^LR_boya$", "REF_boya"), (r"^M11_M11_", "M11_"), (r"^LR_", "REF_"),
+             (r"^ref_botella(\d+)$", r"REF_botella_\1"), (r"^ref_batt$", "REF_portabaterias_18650"),
+             (r"^ref_pcb$", "REF_pcb_heltec"), (r"^ref_ws$", "REF_waveshare"), (r"^ref_panel$", "REF_panel_solar"),
+             (r"^ref_", "REF_")]
 
 
 def step_parts(path):
