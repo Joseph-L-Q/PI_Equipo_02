@@ -1,6 +1,6 @@
 # Estado de la sesión LanternGuard CAD (PC de casa, 30/10/2026)
 
-Última actualización: **21:10**. Terminados: 0, A, B, D. En curso: C segunda vuelta (boya con 4 botellas de 500 ml)
+Última actualización: **21:25** (handoff en `docs/HANDOFF_noche.md`). Terminados: 0, A, B, D. En curso: C segunda vuelta (boya con 4 botellas de 500 ml)
 y E (falta la parte de la boya). Siguen F (documento para el equipo) y G (cierre).
 Rama `cad/version-final`: https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/version-final
 
