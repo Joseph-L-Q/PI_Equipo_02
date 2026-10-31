@@ -46,5 +46,34 @@
   11.5,
   10.2
  ],
- "fuente": "ariblk.ttf"
+ "fuente": "ariblk.ttf",
+ "slicer": {
+  "g": 34.9,
+  "h": 1.11,
+  "costo_soles": 2.09,
+  "precio_kg": 60,
+  "filamento": "PETG gris (Bambu PETG Basic)",
+  "relleno_pct": 100,
+  "soportes": false,
+  "tresmf": "salida/skin/P2_robusto/concha/3mf/SKIN_concha_P2.3mf"
+ },
+ "lastre": {
+  "skin_aparente_g": 5.1,
+  "40": {
+   "aparente_antes_g": 352.5,
+   "aparente_con_skin_g": 357.6,
+   "lastre_actual_g": 1150.0,
+   "lastre_con_skin_g": 1140.0,
+   "cambia": true,
+   "en_ventana": true
+  },
+  "100": {
+   "aparente_antes_g": 361.5,
+   "aparente_con_skin_g": 366.6,
+   "lastre_actual_g": 1150.0,
+   "lastre_con_skin_g": 1130.0,
+   "cambia": true,
+   "en_ventana": true
+  }
+ }
 }

@@ -678,6 +678,50 @@
    "pdf": "salida\\planos_onshape\\pdf\\PLANO_B6_correa.pdf",
    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/179a924d6404a0872fb4f86b",
    "llamadas": 27
+  },
+  "SKIN_concha_v1": {
+   "partstudio": "d673598277ad9d0219527b84",
+   "pestana": "SKIN_concha_v1",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "ae3e1b2d15303eed865250cd",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "ece88acc121e40911ef864d4",
+    "front": "52272590f2f5d67bef57f9f4",
+    "left": "0186477722032daeb91fd6a4",
+    "back": "ece56a2bd8292bca8d82cd13",
+    "top": "b50e301d478fb999d970dbba",
+    "bottom": "2b80cc8da3356a393e4b1f03",
+    "isometric": "370e6b3045fd3bc9b8e1ffc0"
+   },
+   "cotas": {
+    "creadas": 6,
+    "fallidas": [],
+    "a_mano": [
+     "front: alto general 5.5 mm (el extremo es curvo)",
+     "left: alto general 5.5 mm (el extremo es curvo)"
+    ],
+    "agujeros": 12
+   },
+   "espesor": "placa 2.0 mm",
+   "escala": "1:2",
+   "escala_iso": "1:2",
+   "cantidad": 1,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_SKIN_concha_v1.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/ae3e1b2d15303eed865250cd",
+   "llamadas": 29
   }
  }
 }
