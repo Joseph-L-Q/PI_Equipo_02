@@ -1,0 +1,3 @@
+{"salida": "salida/skin/P2_robusto/concha/3mf", "capturas": "salida/skin/P2_robusto/concha/3mf",
+ "placas": [{"nombre": "SKIN_concha_P2", "relleno": 100, "soportes": false, "paredes": 3, "fijo": true,
+             "piezas": [["salida/skin/P2_robusto/concha/SKIN_concha.stl", 1]]}]}

@@ -1,0 +1,79 @@
+{
+ "prototipo": "P2_robusto",
+ "tema": "concha",
+ "volumen_cm3": 29.05,
+ "masa_100_g": 36.9,
+ "solidos": 1,
+ "brep_ok": true,
+ "brep": {
+  "brep": true,
+  "bop": true,
+  "solids": 1,
+  "min_edge": 0.15234161248162012,
+  "min_face": 0.12187328998529656,
+  "ok": true
+ },
+ "pared_p1_mm": 2.0,
+ "pared_min_mm": 1.8,
+ "pared_ok": true,
+ "bbox_mm": [
+  146.0,
+  145.0,
+  5.5
+ ],
+ "dentro_de_la_tapa": true,
+ "margen_a_la_tapa_mm": 0.5,
+ "z_cambio_color_mm": 2.0,
+ "interferencias_mm3": {},
+ "tornillos": 12,
+ "umbilical": [
+  -27.83974596215,
+  42.50000000000001
+ ],
+ "bisagra": [
+  0.0,
+  -19.14944898632953
+ ],
+ "umbo_r": 11.1,
+ "costillas": 9,
+ "perla_logo": null,
+ "roce_perla_mm": null,
+ "letra_mm": [
+  16.0,
+  14.0
+ ],
+ "alto_mayuscula_mm": [
+  11.5,
+  10.2
+ ],
+ "fuente": "ariblk.ttf",
+ "slicer": {
+  "g": 34.9,
+  "h": 1.11,
+  "costo_soles": 2.09,
+  "precio_kg": 60,
+  "filamento": "PETG gris (Bambu PETG Basic)",
+  "relleno_pct": 100,
+  "soportes": false,
+  "tresmf": "salida/skin/P2_robusto/concha/3mf/SKIN_concha_P2.3mf"
+ },
+ "lastre": {
+  "skin_aparente_g": 5.1,
+  "40": {
+   "aparente_antes_g": 352.5,
+   "aparente_con_skin_g": 357.6,
+   "lastre_actual_g": 1150.0,
+   "lastre_con_skin_g": 1140.0,
+   "cambia": true,
+   "en_ventana": true
+  },
+  "100": {
+   "aparente_antes_g": 361.5,
+   "aparente_con_skin_g": 366.6,
+   "lastre_actual_g": 1150.0,
+   "lastre_con_skin_g": 1130.0,
+   "cambia": true,
+   "en_ventana": true
+  }
+ }
+}

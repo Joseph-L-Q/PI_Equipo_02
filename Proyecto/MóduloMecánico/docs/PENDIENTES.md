@@ -20,12 +20,14 @@ Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 - Estimados que hay que medir: densidad a granel del lastre (tuercas M8 4.5 g/cm³, perdigón 6.5) y llenado de la espuma PU (50 %), del que depende que la boya aguante perder una botella.
 - Decisión del equipo: cuerda a 2.9 mm de la brida de la tapa en P2 (6.8 en P4); opciones (a), (b) y (c) en `docs/PROTOTIPOS.md`.
 
-## Skin decorativo "concha" (30/10, detenido por prioridad de planos)
-- Código en la rama `cad/skin-wip` (`cad_final/skin.py` y el bloque `skin.*` de `params.py`); no está en `cad/version-final`.
-- Dónde quedó (P4): un solo sólido de ~24 cm³ (~31 g en PETG, muy bajo el tope de 200 g), dentro del contorno de la tapa con 0.5 mm de margen, sin interferencias con la tapa, el asa ni el umbilical, 10 agujeros M3 en los tornillos de la tapa.
-- Falla 1, pared: el percentil 1 del espesor da 0.22 mm. La causa es la costilla exterior (344° y 196°), que pasa casi tangente al óvalo que deja ver el logo de P4 y queda una astilla. Arreglo a medio hacer: 9 costillas en lugar de 11 y agrandar el óvalo hasta que ninguna costilla lo roce (función `graze`, no aplicada).
-- Falla 2, `brep_ok` false: `CurveOnSurfaceMode` del analizador booleano. El texto de la fuente de CadQuery ya trae autointersecciones (`SelfInterMode` true en "LanternGuard" solo). Los trazos más finos de "LanternGuard" a 16 mm miden ~1.3 mm, bajo la pared mínima de 1.6.
-- Falta: P2, cálculo del lastre con el skin, 3MF con pausa `M400 U1` en z 2.0, render, pestaña `SKIN_concha_v1` en LG_P4_estetico, STL a Drive. El tema "manta" no se empezó.
+## Skin decorativo "concha" — P2 terminado (31/10), P4 sin rehacer
+- **P2 (`python skin.py P2_robusto`)**: 1 sólido, `brep_ok` true, pared p1 2.0 mm y mínima 1.8 mm (0 de 13 158 rayos bajo 1.6), dentro de la tapa con 0.5 mm, sin interferencias (asa, umbilical, cuerdas en (±75, ±75)), 12 agujeros Ø3.4. 146 × 145 × 5.5 mm, 29.1 cm³.
+- Slicer (P1P, PETG gris, 100 %, sin soportes): **34.9 g, 1.11 h, S/ 2.09** a S/ 60/kg → `salida/skin/P2_robusto/concha/3mf/SKIN_concha_P2.3mf`.
+- Lastre: +5.1 g aparentes (352.5 → 357.6 gf con 40 % de relleno), dentro de 200–500. **El lastre no cambia.** Para volver exactamente al centro (350) habría que sacar ~10 g de tuercas: opcional.
+- Onshape: pestaña `SKIN_concha_v1` y `PLANO_SKIN_concha_v1` en LG_IMPRIMIR_P2 (6 cotas). **A mano:** alto general 5.5 mm en frontal y lateral (el tope de la costilla es inclinado y el script no lo acota).
+- Montaje: los 12 tornillos M3 de la tapa deben ser **2 mm más largos** con el skin puesto (placa de 2 mm). Añadir al BOM.
+- Con el asa centrada en P2, "LanternGuard" queda detrás del asa: en la vista de frente el asa tapa parte del texto. Se ve completo en ISO y desde atrás.
+- Pendiente: P4 con la misma receta (labio sobre contorno real + texto poligonal), y el óvalo del logo de P4. Tema "manta" sin empezar. `assets/logo_upch.svg` no existe: "UPCH" va como texto.
 
 ## Planos Onshape de P2 + boya (LG_IMPRIMIR_P2, 30/10)
 - Link sharing del documento: la API devuelve 403 (la llave no tiene permiso de compartir). A mano: Share > Link > ver + exportar.
