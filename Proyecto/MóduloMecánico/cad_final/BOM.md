@@ -7,9 +7,12 @@ No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `s
 | Grupo | Masa impresa g | Horas | Costo filamento S/ |
 |---|---|---|---|
 | nodo simple | 1358 | 47.0 | 122.26 |
-| linterna de prueba | 37 | 1.6 | 3.33 |
+| linterna de prueba | 0 | 0.0 | 0.00 |
 | boya simple | 1943 | 129.5 | 174.89 |
 | modular D200 | 1229 | 82.0 | 110.64 |
+| nodo P2 robusto | 1400 | 46.7 | 126.02 |
+| nodo P4 estetico | 1352 | 46.0 | 121.66 |
+| boya PET 4 x 1 L | 863 | 32.0 | 77.69 |
 
 El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 
@@ -17,16 +20,15 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 
 | Pieza | Grupo | Cant. | X × Y × Z mm | Volumen cm³ | Orientacion | Soportes | Relleno | Masa por pieza g | Fuente |
 |---|---|---|---|---|---|---|---|---|---|
-| M1s_caja_cuerpo | nodo simple | 1 | 147.0 × 146.0 × 102.5 | 349.4 | X180 | si | 100 % | 498 | slicer |
+| M1s_caja_cuerpo | nodo simple | 1 | 147.0 × 146.0 × 107.0 | 383.4 | sin girar | si | 100 % | 498 | slicer |
 | M2_caja_tapa | nodo simple | 1 | 63.0 × 146.0 × 147.0 | 136.0 | Y+90 | si | 100 % | 181 | slicer |
 | M3s_riel_gancho | nodo simple | 2 | 141.5 × 79.4 × 50.0 | 92.3 | X+90 | si | riel 40 %, gancho 100 % | 132 | slicer |
-| M3t_tapa_bolsillo | nodo simple | 2 | 117.0 × 32.0 × 3.0 | 11.1 | X180 | no | 100 % | 13 | slicer |
+| M3t_tapa_bolsillo | nodo simple | 2 | 117.0 × 57.0 × 3.0 | 19.9 | X180 | no | 100 % | 13 | slicer |
 | M5s_capsula_tapa_pie | nodo simple | 2 | 55.2 × 64.0 × 95.9 | 74.1 | sin girar | si | 100 % | 96 | slicer |
 | M11_bandeja | nodo simple | 1 | 115.0 × 114.0 × 30.0 | 39.9 | sin girar | no | 40 % | 38 | slicer |
 | M11_bandeja_sup | nodo simple | 1 | 115.0 × 114.0 × 3.0 | 38.1 | sin girar | no | 40 % | 34 | slicer |
 | M4_capsula_cuerpo | nodo simple | 2 | 64.0 × 64.0 × 44.0 | 46.0 | Y-90 | si | 100 % | 60 | slicer |
 | M6_capsula_bisel | nodo simple | 2 | 42.0 × 42.0 × 2.5 | 1.9 | Y+90 | no | 40 % | 2 | slicer |
-| LR1_separador | linterna de prueba | 1 | 211.9 × 211.9 × 6.0 | 44.9 | sin girar | no | 40 % | 37 | slicer |
 | B1s_casco | boya simple | 1 | 240.0 × 220.0 × 125.0 | 753.5 | X180 | si | 100 % | 957 | estimado |
 | B2s_tapa | boya simple | 1 | 9.0 × 220.0 × 240.0 | 260.5 | Y+90 | si | 100 % | 331 | estimado |
 | B1bs_bandeja | boya simple | 1 | 206.0 × 186.0 × 3.0 | 113.0 | sin girar | no | 40 % | 129 | estimado |
@@ -48,6 +50,30 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M12_perilla | modular D200 | 4 | 30.0 × 30.0 × 12.0 | 6.7 | X180 | no | 40 % | 6 | estimado |
 | M13_casquillo_D8 | modular D200 | 2 | 15.7 × 20.0 × 13.5 | 1.6 | X-90 | no | 40 % | 2 | estimado |
 | M14_pestillo | modular D200 | 2 | 12.0 × 35.2 × 3.6 | 0.9 | X+90 | no | 40 % | 1 | estimado |
+| M1s_caja_cuerpo | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 509 | slicer |
+| M2_caja_tapa | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 181 | slicer |
+| M3s_riel_gancho | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 137 | slicer |
+| M3t_tapa_bolsillo | nodo P2 robusto | 2 | - | - | slicer | no | 100 % | 24 | slicer |
+| M5s_capsula_tapa_pie | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 96 | slicer |
+| M11_bandeja | nodo P2 robusto | 1 | - | - | slicer | no | 40 % | 38 | slicer |
+| M11_bandeja_sup | nodo P2 robusto | 1 | - | - | slicer | no | 40 % | 34 | slicer |
+| M4_capsula_cuerpo | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 60 | slicer |
+| M6_capsula_bisel | nodo P2 robusto | 2 | - | - | slicer | no | 40 % | 2 | slicer |
+| M1m_caja_riel | nodo P4 estetico | 1 | - | - | slicer | si | 100 % | 675 | slicer |
+| M2_caja_tapa | nodo P4 estetico | 1 | - | - | slicer | si | 100 % | 171 | slicer |
+| M3t_tapa_bolsillo | nodo P4 estetico | 2 | - | - | slicer | no | 100 % | 24 | slicer |
+| M5m_extremo_pie | nodo P4 estetico | 2 | - | - | slicer | si | 100 % | 131 | slicer |
+| M9c_abrazadera | nodo P4 estetico | 2 | - | - | slicer | no | 100 % | 3 | slicer |
+| M11_bandeja | nodo P4 estetico | 1 | - | - | slicer | no | 40 % | 35 | slicer |
+| M11_bandeja_sup | nodo P4 estetico | 1 | - | - | slicer | no | 40 % | 31 | slicer |
+| M4_capsula_cuerpo | nodo P4 estetico | 2 | - | - | slicer | si | 100 % | 60 | slicer |
+| M6_capsula_bisel | nodo P4 estetico | 2 | - | - | slicer | no | 40 % | 2 | slicer |
+| B1_casco | boya PET 4 x 1 L | 1 | - | - | slicer | si | 40 % | 214 | slicer |
+| B2_cubierta | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 119 | slicer |
+| B3_caja | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 171 | slicer |
+| B4_tapa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 57 | slicer |
+| B5_cuna | boya PET 4 x 1 L | 2 | - | - | slicer | si | 40 % | 141 | slicer |
+| B6_correa | boya PET 4 x 1 L | 4 | - | - | slicer | no | 40 % | 5 | slicer |
 
 ## Hardware
 
@@ -65,7 +91,7 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | nodo simple | Tornillo M3 x 8 avellanado + inserto M3 (tapas del bolsillo) | M3 | 4 |
 | nodo simple | Tornillo M4 x 45 + tuerca (pie de las capsulas) | M4 | 4 |
 | nodo simple | Correa textil | 25 x 300 mm | 2 |
-| nodo simple | Pletina de inox | 25 x 5 x 100 | 10 |
+| nodo simple | Lastre a granel: tuercas y arandelas M8 de inox | 1140 g | 1 |
 | boya simple | Tornillo M3 x 12 + inserto M3 (tapa de la boya) | M3 | 16 |
 | boya simple | Tornillo M3 + inserto M3 (portabaterias y bandeja) | M3 | 8 |
 | boya simple | Tornillo M3 x 30 + inserto M3 (largueros a la tapa) | M3 | 4 |
@@ -112,13 +138,13 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | Capsula: angulo y acimut | 30 grados, adentro | - | params.py capsula.angulo, capsula.acimut (equipo) |
 | Ventana: diametro x espesor | 30 x 3 | mm | params.py ventana.* |
 | Gancho en C (fusionado al riel): C interior / pared / asiento | 8.8 / 6 / 12 | mm | params.py aro.seccion, gancho.c |
-| Separador LR1: tipo, seccion, altura (minima) | aro, 12 x 6, 140 (136) | mm | params.py separador.*, simple.py |
-| Pletinas de lastre | 5 x 2 de 25 x 5 x 100 | mm | params.py lastre.pletinas |
-| Nodo: peso en aire (bandeja 40 % / 100 %) | 2462 / 2471 | g | simple.py, masas por pieza con su relleno |
-| Nodo: peso aparente (40 % / 100 %) | +205 / +214 | g | simple.py (ventana +200 a +500) |
-| Nodo: BG | 18.2 | mm | simple.py |
-| Apice sobre el aro | 290 | mm | separador.altura + apice.altura |
-| Aire minimo suspension-nodo | 11.6 | mm | simple.py (exigido 10) |
+| Separador LR1 | no se usa | - | params.py separador.usar (tanda 3: sin separador) |
+| Lastre a granel (un bolsillo por lado) | 1140 g de tuercas y arandelas M8 de inox, a granel, bolsillo 100 x 50 x 30 | mm | params.py lastre.granel, simple.py |
+| Nodo: peso en aire (bandeja 40 % / 100 %) | 2680 / 2689 | g | simple.py, masas por pieza con su relleno |
+| Nodo: peso aparente (40 % / 100 %) | +350 / +359 | g | simple.py (ventana +200 a +500) |
+| Nodo: BG | 20.1 | mm | simple.py |
+| Punto de amarre de las cuerdas sobre el aro | 400 | mm | linterna.nudo_h |
+| Aire minimo suspension-nodo | 48.0 | mm | simple.py (exigido 10) |
 | FS riel (capas / entre capas) | 17.8 / 8.7 | - | simple.py §5, a mano |
 | FS pie de capsula (capas / entre capas) | 4.5 / 2.2 | - | simple.py §5, a mano |
 | FS gancho (capas / entre capas) | 5.8 / 2.9 | - | simple.py §5, a mano |

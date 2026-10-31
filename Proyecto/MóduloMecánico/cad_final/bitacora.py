@@ -31,6 +31,8 @@ MODULAR = [("M1_caja_cuerpo", 1, "Caja, cuerpo"), ("M2_caja_tapa", 1, "Caja, tap
            ("M3_tapa_bolsillo", 2, "Tapa del bolsillo"), ("M4_capsula_cuerpo", 2, "Capsula, cuerpo"), ("M5_capsula_tapa", 2, "Capsula, tapa con bisagra"),
            ("M6_capsula_bisel", 2, "Bisel"), ("M9_gancho", 2, "Gancho al aro"), ("M10_carro_capsula", 2, "Carro"),
            ("M12_perilla", 4, "Perilla"), ("M13_casquillo_D8", 2, "Casquillo Ø8"), ("M14_pestillo", 2, "Pestillo")]
+SLICER_GROUPS = {"nodo P2 robusto": SAL / "prototipos" / "P2_robusto", "nodo P4 estetico": SAL / "prototipos" / "P4_estetico",
+                 "boya PET 4 x 1 L": SAL / "boya_pet"}
 MODULAR_SEALED = ("M1_", "M2_", "M4_", "M5_", "M3_riel_central", "M3_riel_ext")
 
 # MEDIDAS template name -> (params key, index in the tuple or None, note)
@@ -92,7 +94,32 @@ def piece_rows():
                 best = (on, mc)
         rows.append(("modular D200", stem, qty, desc, sh.Volume() / 1000, best[1]["bbox"], best[0], best[1]["overhang_mm2"] > thr,
                      f"{inf * 100:.0f} %", FA.mass_g(sh, inf)))
+    rows += slicer_rows()
     return rows, res, rb
+
+
+def slicer_rows():
+    """Rows of the groups that come only from slicer.json (g, h per piece; quantity from resultados.json "cantidades" or qty)."""
+    rows = []
+    for g, d in SLICER_GROUPS.items():
+        sl = json.loads((d / "slicer.json").read_text(encoding="utf-8"))
+        qtys = {}
+        if g != "boya PET 4 x 1 L":
+            qtys = json.loads((d / "resultados.json").read_text(encoding="utf-8"))["cantidades"]
+        for stem, v in sl.items():
+            q = v["qty"] if "qty" in v else qtys.get(stem, 1)
+            rows.append((g, stem, q, v.get("nombre", stem), 0.0, (0, 0, 0), "slicer", v["soportes"], f"{v['relleno_pct']} %", v["g"]))
+            SLICER_DATA.setdefault(g, {})[stem] = v
+    return rows
+
+
+SLICER_DATA = {}
+
+
+def slicer_of(g, stem, slicer):
+    if g in SLICER_GROUPS:
+        return SLICER_DATA[g][stem]
+    return slicer.get(stem) if g in ("nodo simple", "linterna de prueba") else None
 
 
 def hardware(res, rb):
@@ -237,6 +264,15 @@ def build_book(rows, hw, res, rb, slicer):
     rs.cell(r, 1, "nodo simple + linterna + boya").font = head
     for col in "BCDEF":
         rs[f"{col}{r}"] = f"=SUM({col}10:{col}12)"
+    for i, g in enumerate(SLICER_GROUPS):
+        r2 = r + 2 + i
+        rs.cell(r2, 1, g)
+        rs.cell(r2, 2, f"=SUMIF(PIEZAS!$B:$B,$A{r2},PIEZAS!$N:$N)")
+        rs.cell(r2, 3, f"=SUMIF(PIEZAS!$B:$B,$A{r2},PIEZAS!$P:$P)")
+        rs.cell(r2, 4, f"=SUMIF(PIEZAS!$B:$B,$A{r2},PIEZAS!$Q:$Q)")
+        rs.cell(r2, 5, f"=SUMIF(HARDWARE!$A:$A,$A{r2},HARDWARE!$F:$F)")
+        rs.cell(r2, 6, f"=D{r2}+E{r2}")
+    r += len(SLICER_GROUPS) + 1
     rs.cell(r + 2, 1, "Masa por pieza = la misma del calculo de flotacion (piel + relleno de cada pieza). Llenar los precios "
                       "amarillos de HARDWARE para el costo total. La fila modular D200 es para comparar.")
 
@@ -253,7 +289,7 @@ def build_book(rows, hw, res, rb, slicer):
         for j, v in enumerate([stem, g, desc, q, round(bb[0], 1), round(bb[1], 1), round(bb[2], 1), round(vol, 2), orient,
                                "si" if sup else "no", rel, round(frac, 3)]):
             ps.cell(r, 1 + j, v)
-        sl = slicer.get(stem) if g in ("nodo simple", "linterna de prueba") else None
+        sl = slicer_of(g, stem, slicer)
         if sl:
             ps.cell(r, 13, round(sl["g"], 1))
             ps.cell(r, 15, round(sl["h"], 2))
@@ -302,17 +338,17 @@ def build_book(rows, hw, res, rb, slicer):
 def totals(rows, slicer):
     """Same numbers as the RESUMEN formulas (hardware prices are empty: cost 0 until filled)."""
     out = {}
-    for g in ("nodo simple", "linterna de prueba", "boya simple", "modular D200"):
+    for g in ("nodo simple", "linterna de prueba", "boya simple", "modular D200", *SLICER_GROUPS):
         m = h = 0.0
         for gg, stem, q, desc, vol, bb, orient, sup, rel, mu in rows:
             if gg != g:
                 continue
-            sl = slicer.get(stem) if g in ("nodo simple", "linterna de prueba") else None
+            sl = slicer_of(g, stem, slicer)
             mu = sl["g"] if sl else mu
             hu = sl["h"] if sl else mu / P.PRINT_RATE_GH
             m += mu * q
             h += hu * q
-        out[g] = dict(masa=m, horas=h, costo=m / 1000 * P.FILAMENT_PRICE)
+        out[g] = dict(masa=m, horas=h, costo=m / 1000 * (P.PETG_PRICE if g in SLICER_GROUPS else P.FILAMENT_PRICE))
     return out
 
 
@@ -331,9 +367,9 @@ def write_md(rows, hw, res, rb, slicer):
           "## Piezas", "", "| Pieza | Grupo | Cant. | X × Y × Z mm | Volumen cm³ | Orientacion | Soportes | Relleno | Masa por pieza g | Fuente |",
           "|---|---|---|---|---|---|---|---|---|---|"]
     for g, stem, q, desc, vol, bb, orient, sup, rel, mu in rows:
-        sl = slicer.get(stem) if g in ("nodo simple", "linterna de prueba") else None
+        sl = slicer_of(g, stem, slicer)
         L.append(f"| {stem} | {g} | {q} | {bb[0]:.1f} × {bb[1]:.1f} × {bb[2]:.1f} | {vol:.1f} | {orient} | {'si' if sup else 'no'} | "
-                 f"{rel} | {sl['g'] if sl else mu:.0f} | {'slicer' if sl else 'estimado'} |")
+                 f"{rel} | {sl['g'] if sl else mu:.0f} | {'slicer' if sl else 'estimado'} |" if g not in SLICER_GROUPS else f"| {stem} | {g} | {q} | - | - | {sl and 'slicer'} | {'si' if sup else 'no'} | {rel} | {sl['g']:.0f} | slicer |")
     L += ["", "## Hardware", "", "| Grupo | Item | Medida | Cantidad |", "|---|---|---|---|"]
     L += [f"| {g} | {it} | {sz} | {q} |" for g, it, sz, q in hw]
     L += ["", "## Diseño", "", "| Concepto | Valor | Unidad | De donde sale |", "|---|---|---|---|"]
