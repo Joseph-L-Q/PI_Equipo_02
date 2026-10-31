@@ -744,3 +744,22 @@ PET_HULL_L_ALT = p("boya_pet.casco_largo_alt", 236.0, EST, VER, "256 - 18 de zon
 PET_TONGUE = p("boya_pet.lengueta", (12.0, 14.0, 8.0), EST, VER, "Lenguetas de la cuna atornilladas a las costillas extremas del casco: ancho, alto, largo minimo")
 PET_STRAP = p("boya_pet.correa", (14.0, 4.0), EST, VER, "Correa que cierra cada cuna sobre la botella: ancho, espesor")
 PET_UMB_Z = p("boya_pet.pg7_umbilical_z", 30.0, EST, VER, "Altura del eje del PG7 del umbilical sobre el piso interior de la caja (era 15; subido para el francobordo con el casco mas bajo)")
+
+# =====================================================================================
+# SKIN decorativo (31/10): cubierta para presentar que va sobre la tapa M2 de P2/P4; NO cambia la geometria del nodo
+# =====================================================================================
+SKIN_THEME = p("skin.tema", "concha", "equipo", VER, "'concha' (abanico de costillas con borde ondulado) | 'manta' | 'olas'")
+SKIN_BASE = p("skin.base", 2.0, EST, VER, "Espesor del marco y de la placa del texto (mm); en esta altura empieza el color del relieve")
+SKIN_RELIEF = p("skin.relieve", 0.8, "equipo", VER, "Relieve del texto sobre la placa (mm)")
+SKIN_WALL_MIN = p("skin.pared_min", 1.6, "equipo", VER, "Pared minima del skin (mm)")
+SKIN_MASS_MAX = p("skin.masa_max_g", 200.0, "equipo", VER, "Masa impresa maxima del skin")
+SKIN_INSET = p("skin.retiro", 0.5, EST, VER, "Retiro del contorno de la tapa en planta: el skin nunca sale de la tapa (las cuerdas pasan a 2.9 mm)")
+SKIN_FRAME_W = p("skin.marco", 8.0, EST, VER, "Ancho del marco perimetral que toman los 12 tornillos M3 de la tapa")
+SKIN_SCREW_D = p("skin.agujero_m3", 3.4, EST, VER, "Agujero pasante para los tornillos de la tapa (M3 con 2 mm mas de largo)")
+SKIN_CLEAR = p("skin.holgura", 2.0, EST, VER, "Holgura al asa, al PG7 del umbilical y al logo de la tapa")
+SKIN_GLAND_R = p("skin.radio_pg7", 12.0, EST, VER, "Radio libre alrededor del umbilical en la tapa (domo del PG7 de 19 + llave)")
+SKIN_RIB = p("skin.costilla", (2.0, 5.0, 3.0), EST, VER, "Costilla de la concha: ancho, alto junto a la bisagra, alto en el borde (mm)")
+SKIN_RIBS = p("skin.costillas", 9, EST, VER, "Numero de costillas radiales de la concha; con 9 el umbo (radio = (ancho + pared_min) / paso angular) queda en 11 mm y cabe entre el asa y el logo de P4")
+SKIN_WAVE = p("skin.borde_onda", (3.0, 2.4), EST, VER, "Borde ondulado: profundidad de la onda y alto del labio (mm); el labio queda 0.6 mm bajo el final de las costillas para no cruzar caras casi coplanares")
+SKIN_TEXT = p("skin.texto", ("LanternGuard", "UPCH"), "equipo", VER, "Textos en relieve; si existe assets/logo_upch.svg se usa en lugar de 'UPCH'")
+SKIN_PAUSE = p("skin.pausa_gcode", "M400 U1", "fabricante", VER, "Pausa de la P1P (Bambu) para cambiar a filamento azul en la capa donde empieza el relieve")
