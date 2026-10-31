@@ -1,0 +1,550 @@
+{
+ "botella": "1L",
+ "cantidad": 2,
+ "masa_g": 1412.256641051667,
+ "masa_impresa_g": 624.4,
+ "fuente_masa_impresa": "slicer",
+ "KG": 125.71912570522554,
+ "LCG": 10.118089179610797,
+ "empuje_botellas_g": 2050.0,
+ "reserva_g": 637.743358948333,
+ "reserva_pct": 45.15775252247523,
+ "espuma_reserva_estimada_g": 459.5785948802922,
+ "espuma_volumen_cm3": 461.88803505557007,
+ "hidro": {
+  "flota": true,
+  "calado": 55.11176624064657,
+  "V": 1377811.3571235777,
+  "KB": 33.96647928428071,
+  "GM_roll": 30.621333341459177,
+  "GM_pitch": 15.526725266089585,
+  "BMr": 122.373979762404,
+  "BMp": 107.27937168703441,
+  "cb_y": 0.0,
+  "cb_x": 11.0,
+  "trim_arm": 0.8819108203892032
+ },
+ "dims": {
+  "bottle": "1L",
+  "n": 2,
+  "D": 80.0,
+  "r": 40.0,
+  "Lb": 270.0,
+  "V": 1000.0,
+  "neck_D": 30.0,
+  "neck_len": 25.0,
+  "m_bottle": 25.0,
+  "wall": 2.4,
+  "rib": 3.0,
+  "clr": 1.5,
+  "wc": 50.0,
+  "slot_w": 83.0,
+  "yb": 68.9,
+  "WH": 225.6,
+  "LH": 254.0,
+  "zc": 43.9,
+  "z_top": 85.4,
+  "L1": 63.5,
+  "x_bot0": -124.0,
+  "xc_bot": 11.0,
+  "X0": 11.0,
+  "neck_slot_r": 16.0,
+  "Li": 142.0,
+  "Wi": 84,
+  "Hi": 72.0,
+  "Lx": 146.8,
+  "Wy": 88.8,
+  "HB": 74.4,
+  "pillar_h": 6.0,
+  "z_cover": 85.4,
+  "z_cover_top": 89.4,
+  "z0": 95.4,
+  "z_lid": 169.8,
+  "z_lid_top": 173.8,
+  "z_panel0": 198.8,
+  "z_panel1": 201.8,
+  "z_mast": 221.8,
+  "x_mast": 120.0
+ },
+ "piezas": {
+  "B1_casco": {
+   "nombre": "B1 casco",
+   "qty": 1,
+   "orient": "sin girar",
+   "bbox": [
+    254.0,
+    225.60000610351562,
+    85.4000015258789
+   ],
+   "voladizo_mm2": 0.0,
+   "volumen_cm3": 254.74149269276845,
+   "g": 277.4,
+   "h": 7.49,
+   "g_estimado": 307.8492384477049
+  },
+  "B2_cubierta": {
+   "nombre": "B2 cubierta",
+   "qty": 1,
+   "orient": "sin girar",
+   "bbox": [
+    254.0,
+    225.60000610351562,
+    136.4000015258789
+   ],
+   "voladizo_mm2": 16.945843536449868,
+   "volumen_cm3": 137.09748998787396,
+   "g": 118.8,
+   "h": 5.79,
+   "g_estimado": 136.91054921499267
+  },
+  "B3_caja": {
+   "nombre": "B3 caja seca",
+   "qty": 1,
+   "orient": "sin girar",
+   "bbox": [
+    166.8000030517578,
+    116.80000305175781,
+    74.4000015258789
+   ],
+   "voladizo_mm2": 122.82029133465477,
+   "volumen_cm3": 180.37892682615956,
+   "g": 171.0,
+   "h": 5.49,
+   "g_estimado": 191.3923910319334
+  },
+  "B4_tapa": {
+   "nombre": "B4 tapa",
+   "qty": 1,
+   "orient": "X180",
+   "bbox": [
+    166.8000030517578,
+    108.80000305175781,
+    4.0
+   ],
+   "voladizo_mm2": 0.0,
+   "volumen_cm3": 69.98417579460255,
+   "g": 57.2,
+   "h": 2.1,
+   "g_estimado": 71.90981958813252
+  }
+ },
+ "masas": [
+  {
+   "elemento": "B1 casco impreso",
+   "g": 277.4,
+   "z": 33.290836943798936
+  },
+  {
+   "elemento": "B2 cubierta impreso",
+   "g": 118.8,
+   "z": 114.51425968142988
+  },
+  {
+   "elemento": "B3 caja impreso",
+   "g": 171.0,
+   "z": 135.66588299957482
+  },
+  {
+   "elemento": "B4 tapa impreso",
+   "g": 57.2,
+   "z": 171.83348655515601
+  },
+  {
+   "elemento": "3 x celdas 18650",
+   "g": 141.0,
+   "z": 118.80000000000001
+  },
+  {
+   "elemento": "portabaterias",
+   "g": 25.0,
+   "z": 118.80000000000001
+  },
+  {
+   "elemento": "PCB + Heltec",
+   "g": 35.0,
+   "z": 152.3
+  },
+  {
+   "elemento": "Waveshare D",
+   "g": 15.0,
+   "z": 144.85000000000002
+  },
+  {
+   "elemento": "RTC",
+   "g": 8.0,
+   "z": 105.30000000000001
+  },
+  {
+   "elemento": "panel solar",
+   "g": 350.0,
+   "z": 200.3
+  },
+  {
+   "elemento": "antena LoRa (en el mastil)",
+   "g": 20.0,
+   "z": 181.8
+  },
+  {
+   "elemento": "cables y fusible",
+   "g": 40.0,
+   "z": 127.80000000000001
+  },
+  {
+   "elemento": "3 PG7",
+   "g": 30.0,
+   "z": 127.80000000000001
+  },
+  {
+   "elemento": "tornilleria (M3, insertos, junta)",
+   "g": 60.0,
+   "z": 135.4
+  },
+  {
+   "elemento": "2 botellas vacias",
+   "g": 50.0,
+   "z": 43.9
+  },
+  {
+   "elemento": "espuma PU (masa)",
+   "g": 13.8566410516671,
+   "z": 43.9
+  }
+ ],
+ "francobordo_caja_mm": 40.28823375935344,
+ "francobordo_tapa_mm": 118.68823375935344,
+ "francobordo_cubierta_mm": 34.28823375935344,
+ "francobordo_junta_mm": 114.68823375935344,
+ "francobordo_abertura_mm": 51.38823375935345,
+ "una_botella_perdida_sin_espuma": {
+  "flota": true,
+  "calado": 124.48884464010708,
+  "V": 1377811.3571235777,
+  "KB": 62.0262138544486,
+  "GM_roll": -57.47572461646406,
+  "GM_pitch": -46.70186543810007,
+  "BMr": 6.217187234312871,
+  "BMp": 16.991046412676862,
+  "cb_y": 68.9,
+  "cb_x": 11.0,
+  "trim_arm": 0.8819108203892032
+ },
+ "una_botella_perdida_con_espuma_estimada": {
+  "flota": true,
+  "calado": 107.29128158092433,
+  "V": 1377811.3571235777,
+  "KB": 50.328929795092236,
+  "GM_roll": -69.17300867582043,
+  "GM_pitch": -58.399149497456435,
+  "BMr": 6.217187234312871,
+  "BMp": 16.991046412676862,
+  "cb_y": 68.9,
+  "cb_x": 11.0,
+  "trim_arm": 0.8819108203892032
+ },
+ "piezas_cabe_cama": true,
+ "total_impreso_g": 624.4,
+ "total_impreso_h": 20.87,
+ "costo_soles": 56.196,
+ "fallas": [],
+ "interferencias": [],
+ "alternativas": {
+  "500ml": {
+   "botella": "500ml",
+   "cantidad": 2,
+   "masa_g": 1381.4007558916878,
+   "masa_impresa_g": 599.9583071617069,
+   "fuente_masa_impresa": "estimado",
+   "KG": 117.74894408774826,
+   "LCG": 8.74945986285584,
+   "empuje_botellas_g": 1025.0,
+   "reserva_g": -356.4007558916878,
+   "reserva_pct": -25.79995373331273,
+   "espuma_reserva_estimada_g": 246.8412162110349,
+   "espuma_volumen_cm3": 248.08162433269842,
+   "hidro": {
+    "flota": true,
+    "calado": 107.16522581895812,
+    "V": 1347708.0545284762,
+    "KB": 51.21269053733017,
+    "GM_roll": -60.18019509100862,
+    "GM_pitch": -49.16568383530969,
+    "BMr": 6.35605845940947,
+    "BMp": 17.370569715108395,
+    "cb_y": 0.0,
+    "cb_x": 10.000000000000002,
+    "trim_arm": 1.2505401371441618
+   },
+   "piezas": {
+    "B1_casco": {
+     "nombre": "B1 casco",
+     "qty": 1,
+     "orient": "sin girar",
+     "bbox": [
+      196.0,
+      195.60000610351562,
+      70.4000015258789
+     ],
+     "voladizo_mm2": 0.0,
+     "volumen_cm3": 178.25095471066126,
+     "g": 214.49565673441094,
+     "h": null,
+     "g_estimado": 214.49565673441094
+    },
+    "B2_cubierta": {
+     "nombre": "B2 cubierta",
+     "qty": 1,
+     "orient": "sin girar",
+     "bbox": [
+      196.0,
+      195.60000610351562,
+      136.4000015258789
+     ],
+     "voladizo_mm2": 16.945843536449868,
+     "volumen_cm3": 123.80780802532668,
+     "g": 122.18410428319639,
+     "h": null,
+     "g_estimado": 122.18410428319639
+    },
+    "B3_caja": {
+     "nombre": "B3 caja seca",
+     "qty": 1,
+     "orient": "sin girar",
+     "bbox": [
+      166.8000030517578,
+      116.80000305175781,
+      74.4000015258789
+     ],
+     "voladizo_mm2": 122.82029133465477,
+     "volumen_cm3": 180.36509789726932,
+     "g": 191.368726555967,
+     "h": null,
+     "g_estimado": 191.368726555967
+    },
+    "B4_tapa": {
+     "nombre": "B4 tapa",
+     "qty": 1,
+     "orient": "X180",
+     "bbox": [
+      166.8000030517578,
+      108.80000305175781,
+      4.0
+     ],
+     "voladizo_mm2": 0.0,
+     "volumen_cm3": 69.98417579460255,
+     "g": 71.90981958813252,
+     "h": null,
+     "g_estimado": 71.90981958813252
+    }
+   },
+   "francobordo_caja_mm": -26.765225818958115,
+   "francobordo_tapa_mm": 51.63477418104189,
+   "francobordo_cubierta_mm": -32.765225818958115,
+   "francobordo_junta_mm": 47.63477418104189,
+   "francobordo_abertura_mm": -15.665225818958106,
+   "una_botella_perdida_sin_espuma": {
+    "flota": true,
+    "calado": 145.5250260768887,
+    "V": 1347708.0545284762,
+    "KB": 84.58606131892004,
+    "GM_roll": -26.806824309418744,
+    "GM_pitch": -15.792313053719809,
+    "BMr": 6.35605845940947,
+    "BMp": 17.370569715108395,
+    "cb_y": 61.4,
+    "cb_x": 10.000000000000002,
+    "trim_arm": 1.2505401371441618
+   },
+   "una_botella_perdida_con_espuma_estimada": {
+    "flota": true,
+    "calado": 136.28815684780662,
+    "V": 1347708.0545284762,
+    "KB": 75.25790295969749,
+    "GM_roll": -36.1349826686413,
+    "GM_pitch": -25.120471412942365,
+    "BMr": 6.35605845940947,
+    "BMp": 17.370569715108395,
+    "cb_y": 61.4,
+    "cb_x": 10.000000000000002,
+    "trim_arm": 1.2505401371441618
+   },
+   "piezas_cabe_cama": true,
+   "total_impreso_g": 599.9583071617069,
+   "total_impreso_h": null,
+   "costo_soles": 53.99624764455362,
+   "fallas": [
+    "interferencia B2 cubierta / B3 caja: 1149.31 mm3",
+    "interferencia B2 cubierta / B4 tapa: 230.24 mm3",
+    "interferencia B2 cubierta / dummy panel: 238.46 mm3",
+    "francobordo a la abertura mas baja de la caja -15.7 < 50",
+    "GM no positivo (-60 / -49)"
+   ],
+   "interferencias": [
+    [
+     "B2 cubierta",
+     "B3 caja",
+     1149.3056332684284
+    ],
+    [
+     "B2 cubierta",
+     "B4 tapa",
+     230.24357939982104
+    ],
+    [
+     "B2 cubierta",
+     "dummy panel",
+     238.45746452479685
+    ]
+   ]
+  },
+  "2L": {
+   "botella": "2L",
+   "cantidad": 2,
+   "masa_g": 1614.1947590640252,
+   "masa_impresa_g": 777.8376688148644,
+   "fuente_masa_impresa": "estimado",
+   "KG": 138.95716665123464,
+   "LCG": 28.83698061308369,
+   "empuje_botellas_g": 4100.0,
+   "reserva_g": 2485.805240935975,
+   "reserva_pct": 153.99661205549597,
+   "espuma_reserva_estimada_g": 741.5101599305033,
+   "espuma_volumen_cm3": 745.2363416386969,
+   "hidro": {
+    "flota": true,
+    "calado": 48.537597091813325,
+    "V": 1574824.155184415,
+    "KB": 32.20131704421859,
+    "GM_roll": 142.8696411479959,
+    "GM_pitch": 188.87577335852293,
+    "BMr": 249.62549075501198,
+    "BMp": 295.631622965539,
+    "cb_y": 0.0,
+    "cb_x": 41.0,
+    "trim_arm": 12.16301938691631
+   },
+   "piezas": {
+    "B1_casco": {
+     "nombre": "B1 casco",
+     "qty": 1,
+     "orient": "no cabe",
+     "bbox": [
+      254.0,
+      275.6000061035156,
+      110.4000015258789
+     ],
+     "voladizo_mm2": 0.0,
+     "volumen_cm3": 301.40539515730023,
+     "g": 365.35163294890236,
+     "h": null,
+     "g_estimado": 365.35163294890236
+    },
+    "B2_cubierta": {
+     "nombre": "B2 cubierta",
+     "qty": 1,
+     "orient": "no cabe",
+     "bbox": [
+      254.0,
+      275.6000061035156,
+      136.4000015258789
+     ],
+     "voladizo_mm2": 16.945841151436536,
+     "volumen_cm3": 148.29748217482495,
+     "g": 149.183825245896,
+     "h": null,
+     "g_estimado": 149.183825245896
+    },
+    "B3_caja": {
+     "nombre": "B3 caja seca",
+     "qty": 1,
+     "orient": "sin girar",
+     "bbox": [
+      166.8000030517578,
+      116.80000305175781,
+      74.4000015258789
+     ],
+     "voladizo_mm2": 122.82026949069781,
+     "volumen_cm3": 180.37892682615973,
+     "g": 191.3923910319335,
+     "h": null,
+     "g_estimado": 191.3923910319335
+    },
+    "B4_tapa": {
+     "nombre": "B4 tapa",
+     "qty": 1,
+     "orient": "X180",
+     "bbox": [
+      166.8000030517578,
+      108.80000305175781,
+      4.0
+     ],
+     "voladizo_mm2": 0.0,
+     "volumen_cm3": 69.98417579460255,
+     "g": 71.90981958813252,
+     "h": null,
+     "g_estimado": 71.90981958813252
+    }
+   },
+   "francobordo_caja_mm": 71.86240290818668,
+   "francobordo_tapa_mm": 150.2624029081867,
+   "francobordo_cubierta_mm": 65.86240290818668,
+   "francobordo_junta_mm": 146.2624029081867,
+   "francobordo_abertura_mm": 82.96240290818668,
+   "una_botella_perdida_sin_espuma": {
+    "flota": true,
+    "calado": 78.3862647843519,
+    "V": 1574824.155184415,
+    "KB": 47.70295726979445,
+    "GM_roll": 18.407235860183647,
+    "GM_pitch": 41.153896185986554,
+    "BMr": 109.66144524162384,
+    "BMp": 132.40810556742673,
+    "cb_y": 81.4,
+    "cb_x": 41.0,
+    "trim_arm": 12.16301938691631,
+    "escora_est_deg": 77.25783695617103
+   },
+   "una_botella_perdida_con_espuma_estimada": {
+    "flota": true,
+    "calado": 69.46825552672584,
+    "V": 1574824.155184415,
+    "KB": 42.30784342756616,
+    "GM_roll": 24.33245178368071,
+    "GM_pitch": 47.342265112314095,
+    "BMr": 120.9817750073492,
+    "BMp": 143.99158833598258,
+    "cb_y": 81.4,
+    "cb_x": 41.0,
+    "trim_arm": 12.16301938691631,
+    "escora_est_deg": 73.35730770091146
+   },
+   "piezas_cabe_cama": false,
+   "total_impreso_g": 777.8376688148644,
+   "total_impreso_h": null,
+   "costo_soles": 70.00539019333779,
+   "fallas": [
+    "B1_casco: brep={'brep': True, 'bop': True, 'solids': 2, 'min_edge': 0.027016653792514944, 'min_face': 0.04206628575966199, 'ok': False} estanco=True bodies=2 cama=False",
+    "B2_cubierta: brep={'brep': True, 'bop': True, 'solids': 1, 'min_edge': 0.09999999999999432, 'min_face': 6.0, 'ok': True} estanco=True bodies=1 cama=False",
+    "interferencia B2 cubierta / B3 caja: 1474.95 mm3",
+    "interferencia B2 cubierta / B4 tapa: 306.36 mm3",
+    "interferencia B2 cubierta / dummy panel: 296.38 mm3"
+   ],
+   "interferencias": [
+    [
+     "B2 cubierta",
+     "B3 caja",
+     1474.9464019414415
+    ],
+    [
+     "B2 cubierta",
+     "B4 tapa",
+     306.35871590644246
+    ],
+    [
+     "B2 cubierta",
+     "dummy panel",
+     296.37596534804095
+    ]
+   ]
+  }
+ }
+}
