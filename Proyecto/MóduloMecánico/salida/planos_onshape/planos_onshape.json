@@ -1,0 +1,69 @@
+{
+ "link_sharing": "a mano en Onshape (Share > Link): POST /documents/b2a875b87e1322c259f4cd3b/acl/anonymousAccess -> 403: {\n  \"messag",
+ "documento": {
+  "did": "b2a875b87e1322c259f4cd3b",
+  "wid": "3bda440db9eda84724dc5cff",
+  "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff"
+ },
+ "ensamble": {
+  "pestana": "00_ENSAMBLE",
+  "pestanas": [
+   [
+    "00_ENSAMBLE.step",
+    "STEP",
+    "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/2aa25eaa2a69f4b4db17f47e"
+   ],
+   [
+    "00_ENSAMBLE",
+    "PARTSTUDIO",
+    "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/fda21bfe8f53a988ceaa82e9"
+   ]
+  ]
+ },
+ "piezas": {
+  "M2_caja_tapa": {
+   "partstudio": "7be4d8e0feeb49eb0d16b166",
+   "pestana": "M2_caja_tapa",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "escala": "1:2",
+   "escala_iso": "2:5",
+   "cantidad": 1,
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/c8bc1899e000dcde7ec76f6b",
+   "llamadas": 19,
+   "obsoletos": [
+    "1e07a5d2da9bd4f6100d2364"
+   ],
+   "drawing": "c8bc1899e000dcde7ec76f6b",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "vistas": {
+    "right": "60eaa86bc07f0107b1e23343",
+    "front": "af1d93f67259242cb0f95192",
+    "left": "fe4159cd05164f75614dae9e",
+    "back": "2654ae51d05c5bb6a31268da",
+    "top": "73beb96d198406ed1f33286a",
+    "bottom": "f29735db5ff3944444bf546f",
+    "isometric": "28c706ae850c14c33e1be828"
+   },
+   "cotas": {
+    "creadas": 9,
+    "fallidas": [],
+    "a_mano": [
+     "front: alto general 58.0 mm (el extremo es curvo)"
+    ],
+    "agujeros": 14
+   },
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M2_caja_tapa.pdf"
+  }
+ }
+}
