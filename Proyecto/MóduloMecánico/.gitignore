@@ -55,3 +55,6 @@ salida/imprimir_hoy/3mf/*.3mf
 # Copias con nombres REF_ para Onshape (onshape_push.py --ensamble-v2): se regeneran de los STEP versionados
 salida/prototipos/P[1-4]_*/ensamble_simple_D200_v2_nombres.step
 salida/simple/ENSAMBLE_sistema_simple_v2_nombres.step
+
+# 3MF que salieron de la lista (no se suben a Drive)
+salida/imprimir_hoy/3mf/_obsoleto/
