@@ -296,3 +296,41 @@ perímetros con 40 % de relleno (la boya está seca), flotadores de espuma con c
 Ninguno se rompió: insertos M4 de las bridas 339 N al izar (§4 exige 345 N: probar con PB8), peso aparente en la
 ventana, BG positivo, aire ≥ 10, FS ≥ 2 entre capas en riel, gancho y pie. Cambian de forma: §3 (uniones) y §6b
 (linterna en el asa) no aplican en la simple; el gancho se verifica con 150 N.
+
+## 11. Prototipos, boya PET y entrega (30/10, noche, sin el equipo)
+
+Plan: `HANDOFF_2026-10-30_v2.md` §4 y `docs/HANDOFF_noche.md`. Decisiones con su forma de revertir: `docs/DECISIONES.md`
+(raíz del repo). Documento para el equipo: `docs/LANTERNGUARD_ENTREGA.pdf`.
+
+### 11.1 Qué se hizo
+- **Prototipos del nodo** (`docs/PROTOTIPOS.md`, `salida/prototipos/`): P0 original (simple V1 y modular, geometría sin
+  tocar), P1 mínimo, P2 robusto, P3 monocasco y P4 estético, todos desde `simple.py` con banderas de `params.proto`.
+  Recomendación: **P2 para la piscina** (1400 g, 46.7 h, S/ 126.0, FS riel 5.6 / 2.7, pie 5.0 / 2.5) y **P4 para
+  presentar** (1352 g, 46.0 h, S/ 121.7, FS 4.7 / 2.3). P1 descartado (FS 2.0 entre capas).
+- **Correcciones de Yoichi** (tanda 3, `683ade1`): linterna sin separador ni ápice (aro + 4 cuerdas a un nudo a 400 mm +
+  cabo), nodo girado con los brazos a 45° entre cuerdas (aire ≥ 10 mm a brazo y cápsula); lastre a granel en un bolsillo
+  por lado (`lastre_izq`/`lastre_der`, 1020 a 1150 g para 0.35 kgf); cajas de P1, P3 y P4 más chicas (menos aire).
+- **Boya PET** (`docs/BOYA.md`): tres vueltas; queda **4 × 1 L en cruz** (casco + 2 cunas + 4 correas): 863 g, 32.0 h,
+  S/ 77.7, calado 39.5 mm, francobordo a la abertura 82 mm, GM 112 / 762 mm, reserva 136 %. Con una botella perdida
+  vuelca sin espuma y queda estable con la espuma estimada (6 a 12°). No cumple 700 g ni 25 h.
+- **Onshape**: carpeta LanternGuard con `LG_00_LEER_PRIMERO` (el PDF), `LG_P0` a `LG_P4`, `LG_boya_PET` y `_v2`,
+  `LG_sistema`, `LG_probetas`. Pestañas de ensamble con nombres (código para lo impreso, `REF_` para lo demás),
+  verificadas contra el STEP (`onshape_push.py --verificar`). `M1m_caja_riel` y el umbilical solo entran con
+  `allowFaultyParts` (pestaña `ENSAMBLE_v2_completo`).
+- **Planos**: `planos/PLANOS_LanternGuard.pdf`, 27 láminas (P2, P4, boya).
+- **Impresión**: 17 placas sin fallas, 2469 g y 84.7 h (`salida/imprimir_hoy/`, 3MF en Drive), capturas del slicer en
+  `salida/capturas_slicer/`.
+- **Bitácora**: BITACORA.xlsx y BOM.md con P2, P4 y la boya PET.
+
+### 11.2 Lo que no salió como se pedía
+- Boya: 4 × 500 ml (lo pedido) vuelca si pierde una botella y no llega a GM ≥ 40 en un solo casco; se recomendó 1 L.
+- Boya: masa y horas por encima del objetivo (863 g contra 700; 32 h contra 25).
+- Cuerda a brida de la tapa: 2.9 mm en P2 (6.8 en P4). Aviso, no falla; tres opciones en `docs/PROTOTIPOS.md`.
+- Onshape no cura `M1m_caja_riel` ni el umbilical al importar (en OCCT son válidos): entran marcados como "faulty".
+- `cad_final/variantes.py` quedó roto (usa las firmas viejas de `plates`, `assemble` y `lantern`).
+- Densidad a granel del lastre (4.5 g/cm³ tuercas, 6.5 perdigón) y espuma PU (50 % de llenado): estimadas.
+
+### 11.3 Chequeos
+Builds de V2, P1 a P4, sistema y boya: "FALLAS: ninguna". Slicer: 17 de 17 placas. Onshape: partes = sólidos en todas
+las pestañas de ensamble indicadas en `docs/LINKS.md`. Nada de esto reemplaza las probetas: nada se declara listo para
+imprimir sin PB6 a PB10.
