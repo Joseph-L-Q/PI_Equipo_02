@@ -565,6 +565,20 @@ SIMPLE_POCKET_LAYERS = p("simple.bolsillo_capacidad", 5, EST, VER,
 SIMPLE_PLATES = p("lastre.pletinas", 5, EST, VER,
                   "Pletinas por bolsillo (hay 2) en la version simple; simple.py verifica que el peso aparente quede en "
                   "la ventana y dice cuantas hacen falta")
+SIMPLE_POCKET_DEPTH = p("lastre.bolsillo_prof_simple", 30.0, EST, VER,
+                        "Tanda 3: alto interior del bolsillo unico de lastre a granel bajo la caja (hay 2). Cada perfil de PROTO_CFG puede "
+                        "traer el suyo en 'bolsillo' (mm); simple.py verifica que quepa el lastre del peso aparente")
+BALLAST_POCKET_W = p("lastre.bolsillo_ancho", 50.0, EST, VER,
+                     "Tanda 3: ancho en y del bolsillo de lastre a granel (antes 25 de pletina); el largo sigue siendo lastre.pletina_largo + holguras")
+BALLAST_MID_KGF = p("lastre.objetivo_medio_kgf", 0.35, "equipo", VER,
+                    "Tanda 3: peso aparente buscado, al medio de la ventana lastre.objetivo_kgf (0.2 a 0.5)")
+BALLAST_BULK = p("lastre.granel", dict(material="tuercas_m8", opciones=dict(
+    tuercas_m8=dict(nombre="tuercas y arandelas M8 de inox, a granel", aparente=4.5, solido=7.9),
+    perdigon_plomo=dict(nombre="perdigon de plomo en bolsa", aparente=6.5, solido=11.34))), EST, VER,
+    "Tanda 3: lastre a granel en UN bolsillo por lado. aparente = densidad aparente del granel (g/cm3) y solido = densidad del metal "
+    "(el empuje se calcula con el solido). ESTIMADO: tuercas y arandelas sueltas empacan ~55 a 60 % del acero (7.9 -> ~4.5); perdigon "
+    "de plomo suelto ~57 a 60 % de 11.34 (-> ~6.5). Pesar un cubo lleno del granel comprado antes de fijar la cantidad. Sin plomo por "
+    "defecto: el nodo va al mar")
 SIMPLE_HARDWARE_G = p("masa.tornilleria_simple", 40.0, EST, VER,
                       "4 M3 de la union, 4 M4 + tuercas T de los ganchos, 4 M4 de los pies, 4 M3 de las tapas del "
                       "bolsillo y 2 correas; pesar")
@@ -612,9 +626,16 @@ SEP_H = p("separador.altura", 140.0, "equipo", OK,
           "Plano medio del separador sobre el centro de la varilla del aro. V2 (caja baja): el minimo calculado con 10 mm de aire es 136, se usa 140 (antes 250)", 250.0)
 SEP_SECTION = p("separador.seccion", (12.0, 6.0), EST, VER, "Ancho x espesor del anillo o de los rayos (se imprime plano)")
 SEP_HOLE = p("separador.agujero", 4.5, EST, VER, "Agujero por donde pasa cada cuerda (cuerda de Ø4)")
-SIMPLE_CORD_AZ = p("linterna.cuerda_azimut", (60.0, 120.0, 240.0, 300.0), "equipo", OK,
-                   "Version simple: a 45 grados la brida de la caja corta la cuerda vertical (decision 29/10). "
-                   "ensamble.cuerda_azimut queda en 45 para la modular")
+SIMPLE_CORD_AZ = p("linterna.cuerda_azimut", (45.0, 135.0, 225.0, 315.0), "equipo", OK,
+                   "Tanda 3 (30/10 noche): las 4 cuerdas salen del aro a 45 grados del riel (en el marco del nodo, riel en X): los brazos "
+                   "quedan entre las cuerdas. Antes (60, 120, 240, 300) por la brida de la caja", (60.0, 120.0, 240.0, 300.0))
+SEP_USE = p("separador.usar", False, "equipo", OK,
+            "Tanda 3 (30/10 noche): sin separador LR1 ni apice. Las 4 cuerdas van rectas del aro a un solo punto de amarre (linterna.nudo_h) "
+            "y de ahi un cabo a la linea larga. El codigo del separador se conserva: True lo vuelve a dibujar (con apice.altura)")
+LANTERN_TIE_H = p("linterna.nudo_h", 400.0, EST, VER,
+                  "Altura del punto de amarre de las 4 cuerdas sobre el centro de la varilla del aro (linterna de prueba sin separador). "
+                  "El minimo lo dan los 10 mm de aire cuerda-brazo y cuerda-capsula; simple.py lo verifica")
+
 APEX_H = p("apice.altura", 150.0, "equipo", OK, "Apice de las cuerdas sobre el separador; de ahi sube el cabo central")
 LANTERN_FIXED_POINT = p("linterna.punto_fijo", "estructura", "equipo", OK,
                         "Donde termina el cabo central: 'estructura' (punto fijo del banco) o 'boya'")
@@ -632,18 +653,18 @@ UMB_SAG = p("umbilical.comba", 80.0, EST, VER, "Cuanto cuelga el umbilical bajo 
 PROTOTYPES = ("P1_minimo", "P2_robusto", "P3_monocasco", "P4_estetico")
 PROTO_CFG = p("proto.perfiles", {
     "simple": dict(riel="solido", pared=4.0, gancho="c", monocasco=False, estetico=False, caja="v2", capsula="v2"),
-    "P1_minimo": dict(riel="celosia", pared=3.5, gancho="snap", monocasco=False, estetico=False, caja="minima", capsula="minima"),
-    "P2_robusto": dict(riel="celosia", pared=5.0, gancho="c", monocasco=False, estetico=False, caja="v2", capsula="v2",
-                       capacidad=6, pletinas=6),
-    "P3_monocasco": dict(riel="celosia", pared=4.0, gancho="abrazadera", monocasco=True, estetico=False, caja="v2", capsula="v2"),
-    "P4_estetico": dict(riel="celosia", pared=4.0, gancho="abrazadera", monocasco=True, estetico=True, caja="v2", capsula="v2"),
-}, EST, VER, "Banderas por version: riel solido|celosia, pared del conducto, gancho c|snap|abrazadera, monocasco (opcional: capacidad del bolsillo y pletinas si la ventana de peso aparente lo pide) "
-   "(caja+riel en una pieza), estetico (redondeos + logo), caja v2|minima, capsula v2|minima. P4 parte de P3 (ver PROTOTIPOS.md)")
+    "P1_minimo": dict(riel="celosia", pared=3.5, gancho="snap", monocasco=False, estetico=False, caja="minima", capsula="minima", bolsillo=28.0),
+    "P2_robusto": dict(riel="celosia", pared=5.0, gancho="c", monocasco=False, estetico=False, caja="v2", capsula="v2"),
+    "P3_monocasco": dict(riel="celosia", pared=4.0, gancho="abrazadera", monocasco=True, estetico=False, caja="minima", capsula="v2", bolsillo=28.0),
+    "P4_estetico": dict(riel="celosia", pared=4.0, gancho="abrazadera", monocasco=True, estetico=True, caja="minima", capsula="v2", bolsillo=28.0),
+}, EST, VER, "Banderas por version: riel solido|celosia, pared del conducto, gancho c|snap|abrazadera, monocasco "
+   "(caja+riel en una pieza), estetico (redondeos + logo), caja v2|minima, capsula v2|minima. Opcional 'bolsillo' = alto del bolsillo de lastre en mm. "
+   "Tanda 3: P3 y P4 usan la caja minima (menos aire atrapado). P4 parte de P3 (ver PROTOTIPOS.md)")
 PROTO_OVERRIDES = p("proto.sobreescrituras", {
-    "caja": {"minima": dict(GAP_MOD=3.0, GAP_WALL=3.0, CLR_USB=25.0, CLR_SD=10.0)},
+    "caja": {"minima": dict(GAP_MOD=3.0, GAP_WALL=2.0, CLR_USB=25.0, CLR_SD=10.0)},
     "capsula": {"minima": dict(CAP_SIDE_GAP=1.5, CAP_REAR_ZONE=20.0)},
-}, EST, VER, "Valores de params que P1 pisa al importar (los modulos los leen por valor): holgura entre modulos y a la "
-   "pared 3 mm (pedido del 30/10), zonas de acceso USB 35->25 y microSD 15->10, capsula con 1.5 mm por lado (cavidad 36 "
+}, EST, VER, "Valores de params que P1 pisa al importar (los modulos los leen por valor): holgura entre modulos 3 mm y a la "
+   "pared 2 mm como en V2 (tanda 3: con 3 la caja crecia 2 mm en y), zonas de acceso USB 35->25 y microSD 15->10, capsula con 1.5 mm por lado (cavidad 36 "
    "para la camara de 33) y zona trasera 23->20. Todo estimado: confirmar con el montaje de prueba")
 TRUSS = p("proto.celosia", dict(barra=3.0, angulo=65.0, margen_brida=4.0, margen_silla=4.0, margen_punta=8.0, margen_gancho=0.0),
           EST, VER, "Riel en celosia: ancho de barra entre ventanas triangulares (Warren, angulo de las diagonales) en las paredes laterales del conducto, "

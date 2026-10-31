@@ -6,8 +6,10 @@ cable chamber under the box. Each rail half M3s bolts with a flange to a pad on 
 its C hook (fused, gancho.correa) and the saddle of the capsule foot. The ballast pockets are moulded under the floor of
 M1, outside the seal, closed by M3t. The capsules look inward and down to the net (capsula.acimut, capsula.angulo).
 Box M2, tray M11, capsule M4, bezel M6 and window M7 are the modular ones (the tray gets two notches for the PG7 nuts).
-Test lantern: ring, net, separator LR1 above the node, 4 cords straight up to it and on to the apex, central line,
-slack umbilical.
+Test lantern (tanda 3, 30/10 night): ring, net, 4 cords that go straight up from the ring (45 deg to the rail) past the lid and
+on to ONE tie point, a line (cabo) from there to the long line, slack umbilical. No separator LR1 and no apex (params
+separador.usar = False; the LR1 code is kept). The ballast is bulk (M8 nuts and washers or shot), ONE pocket per side.
+The assembly STEP is a named assembly: printed parts by code and stem, the rest REF_*, ballast "lastre_izq"/"lastre_der".
 
     python simple.py        (from cad_final/; build.py runs it when version = "simple")
 Outputs: salida/simple/ (stl/, step/, simscale/, ensamble_simple_D200.step, renders, resultados.json),
@@ -26,6 +28,7 @@ from pathlib import Path
 
 import cadquery as cq
 import numpy as np
+from OCP.BRepCheck import BRepCheck_Analyzer
 
 import params as P
 import camara
@@ -139,15 +142,15 @@ def pad_bolts():
 
 
 # ------------------------------------------------------------------ box M1 (low, pockets under the floor)
-def pocket_dims(layers):
-    lin, win = P.PLATE_L + 2 * P.PLATE_CLR, P.PLATE_BAR[0] + 2 * P.PLATE_CLR
+def pocket_dims(depth):
+    lin, win = P.PLATE_L + 2 * P.PLATE_CLR, P.BALLAST_POCKET_W + 2 * P.PLATE_CLR
     w = P.PLATE_POCKET_WALL
     y_in0 = 1.0 + w                                   # 1 mm centre wall half + wall
-    return dict(lin=lin, win=win, w=w, depth=camara.pocket_depth(layers), y0=y_in0, y1=y_in0 + win,
+    return dict(lin=lin, win=win, w=w, depth=depth, y0=y_in0, y1=y_in0 + win,
                 x_out=lin / 2 + POCKET_END, x_ins=lin / 2 + POCKET_END / 2, yc=y_in0 + win / 2)
 
 
-def box_body_low(lay, layers, bolts=True):
+def box_body_low(lay, depth, bolts=True):
     import copy
     lay_b = copy.copy(lay)
     lay_b.floor_glands = []                            # the cables now leave through the end walls
@@ -167,7 +170,7 @@ def box_body_low(lay, layers, bolts=True):
         m1 = m1.cut(_cyl((sg * (ol / 2 - P.BOX_WALL - 1), 0, Z_G), (sg, 0, 0), P.PG7_HOLE / 2, P.BOX_WALL + 2))
         for y, z in (pad_bolts() if bolts else []):
             m1 = m1.cut(_cyl((xo + sg * 0.01, y, z), (-sg, 0, 0), P.M4_INSERT_HOLE / 2, P.M4_INSERT_DEPTH))
-    d = pocket_dims(layers)
+    d = pocket_dims(depth)
     for sy in (1, -1):
         ya, yb = sorted((sy * 1.0, sy * (d["y1"] + d["w"])))
         outer = _box(-d["x_out"], d["x_out"], ya, yb, -d["depth"], 0.01)
@@ -181,9 +184,9 @@ def box_body_low(lay, layers, bolts=True):
     return m1
 
 
-def pocket_cover(layers):
+def pocket_cover(depth):
     """M3t (+Y pocket; the -Y one is the same part turned 180 deg about Z): plate with 2 countersunk M3."""
-    d = pocket_dims(layers)
+    d = pocket_dims(depth)
     w = d["w"]
     zc = -d["depth"] - w
     c = _box(-d["x_out"], d["x_out"], 1.0, d["y1"] + w, zc, -d["depth"])
@@ -194,8 +197,8 @@ def pocket_cover(layers):
     return c
 
 
-def plates(layers, k):
-    d = pocket_dims(layers)
+def plates(depth, k):
+    d = pocket_dims(depth)
     w, th = P.PLATE_BAR
     out = []
     for sy in (1, -1):
@@ -203,6 +206,20 @@ def plates(layers, k):
             ya, yb = sorted((sy * (d["y0"] + P.PLATE_CLR), sy * (d["y0"] + P.PLATE_CLR + w)))
             z0 = -d["depth"] + i * th                     # stacked up from the cover
             out.append(solid(_box(-P.PLATE_L / 2, P.PLATE_L / 2, ya, yb, z0, z0 + th)))
+    return out
+
+
+def ballast_solids(depth, g_side, rho):
+    """The bulk ballast as ONE solid per pocket (names lastre_izq = +Y pocket, lastre_der = -Y pocket): a block of the pocket
+    plan (PLATE_CLR clear of the walls) piled on the cover up to the height g_side grams of apparent density rho fill."""
+    d = pocket_dims(depth)
+    c = P.PLATE_CLR
+    wy = d["win"] - 2 * c
+    h = min(g_side / rho * 1000.0 / (P.PLATE_L * wy), depth)
+    out = {}
+    for name, sy in (("lastre_izq", 1), ("lastre_der", -1)):
+        ya, yb = sorted((sy * (d["y0"] + c), sy * (d["y0"] + c + wy)))
+        out[name] = solid(_box(-P.PLATE_L / 2, P.PLATE_L / 2, ya, yb, -depth, -depth + h))
     return out
 
 
@@ -508,9 +525,9 @@ def end_piece(lay, foot, lid, ax, az):
     return rail_piece(lay, foot, "end").union(lid_with_foot(lid, ax, az, foot))
 
 
-def central_mono(lay, layers, foot):
+def central_mono(lay, depth, foot):
     """P3/P4 M1m: the low box (no insert holes in the pads) with both rail stubs (hooks fused) up to X_CUT, in one piece."""
-    m = box_body_low(lay, layers, bolts=False)
+    m = box_body_low(lay, depth, bolts=False)
     stub = rail_piece(lay, foot, "stub")
     return m.union(stub).union(put(stub, -1))
 
@@ -547,24 +564,30 @@ def lid_edges(m2):
     return soften("M2 borde superior", m2, perimeter(2, zt, {0: ol / 2 + fl, 1: ow / 2 + fl}), P.FILLETS["caja"])
 
 
-def assemble(an, half, m5s, cover, cp, ax, az, plate_list, m1, trays, strap=False):
-    """name -> (shape, group) of the whole node in the box frame; strap=True adds the strap loops (render only)."""
+SIDE = {1: "der", -1: "izq"}      # rail halves, capsules, hooks: der = +X, izq = -X (top view, X to the right)
+
+
+def assemble(an, half, m5s, cover, cp, ax, az, ballast, m1, trays, strap=False):
+    """name -> (shape, group) of the whole node in the box frame. The names are the ones of the assembly STEP: printed parts by
+    code and stem (pocket parts izq = +Y, der = -Y), bought bodies REF_*, ballast lastre_izq / lastre_der. strap=True adds the
+    strap loops (render only)."""
     cap_w = {kk: place_cap(cp[kk], ax, az) for kk in ("M4", "M6", "M7")}
-    node = {("M1m caja con riel" if MONO else "M1 caja"): (solid(m1), "caja"), "M2 tapa": (solid(an["m2"]), "caja")}
-    node.update({f"M11 {kk}": (solid(t), "caja") for kk, t in trays.items()})
-    node.update({"M3t tapa bolsillo +Y": (solid(cover), "lastre_t"), "M3t tapa bolsillo -Y": (put(cover, -1), "lastre_t")})
-    node.update({f"pletina {i + 1}": (p, "lastre") for i, p in enumerate(plate_list)})
+    node = {K_M1: (solid(m1), "caja"), "M2_caja_tapa": (solid(an["m2"]), "caja")}
+    node.update({kk: (solid(t), "caja") for kk, t in trays.items()})
+    node.update({"M3t_tapa_bolsillo_izq": (solid(cover), "lastre_t"), "M3t_tapa_bolsillo_der": (put(cover, -1), "lastre_t")})
+    node.update({kk: (b, "lastre") for kk, b in ballast.items()})
     z_rod = Z_RAIL - P.HOOK_DROP
-    for side, sg in ((1, "+X"), (-1, "-X")):
+    for side in (1, -1):
+        sg = SIDE[side]
         if not MONO:
-            node[f"M3s riel con gancho {sg}"] = (put(half, side), "riel")
+            node[f"{K_RAIL}_{sg}"] = (put(half, side), "riel")
         if HOOK_STYLE == "abrazadera":
-            node[f"M9c abrazadera {sg}"] = (put(solid(clamp_piece()).translate(cq.Vector(R_RING, 0, z_rod)), side), "abrazadera")
+            node[f"M9c_abrazadera_{sg}"] = (put(solid(clamp_piece()).translate(cq.Vector(R_RING, 0, z_rod)), side), "abrazadera")
         if strap:
-            node[f"correa {sg}"] = (put(solid(strap_band()).translate(cq.Vector(R_RING, 0, z_rod)), side), "correa")
-        node[("M5m extremo con pie " if MONO else "M5s tapa con pie ") + sg] = (put(m5s, side), "capsula" + sg)
-        for kk, nm in (("M4", "M4 capsula"), ("M6", "M6 bisel"), ("M7", "M7 ventana")):
-            node[f"{nm} {sg}"] = (put(cap_w[kk], side), "capsula" + sg)
+            node[f"REF_correa_{sg}"] = (put(solid(strap_band()).translate(cq.Vector(R_RING, 0, z_rod)), side), "correa")
+        node[f"{K_M5}_{sg}"] = (put(m5s, side), "capsula" + ("+X" if side > 0 else "-X"))
+        for kk, nm in (("M4", "M4_capsula_cuerpo"), ("M6", "M6_capsula_bisel"), ("M7", "REF_M7_capsula_ventana")):
+            node[f"{nm}_{sg}"] = (put(cap_w[kk], side), "capsula" + ("+X" if side > 0 else "-X"))
     return node
 
 
@@ -628,8 +651,51 @@ def lantern(z_rod, z_sep, z_apex, fixed=None):
     return out, axes, buoy_end
 
 
+def lantern_tie(z_rod, z_bend, z_tie, fixed=None):
+    """Test lantern without separator (box frame): ring, net with floors, 4 cords straight up from the ring (tied round the rod, so
+    the axis lies outside it) to z_bend and from there straight to ONE tie point, the cabo from the tie point to the long line.
+    Names are the REF_* ones of the assembly STEP. Returns (name -> shape, name -> [(p, q), ...] axes, end of the umbilical)."""
+    rd = P.RING_SECTION
+    out = {"REF_aro_superior": cq.Solid.makeTorus(R_RING, rd / 2, cq.Vector(0, 0, z_rod), ZAX)}
+    h = P.LANTERN_NET_H
+    z_net = z_rod - rd / 2
+    out["REF_linterna_malla"] = cq.Solid.makeCylinder(R_RING, h, cq.Vector(0, 0, z_net - h), ZAX).cut(
+        cq.Solid.makeCylinder(R_RING - P.LANTERN_NET_T, h + 2, cq.Vector(0, 0, z_net - h - 1), ZAX))
+    for k in range(P.LANTERN_FLOORS):
+        z = z_net - h * (k + 1) / (P.LANTERN_FLOORS + 1)
+        out[f"REF_linterna_piso_{k + 1}"] = cq.Solid.makeCylinder(R_RING - P.LANTERN_NET_T - 1, 1.0, cq.Vector(0, 0, z), ZAX)
+    d = P.LANTERN_CORD_D
+    r_c = R_RING + rd / 2 + d / 2
+    axes = {}
+    tie = (0.0, 0.0, z_tie)
+    for i, a in enumerate(P.SIMPLE_CORD_AZ):
+        x, y = r_c * math.cos(math.radians(a)), r_c * math.sin(math.radians(a))
+        p0, p1 = (x, y, z_rod), (x, y, z_bend)
+        axes[f"REF_cuerda_{i + 1}"] = [(p0, p1), (p1, tie)]
+        c = cq.Workplane().add(segment(p0, p1, d)).union(cq.Workplane().add(
+            cq.Solid.makeSphere(d / 2, cq.Vector(*p1), angleDegrees1=-90, angleDegrees2=90))).union(
+            cq.Workplane().add(segment(p1, tie, d))).clean()
+        out[f"REF_cuerda_{i + 1}"] = solid(c)
+    z_top = z_tie + P.LANTERN_LINE_L
+    fixed = fixed or P.LANTERN_FIXED_POINT
+    if P.LANTERN_CENTRAL_LINE and fixed != "ninguno":
+        axes["REF_cabo"] = [(tie, (0.0, 0.0, z_top))]
+        out["REF_cabo"] = segment(tie, (0.0, 0.0, z_top), d)
+    if fixed == "boya":
+        out["REF_boya"] = solid(_box(-105, 105, -70, 70, z_top, z_top + 76))
+        buoy_end = (60.0, 0.0, z_top)
+    elif fixed == "estructura":
+        out["REF_estructura_punto_fijo"] = solid(_box(-150, 150, -10, 10, z_top, z_top + 20))
+        out["REF_boya"] = solid(_box(-105, 105, 180, 320, z_top, z_top + 76))
+        buoy_end = (0.0, 200.0, z_top)
+    else:
+        buoy_end = None
+    return out, axes, buoy_end
+
+
 def umbilical(gland, buoy_end):
-    """Slack umbilical: up from the gland, then a sagging curve to the buoy (render and STEP only)."""
+    """Slack umbilical: up from the gland, then a sagging curve to the buoy (render and STEP only). Returns [ONE solid]: the
+    segments and the joint spheres fused, so the assembly has a single body REF_umbilical."""
     p0 = np.array(gland, float)
     p1 = p0 + np.array([0, 0, 40.0])
     p2 = np.array(buoy_end, float)
@@ -637,7 +703,12 @@ def umbilical(gland, buoy_end):
     for t in np.linspace(0, 1, 13):
         pts.append(p1 + (p2 - p1) * t - np.array([0, 0, P.UMB_SAG * 4 * t * (1 - t)]))
     d = P.UMBILICAL[0]
-    return [segment(tuple(a), tuple(b), d) for a, b in zip(pts, pts[1:]) if np.linalg.norm(b - a) > 1e-6]
+    segs = [segment(tuple(a), tuple(b), d) for a, b in zip(pts, pts[1:]) if np.linalg.norm(b - a) > 1e-6]
+    u = cq.Workplane().add(segs[0])
+    for sg_, pt in zip(segs[1:], pts[1:]):
+        u = u.union(cq.Workplane().add(sg_)).union(cq.Workplane().add(
+            cq.Solid.makeSphere(d / 2, cq.Vector(*pt), angleDegrees1=-90, angleDegrees2=90)))
+    return [solid(u.clean())]
 
 
 def lid_gland_point(lay):
@@ -791,31 +862,69 @@ def piece_mass(shape, infill):
 
 
 # ------------------------------------------------------------------ main
+# ------------------------------------------------------------------ bodies of the assembly STEP
+def one_solid(name, shape, rec):
+    """The body of the assembly as ONE valid Solid (ShapeFix when it is not), so Onshape imports it as a single part.
+    rec gets the entry written to ensamble_solidos.json."""
+    s = solid(shape)
+    fixed = False
+    if not (BRepCheck_Analyzer(s.wrapped, True).IsValid() and len(s.Solids()) == 1):
+        s = solid(sanitize(cq.Workplane().add(s)))
+        fixed = True
+    sols = s.Solids()
+    out = sols[0] if len(sols) == 1 else s
+    valid = bool(BRepCheck_Analyzer(out.wrapped, True).IsValid() and len(sols) == 1 and out.Volume() > 0)
+    rec.append(dict(nombre=name, solidos=len(sols), valido=valid, corregido=fixed, volumen_mm3=round(out.Volume(), 1)))
+    return out
+
+
+def cord_air(axes, groups):
+    """Minimum free distance (mm) from each cord/line (axes: name -> [(p, q), ...], radius LANTERN_CORD_D / 2) to each group of
+    node bodies (groups: name -> [shapes]); returns {group: {cord: mm}}."""
+    from scipy.spatial import cKDTree
+    r = P.LANTERN_CORD_D / 2
+    samples = {}
+    for name, segs in axes.items():
+        pts = []
+        for p, q in segs:
+            p, q = np.array(p, float), np.array(q, float)
+            pts.append(p + (q - p) * np.linspace(0, 1, int(max(20, np.linalg.norm(q - p))))[:, None])
+        samples[name] = np.vstack(pts)
+    out = {}
+    for g, shapes in groups.items():
+        tree = cKDTree(E.surface_points(shapes, 0.7))
+        out[g] = {name: float(tree.query(pp)[0].min() - r) for name, pp in samples.items()}
+    return out
+
+
+def ballast_h(depth, g_side, rho):
+    """Height (mm) that g_side grams of bulk ballast of apparent density rho (g/cm3) fill in the pocket."""
+    d = pocket_dims(depth)
+    return g_side / rho * 1000.0 / (P.PLATE_L * (d["win"] - 2 * P.PLATE_CLR))
+
+
+# ------------------------------------------------------------------ main
 def main():
     t0 = time.time()
-    for d in (OUT / "stl", OUT / "step", OUT / "simscale", LR_OUT):
+    for d in [OUT / "stl", OUT / "step", OUT / "simscale"] + ([LR_OUT] if P.SEP_USE else []):
         d.mkdir(parents=True, exist_ok=True)
     for old in list((OUT / "stl").glob("*")) + list((OUT / "step").glob("*")):
         old.unlink()                                    # piece names changed in V2: no stale files
-    fails = []
+    fails, warns = [], []
     lay = layout.build(P.SIMPLE_ESP32_BASE, floors=P.SIMPLE_FLOORS)
     set_pad(lay)
     s = layout.summary(lay)
     if s["conflictos"] or s["fuera_de_cavidad"]:
         fails.append(f"layout {P.SIMPLE_ESP32_BASE} {P.SIMPLE_FLOORS} pisos: {s['conflictos']} {s['fuera_de_cavidad']}")
-    layers = CFG.get("capacidad", P.SIMPLE_POCKET_LAYERS)
-    k = CFG.get("pletinas", P.SIMPLE_PLATES)
-    if k > layers:
-        fails.append(f"lastre.pletinas = {k} no entra en el bolsillo (capacidad {layers})")
+    depth = CFG.get("bolsillo", P.SIMPLE_POCKET_DEPTH)
     an = FA.analyse_box(lay)
     if ESTET:
         an["m2"] = solid(lid_logo(lid_edges(an["m2"])))
     cp = capsule_parts()
     ax, az, foot = capsule_pose(lay, cp)
-    m1 = solid(sanitize(central_mono(lay, layers, foot) if MONO else box_body_low(lay, layers)))
+    m1 = solid(sanitize(central_mono(lay, depth, foot) if MONO else box_body_low(lay, depth)))
     trays = {kk: solid(sanitize(t)) for kk, t in trays_low(lay).items()}
-    cover = solid(pocket_cover(layers))
-    plate_list = plates(layers, k)
+    cover = solid(pocket_cover(depth))
     print("caja", f"{time.time() - t0:.0f}s", "exterior", [round(v, 1) for v in lay.box_outer()], flush=True)
 
     # pieces
@@ -861,7 +970,93 @@ def main():
         half = R[K_RAIL]
     print("piezas", f"{time.time() - t0:.0f}s", flush=True)
 
-    node = assemble(an, half, m5s, cover, cp, ax, az, plate_list, m1, trays)
+    # fused rail for SimScale and the local FEM (both halves + the box pad region is not included)
+    fem_path = OUT / "simscale" / "riel_fem.step"      # one side of the rail as the local FEM sees it (fem.py)
+    cq.exporters.export(cq.Workplane().add(half), str(fem_path))
+    fix_step_stamp(fem_path)
+    if MONO:
+        n_sol, sim_note = 1, "P3/P4: riel fundido (tramo central + extremo) de un lado, con las bridas de union como cuerpo continuo"
+    else:
+        fused = half.fuse(put(half, -1)).clean()
+        sim_path = OUT / "simscale" / "M3s_riel_fusionado.step"
+        cq.exporters.export(cq.Workplane().add(fused), str(sim_path))
+        fix_step_stamp(sim_path)
+        n_sol = len(fused.Solids())
+        sim_note = "dos mitades separadas por la caja: el STEP tiene las 2 mitades con sus ganchos" if n_sol == 2 else ""
+
+    # masses (the same per piece for the buoyancy and the bitacora), buoyancy and the bulk ballast (one pocket per side)
+    cav = CP.capsule_cavity().val()
+    air = cav.Volume() - cav.intersect(cp["M4"].val()).Volume()
+    masses = {K_M1: piece_mass(m1, INFILL["M1"]), "M2_caja_tapa": piece_mass(an["m2"], INFILL["M2"]),
+              "M3t_tapa_bolsillo": piece_mass(cover, INFILL["M3t"]),
+              K_M5: piece_mass(m5s, INFILL["M5s"]), "M4_capsula_cuerpo": piece_mass(cp["M4"].val(), INFILL["M4"]),
+              "M6_capsula_bisel": piece_mass(cp["M6"].val(), INFILL["M6"]),
+              "M7_capsula_ventana": P.ACRYLIC_DENSITY * cp["M7"].val().Volume() / 1000}
+    if not MONO:
+        rail_only = solid(rail_half(lay, foot, hook_on=False))
+        hook_part = half.cut(rail_only)
+        masses[K_RAIL] = piece_mass(rail_only, INFILL["riel"]) + piece_mass(hook_part, INFILL["gancho"])
+    if clamp is not None:
+        masses["M9c_abrazadera"] = piece_mass(clamp, INFILL["gancho"])
+    rail_vol = 0.0 if MONO else 2 * half.Volume()
+    clamp_vol = 0.0 if clamp is None else 2 * clamp.Volume()
+    bulk = P.BALLAST_BULK["opciones"][P.BALLAST_BULK["material"]]
+    net = 1 - RHO_W / bulk["solido"]                    # net sinking per gram of the ballast metal
+    lo, hi = (t * 1000 for t in P.BALLAST_TARGET_KGF)
+    mid = P.BALLAST_MID_KGF * 1000
+    elec = an["fixed_g"]
+    bal = {}
+    for f in P.INFILL_CASES:
+        tray_g = sum(piece_mass(t, f) for t in trays.values())
+        parts_g = {"caja (M1 con bolsillos + M2 + bandejas + electronica)" if not MONO else "caja con tramos de riel (M1m + M2 + bandejas + electronica)":
+                   masses[K_M1] + masses["M2_caja_tapa"] + tray_g + elec}
+        if not MONO:
+            parts_g["riel con ganchos (2 M3s)"] = 2 * masses[K_RAIL]
+        if clamp is not None:
+            parts_g["abrazaderas (2 M9c)"] = 2 * masses["M9c_abrazadera"]
+        parts_g.update({"tapas del bolsillo (2 M3t)": 2 * masses["M3t_tapa_bolsillo"],
+                        "capsulas (M4, M5, M6, M7, contenido)": 2 * (masses["M4_capsula_cuerpo"] + masses[K_M5]
+                                                                   + masses["M6_capsula_bisel"] + masses["M7_capsula_ventana"] + P.CAPSULE_CONTENT_G),
+                        "tornilleria y correas": P.SIMPLE_HARDWARE_G})
+        env = m1.fuse(CC.cavity_tool(lay).val())
+        disp = (env.Volume() + an["m2"].Volume() + rail_vol + clamp_vol + 2 * cover.Volume()
+                + 2 * (cp["M4"].val().Volume() + m5s.Volume() + cp["M6"].val().Volume() + cp["M7"].val().Volume() + air)) / 1000 \
+            + P.SIMPLE_HARDWARE_G / P.STEEL_DENSITY
+        node_g = sum(parts_g.values())
+        app0 = node_g - RHO_W * disp
+        bal[f] = dict(parts=parts_g, node_g=node_g, disp=disp, app0=app0,
+                      g_lo=(lo - app0) / net, g_mid=(mid - app0) / net, g_hi=(hi - app0) / net)
+    f0 = P.INFILL_CASES[0]
+    g_tot = max(0.0, round(bal[f0]["g_mid"] / 10.0) * 10.0)      # grams of ballast in the node, 10 g steps (both pockets)
+    g_side = g_tot / 2
+    g_rng = (max(max(0.0, b["g_lo"]) for b in bal.values()), min(b["g_hi"] for b in bal.values()))
+    for f, b in bal.items():
+        b.update(g=g_tot, app=b["app0"] + g_tot * net, total=b["node_g"] + g_tot)
+        b["in_window"] = lo <= b["app"] <= hi
+        if not b["in_window"]:
+            fails.append(f"peso aparente {b['app']:+.0f} g con {g_tot:.0f} g de lastre y bandeja al {f * 100:.0f} %: la ventana pide {lo:.0f} a {hi:.0f}")
+        if b["total"] > P.AIR_MASS_MAX_KG * 1000:
+            fails.append(f"peso en aire {b['total']:.0f} g > {P.AIR_MASS_MAX_KG:g} kg")
+    ballast = ballast_solids(depth, g_side, bulk["aparente"])
+    h_b, h_hi = ballast_h(depth, g_side, bulk["aparente"]), ballast_h(depth, g_rng[1] / 2, bulk["aparente"])
+    dp = pocket_dims(depth)
+    pocket_cm3 = P.PLATE_L * (dp["win"] - 2 * P.PLATE_CLR) * depth / 1000
+    if h_b > depth - 0.2:
+        fails.append(f"el lastre ({g_tot:.0f} g de {bulk['nombre']}) llena {h_b:.1f} mm y el bolsillo mide {depth:g}")
+    bsum = dict(material=P.BALLAST_BULK["material"], nombre=bulk["nombre"], aparente=bulk["aparente"], solido=bulk["solido"],
+                total_g=g_tot, por_bolsillo_g=g_side, rango_total_g=list(g_rng), altura_mm=h_b, altura_en_el_maximo_mm=h_hi,
+                bolsillo_mm=depth, bolsillo_cm3=pocket_cm3, ocupacion=h_b / depth, cabe_en_el_maximo=bool(h_hi <= depth),
+                volumen_lastre_cm3=g_side / bulk["aparente"], medida_bolsillo=[P.PLATE_L, dp["win"] - 2 * P.PLATE_CLR, depth])
+    alt = {}                                            # the other bulk material, same window, for the report
+    for key, o in P.BALLAST_BULK["opciones"].items():
+        n2 = 1 - RHO_W / o["solido"]
+        g2 = max(0.0, (mid - bal[f0]["app0"]) / n2)
+        alt[key] = dict(nombre=o["nombre"], total_g=g2, altura_mm=ballast_h(depth, g2 / 2, o["aparente"]))
+    bsum["alternativas"] = alt
+    print("lastre", f"{g_tot:.0f} g en 2 bolsillos de {depth:g} mm ({h_b:.1f} mm llenos), rango {g_rng[0]:.0f} a {g_rng[1]:.0f} g, "
+          f"peso aparente {bal[f0]['app']:+.0f} g, {time.time() - t0:.0f}s", flush=True)
+
+    node = assemble(an, half, m5s, cover, cp, ax, az, ballast, m1, trays)
     z_rod = Z_RAIL - P.HOOK_DROP
 
     # interferences inside the node (touching faces give ~0), PG7 nuts inside the box
@@ -888,88 +1083,27 @@ def main():
         fails.append(f"los M4 del pie pasan a {cable_gap:.1f} mm del Cat5e")
     print("interferencias", len(pairs), "tuercas", round(nut_hits, 3), f"{time.time() - t0:.0f}s", flush=True)
 
-    # fused rail for SimScale and the local FEM (both halves + the box pad region is not included)
-    fem_path = OUT / "simscale" / "riel_fem.step"      # one side of the rail as the local FEM sees it (fem.py)
-    cq.exporters.export(cq.Workplane().add(half), str(fem_path))
-    fix_step_stamp(fem_path)
-    if MONO:
-        n_sol, sim_note = 1, "P3/P4: riel fundido (tramo central + extremo) de un lado, con las bridas de union como cuerpo continuo"
-    else:
-        fused = half.fuse(put(half, -1)).clean()
-        sim_path = OUT / "simscale" / "M3s_riel_fusionado.step"
-        cq.exporters.export(cq.Workplane().add(fused), str(sim_path))
-        fix_step_stamp(sim_path)
-        n_sol = len(fused.Solids())
-        sim_note = "dos mitades separadas por la caja: el STEP tiene las 2 mitades con sus ganchos" if n_sol == 2 else ""
-
-    # masses (the same per piece for the buoyancy and the bitacora) and buoyancy
-    cav = CP.capsule_cavity().val()
-    air = cav.Volume() - cav.intersect(cp["M4"].val()).Volume()
-    masses = {K_M1: piece_mass(m1, INFILL["M1"]), "M2_caja_tapa": piece_mass(an["m2"], INFILL["M2"]),
-              "M3t_tapa_bolsillo": piece_mass(cover, INFILL["M3t"]),
-              K_M5: piece_mass(m5s, INFILL["M5s"]), "M4_capsula_cuerpo": piece_mass(cp["M4"].val(), INFILL["M4"]),
-              "M6_capsula_bisel": piece_mass(cp["M6"].val(), INFILL["M6"]),
-              "M7_capsula_ventana": P.ACRYLIC_DENSITY * cp["M7"].val().Volume() / 1000}
-    if not MONO:
-        rail_only = solid(rail_half(lay, foot, hook_on=False))
-        hook_part = half.cut(rail_only)
-        masses[K_RAIL] = piece_mass(rail_only, INFILL["riel"]) + piece_mass(hook_part, INFILL["gancho"])
-    if clamp is not None:
-        masses["M9c_abrazadera"] = piece_mass(clamp, INFILL["gancho"])
-    rail_vol = 0.0 if MONO else 2 * half.Volume()
-    clamp_vol = 0.0 if clamp is None else 2 * clamp.Volume()
-    plate_g = camara.plate_mass_g()
-    lo, hi = (t * 1000 for t in P.BALLAST_TARGET_KGF)
-    elec = an["fixed_g"]
-    bal = {}
-    for f in P.INFILL_CASES:
-        tray_g = sum(piece_mass(t, f) for t in trays.values())
-        parts_g = {"caja (M1 con bolsillos + M2 + bandejas + electronica)" if not MONO else "caja con tramos de riel (M1m + M2 + bandejas + electronica)":
-                   masses[K_M1] + masses["M2_caja_tapa"] + tray_g + elec}
-        if not MONO:
-            parts_g["riel con ganchos (2 M3s)"] = 2 * masses[K_RAIL]
-        if clamp is not None:
-            parts_g["abrazaderas (2 M9c)"] = 2 * masses["M9c_abrazadera"]
-        parts_g.update({"tapas del bolsillo (2 M3t)": 2 * masses["M3t_tapa_bolsillo"],
-                        "capsulas (M4, M5, M6, M7, contenido)": 2 * (masses["M4_capsula_cuerpo"] + masses[K_M5]
-                                                                   + masses["M6_capsula_bisel"] + masses["M7_capsula_ventana"] + P.CAPSULE_CONTENT_G),
-                        "tornilleria y correas": P.SIMPLE_HARDWARE_G})
-        env = m1.fuse(CC.cavity_tool(lay).val())
-        disp = (env.Volume() + an["m2"].Volume() + rail_vol + clamp_vol + 2 * cover.Volume()
-                + 2 * (cp["M4"].val().Volume() + m5s.Volume() + cp["M6"].val().Volume() + cp["M7"].val().Volume() + air)) / 1000 \
-            + P.SIMPLE_HARDWARE_G / P.STEEL_DENSITY
-        node_g = sum(parts_g.values())
-        app0 = node_g - RHO_W * disp
-        k_need = next((n for n in range(0, 20) if app0 + n * 2 * plate_g * NET_STEEL >= lo), None)
-        app = app0 + k * 2 * plate_g * NET_STEEL
-        bal[f] = dict(parts=parts_g, node_g=node_g, disp=disp, app0=app0, k_need=k_need,
-                      k_max=max((n for n in range(0, 20) if app0 + n * 2 * plate_g * NET_STEEL <= hi), default=None),
-                      app=app, total=node_g + k * 2 * plate_g, in_window=lo <= app <= hi)
-        if not bal[f]["in_window"]:
-            fails.append(f"peso aparente {app:+.0f} g con {k} pletinas por bolsillo y bandeja al {f * 100:.0f} %: hacen falta {k_need}")
-        if bal[f]["total"] > P.AIR_MASS_MAX_KG * 1000:
-            fails.append(f"peso en aire {bal[f]['total']:.0f} g > {P.AIR_MASS_MAX_KG:g} kg")
-    env_box = m1.fuse(CC.cavity_tool(lay).val())
-
     # stability (trays 40 %)
     f = P.INFILL_CASES[0]
+    xr = node[f"{K_M5}_der"][0]
     m_pts = [(m1.Center().z, masses[K_M1]), (an["m2"].Center().z, masses["M2_caja_tapa"])]
     m_pts += [(t.Center().z, piece_mass(t, f)) for t in trays.values()]
     m_pts += [((b.z[0] + b.z[1]) / 2, P.COMPONENTS[key][3]) for _, key, b in lay.modules]
     m_pts.append((P.BOX_FLOOR + lay.cav[2] / 2, elec - sum(P.COMPONENTS[key][3] for _, key, _ in lay.modules)))
     m_pts += [(cover.Center().z, 2 * masses["M3t_tapa_bolsillo"]),
-              (node["M4 capsula +X"][0].Center().z, 2 * (masses["M4_capsula_cuerpo"] + P.CAPSULE_CONTENT_G)),
-              (m5s.Center().z, 2 * masses[K_M5]), (Z_RAIL + S / 2, P.SIMPLE_HARDWARE_G)]
+              (node["M4_capsula_cuerpo_der"][0].Center().z, 2 * (masses["M4_capsula_cuerpo"] + P.CAPSULE_CONTENT_G)),
+              (xr.Center().z, 2 * masses[K_M5]), (Z_RAIL + S / 2, P.SIMPLE_HARDWARE_G)]
     if not MONO:
         m_pts.append((half.Center().z, 2 * masses[K_RAIL]))
     if clamp is not None:
         m_pts.append((Z_RAIL - P.HOOK_DROP, 2 * masses["M9c_abrazadera"]))
-    m_pts += [(p.Center().z, plate_g) for p in plate_list]
+    m_pts += [(b.Center().z, g_side) for b in ballast.values()]
     air_w = place_cap(cav.cut(cp["M4"].val()), ax, az)
+    env_box = m1.fuse(CC.cavity_tool(lay).val())
     b_pts = [(env_box.Center().z, env_box.Volume()), (an["m2"].Center().z, an["m2"].Volume()),
              (cover.Center().z, 2 * cover.Volume()),
-             (node["M4 capsula +X"][0].Center().z, 2 * cp["M4"].val().Volume()), (m5s.Center().z, 2 * m5s.Volume()),
-             (air_w.Center().z, 2 * air_w.Volume())] + [(p.Center().z, p.Volume()) for p in plate_list]
+             (node["M4_capsula_cuerpo_der"][0].Center().z, 2 * cp["M4"].val().Volume()), (xr.Center().z, 2 * m5s.Volume()),
+             (air_w.Center().z, 2 * air_w.Volume())] + [(b.Center().z, g_side / bulk["solido"] * 1000) for b in ballast.values()]
     if not MONO:
         b_pts.append((half.Center().z, 2 * half.Volume()))
     zg = sum(z * m for z, m in m_pts) / sum(m for _, m in m_pts)
@@ -977,66 +1111,114 @@ def main():
     if zg >= zb:
         fails.append(f"centro de masa sobre el de empuje (G {zg:.1f}, B {zb:.1f})")
 
-    # test lantern, separator LR1 and clearances
+    # test lantern: ring, 4 cords to ONE tie point, cabo to the long line (no separator since tanda 3) and clearances
     node_solids = [v[0] for v in node.values()]
     node_pts = E.surface_points(node_solids, 0.7)
     z_top_node = float(node_pts[:, 2].max())
-    h_sep_min = min_separator_h(node_pts, z_rod)
-    z_sep = z_rod + P.SEP_H
-    z_apex = z_sep + P.APEX_H
-    sep = solid(separator(z_sep))
-    lant, axes, buoy_end = lantern(z_rod, z_sep, z_apex)
+    h_sep_min = min_separator_h(node_pts, z_rod) if P.SEP_USE else None
+    sep, z_sep = None, None
+    if P.SEP_USE:                                       # legacy path (LR1 + apex), kept: separador.usar = True
+        z_sep = z_rod + P.SEP_H
+        z_apex = z_sep + P.APEX_H
+        sep = solid(separator(z_sep))
+        lant0, axes0, buoy_end = lantern(z_rod, z_sep, z_apex)
+        lant = {"REF_" + kk.replace(" ", "_").replace("(", "").replace(")", ""): v for kk, v in lant0.items()}
+        axes = {"REF_" + kk.replace(" ", "_"): [pq] for kk, pq in axes0.items()}
+        z_bend = z_tie = z_apex
+        if P.SEP_H < h_sep_min:
+            fails.append(f"separador.altura {P.SEP_H:g} < minimo {h_sep_min:.0f}")
+    else:
+        z_bend = z_top_node + P.CORD_CLEAR + P.LANTERN_CORD_D          # cords go straight up past the lid, then to the tie point
+        z_tie = z_rod + P.LANTERN_TIE_H
+        z_apex = z_tie
+        if z_tie < z_bend + 50.0:
+            fails.append(f"linterna.nudo_h {P.LANTERN_TIE_H:g} deja el punto de amarre a menos de 50 mm sobre el codo de las cuerdas ({z_bend - z_rod:.0f})")
+        lant, axes, buoy_end = lantern_tie(z_rod, z_bend, z_tie)
     umb = umbilical(lid_gland_point(lay), buoy_end)
-    airs = min_air(node_solids, {kk: (p, q, P.LANTERN_CORD_D / 2) for kk, (p, q) in axes.items()}, {"LR1 separador": sep})
-    worst = min(airs.values())
+    arm_sh = [half, put(half, -1)]
+    cap_keys = [kk for kk in node if "capsula" in kk or kk.startswith(K_M5)]
+    cap_sh = [node[kk][0] for kk in cap_keys]
+    rail_keys = [kk for kk in node if kk.startswith(K_RAIL)]
+    box_sh = [v[0] for kk, v in node.items() if kk not in cap_keys and kk not in rail_keys]
+    air_g = cord_air(axes, {"brazo": arm_sh, "capsula": cap_sh, "caja": box_sh})
+    clr = {g: min(v.values()) for g, v in air_g.items()}
+    airs = {f"{g}/{c}": v for g, d in air_g.items() for c, v in d.items()}
+    worst = min(clr["brazo"], clr["capsula"])
     if worst < P.CORD_CLEAR:
-        fails.append(f"aire minimo entre la suspension y el nodo {worst:.1f} mm < {P.CORD_CLEAR:g}")
-    if P.SEP_H < h_sep_min:
-        fails.append(f"separador.altura {P.SEP_H:g} < minimo {h_sep_min:.0f}")
-    ring_hits = {kk: E.common(v[0], lant["aro"]) for kk, v in node.items() if E.bb_hit(bbs[kk], E.bbox(lant["aro"]))}
+        fails.append(f"aire minimo cuerda-brazo {clr['brazo']:.1f} / cuerda-capsula {clr['capsula']:.1f} mm < {P.CORD_CLEAR:g}")
+    if clr["caja"] < 0:
+        warns.append(f"cuerda contra la caja: {clr['caja']:.1f} mm (interpenetra)")
+    elif clr["caja"] < P.CORD_CLEAR:
+        warns.append(f"cuerda-caja (brida de la tapa) a {clr['caja']:.1f} mm, menos que los {P.CORD_CLEAR:g} que se piden a brazos y capsulas")
+    ring_hits = {kk: E.common(v[0], lant["REF_aro_superior"]) for kk, v in node.items() if E.bb_hit(bbs[kk], E.bbox(lant["REF_aro_superior"]))}
     ring_hits = {kk: v for kk, v in ring_hits.items() if not (v <= P.INTERF_TOL)}
-    net_hits = {kk: E.common(v[0], lant["red"]) for kk, v in node.items() if E.bb_hit(bbs[kk], E.bbox(lant["red"]))}
+    net_hits = {kk: E.common(v[0], lant["REF_linterna_malla"]) for kk, v in node.items() if E.bb_hit(bbs[kk], E.bbox(lant["REF_linterna_malla"]))}
     net_hits = {kk: v for kk, v in net_hits.items() if not (v <= P.INTERF_TOL) and not kk.startswith("M9c")}   # the net is lashed through the clamp
     for kk, v in {**ring_hits, **{f"red/{a}": b for a, b in net_hits.items()}}.items():
         fails.append(f"linterna contra el nodo: {kk} {v:.2f} mm3")
     views = [camera_view(ax, az, z_rod, R_RING), camera_view(ax, az, z_rod, 250.0)]
-    print("linterna", round(worst, 1), "sep min", round(h_sep_min, 1), "camara", views, f"{time.time() - t0:.0f}s", flush=True)
+    print("linterna", {g: round(v, 1) for g, v in clr.items()}, "nudo +", round(z_tie - z_rod), "camara", views, f"{time.time() - t0:.0f}s", flush=True)
+    for w in warns:
+        print("AVISO:", w, flush=True)
 
-    lr = process("LR1 separador", solid(separator(P.SEP_SECTION[1] / 2)), "LR1_separador", LR_OUT, LR_OUT, thick=False)
-    if not (lr["chk"]["ok"] and lr["mc"]["fits_bed"]):
-        fails.append(f"LR1_separador: brep={lr['chk']['ok']} cama={lr['mc']['fits_bed']}")
+    lr = None
+    if P.SEP_USE:
+        lr = process("LR1 separador", solid(separator(P.SEP_SECTION[1] / 2)), "LR1_separador", LR_OUT, LR_OUT, thick=False)
+        if not (lr["chk"]["ok"] and lr["mc"]["fits_bed"]):
+            fails.append(f"LR1_separador: brep={lr['chk']['ok']} cama={lr['mc']['fits_bed']}")
 
-    # assembly STEP (named parts) and renders
-    asm = cq.Assembly(name="nodo_simple")
+    # assembly STEP: one named body per part (printed ones by code and stem, the rest REF_*), each ONE valid solid
+    rec = []
+    asm = cq.Assembly(name=f"nodo_{P.VERSION}")
+    named = {}
     for kk, (sh, g) in node.items():
-        asm.add(sh, name=kk.replace(" ", "_"))
+        named[kk] = one_solid(kk, sh, rec)
     for kk, sh in lant.items():
-        asm.add(sh, name="LR_" + kk.replace(" ", "_").replace("(", "").replace(")", ""))
-    asm.add(sep, name="LR1_separador")
+        named[kk] = one_solid(kk, sh, rec)
+    if sep is not None:
+        named["LR1_separador"] = one_solid("LR1_separador", sep, rec)
     for i, u in enumerate(umb):
-        asm.add(u, name=f"U1_umbilical_{i + 1}")
+        named["REF_umbilical" if len(umb) == 1 else f"REF_umbilical_{i + 1}"] = one_solid("REF_umbilical", u, rec)
+    for kk, sh in named.items():
+        asm.add(sh, name=kk)
     asm_path = OUT / f"ensamble_simple_D{P.SIMPLE_RING_D:g}.step"
     asm.export(str(asm_path))
     fix_step_stamp(asm_path)
+    bad = [r_ for r_ in rec if not r_["valido"]]
+    for r_ in bad:
+        fails.append(f"ensamble: {r_['nombre']} no es un solido unico valido ({r_['solidos']} solidos)")
+    import re
+    step_names = re.findall(r"PRODUCT\('([^']*)'", asm_path.read_text(encoding="utf-8", errors="replace"))
+    back = cq.importers.importStep(str(asm_path))
+    n_back = sum(len(v.Solids()) for v in back.vals())
+    miss = [kk for kk in named if kk not in step_names]
+    if miss or n_back != len(named):
+        fails.append(f"el STEP del ensamble: {n_back} solidos leidos de {len(named)}, nombres que faltan {miss}")
+    (OUT / "ensamble_solidos.json").write_text(json.dumps(dict(
+        ensamble=asm_path.name, version=P.VERSION, cuerpos=len(rec), solidos_total=sum(r_["solidos"] for r_ in rec),
+        solidos_leidos_del_step=n_back, nombres_en_step=len(step_names) - 1, cuerpos_no_validos=[r_["nombre"] for r_ in bad],
+        solidos=rec), indent=1, ensure_ascii=False), encoding="utf-8")
+    print("ensamble", len(rec), "cuerpos,", n_back, "solidos leidos del STEP", f"{time.time() - t0:.0f}s", flush=True)
+
     from render import render
     col = {"caja": ("#5b8fb9", 0.55), "riel": ("#3a9d7a", 1.0), "lastre": ("#777777", 1.0), "lastre_t": ("#3a9d7a", 1.0)}
     node_items = [(sh, *col.get(g, ("#3a7ca5", 1.0)), True, None) for sh, g in node.values()]
     items = list(node_items)
     for kk, sh in lant.items():
-        cc = "#c0504d" if kk.startswith(("cuerda", "cabo")) else "#8a8a8a" if kk == "aro" else "#b9d6e8"
-        items.append((sh, cc, 0.25 if kk.startswith(("red", "piso")) else 0.9, False, None))
-    items += [(sep, "#e07b39", 1.0, True, None)] + [(u, "#222222", 1.0, False, None) for u in umb]
+        cc = "#c0504d" if kk.startswith(("REF_cuerda", "REF_cabo")) else "#8a8a8a" if kk == "REF_aro_superior" else "#b9d6e8"
+        items.append((sh, cc, 0.25 if kk.startswith(("REF_linterna_malla", "REF_linterna_piso")) else 0.9, False, None))
+    items += ([(sep, "#e07b39", 1.0, True, None)] if sep is not None else []) + [(u, "#222222", 1.0, False, None) for u in umb]
     title = (f"Nodo {P.VERSION} Ø{P.SIMPLE_RING_D:g}: caja baja, capsulas {P.SIMPLE_CAP_AZ} a {P.SIMPLE_CAP_TILT:g} grados, "
-             f"separador a {P.SEP_H:g}, apice +{P.APEX_H:g}")
+             + (f"separador a {P.SEP_H:g}, apice +{P.APEX_H:g}" if P.SEP_USE else f"4 cuerdas al nudo a {z_tie - z_rod:.0f} mm sobre el aro, sin separador"))
     render(items, OUT / "ensamble_simple_iso.png", "iso", title)
     render(items, OUT / "ensamble_simple_lado.png", "frontal", title)
     render(node_items, OUT / "nodo_simple_iso.png", "iso", f"Nodo {P.VERSION} (sin la linterna)")
     half_cut = _box(-400, 400, -200, 0, -300, 300).val()
     render([(sh.cut(half_cut), c, 1.0 if c != "#5b8fb9" else 0.9, True, None) for sh, c, *_ in node_items
             if sh.BoundingBox().ymin < 0 and sh.cut(half_cut).Volume() > 1e-3],
-           OUT / "nodo_simple_corte.png", "frontal", "Corte en y = 0: PG7 por la pared extrema al conducto del riel, bolsillos bajo la caja")
+           OUT / "nodo_simple_corte.png", "frontal", "Corte en y = 0: PG7 por la pared extrema al conducto del riel, bolsillos de lastre bajo la caja")
 
-    x_load = node["M4 capsula +X"][0].Center().x
+    x_load = node["M4_capsula_cuerpo_der"][0].Center().x
     x_front = (ax + cap_pt(CP.cap_dims()[6], 0)[0])
     calc = hand_calcs(lay, half, x_load, x_front, foot)
     cab = cable_run(lay, ax, az)
@@ -1054,18 +1236,23 @@ def main():
                  cg_sobre_aro=zg - z_rod, cb_sobre_aro=zb - z_rod, piezas_impresas=sum(printed.values()),
                  tipos_impresos=len(printed), camaras=views, caja_exterior=list(lay.box_outer()),
                  version=P.VERSION, cfg=CFG, cantidades=dict(QTY), sellos=SEALS, juntas_atornilladas=juntas,
-                 celosia_ventanas=dict(TRUSS_N), redondeos=dict(FILLET_LOG))
+                 celosia_ventanas=dict(TRUSS_N), redondeos=dict(FILLET_LOG),
+                 aire_cuerdas=dict(brazo=clr["brazo"], capsula=clr["capsula"], caja=clr["caja"]),
+                 cuerdas=dict(azimut_en_el_marco_del_nodo=list(P.SIMPLE_CORD_AZ), codo_sobre_aro=z_bend - z_rod,
+                              nudo_sobre_aro=z_tie - z_rod, por_cuerda=airs),
+                 ensamble=dict(cuerpos=len(rec), solidos=n_back, no_validos=[r_["nombre"] for r_ in bad]), avisos=warns)
     secs = time.time() - t0
-    save_results(rows + [lr], masses, bal, k, zg, zb, airs, h_sep_min, z_rod, z_apex, calc, cab, lay, trays)
-    write_report(rows, lr, bal, k, plate_g, zg, zb, airs, h_sep_min, z_rod, z_sep, z_apex, z_top_node, pairs, slivers,
-                 ring_hits, net_hits, calc, cab, n_sol, sim_note, cable_gap, nut_hits, views, fails, lay, foot, secs)
-    print(f"peso aparente {bal[0.4]['app']:+.0f} g, total {bal[0.4]['total']:.0f} g, apice {z_apex - z_rod:.0f} mm sobre el aro, "
-          f"aire min {worst:.1f} mm, alto {z_top_node - float(node_pts[:, 2].min()):.0f} mm, {secs:.0f}s")
+    save_results(rows + ([lr] if lr else []), masses, bal, bsum, zg, zb, clr, h_sep_min, z_rod, z_apex, calc, cab, lay, trays)
+    write_report(rows, lr, bal, bsum, zg, zb, clr, h_sep_min, z_rod, z_sep, z_apex, z_top_node, pairs, slivers,
+                 ring_hits, net_hits, calc, cab, n_sol, sim_note, cable_gap, nut_hits, views, fails, warns, lay, foot, secs, z_bend)
+    print(f"peso aparente {bal[0.4]['app']:+.0f} g, lastre {g_tot:.0f} g, total {bal[0.4]['total']:.0f} g, nudo {z_tie - z_rod:.0f} mm sobre el aro, "
+          f"aire cuerda-brazo {clr['brazo']:.1f} / capsula {clr['capsula']:.1f} / caja {clr['caja']:.1f} mm, "
+          f"alto {z_top_node - float(node_pts[:, 2].min()):.0f} mm, {secs:.0f}s")
     print("FALLAS:", fails if fails else "ninguna")
     return 1 if fails else 0
 
 
-def save_results(rows, masses, bal, k, zg, zb, airs, h_sep_min, z_rod, z_apex, calc, cab, lay, trays):
+def save_results(rows, masses, bal, bsum, zg, zb, clr, h_sep_min, z_rod, z_apex, calc, cab, lay, trays):
     """salida/simple/resultados.json: what the bitacora reads (same mass per piece as the buoyancy)."""
     ol, ow, oh = lay.box_outer()
     out_w, out_h, *_ = CP.cap_dims()
@@ -1092,11 +1279,11 @@ def save_results(rows, masses, bal, k, zg, zb, airs, h_sep_min, z_rod, z_apex, c
         "ventana": dict(diametro=P.WIN_DIA, espesor=P.WIN_T),
         "gancho": dict(c_interior=P.RING_SECTION + 2 * P.SIMPLE_HOOK_C[0], pared=P.SIMPLE_HOOK_C[1],
                        asiento=P.SIMPLE_HOOK_C[2], caida=P.HOOK_DROP, correa=P.SIMPLE_HOOK_STRAP, fusionado=True),
-        "separador": dict(tipo=P.SEP_TYPE, seccion=list(P.SEP_SECTION), altura=P.SEP_H, altura_min=h_sep_min),
-        "pletinas": dict(por_bolsillo=k, bolsillos=2, medida=[*P.PLATE_BAR, P.PLATE_L]),
-        "peso": {f"{int(f * 100)}": dict(aire_g=b["total"], aparente_g=b["app"], sin_pletinas_g=b["app0"],
-                                          pletinas_min=b["k_need"], pletinas_max=b["k_max"]) for f, b in bal.items()},
-        "bg_mm": zb - zg, "apice_sobre_aro": z_apex - z_rod, "aire_min": min(airs.values()),
+        "separador": dict(usar=P.SEP_USE, tipo=P.SEP_TYPE, seccion=list(P.SEP_SECTION), altura=P.SEP_H, altura_min=h_sep_min),
+        "lastre": bsum,
+        "peso": {f"{int(f * 100)}": dict(aire_g=b["total"], aparente_g=b["app"], sin_lastre_g=b["app0"], lastre_g=b["g"],
+                                          lastre_min_g=max(0.0, b["g_lo"]), lastre_max_g=b["g_hi"]) for f, b in bal.items()},
+        "bg_mm": zb - zg, "apice_sobre_aro": z_apex - z_rod, "aire_min": min(clr["brazo"], clr["capsula"]),
         "fs": dict(riel=calc["riel"]["fs"], riel_capas=calc["riel"]["fs_z"], pie=calc["pie"]["fs"],
                    pie_capas=calc["pie"]["fs_z"], gancho=calc["gancho"]["fs"], gancho_capas=calc["gancho"]["fs_z"]),
         "insertos_N": calc["insertos"]["por_inserto"], "cable_mm": cab["total"], **EXTRA,
@@ -1104,19 +1291,19 @@ def save_results(rows, masses, bal, k, zg, zb, airs, h_sep_min, z_rod, z_apex, c
     (OUT / "resultados.json").write_text(json.dumps(data, indent=1, ensure_ascii=False, default=float), encoding="utf-8")
 
 
-def write_report(rows, lr, bal, k, plate_g, zg, zb, airs, h_sep_min, z_rod, z_sep, z_apex, z_top_node, pairs, slivers,
-                 ring_hits, net_hits, calc, cab, n_sol, sim_note, cable_gap, nut_hits, views, fails, lay, foot, secs):
+def write_report(rows, lr, bal, bsum, zg, zb, clr, h_sep_min, z_rod, z_sep, z_apex, z_top_node, pairs, slivers,
+                 ring_hits, net_hits, calc, cab, n_sol, sim_note, cable_gap, nut_hits, views, fails, warns, lay, foot, secs, z_bend):
     qty = QTY
     b4, b1 = bal[0.4], bal[1.0]
     ol, ow, oh = lay.box_outer()
     L = ["# Version {} del nodo, aro Ø{:g} (generado por `simple.py`)".format(P.VERSION, P.SIMPLE_RING_D), "",
          "No editar a mano: se regenera con `python cad_final/build.py --rapido` cuando `version = \"simple\"` en "
          "`params.py`. La version modular no cambia. mm, g, N, MPa.", "",
-         f"**V2 (29/10, decisiones del equipo):** ESP32-S3 sobre {P.SIMPLE_ESP32_BASE.upper()} en {P.SIMPLE_FLOORS} pisos "
+         f"**V2 (29/10, decisiones del equipo) y tanda 3 (30/10 noche):** ESP32-S3 sobre {P.SIMPLE_ESP32_BASE.upper()} en {P.SIMPLE_FLOORS} pisos "
          f"(caja {ol:.1f} × {ow:.1f} × {oh:.1f}). **Caja baja:** el PG7 de cada camara atraviesa la pared extrema de M1 a "
          f"z = {Z_G:.1f}, el eje del conducto del riel, y el domo entra en el conducto: no hay camara de cables. Cada mitad "
          f"del riel (M3s, con el gancho en C fusionado) se atornilla con una brida a un cojin de la pared extrema (4 M4 a "
-         f"insertos). Los bolsillos del lastre van moldeados bajo el piso de M1, fuera del sello, cerrados por M3t. Capsulas "
+         f"insertos). **Lastre a granel:** un bolsillo por lado moldeado bajo el piso de M1, fuera del sello, cerrado por M3t. Capsulas "
          f"fijas a {P.SIMPLE_CAP_TILT:g} grados mirando **{P.SIMPLE_CAP_AZ}** (a la malla); la tapa M5s trae el pie en silla "
          "con 2 M4 que cruzan el riel.", "",
          "## 1. Piezas", "",
@@ -1135,27 +1322,42 @@ def write_report(rows, lr, bal, k, plate_g, zg, zb, airs, h_sep_min, z_rod, z_se
           "Quedan aparte, para desmontar: tapas (M2, M3t, M5s), capsulas y bandeja.",
           f"STEP del riel para SimScale y el FEM local: `salida/simple/simscale/M3s_riel_fusionado.step` ({n_sol} solido(s)"
           + (f"; {sim_note}" if sim_note else "") + ").", "",
-          "## 2. Peso y peso aparente", "",
+          "## 2. Peso, lastre y peso aparente", "",
           f"Masa por pieza con su relleno (100 % cajas estancas, tapas con junta y ganchos; 40 % riel y bandeja; piel de "
-          f"{P.SHELL_T:g}): la misma que usa la bitacora. Pletinas de inox {P.PLATE_BAR[0]:g} × {P.PLATE_BAR[1]:g} × "
-          f"{P.PLATE_L:g} ({plate_g:.0f} g), {k} por bolsillo, 2 bolsillos bajo la caja.", "",
+          f"{P.SHELL_T:g}): la misma que usa la bitacora. **Lastre:** {bsum['nombre']} (densidad aparente {bsum['aparente']:g} g/cm³ del granel, "
+          f"metal de {bsum['solido']:g}; ESTIMADO, pesar un cubo lleno), UN bolsillo por lado de {bsum['medida_bolsillo'][0]:g} × "
+          f"{bsum['medida_bolsillo'][1]:g} × {bsum['medida_bolsillo'][2]:g} mm ({bsum['bolsillo_cm3']:.0f} cm³) cerrado por M3t con 2 M3. "
+          f"En el ensamble es un solido por bolsillo (`lastre_izq` = +Y, `lastre_der` = -Y).", "",
           "| Concepto | Bandeja 40 % | Bandeja 100 % |", "|---|---|---|"]
     for kk in b4["parts"]:
         L.append(f"| {kk} | {b4['parts'][kk]:.0f} | {b1['parts'][kk]:.0f} |")
-    L += [f"| Nodo sin pletinas g | {b4['node_g']:.0f} | {b1['node_g']:.0f} |",
+    L += [f"| Nodo sin lastre g | {b4['node_g']:.0f} | {b1['node_g']:.0f} |",
           f"| Desplaza cm³ | {b4['disp']:.0f} | {b1['disp']:.0f} |",
-          f"| Peso aparente sin pletinas g | {b4['app0']:+.0f} | {b1['app0']:+.0f} |",
-          f"| Pletinas por bolsillo para entrar en la ventana | {b4['k_need']} a {b4['k_max']} | {b1['k_need']} a {b1['k_max']} |",
-          f"| **Peso aparente con {k} por bolsillo g** | **{b4['app']:+.0f}** | **{b1['app']:+.0f}** |",
+          f"| Peso aparente sin lastre g | {b4['app0']:+.0f} | {b1['app0']:+.0f} |",
+          f"| Lastre que deja el peso aparente en la ventana ({P.BALLAST_TARGET_KGF[0] * 1000:.0f} a {P.BALLAST_TARGET_KGF[1] * 1000:.0f} g), total g | "
+          f"{max(0, b4['g_lo']):.0f} a {b4['g_hi']:.0f} | {max(0, b1['g_lo']):.0f} a {b1['g_hi']:.0f} |",
+          f"| **Lastre puesto g (total, mitad por bolsillo)** | **{b4['g']:.0f}** ({b4['g'] / 2:.0f}) | **{b1['g']:.0f}** ({b1['g'] / 2:.0f}) |",
+          f"| **Peso aparente con ese lastre g** | **{b4['app']:+.0f}** | **{b1['app']:+.0f}** |",
           f"| **Peso en aire g** | **{b4['total']:.0f}** | **{b1['total']:.0f}** |", "",
-          f"Estabilidad: centro de masa a {zg - z_rod:.1f} y de empuje a {zb - z_rod:.1f} sobre el aro, BG = **{zb - zg:.1f} mm**.", "",
-          "## 3. Linterna, suspension y camaras", "",
+          f"Rango de lastre que mantiene ambos casos en la ventana: **{bsum['rango_total_g'][0]:.0f} a {bsum['rango_total_g'][1]:.0f} g** en total. "
+          f"El granel llena {bsum['altura_mm']:.1f} de {bsum['bolsillo_mm']:g} mm del bolsillo ({bsum['ocupacion'] * 100:.0f} %); en el maximo del rango llenaria "
+          f"{bsum['altura_en_el_maximo_mm']:.1f} mm ({'cabe' if bsum['cabe_en_el_maximo'] else 'NO cabe'}). "
+          + " ".join(f"Con {a['nombre']}: {a['total_g']:.0f} g en total, {a['altura_mm']:.1f} mm llenos." for a in bsum["alternativas"].values()),
+          "", f"Estabilidad: centro de masa a {zg - z_rod:.1f} y de empuje a {zb - z_rod:.1f} sobre el aro, BG = **{zb - zg:.1f} mm**.", "",
+          "## 3. Linterna de prueba, cuerdas y camaras", "",
+          "Aro Ø200, malla de referencia, **4 cuerdas** que suben rectas del aro (atadas por fuera de la varilla) a 45 grados del riel, por encima de la tapa, y de ahi "
+          "van rectas a **un solo punto de amarre**; del nudo sale un cabo a la linea larga. Sin separador LR1, sin anillo guia y sin apice. "
+          "El nodo cuelga del aro con el riel (los brazos) entre cuerdas.", "",
           "| Concepto | Valor |", "|---|---|",
           f"| Nodo sobre el centro de la varilla del aro | de {EXTRA['zmin_sobre_aro']:.0f} a {z_top_node - z_rod:.0f} mm |",
-          f"| Separador `separador.altura` | {P.SEP_H:g} mm (minimo calculado: **{h_sep_min:.0f}**) |",
-          f"| **Apice sobre el aro** | **{z_apex - z_rod:.0f} mm** |",
-          f"| Aire minimo suspension-nodo (exigido {P.CORD_CLEAR:g}) | **{min(airs.values()):.1f} mm** |",
+          f"| Azimut de las cuerdas en el marco del nodo (riel en X) | {', '.join(f'{a:g}' for a in P.SIMPLE_CORD_AZ)} grados |",
+          f"| Codo de las cuerdas / punto de amarre sobre el aro | {z_bend - z_rod:.0f} / **{z_apex - z_rod:.0f} mm** (`linterna.nudo_h`) |",
+          f"| **Aire cuerda-brazo** (exigido {P.CORD_CLEAR:g}) | **{clr['brazo']:.1f} mm** |",
+          f"| **Aire cuerda-capsula** (exigido {P.CORD_CLEAR:g}) | **{clr['capsula']:.1f} mm** |",
+          f"| Aire cuerda-caja (brida de la tapa; informativo) | {clr['caja']:.1f} mm |",
           f"| Aro y red contra el nodo | {'sin contacto' if not (ring_hits or net_hits) else {**ring_hits, **net_hits}} |"]
+    if lr is not None:
+        L.append(f"| Separador `separador.altura` (separador.usar = True) | {P.SEP_H:g} mm (minimo calculado: **{h_sep_min:.0f}**) |")
     for v in views:
         if v["dist"]:
             L.append(f"| Camara en Ø{v['D']:g}: lente a la red | {v['dist']:.0f} mm, campo diagonal {v['campo_diag']:.0f} mm, "
@@ -1186,6 +1388,7 @@ def write_report(rows, lr, bal, k, plate_g, zg, zb, airs, h_sep_min, z_rod, z_se
           f"bucle {cab['loop']:.0f} + {P.CABLE_ALLOW['capsula']:g} + {P.CABLE_ALLOW['holgura']:g} = **{cab['total']:.0f} mm** "
           f"({'requiere prueba SPI a 8 y 4 MHz' if cab['spi'] else 'alcanza el cable de fabrica de 300'}).", "",
           "## 7. Chequeos que fallaron", ""] + ([f"- {x}" for x in fails] if fails else ["- ninguno"])
+    L += ["", "## 7b. Avisos (no hacen fallar el build)", ""] + ([f"- {x}" for x in warns] if warns else ["- ninguno"])
     L += ["", "## 8. Constantes de modulo", "",
           f"- `PAD_BORE` = {PAD_BORE:g}: agujero del cojin para la llave de vaso del PG7. `POCKET_END` = {POCKET_END:g}: "
           f"paredes extremas de los bolsillos con los insertos M3 de M3t. `TIP_HOLE` = {TIP_HOLE:g}: salida del cable en la punta. "

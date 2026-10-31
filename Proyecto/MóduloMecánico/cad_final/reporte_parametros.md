@@ -1,6 +1,6 @@
 # Parámetros (generado por `reporte_parametros.py` desde `params.py`)
 
-392 parámetros. Por origen y estado: equipo / confirmado: 72; equipo / por_verificar: 25; estimado / confirmado: 1; estimado / por_verificar: 277; fabricante / confirmado: 8; fabricante / por_verificar: 9.
+398 parámetros. Por origen y estado: equipo / confirmado: 73; equipo / por_verificar: 26; estimado / confirmado: 1; estimado / por_verificar: 281; fabricante / confirmado: 8; fabricante / por_verificar: 9.
 
 ## 1. Qué cambió (tienen valor anterior)
 
@@ -49,6 +49,7 @@
 | `gancho.c` | 0.4 × 4 × 12 | 0.4 × 6 × 12 | estimado | por_verificar | M9s: holgura sobre la varilla, pared de la C y largo del asiento sobre la varilla (la curva del aro Ø200 corre la varilla 0.18 mm en 12, 1.4 mm en 33). Pared 6 (antes 4): con la capsula junto al gancho, en el agua un solo gancho lleva los 150 N y el FEM daba FS 1.25 entre capas con 4 |
 | `gancho.alma` | 12 | 20 | estimado | por_verificar | Ancho en X del alma del gancho en C (version simple); con 12 el FEM daba 17.6 MPa junto a la ranura de la correa (FS 1.25 entre capas) con los 150 N en un solo gancho |
 | `separador.altura` | 250 | 140 | equipo | confirmado | Plano medio del separador sobre el centro de la varilla del aro. V2 (caja baja): el minimo calculado con 10 mm de aire es 136, se usa 140 (antes 250) |
+| `linterna.cuerda_azimut` | 60 × 120 × 240 × 300 | 45 × 135 × 225 × 315 | equipo | confirmado | Tanda 3 (30/10 noche): las 4 cuerdas salen del aro a 45 grados del riel (en el marco del nodo, riel en X): los brazos quedan entre las cuerdas. Antes (60, 120, 240, 300) por la brida de la caja |
 
 ## 2. Qué hay que medir o confirmar (estado por_verificar)
 
@@ -66,7 +67,7 @@
 | `camara.cable_incluido` | 300 | Medir el recibido |
 | `riel.varilla_M8_datos` | d: 8, d_nucleo: 6.47, A_s: 36.6, E: 200000, fy_8.8: 640, fy_4.6: 240 | Varilla roscada M8 de acero (ISO 898-1): nucleo, area resistente, modulo y fluencia de los grados 8.8 y 4.6 |
 
-### Origen equipo (25)
+### Origen equipo (26)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -75,6 +76,7 @@
 | `boya.pcb` | 70 × 73.5 × 1.6 | Placa fabricada; agujeros por verificar |
 | `boya.rtc_reserva` | 40 × 25 × 15 | DS3231, montaje sin confirmar |
 | `ensamble.cuerda_azimut` | 45 × 135 × 225 × 315 | Cuerdas entre los dos lados de la barra: la barra cruza el aro por el centro, orientada entre dos cuerdas |
+| `lastre.objetivo_medio_kgf` | 0.35 | Tanda 3: peso aparente buscado, al medio de la ventana lastre.objetivo_kgf (0.2 a 0.5) |
 | `material` | PETG opaco | Melissa 29/10: PETG opaco en todas las piezas, no ASA |
 | `simple.esp32_base` | kit_a | Melissa 29/10: ESP32-S3 N16R8 sobre KIT A + modulos sueltos (acelerometro, microSD) en la caja. esp32.base sigue en sin_base para la modular |
 | `capsula.acimut` | adentro | Melissa 29/10: camaras inclinadas hacia la malla. adentro: miran al eje de la linterna; afuera: hacia las puntas del riel (version V1) |
@@ -96,7 +98,7 @@
 | `boya_pet.masa_objetivo_g` | 700 | Masa impresa maxima del conjunto |
 | `boya_pet.tiempo_objetivo_h` | 25 | Horas de impresion maximas del conjunto |
 
-### Origen estimado (277)
+### Origen estimado (281)
 
 | Parámetro | Valor | Razón |
 |---|---|---|
@@ -331,6 +333,9 @@
 | `capsula.pie_aire` | 2 | Aire entre lo mas alto de la capsula inclinada y la placa de la silla |
 | `simple.bolsillo_capacidad` | 5 | Pletinas que entran en cada bolsillo bajo la caja (V2: la caja con KIT A en 2 pisos encierra mas aire) |
 | `lastre.pletinas` | 5 | Pletinas por bolsillo (hay 2) en la version simple; simple.py verifica que el peso aparente quede en la ventana y dice cuantas hacen falta |
+| `lastre.bolsillo_prof_simple` | 30 | Tanda 3: alto interior del bolsillo unico de lastre a granel bajo la caja (hay 2). Cada perfil de PROTO_CFG puede traer el suyo en 'bolsillo' (mm); simple.py verifica que quepa el lastre del peso aparente |
+| `lastre.bolsillo_ancho` | 50 | Tanda 3: ancho en y del bolsillo de lastre a granel (antes 25 de pletina); el largo sigue siendo lastre.pletina_largo + holguras |
+| `lastre.granel` | material: tuercas_m8, opciones: tuercas_m8: nombre: tuercas y arandelas M8 de inox, a granel, aparente: 4.5, solido: 7.9, perdigon_plomo: nombre: perdigon de plomo en bolsa, aparente: 6.5, solido: 11.34 | Tanda 3: lastre a granel en UN bolsillo por lado. aparente = densidad aparente del granel (g/cm3) y solido = densidad del metal (el empuje se calcula con el solido). ESTIMADO: tuercas y arandelas sueltas empacan ~55 a 60 % del acero (7.9 -> ~4.5); perdigon de plomo suelto ~57 a 60 % de 11.34 (-> ~6.5). Pesar un cubo lleno del granel comprado antes de fijar la cantidad. Sin plomo por defecto: el nodo va al mar |
 | `masa.tornilleria_simple` | 40 | 4 M3 de la union, 4 M4 + tuercas T de los ganchos, 4 M4 de los pies, 4 M3 de las tapas del bolsillo y 2 correas; pesar |
 | `simple.caja_pisos` | 2 | Con KIT A en 1 piso la caja mide 159.6 x 170 con brida y la brida queda a 1.6 mm de las cuerdas a 60 grados; en 2 pisos mide 147 x 146 y deja unos 11 mm |
 | `camara.fov_diagonal` | 70 | Arducam Mega 5MP: sin ficha a mano; 70 grados diagonal estimado |
@@ -343,12 +348,13 @@
 | `fem.malla` | 2.5 | Tamano de elemento de Gmsh (mm) para fem.py; tetraedros de 10 nodos |
 | `separador.seccion` | 12 × 6 | Ancho x espesor del anillo o de los rayos (se imprime plano) |
 | `separador.agujero` | 4.5 | Agujero por donde pasa cada cuerda (cuerda de Ø4) |
+| `linterna.nudo_h` | 400 | Altura del punto de amarre de las 4 cuerdas sobre el centro de la varilla del aro (linterna de prueba sin separador). El minimo lo dan los 10 mm de aire cuerda-brazo y cuerda-capsula; simple.py lo verifica |
 | `linterna.alto` | 200 | Alto de la red de la linterna de referencia |
 | `linterna.pisos` | 3 | Pisos (bandejas) dentro de la red; solo renders y STEP |
 | `linterna.cabo_largo` | 300 | Largo del cabo central que se dibuja |
 | `umbilical.comba` | 80 | Cuanto cuelga el umbilical bajo la recta boya-nodo (sin tension; render) |
-| `proto.perfiles` | simple: riel: solido, pared: 4, gancho: c, monocasco: False, estetico: False, caja: v2, capsula: v2, P1_minimo: riel: celosia, pared: 3.5, gancho: snap, monocasco: False, estetico: False, caja: minima, capsula: minima, P2_robusto: riel: celosia, pared: 5, gancho: c, monocasco: False, estetico: False, caja: v2, capsula: v2, capacidad: 6, pletinas: 6, P3_monocasco: riel: celosia, pared: 4, gancho: abrazadera, monocasco: True, estetico: False, caja: v2, capsula: v2, P4_estetico: riel: celosia, pared: 4, gancho: abrazadera, monocasco: True, estetico: True, caja: v2, capsula: v2 | Banderas por version: riel solido/celosia, pared del conducto, gancho c/snap/abrazadera, monocasco (opcional: capacidad del bolsillo y pletinas si la ventana de peso aparente lo pide) (caja+riel en una pieza), estetico (redondeos + logo), caja v2/minima, capsula v2/minima. P4 parte de P3 (ver PROTOTIPOS.md) |
-| `proto.sobreescrituras` | caja: minima: GAP_MOD: 3, GAP_WALL: 3, CLR_USB: 25, CLR_SD: 10, capsula: minima: CAP_SIDE_GAP: 1.5, CAP_REAR_ZONE: 20 | Valores de params que P1 pisa al importar (los modulos los leen por valor): holgura entre modulos y a la pared 3 mm (pedido del 30/10), zonas de acceso USB 35->25 y microSD 15->10, capsula con 1.5 mm por lado (cavidad 36 para la camara de 33) y zona trasera 23->20. Todo estimado: confirmar con el montaje de prueba |
+| `proto.perfiles` | simple: riel: solido, pared: 4, gancho: c, monocasco: False, estetico: False, caja: v2, capsula: v2, P1_minimo: riel: celosia, pared: 3.5, gancho: snap, monocasco: False, estetico: False, caja: minima, capsula: minima, bolsillo: 28, P2_robusto: riel: celosia, pared: 5, gancho: c, monocasco: False, estetico: False, caja: v2, capsula: v2, P3_monocasco: riel: celosia, pared: 4, gancho: abrazadera, monocasco: True, estetico: False, caja: minima, capsula: v2, bolsillo: 28, P4_estetico: riel: celosia, pared: 4, gancho: abrazadera, monocasco: True, estetico: True, caja: minima, capsula: v2, bolsillo: 28 | Banderas por version: riel solido/celosia, pared del conducto, gancho c/snap/abrazadera, monocasco (caja+riel en una pieza), estetico (redondeos + logo), caja v2/minima, capsula v2/minima. Opcional 'bolsillo' = alto del bolsillo de lastre en mm. Tanda 3: P3 y P4 usan la caja minima (menos aire atrapado). P4 parte de P3 (ver PROTOTIPOS.md) |
+| `proto.sobreescrituras` | caja: minima: GAP_MOD: 3, GAP_WALL: 2, CLR_USB: 25, CLR_SD: 10, capsula: minima: CAP_SIDE_GAP: 1.5, CAP_REAR_ZONE: 20 | Valores de params que P1 pisa al importar (los modulos los leen por valor): holgura entre modulos 3 mm y a la pared 2 mm como en V2 (tanda 3: con 3 la caja crecia 2 mm en y), zonas de acceso USB 35->25 y microSD 15->10, capsula con 1.5 mm por lado (cavidad 36 para la camara de 33) y zona trasera 23->20. Todo estimado: confirmar con el montaje de prueba |
 | `proto.celosia` | barra: 3, angulo: 65, margen_brida: 4, margen_silla: 4, margen_punta: 8, margen_gancho: 0 | Riel en celosia: ancho de barra entre ventanas triangulares (Warren, angulo de las diagonales) en las paredes laterales del conducto, y tramos macizos (mm) junto a la brida, a la silla, a la punta y al gancho. El piso y el techo del conducto no se tocan |
 | `proto.snap` | brazo: 2.4, apertura: 6.8, raiz_z: 5 | Gancho snap-fit (ENGANCHES.md): espesor del brazo flexible (la pared de la C se quita bajo la raiz), apertura entre las puntas (varilla Ø8 -> 0.6 mm de flexion por lado) y z de la raiz del brazo sobre el centro de la varilla |
 | `proto.abrazadera` | oreja: 8, oreja_t: 6 | Gancho con media luna atornillada (ENGANCHES.md): salida de la oreja mas alla de la C y espesor de cada oreja; 1 M4 vertical por lado con tuerca hexagonal en la oreja del gancho |

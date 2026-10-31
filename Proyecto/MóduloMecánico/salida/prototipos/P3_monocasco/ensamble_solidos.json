@@ -1,0 +1,228 @@
+{
+ "ensamble": "ensamble_simple_D200.step",
+ "version": "P3_monocasco",
+ "cuerpos": 31,
+ "solidos_total": 31,
+ "solidos_leidos_del_step": 31,
+ "nombres_en_step": 31,
+ "cuerpos_no_validos": [],
+ "solidos": [
+  {
+   "nombre": "M1m_caja_riel",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 471146.0
+  },
+  {
+   "nombre": "M2_caja_tapa",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 128866.6
+  },
+  {
+   "nombre": "M11_bandeja",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 36493.5
+  },
+  {
+   "nombre": "M11_bandeja_sup",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 34639.4
+  },
+  {
+   "nombre": "M3t_tapa_bolsillo_izq",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 19913.5
+  },
+  {
+   "nombre": "M3t_tapa_bolsillo_der",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 19913.5
+  },
+  {
+   "nombre": "lastre_izq",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 113333.3
+  },
+  {
+   "nombre": "lastre_der",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 113333.3
+  },
+  {
+   "nombre": "M9c_abrazadera_der",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 2747.4
+  },
+  {
+   "nombre": "M5m_extremo_pie_der",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 101171.4
+  },
+  {
+   "nombre": "M4_capsula_cuerpo_der",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 45954.5
+  },
+  {
+   "nombre": "M6_capsula_bisel_der",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 1890.3
+  },
+  {
+   "nombre": "REF_M7_capsula_ventana_der",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 2120.6
+  },
+  {
+   "nombre": "M9c_abrazadera_izq",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 2747.4
+  },
+  {
+   "nombre": "M5m_extremo_pie_izq",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 101171.4
+  },
+  {
+   "nombre": "M4_capsula_cuerpo_izq",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 45954.5
+  },
+  {
+   "nombre": "M6_capsula_bisel_izq",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 1890.3
+  },
+  {
+   "nombre": "REF_M7_capsula_ventana_izq",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 2120.6
+  },
+  {
+   "nombre": "REF_aro_superior",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 31582.7
+  },
+  {
+   "nombre": "REF_linterna_malla",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 125035.4
+  },
+  {
+   "nombre": "REF_linterna_piso_1",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 30171.9
+  },
+  {
+   "nombre": "REF_linterna_piso_2",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 30171.9
+  },
+  {
+   "nombre": "REF_linterna_piso_3",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 30171.9
+  },
+  {
+   "nombre": "REF_cuerda_1",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 5351.0
+  },
+  {
+   "nombre": "REF_cuerda_2",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 5351.0
+  },
+  {
+   "nombre": "REF_cuerda_3",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 5351.0
+  },
+  {
+   "nombre": "REF_cuerda_4",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 5351.0
+  },
+  {
+   "nombre": "REF_cabo",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 3769.9
+  },
+  {
+   "nombre": "REF_estructura_punto_fijo",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 120000.0
+  },
+  {
+   "nombre": "REF_boya",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 2234400.0
+  },
+  {
+   "nombre": "REF_umbilical",
+   "solidos": 1,
+   "valido": true,
+   "corregido": false,
+   "volumen_mm3": 17051.7
+  }
+ ]
+}

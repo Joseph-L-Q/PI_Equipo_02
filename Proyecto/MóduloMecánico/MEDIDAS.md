@@ -9,25 +9,24 @@
 - **decisión del equipo**: lo decidimos nosotros (por ejemplo, el largo del riel).
 - **estimado**: es una suposición o una propuesta de diseño; se confirma midiendo o con una probeta.
 
-Hoy hay 392 medidas en `params.py`: 0 medidas a mano y 311 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
+Hoy hay 398 medidas en `params.py`: 0 medidas a mano y 316 por confirmar. Las piezas de `salida/preliminar/` y `salida/boya/` **no están listas para imprimir** hasta que se confirmen las medidas de la tabla 1. Lo único listo para imprimir son las probetas de `salida/probetas/`.
 
 ## 0. Versión simple (prototipo en el aro Ø200, la que se imprime)
 
-`version = "simple"` en `params.py`. Nodo V2: ESP32 sobre KIT_A en 2 pisos, caja baja con los PG7 de las cámaras en las paredes extremas, riel de 430 en 2 mitades con el gancho fusionado, cápsulas a 30° mirando adentro. Peso en el aire 2462 g, en el agua +205 g, ápice a 290 mm sobre el aro. Boya: 2705 g, calado 32 mm, francobordo 88 mm. Nodo + boya: **5168 g** (límite 3000). Detalle: `cad_final/reporte_simple.md`, `cad_final/reporte_boya_simple.md`, `cad_final/BOM.md`. Las secciones 1 a 4 de abajo describen la versión modular.
+`version = "simple"` en `params.py`. Nodo V2: ESP32 sobre KIT_A en 2 pisos, caja baja con los PG7 de las cámaras en las paredes extremas, riel de 430 en 2 mitades con el gancho fusionado, cápsulas a 30° mirando adentro. Peso en el aire 2680 g, en el agua +350 g, ápice a 400 mm sobre el aro. Boya: 2705 g, calado 32 mm, francobordo 88 mm. Nodo + boya: **5168 g** (límite 3000). Detalle: `cad_final/reporte_simple.md`, `cad_final/reporte_boya_simple.md`, `cad_final/BOM.md`. Las secciones 1 a 4 de abajo describen la versión modular.
 
 | Pieza | Archivo STL | Cant. | Medidas en la orientación de impresión (mm) | Relleno | Masa g | Soportes |
 |---|---|---|---|---|---|---|
-| M1 caja baja con bolsillos | `salida/simple/stl/M1s_caja_cuerpo.stl` | 1 | 147.0 × 146.0 × 102.5 | 100 % | 444 | sí |
+| M1 caja baja con bolsillos | `salida/simple/stl/M1s_caja_cuerpo.stl` | 1 | 147.0 × 146.0 × 107.0 | 100 % | 487 | sí |
 | M2 caja, tapa con asa | `salida/simple/stl/M2_caja_tapa.stl` | 1 | 63.0 × 146.0 × 147.0 | 100 % | 173 | sí |
 | M3s riel con gancho, mitad | `salida/simple/stl/M3s_riel_gancho.stl` | 2 | 141.5 × 79.4 × 50.0 | riel 40 %, gancho 100 % | 98 | sí |
-| M3t tapa del bolsillo | `salida/simple/stl/M3t_tapa_bolsillo.stl` | 2 | 117.0 × 32.0 × 3.0 | 100 % | 14 | no |
+| M3t tapa del bolsillo | `salida/simple/stl/M3t_tapa_bolsillo.stl` | 2 | 117.0 × 57.0 × 3.0 | 100 % | 25 | no |
 | M5s tapa con pie | `salida/simple/stl/M5s_capsula_tapa_pie.stl` | 2 | 55.2 × 64.0 × 95.9 | 100 % | 94 | sí |
 | M11 bandeja (M11_bandeja) | `salida/simple/stl/M11_bandeja.stl` | 1 | 115.0 × 114.0 × 30.0 | 40 % | 46 | no |
 | M11 bandeja (M11_bandeja_sup) | `salida/simple/stl/M11_bandeja_sup.stl` | 1 | 115.0 × 114.0 × 3.0 | 40 % | 44 | no |
 | M4 capsula, cuerpo | `salida/simple/stl/M4_capsula_cuerpo.stl` | 2 | 64.0 × 64.0 × 44.0 | 100 % | 58 | sí |
 | M6 bisel | `salida/simple/stl/M6_capsula_bisel.stl` | 2 | 42.0 × 42.0 × 2.5 | 40 % | 2 | no |
 | M7 ventana (acrilico) | `salida/simple/stl/M7_capsula_ventana.stl` | 2 | 30.0 × 30.0 × 3.0 | acrílico | 3 | no |
-| LR1 separador | `salida/linterna_prueba/LR1_separador.stl` | 1 | 211.9 × 211.9 × 6.0 | 40 % | 44 | no |
 | B1s casco | `salida/simple/boya/stl/B1s_casco.stl` | 1 | 240.0 × 220.0 × 125.0 | 100 % | 957 | sí |
 | B2s tapa | `salida/simple/boya/stl/B2s_tapa.stl` | 1 | 9.0 × 220.0 × 240.0 | 100 % | 331 | sí |
 | B1bs bandeja | `salida/simple/boya/stl/B1bs_bandeja.stl` | 1 | 206.0 × 186.0 × 3.0 | 40 % | 129 | no |
@@ -84,7 +83,7 @@ Lo primero que hay que medir para la versión simple:
 | 27 | Que el pestillo haga clic sin trabarse (probeta PB4 sobre PB1) | probeta + guante | 0.6 | `pestillo.resalte` | decisión del equipo | cierre del gancho |
 | 28 | Que el casquillo entre a presión en el gancho (probeta PB1) | probeta | 0.15 | `casquillo.interferencia` | estimado | casquillo firme |
 
-Además hay 284 valores de diseño propuestos (formas, holguras, espesores) que se confirman con las probetas y la prueba en el agua. Están en las secciones de cada pieza y todos juntos en `cad_final/reporte_parametros.md` §2.
+Además hay 289 valores de diseño propuestos (formas, holguras, espesores) que se confirman con las probetas y la prueba en el agua. Están en las secciones de cada pieza y todos juntos en `cad_final/reporte_parametros.md` §2.
 
 ## 2. Qué se arma para cada aro
 

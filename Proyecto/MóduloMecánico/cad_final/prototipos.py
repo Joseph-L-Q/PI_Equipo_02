@@ -28,6 +28,10 @@ def summarize(ver_dir=None):
                sellos=sum(res["sellos"].values()), juntas=sum(res["juntas_atornilladas"].values()),
                aire_g=res["peso"]["40"]["aire_g"], aparente_g=res["peso"]["40"]["aparente_g"],
                aparente100_g=res["peso"]["100"]["aparente_g"], caja=res["caja"]["exterior"],
+               lastre_g=res["lastre"]["total_g"], lastre_rango_g=res["lastre"]["rango_total_g"],
+               lastre_altura_mm=res["lastre"]["altura_mm"], bolsillo_mm=res["lastre"]["bolsillo_mm"],
+               aire_cuerda_brazo=res["aire_cuerdas"]["brazo"], aire_cuerda_capsula=res["aire_cuerdas"]["capsula"],
+               aire_cuerda_caja=res["aire_cuerdas"]["caja"],
                fs_mano=res["fs"])
     if sl and all(k in sl for k in printed):
         row["masa_g"] = sum(q * sl[k]["g"] for k, q in printed.items())
@@ -69,7 +73,7 @@ def main():
                  f"{'si' if p.get('soportes') else 'no'} | {p.get('relleno')} |")
     L += ["", f"Piezas impresas por nodo: **{row['piezas']}** de {row['tipos']} tipos, mas 2 ventanas de acrilico.", ""]
     if "masa_g" in row:
-        L += [f"Masa impresa del nodo (slicer, sin pletinas ni tornilleria): **{row['masa_g']:.0f} g**; tiempo **{row['horas']:.1f} h**; "
+        L += [f"Masa impresa del nodo (slicer, sin lastre ni tornilleria): **{row['masa_g']:.0f} g**; tiempo **{row['horas']:.1f} h**; "
               f"filamento **S/ {row['costo_soles']:.2f}** (a S/ {P.PETG_PRICE:g} el kg, estimado).", ""]
     else:
         L += ["Masa, horas y costo: **sin slicer** (correr `build.py --prototipo " + P.VERSION + " --slicer`).", ""]
@@ -78,7 +82,12 @@ def main():
           f"- Juntas atornilladas no estancas (conducto inundado): **{row['juntas']}** ({', '.join(f'{k} {v}' for k, v in res['juntas_atornilladas'].items())}); "
           "ademas de las tapas del bolsillo del lastre (2 M3t) y los tornillos de las tapas.", "",
           "## Peso", "",
-          f"- En aire: **{row['aire_g']:.0f} g** (bandeja al 40 %), con {res['pletinas']['por_bolsillo']} pletinas por bolsillo.",
+          f"- En aire: **{row['aire_g']:.0f} g** (bandeja al 40 %), con el lastre.",
+          f"- **Lastre a granel** ({res['lastre']['nombre']}, densidad aparente {res['lastre']['aparente']:g} g/cm3, estimada): "
+          f"**{row['lastre_g']:.0f} g** en total ({row['lastre_g'] / 2:.0f} g por bolsillo, un bolsillo por lado, 100 x {res['lastre']['medida_bolsillo'][1]:g} x "
+          f"{row['bolsillo_mm']:g} mm). Llena {row['lastre_altura_mm']:.1f} de {row['bolsillo_mm']:g} mm. Rango de lastre que deja el peso aparente en la ventana: "
+          f"{row['lastre_rango_g'][0]:.0f} a {row['lastre_rango_g'][1]:.0f} g. Con perdigon de plomo: "
+          f"{res['lastre']['alternativas']['perdigon_plomo']['total_g']:.0f} g.",
           f"- Aparente en agua de mar: **{row['aparente_g']:+.0f} g** (40 %) / {row['aparente100_g']:+.0f} g (100 %); ventana exigida "
           f"{P.BALLAST_TARGET_KGF[0] * 1000:.0f} a {P.BALLAST_TARGET_KGF[1] * 1000:.0f} g.", "",
           "## Factores de seguridad (150 N de manipulacion en una capsula)", ""]
@@ -97,8 +106,16 @@ def main():
           f"gancho {fm['gancho']:.1f} / {fm['gancho_capas']:.1f} (a lo largo / entre capas)."
           + (" En P3/P4 el pie va fundido a la tapa: el calculo a mano del pie (aplastamiento de los M4) no aplica; vale el FEM." if cfg["monocasco"] else ""), "",
           "## Archivos", "",
-          "- `ensamble_simple_D200.step` (nodo + linterna de prueba), `stl/` y `step/` por pieza, `ensamble_simple_iso.png` y `ensamble_simple_lado.png` "
+          "- `ensamble_simple_D200.step` (nodo + linterna de prueba, ensamble con nombres: piezas impresas por codigo, el resto `REF_*`, lastre `lastre_izq`/`lastre_der`) y `ensamble_solidos.json` (lista de cuerpos y conteo de solidos), `stl/` y `step/` por pieza, `ensamble_simple_iso.png` y `ensamble_simple_lado.png` "
           "(vista frontal), `nodo_simple_iso.png`, `nodo_simple_corte.png`, `REPORTE.md` (chequeos), `slicer.json`, `fem/fem.json` y sus PNG.", "",
+          "## Cambios del 30/10 noche (tanda 3)", "",
+          "- **Sin separador ni apice.** La linterna de prueba es el aro, la malla de referencia, 4 cuerdas que suben rectas del aro (a 45 grados del riel, "
+          "los brazos quedan entre cuerdas) y van a un solo nudo, y un cabo del nudo a la linea larga.",
+          f"- **Aire cuerda-brazo {row['aire_cuerda_brazo']:.1f} mm y cuerda-capsula {row['aire_cuerda_capsula']:.1f} mm** (se exigen 10; el build falla si no). "
+          f"Cuerda-caja (brida de la tapa): {row['aire_cuerda_caja']:.1f} mm, informativo.",
+          f"- **Lastre a granel** en vez de pletinas: {row['lastre_g']:.0f} g, un bolsillo por lado cerrado por M3t; peso aparente {row['aparente_g']:+.0f} g (40 %) / "
+          f"{row['aparente100_g']:+.0f} g (100 %); caja {' x '.join(f'{v:.0f}' for v in row['caja'])} mm (V2: 127 x 126 x 77).",
+          "- **Ensamble con nombres** (`REF_*` para lo no impreso, `lastre_izq`/`lastre_der`) y `ensamble_solidos.json` con el conteo de solidos.", "",
           "## Pendiente", "",
           "- Todo lo estimado de `params.py` sigue por verificar (diametro real de la varilla del aro, cargas, PETG real); ver `docs/PROTOTIPOS.md`.",
           "- Ninguna cifra de este prototipo esta probada en agua: el FEM es de un material isotropico estimado y no dice nada de estanqueidad."]
