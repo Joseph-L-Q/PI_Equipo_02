@@ -17,7 +17,7 @@ con `python cad_final/onshape_push.py --carpeta <carpeta> --documento <nombre> -
 
 | Documento | Qué es | Link |
 |---|---|---|
-| LG_00_LEER_PRIMERO | Resumen: qué es cada documento, cuál se recomienda, qué se imprime primero | (se crea al cerrar la entrega) |
+| **LG_00_LEER_PRIMERO** | **El PDF de entrega (LANTERNGUARD_ENTREGA.pdf) como pestaña: qué es cada documento, cuál abrir, qué imprimir** | https://cad.onshape.com/documents/b9bce32f5ed7658b40f45777/w/5b938b69e9a7352f33c5075c |
 | LG_probetas | Probetas de calibración (PB6, PB7, PB8 y las del riel modular) | https://cad.onshape.com/documents/dfcea0e1fd7d960062f6631e/w/7030967448e32d98d4462131 |
 | LG_P0_original | Referencia: simple V1 y la modular (ENSAMBLE_modular) | https://cad.onshape.com/documents/95702b685c4703a1812f1cd5/w/22e05e9a953df1fd6ec5ee2a |
 | LG_P1_minimo | Riel en celosía, gancho snap, caja mínima (descartado) | https://cad.onshape.com/documents/78580e61be69350e3e1577c4/w/e8effc28aa305039dd6d79cb |

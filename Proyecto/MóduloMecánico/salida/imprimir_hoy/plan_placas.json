@@ -175,19 +175,6 @@
    ]
   },
   {
-   "nombre": "P13_separador_LR1",
-   "relleno": 40,
-   "soportes": false,
-   "paredes": 3,
-   "grupo": 3,
-   "piezas": [
-    [
-     "salida/imprimir_hoy/17_LR1_separador_x1.stl",
-     1
-    ]
-   ]
-  },
-  {
    "nombre": "P14_boya_casco",
    "relleno": 40,
    "soportes": true,

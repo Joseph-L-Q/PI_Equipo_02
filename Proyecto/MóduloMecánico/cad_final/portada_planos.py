@@ -14,7 +14,7 @@ from matplotlib.patches import Rectangle  # noqa: E402
 OUT = Path(__file__).resolve().parent.parent / "planos" / "cad_final" / "_portada.pdf"
 SETS = [("P2", "P2 robusto", "nodo recomendado para las pruebas en piscina (riel en celosía, pared 5, gancho en C)"),
         ("P4", "P4 estético", "nodo recomendado para presentar (caja y riel en una pieza, redondeos, logo en relieve)"),
-        ("BP", "Boya PET", "casco con 2 botellas de 1 L + espuma PU, caja seca, cubierta con el panel y el mástil")]
+        ("BP", "Boya PET", "casco central + 2 cunas con 4 botellas de 1 L en cruz + espuma PU, caja seca, cubierta con el panel y el mástil")]
 
 
 def main(commit="?"):

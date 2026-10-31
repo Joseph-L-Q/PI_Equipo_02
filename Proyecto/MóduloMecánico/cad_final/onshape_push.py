@@ -135,6 +135,17 @@ def ref_rename_step(src, dst):
     return step_parts(dst)
 
 
+def attach(path, doc_name, client=None):
+    """Uploads a file (a PDF) as a blob tab WITHOUT translation, into doc_name (created if needed). Returns its url."""
+    OS.API = API_V6
+    client = client or OS.Client()
+    doc = ensure_document(client, doc_name)
+    path = Path(path)
+    body, ctype = OS.multipart({"encodedFilename": path.name, "translate": "false", "storeInDocument": "true"}, path)
+    r = client.call("POST", f"/blobelements/d/{doc['did']}/w/{doc['wid']}", body, ctype)
+    return f"https://cad.onshape.com/documents/{doc['did']}/w/{doc['wid']}/e/{r['id']}"
+
+
 def verify(doc_name, tab_prefix="ENSAMBLE", local=None, client=None):
     """Parts that Onshape reports in each Part Studio whose tab name starts with tab_prefix
     (GET /parts/d/{did}/w/{wid}?elementId=...) against the solids of the local STEP. Returns a list of dicts."""
