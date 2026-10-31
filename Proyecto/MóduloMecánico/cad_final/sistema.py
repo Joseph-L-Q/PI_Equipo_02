@@ -1,15 +1,17 @@
-"""Whole system of the simple version: node + LR1 + cords + lantern at linterna.profundidad + umbilical U1 + mooring
-line C1 + buoy at the surface, with named parts (M*, B*, LR*, U1, C1) so Onshape keeps them apart.
+"""Whole system of the simple version: node + test lantern (ring, net, 4 cords to ONE tie point, no separator since tanda 3) at
+linterna.profundidad + cabo C1 + umbilical U1 + the PET-bottle buoy (boya_pet.py, read-only use) at the surface, as a named
+assembly: printed parts by code and stem (M*, B*), the rest REF_* so Onshape keeps them apart.
 
-    python sistema.py        (from cad_final/; run simple.py and boya_simple.py first)
+    python sistema.py        (from cad_final/; run simple.py (version simple) and boya_pet.py first)
 U1 is a reference flexible hose (umbilical.diametro_manguera) swept along a smooth path from the PG7 of the lid of M1 to
-the PG7 in the floor of B1s: it leaves the cord pyramid through the gap at 180 deg, its minimum bend radius and its
-slack (umbilical.longitud - path) are checked. C1 goes from the apex up to the mooring eye B6s: the line carries the
-lantern, the cable carries nothing.
-Outputs: salida/simple/ENSAMBLE_sistema_simple.step, sistema_simple_iso.png, sistema.json.
+the PG7 in the -X wall of the buoy box (B3): it leaves the cord cone through the gap at 180 deg, its minimum bend radius
+and its slack (umbilical.longitud - path) are checked. REF_cabo (C1) goes straight up from the tie point to the mooring pad
+of the buoy hull (B1, keel centre): the line carries the lantern, the cable carries nothing.
+Outputs: salida/simple/ENSAMBLE_sistema_simple.step, ensamble_solidos_sistema.json, sistema_simple_iso.png, sistema.json.
 """
 import json
 import math
+import re
 from pathlib import Path
 
 import cadquery as cq
@@ -17,25 +19,28 @@ import numpy as np
 
 import params as P
 import simple as SM
-import boya_simple as BS
+import boya_pet as BP
 import capsula as CP
 import fase_a as FA
 import layout
 from checks import fix_step_stamp
 
 OUT = SM.OUT
+BUOY_OUT = Path(__file__).resolve().parent.parent / "salida" / "boya_pet"
 
 
 def node_parts():
     lay = layout.build(P.SIMPLE_ESP32_BASE, floors=P.SIMPLE_FLOORS)
+    SM.set_pad(lay)
     an = FA.analyse_box(lay)
-    layers = P.SIMPLE_POCKET_LAYERS
+    depth = P.SIMPLE_POCKET_DEPTH
     cp = {"M4": CP.capsule_body(), "M6": CP.bezel(), "M7": CP.window_disc(), "lid": CP.lid_plate()}
     ax, az, foot = SM.capsule_pose(lay, cp)
     half = SM.solid(SM.rail_half(lay, foot))
     m5s = SM.solid(SM.lid_with_foot(cp["lid"], ax, az, foot))
-    node = SM.assemble(an, half, m5s, SM.pocket_cover(layers), cp, ax, az, SM.plates(layers, P.SIMPLE_PLATES),
-                       SM.box_body_low(lay, layers), SM.trays_low(lay))
+    lastre = json.loads((OUT / "resultados.json").read_text(encoding="utf-8"))["lastre"]      # grams the V2 run found
+    ballast = SM.ballast_solids(depth, lastre["por_bolsillo_g"], lastre["aparente"])
+    node = SM.assemble(an, half, m5s, SM.pocket_cover(depth), cp, ax, az, ballast, SM.box_body_low(lay, depth), SM.trays_low(lay))
     return lay, node
 
 
@@ -62,7 +67,7 @@ def catmull_rom(W, n=30):
 
 
 def hose(points, d):
-    """Tube of diameter d swept along a smooth curve through the waypoints (straight up out of and into the glands);
+    """Tube of diameter d swept along a smooth curve through the waypoints (straight up out of the gland);
     returns (solid, path length, minimum bend radius)."""
     vs = [cq.Vector(*p) for p in catmull_rom(points, 8)]
     path = cq.Edge.makeSpline(vs)
@@ -85,89 +90,111 @@ def hose(points, d):
     return tube, path.Length(), rmin
 
 
+def route(g0, g1, radius=100.0, tail=35.0):
+    """Waypoints of U1: up out of the lid gland, an S through the 180 deg gap between the cords, a vertical run outside the hull end
+    (x of the arc start), and a quarter circle of `radius` that ends horizontal, with `tail` mm straight, into the -X wall PG7 of B3."""
+    x0, y0, z0 = g0
+    cx, zc = g1[0] - tail, g1[2] - radius
+    arc = [(cx - radius * math.cos(math.radians(t)), 0.0, zc + radius * math.sin(math.radians(t))) for t in (0, 15, 30, 45, 60, 75, 90)]
+    xo = arc[0][0]
+    return [g0, (x0, y0, z0 + 70), (-60.0, 20.0, z0 + 190), (-100.0, 10.0, z0 + 350), (-145.0, 3.0, z0 + 450),
+            (xo + 14, 0.0, z0 + 570), (xo, 0.0, z0 + 700), (xo, 0.0, zc - 100)] + arc + [g1]
+
+
 def main():
     lay, node = node_parts()
-    res_b = json.loads((BS.OUT / "resultados_boya.json").read_text(encoding="utf-8"))
     z_rod = SM.Z_RAIL - P.HOOK_DROP
-    z_sep = z_rod + P.SEP_H
-    z_apex = z_sep + P.APEX_H
+    z_top_node = max(sh.BoundingBox().zmax for sh, _ in node.values())
+    z_bend = z_top_node + P.CORD_CLEAR + P.LANTERN_CORD_D
+    z_tie = z_rod + P.LANTERN_TIE_H
     z_ws = z_rod + P.LANTERN_DEPTH                       # water surface
-    zb0 = z_ws - res_b["calado"]                         # bottom of the buoy box
-    dxb = -(BS.L / 2 - 30.0)                             # the mooring eye of the buoy right over the apex
-    lant, axes, _ = SM.lantern(z_rod, z_sep, z_apex, fixed="ninguno")
-    sep = SM.solid(SM.separator(z_sep))
-    # buoy parts, moved to the surface
+    d = BP.dims(P.FLOT_BOTTLE, P.FLOT_COUNT)
+    res_b = json.loads((BUOY_OUT / "resultados.json").read_text(encoding="utf-8"))
+    calado = res_b["hidro"]["calado"]
+    zb0 = z_ws - calado                                  # keel of the buoy hull
+    dxb = 0.0                                            # the mooring pad (keel centre) right over the tie point
+    lant, axes, _ = SM.lantern_tie(z_rod, z_bend, z_tie, fixed="ninguno")
+    # buoy printed parts (the 4 of boya_pet.py) and its reference bodies, moved to the surface
     buoy = {}
-    for stem, qty in (("B1s_casco", 1), ("B2s_tapa", 1), ("B1bs_bandeja", 1), ("B6s_ojal", 1)):
-        buoy[stem] = cq.importers.importStep(str(BS.OUT / "step" / f"{stem}.step")).val()
-    for i, x in enumerate(BS.rail_x()):
-        buoy[f"B3s_larguero_{i + 1}"] = BS.b3_larguero(x).val()
-    for i, c in enumerate(BS.float_centres()):
-        buoy[f"B5s_flotador_{i + 1}"] = BS.b5_flotador(*c).val()
-    buoy = {k: v.translate(cq.Vector(dxb, 0, zb0)) for k, v in buoy.items()}
-    pl, pw, pt = P.BUOY_PANEL
-    buoy["B_panel_solar_ref"] = BS.dummies()["panel"].val().translate(cq.Vector(dxb, 0, zb0))
-    eye = (dxb + BS.L / 2 - 30.0, 0.0, zb0 - 24.0 - 6.0)
-    c1 = SM.segment((0, 0, z_apex), eye, P.LANTERN_CORD_D)
-    # U1: lid gland -> up inside the cords -> over the LR1 ring through the 180 deg gap -> up to the buoy floor gland
-    # (under the ring there are only ~13 mm between the lid and LR1)
+    for stem in ("B1_casco", "B2_cubierta", "B3_caja", "B4_tapa"):
+        buoy[stem] = cq.importers.importStep(str(BUOY_OUT / "step" / f"{stem}.step")).val().translate(cq.Vector(dxb, 0, zb0))
+    dm = BP.dummies(d)
+    buoy["REF_panel_solar"] = dm["panel"].val().translate(cq.Vector(dxb, 0, zb0))
+    for i in (1, 2):
+        buoy[f"REF_botella_{i}"] = dm[f"botella{i}"].val().translate(cq.Vector(dxb, 0, zb0))
+    # REF_cabo (C1): straight up from the tie point to the mooring pad of the hull
+    pad_pt = (dxb, 0.0, zb0)
+    tie = (0.0, 0.0, z_tie)
+    c1 = SM.segment(tie, pad_pt, P.LANTERN_CORD_D)
+    axes["REF_cabo"] = [(tie, pad_pt)]
+    # U1: lid gland -> up inside the cords -> out through the 180 deg gap -> up outside the cone -> into the PG7 of the -X wall of B3
     g0 = SM.lid_gland_point(lay)
-    ux, uy = BS.layout()["umb"]
-    g1 = (dxb + ux, uy, zb0)
-    # waypoints tuned for a minimum bend radius over umbilical.radio_min (straight up 53 before turning)
-    x0, y0, z0 = g0
-    pts = [g0, (x0, y0, z0 + 53), (x0 - 6, y0 - 14, z0 + 93), (x0 - 30, y0 - 32, z0 + 133), (x0 - 80, y0 - 40, z0 + 163),
-           (-180.0, 2.0, z0 + 203), (-230.0, 0.0, z0 + 338), (-225.0, 0.0, (z0 + zb0) / 2 + 80),
-           (g1[0] - 25.0, 0.0, zb0 - 127), (g1[0] - 2.0, 0.0, zb0 - 47), g1]
+    gl = BP.layout(d)
+    g1 = (dxb + d["X0"] - d["Lx"] / 2, 0.0, zb0 + gl["umb_z"])
+    pts = route(g0, g1)
     u1, length, rmin = hose(pts, P.UMB_HOSE_D)
     slack = P.UMB_LEN - length
-    # clearances of U1 to the cords, LR1 and the node (sampled)
+    # clearances of U1 to the cords, the cabo and the node (sampled)
     from scipy.spatial import cKDTree
     import ensambles as E
-    u_pts = E.surface_points([u1], 1.0)
-    u_tree = cKDTree(u_pts)
+    u_tree = cKDTree(E.surface_points([u1], 1.0))
     near = {}
-    for k, (p, q) in axes.items():
-        p, q = np.array(p), np.array(q)
-        s = p + (q - p) * np.linspace(0, 1, 400)[:, None]
+    for k, segs in axes.items():
+        s = np.vstack([np.array(p) + (np.array(q) - np.array(p)) * np.linspace(0, 1, 400)[:, None] for p, q in segs])
         near[k] = float(u_tree.query(s)[0].min() - P.LANTERN_CORD_D / 2)
-    near["LR1"] = float(u_tree.query(E.surface_points([sep], 1.0))[0].min())
+    near["boya"] = float(u_tree.query(E.surface_points([buoy["B3_caja"]], 2.0))[0].min())
     fails = []
     if rmin < P.UMB_BEND_R:
         fails.append(f"radio minimo de U1 {rmin:.0f} < {P.UMB_BEND_R:g}")
     if slack < 0:
         fails.append(f"U1 necesita {length:.0f} mm y el umbilical mide {P.UMB_LEN:g}")
-    if min(near.values()) < 5.0:
-        fails.append(f"U1 roza la suspension: {min(near.values()):.1f} mm")
-    # assembly with names
-    asm = cq.Assembly(name="sistema_simple")
+    if min(v for k, v in near.items() if k != "boya") < 5.0:
+        fails.append(f"U1 roza la suspension: {min(v for k, v in near.items() if k != 'boya'):.1f} mm")
+    # assembly with names (each body ONE valid solid)
+    rec = []
+    named = {}
     for k, (sh, g) in node.items():
-        asm.add(sh, name=k.replace(" ", "_"))
+        named[k] = SM.one_solid(k, sh, rec)
     for k, sh in lant.items():
-        asm.add(sh, name="LR_" + k.replace(" ", "_"))
-    asm.add(sep, name="LR1_separador")
+        named[k] = SM.one_solid(k, sh, rec)
     for k, sh in buoy.items():
+        named[k] = SM.one_solid(k, sh, rec)
+    named["REF_umbilical"] = SM.one_solid("REF_umbilical", u1, rec)
+    named["REF_cabo"] = SM.one_solid("REF_cabo", c1, rec)
+    asm = cq.Assembly(name="sistema_simple")
+    for k, sh in named.items():
         asm.add(sh, name=k)
-    asm.add(u1, name="U1_umbilical")
-    asm.add(c1, name="C1_cabo_amarre")
     path = OUT / "ENSAMBLE_sistema_simple.step"
     asm.export(str(path))
     fix_step_stamp(path)
+    bad = [r for r in rec if not r["valido"]]
+    for r in bad:
+        fails.append(f"ensamble: {r['nombre']} no es un solido unico valido ({r['solidos']} solidos)")
+    step_names = re.findall(r"PRODUCT\('([^']*)'", path.read_text(encoding="utf-8", errors="replace"))
+    n_back = sum(len(v.Solids()) for v in cq.importers.importStep(str(path)).vals())
+    miss = [k for k in named if k not in step_names]
+    if miss or n_back != len(named):
+        fails.append(f"el STEP del sistema: {n_back} solidos leidos de {len(named)}, nombres que faltan {miss}")
+    (OUT / "ensamble_solidos_sistema.json").write_text(json.dumps(dict(
+        ensamble=path.name, cuerpos=len(rec), solidos_total=sum(r["solidos"] for r in rec), solidos_leidos_del_step=n_back,
+        nombres_en_step=len(step_names) - 1, cuerpos_no_validos=[r["nombre"] for r in bad], solidos=rec),
+        indent=1, ensure_ascii=False), encoding="utf-8")
     from render import render
     items = [(sh, "#5b8fb9" if g == "caja" else "#3a9d7a" if g == "riel" else "#3a7ca5", 1.0, True, None) for sh, g in node.values()]
-    items += [(sh, "#c0504d" if k.startswith(("cuerda", "cabo")) else "#8a8a8a" if k == "aro" else "#b9d6e8",
-               0.25 if k.startswith(("red", "piso")) else 0.9, False, None) for k, sh in lant.items()]
-    items += [(sep, "#e07b39", 1.0, True, None), (u1, "#222222", 1.0, False, None), (c1, "#7a3e9d", 1.0, False, None)]
-    items += [(sh, "#e07b39" if k.startswith("B5s") else "#1d1d3a" if "panel" in k else "#3a7ca5", 1.0, True, None) for k, sh in buoy.items()]
+    items += [(sh, "#c0504d" if k.startswith(("REF_cuerda", "REF_cabo")) else "#8a8a8a" if k == "REF_aro_superior" else "#b9d6e8",
+               0.25 if k.startswith(("REF_linterna_malla", "REF_linterna_piso")) else 0.9, False, None) for k, sh in lant.items()]
+    items += [(u1, "#222222", 1.0, False, None), (c1, "#c0504d", 1.0, False, None)]
+    items += [(sh, "#1d1d3a" if "panel" in k else "#5dade2" if "botella" in k else "#e07b39" if k.startswith("B2") else "#3a7ca5",
+               0.5 if "botella" in k else 1.0, True, None) for k, sh in buoy.items()]
     water = cq.Workplane("XY").box(900, 700, 1).translate((dxb, 0, z_ws - 0.5)).val()
     items.append((water, "#7fb3d5", 0.2, False, None))
     render(items, OUT / "sistema_simple_iso.png", "iso",
-           f"Sistema simple: linterna a {P.LANTERN_DEPTH / 1000:g} m, U1 de {length:.0f} mm (holgura {slack:.0f}), C1 del apice a la boya")
-    res = dict(u1_largo=length, u1_holgura=slack, u1_radio_min=rmin, u1_aire=near, c1_largo=(np.array(eye) - np.array((0, 0, z_apex))).tolist(),
-               z_superficie=z_ws, z_fondo_boya=zb0, fallas=fails)
-    res["c1_largo"] = float(np.linalg.norm(np.array(eye) - np.array((0, 0, z_apex))))
+           f"Sistema simple: linterna a {P.LANTERN_DEPTH / 1000:g} m, U1 de {length:.0f} mm (holgura {slack:.0f}), cabo del nudo a la boya")
+    res = dict(u1_largo=length, u1_holgura=slack, u1_radio_min=rmin, u1_aire=near, cabo_largo=float(np.linalg.norm(np.array(pad_pt) - np.array(tie))),
+               z_superficie=z_ws, z_fondo_boya=zb0, calado_boya=calado, cuerpos=len(rec), solidos=n_back, fallas=fails)
     (OUT / "sistema.json").write_text(json.dumps(res, indent=1, ensure_ascii=False), encoding="utf-8")
-    print(f"U1 {length:.0f} mm (holgura {slack:.0f}, radio min {rmin:.0f}), aire U1-suspension {min(near.values()):.1f} mm, C1 {res['c1_largo']:.0f} mm")
+    print(f"U1 {length:.0f} mm (holgura {slack:.0f}, radio min {rmin:.0f}), aire U1-suspension {min(v for k, v in near.items() if k != 'boya'):.1f} mm, "
+          f"U1-boya {near['boya']:.1f}, cabo {res['cabo_largo']:.0f} mm, {len(rec)} cuerpos / {n_back} solidos")
     print("FALLAS:", fails if fails else "ninguna")
     return 1 if fails else 0
 

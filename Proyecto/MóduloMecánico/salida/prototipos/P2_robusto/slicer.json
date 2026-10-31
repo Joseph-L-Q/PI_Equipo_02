@@ -1,7 +1,7 @@
 {
  "M1s_caja_cuerpo": {
-  "g": 511.06,
-  "h": 17.071666666666665,
+  "g": 509.23,
+  "h": 16.13277777777778,
   "soportes": true,
   "relleno_pct": 100,
   "gcode": "salida/prototipos/P2_robusto/gcode/M1s_caja_cuerpo.gcode"
@@ -21,8 +21,8 @@
   "gcode": "salida/prototipos/P2_robusto/gcode/M3s_riel_gancho.gcode"
  },
  "M3t_tapa_bolsillo": {
-  "g": 13.3,
-  "h": 0.3813888888888889,
+  "g": 23.72,
+  "h": 0.5533333333333333,
   "soportes": false,
   "relleno_pct": 100,
   "gcode": "salida/prototipos/P2_robusto/gcode/M3t_tapa_bolsillo.gcode"
@@ -61,12 +61,5 @@
   "soportes": false,
   "relleno_pct": 40,
   "gcode": "salida/prototipos/P2_robusto/gcode/M6_capsula_bisel.gcode"
- },
- "LR1_separador": {
-  "g": 36.97,
-  "h": 1.558888888888889,
-  "soportes": false,
-  "relleno_pct": 40,
-  "gcode": "salida/prototipos/P2_robusto/gcode/LR1_separador.gcode"
  }
 }

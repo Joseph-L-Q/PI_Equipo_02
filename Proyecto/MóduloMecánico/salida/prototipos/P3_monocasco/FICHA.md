@@ -4,26 +4,26 @@ Generada por `cad_final/prototipos.py` desde `resultados.json`, `slicer.json` y 
 
 ## Que es
 
-Nodo del aro de prueba Ø200 (version simple V2 como base) con estas diferencias: riel **celosia**, pared del conducto **4 mm**, gancho **abrazadera**, caja y riel en una sola pieza (monocasco), sin acabado estetico, caja **v2**, capsula **v2**. Caja exterior 127 x 126 x 77 mm. Ventanas de celosia: {'stub': 2, 'end': 1}. Redondeos aplicados (radio mm, 0 = fallo): ninguno.
+Nodo del aro de prueba Ø200 (version simple V2 como base) con estas diferencias: riel **celosia**, pared del conducto **4 mm**, gancho **abrazadera**, caja y riel en una sola pieza (monocasco), sin acabado estetico, caja **minima**, capsula **v2**. Caja exterior 117 x 126 x 77 mm. Ventanas de celosia: {'stub': 3, 'end': 1}. Redondeos aplicados (radio mm, 0 = fallo): ninguno.
 
 ## Piezas impresas
 
 | Pieza | Cant. | g c/u (slicer) | h c/u | Orientacion | Soportes | Relleno |
 |---|---|---|---|---|---|---|
-| M1m caja con tramos de riel | 1 | 661.5 | 23.05 | X180 | si | 1.0 |
-| M2 caja, tapa con asa | 1 | 181.2 | 5.11 | Y+90 | si | 1.0 |
-| M3t tapa del bolsillo | 2 | 13.3 | 0.38 | X180 | no | 1.0 |
+| M1m caja con tramos de riel | 1 | 677.1 | 23.25 | X180 | si | 1.0 |
+| M2 caja, tapa con asa | 1 | 171.6 | 4.90 | Y+90 | si | 1.0 |
+| M3t tapa del bolsillo | 2 | 23.7 | 0.55 | X180 | no | 1.0 |
 | M5m extremo de riel con pie y tapa | 2 | 131.5 | 4.36 | X180 | si | 1.0 |
 | M4 capsula, cuerpo | 2 | 59.6 | 2.05 | Y-90 | si | 1.0 |
 | M6 bisel | 2 | 2.0 | 0.20 | Y+90 | no | 0.4 |
 | M7 ventana (acrilico) | 2 | comprada | - | - | - | acrilico |
-| M11 bandeja (M11_bandeja) | 1 | 38.3 | 1.73 | sin girar | no | 0.4 |
-| M11 bandeja (M11_bandeja_sup) | 1 | 34.1 | 1.13 | sin girar | no | 0.4 |
+| M11 bandeja (M11_bandeja) | 1 | 35.2 | 1.64 | sin girar | no | 0.4 |
+| M11 bandeja (M11_bandeja_sup) | 1 | 31.1 | 1.06 | sin girar | no | 0.4 |
 | M9c abrazadera (media luna del gancho) | 2 | 3.3 | 0.34 | X+90 | no | 1.0 |
 
 Piezas impresas por nodo: **14** de 9 tipos, mas 2 ventanas de acrilico.
 
-Masa impresa del nodo (slicer, sin pletinas ni tornilleria): **1335 g**; tiempo **45.7 h**; filamento **S/ 120.12** (a S/ 90 el kg, estimado).
+Masa impresa del nodo (slicer, sin lastre ni tornilleria): **1356 g**; tiempo **45.8 h**; filamento **S/ 121.99** (a S/ 90 el kg, estimado).
 
 ## Sellos y juntas
 
@@ -32,8 +32,9 @@ Masa impresa del nodo (slicer, sin pletinas ni tornilleria): **1335 g**; tiempo 
 
 ## Peso
 
-- En aire: **2475 g** (bandeja al 40 %), con 5 pletinas por bolsillo.
-- Aparente en agua de mar: **+238 g** (40 %) / +247 g (100 %); ventana exigida 200 a 500 g.
+- En aire: **2534 g** (bandeja al 40 %), con el lastre.
+- **Lastre a granel** (tuercas y arandelas M8 de inox, a granel, densidad aparente 4.5 g/cm3, estimada): **1020 g** en total (510 g por bolsillo, un bolsillo por lado, 100 x 50 x 28 mm). Llena 22.7 de 28 mm. Rango de lastre que deja el peso aparente en la ventana: 843 a 1179 g. Con perdigon de plomo: 972 g.
+- Aparente en agua de mar: **+354 g** (40 %) / +362 g (100 %); ventana exigida 200 a 500 g.
 
 ## Factores de seguridad (150 N de manipulacion en una capsula)
 
@@ -41,15 +42,22 @@ FEM local (Gmsh + CalculiX, PETG isotropico estimado, esfuerzo = percentil 99.5 
 
 | Caso | Desplazamiento mm | Esfuerzo MPa | FS | FS entre capas |
 |---|---|---|---|---|
-| riel_agua | 1.91 | 9.5 | 4.8 | 2.3 |
-| riel_izado | 0.60 | 7.2 | 6.2 | 3.0 |
+| riel_agua | 1.97 | 9.4 | 4.8 | 2.3 |
+| riel_izado | 0.72 | 7.4 | 6.1 | 3.0 |
 | pie | 0.40 | 8.2 | 5.5 | 2.7 |
 
 Calculo a mano (simple.py, conservador, no es FEM): riel 15.7 / 7.7, pie 4.5 / 2.2, gancho 5.8 / 2.9 (a lo largo / entre capas). En P3/P4 el pie va fundido a la tapa: el calculo a mano del pie (aplastamiento de los M4) no aplica; vale el FEM.
 
 ## Archivos
 
-- `ensamble_simple_D200.step` (nodo + linterna de prueba), `stl/` y `step/` por pieza, `ensamble_simple_iso.png` y `ensamble_simple_lado.png` (vista frontal), `nodo_simple_iso.png`, `nodo_simple_corte.png`, `REPORTE.md` (chequeos), `slicer.json`, `fem/fem.json` y sus PNG.
+- `ensamble_simple_D200.step` (nodo + linterna de prueba, ensamble con nombres: piezas impresas por codigo, el resto `REF_*`, lastre `lastre_izq`/`lastre_der`) y `ensamble_solidos.json` (lista de cuerpos y conteo de solidos), `stl/` y `step/` por pieza, `ensamble_simple_iso.png` y `ensamble_simple_lado.png` (vista frontal), `nodo_simple_iso.png`, `nodo_simple_corte.png`, `REPORTE.md` (chequeos), `slicer.json`, `fem/fem.json` y sus PNG.
+
+## Cambios del 30/10 noche (tanda 3)
+
+- **Sin separador ni apice.** La linterna de prueba es el aro, la malla de referencia, 4 cuerdas que suben rectas del aro (a 45 grados del riel, los brazos quedan entre cuerdas) y van a un solo nudo, y un cabo del nudo a la linea larga.
+- **Aire cuerda-brazo 56.5 mm y cuerda-capsula 68.3 mm** (se exigen 10; el build falla si no). Cuerda-caja (brida de la tapa): 6.8 mm, informativo.
+- **Lastre a granel** en vez de pletinas: 1020 g, un bolsillo por lado cerrado por M3t; peso aparente +354 g (40 %) / +362 g (100 %); caja 117 x 126 x 77 mm (V2: 127 x 126 x 77).
+- **Ensamble con nombres** (`REF_*` para lo no impreso, `lastre_izq`/`lastre_der`) y `ensamble_solidos.json` con el conteo de solidos.
 
 ## Pendiente
 

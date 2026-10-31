@@ -2,17 +2,17 @@
  "piezas": {
   "M1s_caja_cuerpo": {
    "nombre": "M1 caja baja con bolsillos",
-   "orient": "X180",
+   "orient": "sin girar",
    "bbox": [
     147.0,
     146.0,
-    102.50000000000001
+    107.0
    ],
-   "voladizo_mm2": 15793.431941394678,
+   "voladizo_mm2": 15115.187253678276,
    "soportes": true,
-   "volumen_cm3": 349.3862135304082,
+   "volumen_cm3": 383.4482135304114,
    "relleno": 1.0,
-   "masa_g": 443.72049118361844
+   "masa_g": 486.9792311836225
   },
   "M2_caja_tapa": {
    "nombre": "M2 caja, tapa con asa",
@@ -47,14 +47,14 @@
    "orient": "X180",
    "bbox": [
     117.0,
-    32.0,
-    3.0000000000000036
+    57.0,
+    3.000000000000007
    ],
    "voladizo_mm2": 0.0,
    "soportes": false,
-   "volumen_cm3": 11.13851069301227,
+   "volumen_cm3": 19.913510693012267,
    "relleno": 1.0,
-   "masa_g": 14.145908580125582
+   "masa_g": 25.290158580125578
   },
   "M5s_capsula_tapa_pie": {
    "nombre": "M5s tapa con pie",
@@ -139,20 +139,6 @@
    "volumen_cm3": 2.1205750411731086,
    "relleno": null,
    "masa_g": 2.5234842989959994
-  },
-  "LR1_separador": {
-   "nombre": "LR1 separador",
-   "orient": "sin girar",
-   "bbox": [
-    211.86823272705078,
-    211.93411254882812,
-    6.0
-   ],
-   "voladizo_mm2": 0.0,
-   "soportes": false,
-   "volumen_cm3": 44.85723070428181,
-   "relleno": 0.4,
-   "masa_g": 43.66461930112607
   }
  },
  "soporte_umbral_mm2": 300.0,
@@ -209,42 +195,72 @@
   "fusionado": true
  },
  "separador": {
+  "usar": false,
   "tipo": "aro",
   "seccion": [
    12.0,
    6.0
   ],
   "altura": 140.0,
-  "altura_min": 136.3397459621556
+  "altura_min": null
  },
- "pletinas": {
-  "por_bolsillo": 5,
-  "bolsillos": 2,
-  "medida": [
-   25.0,
-   5.0,
-   100.0
-  ]
+ "lastre": {
+  "material": "tuercas_m8",
+  "nombre": "tuercas y arandelas M8 de inox, a granel",
+  "aparente": 4.5,
+  "solido": 7.9,
+  "total_g": 1140.0,
+  "por_bolsillo_g": 570.0,
+  "rango_total_g": [
+   967.2043878090404,
+   1301.6218720485526
+  ],
+  "altura_mm": 25.333333333333336,
+  "altura_en_el_maximo_mm": 28.924930489967835,
+  "bolsillo_mm": 30.0,
+  "bolsillo_cm3": 150.0,
+  "ocupacion": 0.8444444444444446,
+  "cabe_en_el_maximo": true,
+  "volumen_lastre_cm3": 126.66666666666667,
+  "medida_bolsillo": [
+   100.0,
+   50.0,
+   30.0
+  ],
+  "alternativas": {
+   "tuercas_m8": {
+    "nombre": "tuercas y arandelas M8 de inox, a granel",
+    "total_g": 1139.5680241726768,
+    "altura_mm": 25.32373387050393
+   },
+   "perdigon_plomo": {
+    "nombre": "perdigon de plomo en bolsa",
+    "total_g": 1090.2590191813854,
+    "altura_mm": 16.77321567971362
+   }
+  }
  },
  "peso": {
   "40": {
-   "aire_g": 2462.433774226701,
-   "aparente_g": 205.01738073580282,
-   "sin_pletinas_g": -654.3576192641972,
-   "pletinas_min": 5,
-   "pletinas_max": 6
+   "aire_g": 2680.481014226705,
+   "aparente_g": 350.37592833074007,
+   "sin_lastre_g": -641.7126792641966,
+   "lastre_g": 1140.0,
+   "lastre_min_g": 967.2043878090404,
+   "lastre_max_g": 1311.9316605363133
   },
   "100": {
-   "aire_g": 2471.4059002840877,
-   "aparente_g": 213.98950679318932,
-   "sin_pletinas_g": -645.3854932068107,
-   "pletinas_min": 5,
-   "pletinas_max": 6
+   "aire_g": 2689.4531402840917,
+   "aparente_g": 359.34805438812657,
+   "sin_lastre_g": -632.7405532068101,
+   "lastre_g": 1140.0,
+   "lastre_min_g": 956.89459932128,
+   "lastre_max_g": 1301.6218720485526
   }
  },
- "bg_mm": 18.184984940392766,
- "apice_sobre_aro": 290.0,
- "aire_min": 11.602593758070153,
+ "bg_mm": 20.090975940489617,
+ "apice_sobre_aro": 400.0,
+ "aire_min": 47.953320128610144,
  "fs": {
   "riel": 17.845075698619034,
   "riel_capas": 8.724259230435973,
@@ -257,8 +273,8 @@
  "cable_mm": 378.7971068265191,
  "zmax_sobre_aro": 181.32764195254734,
  "zmin_sobre_aro": -40.13139720814413,
- "cg_sobre_aro": 45.90398905774139,
- "cb_sobre_aro": 64.08897399813415,
+ "cg_sobre_aro": 42.325358423337505,
+ "cb_sobre_aro": 62.416334363827126,
  "piezas_impresas": 14,
  "tipos_impresos": 9,
  "camaras": [
@@ -287,5 +303,82 @@
   127.0,
   126.0,
   77.0
+ ],
+ "version": "simple",
+ "cfg": {
+  "riel": "solido",
+  "pared": 4.0,
+  "gancho": "c",
+  "monocasco": false,
+  "estetico": false,
+  "caja": "v2",
+  "capsula": "v2"
+ },
+ "cantidades": {
+  "M1s_caja_cuerpo": 1,
+  "M2_caja_tapa": 1,
+  "M3t_tapa_bolsillo": 2,
+  "M5s_capsula_tapa_pie": 2,
+  "M4_capsula_cuerpo": 2,
+  "M6_capsula_bisel": 2,
+  "M7_capsula_ventana": 2,
+  "M11_bandeja": 1,
+  "M11_bandeja_sup": 1,
+  "M3s_riel_gancho": 2
+ },
+ "sellos": {
+  "tapa_caja": 1,
+  "tapa_capsula": 2,
+  "ventana": 2,
+  "pg7_caja": 2,
+  "pg7_capsula": 2
+ },
+ "juntas_atornilladas": {
+  "riel_caja": 2,
+  "union_extremo": 0,
+  "pie_m4": 2,
+  "abrazadera_m4": 0
+ },
+ "celosia_ventanas": {},
+ "redondeos": {},
+ "aire_cuerdas": {
+  "brazo": 47.953320128610144,
+  "capsula": 68.34213344534813,
+  "caja": 2.9055976693378565
+ },
+ "cuerdas": {
+  "azimut_en_el_marco_del_nodo": [
+   45.0,
+   135.0,
+   225.0,
+   315.0
+  ],
+  "codo_sobre_aro": 195.32764195254734,
+  "nudo_sobre_aro": 400.0,
+  "por_cuerda": {
+   "brazo/REF_cuerda_1": 47.95332282494893,
+   "brazo/REF_cuerda_2": 47.95335391703396,
+   "brazo/REF_cuerda_3": 47.9534437824808,
+   "brazo/REF_cuerda_4": 47.953320128610144,
+   "brazo/REF_cabo": 336.08981495210185,
+   "capsula/REF_cuerda_1": 68.34213344534814,
+   "capsula/REF_cuerda_2": 68.34213344534815,
+   "capsula/REF_cuerda_3": 68.34213344534813,
+   "capsula/REF_cuerda_4": 68.34213344534818,
+   "capsula/REF_cabo": 365.0614253772793,
+   "caja/REF_cuerda_1": 2.9067818627391517,
+   "caja/REF_cuerda_2": 2.9062179439244993,
+   "caja/REF_cuerda_3": 2.9055976693378565,
+   "caja/REF_cuerda_4": 2.906814173192606,
+   "caja/REF_cabo": 216.67255007063366
+  }
+ },
+ "ensamble": {
+  "cuerpos": 31,
+  "solidos": 31,
+  "no_validos": []
+ },
+ "avisos": [
+  "cuerda-caja (brida de la tapa) a 2.9 mm, menos que los 10 que se piden a brazos y capsulas"
  ]
 }

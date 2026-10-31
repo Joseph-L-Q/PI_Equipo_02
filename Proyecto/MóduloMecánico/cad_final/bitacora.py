@@ -109,7 +109,7 @@ def hardware(res, rb):
     _, _, fl_w, fl_h, *_ = CP.cap_dims()
     cap_cord = 2 * ((CP.CAP_CAV_W + fl_w - P.CAP_FLANGE) / 2 + (CP.CAP_CAV_H + fl_h - P.CAP_FLANGE) / 2)
     cord = round((box_cord + 2 * cap_cord) * 1.1 / 10) * 10
-    k = res["pletinas"]["por_bolsillo"] * res["pletinas"]["bolsillos"]
+    lastre_g = res["lastre"]["total_g"]
     common = [("Tornillo M3 x 12 + inserto termico M3 (tapa de la caja)", "M3", n_lid),
               ("Tornillo M3 x 8 + inserto termico M3 (bandejas)", "M3", n_tray),
               ("Tornillo M3 x 16 + tuerca (capsulas)", "M3", 8),
@@ -121,7 +121,7 @@ def hardware(res, rb):
     simple = common + [("Tornillo M4 x 20 + inserto termico M4 (bridas del riel a la caja)", "M4", 8),
                        ("Tornillo M3 x 8 avellanado + inserto M3 (tapas del bolsillo)", "M3", 4),
                        ("Tornillo M4 x 45 + tuerca (pie de las capsulas)", "M4", 4),
-                       ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Pletina de inox", "25 x 5 x 100", k)]
+                       ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Lastre a granel: tuercas y arandelas M8 de inox", f"{lastre_g:.0f} g", 1)]
     bl = 2 * ((BS.LI + BS.L) / 2 + (BS.WI + BS.Wd) / 2) * 1.1
     boya = [("Tornillo M3 x 12 + inserto M3 (tapa de la boya)", "M3", len(BS.screw_pts())),
             ("Tornillo M3 + inserto M3 (portabaterias y bandeja)", "M3", 8),
@@ -161,12 +161,12 @@ def design_rows(res, rb):
             ("Capsula: angulo y acimut", f"{r['capsula']['angulo']:g} grados, {r['capsula']['acimut']}", "-", "params.py capsula.angulo, capsula.acimut (equipo)"),
             ("Ventana: diametro x espesor", f"{r['ventana']['diametro']:g} x {r['ventana']['espesor']:g}", "mm", "params.py ventana.*"),
             ("Gancho en C (fusionado al riel): C interior / pared / asiento", f"{r['gancho']['c_interior']:g} / {r['gancho']['pared']:g} / {r['gancho']['asiento']:g}", "mm", "params.py aro.seccion, gancho.c"),
-            ("Separador LR1: tipo, seccion, altura (minima)", f"{r['separador']['tipo']}, {r['separador']['seccion'][0]:g} x {r['separador']['seccion'][1]:g}, {r['separador']['altura']:g} ({r['separador']['altura_min']:.0f})", "mm", "params.py separador.*, simple.py"),
-            ("Pletinas de lastre", f"{r['pletinas']['por_bolsillo']} x {r['pletinas']['bolsillos']} de {' x '.join(f'{v:g}' for v in r['pletinas']['medida'])}", "mm", "params.py lastre.pletinas"),
+            ("Separador LR1", "no se usa" if not r["separador"].get("usar", True) else f"{r['separador']['tipo']}, {r['separador']['altura']:g}", "-", "params.py separador.usar (tanda 3: sin separador)"),
+            ("Lastre a granel (un bolsillo por lado)", f"{r['lastre']['total_g']:.0f} g de {r['lastre']['nombre']}, bolsillo {' x '.join(f'{v:g}' for v in r['lastre']['medida_bolsillo'])}", "mm", "params.py lastre.granel, simple.py"),
             ("Nodo: peso en aire (bandeja 40 % / 100 %)", f"{w4['aire_g']:.0f} / {w1['aire_g']:.0f}", "g", "simple.py, masas por pieza con su relleno"),
             ("Nodo: peso aparente (40 % / 100 %)", f"{w4['aparente_g']:+.0f} / {w1['aparente_g']:+.0f}", "g", "simple.py (ventana +200 a +500)"),
             ("Nodo: BG", f"{r['bg_mm']:.1f}", "mm", "simple.py"),
-            ("Apice sobre el aro", f"{r['apice_sobre_aro']:.0f}", "mm", "separador.altura + apice.altura"),
+            ("Punto de amarre de las cuerdas sobre el aro", f"{r['apice_sobre_aro']:.0f}", "mm", "linterna.nudo_h"),
             ("Aire minimo suspension-nodo", f"{r['aire_min']:.1f}", "mm", "simple.py (exigido 10)"),
             ("FS riel (capas / entre capas)", f"{r['fs']['riel']:.1f} / {r['fs']['riel_capas']:.1f}", "-", "simple.py §5, a mano"),
             ("FS pie de capsula (capas / entre capas)", f"{r['fs']['pie']:.1f} / {r['fs']['pie_capas']:.1f}", "-", "simple.py §5, a mano"),

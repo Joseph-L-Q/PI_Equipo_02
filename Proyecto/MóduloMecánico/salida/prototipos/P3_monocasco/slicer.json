@@ -1,21 +1,21 @@
 {
  "M1m_caja_riel": {
-  "g": 661.45,
-  "h": 23.051111111111112,
+  "g": 677.09,
+  "h": 23.245277777777776,
   "soportes": true,
   "relleno_pct": 100,
   "gcode": "salida/prototipos/P3_monocasco/gcode/M1m_caja_riel.gcode"
  },
  "M2_caja_tapa": {
-  "g": 181.21,
-  "h": 5.111944444444444,
+  "g": 171.62,
+  "h": 4.896944444444444,
   "soportes": true,
   "relleno_pct": 100,
   "gcode": "salida/prototipos/P3_monocasco/gcode/M2_caja_tapa.gcode"
  },
  "M3t_tapa_bolsillo": {
-  "g": 13.3,
-  "h": 0.3813888888888889,
+  "g": 23.72,
+  "h": 0.5533333333333333,
   "soportes": false,
   "relleno_pct": 100,
   "gcode": "salida/prototipos/P3_monocasco/gcode/M3t_tapa_bolsillo.gcode"
@@ -35,15 +35,15 @@
   "gcode": "salida/prototipos/P3_monocasco/gcode/M9c_abrazadera.gcode"
  },
  "M11_bandeja": {
-  "g": 38.33,
-  "h": 1.73,
+  "g": 35.25,
+  "h": 1.6394444444444445,
   "soportes": false,
   "relleno_pct": 40,
   "gcode": "salida/prototipos/P3_monocasco/gcode/M11_bandeja.gcode"
  },
  "M11_bandeja_sup": {
-  "g": 34.07,
-  "h": 1.131388888888889,
+  "g": 31.06,
+  "h": 1.0552777777777778,
   "soportes": false,
   "relleno_pct": 40,
   "gcode": "salida/prototipos/P3_monocasco/gcode/M11_bandeja_sup.gcode"
@@ -61,12 +61,5 @@
   "soportes": false,
   "relleno_pct": 40,
   "gcode": "salida/prototipos/P3_monocasco/gcode/M6_capsula_bisel.gcode"
- },
- "LR1_separador": {
-  "g": 36.97,
-  "h": 1.558888888888889,
-  "soportes": false,
-  "relleno_pct": 40,
-  "gcode": "salida/prototipos/P3_monocasco/gcode/LR1_separador.gcode"
  }
 }
