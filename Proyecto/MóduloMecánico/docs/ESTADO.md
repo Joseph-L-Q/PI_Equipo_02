@@ -1,13 +1,13 @@
 # Estado de la sesión LanternGuard CAD (PC de casa, 30/10/2026)
 
-Última actualización: **21:25** (handoff en `docs/HANDOFF_noche.md`). Terminados: 0, A, B, D. En curso: C segunda vuelta (boya con 4 botellas de 500 ml)
+Última actualización: **20:58** según el reloj de la PC (el 21:25 anterior era estimado; handoff en `docs/HANDOFF_noche.md`). Terminados: 0, A, B, D. En curso: C segunda vuelta (boya con 4 botellas de 500 ml)
 y E (falta la parte de la boya). Siguen F (documento para el equipo) y G (cierre).
 Rama `cad/version-final`: https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/version-final
 
 | Bloque | Estado | Resultado |
 |---|---|---|
 | 0 Herramientas | listo | Orca nightly, CalculiX, Gmsh, rclone y claves de Onshape funcionan en esta PC |
-| A Onshape | listo (falta LG_00_LEER_PRIMERO, va con F) | 8 documentos `LG_*` dentro de la carpeta LanternGuard, con descripción. Links en `docs/LINKS.md` |
+| A Onshape | listo; correcciones 3 y 4 hechas en P0, siguen P1 a P4 y la boya | 8 documentos `LG_*` en la carpeta LanternGuard. **P0: pestañas nuevas `ENSAMBLE_v2` (simple V1, 53 partes) y `ENSAMBLE_modular_v2` (47), todas con nombre y REF_ en lo que no se imprime, geometría igual.** Verificación de los ENSAMBLE viejos: P1, P2 y boya coinciden; a P3 y P4 les falta `M1m_caja_con_riel` (se arregla con su ENSAMBLE_v2). Links en `docs/LINKS.md` |
 | B Prototipos | listo | Tabla y recomendación en `docs/PROTOTIPOS.md`; fichas en `salida/prototipos/` |
 | C Boya PET | 1.ª vuelta lista; 2.ª vuelta en curso | 2 × 1 L: 624 g, 20.9 h, pero GM 16 mm y vuelca si pierde una botella. Se prueba 4 × 500 ml en las esquinas |
 | D Planos | listo | `planos/PLANOS_LanternGuard.pdf` (25 páginas: P2, P4 y boya 2 × 1 L; la boya se rehace con la 2.ª vuelta) |
