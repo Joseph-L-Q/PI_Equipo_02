@@ -34,7 +34,7 @@
    "escala_iso": "2:5",
    "cantidad": 1,
    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/c8bc1899e000dcde7ec76f6b",
-   "llamadas": 19,
+   "llamadas": 10,
    "obsoletos": [
     "1e07a5d2da9bd4f6100d2364"
    ],
@@ -63,7 +63,621 @@
     ],
     "agujeros": 14
    },
-   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M2_caja_tapa.pdf"
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M2_caja_tapa.pdf",
+   "autor": "Equipo 02 UPCH",
+   "espesor": "placa 5.0 mm"
+  },
+  "M1s_caja_cuerpo": {
+   "partstudio": "5e97a4b1df6ba9925e9c53ed",
+   "pestana": "M1s_caja_cuerpo",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "9e96056813ecb22364be3158",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "9a11b8a33feb7cece0e308a8",
+    "front": "b743624c3babf86136e45d85",
+    "left": "ad7517cf031727c93fe6b3bd",
+    "back": "3444413d15ada51b8fa35845",
+    "top": "087db7b9e28fc66e9004a649",
+    "bottom": "56aa382be776a0619825634e",
+    "isometric": "9069ebff1117837633946600"
+   },
+   "cotas": {
+    "creadas": 9,
+    "fallidas": [],
+    "a_mano": [
+     "left: 4x Ø5.6 (choca)",
+     "left: Ø30.0 (no encontré el círculo en la vista)"
+    ],
+    "agujeros": 26
+   },
+   "espesor": "pared 5.0 mm",
+   "escala": "2:5",
+   "escala_iso": "2:5",
+   "cantidad": 1,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M1s_caja_cuerpo.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/9e96056813ecb22364be3158",
+   "llamadas": 27
+  },
+  "M3s_riel_gancho": {
+   "partstudio": "64f251756f363a7984f88b6d",
+   "pestana": "M3s_riel_gancho",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "647f449f520dc9ecac1040bf",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "552947644fa29921992eb0f9",
+    "front": "ce89b721bbde952aad89d4dd",
+    "left": "daef87dcec88252cd97bc66d",
+    "back": "961a7a2369e28044b9ef54bc",
+    "top": "153885a5456b111aff115446",
+    "bottom": "a36bf26826ed0351c5611016",
+    "isometric": "a4172acf68f57d2cca2f6a78"
+   },
+   "cotas": {
+    "creadas": 7,
+    "fallidas": [],
+    "a_mano": [
+     "front: alto general 79.4 mm (el extremo es curvo)",
+     "left: 4x Ø4.2 (choca)",
+     "left: Ø8.0 (choca)"
+    ],
+    "agujeros": 7
+   },
+   "espesor": "pared 8.5 mm",
+   "escala": "1:2",
+   "escala_iso": "1:2",
+   "cantidad": 2,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M3s_riel_gancho.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/647f449f520dc9ecac1040bf",
+   "llamadas": 27
+  },
+  "M3t_tapa_bolsillo": {
+   "partstudio": "d6434ebdd3ed32bbe24ea0ea",
+   "pestana": "M3t_tapa_bolsillo",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "c791f0e5175157ce8ac1efdf",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "506cd99a49e227dbda2bd2e3",
+    "front": "1aaf6a6fd4e6256df736d021",
+    "left": "66c056c8acfecaf4039f88a2",
+    "back": "f246168706ffbd6ff194de4e",
+    "top": "54c842ae7a789386460207ae",
+    "bottom": "97f8c7ae104e8170d4897150",
+    "isometric": "fb0b5c342a201c50d8b56400"
+   },
+   "cotas": {
+    "creadas": 8,
+    "fallidas": [],
+    "a_mano": [],
+    "agujeros": 2
+   },
+   "espesor": "placa 3.0 mm",
+   "escala": "1:2",
+   "escala_iso": "1:2",
+   "cantidad": 2,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M3t_tapa_bolsillo.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/c791f0e5175157ce8ac1efdf",
+   "llamadas": 28
+  },
+  "M4_capsula_cuerpo": {
+   "partstudio": "4bfdc7cde848b22c29d6e11c",
+   "pestana": "M4_capsula_cuerpo",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "b02f3a4233d099507593bef3",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "0861bae66c3d6f95765d5e12",
+    "front": "ffcae18455b910a0d9f5f91c",
+    "left": "2e541cde7879e9942f6cda20",
+    "back": "a9576f5630b90f89c0b8b348",
+    "top": "0dc2127d0309f9e039732a6a",
+    "bottom": "0ba3c47ee8524e08265a1aee",
+    "isometric": "44cfe436021ec710f8ad490e"
+   },
+   "cotas": {
+    "creadas": 8,
+    "fallidas": [],
+    "a_mano": [
+     "top: Ø12.6 (no encontré el círculo en la vista)",
+     "left: 3x Ø1.8 (no encontré el círculo en la vista)",
+     "left: Ø16.4 (choca)",
+     "left: Ø30.4 (no encontré el círculo en la vista)"
+    ],
+    "agujeros": 10
+   },
+   "espesor": "sin placa ni pared <= 12 mm en la vista lateral",
+   "escala": "1:1",
+   "escala_iso": "1:1",
+   "cantidad": 2,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M4_capsula_cuerpo.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b02f3a4233d099507593bef3",
+   "llamadas": 25
+  },
+  "M5s_capsula_tapa_pie": {
+   "partstudio": "d78e18ce5f3d0a1993bea919",
+   "pestana": "M5s_capsula_tapa_pie",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "463cfca816288db725930e5a",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "a6a04c7813b792a5109bddd2",
+    "front": "21af7940b02931e865984231",
+    "left": "d5c18f169a10db88dfa2bb87",
+    "back": "5a810ae22472c48c0878a733",
+    "top": "4d2d2526d4397007cccf9255",
+    "bottom": "ee34fc5db5b34430dd7b3a98",
+    "isometric": "fd1077605d8415a6706a5510"
+   },
+   "cotas": {
+    "creadas": 5,
+    "fallidas": [],
+    "a_mano": [
+     "front: ancho general 55.2 mm (el extremo es curvo)",
+     "front: alto general 95.9 mm (el extremo es curvo)",
+     "front: 2x Ø4.2 (choca)"
+    ],
+    "agujeros": 2
+   },
+   "espesor": "placa 6.5 mm",
+   "escala": "1:1",
+   "escala_iso": "1:2",
+   "cantidad": 2,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M5s_capsula_tapa_pie.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/463cfca816288db725930e5a",
+   "llamadas": 27
+  },
+  "M6_capsula_bisel": {
+   "partstudio": "64a62ba308f3d5ba0ac54398",
+   "pestana": "M6_capsula_bisel",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "220ae7ae43b3300b4a2affc5",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "ef48fda98e6ec6ce4c797fea",
+    "front": "978aac9c485747af0f293270",
+    "left": "33c409ee80c10367cb90b9e4",
+    "back": "ac3f507a5186dd82ea248c56",
+    "top": "d99082483f6d77aaee77099f",
+    "bottom": "04663399b1ae5dc190553c37",
+    "isometric": "ef1d4edda154da6bd37ddaa6"
+   },
+   "cotas": {
+    "creadas": 3,
+    "fallidas": [],
+    "a_mano": [
+     "front: ancho general 2.5 mm (el extremo es curvo)",
+     "top: ancho general 2.5 mm (el extremo es curvo)",
+     "left: ancho general 42.0 mm (el extremo es curvo)",
+     "left: alto general 42.0 mm (el extremo es curvo)",
+     "left: 3x Ø2.4 (choca)",
+     "left: Ø28.0 (choca)"
+    ],
+    "agujeros": 4
+   },
+   "espesor": "sin aristas rectas",
+   "escala": "1:1",
+   "escala_iso": "1:1",
+   "cantidad": 2,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M6_capsula_bisel.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/220ae7ae43b3300b4a2affc5",
+   "llamadas": 26
+  },
+  "M11_bandeja": {
+   "partstudio": "4e10e2a21bf2a9d2348ab919",
+   "pestana": "M11_bandeja",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "f62b1a56cf8b244465e12d72",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "e4fb90cf05091905fb14b26d",
+    "front": "fabd078e6662cd1fae49b53c",
+    "left": "64a299b0d40a023cbcaff479",
+    "back": "37e5f3c5a7e0e7a6d8a9471d",
+    "top": "3332d9b325b72c34b58d3dbc",
+    "bottom": "05f0aedd2d00f0d18959d4a4",
+    "isometric": "641b64339c6fd13ca53b51f1"
+   },
+   "cotas": {
+    "creadas": 6,
+    "fallidas": [],
+    "a_mano": [
+     "front: alto general 30.0 mm (el extremo es curvo)",
+     "left: alto general 30.0 mm (el extremo es curvo)"
+    ],
+    "agujeros": 4
+   },
+   "espesor": "placa 3.0 mm",
+   "escala": "1:2",
+   "escala_iso": "1:2",
+   "cantidad": 1,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M11_bandeja.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/f62b1a56cf8b244465e12d72",
+   "llamadas": 27
+  },
+  "M11_bandeja_sup": {
+   "partstudio": "44bb7798a2f027f8aa038fbc",
+   "pestana": "M11_bandeja_sup",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "a534a14c57140a2a7947991f",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "f356929dab526b2d0c9b5392",
+    "front": "151b62d81f21756c624c97bc",
+    "left": "da8e6e4649e09ed886f5910a",
+    "back": "0f09ffdf3a104049e58011d0",
+    "top": "867adc0f9c144e75be11f0c1",
+    "bottom": "37fdd8982ce1b7b29acc5eb4",
+    "isometric": "aa76df5c24267f8b78b7fb45"
+   },
+   "cotas": {
+    "creadas": 8,
+    "fallidas": [],
+    "a_mano": [],
+    "agujeros": 4
+   },
+   "espesor": "pared 2.0 mm",
+   "escala": "1:2",
+   "escala_iso": "1:2",
+   "cantidad": 1,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_M11_bandeja_sup.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/a534a14c57140a2a7947991f",
+   "llamadas": 27
+  },
+  "B1_casco": {
+   "partstudio": "36031f254206f313ee4cae01",
+   "pestana": "B1_casco",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "b1ce524a5a1044c1f7ae2d1e",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "3095dc870dfecca2a9846d2c",
+    "front": "ab326bdda2bf2238f2ebc506",
+    "left": "e8c50727eca3eaed4d886832",
+    "back": "0b09802d2ce9093bea1eff66",
+    "top": "7c14b732d88be9c4a3fe8502",
+    "bottom": "0ce153c4fd695a6f4b5ce626",
+    "isometric": "dd35e6c4a7733083c4230f6e"
+   },
+   "cotas": {
+    "creadas": 10,
+    "fallidas": [],
+    "a_mano": [
+     "left: 2x Ø83.0 (no encontré el círculo en la vista)"
+    ],
+    "agujeros": 15
+   },
+   "espesor": "sin placa ni pared <= 12 mm en la vista lateral",
+   "escala": "1:5",
+   "escala_iso": "1:5",
+   "cantidad": 1,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_B1_casco.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b1ce524a5a1044c1f7ae2d1e",
+   "llamadas": 26
+  },
+  "B2_cubierta": {
+   "partstudio": "3a02aa937a935cd6531cb0d7",
+   "pestana": "B2_cubierta",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "b51ca32e224afd570e4b1967",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "dc392945c637e7536bf6de3d",
+    "front": "20ae736e3201b8209877becb",
+    "left": "de21f6350a6390e9dc3ad078",
+    "back": "e8cac5c3573f9d889ed36f45",
+    "top": "340063be33180d5ab32b0916",
+    "bottom": "d45fd041bc3788d6f9bb4710",
+    "isometric": "5a2284a0f819b5e6018df529"
+   },
+   "cotas": {
+    "creadas": 9,
+    "fallidas": [],
+    "a_mano": [
+     "front: alto general 136.4 mm (el extremo es curvo)",
+     "left: alto general 136.4 mm (el extremo es curvo)"
+    ],
+    "agujeros": 18
+   },
+   "espesor": "placa 4.0 mm",
+   "escala": "1:5",
+   "escala_iso": "1:5",
+   "cantidad": 1,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_B2_cubierta.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b51ca32e224afd570e4b1967",
+   "llamadas": 27
+  },
+  "B3_caja": {
+   "partstudio": "2b31965af0a99c9d4ec7f8d7",
+   "pestana": "B3_caja",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "44e46283773d737b3bbf6a7b",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "c2b4b9155098c11e5d33562b",
+    "front": "76394fcb8b8b6b506c1a84f5",
+    "left": "4596f594b52d738d12f3ebd4",
+    "back": "3cfb160c1f5cc0f9cee30ff2",
+    "top": "e137d588be5b0f0b4021114b",
+    "bottom": "24cff41fda375c12f5a3e392",
+    "isometric": "15479e18fdd83303a368c0fe"
+   },
+   "cotas": {
+    "creadas": 9,
+    "fallidas": [],
+    "a_mano": [
+     "top: 4x Ø3.4 (no encontré el círculo en la vista)"
+    ],
+    "agujeros": 25
+   },
+   "espesor": "pared 6.0 mm",
+   "escala": "1:2",
+   "escala_iso": "1:2",
+   "cantidad": 1,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_B3_caja.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/44e46283773d737b3bbf6a7b",
+   "llamadas": 27
+  },
+  "B4_tapa": {
+   "partstudio": "0f5dd92177c3b8aefa67a680",
+   "pestana": "B4_tapa",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "b0bb63049a2a3ad255904b12",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "243321f603d330cb304da553",
+    "front": "96642a1e79bffc16c329bd45",
+    "left": "d30169bdb9441670c0a3de58",
+    "back": "47bfbc45fdab0f847a063713",
+    "top": "7585b25467766bd8d55c3ef1",
+    "bottom": "aeb7987a5ed08f30087ef98a",
+    "isometric": "4f909c56b6f860be72aba084"
+   },
+   "cotas": {
+    "creadas": 8,
+    "fallidas": [],
+    "a_mano": [],
+    "agujeros": 6
+   },
+   "espesor": "pared 2.6 mm",
+   "escala": "1:2",
+   "escala_iso": "1:2",
+   "cantidad": 1,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_B4_tapa.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b0bb63049a2a3ad255904b12",
+   "llamadas": 27
+  },
+  "B5_cuna": {
+   "partstudio": "7bf55dd78e31346551b1b5fb",
+   "pestana": "B5_cuna",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "56227aa49e10d80f5792c561",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "10b802ad2c19f0a6bddc8c72",
+    "front": "58c352f4899a8c0b70a3df9e",
+    "left": "fd90f4a9edca2742a49a5e95",
+    "back": "16972bf2e712c61fee766cf9",
+    "top": "b975d69ec8769646084eee7a",
+    "bottom": "51d872e0cb10d5d19fc212f8",
+    "isometric": "5e17fb01cc3063e9fae86bda"
+   },
+   "cotas": {
+    "creadas": 6,
+    "fallidas": [],
+    "a_mano": [
+     "front: 4x Ø4.0 (no encontré el círculo en la vista)",
+     "top: alto general 114.6 mm (el extremo es curvo)",
+     "top: 4x Ø4.0 (choca)",
+     "left: Ø83.0 (no encontré el círculo en la vista)"
+    ],
+    "agujeros": 9
+   },
+   "espesor": "pared 5.0 mm",
+   "escala": "2:5",
+   "escala_iso": "2:5",
+   "cantidad": 2,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_B5_cuna.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/56227aa49e10d80f5792c561",
+   "llamadas": 27
+  },
+  "B6_correa": {
+   "partstudio": "ba81228a303a1d865c28e343",
+   "pestana": "B6_correa",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "drawing": "179a924d6404a0872fb4f86b",
+   "cajetin": [
+    "Description",
+    "Part number",
+    "Title 1",
+    "Title 2",
+    "Title 3"
+   ],
+   "autor": "Equipo 02 UPCH",
+   "vistas": {
+    "right": "3960dccc22af3fd4b5f9e26e",
+    "front": "c51d63f7c0de9f0fb1683500",
+    "left": "452ee49a3fb0362cee174340",
+    "back": "def4f3e954aac9a60cbe1164",
+    "top": "05b08206af9f9d2c09425936",
+    "bottom": "b2b3dcccf7d5a6f8dc9548fd",
+    "isometric": "5b2b300d160505fe3eaec134"
+   },
+   "cotas": {
+    "creadas": 8,
+    "fallidas": [],
+    "a_mano": [],
+    "agujeros": 2
+   },
+   "espesor": "placa 4.0 mm",
+   "escala": "1:1",
+   "escala_iso": "1:1",
+   "cantidad": 4,
+   "pdf": "salida\\planos_onshape\\pdf\\PLANO_B6_correa.pdf",
+   "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/179a924d6404a0872fb4f86b",
+   "llamadas": 27
   }
  }
 }

@@ -298,6 +298,50 @@ def dims_for_view(name, vid, vm, geom, box, centre_uv, s, lo, hi, hole_list, tak
     return out, skipped
 
 
+def thickness(vid, geom, box, centre_uv, s, boxes):
+    """Thinnest plate (two long horizontal lines from the bottom up) or wall (two long vertical lines from the left)
+    of the left view, <= 12 mm. Returns (annotation or None, text for the registry)."""
+    segs = []
+    for e in geom:
+        if e["type"] == "line" and e.get("visible", True):
+            (x0, y0), (x1, y1) = (1000 * e["data"]["start"][0], 1000 * e["data"]["start"][1]),                                  (1000 * e["data"]["end"][0], 1000 * e["data"]["end"][1])
+            segs.append((e, x0, y0, x1, y1))
+    if not segs:
+        return None, "sin aristas rectas"
+    W = max(max(s_[1], s_[3]) for s_ in segs) - min(min(s_[1], s_[3]) for s_ in segs)
+    H = max(max(s_[2], s_[4]) for s_ in segs) - min(min(s_[2], s_[4]) for s_ in segs)
+    to_sheet = lambda u, v: ((box[0] + box[2]) / 2 + s * (u - centre_uv[0]), (box[1] + box[3]) / 2 + s * (v - centre_uv[1]))
+    best = None
+    for k, span in ((1, W), (0, H)):                                  # k = 1: horizontal lines, gap in v
+        long_ = [g for g in segs if (abs(g[2] - g[4]) < 1e-3 if k == 1 else abs(g[1] - g[3]) < 1e-3)
+                 and (abs(g[1] - g[3]) if k == 1 else abs(g[2] - g[4])) >= 0.3 * span]
+        if len(long_) < 2:
+            continue
+        pos = lambda g: g[2] if k == 1 else g[1]
+        long_.sort(key=pos)
+        a = long_[0]
+        b = next((g for g in long_[1:] if 0.5 <= pos(g) - pos(a) <= 12.0), None)
+        if b and (best is None or pos(b) - pos(a) < best[0]):
+            best = (pos(b) - pos(a), k, a, b)
+    if best is None:
+        return None, "sin placa ni pared <= 12 mm en la vista lateral"
+    t, k, a, b = best
+    if k == 1:                                                        # plate: text left of the view, at its height
+        tx, ty = box[0] - 6.0, to_sheet(0, (a[2] + b[2]) / 2)[1]
+    else:                                                             # wall: text below the view, at its position
+        tx, ty = to_sheet((a[1] + b[1]) / 2, 0)[0], box[1] - 6.0
+    txt = f"{t:.1f}"
+    tb = text_box(tx, ty, txt)
+    others = [TITLE] + [bb for kk, bb in boxes.items() if kk != "left"]
+    if clash(tb, others) or tb[0] < FRAME[0] or tb[1] < FRAME[1]:
+        return None, f"espesor {txt} mm (choca)"
+    return {"type": "Onshape::Dimension::LineToLine", "lineToLineDimension": {
+        "edge1": {"type": "Onshape::Reference::Edge", "viewId": vid, "uniqueId": a[0]["uniqueId"]},
+        "edge2": {"type": "Onshape::Reference::Edge", "viewId": vid, "uniqueId": b[0]["uniqueId"]},
+        "formatting": {"type": "Onshape::Formatting::Dimension", "dimdec": 1}, "textOverride": "",
+        "textPosition": {"type": "Onshape::Reference::Point", "coordinate": [tx, ty, 0]}}},         f"{'placa' if k == 1 else 'pared'} {txt} mm"
+
+
 def export_pdf(c, did, wid, eid, dst):
     t = c.call("POST", f"/drawings/d/{did}/w/{wid}/e/{eid}/translations",
                {"formatName": "PDF", "storeInDocument": False, "showOverriddenDimensions": True})
@@ -360,6 +404,13 @@ def piece(code, step, qty, c=None, redo=False):
         c.call("POST", f"/metadata/d/{did}/w/{wid}/e/{deid}",
                {"properties": [{"propertyId": ids[k], "value": v} for k, v in want.items() if k in ids]})
         rec["cajetin"] = sorted(k for k in want if k in ids)
+    if not rec.get("autor"):                                          # author field of the title block
+        md = c.call("GET", f"/metadata/d/{did}/w/{wid}/e/{deid}")
+        pid_by = next((p["propertyId"] for p in md["properties"] if p["name"] == "Drawn by"), None)
+        if pid_by:
+            c.call("POST", f"/metadata/d/{did}/w/{wid}/e/{deid}",
+                   {"properties": [{"propertyId": pid_by, "value": "Equipo 02 UPCH"}]})
+            rec["autor"] = "Equipo 02 UPCH"
     if "vistas" not in rec:
         views = []
         for o, (x, y) in centres.items():
@@ -394,6 +445,22 @@ def piece(code, step, qty, c=None, redo=False):
         failed = [(a["type"], r.get("errorDescription")) for a, r in zip(anns, results) if r.get("status") != "OK"]
         rec["cotas"] = {"creadas": sum(1 for r in results if r.get("status") == "OK"), "fallidas": failed,
                         "a_mano": skipped, "agujeros": len(hole_list)}
+        R["piezas"][code] = rec
+        save(R)
+    if "espesor" not in rec:                                          # 3b. plate or wall thickness, left view
+        info = {v["viewId"]: v for v in c.call("GET", f"/drawings/d/{did}/w/{wid}/e/{deid}/views")["items"]}
+        vid = rec["vistas"]["left"]
+        vm = info[vid]["viewMatrix"]
+        geom = c.call("GET", f"/drawings/d/{did}/w/{wid}/e/{deid}/views/{vid}/jsongeometry")["bodyData"]
+        ctr = [(lo[i] + hi[i]) / 2 / 1000 for i in range(3)]
+        ann, why = thickness(vid, geom, boxes["left"], project(vm, ctr), s, boxes)
+        rec["espesor"] = why
+        if ann:
+            res = wait_modify(c, did, wid, deid, [{"messageName": "onshapeCreateAnnotations", "formatVersion": "2021-01-01",
+                                                   "annotations": [ann]}], f"espesor {code}")
+            r0 = (res.get("results") or [{}])[0]
+            if r0.get("status") != "OK":
+                rec["espesor"] = f"fallo: {r0.get('errorDescription')}"
         R["piezas"][code] = rec
         save(R)
     pdf = OUT / "pdf" / f"PLANO_{code}.pdf"                         # 4. PDF
@@ -459,11 +526,72 @@ def assembly():
     return out
 
 
+BUOY_NAMES = {"B1_casco": "B1 casco de la boya", "B2_cubierta": "B2 cubierta de la boya",
+              "B3_caja": "B3 caja de electrónica", "B4_tapa": "B4 tapa de la caja", "B5_cuna": "B5 cuna de las botellas",
+              "B6_correa": "B6 correa de las botellas"}
+
+
+def merge():
+    """Cover (index of pieces, quantities, scale, dimensions left for hand) + every drawing PDF, in PIECES order."""
+    import html
+    import subprocess
+    import tempfile
+    from pypdf import PdfReader, PdfWriter
+    from entrega_pdf import EDGE
+    R = reg()
+    names = json.loads((P2 / "resultados.json").read_text(encoding="utf-8"))["piezas"]
+    rows, files = [], []
+    for i, (code, _, _, q) in enumerate(PIECES, 1):
+        rec = R.get("piezas", {}).get(code, {})
+        pdf = MOD / rec["pdf"] if rec.get("pdf") else None
+        ok = pdf is not None and pdf.exists()
+        if ok:
+            files.append(pdf)
+        desc = names[code]["nombre"] if code in names else BUOY_NAMES.get(code, "boya PET 4 x 1 L")
+        esc = {"2:5": "1:2.5"}.get(rec.get("escala"), rec.get("escala", "-"))
+        mano = "; ".join(rec.get("cotas", {}).get("a_mano", [])) or "ninguna"
+        rows.append(f"<tr><td>{len(files) + 1 if ok else '-'}</td><td><b>{html.escape(code)}</b></td><td>{html.escape(desc)}</td>"
+                    f"<td class=c>{q}</td><td class=c>{esc}</td>"
+                    f"<td class=c>{rec.get('cotas', {}).get('creadas', '-')}</td><td>{html.escape(rec.get('espesor', '-'))}</td>"
+                    f"<td>{html.escape(mano) if ok else 'plano no generado'}</td></tr>")
+    doc = R["documento"]["url"]
+    page = f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><style>
+@page {{ size: A3 landscape; margin: 14mm; }}
+body {{ font-family: "Segoe UI", Arial, sans-serif; font-size: 10.5pt; color: #1b1b1b; }}
+h1 {{ font-size: 26pt; margin: 0; }} .sub {{ font-size: 13pt; color: #444; margin: 2pt 0 14pt; }}
+table {{ border-collapse: collapse; width: 100%; }} th, td {{ border: 1px solid #bbb; padding: 4pt 6pt; vertical-align: top; }}
+th {{ background: #e8eef3; text-align: left; }} .c {{ text-align: center; }} .n {{ font-size: 9.5pt; color: #333; margin-top: 12pt; }}
+</style></head><body>
+<h1>LanternGuard: planos de impresión de P2 + boya PET 4 x 1 L</h1>
+<div class="sub">Equipo 02 UPCH · material PETG · A3, primer diedro, cotas en mm · generado desde Onshape el {time.strftime('%d/%m/%Y')}</div>
+<table><tr><th>Hoja</th><th>Pieza</th><th>Descripción</th><th>Cantidad</th><th>Escala</th><th>Cotas</th><th>Espesor</th>
+<th>Cotas que faltan (a mano)</th></tr>{''.join(rows)}</table>
+<p class="n">Cantidades para un nodo P2 y una boya. "Hoja" es la página de este PDF. M7 (ventana) no está:
+es de acrílico, no se imprime. Las cotas son automáticas y solo cubren medidas generales, diámetros de agujeros, alto total y
+un espesor; lo que falta para fabricar se mide en el modelo de Onshape: {html.escape(doc)}</p>
+</body></html>"""
+    tmp = Path(tempfile.mkdtemp(prefix="portada_"))
+    (tmp / "p.html").write_text(page, encoding="utf-8")
+    cover = OUT / "portada.pdf"
+    subprocess.run([str(EDGE), "--headless=new", "--disable-gpu", f"--user-data-dir={tmp / 'perfil'}",
+                    "--no-pdf-header-footer", f"--print-to-pdf={cover}", (tmp / "p.html").as_uri()], capture_output=True, timeout=180)
+    w = PdfWriter()
+    for f in [cover] + files:
+        for pg in PdfReader(str(f)).pages:
+            w.add_page(pg)
+    out = OUT / "PLANOS_ONSHAPE_P2.pdf"
+    with open(out, "wb") as fh:
+        w.write(fh)
+    print(out, len(w.pages), "paginas,", len(files), "planos")
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--documento", action="store_true")
     ap.add_argument("--pieza")
     ap.add_argument("--todas", action="store_true")
+    ap.add_argument("--unir", action="store_true")
     ap.add_argument("--rehacer", action="store_true", help="renombra el Drawing anterior a zz_obsoleto_ y hace uno nuevo")
     a = ap.parse_args()
     if a.documento:
@@ -477,6 +605,8 @@ def main():
         for code, step, _, q in PIECES:
             if "pdf" not in done.get(code, {}):
                 piece(code, step, q, c)
+    if a.unir:
+        merge()
     return 0
 
 
