@@ -107,8 +107,11 @@ nominal (575 g por bolsillo, 25,6 mm) sobran 4,4 mm.
     → cambiar la referencia al Part Studio `_v2`.
   - El primer intento de los 4 planos v2 tenía la cota del chaflán cruzada sobre otra vista. Se rehicieron, y el
     intento quedó como `zz_A4_prueba1_<pieza>_v2`, sin borrar.
-- **Drive** `04_Planos/A4_formato_equipo/correccion_chaflan/`: los 4 PDF y los 4 STL nuevos.
-- **Drive** `04_Planos/`: `PLANOS_A4_LanternGuard_v3.pdf`, con las 4 piezas reemplazadas.
+- **Drive** `04_Planos/A4_formato_equipo/correccion_chaflan/`: los 4 PDF y los 4 STL nuevos, más los 3MF en `3mf/`.
+  https://drive.google.com/open?id=17fAHg0FpzQXGBqcPaqawMURLoB9X9TVK
+- **Drive** `04_Planos/PLANOS_A4_LanternGuard_v3.pdf`, con las 4 piezas reemplazadas.
+  https://drive.google.com/open?id=1YJ--prr1EcfMIFeJOVHmHnyuDqIGMd1D
+- **Onshape LG_IMPRIMIR_P2:** https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff
 
 ## Cómo repetirlo
 
