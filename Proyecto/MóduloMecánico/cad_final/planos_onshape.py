@@ -58,6 +58,18 @@ SCALES = [(2, 1), (1, 1), (1, 2), (2, 5), (1, 5), (1, 10)]          # 2:5 = 1:2.
 ISO_SCALES = [(2, 1), (1, 1), (2, 3), (1, 2), (2, 5), (1, 3), (1, 4), (1, 5), (1, 8), (1, 10)]
 TEXT_H = 3.5
 OFF = 7.0                                     # dimension text distance from the view box
+FMT_NAME = "A3"
+MARGIN_L = 0.0                                # extra room left of the first column (vertical dimension texts)
+
+
+def use_format(name):
+    """--formato equipo: the team's sheet (Melissa's B1_casco by hand): ISO A4 landscape, standard Onshape title block
+    at (125..287, 10..48), frame 10 mm. The layout and dimension helpers read these module globals."""
+    global SHEET, FRAME, TITLE, GAP, OFF, TEXT_H, SCALES, FMT_NAME, MARGIN_L
+    if name == "equipo":
+        SHEET, FRAME, TITLE = (297.0, 210.0), (10.0, 10.0, 287.0, 200.0), (124.0, 0.0, 297.0, 49.0)
+        GAP, OFF, TEXT_H, FMT_NAME, MARGIN_L = 13.0, 5.5, 3.2, "A4", 8.0
+        SCALES = [(2, 1), (1, 1), (1, 2), (2, 5), (1, 3), (1, 4), (1, 5), (1, 8), (1, 10)]
 
 
 def client():
@@ -117,23 +129,24 @@ def bbox(step):
 
 
 # ---------------------------------------------------------------- layout
-def layout(lo, hi):
+def layout(lo, hi, back=True, right=True):
     """Scale and view centres (sheet mm). First angle: bottom view above the front, top view below it, the right
-    view on the left of the front, the left view on its right, the back view at the far right."""
+    view on the left of the front, the left view on its right, the back view at the far right (back=False: no back
+    view, the isometric takes its column; right=False: no right view, the front starts at the left margin)."""
     W, D, H = (hi[i] - lo[i] for i in range(3))
     for num, den in SCALES:
         s = num / den
-        cw = [s * D, s * W, s * D, s * W]                             # columns: right, front, left, back
+        cw = [s * D if right else 0.0, s * W, s * D, s * W if back else 0.0]   # columns: right, front, left, back
         rh = [s * D, s * H, s * D]                                    # rows: top view, main row, bottom view
-        x = [FRAME[0] + GAP]
+        x = [FRAME[0] + GAP + MARGIN_L]
         for i in range(1, 4):
-            x.append(x[-1] + cw[i - 1] + GAP)
+            x.append(x[-1] + cw[i - 1] + (GAP if cw[i - 1] > 0 else 0.0))
         y0 = max(FRAME[1] + GAP, TITLE[3] + 12 - GAP - rh[0])         # main row clear of the quantity note
         if x[1] + cw[1] > TITLE[0] - 4:                               # top view would reach the title block: lift it
             y0 = TITLE[3] + 4
         y = [y0, y0 + rh[0] + GAP, y0 + rh[0] + GAP + rh[1] + GAP]
-        right, top = x[3] + cw[3], y[2] + rh[2]
-        if right > FRAME[2] - 4 or top > FRAME[3] - 4:
+        xr, top = x[3] + cw[3], y[2] + rh[2]
+        if xr > FRAME[2] - 4 or top > FRAME[3] - 4:
             continue
         c = lambda i, j: (x[i] + cw[i] / 2, y[j] + rh[j] / 2)
         views = {"right": c(0, 1), "front": c(1, 1), "left": c(2, 1), "back": c(3, 1), "top": c(1, 0), "bottom": c(1, 2)}
@@ -154,8 +167,12 @@ def layout(lo, hi):
         iw, ih = 0.71 * si * (W + D), si * (0.82 * H + 0.41 * (W + D))
         views["isometric"] = ((ix0 + ix1) / 2, (iy0 + iy1) / 2)
         boxes["isometric"] = ((ix0 + ix1 - iw) / 2, (iy0 + iy1 - ih) / 2, (ix0 + ix1 + iw) / 2, (iy0 + iy1 + ih) / 2)
+        for k, on in (("back", back), ("right", right)):
+            if not on:
+                views.pop(k)
+                boxes.pop(k)
         return (num, den), iso_s, views, boxes
-    raise SystemExit("ninguna escala estandar entra en A3")
+    raise SystemExit(f"ninguna escala estandar entra en {FMT_NAME}")
 
 
 # ---------------------------------------------------------------- Onshape
@@ -186,8 +203,10 @@ def project(vm, p):
     return (1000 * (vm[0] * p[0] + vm[1] * p[1] + vm[2] * p[2]), 1000 * (vm[4] * p[0] + vm[5] * p[1] + vm[6] * p[2]))
 
 
-def text_box(x, y, txt):
+def text_box(x, y, txt, vertical=False):
     w = 0.62 * TEXT_H * len(txt) + 2
+    if vertical:
+        return (x - TEXT_H / 2 - 1, y - w / 2, x + TEXT_H / 2 + 1, y + w / 2)
     return (x - w / 2, y - TEXT_H / 2 - 1, x + w / 2, y + TEXT_H / 2 + 1)
 
 
@@ -474,6 +493,481 @@ def piece(code, step, qty, c=None, redo=False):
     return rec
 
 
+# ---------------------------------------------------------------- --formato equipo (A4, Melissa's B1 as the model)
+SKIN_STEP = MOD / "salida" / "skin" / "P2_robusto" / "concha" / "SKIN_concha.step"
+A4_ORDER = ["B2_cubierta", "B3_caja", "B4_tapa", "B5_cuna", "B6_correa", "M1s_caja_cuerpo", "M2_caja_tapa",
+            "M3s_riel_gancho", "M3t_tapa_bolsillo", "M4_capsula_cuerpo", "M5s_capsula_tapa_pie", "M6_capsula_bisel",
+            "M11_bandeja", "M11_bandeja_sup", "SKIN_concha_v1"]
+MELISSA_B1 = "50788a3701406af8a0f183a5"          # "Drawing 1 B1_casco", drawn by hand: exported as is, never modified
+COMPANY = "LANTERNGUARD"
+OUT_A4 = OUT / "pdf_a4"
+CACHE = OUT / "cache_vistas"
+LIMIT_A4 = 2200                                   # of 2500/year (EDU): keeps 300 for November and December
+RIB_T = 4.0                                       # gap <= this between two long parallel edges = a wall or a rib
+# The title block that the API creates (ISO A4) has the same grid as Melissa's but no labels: her labels are added as
+# notes, at her positions and text heights. Onshape places a note by its top-left corner and ignores {\\pxqc;}, so
+# the centred ones ("C") are shifted by half their estimated width and long ones are split to fit their cell.
+# (L/C, x, y top, text height, cell width, text)
+TB_NOTES = [
+    ("L", 125.75, 47.00, 1.000, 29.9, "UNLESS OTHERWISE SPECIFIED, DIMENSIONS ARE IN MILLIMETERS"),
+    ("L", 130.60, 41.40, 1.097, 15.0, "ANGULAR"), ("L", 125.75, 35.12, 1.219, 16.5, "SURFACE FINISH"),
+    ("C", 140.31, 28.84, 1.585, 29.9, "DO NOT SCALE DRAWING"),
+    ("C", 140.31, 24.75, 1.219, 29.9, "BREAK ALL SHARP EDGES AND REMOVE BURRS"),
+    ("C", 140.31, 19.57, 1.219, 29.9, "FIRST ANGLE PROJECTION"), ("C", 191.75, 47.00, 1.219, 14.9, "SIGNATURE"),
+    ("L", 169.56, 47.00, 1.219, 14.9, "NAME"), ("C", 204.13, 47.00, 1.219, 9.3, "DATE"),
+    ("L", 156.23, 42.43, 1.219, 13.1, "DRAWN"), ("L", 156.23, 37.86, 1.219, 13.1, "CHECKED"),
+    ("L", 156.23, 33.29, 1.219, 13.1, "APPROVED"), ("C", 176.51, 32.10, 1.024, 15.2, "----"),
+    ("C", 204.13, 32.10, 1.024, 9.5, "----"), ("L", 156.23, 19.57, 1.219, 26.1, "MATERIAL"),
+    ("C", 168.89, 15.33, 1.829, 26.7, "PETG"), ("L", 182.90, 19.57, 1.219, 26.1, "FINISH"),
+    ("L", 209.57, 37.48, 1.219, 9.3, "TITLE"), ("C", 247.95, 30.73, 2.926, 70.5, "<CODE>"),
+    ("L", 209.43, 21.70, 0.975, 9.4, "SIZE"), ("L", 218.96, 21.70, 0.975, 59.7, "DWG NO."),
+    ("L", 279.92, 21.70, 0.975, 7.5, "REV."), ("C", 283.57, 18.76, 3.658, 6.9, "-"),
+    ("L", 209.43, 14.08, 0.975, 16.4, "SCALE"), ("L", 226.20, 14.08, 0.975, 34.0, "WEIGHT"),
+    ("L", 260.87, 14.08, 0.975, 26.1, "SHEET"), ("C", 247.93, 43.50, 2.926, 70.5, COMPANY)]
+
+
+def text_w(s, h):
+    """Estimated width (mm) of s in Onshape's drawing font (Noto Sans) at cap height h."""
+    return h * sum(0.92 if ch.isupper() else 0.77 if ch.islower() else 0.8 if ch.isdigit() else
+                   0.35 if ch in " .,:" else 0.62 for ch in s)
+
+
+def title_notes(code):
+    out = []
+    for mode, x, y, h, cell, txt in TB_NOTES:
+        txt = txt.replace("<CODE>", code)
+        lines, cur = [], ""
+        for w in txt.split():
+            if cur and text_w(cur + " " + w, h) > min(cell - 0.6, 19.5 * h):     # Onshape wraps a note past ~20 x its height
+                lines.append(cur)
+                cur = w
+            else:
+                cur = (cur + " " + w).strip()
+        lines.append(cur)
+        xl = x if mode == "L" else x - max(text_w(ln, h) for ln in lines) / 2      # one note, explicit line breaks
+        out.append({"type": "Onshape::Note", "note": {"position": {"type": "Onshape::Reference::Point",
+                    "coordinate": [xl, y, 0]}, "contents": "\n".join(lines), "textHeight": h}})
+    return out
+
+
+def best_layout(lo, hi):
+    """Largest scale over the optional views (right side, back); at equal scale, the one with more views."""
+    best = None
+    for right, back in ((True, True), (False, True), (True, False), (False, False)):
+        try:
+            L = layout(lo, hi, back=back, right=right)
+        except SystemExit:
+            continue
+        if best is None or L[0][0] / L[0][1] > best[0][0] / best[0][1] + 1e-9:
+            best = L
+    if best is None:
+        raise SystemExit(f"ninguna escala estandar entra en {FMT_NAME}")
+    return best
+
+
+def a4_pieces():
+    by = {c: (st, q) for c, st, _, q in PIECES}
+    by["SKIN_concha_v1"] = (SKIN_STEP, 1)
+    return [(c, *by[c]) for c in A4_ORDER]
+
+
+def m(xyz):
+    return [1000 * v for v in xyz]
+
+
+def view_parts(geom):
+    """jsongeometry (view space, m) -> visible lines, circles and arcs in view mm, each with its entity."""
+    L, C, A = [], [], []
+    for e in geom:
+        if not e.get("visible", True):
+            continue
+        d = e["data"]
+        if e["type"] == "line":
+            a, b = m(d["start"]), m(d["end"])
+            L.append((e, (a[0], a[1]), (b[0], b[1])))
+        elif e["type"] == "circle" and "center" in d:
+            C.append((e, tuple(m(d["center"])[:2]), 1000 * d["radius"]))
+        elif e["type"] == "arc" and "center" in d:
+            A.append((e, tuple(m(d["center"])[:2]), 1000 * d["radius"]))
+    return L, C, A
+
+
+def place(cands, txt, taken, blocked, vertical=False):
+    """First candidate text position whose box is free and inside the frame; it is reserved."""
+    for tx, ty in cands:
+        tb = text_box(tx, ty, txt, vertical)
+        if not clash(tb, taken + blocked) and tb[0] >= FRAME[0] and tb[2] <= FRAME[2] and tb[1] >= FRAME[1] and tb[3] <= FRAME[3]:
+            taken.append(tb)
+            return tx, ty
+    return None
+
+
+def pt(xyz):
+    return {"type": "Onshape::Reference::Point", "coordinate": [xyz[0], xyz[1], 0]}
+
+
+def fmt(prefix=""):
+    f = {"type": "Onshape::Formatting::Dimension", "dimdec": 1}
+    return f
+
+
+def ann_l2l(vid, e1, e2, txy, prefix=""):
+    d = {"edge1": {"type": "Onshape::Reference::Edge", "viewId": vid, "uniqueId": e1["uniqueId"]},
+         "edge2": {"type": "Onshape::Reference::Edge", "viewId": vid, "uniqueId": e2["uniqueId"]},
+         "formatting": fmt(), "textOverride": "", "textPosition": pt(txy)}
+    if prefix:
+        d["prefix"] = prefix
+    return {"type": "Onshape::Dimension::LineToLine", "lineToLineDimension": d}
+
+
+def num(v):
+    return f"{v:.1f}".rstrip("0").rstrip(".").replace(".", ",")
+
+
+def dims_a4(name, vid, geom, box, centre_uv, s, taken, blocked, used):
+    """Dimensions of one orthographic view, in the order of Melissa's B1: overall size, wall/rib thickness and the
+    spacing between ribs (chain), patterned diameters (n x Ø), patterned radii (n x R) and the position of one hole of
+    each size from the left and bottom edges. Returns (annotations, list of what was left for hand)."""
+    out, skip = [], []
+    L, C, A = view_parts(geom)
+    if not L:
+        return out, [f"{name}: sin aristas rectas, solo cotas a mano"]
+    sx = lambda u: (box[0] + box[2]) / 2 + s * (u - centre_uv[0])
+    sy = lambda v: (box[1] + box[3]) / 2 + s * (v - centre_uv[1])
+    us = [p[0] for _, a, b in L for p in (a, b)]
+    vs = [p[1] for _, a, b in L for p in (a, b)]
+    ext = ((min(us), max(us)), (min(vs), max(vs)))
+    row = TEXT_H + 5.0
+    above = [box[3] + OFF + i * row for i in range(4)]
+    below = [box[1] - OFF - i * row for i in range(4)]
+    left = [box[0] - OFF - 4 - i * 9 for i in range(3)]
+    right = [box[2] + OFF + 4 + i * 9 for i in range(3)]
+    edge_at = {}
+    for k in (0, 1):                                                   # 1. overall size
+        mn, mx = ext[k]
+        par = lambda ln, t: abs(ln[1][k] - t) < 0.05 and abs(ln[2][k] - t) < 0.05
+        side = lambda t: max((ln for ln in L if par(ln, t)), key=lambda ln: abs(ln[1][1 - k] - ln[2][1 - k]), default=None)
+        e1, e2 = side(mn), side(mx)
+        edge_at[k] = e1
+        txt = num(mx - mn)
+        if e1 is None or e2 is None:
+            skip.append(f"{name}: {'ancho' if k == 0 else 'alto'} total {txt} (el borde es curvo)")
+            continue
+        cands = ([(sx((mn + mx) / 2), y) for y in (above[:1] + below[:1])] if k == 0 else
+                 [(x, sy((mn + mx) / 2)) for x in (left[:1] + right[:1])])
+        p = place(cands, txt, taken, blocked, vertical=k == 1)
+        if p is None:
+            skip.append(f"{name}: {'ancho' if k == 0 else 'alto'} total {txt} (sin espacio)")
+            continue
+        out.append(ann_l2l(vid, e1[0], e2[0], p))
+    for k in (0, 1):                                                   # 2. walls, ribs and spacing (chain)
+        span = ext[1 - k][1] - ext[1 - k][0]
+        lng = [ln for ln in L if abs(ln[1][k] - ln[2][k]) < 1e-3 and abs(ln[1][1 - k] - ln[2][1 - k]) >= 0.35 * span]
+        pos = {}
+        for ln in lng:
+            key = round(ln[1][k] / 0.05) * 0.05
+            if key not in pos or abs(ln[1][1 - k] - ln[2][1 - k]) > abs(pos[key][1][1 - k] - pos[key][2][1 - k]):
+                pos[key] = ln
+        P = sorted(pos)
+        what = "nervios verticales" if k == 0 else "nervios horizontales"
+        if len(P) < 3:
+            continue
+        if len(P) > 16:
+            skip.append(f"{name}: {what} ({len(P)} aristas, demasiadas para encadenar)")
+            continue
+        gaps = [(P[i + 1] - P[i], i) for i in range(len(P) - 1)]
+        thin = [(g, i) for g, i in gaps if 0.3 <= g <= RIB_T]
+        wide = [(g, i) for g, i in gaps if g > RIB_T]
+        rows_k = (above[1:] + below[1:]) if k == 0 else (left[1:] + right[1:])
+        mk = lambda c: [(sx(c), y) for y in rows_k] if k == 0 else [(x, sy(c)) for x in rows_k]
+        if thin:
+            t = min(g for g, _ in thin)
+            same = [i for g, i in thin if abs(g - t) < 0.06]
+            i = same[0]
+            pre = f"{len(same)}x " if len(same) > 1 else ""
+            p = place(mk((P[i] + P[i + 1]) / 2), pre + num(t), taken, blocked, vertical=k == 1)
+            if p:
+                out.append(ann_l2l(vid, pos[P[i]][0], pos[P[i + 1]][0], p, pre))
+            else:
+                skip.append(f"{name}: espesor {pre}{num(t)} (sin espacio)")
+        if len(wide) >= 2:
+            g0 = wide[0][0]
+            if all(abs(g - g0) < 0.06 for g, _ in wide):
+                todo = [(g0, wide[0][1], f"{len(wide)}x ")]
+            else:
+                todo = [(g, i, "") for g, i in wide[:6]]
+                if len(wide) > 6:
+                    skip.append(f"{name}: {len(wide) - 6} separaciones más entre {what}")
+            for g, i, pre in todo:
+                p = place(mk((P[i] + P[i + 1]) / 2), pre + num(g), taken, blocked, vertical=k == 1)
+                if p:
+                    out.append(ann_l2l(vid, pos[P[i]][0], pos[P[i + 1]][0], p, pre))
+                else:
+                    skip.append(f"{name}: separación {pre}{num(g)} entre {what} (sin espacio)")
+    groups = {}                                                        # 3. diameters, n x Ø
+    for e, c, r in C:
+        g = groups.setdefault(round(r, 2), {})
+        g.setdefault((round(c[0], 2), round(c[1], 2)), (e, c, r))
+    n_d = 0
+    for r, g in sorted(groups.items(), key=lambda kv: -len(kv[1])):
+        if r in used["d"] or 2 * r < 0.5:
+            continue
+        if n_d >= 4:
+            skip.append(f"{name}: Ø{num(2 * r)} (más de 4 diámetros en la vista)")
+            continue
+        used["d"].add(r)
+        n_d += 1
+        hs = list(g.values())
+        e, c, rr = min(hs, key=lambda h: (h[1][0] - ext[0][0]) + (h[1][1] - ext[1][0]))     # nearest the bottom-left
+        pre = f"{len(hs)}x Ø" if len(hs) > 1 else ""
+        label = (pre or "Ø") + num(2 * r)
+        cx, cy = sx(c[0]), sy(c[1])
+        cands = [(x, cy) for x in (left + right)]
+        p = place(sorted(cands, key=lambda q: abs(q[0] - cx) + abs(q[1] - cy)), label, taken, blocked)
+        if p is None:
+            skip.append(f"{name}: {label} (sin espacio)")
+            continue
+        c3 = e["data"]["center"]
+        rm = e["data"]["radius"]
+        d = {"chordPoint": ref_pt(vid, e["uniqueId"], [c3[0] + rm, c3[1], c3[2]], "ModeNear"),
+             "farChordPoint": ref_pt(vid, e["uniqueId"], [c3[0] - rm, c3[1], c3[2]], "ModeNear"),
+             "formatting": fmt(), "textOverride": "", "textPosition": pt(p)}
+        if pre:
+            d["prefix"] = pre
+        out.append({"type": "Onshape::Dimension::Diametric", "diametricDimension": d})
+        for k in (0, 1):                                               # 4. its position from the left / bottom edge
+            ed = edge_at.get(k)
+            dist = c[k] - ext[k][0]
+            if ed is None or dist < 0.5 or n_d > 2:
+                continue
+            cands = ([(sx(ext[0][0] + dist / 2), y) for y in below[1:] + above[1:]] if k == 0 else
+                     [(x, sy(ext[1][0] + dist / 2)) for x in left[1:] + right[1:]])
+            p = place(cands, num(dist), taken, blocked, vertical=k == 1)
+            if p is None:
+                skip.append(f"{name}: posición de {label} a {num(dist)} del borde (sin espacio)")
+                continue
+            out.append({"type": "Onshape::Dimension::PointToLine", "pointToLineDimension": {
+                "point": ref_pt(vid, e["uniqueId"], c3, "ModeCenter"),
+                "edge": {"type": "Onshape::Reference::Edge", "viewId": vid, "uniqueId": ed[0]["uniqueId"]},
+                "formatting": fmt(), "textOverride": "", "textPosition": pt(p)}})
+    rg = {}                                                            # 5. radii, n x R (arcs, not full circles)
+    for e, c, r in A:
+        if 0.4 <= r <= 60:
+            rg.setdefault(round(r, 2), {}).setdefault((round(c[0], 2), round(c[1], 2)), (e, c, r))
+    n_r = 0
+    for r, g in sorted(rg.items(), key=lambda kv: -len(kv[1])):
+        if r in used["r"] or r in used["d"] or n_r >= 3:
+            continue
+        used["r"].add(r)
+        n_r += 1
+        e, c, _ = next(iter(g.values()))
+        pre = f"{len(g)}x R" if len(g) > 1 else "R"
+        label = pre + num(r)
+        cx, cy = sx(c[0]), sy(c[1])
+        cands = [(x, cy) for x in (left + right)]
+        p = place(sorted(cands, key=lambda q: abs(q[0] - cx) + abs(q[1] - cy)), label, taken, blocked)
+        if p is None:
+            skip.append(f"{name}: {label} (sin espacio)")
+            continue
+        d = e["data"]
+        out.append({"type": "Onshape::Dimension::Radial", "radialDimension": {
+            "centerPoint": ref_pt(vid, e["uniqueId"], d["center"], "ModeCenter"),
+            "chordPoint": ref_pt(vid, e["uniqueId"], d.get("start", d["center"]), "ModeNear"),
+            "formatting": {**fmt(), "dimpost": pre + "<>"}, "prefix": pre, "textOverride": "", "textPosition": pt(p)}})
+    return out, skip
+
+
+def piece_a4(code, step, qty, c, ctx, redo=False):
+    n0 = OS.year_total()
+    if n0 > LIMIT_A4:
+        raise SystemExit(f"cupo: {n0} llamadas en el año, por encima de {LIMIT_A4}; paro antes de {code}")
+    t0 = time.time()
+    R = reg()
+    did, wid = R["documento"]["did"], R["documento"]["wid"]
+    rec = R.setdefault("piezas", {}).setdefault(code, {})
+    a4 = rec.setdefault("a4", {})
+
+    def keep():
+        R["piezas"][code] = rec
+        save(R)
+
+    if redo and a4.get("drawing"):                                    # a previous A4 try: renamed, never deleted
+        n_try = len(rec.get("a4_pruebas", [])) + 1
+        c.call("POST", f"/metadata/d/{did}/w/{wid}/e/{a4['drawing']}",
+               {"properties": [{"propertyId": ctx["name_pid"], "value": f"zz_A4_prueba{n_try}_{code}"}]})
+        rec["a4_pruebas"] = rec.get("a4_pruebas", []) + [a4["drawing"]]
+        a4.clear()
+        keep()
+    if rec.get("drawing") and not rec.get("a3_renombrado"):           # the A3 drawing of last night: renamed, kept
+        if rec["drawing"] in ctx["elements"]:
+            c.call("POST", f"/metadata/d/{did}/w/{wid}/e/{rec['drawing']}",
+                   {"properties": [{"propertyId": ctx["name_pid"], "value": f"zz_A3_PLANO_{code}"}]})
+            rec["a3_renombrado"] = f"zz_A3_PLANO_{code}"
+        else:
+            rec["a3_renombrado"] = "ya no estaba en el documento"
+        keep()
+    if "partstudio" not in rec:
+        name, made = OP.push(step, code, did=did, wid=wid, client=c)
+        rec["partstudio"] = next(u for n, typ, u in made if typ == "PARTSTUDIO").rsplit("/e/", 1)[1]
+        rec["pestana"] = name
+    eid = rec["partstudio"]
+    if "pid" not in rec:
+        rec["pid"] = c.call("GET", f"/parts/d/{did}/w/{wid}/e/{eid}")[0]["partId"]
+    if "propiedades" not in rec:
+        rec["propiedades"] = set_props(c, did, wid, eid, rec["pid"], code)
+    keep()
+    lo, hi = bbox(step)
+    (num_, den), iso_s, centres, boxes = best_layout(lo, hi)
+    with_back = "back" in centres
+    s = num_ / den
+    if "drawing" not in a4:
+        d = c.call("POST", f"/drawings/d/{did}/w/{wid}/create", {
+            "drawingName": f"PLANO_A4_{code}", "elementId": eid, "partId": rec["pid"], "views": "zero",
+            "titleblock": True, "border": True, "units": "MILLIMETER", "projection": "First", "size": "A4",
+            "standard": "ISO", "decimalSeparator": "COMMA"})
+        a4["drawing"] = d["id"]
+        keep()
+    deid = a4["drawing"]
+    if "cajetin" not in a4:
+        md = c.call("GET", f"/metadata/d/{did}/w/{wid}/e/{deid}")
+        ids = {p["name"]: p["propertyId"] for p in md.get("properties", [])}
+        want = {k: v for k, v in CAJETIN(code).items() if k in ids}
+        c.call("POST", f"/metadata/d/{did}/w/{wid}/e/{deid}",
+               {"properties": [{"propertyId": ids[k], "value": v} for k, v in want.items()]})
+        a4["cajetin"] = want
+        a4["props_disponibles"] = sorted(ids)
+        keep()
+    if "vistas" not in a4:
+        views = []
+        for o, (x, y) in centres.items():
+            sn, sd = iso_s if o == "isometric" else (num_, den)
+            views.append({"viewType": "TopLevel", "position": {"x": x, "y": y}, "orientation": o,
+                          "scale": {"scaleSource": "Custom", "numerator": sn, "denumerator": sd},
+                          "reference": {"elementId": eid}})
+        res = wait_modify(c, did, wid, deid, [{"messageName": "onshapeCreateViews", "formatVersion": "2021-01-01",
+                                               "views": views}], f"vistas A4 {code}")
+        a4["vistas"] = {o: r.get("viewId") for o, r in zip(centres, res.get("results", []))}
+        keep()
+    if "cotas" not in a4:
+        info = {v["viewId"]: v for v in c.call("GET", f"/drawings/d/{did}/w/{wid}/e/{deid}/views")["items"]}
+        anns, skipped, taken, used = [], [], [], {"d": set(), "r": set()}
+        ctr = [(lo[i] + hi[i]) / 2 / 1000 for i in range(3)]
+        for o in ("front", "top", "left"):
+            vid = a4["vistas"][o]
+            vm = info[vid]["viewMatrix"]
+            geom = c.call("GET", f"/drawings/d/{did}/w/{wid}/e/{deid}/views/{vid}/jsongeometry")["bodyData"]
+            CACHE.mkdir(parents=True, exist_ok=True)               # to tune the placement offline, at no API cost
+            (CACHE / f"{code}_{o}.json").write_text(json.dumps({"vm": vm, "geom": geom}), encoding="utf-8")
+            blocked = [TITLE] + list(boxes.values())
+            a, sk = dims_a4(o, vid, geom, boxes[o], project(vm, ctr), s, taken, blocked, used)
+            anns += a
+            skipped += sk
+        anns += title_notes(code)
+        note = f"Cantidad: {qty}   ·   Material: PETG   ·   Cotas en mm"
+        anns.append({"type": "Onshape::Note", "note": {"position": {"type": "Onshape::Reference::Point",
+                     "coordinate": [TITLE[0] + 2, TITLE[3] + 4, 0]}, "contents": note, "textHeight": TEXT_H}})
+        res = wait_modify(c, did, wid, deid, [{"messageName": "onshapeCreateAnnotations", "formatVersion": "2021-01-01",
+                                               "annotations": anns}], f"cotas A4 {code}")
+        results = res.get("results", [])
+        failed = [(a["type"].split("::")[-1], r.get("errorDescription")) for a, r in zip(anns, results) if r.get("status") != "OK"]
+        sent = sum(1 for a in anns if "Dimension" in a["type"])
+        a4["cotas"] = {"creadas": sum(1 for a, r in zip(anns, results) if r.get("status") == "OK" and "Dimension" in a["type"])
+                       if results else sent, "fallidas": failed, **({} if results else {"sin_confirmacion": True}),
+                       "a_mano": skipped}
+        keep()
+    pdf = OUT_A4 / f"PLANO_A4_{code}.pdf"
+    OUT_A4.mkdir(parents=True, exist_ok=True)
+    export_pdf(c, did, wid, deid, pdf)
+    a4.update(escala=f"{num_}:{den}", escala_iso=f"{iso_s[0]}:{iso_s[1]}", posterior=with_back, cantidad=qty,
+              pdf=str(pdf.relative_to(MOD)), url=f"https://cad.onshape.com/documents/{did}/w/{wid}/e/{deid}",
+              llamadas=OS.year_total() - n0, segundos=round(time.time() - t0))
+    keep()
+    print(code, json.dumps({k: a4[k] for k in ("escala", "posterior", "cotas", "llamadas", "segundos")}, ensure_ascii=False))
+    return a4
+
+
+def CAJETIN(code):
+    """Drawing properties that fill the ISO title block (names as Onshape reports them; missing ones are ignored)."""
+    return {"Title 1": code, "Drawn by": "Equipo 02 UPCH", "Description": f"{COMPANY} - {code}"}
+
+
+def a4_context(c):
+    R = reg()
+    did, wid = R["documento"]["did"], R["documento"]["wid"]
+    els = {e["id"]: e["name"] for e in c.call("GET", f"/documents/d/{did}/w/{wid}/elements")}
+    md = c.call("GET", f"/metadata/d/{did}/w/{wid}/e/{next(iter(els))}")
+    name_pid = next(p["propertyId"] for p in md["properties"] if p["name"] == "Name")
+    return {"elements": els, "name_pid": name_pid}
+
+
+def melissa_b1(c):
+    """Her B1_casco drawing exported as it is (read only: the PDF is not stored in the document)."""
+    R = reg()
+    did, wid = R["documento"]["did"], R["documento"]["wid"]
+    OUT_A4.mkdir(parents=True, exist_ok=True)
+    pdf = OUT_A4 / "PLANO_A4_B1_casco.pdf"
+    export_pdf(c, did, wid, MELISSA_B1, pdf)
+    return pdf
+
+
+def merge_a4():
+    """Cover + B1 (Melissa) + the 15 A4 drawings -> PLANOS_A4_LanternGuard.pdf; the cover lists, per piece, the
+    dimensions that the script could not place."""
+    import html
+    import subprocess
+    import tempfile
+    from pypdf import PdfReader, PdfWriter
+    from entrega_pdf import EDGE
+    R = reg()
+    rows, files, md = [], [], ["# Cotas que no se pudieron poner automáticamente (planos A4)", ""]
+    b1 = OUT_A4 / "PLANO_A4_B1_casco.pdf"
+    order = [("B1_casco", 1)] + [(cd, q) for cd, _, q in a4_pieces()]
+    for code, q in order:
+        a4 = R.get("piezas", {}).get(code, {}).get("a4", {})
+        f = b1 if code == "B1_casco" else (MOD / a4["pdf"] if a4.get("pdf") else None)
+        ok = f is not None and f.exists()
+        if ok:
+            files.append(f)
+        if code == "B1_casco":
+            esc, n, mano = "1:4", "a mano (Melissa)", "plano hecho a mano por Melissa; se exporta tal cual"
+        else:
+            esc = {"2:5": "1:2,5"}.get(a4.get("escala"), a4.get("escala", "-"))
+            n = a4.get("cotas", {}).get("creadas", "-")
+            mano = "; ".join(a4.get("cotas", {}).get("a_mano", []) + [f"falló {t}: {e}" for t, e in a4.get("cotas", {}).get("fallidas", [])]) or "ninguna"
+        md += [f"## {code} (escala {esc}, {n} cotas automáticas)", ""] + [f"- {x}" for x in mano.split("; ")] + [""]
+        rows.append(f"<tr><td class=c>{len(files) if ok else '-'}</td><td><b>{html.escape(code)}</b></td>"
+                    f"<td class=c>{q}</td><td class=c>{esc}</td><td class=c>{n}</td>"
+                    f"<td>{html.escape(mano) if ok else 'plano no generado'}</td></tr>")
+    page = f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><style>
+@page {{ size: A4 landscape; margin: 10mm; }}
+body {{ font-family: "Segoe UI", Arial, sans-serif; font-size: 8.5pt; color: #1b1b1b; }}
+h1 {{ font-size: 18pt; margin: 0; }} .sub {{ font-size: 10pt; color: #444; margin: 2pt 0 8pt; }}
+table {{ border-collapse: collapse; width: 100%; }} th, td {{ border: 1px solid #bbb; padding: 2pt 4pt; vertical-align: top; }}
+th {{ background: #e8eef3; text-align: left; }} .c {{ text-align: center; }}
+</style></head><body>
+<h1>LANTERNGUARD · planos de fabricación (formato del equipo)</h1>
+<div class="sub">Equipo 02 UPCH · PETG · ISO A4 horizontal, primer diedro, cotas en mm · {time.strftime('%d/%m/%Y')} ·
+documento Onshape LG_IMPRIMIR_P2: {html.escape(R['documento']['url'])}</div>
+<table><tr><th>N°</th><th>Pieza</th><th>Cant.</th><th>Escala</th><th>Cotas auto</th>
+<th>Cotas que no se pudieron poner automáticamente (completar a mano en Onshape)</th></tr>{''.join(rows)}</table>
+</body></html>"""
+    tmp = Path(tempfile.mkdtemp(prefix="portada_a4_"))
+    (tmp / "p.html").write_text(page, encoding="utf-8")
+    cover = OUT_A4 / "portada_A4.pdf"
+    subprocess.run([str(EDGE), "--headless=new", "--disable-gpu", f"--user-data-dir={tmp / 'perfil'}",
+                    "--no-pdf-header-footer", f"--print-to-pdf={cover}", (tmp / "p.html").as_uri()], capture_output=True, timeout=180)
+    w = PdfWriter()
+    for f in [cover] + files:
+        for pg in PdfReader(str(f)).pages:
+            w.add_page(pg)
+    (OUT / "COTAS_A_MANO_A4.md").write_text("\n".join(md), encoding="utf-8")
+    out = OUT / "PLANOS_A4_LanternGuard.pdf"
+    with open(out, "wb") as fh:
+        w.write(fh)
+    print(out, len(w.pages), "paginas,", len(files), "planos")
+    return out
+
+
 def document():
     c = client()
     quota_ok()
@@ -593,7 +1087,27 @@ def main():
     ap.add_argument("--todas", action="store_true")
     ap.add_argument("--unir", action="store_true")
     ap.add_argument("--rehacer", action="store_true", help="renombra el Drawing anterior a zz_obsoleto_ y hace uno nuevo")
+    ap.add_argument("--formato", choices=["a3", "equipo"], default="a3",
+                    help="equipo: ISO A4 horizontal como el B1_casco de Melissa, pestañas PLANO_A4_<pieza>")
+    ap.add_argument("--melissa", action="store_true", help="con --formato equipo: exporta el B1 de Melissa tal cual")
     a = ap.parse_args()
+    if a.formato == "equipo":
+        use_format("equipo")
+        c = client() if (a.pieza or a.todas or a.melissa) else None
+        ctx = a4_context(c) if (a.pieza or a.todas) else None
+        todo = [p for p in a4_pieces() if a.todas or p[0] in (a.pieza or "").split(",")]
+        for code, step, q in todo:
+            if a.todas and reg().get("piezas", {}).get(code, {}).get("a4", {}).get("pdf"):
+                continue
+            try:
+                piece_a4(code, step, q, c, ctx, redo=a.rehacer)
+            except (OS.OnshapeError, KeyError, IndexError, StopIteration) as e:   # a stuck piece stays as it is
+                print(code, "FALLO:", str(e)[:300])
+        if a.melissa:
+            print(melissa_b1(c))
+        if a.unir:
+            merge_a4()
+        return 0
     if a.documento:
         document()
     if a.pieza:
