@@ -1,0 +1,58 @@
+{
+ "salida": "salida/correccion_chaflan/3mf",
+ "capturas": "salida/correccion_chaflan/3mf",
+ "placas": [
+  {
+   "nombre": "B2_cubierta_v2",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "fijo": true,
+   "piezas": [
+    [
+     "salida/correccion_chaflan/stl/B2_cubierta_v2.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "B3_caja_v2",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "fijo": true,
+   "piezas": [
+    [
+     "salida/correccion_chaflan/stl/B3_caja_v2.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "B5_cuna_v2",
+   "relleno": 40,
+   "soportes": true,
+   "paredes": 3,
+   "fijo": true,
+   "piezas": [
+    [
+     "salida/correccion_chaflan/stl/B5_cuna_v2.stl",
+     2
+    ]
+   ]
+  },
+  {
+   "nombre": "M1s_caja_cuerpo_v2",
+   "relleno": 100,
+   "soportes": true,
+   "paredes": 3,
+   "fijo": true,
+   "piezas": [
+    [
+     "salida/correccion_chaflan/stl/M1s_caja_cuerpo_v2.stl",
+     1
+    ]
+   ]
+  }
+ ]
+}

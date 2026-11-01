@@ -16,6 +16,19 @@ Rama `cad/version-final`: https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/ve
 | F Documento para el equipo | listo | **`docs/LANTERNGUARD_ENTREGA.pdf`** (7 páginas) en Drive `07_Documentos` y en Onshape `LG_00_LEER_PRIMERO`, junto con PLANOS, BITACORA.xlsx y BOM.md (con P2, P4 y la boya PET) |
 | G Cierre | listo | REPORTE_CAD §11, `docs/HANDOFF_siguiente.md` con los 5 siguientes pasos |
 
+## 01/11/2026: corrección de la jefa de práctica (chaflán en la base de los soportes)
+- **Qué se cambió:** B2_cubierta, B3_caja, B5_cuna y M1s_caja_cuerpo llevan chaflán a 45° en la base de los soportes:
+  - 2 mm donde entra;
+  - 1 mm en las costillas de B5 sobre el patín y en el techo de los bolsillos de M1s;
+  - nada junto a las contratuercas PG7 de M1s.
+
+  Parámetro `chaflan.base_soportes`.
+- **Impresión:** +1,4 g y +5 min en total. Ninguna pieza pasa a necesitar soportes.
+- **FEM:** FS sin cambio (riel 5,56 / 2,72, pie 5,04 / 2,47).
+- **Onshape:** pestañas `*_v2` y `PLANO_A4_*_v2`.
+- **Drive:** `04_Planos/PLANOS_A4_LanternGuard_v3.pdf`.
+- **Detalle:** `docs/CORRECCIONES_2026-11-01.md`.
+
 ## Recomendación
 - **Piscina: nodo P2 robusto.** 1400 g, 46.7 h, S/ 126.0. FS riel 5.6 / 2.7 entre capas, pie 5.0 / 2.5. Lastre 1150 g de tuercas M8.
 - **Presentar: nodo P4 estético.** 1352 g, 46.0 h, S/ 121.7. FS 4.7 / 2.3.

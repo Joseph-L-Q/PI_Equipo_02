@@ -35,6 +35,7 @@ from pathlib import Path
 import cadquery as cq
 import numpy as np
 
+import chaflan as CH
 import fase_a as FA
 import params as P
 from checks import brep_check, export_part, fix_step_stamp, mesh_checks, sanitize
@@ -328,7 +329,29 @@ def b5_cuna(d):
             y = s * (Wb / 2 + 1.0)                                               # outside the slot: clear of the bottle
             h = h.union(cyl((x, y, 0), (0, 0, 1), 4.0, zt))
             h = h.cut(cyl((x, y, zt - P.M3_INSERT_DEPTH), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.1))
+    if CH.on():
+        h = CH.add(h, b5_feet(d, ls))
     return h
+
+
+def b5_feet(d, ls):
+    """45 deg feet in B5 (cradle frame, bottle along X at y = 0): the 5 ribs on the skid, the hull-side wall on the 2
+    tongues and the 2 strap posts that stand on the tongues. Keep-out: the bottle + 0.5 mm (it sits 1.5 above the skid)."""
+    t, wall, LH, Wb, L1, zt = d["rib"], d["wall"], d["LH"], d["Wb"], d["L1"], d["z_top"]
+    tw, th, tl = d["tongue_w"], d["tongue_h"], d["tongue_l"]
+    bottle = [cyl((-LH, 0, d["zc"]), (1, 0, 0), d["r"] + 0.5, 2 * LH)]
+    skid = lambda k: CH.slab([(-LH / 2, LH / 2, -12, 12)], wall, k)
+    ribs = [(-LH / 2 + t / 2, "extremo base"), (-L1, "intermedia"), (0.0, "central"), (L1, "intermedia"), (LH / 2 - t / 2, "extremo cuello")]
+    feet = [CH.fit("B5_cuna", f"costilla {nm} con el patín#{i}", lambda k, x=x: CH.frustum(x - t / 2, x + t / 2, -12, 12, wall, k),
+                   skid, bottle) for i, (x, nm) in enumerate(ribs)]
+    for i, xl in enumerate(d["tongue_y"]):
+        tongue = lambda k, xl=xl: CH.slab([(xl - tw / 2, xl + tw / 2, Wb / 2, Wb / 2 + tl)], th, k)
+        feet.append(CH.fit("B5_cuna", f"pared lateral sobre la lengüeta#{i}",
+                           lambda k, xl=xl: CH.frustum(xl - tw / 2, xl + tw / 2, Wb / 2 - wall, Wb / 2, th, k), tongue, bottle))
+        if any(abs(xl - x) < 1e-6 for x in (-ls, ls)):
+            feet.append(CH.fit("B5_cuna", f"poste de correa (Ø8) sobre la lengüeta#{i}",
+                               lambda k, xl=xl: CH.cone(xl, Wb / 2 + 1.0, th, 4.0, k), tongue, bottle))
+    return feet
 
 
 def b6_correa(d):
@@ -380,6 +403,18 @@ def b2_cubierta(d):
     c = c.union(cyl((xm, 0, zb - 0.1), (0, 0, 1), mo / 2, d["z_mast"] - zb + 0.1))
     c = c.cut(cyl((xm, 0, zb + 6.0), (0, 0, 1), mi / 2, d["z_mast"] - zb))
     c = c.cut(cyl((xm + 1, 0, zb + 12.0), (-1, 0, 0), 3.5, mo))      # pigtail port towards the box
+    if CH.on():                                                      # 45 deg feet of pillars, columns and mast on the bars
+        rects = [(x - bw / 2, x + bw / 2, -WH / 2, WH / 2) for x in (d["X0"] - d["L1"], d["X0"] + d["L1"])]
+        rects += [(LH / 2 - bw, LH / 2, -WH / 2, WH / 2), (-LH / 2, -LH / 2 + bw, -WH / 2, WH / 2)]
+        rects += [(-LH / 2, LH / 2, s * d["yb"] - bw / 2, s * d["yb"] + bw / 2) for s in (1, -1)]
+        heads = [CH.head_keepout(boss_x(d, x), s * boss_y(d), zb) for x, kind in rib_x(d) if kind != "mid0" for s in (1, -1)]
+        plate = lambda k: CH.slab(rects, zb, k)
+        feet = [CH.fit("B2_cubierta", f"pilar bajo oreja de la caja (Ø{pd:g})#{i}", lambda k, x=x, y=y: CH.cone(x, y, zb, pd / 2, k),
+                       plate, heads) for i, (x, y) in enumerate(box_ear_pts(d))]
+        feet += [CH.fit("B2_cubierta", f"columna del panel (Ø{P.PET_COLUMN_D:g})#{i}",
+                        lambda k, x=x, y=y: CH.cone(x, y, zb, P.PET_COLUMN_D / 2, k), plate, heads) for i, (x, y) in enumerate(col_pts(d))]
+        feet.append(CH.fit("B2_cubierta", f"mástil de antena (Ø{mo:g})", lambda k: CH.cone(xm, 0, zb, mo / 2, k), plate, heads))
+        c = CH.add(c, feet)
     return c
 
 
@@ -450,7 +485,46 @@ def b3_caja(d):
     c = c.cut(cyl((-Lx / 2 - 1, 0, g["umb_z"]), (1, 0, 0), P.PG7_HOLE / 2, wall + 2))
     for y, z in (g["solar"], g["pig"]):
         c = c.cut(cyl((Lx / 2 - wall - 1, y, z), (1, 0, 0), P.PG7_HOLE / 2, wall + 2))
+    if CH.on():
+        c = CH.add(c, b3_feet(d, g))
     return c.translate((d["X0"], 0, 0))
+
+
+def b3_keepouts(d, g):
+    """Local frame of B3: battery holder, RTC (on the floor), PCB, Waveshare and the 3 PG7 locknuts (+1 mm)."""
+    ko = [box(*g[k]) for k in ("batt", "rtc", "pcb", "ws")]
+    r = P.nut_corner_r() + 1.0
+    Lx, wall = d["Lx"], P.PET_BOX_WALL
+    ko.append(cyl((-Lx / 2 + wall, 0, g["umb_z"]), (1, 0, 0), r, P.PG7_INNER_H + 1))
+    ko += [cyl((Lx / 2 - wall, y, z), (-1, 0, 0), r, P.PG7_INNER_H + 1) for y, z in (g["solar"], g["pig"])]
+    return ko
+
+
+def b3_feet(d, g):
+    """45 deg feet in B3: floor <-> inner walls, battery standoffs, tray posts, and the ears <-> outer wall."""
+    Lx, Wy, Li, Wi, z0 = d["Lx"], d["Wy"], d["Li"], d["Wi"], d["z0"]
+    wall, zf = P.PET_BOX_WALL, d["z0"] + P.PET_BOX_WALL
+    ko = b3_keepouts(d, g)
+    inside = lambda k: CH.slab([(-Li / 2, Li / 2, -Wi / 2, Wi / 2)], zf, k)
+    feet = [CH.fit("B3_caja", "piso con paredes interiores (todo el perímetro)", lambda k: CH.inner_ring(Li, Wi, 3, zf, k), None, ko)]
+    hx, hy = P.BUOY_HOLDER_HOLES
+    bcx = (g["batt"][0] + g["batt"][1]) / 2
+    pd = P.BUOY_POST_D
+    for sx in (1, -1):
+        for sy in (1, -1):
+            feet.append(CH.fit("B3_caja", f"standoff del portabaterías (Ø9)#{sx}{sy}",
+                               lambda k, x=bcx + sx * hx / 2, y=sy * hy / 2: CH.cone(x, y, zf, 4.5, k), inside, ko))
+            px, py = sx * (Li / 2 - pd / 2 - P.BUOY_POST_WALL_GAP - 1), sy * (Wi / 2 - pd / 2 - P.BUOY_POST_WALL_GAP - 3.0)
+            feet.append(CH.fit("B3_caja", f"poste de la bandeja (Ø{pd:g})#{sx}{sy}", lambda k, x=px, y=py: CH.cone(x, y, zf, pd / 2, k), inside, ko))
+    ew, eo, et = P.PET_EAR
+    for i, (x, y) in enumerate([(x - d["X0"], y) for x, y in box_ear_pts(d)]):      # ear top <-> outer wall
+        s = 1 if y > 0 else -1
+        ya, yb = sorted((s * (Wy / 2 - 1), s * (Wy / 2 + eo)))
+        head = CH.head_keepout(x, y, z0 + et)
+        feet.append(CH.fit("B3_caja", f"oreja con pared exterior#{i}",
+                           lambda k, x=x, s=s: CH.frustum(x - ew / 2, x + ew / 2, *sorted((s * (Wy / 2 - 4), s * Wy / 2)), z0 + et, k),
+                           lambda k, x=x, ya=ya, yb=yb: CH.slab([(x - ew / 2, x + ew / 2, ya, yb)], z0 + et, k), [head]))
+    return feet
 
 
 def b4_tapa(d):

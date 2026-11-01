@@ -32,6 +32,7 @@ from OCP.BRepCheck import BRepCheck_Analyzer
 
 import params as P
 import camara
+import chaflan as CH
 camara.RAIL_ROD_M8 = False      # no M8 rod here; set before importing riel, which reads camara.lanes() on import
 import riel  # noqa: E402
 riel.RAIL_ROD_M8 = False
@@ -62,6 +63,7 @@ Z_RAIL = Z_G - S / 2                             # rail bottom: the conduit is c
 CABLE_Z = Z_RAIL + W + P.CAT5E_D / 2             # the Cat5e lies on the conduit floor
 PAD_BORE = 30.0           # socket access to the PG7 body through the pad (constants listed in the report)
 POCKET_END = 8.0          # end walls of the ballast pockets, they hold the vertical M3 inserts of M3t
+BALLAST_TOP_GAP = 0.9     # air over the bulk ballast at the top of its range: the pocket ceiling chamfer stays out of it
 TIP_HOLE = 8.0            # cable hole in the end wall at the tip of the rail
 HOOK_CLR = 10.0           # x gap between the hook web and the innermost point of the capsule
 NET_STEEL = FA.NET_STEEL
@@ -178,10 +180,36 @@ def box_body_low(lay, depth, bolts=True):
         m1 = m1.union(outer.cut(_box(-d["lin"] / 2, d["lin"] / 2, ia, ib, -d["depth"] - 1, 0.0)))
         for x in (-d["x_ins"], d["x_ins"]):
             m1 = m1.cut(_cyl((x, sy * d["yc"], -d["depth"] - 0.01), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.01))
+    if CH.on():
+        m1 = CH.add(m1, m1_feet(lay, d))
     if ESTET:                                          # P4: round the vertical corners of the body and of the lid flange
         fl = P.BOX_FLANGE                              # the corners of the box are already rounded (R6): round the flange underside
         m1 = soften("M1 brida", m1, perimeter(2, oh - P.BOX_FLANGE_T, {0: ol / 2 + fl, 1: ow / 2 + fl}), P.FILLETS["caja"])
     return m1
+
+
+def m1_feet(lay, d):
+    """45 deg feet in M1: inner floor <-> walls (not under the PG7 locknuts, whose corner is 1 mm over the floor), the tray
+    bosses on the floor, and the ballast pocket walls <-> the underside of the floor (inside the pockets, 45 deg overhang)."""
+    L, W, _ = lay.cav
+    fz = P.BOX_FLOOR
+    ko = gland_nuts(lay) + [s for _, s in CC.module_dummies(lay)] + list(trays_low(lay).values())
+    r = P.nut_corner_r() + 2.0
+    nut_zone = [_box(*sorted((sg * (L / 2 + 1), sg * (L / 2 - P.PG7_INNER_H - 2.0))), -r, r, fz - 0.1, fz + 5) for sg in (1, -1)]
+    feet = [CH.fit(K_M1, "piso con paredes interiores (perímetro, menos junto a las 2 contratuercas PG7)",
+                   lambda k: CH.inner_ring(L, W, 3, fz, k), None, ko, cut=nut_zone)]
+    CH.LOG[K_M1].append(("piso con paredes interiores junto a las contratuercas PG7 (sin chaflán)", 0.0))
+    inside = lambda k: CH.slab([(-L / 2, L / 2, -W / 2, W / 2)], fz, k)
+    for i, (x, y) in enumerate(layout.tray_boss_pts(lay)):
+        feet.append(CH.fit(K_M1, f"boss de la bandeja (Ø{P.TRAY_BOSS_D:g})#{i}", lambda k, x=x, y=y: CH.cone(x, y, fz, P.TRAY_BOSS_D / 2, k),
+                           inside, ko))
+    c = P.PLATE_CLR                                    # bulk ballast at the top of its range fills up to 0.9 mm under the
+    for sy in (1, -1):                                 # ceiling (29.05 of 30, resultados lastre.altura_en_el_maximo_mm)
+        ya, yb = sorted((sy * (d["y0"] + c), sy * (d["y1"] - c)))
+        bal = _box(-P.PLATE_L / 2, P.PLATE_L / 2, ya, yb, -d["depth"], -BALLAST_TOP_GAP)
+        feet.append(CH.fit(K_M1, f"paredes del bolsillo de lastre con el piso (por dentro)#{sy}",
+                           lambda k, sy=sy: CH.inner_ring_rect(0.0, sy * d["yc"], d["lin"], d["win"], 0.0, k, down=True), None, [bal]))
+    return feet
 
 
 def pocket_cover(depth):

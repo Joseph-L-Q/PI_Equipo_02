@@ -16,9 +16,9 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 119.0,
-  "h": 5.8,
-  "costo_soles": 10.71,
+  "g": 119.2,
+  "h": 5.84,
+  "costo_soles": 10.73,
   "voladizo_mm2": 16.9
  },
  "B3_caja": {
@@ -27,9 +27,9 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 171.0,
-  "h": 5.46,
-  "costo_soles": 15.39,
+  "g": 171.7,
+  "h": 5.53,
+  "costo_soles": 15.46,
   "voladizo_mm2": 122.8
  },
  "B4_tapa": {
@@ -49,9 +49,9 @@
   "orientacion": "sin girar",
   "soportes": true,
   "relleno_pct": 40,
-  "g": 141.0,
-  "h": 5.01,
-  "costo_soles": 12.69,
+  "g": 141.2,
+  "h": 5.03,
+  "costo_soles": 12.71,
   "voladizo_mm2": 342.5
  },
  "B6_correa": {

@@ -777,7 +777,7 @@ def dims_a4(name, vid, geom, box, centre_uv, s, taken, blocked, used):
     return out, skip
 
 
-def piece_a4(code, step, qty, c, ctx, redo=False):
+def piece_a4(code, step, qty, c, ctx, redo=False, chamfer=None):
     n0 = OS.year_total()
     if n0 > LIMIT_A4:
         raise SystemExit(f"cupo: {n0} llamadas en el año, por encima de {LIMIT_A4}; paro antes de {code}")
@@ -850,7 +850,7 @@ def piece_a4(code, step, qty, c, ctx, redo=False):
         keep()
     if "cotas" not in a4:
         info = {v["viewId"]: v for v in c.call("GET", f"/drawings/d/{did}/w/{wid}/e/{deid}/views")["items"]}
-        anns, skipped, taken, used = [], [], [], {"d": set(), "r": set()}
+        anns, skipped, taken, used, vdata = [], [], [], {"d": set(), "r": set()}, {}
         ctr = [(lo[i] + hi[i]) / 2 / 1000 for i in range(3)]
         for o in ("front", "top", "left"):
             vid = a4["vistas"][o]
@@ -862,6 +862,13 @@ def piece_a4(code, step, qty, c, ctx, redo=False):
             a, sk = dims_a4(o, vid, geom, boxes[o], project(vm, ctr), s, taken, blocked, used)
             anns += a
             skipped += sk
+            vdata[o] = (vid, geom, boxes[o], project(vm, ctr))
+        if chamfer:
+            qn = f"Cantidad: {qty}   ·   Material: PETG   ·   Cotas en mm"
+            qbox = (TITLE[0] + 1, TITLE[3] + 4 - TEXT_H - 1.5, TITLE[0] + 4 + text_w(qn, TEXT_H), TITLE[3] + 5)
+            a, txt = chamfer_dim(vdata, s, chamfer, taken, [TITLE, qbox] + list(boxes.values()))
+            anns += a
+            a4["chaflan"] = txt
         anns += title_notes(code)
         note = f"Cantidad: {qty}   ·   Material: PETG   ·   Cotas en mm"
         anns.append({"type": "Onshape::Note", "note": {"position": {"type": "Onshape::Reference::Point",
@@ -884,6 +891,154 @@ def piece_a4(code, step, qty, c, ctx, redo=False):
     keep()
     print(code, json.dumps({k: a4[k] for k in ("escala", "posterior", "cotas", "llamadas", "segundos")}, ensure_ascii=False))
     return a4
+
+
+V2_PIECES = ("B2_cubierta", "B3_caja", "B5_cuna", "M1s_caja_cuerpo")      # chamfer correction of 01/11/2026
+CHAMFERS = MOD / "salida" / "correccion_chaflan" / "chaflanes.json"
+
+
+def chamfer_dim(vdata, s, ch, taken, blocked):
+    """The chamfer callout 'Chaflán c x 45°', where the chamfer is seen:
+    1. edge on in an elevation (a visible 45 deg segment of length c*sqrt2): aligned PointToPoint on its ends; Onshape
+       writes the text along the segment, so its rotated box is tested against the lines of the views;
+    2. from above (top view: the strip between a wall / post line and the foot line, two parallel lines c apart):
+       LineToLine with the text beside it, in a free spot that crosses no line;
+    3. otherwise only the note. A multi-line note with the size of every joint is always added in a free spot.
+    Returns (annotations, what was done)."""
+    from shapely.geometry import LineString, Polygon, box as sbox
+    from shapely.strtree import STRtree
+    sizes = sorted({v for vs in ch["grupos"].values() for v in vs if v > 0}, key=lambda v: (v != ch["c"], -v))
+    segs_sheet, maps = [], {}
+    for o, (vid, geom, vbox, cuv) in vdata.items():
+        sx = lambda u, vb=vbox, cv=cuv: (vb[0] + vb[2]) / 2 + s * (u - cv[0])
+        sy = lambda v, vb=vbox, cv=cuv: (vb[1] + vb[3]) / 2 + s * (v - cv[1])
+        maps[o] = (sx, sy)
+        L, C, A = view_parts(geom)
+        segs_sheet += [LineString([(sx(a[0]), sy(a[1])), (sx(b[0]), sy(b[1]))]) for _, a, b in L]
+        segs_sheet += [sbox(sx(cc[0]) - s * r, sy(cc[1]) - s * r, sx(cc[0]) + s * r, sy(cc[1]) + s * r).exterior for _, cc, r in C + A]
+    tree = STRtree(segs_sheet)
+    others = [b for b in blocked if b not in [v[2] for v in vdata.values()]]     # title block + views without geometry
+
+    def free(poly):
+        x0, y0, x1, y1 = poly.bounds
+        if x0 < FRAME[0] + 1 or y0 < FRAME[1] + 1 or x1 > FRAME[2] - 1 or y1 > FRAME[3] - 1:
+            return False
+        if clash((x0, y0, x1, y1), taken + others):
+            return False
+        return not any(poly.intersects(segs_sheet[i]) for i in tree.query(poly))
+
+    def rect(cx, cy, w, h, ang):
+        ca, sa = math.cos(ang), math.sin(ang)
+        return Polygon([(cx + ca * dx - sa * dy, cy + sa * dx + ca * dy) for dx, dy in
+                        ((-w / 2, -h / 2), (w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2))])
+
+    for c in sizes:
+        lab = f"Chaflán {num(c)}x45°"
+        w, h = text_w(lab, TEXT_H) + 2, TEXT_H + 2
+        for o in ("front", "left", "top"):                                 # 1. edge on
+            if o not in vdata:
+                continue
+            vid, geom = vdata[o][:2]
+            sx, sy = maps[o]
+            for e, a, b in view_parts(geom)[0]:
+                if not (abs(abs(b[0] - a[0]) - abs(b[1] - a[1])) < 0.05 and abs(math.hypot(b[0] - a[0], b[1] - a[1]) - c * math.sqrt(2)) < 0.08):
+                    continue
+                p, q = (sx(a[0]), sy(a[1])), (sx(b[0]), sy(b[1]))
+                ux, uy = (q[0] - p[0]), (q[1] - p[1])
+                ln = math.hypot(ux, uy)
+                ux, uy = ux / ln, uy / ln
+                ang = math.atan2(uy, ux)
+                if ang > math.pi / 2 or ang < -math.pi / 2:
+                    ang -= math.copysign(math.pi, ang)
+                mx, my = (p[0] + q[0]) / 2, (p[1] + q[1]) / 2
+                for d in (6, 9, 12, 16, 20, 25, 30):
+                    for sg in (1, -1):
+                        for t in (0, 6, -6, 12, -12, 18, -18):
+                            cx, cy = mx - sg * uy * d + ux * t, my + sg * ux * d + uy * t
+                            if free(rect(cx, cy, w, h, ang)):
+                                taken.append(rect(cx, cy, w, h, ang).bounds)
+                                dd = e["data"]
+                                return [{"type": "Onshape::Dimension::PointToPoint", "pointToPointDimension": {
+                                    "point1": ref_pt(vid, e["uniqueId"], dd["start"], "ModeStart"),
+                                    "point2": ref_pt(vid, e["uniqueId"], dd["end"], "ModeEnd"),
+                                    "formatting": fmt(), "textOverride": lab, "textPosition": pt((cx, cy))}},
+                                    note_free(ch["lineas"], 1.8, taken, blocked)], f"cota en la vista {o} (de canto): {lab}"
+        if "top" in vdata:                                                   # 2. from above: strip of width c
+            vid, geom = vdata["top"][:2]
+            sx, sy = maps["top"]
+            L = view_parts(geom)[0]
+            for k in (0, 1):                                                 # k = 0: vertical lines (gap along u)
+                ax = [ln for ln in L if abs(ln[1][k] - ln[2][k]) < 1e-3 and abs(ln[1][1 - k] - ln[2][1 - k]) > 3]
+                pairs = []
+                for i, l1 in enumerate(ax):
+                    for l2 in ax[i + 1:]:
+                        if abs(abs(l1[1][k] - l2[1][k]) - c) > 0.03:
+                            continue
+                        lo = max(min(l1[1][1 - k], l1[2][1 - k]), min(l2[1][1 - k], l2[2][1 - k]))
+                        hi = min(max(l1[1][1 - k], l1[2][1 - k]), max(l2[1][1 - k], l2[2][1 - k]))
+                        if hi - lo > 3:
+                            pairs.append((hi - lo, l1, l2, lo, hi))
+                pairs.sort(key=lambda g: -g[0])
+                for _, l1, l2, lo, hi in pairs[:20]:
+                    xs = sorted((l1[1][k], l2[1][k]))
+                    for t in [0.5, 0.3, 0.7, 0.15, 0.85, -0.3, 1.3, -0.8, 1.8]:
+                        along = lo + t * (hi - lo)
+                        for d in (3, 6, 10, 14, 20, 26):
+                            for sg in (-1, 1):
+                                edge = xs[0] - d / s if sg < 0 else xs[1] + d / s
+                                if k == 0:
+                                    cx, cy = sx(edge) + sg * w / 2, sy(along)
+                                    poly = rect(cx, cy, w, h, 0.0)
+                                else:
+                                    cx, cy = sx(along), sy(edge) + sg * w / 2
+                                    poly = rect(cx, cy, w, h, math.pi / 2)
+                                if free(poly):
+                                    taken.append(poly.bounds)
+                                    d2 = {"edge1": {"type": "Onshape::Reference::Edge", "viewId": vid, "uniqueId": l1[0]["uniqueId"]},
+                                          "edge2": {"type": "Onshape::Reference::Edge", "viewId": vid, "uniqueId": l2[0]["uniqueId"]},
+                                          "formatting": fmt(), "textOverride": lab, "textPosition": pt((cx, cy))}
+                                    return [{"type": "Onshape::Dimension::LineToLine", "lineToLineDimension": d2},
+                                            note_free(ch["lineas"], 1.8, taken, blocked)], f"cota en la vista superior (franja del chaflán): {lab}"
+    return [note_free(ch["lineas"], 1.8, taken, blocked)], "solo nota (el chaflán no se encontró de canto ni desde arriba)"
+
+
+NL = chr(10)
+
+
+def note_free(lines, h, taken, blocked):
+    """Multi-line note in the first free spot of the frame, scanning from the bottom-left corner (Onshape anchors a note
+    at its top-left corner)."""
+    w = max(text_w(ln, h) for ln in lines) + 2
+    hh = len(lines) * 1.6 * h + 2
+    for y in [FRAME[1] + 2 + hh + 4 * k for k in range(40)]:
+        for x in [FRAME[0] + 3 + 6 * k for k in range(40)]:
+            bx = (x, y - hh, x + w, y)
+            if bx[2] <= FRAME[2] - 2 and bx[3] <= FRAME[3] - 2 and not clash(bx, taken + blocked):
+                taken.append(bx)
+                return {"type": "Onshape::Note", "note": {"position": pt((x, y)), "contents": NL.join(lines), "textHeight": h}}
+    return {"type": "Onshape::Note", "note": {"position": pt((TITLE[0] + 2, TITLE[3] + 2 + hh)), "contents": NL.join(lines),
+                                              "textHeight": h}}
+
+
+def piece_v2(code, c, ctx, redo=False):
+    """Chamfer correction: the v1 Part Studio and its PLANO_A4_ are renamed zz_v1_ (kept), then <code>_v2 is pushed and
+    drawn in the same A4 format with the 'Chaflán c x 45°' callout."""
+    R = reg()
+    did, wid = R["documento"]["did"], R["documento"]["wid"]
+    rec = R["piezas"][code]
+    for eid, new in ((rec.get("partstudio"), f"zz_v1_{rec.get('pestana', code)}"),
+                     (rec.get("a4", {}).get("drawing"), f"zz_v1_PLANO_A4_{code}")):
+        if eid and eid in ctx["elements"] and not ctx["elements"][eid].startswith("zz_v1_"):
+            c.call("POST", f"/metadata/d/{did}/w/{wid}/e/{eid}",
+                   {"properties": [{"propertyId": ctx["name_pid"], "value": new}]})
+            ctx["elements"][eid] = new
+            rec.setdefault("v1_renombrado", []).append(new)
+            R["piezas"][code] = rec
+            save(R)
+    ch = json.loads(CHAMFERS.read_text(encoding="utf-8"))[code]
+    by = {cd: (st, q) for cd, st, q in a4_pieces()}
+    step, qty = by[code]
+    return piece_a4(f"{code}_v2", step, qty, c, ctx, redo=redo, chamfer=ch)
 
 
 def CAJETIN(code):
@@ -910,7 +1065,7 @@ def melissa_b1(c):
     return pdf
 
 
-def merge_a4():
+def merge_a4(v3=False):
     """Cover + B1 (Melissa) + the 15 A4 drawings -> PLANOS_A4_LanternGuard.pdf; the cover lists, per piece, the
     dimensions that the script could not place."""
     import html
@@ -922,6 +1077,8 @@ def merge_a4():
     rows, files, md = [], [], ["# Cotas que no se pudieron poner automáticamente (planos A4)", ""]
     b1 = OUT_A4 / "PLANO_A4_B1_casco.pdf"
     order = [("B1_casco", 1)] + [(cd, q) for cd, _, q in a4_pieces()]
+    if v3:                                                            # the chamfer-corrected pieces replace their v1
+        order = [(f"{cd}_v2" if R.get("piezas", {}).get(f"{cd}_v2", {}).get("a4", {}).get("pdf") else cd, q) for cd, q in order]
     for code, q in order:
         a4 = R.get("piezas", {}).get(code, {}).get("a4", {})
         f = b1 if code == "B1_casco" else (MOD / a4["pdf"] if a4.get("pdf") else None)
@@ -960,8 +1117,8 @@ documento Onshape LG_IMPRIMIR_P2: {html.escape(R['documento']['url'])}</div>
     for f in [cover] + files:
         for pg in PdfReader(str(f)).pages:
             w.add_page(pg)
-    (OUT / "COTAS_A_MANO_A4.md").write_text("\n".join(md), encoding="utf-8")
-    out = OUT / "PLANOS_A4_LanternGuard.pdf"
+    (OUT / ("COTAS_A_MANO_A4_v3.md" if v3 else "COTAS_A_MANO_A4.md")).write_text("\n".join(md), encoding="utf-8")
+    out = OUT / ("PLANOS_A4_LanternGuard_v3.pdf" if v3 else "PLANOS_A4_LanternGuard.pdf")
     with open(out, "wb") as fh:
         w.write(fh)
     print(out, len(w.pages), "paginas,", len(files), "planos")
@@ -1090,11 +1247,18 @@ def main():
     ap.add_argument("--formato", choices=["a3", "equipo"], default="a3",
                     help="equipo: ISO A4 horizontal como el B1_casco de Melissa, pestañas PLANO_A4_<pieza>")
     ap.add_argument("--melissa", action="store_true", help="con --formato equipo: exporta el B1 de Melissa tal cual")
+    ap.add_argument("--v2", help="con --formato equipo: piezas con el chaflán (B2_cubierta,B3_caja,B5_cuna,M1s_caja_cuerpo"
+                                 " o 'todas'): pestañas <pieza>_v2 y PLANO_A4_<pieza>_v2; las v1 pasan a zz_v1_")
     a = ap.parse_args()
     if a.formato == "equipo":
         use_format("equipo")
-        c = client() if (a.pieza or a.todas or a.melissa) else None
-        ctx = a4_context(c) if (a.pieza or a.todas) else None
+        c = client() if (a.pieza or a.todas or a.melissa or a.v2) else None
+        ctx = a4_context(c) if (a.pieza or a.todas or a.v2) else None
+        for code in (V2_PIECES if a.v2 == "todas" else (a.v2.split(",") if a.v2 else [])):
+            try:
+                piece_v2(code, c, ctx, redo=a.rehacer)
+            except (OS.OnshapeError, KeyError, IndexError, StopIteration) as e:
+                print(code, "v2 FALLO:", str(e)[:300])
         todo = [p for p in a4_pieces() if a.todas or p[0] in (a.pieza or "").split(",")]
         for code, step, q in todo:
             if a.todas and reg().get("piezas", {}).get(code, {}).get("a4", {}).get("pdf"):
@@ -1106,7 +1270,7 @@ def main():
         if a.melissa:
             print(melissa_b1(c))
         if a.unir:
-            merge_a4()
+            merge_a4(v3=any(reg().get("piezas", {}).get(f"{k}_v2", {}).get("a4", {}).get("pdf") for k in V2_PIECES))
         return 0
     if a.documento:
         document()

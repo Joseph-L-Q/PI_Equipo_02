@@ -46,6 +46,11 @@ EST, VER, OK = "estimado", "por_verificar", "confirmado"
 PRINT_BED = p("impresora.cama", (256.0, 256.0, 256.0), "fabricante", OK,
               "Bambu Lab P1P (volumen de impresion de la hoja del fabricante)", (220.0, 220.0, 250.0))
 PRINTER = p("impresora.modelo", "Bambu Lab P1P", "fabricante", OK, "Impresora del equipo")
+CHAMFER_BASE = p("chaflan.base_soportes", 1.5, "equipo", VER,
+                 "Chaflan a 45 grados en la union de soportes (postes, standoffs, bosses, nervios, paredes) con su placa base; "
+                 "observacion de la jefa de practica 01/11 (B2, B3, B5, M1s). 0 = sin chaflan (version anterior)")
+CHAMFER_BASE_MAX = p("chaflan.base_soportes_max", 2.0, "equipo", VER,
+                     "Chaflan mas grande que se prueba primero en cada union; si choca se baja a 1.5, 1.0, 0.5")
 NOZZLE = p("impresora.boquilla", 0.4, "fabricante", OK, "Boquilla de 0.4 (la de serie)")
 PIECE_MAX_L = p("pieza.largo_max", 150.0, "equipo", OK,
                 "Prompt v2: ninguna pieza > 150 salvo la caja")

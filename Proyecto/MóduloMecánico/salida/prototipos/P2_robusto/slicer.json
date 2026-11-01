@@ -1,7 +1,7 @@
 {
  "M1s_caja_cuerpo": {
-  "g": 509.23,
-  "h": 16.13277777777778,
+  "g": 509.32,
+  "h": 16.05638888888889,
   "soportes": true,
   "relleno_pct": 100,
   "gcode": "salida/prototipos/P2_robusto/gcode/M1s_caja_cuerpo.gcode"

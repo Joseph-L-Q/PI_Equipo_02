@@ -8,7 +8,7 @@ No editar a mano: se regenera con `python cad_final/build.py --rapido` cuando `v
 
 | Pieza | Archivo (`salida/simple/stl`, `step`) | Cant. | BRep/BOP | Estanco | Cuerpos | Bbox en la orientacion (mm) | Voladizo mm² | Espesor p1 | Masa al 100 % g |
 |---|---|---|---|---|---|---|---|---|---|
-| M1 caja baja con bolsillos | M1s_caja_cuerpo | 1 | ok | si | 1 | 147.0 x 146.0 x 107.0 (sin girar) | 15115 |  | 487 |
+| M1 caja baja con bolsillos | M1s_caja_cuerpo | 1 | ok | si | 1 | 147.0 x 146.0 x 107.0 (sin girar) | 14515 |  | 489 |
 | M2 caja, tapa con asa | M2_caja_tapa | 1 | ok | si | 1 | 63.0 x 146.0 x 147.0 (Y+90) | 1461 |  | 173 |
 | M3s riel con gancho, mitad | M3s_riel_gancho | 2 | ok | si | 1 | 141.5 x 79.4 x 50.0 (X+90) | 6684 | 2.91 | 124 |
 | M3t tapa del bolsillo | M3t_tapa_bolsillo | 2 | ok | si | 1 | 117.0 x 57.0 x 3.0 (X180) | 0 |  | 25 |
@@ -28,20 +28,20 @@ Masa por pieza con su relleno (100 % cajas estancas, tapas con junta y ganchos; 
 
 | Concepto | Bandeja 40 % | Bandeja 100 % |
 |---|---|---|
-| caja (M1 con bolsillos + M2 + bandejas + electronica) | 869 | 878 |
+| caja (M1 con bolsillos + M2 + bandejas + electronica) | 871 | 879 |
 | riel con ganchos (2 M3s) | 200 | 200 |
 | tapas del bolsillo (2 M3t) | 51 | 51 |
 | capsulas (M4, M5, M6, M7, contenido) | 385 | 385 |
 | tornilleria y correas | 40 | 40 |
-| Nodo sin lastre g | 1544 | 1553 |
+| Nodo sin lastre g | 1546 | 1555 |
 | Desplaza cm³ | 2139 | 2139 |
-| Peso aparente sin lastre g | -648 | -639 |
-| Lastre que deja el peso aparente en la ventana (200 a 500 g), total g | 975 a 1320 | 964 a 1309 |
+| Peso aparente sin lastre g | -647 | -638 |
+| Lastre que deja el peso aparente en la ventana (200 a 500 g), total g | 973 a 1318 | 963 a 1308 |
 | **Lastre puesto g (total, mitad por bolsillo)** | **1150** (575) | **1150** (575) |
-| **Peso aparente con ese lastre g** | **+352** | **+361** |
-| **Peso en aire g** | **2694** | **2703** |
+| **Peso aparente con ese lastre g** | **+354** | **+363** |
+| **Peso en aire g** | **2696** | **2705** |
 
-Rango de lastre que mantiene ambos casos en la ventana: **975 a 1309 g** en total. El granel llena 25.6 de 30 mm del bolsillo (85 %); en el maximo del rango llenaria 29.1 mm (cabe). Con tuercas y arandelas M8 de inox, a granel: 1147 g en total, 25.5 mm llenos. Con perdigon de plomo en bolsa: 1098 g en total, 16.9 mm llenos.
+Rango de lastre que mantiene ambos casos en la ventana: **973 a 1308 g** en total. El granel llena 25.6 de 30 mm del bolsillo (85 %); en el maximo del rango llenaria 29.1 mm (cabe). Con tuercas y arandelas M8 de inox, a granel: 1145 g en total, 25.5 mm llenos. Con perdigon de plomo en bolsa: 1096 g en total, 16.9 mm llenos.
 
 Estabilidad: centro de masa a 42.3 y de empuje a 62.4 sobre el aro, BG = **20.0 mm**.
 
@@ -91,4 +91,4 @@ Por camara: 60 + 25 + conducto 152 (recto, sin curva) + bucle 83 + 30 + 30 = **3
 ## 8. Constantes de modulo
 
 - `PAD_BORE` = 30: agujero del cojin para la llave de vaso del PG7. `POCKET_END` = 8: paredes extremas de los bolsillos con los insertos M3 de M3t. `TIP_HOLE` = 8: salida del cable en la punta. `HOOK_CLR` = 10: aire entre el gancho y la capsula.
-- Tiempo de `simple.py`: 76 s.
+- Tiempo de `simple.py`: 35 s.

@@ -10,7 +10,7 @@ Nodo del aro de prueba Ø200 (version simple V2 como base) con estas diferencias
 
 | Pieza | Cant. | g c/u (slicer) | h c/u | Orientacion | Soportes | Relleno |
 |---|---|---|---|---|---|---|
-| M1 caja baja con bolsillos | 1 | 509.2 | 16.13 | sin girar | si | 1.0 |
+| M1 caja baja con bolsillos | 1 | 509.3 | 16.06 | sin girar | si | 1.0 |
 | M2 caja, tapa con asa | 1 | 181.2 | 5.11 | Y+90 | si | 1.0 |
 | M3t tapa del bolsillo | 2 | 23.7 | 0.55 | X180 | no | 1.0 |
 | M5s tapa con pie | 2 | 96.2 | 3.19 | sin girar | si | 1.0 |
@@ -23,7 +23,7 @@ Nodo del aro de prueba Ø200 (version simple V2 como base) con estas diferencias
 
 Piezas impresas por nodo: **14** de 9 tipos, mas 2 ventanas de acrilico.
 
-Masa impresa del nodo (slicer, sin lastre ni tornilleria): **1400 g**; tiempo **46.7 h**; filamento **S/ 126.02** (a S/ 90 el kg, estimado).
+Masa impresa del nodo (slicer, sin lastre ni tornilleria): **1400 g**; tiempo **46.6 h**; filamento **S/ 126.03** (a S/ 90 el kg, estimado).
 
 ## Sellos y juntas
 
@@ -32,9 +32,9 @@ Masa impresa del nodo (slicer, sin lastre ni tornilleria): **1400 g**; tiempo **
 
 ## Peso
 
-- En aire: **2694 g** (bandeja al 40 %), con el lastre.
-- **Lastre a granel** (tuercas y arandelas M8 de inox, a granel, densidad aparente 4.5 g/cm3, estimada): **1150 g** en total (575 g por bolsillo, un bolsillo por lado, 100 x 50 x 30 mm). Llena 25.6 de 30 mm. Rango de lastre que deja el peso aparente en la ventana: 975 a 1309 g. Con perdigon de plomo: 1098 g.
-- Aparente en agua de mar: **+352 g** (40 %) / +361 g (100 %); ventana exigida 200 a 500 g.
+- En aire: **2696 g** (bandeja al 40 %), con el lastre.
+- **Lastre a granel** (tuercas y arandelas M8 de inox, a granel, densidad aparente 4.5 g/cm3, estimada): **1150 g** en total (575 g por bolsillo, un bolsillo por lado, 100 x 50 x 30 mm). Llena 25.6 de 30 mm. Rango de lastre que deja el peso aparente en la ventana: 973 a 1308 g. Con perdigon de plomo: 1096 g.
+- Aparente en agua de mar: **+354 g** (40 %) / +363 g (100 %); ventana exigida 200 a 500 g.
 
 ## Factores de seguridad (150 N de manipulacion en una capsula)
 
@@ -56,7 +56,7 @@ Calculo a mano (simple.py, conservador, no es FEM): riel 18.2 / 8.9, pie 5.6 / 2
 
 - **Sin separador ni apice.** La linterna de prueba es el aro, la malla de referencia, 4 cuerdas que suben rectas del aro (a 45 grados del riel, los brazos quedan entre cuerdas) y van a un solo nudo, y un cabo del nudo a la linea larga.
 - **Aire cuerda-brazo 48.0 mm y cuerda-capsula 68.3 mm** (se exigen 10; el build falla si no). Cuerda-caja (brida de la tapa): 2.9 mm, informativo.
-- **Lastre a granel** en vez de pletinas: 1150 g, un bolsillo por lado cerrado por M3t; peso aparente +352 g (40 %) / +361 g (100 %); caja 127 x 126 x 77 mm (V2: 127 x 126 x 77).
+- **Lastre a granel** en vez de pletinas: 1150 g, un bolsillo por lado cerrado por M3t; peso aparente +354 g (40 %) / +363 g (100 %); caja 127 x 126 x 77 mm (V2: 127 x 126 x 77).
 - **Ensamble con nombres** (`REF_*` para lo no impreso, `lastre_izq`/`lastre_der`) y `ensamble_solidos.json` con el conteo de solidos.
 
 ## Pendiente
