@@ -678,62 +678,62 @@ La Figura 23 muestra el diseño preliminar de la interfaz del aplicativo Lantern
 
 ---
 
+
 ## Referencias bibliográficas
 
 <a name="ref-1"></a>
-**[\[1\]](https://vinculate.concytec.gob.pe/wp-content/files/RP-020-2022-CONCYTEC-P.pdf)** Consejo Nacional de Ciencia, Tecnología e Innovación Tecnológica (CONCYTEC), *Directiva N.º 001-2022-CONCYTEC-P: Uso de la metodología Nivel de Madurez Tecnológica (TRL)*, Resolución de Presidencia N.º 020-2022-CONCYTEC-P, Perú, 2022. [En línea]. Disponible en: <https://vinculate.concytec.gob.pe/wp-content/files/RP-020-2022-CONCYTEC-P.pdf>
+**[1]** Consejo Nacional de Ciencia, Tecnología e Innovación Tecnológica (CONCYTEC), *Directiva N.º 001-2022-CONCYTEC-P: Uso de la metodología Nivel de Madurez Tecnológica (TRL)*, Resolución de Presidencia N.º 020-2022-CONCYTEC-P, Perú, 2022. [En línea]. Disponible en: <https://vinculate.concytec.gob.pe/wp-content/files/RP-020-2022-CONCYTEC-P.pdf>
 
 <a name="ref-2"></a>
-**[\[2\]](https://doi.org/10.1111/jwas.70054)** R. E. Loayza-Aguilar, G. B. Saldaña-Rojas, F. Merino y G. E. Olivos-Ramirez, "Biofouling reduction by lantern nets exchange and its relationship with production and survival of Argopecten purpuratus in Samanco Bay, Peru," *Journal of the World Aquaculture Society*, vol. 56, n.º 5, art. e70054, 2025. doi: <https://doi.org/10.1111/jwas.70054>
+**[2]** R. E. Loayza-Aguilar, G. B. Saldaña-Rojas, F. Merino y G. E. Olivos-Ramirez, "Biofouling reduction by lantern nets exchange and its relationship with production and survival of Argopecten purpuratus in Samanco Bay, Peru," *Journal of the World Aquaculture Society*, vol. 56, n.º 5, art. e70054, 2025. doi: <https://doi.org/10.1111/jwas.70054>
 
 <a name="ref-3"></a>
-**[\[3\]](https://doi.org/10.1016/j.oceaneng.2023.114430)** Q.-P. Chen, C.-W. Bi, Z.-X. Zhang y Y.-P. Zhao, "Hydrodynamic effect of different biofouling types on aquaculture netting," *Ocean Engineering*, vol. 279, art. 114430, 2023. doi: <https://doi.org/10.1016/j.oceaneng.2023.114430>
+**[3]** Q.-P. Chen, C.-W. Bi, Z.-X. Zhang y Y.-P. Zhao, "Hydrodynamic effect of different biofouling types on aquaculture netting," *Ocean Engineering*, vol. 279, art. 114430, 2023. doi: <https://doi.org/10.1016/j.oceaneng.2023.114430>
 
 <a name="ref-4"></a>
-**[\[4\]](https://doi.org/10.3390/jmse8090707)** W. Qiu, V. Pakrashi y B. Ghosh, "Fishing net health state estimation using underwater imaging," *Journal of Marine Science and Engineering*, vol. 8, n.º 9, art. 707, 2020. doi: <https://doi.org/10.3390/jmse8090707>
+**[4]** W. Qiu, V. Pakrashi y B. Ghosh, "Fishing net health state estimation using underwater imaging," *Journal of Marine Science and Engineering*, vol. 8, n.º 9, art. 707, 2020. doi: <https://doi.org/10.3390/jmse8090707>
 
 <a name="ref-5"></a>
-**[\[5\]](https://doi.org/10.1016/j.aquaeng.2024.102466)** R. Cappaert, W. Yang, D. J. Ross, C. Johnston, C. MacLeod y C. A. White, "Development of an image binarization software tool for net occlusion estimations," *Aquacultural Engineering*, vol. 107, art. 102466, 2024. doi: <https://doi.org/10.1016/j.aquaeng.2024.102466>
+**[5]** R. Cappaert, W. Yang, D. J. Ross, C. Johnston, C. MacLeod y C. A. White, "Development of an image binarization software tool for net occlusion estimations," *Aquacultural Engineering*, vol. 107, art. 102466, 2024. doi: <https://doi.org/10.1016/j.aquaeng.2024.102466>
 
 <a name="ref-6"></a>
-**[\[6\]](https://doi.org/10.3390/s16091466)** A. Augustin, J. Yi, T. Clausen y W. M. Townsley, "A study of LoRa: Long range & low power networks for the Internet of Things," *Sensors*, vol. 16, n.º 9, art. 1466, 2016. doi: <https://doi.org/10.3390/s16091466>
+**[6]** A. Augustin, J. Yi, T. Clausen y W. M. Townsley, "A study of LoRa: Long range & low power networks for the Internet of Things," *Sensors*, vol. 16, n.º 9, art. 1466, 2016. doi: <https://doi.org/10.3390/s16091466>
 
 <a name="ref-7"></a>
-**[\[7\]](https://doi.org/10.3390/s18103257)** A. H. Jebril, A. Sali, A. Ismail y M. F. A. Rasid, "Overcoming limitations of LoRa physical layer in image transmission," *Sensors*, vol. 18, n.º 10, art. 3257, 2018. doi: <https://doi.org/10.3390/s18103257>
+**[7]** A. H. Jebril, A. Sali, A. Ismail y M. F. A. Rasid, "Overcoming limitations of LoRa physical layer in image transmission," *Sensors*, vol. 18, n.º 10, art. 3257, 2018. doi: <https://doi.org/10.3390/s18103257>
 
 <a name="ref-8"></a>
-**[\[8\]](https://docs.arducam.com/Arduino-SPI-camera/MEGA-SPI/MEGA-5MP/)** Arducam, "MEGA-5MP: Cámara SPI de 5 megapíxeles," documentación técnica, s. f. [En línea]. Disponible en: <https://docs.arducam.com/Arduino-SPI-camera/MEGA-SPI/MEGA-5MP/>
+**[8]** Arducam, "MEGA-5MP: Cámara SPI de 5 megapíxeles," documentación técnica, s. f. [En línea]. Disponible en: <https://docs.arducam.com/Arduino-SPI-camera/MEGA-SPI/MEGA-5MP/>
 
 <a name="ref-9"></a>
-**[\[9\]](https://wiki.dfrobot.com/sen0598/)** DFRobot, "IP68 Underwater Ultrasonic Obstacle Avoidance Sensor (3m), SEN0598," documentación técnica, s. f. [En línea]. Disponible en: <https://wiki.dfrobot.com/sen0598/>
+**[9]** DFRobot, "IP68 Underwater Ultrasonic Obstacle Avoidance Sensor (3m), SEN0598," documentación técnica, s. f. [En línea]. Disponible en: <https://wiki.dfrobot.com/sen0598/>
 
 <a name="ref-10"></a>
-**[\[10\]](https://www.st.com/en/mems-and-sensors/lis3dh.html)** STMicroelectronics, "LIS3DH: 3-axis MEMS accelerometer," documentación técnica, s. f. [En línea]. Disponible en: <https://www.st.com/en/mems-and-sensors/lis3dh.html>
+**[10]** STMicroelectronics, "LIS3DH: 3-axis MEMS accelerometer," documentación técnica, s. f. [En línea]. Disponible en: <https://www.st.com/en/mems-and-sensors/lis3dh.html>
 
 <a name="ref-11"></a>
-**[\[11\]](https://www.comunidadandina.org/StaticFiles/DocOf/DEC486.pdf)** Comunidad Andina, *Decisión 486: Régimen Común sobre Propiedad Industrial*, 2000. [En línea]. Disponible en: <https://www.comunidadandina.org/StaticFiles/DocOf/DEC486.pdf>
+**[11]** Comunidad Andina, *Decisión 486: Régimen Común sobre Propiedad Industrial*, 2000. [En línea]. Disponible en: <https://www.comunidadandina.org/StaticFiles/DocOf/DEC486.pdf>
 
 <a name="ref-12"></a>
-**[\[12\]](https://patents.google.com/patent/WO2024072597A1/en)** M. Stokes, H. Pham y T. R. Swanson, "Adjustable aquaculture camera mounting system," publicación de patente WO2024072597A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/WO2024072597A1/en>
+**[12]** M. Stokes, H. Pham y T. R. Swanson, "Adjustable aquaculture camera mounting system," publicación de patente WO2024072597A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/WO2024072597A1/en>
 
 <a name="ref-13"></a>
-**[\[13\]](https://patents.google.com/patent/US20240130336A1/en)** H. Pham y T. R. Swanson, "Underwater net monitoring device," publicación de patente US20240130336A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/US20240130336A1/en>
+**[13]** H. Pham y T. R. Swanson, "Underwater net monitoring device," publicación de patente US20240130336A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/US20240130336A1/en>
 
 <a name="ref-14"></a>
-**[\[14\]](https://patents.google.com/patent/NO20240761A1/en)** M. D. Zúñiga Barraza *et al.*, "System for inspecting farming netting in aquaculture cages," publicación de patente NO20240761A1, familia WO2023108307A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/NO20240761A1/en>
+**[14]** M. D. Zúñiga Barraza *et al.*, "System for inspecting farming netting in aquaculture cages," publicación de patente NO20240761A1, familia WO2023108307A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/NO20240761A1/en>
 
 <a name="ref-15"></a>
-**[\[15\]](https://patents.google.com/patent/US20200326279A1/en)** L. Fortunato y T. Leiknes, "In-situ non-invasive device for early detection of fouling in aquatic systems," publicación de patente US20200326279A1, 2020. [En línea]. Disponible en: <https://patents.google.com/patent/US20200326279A1/en>
+**[15]** L. Fortunato y T. Leiknes, "In-situ non-invasive device for early detection of fouling in aquatic systems," publicación de patente US20200326279A1, 2020. [En línea]. Disponible en: <https://patents.google.com/patent/US20200326279A1/en>
 
 <a name="ref-16"></a>
-**[\[16\]](https://www.espressif.com/en/products/devkits/esp32-s3-series/esp32-s3-devkitc-1)** Espressif Systems, "ESP32-S3-DevKitC-1: Placas de desarrollo ESP32-S3," documentación técnica del fabricante, s. f. [En línea]. Disponible en: <https://www.espressif.com/en/products/devkits/esp32-s3-series/esp32-s3-devkitc-1>
+**[16]** Espressif Systems, "ESP32-S3-DevKitC-1: Placas de desarrollo ESP32-S3," documentación técnica del fabricante, s. f. [En línea]. Disponible en: <https://www.espressif.com/en/products/devkits/esp32-s3-series/esp32-s3-devkitc-1>
 
 <a name="ref-17"></a>
-**[\[17\]](https://www.analog.com/en/products/max3485.html)** Analog Devices, "MAX3485: Transceptor RS-485/RS-422 de 3,3 V," ficha técnica, s. f. [En línea]. Disponible en: <https://www.analog.com/en/products/max3485.html>
+**[17]** Analog Devices, "MAX3485: Transceptor RS-485/RS-422 de 3,3 V," ficha técnica, s. f. [En línea]. Disponible en: <https://www.analog.com/en/products/max3485.html>
 
 <a name="ref-18"></a>
-**[\[18\]](https://www.analog.com/en/products/ds3231.html)** Analog Devices, "DS3231: Reloj de tiempo real integrado con interfaz I²C," ficha técnica, s. f. [En línea]. Disponible en: <https://www.analog.com/en/products/ds3231.html>
+**[18]** Analog Devices, "DS3231: Reloj de tiempo real integrado con interfaz I²C," ficha técnica, s. f. [En línea]. Disponible en: <https://www.analog.com/en/products/ds3231.html>
 
 <a name="ref-19"></a>
-**[\[19\]](https://heltec.org/project/wifi-lora-32-v3/)** Heltec Automation, "WiFi LoRa 32 (V3): ESP32-S3 y SX1262," documentación técnica, s. f. [En línea]. Disponible en: <https://heltec.org/project/wifi-lora-32-v3/>
-
+**[19]** Heltec Automation, "WiFi LoRa 32 (V3): ESP32-S3 y SX1262," documentación técnica, s. f. [En línea]. Disponible en: <https://heltec.org/project/wifi-lora-32-v3/>
