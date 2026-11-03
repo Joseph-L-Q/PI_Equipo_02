@@ -1,4 +1,3 @@
-
 <h1 align="center">LanternGuard</h1>
 
 <h2 align="center">TRL 2 — Formulación conceptual de la propuesta tecnológica</h2>
@@ -85,7 +84,7 @@ A partir de estos antecedentes, LanternGuard propone analizar fotografías subma
 
 Augustin et al. [\[6\]](#ref-6) analizaron las características y el desempeño de la tecnología LoRa, destacando su capacidad de comunicación a largas distancias y su bajo consumo energético, aunque con limitaciones en la velocidad de transmisión de datos. De manera complementaria, Jebril et al. [\[7\]](#ref-7) investigaron la transmisión de imágenes mediante LoRa, utilizando la división de la información en paquetes para superar las restricciones del enlace inalámbrico. Ambos estudios proporcionan fundamentos para la arquitectura de comunicación propuesta en LanternGuard, que contempla el almacenamiento temporal de fotografías, su transmisión mediante paquetes de datos y la posterior reconstrucción de los archivos en la estación receptora terrestre. No obstante, la velocidad efectiva y el alcance de comunicación dependerán de las características y condiciones del enlace utilizado.
 
-Respecto a la adquisición de información, la documentación técnica de Arducam [\[8\]](#ref-8) describe las características de las cámaras Mega de 5 MP con interfaz SPI, seleccionadas para la captura de imágenes submarinas. Asimismo, DFRobot [\[9\]](#ref-9) especifica que el sensor ultrasónico SEN0598 permite medir distancias bajo el agua en un rango nominal de 2 a 300 cm mediante comunicación UART. Por su parte, STMicroelectronics [\[10\]](#ref-10) describe el acelerómetro triaxial LIS3DH, que permite registrar aceleraciones y movimientos. Estos componentes sustentan la selección tecnológica de LanternGuard, donde las cámaras permitirán observar regiones de las mallas, mientras que el sensor ultrasónico y el acelerómetro proporcionarán mediciones complementarias para caracterizar las condiciones de captura.
+Respecto a la adquisición de información, la documentación técnica de Arducam [\[8\]](#ref-8) describe las características de las cámaras Mega de 5 MP con interfaz SPI, seleccionadas para la captura de imágenes submarinas. Por su parte, STMicroelectronics [\[9\]](#ref-9) describe el acelerómetro triaxial LIS3DH, que permite registrar aceleraciones y movimientos. Estos componentes sustentan la selección tecnológica de LanternGuard, donde las cámaras permitirán observar regiones de las mallas, mientras que el acelerómetro proporcionará información complementaria sobre el movimiento del módulo durante la captura.
 
 ### 1.4. Síntesis de la aplicación de los antecedentes
 
@@ -109,7 +108,7 @@ Las investigaciones revisadas proporcionan fundamentos científicos y tecnológi
 
 ### 2.1. Criterios de evaluación
 
-La Decisión 486 de la Comunidad Andina [\[11\]](#ref-11), que establece el Régimen Común sobre Propiedad Industrial, señala que una patente de invención debe cumplir tres requisitos: novedad (artículo 16), nivel inventivo (artículo 18) y aplicación industrial (artículo 19). Asimismo, el artículo 81 contempla la protección mediante modelos de utilidad cuando una nueva forma, configuración o disposición de elementos de un objeto permite mejorar su funcionamiento, utilización o fabricación, o proporciona una ventaja o efecto técnico.
+La Decisión 486 de la Comunidad Andina [\[10\]](#ref-10), que establece el Régimen Común sobre Propiedad Industrial, señala que una patente de invención debe cumplir tres requisitos: novedad (artículo 16), nivel inventivo (artículo 18) y aplicación industrial (artículo 19). Asimismo, el artículo 81 contempla la protección mediante modelos de utilidad cuando una nueva forma, configuración o disposición de elementos de un objeto permite mejorar su funcionamiento, utilización o fabricación, o proporciona una ventaja o efecto técnico.
 
 A partir de estos criterios, el análisis de patentabilidad de LanternGuard se orienta a identificar posibles características diferenciadoras frente a las tecnologías existentes y evaluar si su configuración podría ofrecer una ventaja técnica. Para ello, se revisan publicaciones de patentes relacionadas con sistemas de inspección submarina, monitoreo de redes acuícolas y detección de bioincrustación.
 
@@ -121,28 +120,28 @@ Se realizó una búsqueda exploratoria en Google Patents utilizando términos re
 
 | Documento | Tecnología descrita | Comparación con LanternGuard |
 |---|---|---|
-| WO2024072597A1 [\[12\]](#ref-12) | Sistema de montaje ajustable de cámaras para modificar su campo de visión en entornos de acuicultura. | Ambas propuestas utilizan cámaras; LanternGuard contempla cámaras orientadas hacia regiones de las mallas, sin incorporar el mecanismo de ajuste descrito en la publicación. |
-| US20240130336A1 [\[13\]](#ref-13) | Dispositivo de monitoreo de redes sumergidas mediante impulsos mecánicos y señales relacionadas con la tensión de las redes. | Comparte el monitoreo de estructuras acuícolas, pero utiliza un principio de medición diferente del análisis de imágenes propuesto en LanternGuard. |
-| NO20240761A1 [\[14\]](#ref-14) | Sistema de inspección de redes acuícolas mediante un dispositivo submarino móvil, captura de imágenes y posicionamiento ultrasónico. | Comparte el uso de imágenes y tecnología ultrasónica, pero LanternGuard propone inspecciones periódicas mediante un módulo situado respecto a una linterna de cultivo, sin utilizar un vehículo móvil para recorrer las redes. |
-| US20200326279A1 [\[15\]](#ref-15) | Dispositivo de detección no invasiva de incrustaciones en sistemas acuáticos mediante técnicas ópticas de medición de superficies. | Aborda la detección no invasiva de incrustaciones mediante técnicas ópticas, mientras que LanternGuard propone estimar la cobertura visible por bioincrustación mediante fotografías submarinas. |
+| WO2024072597A1 [\[11\]](#ref-11) | Sistema de montaje ajustable de cámaras para modificar su campo de visión en entornos de acuicultura. | Ambas propuestas utilizan cámaras; LanternGuard contempla cámaras orientadas hacia regiones de las mallas, sin incorporar el mecanismo de ajuste descrito en la publicación. |
+| US20240130336A1 [\[12\]](#ref-12) | Dispositivo de monitoreo de redes sumergidas mediante impulsos mecánicos y señales relacionadas con la tensión de las redes. | Comparte el monitoreo de estructuras acuícolas, pero utiliza un principio de medición diferente del análisis de imágenes propuesto en LanternGuard. |
+| NO20240761A1 [\[13\]](#ref-13) | Sistema de inspección de redes acuícolas mediante un dispositivo submarino móvil, captura de imágenes y posicionamiento ultrasónico. | Comparte el uso de imágenes submarinas; sin embargo, el antecedente incorpora posicionamiento ultrasónico, mientras que LanternGuard propone inspecciones periódicas mediante un módulo situado respecto a una linterna de cultivo, sin utilizar un vehículo móvil para recorrer las redes. |
+| US20200326279A1 [\[14\]](#ref-14) | Dispositivo de detección no invasiva de incrustaciones en sistemas acuáticos mediante técnicas ópticas de medición de superficies. | Aborda la detección no invasiva de incrustaciones mediante técnicas ópticas, mientras que LanternGuard propone estimar la cobertura visible por bioincrustación mediante fotografías submarinas. |
 
-<p align="center"><em><strong>Nota.</strong> Elaboración propia a partir de las publicaciones consultadas en Google Patents [\[12\]](#ref-12)–[\[15\]](#ref-15).</em></p>
+<p align="center"><em><strong>Nota.</strong> Elaboración propia a partir de las publicaciones consultadas en Google Patents [\[11\]](#ref-11)–[\[14\]](#ref-14).</em></p>
 
-La publicación noruega NO20240761A1 pertenece a la misma familia de patentes que WO2023108307A1, por lo que ambas se consideran un mismo antecedente tecnológico [\[14\]](#ref-14). Asimismo, la solicitud estadounidense US20240130336A1 dio lugar a la patente concedida US12426577B2 [\[13\]](#ref-13). Estas relaciones permiten identificar las publicaciones vinculadas, aunque no constituyen una evaluación completa de su situación jurídica en todos los territorios.
+La publicación noruega NO20240761A1 pertenece a la misma familia de patentes que WO2023108307A1, por lo que ambas se consideran un mismo antecedente tecnológico [\[13\]](#ref-13). Asimismo, la solicitud estadounidense US20240130336A1 dio lugar a la patente concedida US12426577B2 [\[12\]](#ref-12). Estas relaciones permiten identificar las publicaciones vinculadas, aunque no constituyen una evaluación completa de su situación jurídica en todos los territorios.
 
 La comparación muestra que existen tecnologías orientadas al monitoreo submarino, la inspección de redes y la detección de bioincrustación. Frente a estos antecedentes, LanternGuard plantea una configuración dirigida específicamente al seguimiento periódico de las mallas de linternas utilizadas en el cultivo de *Argopecten purpuratus*, mediante la integración de captura de imágenes, mediciones complementarias y comunicación entre un módulo sumergido y una boya de superficie. Esta diferenciación constituye una característica de la propuesta que deberá considerarse en el análisis preliminar de patentabilidad, sin que por sí sola demuestre novedad o nivel inventivo.
 
 ### 2.3. Evaluación preliminar de novedad, nivel inventivo y aplicación industrial
 
-**Novedad.** La configuración propuesta de LanternGuard integra dos cámaras submarinas, sensores complementarios, una boya de superficie, comunicación RS-485 y LoRa, y procesamiento de imágenes para estimar la cobertura visible de bioincrustación en las mallas de linternas utilizadas para el cultivo de *Argopecten purpuratus*. Esta combinación específica no se identificó en las cuatro publicaciones de patentes examinadas. Sin embargo, sus principales componentes y funciones ya se encuentran presentes en tecnologías existentes relacionadas con la inspección submarina, el monitoreo de redes acuícolas y la detección de bioincrustación. Por ello, la búsqueda realizada no permite establecer de manera definitiva la novedad de la propuesta, siendo necesario ampliar la revisión del estado de la técnica [\[11\]](#ref-11)–[\[15\]](#ref-15).
+**Novedad.** La configuración propuesta de LanternGuard integra dos cámaras submarinas, sensores complementarios, una boya de superficie, comunicación RS-485 y LoRa, y procesamiento de imágenes para estimar la cobertura visible de bioincrustación en las mallas de linternas utilizadas para el cultivo de *Argopecten purpuratus*. Esta combinación específica no se identificó en las cuatro publicaciones de patentes examinadas. Sin embargo, sus principales componentes y funciones ya se encuentran presentes en tecnologías existentes relacionadas con la inspección submarina, el monitoreo de redes acuícolas y la detección de bioincrustación. Por ello, la búsqueda realizada no permite establecer de manera definitiva la novedad de la propuesta, siendo necesario ampliar la revisión del estado de la técnica [\[10\]](#ref-10)–[\[14\]](#ref-14).
 
-**Nivel inventivo.** La integración de cámaras, microcontroladores, sensores comerciales y tecnologías de comunicación conocidas podría considerarse una solución previsible para una persona especializada en este campo tecnológico. Para determinar si LanternGuard presenta nivel inventivo, sería necesario identificar características técnicas de su configuración que no resulten evidentes a partir de las tecnologías existentes. Entre los aspectos que podrían analizarse se encuentran la disposición de los componentes para observar regiones específicas de las mallas y el sistema de montaje del dispositivo sumergido. En esta etapa no se dispone de evidencia suficiente para establecer que dichas características cumplen este requisito [\[11\]](#ref-11).
+**Nivel inventivo.** La integración de cámaras, microcontroladores, sensores comerciales y tecnologías de comunicación conocidas podría considerarse una solución previsible para una persona especializada en este campo tecnológico. Para determinar si LanternGuard presenta nivel inventivo, sería necesario identificar características técnicas de su configuración que no resulten evidentes a partir de las tecnologías existentes. Entre los aspectos que podrían analizarse se encuentran la disposición de los componentes para observar regiones específicas de las mallas y el sistema de montaje del dispositivo sumergido. En esta etapa no se dispone de evidencia suficiente para establecer que dichas características cumplen este requisito [\[10\]](#ref-10).
 
-**Aplicación industrial.** LanternGuard presenta una aplicación potencial en el sector acuícola, específicamente en el monitoreo de las linternas utilizadas para el cultivo suspendido de conchas de abanico. Su arquitectura contempla componentes electrónicos y estructuras que podrían fabricarse e integrarse para obtener información sobre el estado visible de las mallas y apoyar la planificación del mantenimiento. Por tanto, la propuesta presenta una posible aplicación industrial conforme al artículo 19 de la Decisión 486, aunque este criterio no implica por sí solo el cumplimiento de los requisitos de novedad y nivel inventivo [\[11\]](#ref-11).
+**Aplicación industrial.** LanternGuard presenta una aplicación potencial en el sector acuícola, específicamente en el monitoreo de las linternas utilizadas para el cultivo suspendido de conchas de abanico. Su arquitectura contempla componentes electrónicos y estructuras que podrían fabricarse e integrarse para obtener información sobre el estado visible de las mallas y apoyar la planificación del mantenimiento. Por tanto, la propuesta presenta una posible aplicación industrial conforme al artículo 19 de la Decisión 486, aunque este criterio no implica por sí solo el cumplimiento de los requisitos de novedad y nivel inventivo [\[10\]](#ref-10).
 
 ### 2.4. Posibles vías de protección
 
-A partir del análisis realizado, LanternGuard podría considerar diferentes mecanismos de protección de propiedad intelectual. Una eventual patente de invención requeriría ampliar la búsqueda del estado de la técnica y verificar el cumplimiento de los requisitos de patentabilidad. Asimismo, podría evaluarse la protección de una configuración mecánica mediante un modelo de utilidad, siempre que presente una nueva disposición de elementos que proporcione una ventaja técnica, conforme al artículo 81 de la Decisión 486 de la Comunidad Andina [\[11\]](#ref-11).
+A partir del análisis realizado, LanternGuard podría considerar diferentes mecanismos de protección de propiedad intelectual. Una eventual patente de invención requeriría ampliar la búsqueda del estado de la técnica y verificar el cumplimiento de los requisitos de patentabilidad. Asimismo, podría evaluarse la protección de una configuración mecánica mediante un modelo de utilidad, siempre que presente una nueva disposición de elementos que proporcione una ventaja técnica, conforme al artículo 81 de la Decisión 486 de la Comunidad Andina [\[10\]](#ref-10).
 
 Por otro lado, el software original desarrollado para la adquisición y el procesamiento de imágenes podría protegerse mediante derecho de autor. La viabilidad de estas alternativas dependerá de las características definitivas de la propuesta y de las condiciones de titularidad aplicables.
 
@@ -166,26 +165,26 @@ LanternGuard se organiza en cuatro elementos principales: módulo sumergido, boy
 
 | Elemento | Composición conceptual | Función prevista |
 |---|---|---|
-| **Módulo sumergido** | ESP32-S3-DevKitC-1-N16R8, dos cámaras Arducam Mega 5 MP, sensor ultrasónico SEN0598, acelerómetro LIS3DH, microSD, iluminación y transceptor MAX3485. Integración mediante placa universal perforada. | Capturar imágenes submarinas, registrar mediciones complementarias, almacenar temporalmente la información y transferirla a la boya mediante RS-485. |
+| **Módulo sumergido** | ESP32-S3-DevKitC-1-N16R8, dos cámaras Arducam Mega 5 MP, acelerómetro LIS3DH, microSD, iluminación y transceptor MAX3485. Integración mediante placa universal perforada. | Capturar imágenes submarinas, registrar mediciones complementarias, almacenar temporalmente la información y transferirla a la boya mediante RS-485. |
 | **Boya de superficie** | Heltec WiFi LoRa 32 V3, RTC DS3231, transceptor MAX3485 y PCB personalizada. Se contempla alimentación mediante panel solar, batería y circuito de gestión energética, además de almacenamiento temporal. | Coordinar las inspecciones programadas, recibir información del módulo sumergido, gestionar su almacenamiento temporal y transmitirla hacia tierra mediante LoRa. |
 | **Estación receptora terrestre** | Receptor Heltec WiFi LoRa 32 V3 y equipo informático con acceso a internet. | Recibir los datos transmitidos por LoRa, reconstruir los archivos y gestionar su envío al servicio de procesamiento. |
 | **Servicio de procesamiento de imágenes** | Sistema de almacenamiento y procesamiento digital de imágenes, por configurar. | Procesar las fotografías recibidas, identificar las regiones cubiertas por organismos incrustantes, estimar el porcentaje de cobertura visible de bioincrustación y presentar los resultados del monitoreo. |
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia a partir de la arquitectura conceptual propuesta para LanternGuard.</em></p>
 
-La selección de los componentes electrónicos se sustenta en la documentación técnica de sus fabricantes. Espressif Systems [\[16\]](#ref-16) describe las características del ESP32-S3-DevKitC-1, Arducam [\[8\]](#ref-8) documenta las cámaras Mega de 5 MP, DFRobot [\[9\]](#ref-9) especifica el funcionamiento del sensor ultrasónico SEN0598 y STMicroelectronics [\[10\]](#ref-10) presenta las características del acelerómetro LIS3DH. Asimismo, Analog Devices documenta el transceptor MAX3485 [\[17\]](#ref-17) y el reloj de tiempo real DS3231 [\[18\]](#ref-18), mientras que Heltec Automation [\[19\]](#ref-19) proporciona las especificaciones de la placa WiFi LoRa 32 V3.
+La selección de los componentes electrónicos se sustenta en la documentación técnica de sus fabricantes. Espressif Systems [\[15\]](#ref-15) describe las características del ESP32-S3-DevKitC-1, Arducam [\[8\]](#ref-8) documenta las cámaras Mega de 5 MP y STMicroelectronics [\[9\]](#ref-9) presenta las características del acelerómetro LIS3DH. Asimismo, Analog Devices documenta el transceptor MAX3485 [\[16\]](#ref-16) y el reloj de tiempo real DS3231 [\[17\]](#ref-17), mientras que Heltec Automation [\[18\]](#ref-18) proporciona las especificaciones de la placa WiFi LoRa 32 V3.
 
 La arquitectura contempla dos soluciones de integración electrónica. En la boya de superficie se propone utilizar una placa de circuito impreso (PCB) personalizada, cuyo diseño electrónico y distribución de pistas han sido elaborados. Por su parte, los componentes del módulo sumergido se integrarán mediante una placa universal perforada, utilizando como referencia su esquemático de conexiones. Ambas configuraciones se complementan para desarrollar las funciones de adquisición, comunicación y procesamiento previstas en LanternGuard.
 
 ### 3.3. Secuencia prevista de operación e indicador
 
-LanternGuard contempla realizar inspecciones periódicas cada 15 días, con una duración aproximada de cinco minutos para la captura de imágenes y el registro de mediciones. La programación temporal se gestionaría mediante el reloj de tiempo real (RTC) ubicado en la boya de superficie. Durante cada inspección, el módulo sumergido utilizaría dos cámaras orientadas hacia diferentes regiones de las mallas, mientras que el sensor ultrasónico y el acelerómetro registrarían mediciones complementarias de distancia y movimiento.
+LanternGuard contempla realizar inspecciones periódicas cada 15 días, con una duración aproximada de cinco minutos para la captura de imágenes y el registro de mediciones. La programación temporal se gestionaría mediante el reloj de tiempo real (RTC) ubicado en la boya de superficie. Durante cada inspección, el módulo sumergido utilizaría dos cámaras orientadas hacia diferentes regiones de las mallas, mientras que el acelerómetro registraría mediciones complementarias de movimiento.
 
 Las fotografías y mediciones obtenidas se almacenarían inicialmente en una tarjeta microSD del módulo sumergido y posteriormente se transferirían a la boya mediante comunicación RS-485. Desde la boya se contempla el envío de fotografías hacia la estación receptora terrestre mediante tecnología LoRa, considerando su almacenamiento temporal y la posible compresión y fragmentación de los archivos. La estación terrestre se encargaría de reconstruir las fotografías y gestionar su transferencia al servicio de procesamiento de imágenes. Los cinco minutos previstos corresponden únicamente a la adquisición de información y no incluyen las etapas posteriores de transferencia y transmisión.
 
 El indicador principal de LanternGuard será el porcentaje estimado de cobertura visible por bioincrustación en regiones seleccionadas de las mallas. Para su obtención, se propone analizar las fotografías mediante técnicas de procesamiento de imágenes que permitan identificar las zonas ocupadas por organismos incrustantes y diferenciarlas de la estructura de la malla. El cálculo se planteará a partir de la proporción de área visible cubierta por bioincrustación respecto al área de referencia definida para cada región de análisis. Asimismo, se contempla comparar regiones equivalentes en inspecciones sucesivas, considerando las variaciones de iluminación, turbidez y perspectiva. La definición del procedimiento se apoyará en los antecedentes de análisis de imágenes submarinas [\[4\]](#ref-4), [\[5\]](#ref-5).
 
-Las mediciones del sensor ultrasónico permitirían obtener información de distancia respecto a una superficie de referencia, mientras que el acelerómetro aportaría datos sobre el movimiento del módulo durante la captura. Estas variables complementarían el análisis visual, sin sustituir la estimación de cobertura obtenida mediante las fotografías.
+El acelerómetro LIS3DH permitiría registrar información sobre el movimiento del módulo durante la captura. Esta variable complementaría el análisis visual, sin sustituir la estimación de cobertura obtenida mediante las fotografías.
 
 ### 3.4. Representación del modelado tridimensional
 
@@ -195,7 +194,7 @@ Como parte del diseño conceptual de LanternGuard, se desarrolló un modelo trid
 
 El módulo sumergido de LanternGuard se diseñó para posicionarse sobre la linterna de cultivo y realizar la captura periódica de imágenes submarinas y mediciones complementarias. Su estructura presenta un compartimento central destinado a alojar la electrónica de control, incluyendo el ESP32-S3-DevKitC-1-N16R8, los componentes de comunicación y almacenamiento, así como las conexiones de los sensores.
 
-El diseño incorpora dos brazos laterales que permiten ubicar las cámaras Arducam Mega de 5 MP con diferentes orientaciones hacia regiones de las mallas. Asimismo, se contempla la integración del sensor ultrasónico SEN0598 para registrar distancias y del acelerómetro LIS3DH para obtener información sobre el movimiento del dispositivo durante las inspecciones.
+El diseño incorpora dos brazos laterales que permiten ubicar las cámaras Arducam Mega de 5 MP con diferentes orientaciones hacia regiones de las mallas. Asimismo, se contempla la integración del acelerómetro LIS3DH para obtener información sobre el movimiento del dispositivo durante las inspecciones.
 
 Una característica importante del modelo es su sistema de sujeción, conformado por elementos de enganche que permiten fijar el módulo a la estructura de la linterna. Esta disposición busca mantener una posición de observación consistente y reducir los desplazamientos que podrían modificar los ángulos de captura entre inspecciones.
 
@@ -594,15 +593,15 @@ Para el módulo sumergido de LanternGuard se desarrolló un esquemático electr�
 
 El esquemático se organiza en bloques funcionales de control y procesamiento, captura de imágenes, alimentación, almacenamiento, comunicación RS-485, control de iluminación y monitoreo, como se muestra en la Figura 20.
 
-**Control y procesamiento.** La unidad principal corresponde al ESP32-S3-DevKitC-1-N16R8, encargado de coordinar la adquisición de imágenes, el registro de mediciones, el almacenamiento de información y la comunicación con la boya. Esta placa dispone de interfaces digitales que permiten integrar los diferentes componentes del módulo sumergido [\[16\]](#ref-16).
+**Control y procesamiento.** La unidad principal corresponde al ESP32-S3-DevKitC-1-N16R8, encargado de coordinar la adquisición de imágenes, el registro de mediciones, el almacenamiento de información y la comunicación con la boya. Esta placa dispone de interfaces digitales que permiten integrar los diferentes componentes del módulo sumergido [\[15\]](#ref-15).
 
 **Captura de imágenes y almacenamiento.** El diseño incorpora conectores para dos cámaras Arducam Mega de 5 MP, que comparten las señales de comunicación SPI y disponen de líneas de selección independientes. Esta configuración permite coordinar la captura de fotografías desde diferentes orientaciones hacia las mallas de la linterna. Asimismo, se contempla una tarjeta microSD conectada mediante SPI para almacenar inicialmente las fotografías y mediciones obtenidas durante las inspecciones [\[8\]](#ref-8).
 
-**Comunicación RS-485.** Para transferir la información hacia la boya se utiliza un transceptor MAX3485, conectado al microcontrolador mediante señales de transmisión, recepción y control. El circuito también incorpora elementos de terminación y conexión al cable umbilical, estableciendo la interfaz de comunicación entre ambos módulos [\[17\]](#ref-17).
+**Comunicación RS-485.** Para transferir la información hacia la boya se utiliza un transceptor MAX3485, conectado al microcontrolador mediante señales de transmisión, recepción y control. El circuito también incorpora elementos de terminación y conexión al cable umbilical, estableciendo la interfaz de comunicación entre ambos módulos [\[16\]](#ref-16).
 
 **Alimentación y control de iluminación.** El esquemático contempla conexiones de alimentación de 5 V y 3,3 V, destinadas a los diferentes componentes electrónicos. Además, incorpora dos circuitos de control mediante transistores MOSFET AO3400A, que permitirán activar las fuentes de iluminación asociadas a las cámaras para favorecer la captura de imágenes submarinas.
 
-**Monitoreo y mediciones complementarias.** El diseño incluye un conector de expansión I²C que permitirá integrar el acelerómetro LIS3DH, destinado al registro de movimientos del módulo durante las inspecciones [\[10\]](#ref-10). Asimismo, se contempla la incorporación del sensor ultrasónico SEN0598, que proporcionará mediciones de distancia respecto a una superficie de referencia mediante comunicación UART [\[9\]](#ref-9). Su conexión específica y alimentación deberán incorporarse al esquema de interconexión del montaje.
+**Monitoreo y mediciones complementarias.** El diseño incluye un conector de expansión I²C que permitirá integrar el acelerómetro LIS3DH, destinado al registro de movimientos del módulo durante las inspecciones [\[9\]](#ref-9).
 
 La integración electrónica se realizará sobre una placa universal perforada, donde se organizarán las conexiones entre los módulos comerciales. Esta solución permitirá reunir los componentes del sistema de adquisición dentro del compartimento electrónico del dispositivo sumergido, de acuerdo con la disposición estructural presentada en el modelo tridimensional.
 
@@ -624,11 +623,11 @@ El esquemático se organiza en cinco bloques funcionales: alimentación, control
 
 El **bloque de alimentación** contempla una entrada de batería identificada como VBAT y la conexión de un convertidor DC-DC elevador de tensión (*Step Up*), destinado a proporcionar una alimentación regulada de 5 V a los componentes correspondientes. Este bloque permitirá integrar el suministro eléctrico de la boya con los circuitos encargados de su funcionamiento.
 
-El **bloque de control y procesamiento** está constituido por la placa Heltec WiFi LoRa 32 V3, que incorpora un microcontrolador ESP32-S3 y un transceptor LoRa. Esta unidad será la encargada de coordinar las funciones electrónicas de la boya, gestionar la comunicación con el módulo sumergido y organizar el envío inalámbrico de la información hacia tierra [\[19\]](#ref-19).
+El **bloque de control y procesamiento** está constituido por la placa Heltec WiFi LoRa 32 V3, que incorpora un microcontrolador ESP32-S3 y un transceptor LoRa. Esta unidad será la encargada de coordinar las funciones electrónicas de la boya, gestionar la comunicación con el módulo sumergido y organizar el envío inalámbrico de la información hacia tierra [\[18\]](#ref-18).
 
-En el **bloque de comunicación** se incorpora el transceptor MAX3485, que permite establecer el enlace RS-485 entre la boya y el módulo sumergido mediante el cable umbilical. El circuito dispone de conexiones para las señales de transmisión, recepción y control, además de resistencias de terminación y polarización asociadas al enlace diferencial [\[17\]](#ref-17).
+En el **bloque de comunicación** se incorpora el transceptor MAX3485, que permite establecer el enlace RS-485 entre la boya y el módulo sumergido mediante el cable umbilical. El circuito dispone de conexiones para las señales de transmisión, recepción y control, además de resistencias de terminación y polarización asociadas al enlace diferencial [\[16\]](#ref-16).
 
-Por su parte, el **bloque de control de salida y tiempo** incluye un conector para el módulo RTC DS3231, cuya función será proporcionar la referencia temporal necesaria para programar las inspecciones periódicas cada 15 días [\[18\]](#ref-18). Asimismo, integra una etapa de conmutación formada por un MOSFET AO3401A y un transistor 2N3904, destinada al control electrónico de una salida de alimentación del sistema.
+Por su parte, el **bloque de control de salida y tiempo** incluye un conector para el módulo RTC DS3231, cuya función será proporcionar la referencia temporal necesaria para programar las inspecciones periódicas cada 15 días [\[17\]](#ref-17). Asimismo, integra una etapa de conmutación formada por un MOSFET AO3401A y un transistor 2N3904, destinada al control electrónico de una salida de alimentación del sistema.
 
 Finalmente, el esquema incorpora cuatro puntos de montaje que permitirán fijar la placa dentro del compartimento electrónico de la boya.
 
@@ -706,34 +705,31 @@ La Figura 23 muestra el diseño preliminar de la interfaz del aplicativo Lantern
 **[8]** Arducam, "MEGA-5MP: Cámara SPI de 5 megapíxeles," documentación técnica, s. f. [En línea]. Disponible en: <https://docs.arducam.com/Arduino-SPI-camera/MEGA-SPI/MEGA-5MP/>
 
 <a name="ref-9"></a>
-**[9]** DFRobot, "IP68 Underwater Ultrasonic Obstacle Avoidance Sensor (3m), SEN0598," documentación técnica, s. f. [En línea]. Disponible en: <https://wiki.dfrobot.com/sen0598/>
+**[9]** STMicroelectronics, "LIS3DH: 3-axis MEMS accelerometer," documentación técnica, s. f. [En línea]. Disponible en: <https://www.st.com/en/mems-and-sensors/lis3dh.html>
 
 <a name="ref-10"></a>
-**[10]** STMicroelectronics, "LIS3DH: 3-axis MEMS accelerometer," documentación técnica, s. f. [En línea]. Disponible en: <https://www.st.com/en/mems-and-sensors/lis3dh.html>
+**[10]** Comunidad Andina, *Decisión 486: Régimen Común sobre Propiedad Industrial*, 2000. [En línea]. Disponible en: <https://www.comunidadandina.org/StaticFiles/DocOf/DEC486.pdf>
 
 <a name="ref-11"></a>
-**[11]** Comunidad Andina, *Decisión 486: Régimen Común sobre Propiedad Industrial*, 2000. [En línea]. Disponible en: <https://www.comunidadandina.org/StaticFiles/DocOf/DEC486.pdf>
+**[11]** M. Stokes, H. Pham y T. R. Swanson, "Adjustable aquaculture camera mounting system," publicación de patente WO2024072597A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/WO2024072597A1/en>
 
 <a name="ref-12"></a>
-**[12]** M. Stokes, H. Pham y T. R. Swanson, "Adjustable aquaculture camera mounting system," publicación de patente WO2024072597A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/WO2024072597A1/en>
+**[12]** H. Pham y T. R. Swanson, "Underwater net monitoring device," publicación de patente US20240130336A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/US20240130336A1/en>
 
 <a name="ref-13"></a>
-**[13]** H. Pham y T. R. Swanson, "Underwater net monitoring device," publicación de patente US20240130336A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/US20240130336A1/en>
+**[13]** M. D. Zúñiga Barraza *et al.*, "System for inspecting farming netting in aquaculture cages," publicación de patente NO20240761A1, familia WO2023108307A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/NO20240761A1/en>
 
 <a name="ref-14"></a>
-**[14]** M. D. Zúñiga Barraza *et al.*, "System for inspecting farming netting in aquaculture cages," publicación de patente NO20240761A1, familia WO2023108307A1, 2024. [En línea]. Disponible en: <https://patents.google.com/patent/NO20240761A1/en>
+**[14]** L. Fortunato y T. Leiknes, "In-situ non-invasive device for early detection of fouling in aquatic systems," publicación de patente US20200326279A1, 2020. [En línea]. Disponible en: <https://patents.google.com/patent/US20200326279A1/en>
 
 <a name="ref-15"></a>
-**[15]** L. Fortunato y T. Leiknes, "In-situ non-invasive device for early detection of fouling in aquatic systems," publicación de patente US20200326279A1, 2020. [En línea]. Disponible en: <https://patents.google.com/patent/US20200326279A1/en>
+**[15]** Espressif Systems, "ESP32-S3-DevKitC-1: Placas de desarrollo ESP32-S3," documentación técnica del fabricante, s. f. [En línea]. Disponible en: <https://www.espressif.com/en/products/devkits/esp32-s3-series/esp32-s3-devkitc-1>
 
 <a name="ref-16"></a>
-**[16]** Espressif Systems, "ESP32-S3-DevKitC-1: Placas de desarrollo ESP32-S3," documentación técnica del fabricante, s. f. [En línea]. Disponible en: <https://www.espressif.com/en/products/devkits/esp32-s3-series/esp32-s3-devkitc-1>
+**[16]** Analog Devices, "MAX3485: Transceptor RS-485/RS-422 de 3,3 V," ficha técnica, s. f. [En línea]. Disponible en: <https://www.analog.com/en/products/max3485.html>
 
 <a name="ref-17"></a>
-**[17]** Analog Devices, "MAX3485: Transceptor RS-485/RS-422 de 3,3 V," ficha técnica, s. f. [En línea]. Disponible en: <https://www.analog.com/en/products/max3485.html>
+**[17]** Analog Devices, "DS3231: Reloj de tiempo real integrado con interfaz I²C," ficha técnica, s. f. [En línea]. Disponible en: <https://www.analog.com/en/products/ds3231.html>
 
 <a name="ref-18"></a>
-**[18]** Analog Devices, "DS3231: Reloj de tiempo real integrado con interfaz I²C," ficha técnica, s. f. [En línea]. Disponible en: <https://www.analog.com/en/products/ds3231.html>
-
-<a name="ref-19"></a>
-**[19]** Heltec Automation, "WiFi LoRa 32 (V3): ESP32-S3 y SX1262," documentación técnica, s. f. [En línea]. Disponible en: <https://heltec.org/project/wifi-lora-32-v3/>
+**[18]** Heltec Automation, "WiFi LoRa 32 (V3): ESP32-S3 y SX1262," documentación técnica, s. f. [En línea]. Disponible en: <https://heltec.org/project/wifi-lora-32-v3/>
