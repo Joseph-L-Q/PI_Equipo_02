@@ -243,6 +243,270 @@ El cable umbilical establecerá la conexión física entre ambos módulos, permi
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia. Se muestra la integración de la boya de superficie y el módulo sumergido, unidos mediante el cable umbilical, de acuerdo con la configuración estructural propuesta para LanternGuard.</em></p>
 
+### 3.4.4. Planos dimensionales de los componentes estructurales de LanternGuard
+
+Como complemento del modelado tridimensional, se presentan los planos dimensionales de los componentes estructurales de LanternGuard. Estos documentos técnicos permiten identificar las características geométricas de las piezas, sus dimensiones, perforaciones y elementos de fijación, proporcionando información para orientar su fabricación y posterior ensamblaje.
+
+Los planos incluyen vistas ortogonales e isométricas, cotas expresadas en milímetros y especificaciones relacionadas con el material y la cantidad requerida de cada componente. Esta documentación complementa la representación conceptual del sistema y facilita la identificación de las características constructivas de las piezas diseñadas.
+
+#### 3.4.4.1. Planos dimensionales de la boya de superficie
+
+Los siguientes planos corresponden a componentes estructurales de la boya de superficie de LanternGuard. Se presentan individualmente las piezas B1_casco, B2_cubierta, B3_caja y B4_tapa, fabricables mediante impresión 3D utilizando material PETG.
+
+Cada plano contiene las vistas y cotas necesarias para describir la geometría de la pieza, así como los detalles de sus perforaciones, soportes y puntos de unión. De acuerdo con los cajetines de los cuatro planos, se requiere una unidad de cada componente.
+
+##### 3.4.4.1.1. Plano dimensional de la pieza B1_casco
+
+La pieza **B1_casco** presenta una estructura abierta conformada por una base, elementos laterales y divisiones verticales. Su geometría incorpora aberturas poligonales distribuidas en los laterales, así como ranuras y perforaciones ubicadas en diferentes zonas de la pieza.
+
+El plano muestra las vistas ortogonales e isométricas, con una dimensión longitudinal principal de 254 mm y cotas adicionales que permiten identificar la distribución y separación de sus elementos estructurales. También se detallan las características de las aberturas y los puntos de fijación previstos en el diseño. Esta información proporciona una referencia técnica para su fabricación e integración en el conjunto de la boya de superficie.
+
+<p align="center">
+  <strong><em>Figura 4. Plano dimensional de la pieza B1_casco de la boya de superficie de LanternGuard.</em></strong>
+</p>
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/62168797-64c9-4a5d-81d2-fd60a1c1dd78"
+       alt="Plano dimensional de la pieza B1_casco"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones principales, aberturas geométricas y detalles de fijación de la pieza B1_casco. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.1.2. Plano dimensional de la pieza B2_cubierta
+
+La pieza **B2_cubierta** presenta una configuración estructural abierta, formada por barras longitudinales y transversales que delimitan espacios interiores. Su diseño incorpora elementos verticales de soporte, perforaciones distribuidas en las barras y detalles geométricos en las uniones de la estructura.
+
+El plano incluye las vistas ortogonales e isométricas, con dimensiones generales de 254 mm y 225,6 mm en planta, además de cotas correspondientes a la separación, disposición y características de sus elementos. También se indican perforaciones y detalles de acabado, como chaflanes en determinadas uniones. Esta documentación permite identificar las características constructivas de la pieza para su posterior fabricación e integración con los demás elementos de la boya.
+
+<p align="center">
+  <strong><em>Figura 5. Plano dimensional de la pieza B2_cubierta de la boya de superficie de LanternGuard.</em></strong>
+</p>
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/e1c05a38-a533-4c50-b44e-9ffdc9ebd91a"
+       alt="Plano dimensional de la pieza B2_cubierta"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se muestran las vistas ortogonales e isométricas, dimensiones, barras estructurales, soportes verticales, perforaciones y detalles de unión de la pieza B2_cubierta. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.1.3. Plano dimensional de la pieza B3_caja
+
+La pieza **B3_caja** presenta un compartimento de geometría rectangular, abierto en su parte superior y provisto de un borde perimetral. Su configuración incorpora paredes laterales, elementos internos de soporte, perforaciones y puntos de fijación distribuidos en diferentes zonas del compartimento.
+
+El plano establece dimensiones exteriores principales de **166,8 mm de largo, 116,8 mm de ancho y 74,4 mm de alto**. Asimismo, presenta detalles de las perforaciones, soportes internos y elementos de montaje que deberán considerarse durante su fabricación y ensamblaje. Estas características permiten definir la geometría del compartimento y su integración estructural dentro de la boya de superficie.
+
+<p align="center">
+  <strong><em>Figura 6. Plano dimensional de la pieza B3_caja de la boya de superficie de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/84b62519-172c-4f24-8a99-2e2bbe104586"
+       alt="Plano dimensional de la pieza B3_caja"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones exteriores, soportes internos y puntos de fijación de la pieza B3_caja. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.1.4. Plano dimensional de la pieza B4_tapa
+
+La pieza **B4_tapa** presenta una geometría rectangular de perfil delgado, con esquinas redondeadas y perforaciones distribuidas alrededor de su perímetro. Su configuración corresponde a un elemento de cierre que contempla puntos de fijación para su integración con un compartimento estructural.
+
+El plano muestra las vistas de la pieza y una representación isométrica, incluyendo cotas correspondientes a su geometría, espesor y ubicación de las perforaciones. También se indican radios de redondeo en las esquinas y dimensiones relacionadas con la distribución de los puntos de fijación. Esta información permite establecer las características necesarias para su fabricación mediante impresión 3D y su posterior montaje.
+
+<p align="center">
+  <strong><em>Figura 7. Plano dimensional de la pieza B4_tapa de la boya de superficie de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f4e3a1dc-f382-4bd7-8876-acbada48378c"
+       alt="Plano dimensional de la pieza B4_tapa"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se muestran las vistas y representación isométrica, geometría, espesor, esquinas redondeadas y perforaciones de fijación de la pieza B4_tapa. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
+</p>
+
+
+##### 3.4.4.1.5. Plano dimensional de la pieza B5_cuna
+
+La pieza **B5_cuna** presenta una estructura abierta y alargada, conformada por paredes laterales, divisiones internas y elementos verticales de soporte. Su diseño incorpora aberturas poligonales distribuidas en las paredes, así como perforaciones y elementos de fijación ubicados en diferentes zonas de la estructura.
+
+El plano muestra las vistas ortogonales e isométricas, con una longitud principal de **254 mm**, una altura de **85,4 mm** y otras cotas que permiten identificar la geometría y disposición de sus elementos. Asimismo, se indican detalles constructivos relacionados con los soportes y chaflanes de la base. Esta información proporciona una referencia técnica para la fabricación de la pieza y su integración en el conjunto estructural de la boya de superficie.
+
+<p align="center">
+  <strong><em>Figura 8. Plano dimensional de la pieza B5_cuna de la boya de superficie de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/537b7afa-2499-469e-8b2c-0c51b316aee7"
+       alt="Plano dimensional de la pieza B5_cuna"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones principales, aberturas laterales, elementos de soporte y perforaciones de fijación de la pieza B5_cuna. Material: PETG. Cantidad requerida: 2 unidades. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.1.6. Plano dimensional de la pieza B6_correa
+
+La pieza **B6_correa** presenta una geometría prismática rectangular y alargada, con dos perforaciones circulares situadas cerca de sus extremos. Su configuración corresponde a un elemento estructural sencillo que dispone de puntos de fijación para su integración con otros componentes del conjunto.
+
+El plano incluye vistas ortogonales e isométricas que permiten identificar sus dimensiones de **103,8 mm de longitud, 14 mm de ancho y 4 mm de espesor**. Asimismo, se especifican dos perforaciones de **3,4 mm de diámetro**, cuya disposición se representa en el dibujo técnico. Estas características proporcionan la información geométrica necesaria para orientar su fabricación mediante impresión 3D.
+
+<p align="center">
+  <strong><em>Figura 9. Plano dimensional de la pieza B6_correa de la boya de superficie de LanternGuard.</em></strong>
+</p>
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0149ba69-3b40-41d2-ab2c-29bf16fc1ff0"
+       alt="Plano dimensional de la pieza B6_correa"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se muestran las vistas ortogonales e isométricas de la pieza B6_correa, con dimensiones de 103,8 × 14 × 4 mm y dos perforaciones de 3,4 mm de diámetro. Material: PETG. Cantidad requerida: 4 unidades. Cotas expresadas en milímetros.</em>
+</p>
+
+#### 3.4.4.2. Planos dimensionales del módulo sumergido
+
+A continuación, se presentan los planos dimensionales de los componentes estructurales correspondientes al módulo sumergido de LanternGuard. Estos documentos permiten identificar la geometría de las piezas, las dimensiones principales, las perforaciones y los elementos de fijación considerados en su diseño.
+
+Los planos complementan la representación tridimensional del módulo sumergido y proporcionan información técnica para orientar la fabricación mediante impresión 3D y el posterior ensamblaje de sus componentes.
+
+##### 3.4.4.2.1. Plano dimensional de la pieza M1s_caja_cuerpo
+
+La pieza **M1s_caja_cuerpo** presenta un compartimento de geometría rectangular, abierto en su parte superior y provisto de un borde perimetral con perforaciones de fijación. Su configuración incorpora paredes laterales, elementos internos de soporte, una sección inferior sobresaliente y un elemento lateral con una abertura circular y perforaciones para montaje.
+
+El plano muestra vistas ortogonales e isométricas, con dimensiones generales de **147 mm por 146 mm en planta y una altura de 107 mm**. Asimismo, se especifican perforaciones de diferentes diámetros, elementos internos de soporte y detalles geométricos relacionados con el montaje del compartimento. Estos elementos proporcionan información sobre la configuración estructural prevista para la pieza y su integración con otros componentes del módulo sumergido.
+
+<p align="center">
+  <strong><em>Figura 10. Plano dimensional de la pieza M1s_caja_cuerpo del módulo sumergido de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9605dd6c-c475-42f4-9f9c-dc9833000f8b"
+       alt="Plano dimensional de la pieza M1s_caja_cuerpo"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones generales, borde perimetral, elementos internos de soporte y perforaciones de fijación de la pieza M1s_caja_cuerpo. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.2.2. Plano dimensional de la pieza M2_caja_tapa
+
+La pieza **M2_caja_tapa** presenta una placa de geometría rectangular, con esquinas redondeadas y perforaciones distribuidas alrededor de su perímetro. Sobre una de sus superficies incorpora una estructura elevada de soporte, conformada por un elemento transversal con refuerzos laterales y una sección circular perforada en su parte superior.
+
+El plano muestra las vistas ortogonales e isométricas, con dimensiones principales de **135 mm por 134 mm en planta**. También se especifica una perforación circular de **12,6 mm de diámetro**, situada fuera del centro de la placa, así como perforaciones de fijación de **3,4 mm de diámetro** en el perímetro. La estructura elevada presenta, además, una sección circular con diámetros indicados de **20 mm y 10 mm**. Estos detalles permiten reconocer la geometría de la tapa y los elementos considerados para su fabricación y posterior montaje.
+
+<p align="center">
+  <strong><em>Figura 11. Plano dimensional de la pieza M2_caja_tapa del módulo sumergido de LanternGuard.</em></strong>
+</p>
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/85b6309f-a0a8-40bf-b3c5-26f0563591e9"
+       alt="Plano dimensional de la pieza M2_caja_tapa"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones principales, perforaciones de fijación y geometría de la estructura elevada de la pieza M2_caja_tapa. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
+</p>
+
+
+##### 3.4.4.2.3. Plano dimensional de la pieza M3s_riel_gancho
+
+La pieza **M3s_riel_gancho** presenta una estructura alargada de sección rectangular, con una placa de fijación en uno de sus extremos y un elemento inferior terminado en forma de gancho abierto. Su diseño incorpora aberturas triangulares distribuidas en las caras laterales del cuerpo principal, además de perforaciones circulares y una abertura en la zona frontal de la estructura.
+
+El plano muestra las vistas ortogonales e isométricas, con una longitud total de **141,5 mm** y una cota de **30 mm** correspondiente a la altura de una de las caras del cuerpo longitudinal. Asimismo, se indican perforaciones de **4,2 mm de diámetro**, una abertura circular frontal de **8 mm de diámetro** y radios que permiten definir la geometría del gancho inferior. Estas características proporcionan información para la fabricación de la pieza y su posterior integración en el conjunto estructural del módulo sumergido.
+
+<p align="center">
+  <strong><em>Figura 12. Plano dimensional de la pieza M3s_riel_gancho del módulo sumergido de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a306688f-f00e-4f7e-b8e0-64d4f88bde7f"
+       alt="Plano dimensional de la pieza M3s_riel_gancho"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones principales, aberturas triangulares, perforaciones de fijación y geometría del gancho de la pieza M3s_riel_gancho. Material: PETG. Cantidad requerida: 2 unidades. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.2.4. Plano dimensional de la pieza M3t_tapa_bolsillo
+
+La pieza **M3t_tapa_bolsillo** presenta una geometría rectangular de perfil delgado, con superficies planas y dos perforaciones circulares ubicadas cerca de sus extremos. Su configuración corresponde a una placa destinada a integrarse con otros elementos del conjunto mediante los puntos de fijación representados en el plano.
+
+El dibujo técnico incluye vistas ortogonales e isométricas, con dimensiones principales de **117 mm de longitud y 57 mm de ancho**. Asimismo, se especifican dos perforaciones de **3,4 mm de diámetro**, acompañadas de detalles circulares concéntricos acotados con un diámetro de **6,72 mm**. Estas características permiten identificar la geometría de la pieza y los detalles necesarios para orientar su fabricación y posterior ensamblaje.
+
+<p align="center">
+  <strong><em>Figura 13. Plano dimensional de la pieza M3t_tapa_bolsillo del módulo sumergido de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a96de4f3-b913-49fa-9fa1-155e552397c5"
+       alt="Plano dimensional de la pieza M3t_tapa_bolsillo"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se muestran las vistas ortogonales e isométricas, dimensiones de la placa y detalles de sus dos puntos de fijación. Material: PETG. Cantidad requerida: 2 unidades. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.2.5. Plano dimensional de la pieza M4_capsula_cuerpo
+
+La pieza **M4_capsula_cuerpo** presenta una estructura hueca de geometría prismática rectangular, conformada por un cuerpo posterior y una placa frontal cuadrada con esquinas redondeadas. La placa incorpora cuatro perforaciones distribuidas en sus esquinas, mientras que el interior del cuerpo presenta una cavidad y elementos de geometría circular. También se observa una perforación circular en una de las paredes laterales.
+
+El plano incluye vistas ortogonales e isométricas, con dimensiones de **56 mm por 56 mm** para la placa frontal y una extensión posterior acotada de **38 mm**. Asimismo, se especifican perforaciones de fijación de **3,4 mm de diámetro**, una perforación lateral de **12,6 mm de diámetro** y detalles circulares interiores con diámetros de **26 mm y 30,4 mm**. Estas especificaciones permiten definir la geometría de la pieza y los elementos considerados para su fabricación e integración con otros componentes del módulo sumergido.
+
+<p align="center">
+  <strong><em>Figura 14. Plano dimensional de la pieza M4_capsula_cuerpo del módulo sumergido de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/91754ce8-8c18-4ff7-b52b-438fe0708653"
+       alt="Plano dimensional de la pieza M4_capsula_cuerpo"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones de la placa frontal, cavidad interior, perforaciones y detalles geométricos de la pieza M4_capsula_cuerpo. Material: PETG. Cantidad requerida: 2 unidades. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.2.6. Plano dimensional de la pieza M5_capsula_tapa_pie
+
+La pieza **M5_capsula_tapa_pie** presenta una configuración estructural compuesta por una placa rectangular con abertura interior, un elemento de soporte inclinado y una sección superior en forma de U. Esta última está conformada por dos paredes paralelas unidas mediante una base, con perforaciones circulares ubicadas en las paredes laterales. La placa inferior incorpora, además, perforaciones distribuidas alrededor de su perímetro.
+
+El plano muestra vistas ortogonales e isométricas que permiten identificar la disposición de estos elementos y sus dimensiones. Entre las cotas principales se encuentran **50 mm** de ancho y **36 mm** de altura para la sección superior, una altura de **48,5 mm** para la placa rectangular y una longitud acotada de **57,38 mm** en uno de los elementos inclinados. Asimismo, se especifican dos perforaciones de **4,2 mm de diámetro** en la sección superior. Esta información proporciona una referencia para la fabricación de la pieza y su posterior integración estructural en el módulo sumergido.
+
+<p align="center">
+  <strong><em>Figura 15. Plano dimensional de la pieza M5_capsula_tapa_pie del módulo sumergido de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7b2008ac-7305-4777-a113-7431c3c239b7"
+       alt="Plano dimensional de la pieza M5_capsula_tapa_pie"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones, placa rectangular, soporte inclinado y sección superior en forma de U de la pieza M5_capsula_tapa_pie. Material: PETG. Cantidad requerida: 2 unidades. Cotas expresadas en milímetros.</em>
+</p>
+
 ### 3.5. Diseño electrónico del módulo sumergido
 
 Para el módulo sumergido de LanternGuard se desarrolló un esquemático electrónico mediante EasyEDA, con el propósito de establecer las conexiones de los componentes encargados de la captura de imágenes, almacenamiento, comunicación y control de iluminación. A diferencia de la boya de superficie, este módulo no contará con una PCB personalizada, ya que sus componentes se integrarán mediante una placa universal perforada, conocida como *galleta electrónica*, sobre la cual se realizarán las conexiones correspondientes.
