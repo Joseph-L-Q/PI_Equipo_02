@@ -333,7 +333,7 @@ La Figura 7 muestra el diseño preliminar de la interfaz del aplicativo LanternG
 
 ---
 
-## Referencias bibliográficas — Formato IEEE
+## Referencias bibliográficas
 
 <a name="ref-1"></a>
 **[\[1\]](https://vinculate.concytec.gob.pe/wp-content/files/RP-020-2022-CONCYTEC-P.pdf)** Consejo Nacional de Ciencia, Tecnología e Innovación Tecnológica (CONCYTEC), *Directiva N.º 001-2022-CONCYTEC-P: Uso de la metodología Nivel de Madurez Tecnológica (TRL)*, Resolución de Presidencia N.º 020-2022-CONCYTEC-P, Perú, 2022. [En línea]. Disponible en: <https://vinculate.concytec.gob.pe/wp-content/files/RP-020-2022-CONCYTEC-P.pdf>
