@@ -1,3 +1,4 @@
+
 <h1 align="center">LanternGuard</h1>
 
 <h2 align="center">TRL 2 — Formulación conceptual de la propuesta tecnológica</h2>
@@ -82,7 +83,7 @@ A partir de estos antecedentes, LanternGuard propone analizar fotografías subma
 
 ### 1.3. Sustento para la arquitectura de adquisición y comunicación
 
-Augustin et al. [\[6\]](#ref-6) analizaron las características y el desempeño de la tecnología LoRa, destacando su capacidad de comunicación a largas distancias y su bajo consumo energético, aunque con limitaciones en la velocidad de transmisión de datos. De manera complementaria, Jebril et al. [\[7\]](#ref-7) investigaron la transmisión de imágenes mediante LoRa, utilizando la división de la información en paquetes para superar las restricciones del enlace inalámbrico. Ambos estudios proporcionan fundamentos para la arquitectura de comunicación propuesta en LanternGuard, que contempla el almacenamiento temporal de fotografías, su transmisión mediante paquetes de datos y la posterior reconstrucción de los archivos en la estación receptora terrestre. No obstante, la velocidad efectiva y el alcance de comunicación dependerán de las características y condiciones del enlace utilizado.
+Augustin et al. [\[6\]](#ref-6) analizaron las características y el desempeño de la tecnología LoRa, destacando su capacidad de comunicación a largas distancias y su bajo consumo energético, aunque con limitaciones en la velocidad de transmisión de datos. De manera complementaria, Jebril et al. [\[7\]](#ref-7) investigaron alternativas para transmitir imágenes mediante LoRa, mediante la división de los archivos en paquetes. Este último estudio se considera un antecedente tecnológico, pero la transmisión de fotografías completas por LoRa no forma parte de la arquitectura seleccionada para LanternGuard. En la propuesta, LoRa se destina a mensajes breves de estado, metadatos de las inspecciones e indicadores resumidos cuando estén disponibles; las fotografías completas se reservarán para una transferencia local posterior. El alcance y desempeño del enlace deberán evaluarse en etapas posteriores.
 
 Respecto a la adquisición de información, la documentación técnica de Arducam [\[8\]](#ref-8) describe las características de las cámaras Mega de 5 MP con interfaz SPI, seleccionadas para la captura de imágenes submarinas. Por su parte, STMicroelectronics [\[9\]](#ref-9) describe el acelerómetro triaxial LIS3DH, que permite registrar aceleraciones y movimientos. Estos componentes sustentan la selección tecnológica de LanternGuard, donde las cámaras permitirán observar regiones de las mallas, mientras que el acelerómetro proporcionará información complementaria sobre el movimiento del módulo durante la captura.
 
@@ -96,11 +97,11 @@ Respecto a la adquisición de información, la documentación técnica de Arduca
 | Chen et al. [\[3\]](#ref-3) | Analizaron los efectos de la bioincrustación sobre el comportamiento hidrodinámico de redes acuícolas. | Sustentar la importancia del seguimiento de la bioincrustación acumulada en las mallas. |
 | Qiu et al. [\[4\]](#ref-4) | Desarrollaron un método de análisis de imágenes submarinas para estimar el bloqueo de aberturas de redes. | Considerar técnicas de segmentación para identificar organismos incrustantes en imágenes submarinas. |
 | Cappaert et al. [\[5\]](#ref-5) | Desarrollaron un procedimiento de segmentación de imágenes para estimar la oclusión de redes salmoneras. | Orientar la diferenciación visual entre organismos incrustantes, estructura de la malla y regiones de agua. |
-| Augustin et al. [\[6\]](#ref-6) y Jebril et al. [\[7\]](#ref-7) | Estudiaron las características y limitaciones de LoRa, así como alternativas para transmitir imágenes mediante esta tecnología. | Sustentar una arquitectura de almacenamiento temporal, fragmentación y reconstrucción de fotografías. |
+| Augustin et al. [\[6\]](#ref-6) y Jebril et al. [\[7\]](#ref-7) | Estudiaron las características y limitaciones de LoRa y las dificultades de transmitir imágenes mediante esta tecnología. | Fundamentar el uso de LoRa para mensajes breves y reservar las fotografías completas para transferencia local, sin incluir su transmisión por LoRa en la arquitectura propuesta. |
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia a partir de los antecedentes científicos revisados en los apartados 1.1, 1.2 y 1.3.</em></p>
 
-Las investigaciones revisadas proporcionan fundamentos científicos y tecnológicos para la formulación de LanternGuard. Los estudios sobre bioincrustación justifican la importancia de monitorear su acumulación en las estructuras de cultivo, mientras que los métodos de procesamiento de imágenes aportan antecedentes para identificar y analizar visualmente organismos incrustantes. Asimismo, las investigaciones sobre comunicación LoRa respaldan la arquitectura propuesta para transmitir la información capturada. A partir de estos antecedentes, LanternGuard plantea integrar tecnologías existentes en un sistema de monitoreo periódico orientado a estimar la cobertura visible de bioincrustación en las mallas de las linternas utilizadas para el cultivo de *Argopecten purpuratus*.
+Las investigaciones revisadas proporcionan fundamentos científicos y tecnológicos para la formulación de LanternGuard. Los estudios sobre bioincrustación justifican la importancia de monitorear su acumulación en las estructuras de cultivo, mientras que los métodos de procesamiento de imágenes aportan antecedentes para identificar y analizar visualmente organismos incrustantes. Asimismo, las investigaciones sobre comunicación LoRa sustentan su uso para transmitir información breve de las inspecciones, teniendo en cuenta sus limitaciones de velocidad. A partir de estos antecedentes, LanternGuard plantea integrar tecnologías existentes en un sistema de monitoreo periódico orientado a estimar la cobertura visible de bioincrustación en las mallas de las linternas utilizadas para el cultivo de *Argopecten purpuratus*.
 
 ---
 
@@ -159,15 +160,15 @@ En el cultivo suspendido de concha de abanico (*Argopecten purpuratus*), las mal
 
 ### 3.2. Arquitectura funcional propuesta
 
-LanternGuard se organiza en cuatro elementos principales: módulo sumergido, boya de superficie, estación receptora terrestre y servicio de procesamiento de imágenes. El módulo sumergido se conecta con la boya mediante un cable umbilical que permite establecer la comunicación RS-485. Desde la boya, la información se transmitiría hacia la estación terrestre mediante tecnología LoRa. Posteriormente, la estación gestionaría el envío de los archivos a un servicio de procesamiento de imágenes a través de una conexión a internet.
+LanternGuard se organiza en cuatro elementos principales: módulo sumergido, boya de superficie, estación receptora terrestre y servicio de procesamiento de imágenes. El módulo sumergido se conecta con la boya mediante un cable umbilical que permite transferir fotografías y registros por comunicación RS-485. Desde la boya, LoRa se utilizará para transmitir a la estación terrestre mensajes breves sobre las inspecciones, como metadatos, estado e indicadores resumidos cuando estén disponibles, pero no fotografías completas. Estas últimas se conservarán para su recuperación mediante una transferencia local posterior, cuyo medio específico aún no se define en esta etapa conceptual. Una vez que el equipo terrestre disponga de las fotografías, gestionará su envío al servicio de procesamiento de imágenes mediante una conexión a internet.
 
 <p align="center"><strong>Tabla 3. Componentes y funciones de la arquitectura conceptual de LanternGuard</strong></p>
 
 | Elemento | Composición conceptual | Función prevista |
 |---|---|---|
 | **Módulo sumergido** | ESP32-S3-DevKitC-1-N16R8, dos cámaras Arducam Mega 5 MP, acelerómetro LIS3DH, microSD, iluminación y transceptor MAX3485. Integración mediante placa universal perforada. | Capturar imágenes submarinas, registrar mediciones complementarias, almacenar temporalmente la información y transferirla a la boya mediante RS-485. |
-| **Boya de superficie** | Heltec WiFi LoRa 32 V3, RTC DS3231, transceptor MAX3485 y PCB personalizada. Se contempla alimentación mediante panel solar, batería y circuito de gestión energética, además de almacenamiento temporal. | Coordinar las inspecciones programadas, recibir información del módulo sumergido, gestionar su almacenamiento temporal y transmitirla hacia tierra mediante LoRa. |
-| **Estación receptora terrestre** | Receptor Heltec WiFi LoRa 32 V3 y equipo informático con acceso a internet. | Recibir los datos transmitidos por LoRa, reconstruir los archivos y gestionar su envío al servicio de procesamiento. |
+| **Boya de superficie** | Heltec WiFi LoRa 32 V3, RTC DS3231, transceptor MAX3485 y PCB personalizada. Se contempla alimentación mediante panel solar, batería y circuito de gestión energética, además de almacenamiento temporal. | Coordinar las inspecciones programadas, recibir los datos y fotografías del módulo sumergido, conservarlos temporalmente y enviar mediante LoRa información resumida de las inspecciones; las fotografías completas se recuperarían por transferencia local posterior. |
+| **Estación receptora terrestre** | Receptor Heltec WiFi LoRa 32 V3 y equipo informático con acceso a internet. | Recibir por LoRa los mensajes breves de las inspecciones y gestionar, después de la recuperación local de las fotografías completas, su envío al servicio de procesamiento. |
 | **Servicio de procesamiento de imágenes** | Sistema de almacenamiento y procesamiento digital de imágenes, por configurar. | Procesar las fotografías recibidas, identificar las regiones cubiertas por organismos incrustantes, estimar el porcentaje de cobertura visible de bioincrustación y presentar los resultados del monitoreo. |
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia a partir de la arquitectura conceptual propuesta para LanternGuard.</em></p>
@@ -180,7 +181,7 @@ La arquitectura contempla dos soluciones de integración electrónica. En la boy
 
 LanternGuard contempla realizar inspecciones periódicas cada 15 días, con una duración aproximada de cinco minutos para la captura de imágenes y el registro de mediciones. La programación temporal se gestionaría mediante el reloj de tiempo real (RTC) ubicado en la boya de superficie. Durante cada inspección, el módulo sumergido utilizaría dos cámaras orientadas hacia diferentes regiones de las mallas, mientras que el acelerómetro registraría mediciones complementarias de movimiento.
 
-Las fotografías y mediciones obtenidas se almacenarían inicialmente en una tarjeta microSD del módulo sumergido y posteriormente se transferirían a la boya mediante comunicación RS-485. Desde la boya se contempla el envío de fotografías hacia la estación receptora terrestre mediante tecnología LoRa, considerando su almacenamiento temporal y la posible compresión y fragmentación de los archivos. La estación terrestre se encargaría de reconstruir las fotografías y gestionar su transferencia al servicio de procesamiento de imágenes. Los cinco minutos previstos corresponden únicamente a la adquisición de información y no incluyen las etapas posteriores de transferencia y transmisión.
+Las fotografías y mediciones obtenidas se almacenarían inicialmente en una tarjeta microSD del módulo sumergido y posteriormente se transferirían a la boya mediante comunicación RS-485. La boya conservaría temporalmente las fotografías completas; estas no se enviarían por LoRa, sino que se recuperarían mediante una transferencia local posterior, cuyo medio aún debe definirse. El enlace LoRa se reservaría para mensajes breves de estado y metadatos de las inspecciones, así como indicadores resumidos cuando estén disponibles. Una vez recibidas las fotografías completas en tierra, se gestionarían su almacenamiento y envío al servicio de procesamiento de imágenes, donde se estimaría la cobertura visible de bioincrustación para presentarla en el aplicativo. Los cinco minutos previstos corresponden únicamente a la adquisición de información y no incluyen las etapas posteriores de transferencia y procesamiento.
 
 El indicador principal de LanternGuard será el porcentaje estimado de cobertura visible por bioincrustación en regiones seleccionadas de las mallas. Para su obtención, se propone analizar las fotografías mediante técnicas de procesamiento de imágenes que permitan identificar las zonas ocupadas por organismos incrustantes y diferenciarlas de la estructura de la malla. El cálculo se planteará a partir de la proporción de área visible cubierta por bioincrustación respecto al área de referencia definida para cada región de análisis. Asimismo, se contempla comparar regiones equivalentes en inspecciones sucesivas, considerando las variaciones de iluminación, turbidez y perspectiva. La definición del procedimiento se apoyará en los antecedentes de análisis de imágenes submarinas [\[4\]](#ref-4), [\[5\]](#ref-5).
 
@@ -264,7 +265,6 @@ El plano muestra las vistas ortogonales e isométricas, con una dimensión longi
   <strong><em>Figura 4. Plano dimensional de la pieza B1_casco de la boya de superficie de LanternGuard.</em></strong>
 </p>
 
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/62168797-64c9-4a5d-81d2-fd60a1c1dd78"
        alt="Plano dimensional de la pieza B1_casco"
@@ -284,7 +284,6 @@ El plano incluye las vistas ortogonales e isométricas, con dimensiones generale
 <p align="center">
   <strong><em>Figura 5. Plano dimensional de la pieza B2_cubierta de la boya de superficie de LanternGuard.</em></strong>
 </p>
-
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e1c05a38-a533-4c50-b44e-9ffdc9ebd91a"
@@ -336,7 +335,6 @@ El plano muestra las vistas de la pieza y una representación isométrica, inclu
   <em><strong>Nota.</strong> Elaboración propia. Se muestran las vistas y representación isométrica, geometría, espesor, esquinas redondeadas y perforaciones de fijación de la pieza B4_tapa. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
 </p>
 
-
 ##### 3.4.4.1.5. Plano dimensional de la pieza B5_cuna
 
 La pieza **B5_cuna** presenta una estructura abierta y alargada, conformada por paredes laterales, divisiones internas y elementos verticales de soporte. Su diseño incorpora aberturas poligonales distribuidas en las paredes, así como perforaciones y elementos de fijación ubicados en diferentes zonas de la estructura.
@@ -366,7 +364,6 @@ El plano incluye vistas ortogonales e isométricas que permiten identificar sus 
 <p align="center">
   <strong><em>Figura 9. Plano dimensional de la pieza B6_correa de la boya de superficie de LanternGuard.</em></strong>
 </p>
-
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/0149ba69-3b40-41d2-ab2c-29bf16fc1ff0"
@@ -414,7 +411,6 @@ El plano muestra las vistas ortogonales e isométricas, con dimensiones principa
   <strong><em>Figura 11. Plano dimensional de la pieza M2_caja_tapa del módulo sumergido de LanternGuard.</em></strong>
 </p>
 
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/85b6309f-a0a8-40bf-b3c5-26f0563591e9"
        alt="Plano dimensional de la pieza M2_caja_tapa"
@@ -424,7 +420,6 @@ El plano muestra las vistas ortogonales e isométricas, con dimensiones principa
 <p align="center">
   <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones principales, perforaciones de fijación y geometría de la estructura elevada de la pieza M2_caja_tapa. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
 </p>
-
 
 ##### 3.4.4.2.3. Plano dimensional de la pieza M3s_riel_gancho
 
@@ -505,7 +500,6 @@ El plano muestra vistas ortogonales e isométricas que permiten identificar la d
 <p align="center">
   <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones, placa rectangular, soporte inclinado y sección superior en forma de U de la pieza M5_capsula_tapa_pie. Material: PETG. Cantidad requerida: 2 unidades. Cotas expresadas en milímetros.</em>
 </p>
-
 
 ##### 3.4.4.2.7. Plano dimensional de la pieza M6_capsula_bisel
 
@@ -623,7 +617,7 @@ El esquemático se organiza en cinco bloques funcionales: alimentación, control
 
 El **bloque de alimentación** contempla una entrada de batería identificada como VBAT y la conexión de un convertidor DC-DC elevador de tensión (*Step Up*), destinado a proporcionar una alimentación regulada de 5 V a los componentes correspondientes. Este bloque permitirá integrar el suministro eléctrico de la boya con los circuitos encargados de su funcionamiento.
 
-El **bloque de control y procesamiento** está constituido por la placa Heltec WiFi LoRa 32 V3, que incorpora un microcontrolador ESP32-S3 y un transceptor LoRa. Esta unidad será la encargada de coordinar las funciones electrónicas de la boya, gestionar la comunicación con el módulo sumergido y organizar el envío inalámbrico de la información hacia tierra [\[18\]](#ref-18).
+El **bloque de control y procesamiento** está constituido por la placa Heltec WiFi LoRa 32 V3, que incorpora un microcontrolador ESP32-S3 y un transceptor LoRa. Esta unidad será la encargada de coordinar las funciones electrónicas de la boya, gestionar la comunicación con el módulo sumergido y organizar el envío inalámbrico de mensajes breves de estado, metadatos e indicadores resumidos cuando estén disponibles, sin transmitir las fotografías completas mediante LoRa [\[18\]](#ref-18).
 
 En el **bloque de comunicación** se incorpora el transceptor MAX3485, que permite establecer el enlace RS-485 entre la boya y el módulo sumergido mediante el cable umbilical. El circuito dispone de conexiones para las señales de transmisión, recepción y control, además de resistencias de terminación y polarización asociadas al enlace diferencial [\[16\]](#ref-16).
 
@@ -676,7 +670,6 @@ La Figura 23 muestra el diseño preliminar de la interfaz del aplicativo Lantern
 <p align="center"><em><strong>Nota.</strong> Elaboración propia. Representación conceptual del aplicativo para visualizar capturas submarinas, porcentajes estimados de cobertura visible por bioincrustación y evolución temporal del monitoreo. Los datos mostrados son referenciales.</em></p>
 
 ---
-
 
 ## Referencias bibliográficas
 
@@ -733,3 +726,4 @@ La Figura 23 muestra el diseño preliminar de la interfaz del aplicativo Lantern
 
 <a name="ref-18"></a>
 **[18]** Heltec Automation, "WiFi LoRa 32 (V3): ESP32-S3 y SX1262," documentación técnica, s. f. [En línea]. Disponible en: <https://heltec.org/project/wifi-lora-32-v3/>
+
