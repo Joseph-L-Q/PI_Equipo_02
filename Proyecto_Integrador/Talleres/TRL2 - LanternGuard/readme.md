@@ -507,11 +507,92 @@ El plano muestra vistas ortogonales e isométricas que permiten identificar la d
   <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones, placa rectangular, soporte inclinado y sección superior en forma de U de la pieza M5_capsula_tapa_pie. Material: PETG. Cantidad requerida: 2 unidades. Cotas expresadas en milímetros.</em>
 </p>
 
+
+##### 3.4.4.2.7. Plano dimensional de la pieza M6_capsula_bisel
+
+La pieza **M6_capsula_bisel** presenta una geometría anular, conformada por un contorno exterior circular y una abertura central concéntrica. Su diseño incorpora tres perforaciones circulares distribuidas alrededor de la superficie del anillo, las cuales constituyen puntos de fijación para su integración con otros elementos del conjunto.
+
+El plano muestra vistas ortogonales e isométricas que permiten identificar un diámetro exterior de **42 mm**, un diámetro interior de **28 mm** y un espesor de **2,5 mm**. Asimismo, se especifican tres perforaciones de **2,4 mm de diámetro**. Estas características permiten definir la geometría y los detalles de fijación de la pieza para orientar su fabricación mediante impresión 3D.
+
+<p align="center">
+  <strong><em>Figura 16. Plano dimensional de la pieza M6_capsula_bisel del módulo sumergido de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b9b9b8ea-0644-4ff0-afb5-06fb3bdf7598"
+       alt="Plano dimensional de la pieza M6_capsula_bisel"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, diámetros exterior e interior, espesor y tres perforaciones de fijación de la pieza M6_capsula_bisel. Material: PETG. Cantidad requerida: 2 unidades. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.2.8. Plano dimensional de la pieza M11_bandeja
+
+La pieza **M11_bandeja** presenta una estructura formada por una placa de base, cuatro soportes cilíndricos ubicados cerca de sus esquinas y una abertura central de geometría compuesta por dos regiones circulares unidas. Su contorno incorpora dos escotaduras rectangulares situadas en lados opuestos, mientras que los soportes presentan perforaciones longitudinales destinadas a proporcionar puntos de fijación.
+
+El plano incluye vistas ortogonales e isométricas, con una dimensión principal acotada de **111 mm** y una altura de **27 mm** correspondiente al conjunto representado en la vista lateral. Asimismo, se especifican cuatro soportes con diámetro exterior de **8 mm** y perforaciones de **3,4 mm de diámetro**, además de radios de **13,66 mm** para las regiones curvas de la abertura central. Estas características permiten identificar la distribución de los elementos estructurales y los detalles geométricos considerados para su fabricación y ensamblaje.
+
+<p align="center">
+  <strong><em>Figura 17. Plano dimensional de la pieza M11_bandeja del módulo sumergido de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a16b8732-d6bb-422b-a18c-c2c063e51677"
+       alt="Plano dimensional de la pieza M11_bandeja"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se muestran las vistas ortogonales e isométricas, dimensiones, cuatro soportes cilíndricos, abertura central y escotaduras laterales de la pieza M11_bandeja. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.2.9. Plano dimensional de la pieza M11_bandeja_sup
+
+La pieza **M11_bandeja_sup** presenta una geometría de placa plana con esquinas ligeramente redondeadas y dos escotaduras rectangulares ubicadas en lados opuestos. Su diseño incorpora cuatro perforaciones circulares distribuidas cerca de las esquinas, que constituyen puntos de fijación para su integración con otros componentes estructurales.
+
+El plano muestra vistas ortogonales e isométricas, con una dimensión principal de **111 mm**, un espesor de **3 mm** y cuatro perforaciones de **3,4 mm de diámetro**. Asimismo, se incluyen cotas para la ubicación y dimensiones de las escotaduras laterales, entre ellas una abertura acotada de **21,32 mm**. Estos detalles permiten definir la geometría de la placa y proporcionar una referencia técnica para su fabricación y posterior montaje.
+
+<p align="center">
+  <strong><em>Figura 18. Plano dimensional de la pieza M11_bandeja_sup del módulo sumergido de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/51b40b00-5495-4dac-b2d3-5a6f171a58fe"
+       alt="Plano dimensional de la pieza M11_bandeja_sup"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se presentan las vistas ortogonales e isométricas, dimensiones principales, espesor, escotaduras laterales y cuatro perforaciones de fijación de la pieza M11_bandeja_sup. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
+</p>
+
+##### 3.4.4.2.10. Plano dimensional de la pieza SKIN_concha_v1
+
+La pieza **SKIN_concha_v1** presenta una geometría de placa rectangular con esquinas redondeadas, perforaciones distribuidas alrededor de su perímetro y elementos gráficos integrados en una de sus superficies. El diseño incorpora los textos **UPCH** y **LanternGuard**, una región rectangular delimitada y una composición geométrica radial que representa de manera estilizada una concha de abanico.
+
+El plano muestra vistas ortogonales e isométricas, con dimensiones exteriores de **135 mm de ancho y 134 mm de alto**. Asimismo, se presenta una región rectangular acotada de **51,16 mm por 36 mm**, junto con relieves y elementos geométricos distribuidos en la zona inferior de la placa. La representación permite identificar las características dimensionales y visuales de esta pieza complementaria, considerada para su fabricación mediante impresión 3D.
+
+<p align="center">
+  <strong><em>Figura 19. Plano dimensional de la pieza SKIN_concha_v1 de LanternGuard.</em></strong>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cf48c53e-9e03-412f-9d45-9cd1c82fbb45"
+       alt="Plano dimensional de la pieza SKIN_concha_v1"
+       width="850" />
+</p>
+
+<p align="center">
+  <em><strong>Nota.</strong> Elaboración propia. Se muestran las vistas ortogonales e isométricas, dimensiones exteriores, perforaciones perimetrales y elementos gráficos de la pieza SKIN_concha_v1, incluyendo los textos UPCH y LanternGuard y la representación estilizada de una concha de abanico. Material: PETG. Cantidad requerida: 1 unidad. Cotas expresadas en milímetros.</em>
+</p>
+
 ### 3.5. Diseño electrónico del módulo sumergido
 
 Para el módulo sumergido de LanternGuard se desarrolló un esquemático electrónico mediante EasyEDA, con el propósito de establecer las conexiones de los componentes encargados de la captura de imágenes, almacenamiento, comunicación y control de iluminación. A diferencia de la boya de superficie, este módulo no contará con una PCB personalizada, ya que sus componentes se integrarán mediante una placa universal perforada, conocida como *galleta electrónica*, sobre la cual se realizarán las conexiones correspondientes.
 
-El esquemático se organiza en bloques funcionales de control y procesamiento, captura de imágenes, alimentación, almacenamiento, comunicación RS-485, control de iluminación y monitoreo, como se muestra en la Figura 4.
+El esquemático se organiza en bloques funcionales de control y procesamiento, captura de imágenes, alimentación, almacenamiento, comunicación RS-485, control de iluminación y monitoreo, como se muestra en la Figura 20.
 
 **Control y procesamiento.** La unidad principal corresponde al ESP32-S3-DevKitC-1-N16R8, encargado de coordinar la adquisición de imágenes, el registro de mediciones, el almacenamiento de información y la comunicación con la boya. Esta placa dispone de interfaces digitales que permiten integrar los diferentes componentes del módulo sumergido [\[16\]](#ref-16).
 
@@ -525,7 +606,7 @@ El esquemático se organiza en bloques funcionales de control y procesamiento, c
 
 La integración electrónica se realizará sobre una placa universal perforada, donde se organizarán las conexiones entre los módulos comerciales. Esta solución permitirá reunir los componentes del sistema de adquisición dentro del compartimento electrónico del dispositivo sumergido, de acuerdo con la disposición estructural presentada en el modelo tridimensional.
 
-<p align="center"><strong><em>Figura 4. Esquemático electrónico del módulo sumergido de LanternGuard.</em></strong></p>
+<p align="center"><strong><em>Figura 20. Esquemático electrónico del módulo sumergido de LanternGuard.</em></strong></p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/cd6aca38-78cf-4cef-9093-3f1e1348016e" alt="Esquemático electrónico del módulo sumergido" width="760" />
@@ -539,7 +620,7 @@ Para la boya de superficie de LanternGuard se desarrolló un esquemático electr
 
 **Esquemático electrónico de la boya**
 
-El esquemático se organiza en cinco bloques funcionales: alimentación, control y procesamiento, comunicación, control de salida y tiempo, y sistema de montaje, como se muestra en la Figura 5.
+El esquemático se organiza en cinco bloques funcionales: alimentación, control y procesamiento, comunicación, control de salida y tiempo, y sistema de montaje, como se muestra en la Figura 21.
 
 El **bloque de alimentación** contempla una entrada de batería identificada como VBAT y la conexión de un convertidor DC-DC elevador de tensión (*Step Up*), destinado a proporcionar una alimentación regulada de 5 V a los componentes correspondientes. Este bloque permitirá integrar el suministro eléctrico de la boya con los circuitos encargados de su funcionamiento.
 
@@ -551,7 +632,7 @@ Por su parte, el **bloque de control de salida y tiempo** incluye un conector pa
 
 Finalmente, el esquema incorpora cuatro puntos de montaje que permitirán fijar la placa dentro del compartimento electrónico de la boya.
 
-<p align="center"><strong><em>Figura 5. Esquemático electrónico de la boya de superficie de LanternGuard.</em></strong></p>
+<p align="center"><strong><em>Figura 21. Esquemático electrónico de la boya de superficie de LanternGuard.</em></strong></p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/b81e2db7-7854-48f7-b860-ad28dced2bc2" alt="Esquemático electrónico de la boya de superficie" width="760" />
@@ -561,7 +642,7 @@ Finalmente, el esquema incorpora cuatro puntos de montaje que permitirán fijar 
 
 **Diseño de la placa PCB ruteada de la boya**
 
-A partir del esquemático electrónico se elaboró el diseño de una PCB personalizada, en la cual se distribuyeron las huellas de los componentes, los conectores y las pistas de interconexión eléctrica, como se observa en la Figura 6.
+A partir del esquemático electrónico se elaboró el diseño de una PCB personalizada, en la cual se distribuyeron las huellas de los componentes, los conectores y las pistas de interconexión eléctrica, como se observa en la Figura 22.
 
 En la zona central de la placa se ubica la huella destinada al módulo Heltec WiFi LoRa 32 V3, mientras que a su alrededor se distribuyen los componentes auxiliares y las conexiones correspondientes al transceptor MAX3485, el módulo RTC y los circuitos de alimentación y control. El diseño también incorpora cuatro perforaciones en las esquinas para facilitar la fijación de la PCB dentro de la estructura de la boya.
 
@@ -569,7 +650,7 @@ El ruteado de las pistas permite organizar las conexiones eléctricas de los dif
 
 La PCB se ha diseñado para su posterior fabricación y ensamblaje. Su integración permitirá reunir las principales funciones electrónicas de la boya en una estructura compacta, mientras que el panel solar, la batería y el circuito de gestión de carga se consideran dentro del sistema de alimentación previsto, cuya configuración definitiva deberá completarse.
 
-<p align="center"><strong><em>Figura 6. Diseño de la placa PCB ruteada de la boya de superficie de LanternGuard.</em></strong></p>
+<p align="center"><strong><em>Figura 22. Diseño de la placa PCB ruteada de la boya de superficie de LanternGuard.</em></strong></p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/c3c2b51e-7a33-4ec2-b2a7-6d31ed5453c5" alt="PCB ruteada de la boya de superficie" width="760" />
@@ -585,9 +666,9 @@ Como complemento de la arquitectura tecnológica de LanternGuard, se propone el 
 
 La interfaz propuesta contempla un panel de monitoreo que presenta la cantidad de linternas registradas, las fechas de captura y los indicadores de biofouling. Asimismo, incorpora la visualización de fotografías submarinas, gráficos de evolución temporal y una sección de comparación de imágenes correspondientes a diferentes inspecciones. Esta organización busca facilitar la interpretación de la información y el seguimiento de los cambios observados en las mallas.
 
-La Figura 7 muestra el diseño preliminar de la interfaz del aplicativo LanternGuard, como representación conceptual de las funciones previstas. Los porcentajes, fechas y niveles de biofouling presentados en la imagen son ilustrativos y permiten visualizar cómo se mostraría la información generada por el sistema.
+La Figura 23 muestra el diseño preliminar de la interfaz del aplicativo LanternGuard, como representación conceptual de las funciones previstas. Los porcentajes, fechas y niveles de biofouling presentados en la imagen son ilustrativos y permiten visualizar cómo se mostraría la información generada por el sistema.
 
-<p align="center"><strong><em>Figura 7. Propuesta preliminar de la interfaz del aplicativo LanternGuard.</em></strong></p>
+<p align="center"><strong><em>Figura 23. Propuesta preliminar de la interfaz del aplicativo LanternGuard.</em></strong></p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e1dcad7c-e80a-48d6-be4d-5a9829fb891c" alt="Interfaz preliminar del aplicativo LanternGuard" width="760" />
