@@ -1,24 +1,35 @@
 {
  "B1_casco": {
-  "nombre": "B1 casco",
-  "qty": 1,
+  "nombre": "B1 casco (mitad, x2)",
+  "qty": 2,
   "orientacion": "sin girar",
   "soportes": true,
   "relleno_pct": 40,
-  "g": 213.6,
-  "h": 7.38,
-  "costo_soles": 19.23,
-  "voladizo_mm2": 331.0
+  "g": 133.1,
+  "h": 5.24,
+  "costo_soles": 11.98,
+  "voladizo_mm2": 322.9
  },
- "B2_cubierta": {
-  "nombre": "B2 cubierta",
+ "B2_cubierta_lisa": {
+  "nombre": "B2 cubierta lado lisa",
   "qty": 1,
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 119.2,
-  "h": 5.84,
-  "costo_soles": 10.73,
+  "g": 63.7,
+  "h": 3.83,
+  "costo_soles": 5.73,
+  "voladizo_mm2": 0.0
+ },
+ "B2_cubierta_mastil": {
+  "nombre": "B2 cubierta lado mastil",
+  "qty": 1,
+  "orientacion": "sin girar",
+  "soportes": false,
+  "relleno_pct": 40,
+  "g": 79.1,
+  "h": 4.42,
+  "costo_soles": 7.12,
   "voladizo_mm2": 16.9
  },
  "B3_caja": {
@@ -43,16 +54,27 @@
   "costo_soles": 5.15,
   "voladizo_mm2": 0.0
  },
- "B5_cuna": {
-  "nombre": "B5 cuna",
+ "B5_cuna_base": {
+  "nombre": "B5 cuna lado base (x2)",
   "qty": 2,
   "orientacion": "sin girar",
-  "soportes": true,
+  "soportes": false,
   "relleno_pct": 40,
-  "g": 141.2,
-  "h": 5.03,
-  "costo_soles": 12.71,
-  "voladizo_mm2": 342.5
+  "g": 72.8,
+  "h": 2.98,
+  "costo_soles": 6.55,
+  "voladizo_mm2": 202.6
+ },
+ "B5_cuna_cuello": {
+  "nombre": "B5 cuna lado cuello (x2)",
+  "qty": 2,
+  "orientacion": "sin girar",
+  "soportes": false,
+  "relleno_pct": 40,
+  "g": 76.2,
+  "h": 3.02,
+  "costo_soles": 6.86,
+  "voladizo_mm2": 202.6
  },
  "B6_correa": {
   "nombre": "B6 correa",
@@ -60,9 +82,9 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 5.1,
+  "g": 5.2,
   "h": 0.3,
-  "costo_soles": 0.46,
+  "costo_soles": 0.47,
   "voladizo_mm2": 0.0
  }
 }

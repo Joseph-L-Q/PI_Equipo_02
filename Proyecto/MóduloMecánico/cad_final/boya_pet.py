@@ -120,7 +120,7 @@ def _dims_cruz(bottle, n):
     d["Wb"] = d["slot_w"] + 2 * wall                                # width of one bay
     lh_nat = Lb + 2 * rib + 2 * ec
     d["LH"] = min(lh_nat, P.PET_HULL_MAX)
-    wmax = P.PET_HULL_W_MAX if d["LH"] <= P.PET_HULL_L_ALT else 256.0 - P.PET_EXCLUDE[1] - 2.4
+    wmax = P.PET_HULL_W_MAX if d["LH"] <= P.PET_HULL_L_ALT else P.PRINT_BED[0] - P.PET_EXCLUDE[1] - 2.4   # 225.6 < 230 usable
     d["yb"] = wmax / 2 - d["Wb"] / 2
     d["WH"] = wmax
     d["wc"] = 2 * (d["yb"] - d["slot_w"] / 2 - wall)                # channel between the two X bays (open at the bottom)
@@ -187,7 +187,7 @@ def dims(bottle, n):
 
 def boss_y(d):
     """|y| of the cover bolts: just inside the channel fin so the boss is fused to it."""
-    return d["wc"] / 2 - P.PET_BOSS
+    return d["wc"] / 2 - P.PET_BOSS - (P.PET_POST_D / 2 - 4.0)      # the old posts were 8: a thicker post grows towards the channel
 
 
 def boss_x(d, x):
@@ -267,21 +267,28 @@ def hex_wall(d, y0, y1, xs):
 
 def bay_rib(d, x, yc, kind):
     """Rib plate of one bay (width Wb centred on y = yc). base: closed with a lightening diamond; tip: slot for a poking neck,
-    or a closed stop when the neck stays inside; mid: U slot with clearance."""
+    or a closed stop when the neck stays inside; mid: U slot with clearance; joint: the mid rib at x = 0 where the halves
+    meet (2 flanges of PET_JOINT[0]). With boya_pet.topes_bajos, mid and joint ribs are a low saddle (z <= wall + tope_alto):
+    the old 2.4 x 3 mm uprights between the slot and the channel are gone."""
     t, zt, zc, Wb = d["rib"], d["z_top"], d["zc"], d["Wb"]
+    if kind == "joint":
+        t = 2 * P.PET_JOINT[0]
+    if kind in ("mid", "joint") and P.PET_LOW_STOPS:
+        zt = d["wall"] + P.PET_STOP_H
     rb = box(x - t / 2, x + t / 2, yc - Wb / 2, yc + Wb / 2, 0, zt)
     if kind == "base" or (kind == "tip" and d["poke"] <= 0):
         return rb.cut(diamond_x(x, yc, zc, 0.42 * d["D"], t))
     rs = d["neck_slot_r"] if kind == "tip" else d["r"] + d["clr"]
     ws = 2 * rs if kind == "tip" else d["slot_w"]
-    return rb.cut(cyl((x - t, yc, zc), (1, 0, 0), rs, 2 * t)).cut(box(x - t, x + t, yc - ws / 2, yc + ws / 2, zc, zt + 1))
+    rb = rb.cut(cyl((x - t, yc, zc), (1, 0, 0), rs, 2 * t))
+    return rb.cut(box(x - t, x + t, yc - ws / 2, yc + ws / 2, zc, zt + 1)) if zt > zc else rb   # a low saddle ends below the axis
 
 
 def bay_solid(d, yc, kinds, walls):
     """One bottle bay along X, centred on y = yc: 5 ribs (kinds = (end at -x, end at +x)), side walls on the given sides
     (+1: at yc + Wb/2, -1: at yc - Wb/2) and the skid under the bottle."""
     t, wall, LH, Wb, L1 = d["rib"], d["wall"], d["LH"], d["Wb"], d["L1"]
-    ribs = [(-LH / 2 + t / 2, kinds[0]), (-L1, "mid"), (0.0, "mid"), (L1, "mid"), (LH / 2 - t / 2, kinds[1])]
+    ribs = [(-LH / 2 + t / 2, kinds[0]), (-L1, "mid"), (0.0, "joint" if P.PET_SPLIT else "mid"), (L1, "mid"), (LH / 2 - t / 2, kinds[1])]
     h = None
     for x, kind in ribs:
         rb = bay_rib(d, x, yc, kind)
@@ -297,21 +304,107 @@ def b1_cruz(d):
     """Central hull of the cross: two X bays with opposite necks, tied by the bottom plates across the channel and the mooring pad."""
     t, wall, zt, yb, wc, LH = d["rib"], d["wall"], d["z_top"], d["yb"], d["wc"], d["LH"]
     h = bay_solid(d, yb, ("base", "tip"), (1,)).union(bay_solid(d, -yb, ("tip", "base"), (-1,)))
+    jf = P.PET_JOINT[0]
     for x in (-LH / 2 + t / 2, -d["L1"], 0.0, d["L1"], LH / 2 - t / 2):          # ties across the (bottom-open) channel
-        h = h.union(box(x - t / 2, x + t / 2, -wc / 2 - 0.5, wc / 2 + 0.5, 0, wall))
+        tt = 2 * jf if (x == 0.0 and P.PET_SPLIT) else t
+        h = h.union(box(x - tt / 2, x + tt / 2, -wc / 2 - 0.5, wc / 2 + 0.5, 0, wall))
     ew, et, eh = P.PET_EYE
-    h = h.union(box(-ew / 2, ew / 2, -(wc / 2 + 1.0), wc / 2 + 1.0, 0, et).cut(cyl((0, 0, -1), (0, 0, 1), eh / 2, et + 2)))
-    for x, kind in rib_x(d):                                                     # M3 insert bosses for the cover
+    for xe in ((-eye_x(d), eye_x(d)) if P.PET_SPLIT else (0.0,)):              # split: one mooring eye per half (2-leg bridle)
+        h = h.union(box(xe - ew / 2, xe + ew / 2, -(wc / 2 + 1.0), wc / 2 + 1.0, 0, et).cut(cyl((xe, 0, -1), (0, 0, 1), eh / 2, et + 2)))
+    rp = P.PET_POST_D / 2
+    zs = wall + P.PET_STOP_H
+    for x, kind in rib_x(d):                                                     # M3 insert posts for the cover
         if kind == "mid0":
             continue
         for s in (1, -1):
             x = boss_x(d, x)
-            h = h.union(cyl((x, s * boss_y(d), 0), (0, 0, 1), 4.0, zt))
+            h = h.union(cyl((x, s * boss_y(d), 0), (0, 0, 1), rp, zt))
+            if P.PET_LOW_STOPS and kind == "mid":                                # 45 deg collar where the post leaves the low saddle
+                h = h.union(cq.Workplane().add(cq.Solid.makeCone(rp, rp + 3.0, 4.0, cq.Vector(x, s * boss_y(d), zs - 4.0), cq.Vector(0, 0, 1))))
+                h = h.union(cq.Workplane().add(cq.Solid.makeCone(rp + 3.0, rp, 3.0, cq.Vector(x, s * boss_y(d), zs), cq.Vector(0, 0, 1))))
             h = h.cut(cyl((x, s * boss_y(d), zt - P.M3_INSERT_DEPTH), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.1))
+    if P.PET_SPLIT:
+        h = h.union(joint_blocks_b1(d))
+    if CH.on():
+        h = CH.add(h, rib_feet("B1_casco", d, [(yb, ("base", "tip")), (-yb, ("tip", "base"))]))
     for y in d["tongue_y"]:                                                      # clearance holes for the cradle M3 (through the end ribs)
         for x0 in (-LH / 2 - 1, LH / 2 - t - 1):
             h = h.cut(cyl((x0, y, d["tongue_h"] / 2), (1, 0, 0), P.M3_CLEAR / 2, t + 2))
     return h
+
+
+def eye_x(d):
+    """x of the two mooring eyes when the hull is split: the pad overlaps the joint column by 1 mm (fused to it)."""
+    return 2 * P.PET_JOINT[0] + P.PET_EYE[0] / 2 - 1.0
+
+
+def joint_b1(d):
+    """(bolts, pins) of the B1 joint: M3 through both flanges along X, at (y, z); 2 alignment pins (peg of A, peg of B)."""
+    jw = P.PET_JOINT[1]
+    yc = d["wc"] / 2 - jw / 2
+    yw = d["WH"] / 2 - jw / 2
+    z1, z2 = 12.0, d["wall_h"] - 10.0
+    bolts = [(s * yc, z) for s in (1, -1) for z in (z1, z2)] + [(s * yw, 7.5) for s in (1, -1)]
+    return bolts, [(yc, (z1 + z2) / 2), (-yc, (z1 + z2) / 2)]
+
+
+def joint_b5(d):
+    jw = P.PET_JOINT[1]
+    return [(s * (d["Wb"] / 2 - jw / 2), 6.5) for s in (1, -1)], None
+
+
+def joint_blocks_b1(d):
+    """Joint columns in the channel (up to the side-wall height) and low pads at the outer walls, 2 flanges thick across
+    x = 0. The bottles clear them (checked against the dummies)."""
+    jf, jw = P.PET_JOINT[0], P.PET_JOINT[1]
+    wc, WH, wh = d["wc"], d["WH"], d["wall_h"]
+    b = None
+    for q in (box(-2 * jf, 2 * jf, wc / 2 - jw, wc / 2, 0, wh), box(-2 * jf, 2 * jf, -wc / 2, -wc / 2 + jw, 0, wh),
+              box(-2 * jf, 2 * jf, WH / 2 - jw, WH / 2, 0, 15.0), box(-2 * jf, 2 * jf, -WH / 2, -WH / 2 + jw, 0, 15.0)):
+        b = q if b is None else b.union(q)
+    return b
+
+
+def joint_blocks_b5(d):
+    """Low pads at both walls of the cradle across x = 0 (cradle frame), for 2 M3 bolts."""
+    jf, jw = P.PET_JOINT[0], P.PET_JOINT[1]
+    Wb = d["Wb"]
+    return box(-2 * jf, 2 * jf, Wb / 2 - jw, Wb / 2, 0, 12.0).union(box(-2 * jf, 2 * jf, -Wb / 2, -Wb / 2 + jw, 0, 12.0))
+
+
+def split_x(shape, bolts, pins):
+    """Cuts a solid at x = 0 into (A: x < 0, B: x > 0). bolts: (y, z) of M3 clearance holes along X through both flanges;
+    pins: [(y, z) peg of A into B, (y, z) peg of B into A] of diameter PET_JOINT[2], socket + PET_JOINT[3] (PB7), or None."""
+    jf, _jw, pd, pc = P.PET_JOINT
+    big = 2000.0
+    for y, z in bolts:
+        shape = shape.cut(cyl((-3 * jf, y, z), (1, 0, 0), P.M3_CLEAR / 2, 6 * jf))
+    A = shape.intersect(box(-big, 0, -big, big, -big, big))
+    B = shape.intersect(box(0, big, -big, big, -big, big))
+    if pins:
+        (ya, za), (yb_, zb_) = pins
+        A = A.union(cyl((-0.5, ya, za), (1, 0, 0), pd / 2, 0.5 + pd)).cut(cyl((0.1, yb_, zb_), (-1, 0, 0), pd / 2 + pc, pd + 1.1))
+        B = B.union(cyl((0.5, yb_, zb_), (-1, 0, 0), pd / 2, 0.5 + pd)).cut(cyl((-0.1, ya, za), (1, 0, 0), pd / 2 + pc, pd + 1.1))
+    return A, B
+
+
+def rib_feet(piece, d, bays):
+    """45 deg feet of the bay ribs on the skid (as b5_feet), for B1: bays = [(yc, kinds)]."""
+    t, wall, LH, L1 = d["rib"], d["wall"], d["LH"], d["L1"]
+    feet = []
+    for yc, _kinds in bays:
+        bottle = [cyl((-LH, yc, d["zc"]), (1, 0, 0), d["r"] + 0.5, 2 * LH)]
+        skid = lambda k, yc=yc: CH.slab([(-LH / 2, LH / 2, yc - 12, yc + 12)], wall, k)
+        for i, x in enumerate((-LH / 2 + t / 2, -L1, 0.0, L1, LH / 2 - t / 2)):
+            tx = 2 * P.PET_JOINT[0] if (x == 0.0 and P.PET_SPLIT) else t      # the joint rib is 2 flanges thick
+            feet.append(CH.fit(piece, f"costilla {i} con el patín (y={yc:.0f})",
+                               lambda k, x=x, yc=yc, tx=tx: CH.frustum(x - tx / 2, x + tx / 2, yc - 12, yc + 12, wall, k), skid, bottle))
+    return feet
+
+
+def strap_y(d):
+    """|y| of the strap posts of B5 and of the holes of B6: outside the slot, the post clears the bottle by 1 mm."""
+    return d["Wb"] / 2 + 1.0 + (P.PET_POST_D / 2 - 4.0)
 
 
 def b5_cuna(d):
@@ -326,9 +419,11 @@ def b5_cuna(d):
     ls = L1 if d["poke"] <= 0 else d["yb"] - 22.0                                # strap stations: clear of a poking neck of the hull bottle
     for x in (-ls, ls):                                                          # posts for the straps
         for s in (1, -1):
-            y = s * (Wb / 2 + 1.0)                                               # outside the slot: clear of the bottle
-            h = h.union(cyl((x, y, 0), (0, 0, 1), 4.0, zt))
+            y = s * strap_y(d)                                                   # outside the slot: clear of the bottle
+            h = h.union(cyl((x, y, 0), (0, 0, 1), P.PET_POST_D / 2, zt))
             h = h.cut(cyl((x, y, zt - P.M3_INSERT_DEPTH), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.1))
+    if P.PET_SPLIT:
+        h = h.union(joint_blocks_b5(d))
     if CH.on():
         h = CH.add(h, b5_feet(d, ls))
     return h
@@ -342,7 +437,8 @@ def b5_feet(d, ls):
     bottle = [cyl((-LH, 0, d["zc"]), (1, 0, 0), d["r"] + 0.5, 2 * LH)]
     skid = lambda k: CH.slab([(-LH / 2, LH / 2, -12, 12)], wall, k)
     ribs = [(-LH / 2 + t / 2, "extremo base"), (-L1, "intermedia"), (0.0, "central"), (L1, "intermedia"), (LH / 2 - t / 2, "extremo cuello")]
-    feet = [CH.fit("B5_cuna", f"costilla {nm} con el patín#{i}", lambda k, x=x: CH.frustum(x - t / 2, x + t / 2, -12, 12, wall, k),
+    tw_ = lambda x: 2 * P.PET_JOINT[0] if (x == 0.0 and P.PET_SPLIT) else t      # noqa: E731  the joint rib is 2 flanges thick
+    feet = [CH.fit("B5_cuna", f"costilla {nm} con el patín#{i}", lambda k, x=x: CH.frustum(x - tw_(x) / 2, x + tw_(x) / 2, -12, 12, wall, k),
                    skid, bottle) for i, (x, nm) in enumerate(ribs)]
     for i, xl in enumerate(d["tongue_y"]):
         tongue = lambda k, xl=xl: CH.slab([(xl - tw / 2, xl + tw / 2, Wb / 2, Wb / 2 + tl)], th, k)
@@ -350,14 +446,14 @@ def b5_feet(d, ls):
                            lambda k, xl=xl: CH.frustum(xl - tw / 2, xl + tw / 2, Wb / 2 - wall, Wb / 2, th, k), tongue, bottle))
         if any(abs(xl - x) < 1e-6 for x in (-ls, ls)):
             feet.append(CH.fit("B5_cuna", f"poste de correa (Ø8) sobre la lengüeta#{i}",
-                               lambda k, xl=xl: CH.cone(xl, Wb / 2 + 1.0, th, 4.0, k), tongue, bottle))
+                               lambda k, xl=xl: CH.cone(xl, strap_y(d), th, P.PET_POST_D / 2, k), tongue, bottle))
     return feet
 
 
 def b6_correa(d):
     """Strap that closes a cradle over the bottle (flat on the bed)."""
     w, t = P.PET_STRAP
-    span = d["Wb"] + 2.0
+    span = 2 * strap_y(d)
     s = box(-w / 2, w / 2, -span / 2 - 7.0, span / 2 + 7.0, 0, t)
     for sg in (1, -1):
         s = s.cut(cyl((0, sg * span / 2, -1), (0, 0, 1), P.M3_CLEAR / 2, t + 2))
@@ -385,6 +481,8 @@ def b2_cubierta(d):
     bars = [box(x - bw / 2, x + bw / 2, -WH / 2, WH / 2, zt, zb) for x in (d["X0"] - d["L1"], d["X0"] + d["L1"])]
     bars += [box(LH / 2 - bw, LH / 2, -WH / 2, WH / 2, zt, zb), box(-LH / 2, -LH / 2 + bw, -WH / 2, WH / 2, zt, zb)]
     bars += [box(-LH / 2, LH / 2, s * d["yb"] - bw / 2, s * d["yb"] + bw / 2, zt, zb) for s in (1, -1)]
+    if P.PET_SPLIT:                                                  # seam crossbar: each half is a closed frame on its own 4 M3
+        bars.append(box(-bw, bw, -WH / 2, WH / 2, zt, zb))
     for b in bars:
         c = b if c is None else c.union(b)
     for x, kind in rib_x(d):                                         # clearance holes for the M3 into the hull bosses
@@ -762,11 +860,11 @@ def process(name, stem, wp, qty, out, check_bed=True):
     export_part(shp, stem, stl, out / "step")
     best = None
     for on, o in ORIENT.items():
-        mc = mesh_checks(str(stl / f"{stem}.stl"), P.PRINT_BED, o)
+        mc = mesh_checks(str(stl / f"{stem}.stl"), (*P.BED_USE, P.PRINT_BED[2]), o)
         if mc["fits_bed"] and (best is None or mc["overhang_mm2"] < best[1]["overhang_mm2"]):
             best = (on, mc)
     if best is None:
-        best = ("no cabe", mesh_checks(str(stl / f"{stem}.stl"), P.PRINT_BED, None))
+        best = ("no cabe", mesh_checks(str(stl / f"{stem}.stl"), (*P.BED_USE, P.PRINT_BED[2]), None))
     return dict(name=name, stem=stem, shape=shp, chk=chk, orient=best[0], mc=best[1], qty=qty)
 
 
@@ -826,9 +924,25 @@ def run(bottle, n, out, do_slice, render_png=True):
     for dd in (out / "stl", out / "step"):
         dd.mkdir(parents=True, exist_ok=True)
     fails = []
-    rows = [process("B1 casco", "B1_casco", b1_cruz(d) if cruz else b1_casco(d), 1, out), process("B2 cubierta", "B2_cubierta", b2_cubierta(d), 1, out),
-            process("B3 caja seca", "B3_caja", b3_caja(d), 1, out), process("B4 tapa", "B4_tapa", b4_tapa(d), 1, out)]
-    if cruz:
+    split = P.PET_SPLIT and cruz
+    halves = {}
+    if split:
+        b1a, b1b = split_x(b1_cruz(d), *joint_b1(d))
+        va, vb = sanitize(b1a).Volume(), sanitize(b1b).Volume()
+        if abs(va - vb) > 1e-3 * va:
+            fails.append(f"las mitades de B1 no son iguales ({va:.0f} / {vb:.0f} mm3)")
+        b2a, b2b = split_x(b2_cubierta(d), [], None)
+        b5a, b5b = split_x(b5_cuna(d), *joint_b5(d))
+        halves = dict(b1=(b1a, b1b), b2=(b2a, b2b), b5=(b5a, b5b))
+        rows = [process("B1 casco (mitad, x2)", "B1_casco", b1a, 2, out),
+                process("B2 cubierta lado lisa", "B2_cubierta_lisa", b2a, 1, out), process("B2 cubierta lado mastil", "B2_cubierta_mastil", b2b, 1, out)]
+    else:
+        rows = [process("B1 casco", "B1_casco", b1_cruz(d) if cruz else b1_casco(d), 1, out), process("B2 cubierta", "B2_cubierta", b2_cubierta(d), 1, out)]
+    rows += [process("B3 caja seca", "B3_caja", b3_caja(d), 1, out), process("B4 tapa", "B4_tapa", b4_tapa(d), 1, out)]
+    if split:
+        rows += [process("B5 cuna lado base (x2)", "B5_cuna_base", b5a, 2, out), process("B5 cuna lado cuello (x2)", "B5_cuna_cuello", b5b, 2, out),
+                 process("B6 correa", "B6_correa", b6_correa(d), 4, out)]
+    elif cruz:
         rows += [process("B5 cuna", "B5_cuna", b5_cuna(d), 2, out), process("B6 correa", "B6_correa", b6_correa(d), 4, out)]
     for r in rows:
         ok = r["chk"]["ok"] and r["mc"]["watertight"] and r["mc"]["bodies"] == 1 and r["mc"]["fits_bed"]
@@ -837,11 +951,19 @@ def run(bottle, n, out, do_slice, render_png=True):
         print(f"{r['stem']:14s} ok={ok} or={r['orient']} bbox={tuple(round(v, 1) for v in r['mc']['bbox'])}", flush=True)
     S_ = {r["stem"]: r["shape"] for r in rows}
     # world parts: (label, stem, shape); the cradles and straps are built in their own frame
-    world = [("B1 casco", "B1_casco", S_["B1_casco"]), ("B2 cubierta", "B2_cubierta", S_["B2_cubierta"]), ("B3 caja", "B3_caja", S_["B3_caja"]),
-             ("B4 tapa", "B4_tapa", S_["B4_tapa"])]
+    if split:
+        world = [("B1 casco mitad 1", "B1_casco", S_["B1_casco"]), ("B1 casco mitad 2", "B1_casco", sanitize(halves["b1"][1])),
+                 ("B2 cubierta lisa", "B2_cubierta_lisa", S_["B2_cubierta_lisa"]), ("B2 cubierta mastil", "B2_cubierta_mastil", S_["B2_cubierta_mastil"])]
+    else:
+        world = [("B1 casco", "B1_casco", S_["B1_casco"]), ("B2 cubierta", "B2_cubierta", S_["B2_cubierta"])]
+    world += [("B3 caja", "B3_caja", S_["B3_caja"]), ("B4 tapa", "B4_tapa", S_["B4_tapa"])]
     if cruz:
         for side, nm in ((1, "D"), (-1, "I")):
-            world.append((f"B5 cuna {nm}", "B5_cuna", to_world(S_["B5_cuna"], side, d)))
+            if split:
+                world.append((f"B5 cuna {nm} base", "B5_cuna_base", to_world(S_["B5_cuna_base"], side, d)))
+                world.append((f"B5 cuna {nm} cuello", "B5_cuna_cuello", to_world(S_["B5_cuna_cuello"], side, d)))
+            else:
+                world.append((f"B5 cuna {nm}", "B5_cuna", to_world(S_["B5_cuna"], side, d)))
             ls = d["L1"] if d["poke"] <= 0 else d["yb"] - 22.0
             for k, x in enumerate((-ls, ls)):
                 world.append((f"B6 correa {nm}{k + 1}", "B6_correa", to_world(S_["B6_correa"], side, d, (x, 0.0, d["z_top"]))))

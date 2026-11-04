@@ -45,6 +45,14 @@ EST, VER, OK = "estimado", "por_verificar", "confirmado"
 # =====================================================================================
 PRINT_BED = p("impresora.cama", (256.0, 256.0, 256.0), "fabricante", OK,
               "Bambu Lab P1P (volumen de impresion de la hoja del fabricante)", (220.0, 220.0, 250.0))
+BED_USE = p("impresora.cama_util", (230.0, 230.0), "equipo", OK,
+            "Cama util para el check: ninguna pieza pasa de 230 en X o Y (zona excluida de la P1P y margen contra errores; "
+            "pedido del equipo 04/11). PRINT_BED (256) sigue siendo la cama fisica que usan el slicer y las placas")
+WALL_MIN_NS = p("margen.pared_min", 2.4, "equipo", OK, "Pared minima en paredes no estructurales (6 perimetros de 0.4)")
+SLENDER_T_MIN = p("margen.esbelto_min", 4.0, "equipo", OK,
+                  "Espesor minimo de todo elemento vertical esbelto (alto/espesor > 8) o que recibe carga, con chaflan en la base")
+SLENDER_RATIO = p("margen.esbelto_ratio", 8.0, "equipo", OK, "alto/espesor por encima del cual un elemento es esbelto")
+FS_TARGET_Z = p("margen.fs_entre_capas", 3.0, "equipo", OK, "FS objetivo entre capas en lo estructural")
 PRINTER = p("impresora.modelo", "Bambu Lab P1P", "fabricante", OK, "Impresora del equipo")
 CHAMFER_BASE = p("chaflan.base_soportes", 1.5, "equipo", VER,
                  "Chaflan a 45 grados en la union de soportes (postes, standoffs, bosses, nervios, paredes) con su placa base; "
@@ -721,8 +729,17 @@ FLOT_CLEAR = p("flotacion.holgura_botella", 1.5, EST, VER, "Holgura radial de la
 FLOT_CHANNEL = p("flotacion.canal", 50.0, EST, VER, "Ancho libre entre botellas: umbilical, domo del PG7 y brazo de estabilidad")
 FLOT_NECK_OUT = p("flotacion.cuello_fuera", 20.0, EST, VER, "Cuanto del cuello/tapon asoma fuera de la costilla del cuello")
 PET_WALL = p("boya_pet.pared", 2.4, "equipo", VER, "Pared de 6 perimetros de 0.4")
-PET_RIB = p("boya_pet.costilla", 3.0, EST, VER, "Espesor de las costillas que sujetan la botella")
-PET_HULL_MAX = p("boya_pet.casco_largo_max", 254.0, EST, VER, "Largo maximo del casco: cama de 256")
+PET_RIB = p("boya_pet.costilla", 4.0, "equipo", VER, "Espesor de las costillas que sujetan la botella (margen 04/11: >= 4 en lo que recibe carga)", 3.0)
+PET_SPLIT = p("boya_pet.partir", True, "equipo", VER,
+              "Casco B1, cubierta B2 y cunas B5 en 2 mitades por x = 0 (cama util 230); False = piezas enteras de 254 (no caben)")
+PET_LOW_STOPS = p("boya_pet.topes_bajos", True, "equipo", VER,
+                  "Costillas intermedias bajas (silla hasta tope_alto sobre el patin) en vez de llegar a la cubierta: se quitan las "
+                  "varillas de 2.4 x 3 mm del lado del canal, que no sujetaban nada (observacion de la profesora 03/11)")
+PET_STOP_H = p("boya_pet.tope_alto", 15.0, "equipo", VER, "Alto maximo de la silla de las costillas intermedias sobre el patin")
+PET_POST_D = p("boya_pet.poste_D", 10.0, "equipo", VER, "Postes de tornillo del casco y de las correas (eran 8); con collar a 45 grados", 8.0)
+PET_JOINT = p("boya_pet.union", (4.0, 12.0, 4.0, 0.2), EST, VER,
+              "Union de mitades: brida por mitad, ancho de columna/almohadilla, pin de alineacion, holgura del pin (PB7)")
+PET_HULL_MAX = p("boya_pet.casco_largo_max", 254.0, EST, VER, "Largo del casco (era el limite de la cama de 256; con las mitades ya no limita, se mantiene para no cambiar la flotacion)")
 PET_COVER_T = p("boya_pet.cubierta_espesor", 4.0, EST, VER, "Barras de la cubierta atornillada (no estanca)")
 PET_BAR_W = p("boya_pet.barra_ancho", 14.0, EST, VER, "Ancho de las barras de la cubierta")
 PET_BOSS = p("boya_pet.cubierta_tornillo_y", 1.0, EST, VER, "Los 8 tornillos M3 cubierta-casco quedan a |y| = canal/2 - este valor (sobre las aletas del canal)")
