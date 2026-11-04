@@ -107,6 +107,39 @@ Verificación independiente: el equilibrio 3D muestreado reproduce el GM analít
 
 PETG alcanza para una piscina; si la boya va a estar semanas al sol, imprimir en ASA. Hay que confirmar con la boleta el precio de 90 soles/kg.
 
+## 04/11/2026: piezas en mitades (cama útil 230) y topes bajos
+
+**Qué cambió.** B1, B2 y B5 medían 254 mm de largo. OrcaSlicer daba error y el equipo fijó la cama útil en 230 × 230.
+
+| Pieza | Antes | Ahora | Unión |
+|---|---|---|---|
+| B1 casco | 1 pieza, 254 × 226 | **2 mitades iguales** de 132 × 226 (un solo STL, se imprime 2 veces) | Brida de 4 + 4 mm en x = 0: 2 columnas en el canal y 2 almohadillas bajas en las paredes, **6 tornillos M3 × 20 inox A2 con tuerca** y 2 pines Ø4 de alineación (holgura 0,2, la de PB7) |
+| B2 cubierta | 1 pieza, 254 × 226 | Lado liso + lado mástil, 127 × 226 cada uno | Cada mitad es un marco cerrado (barra nueva en x = 0) atornillado a sus propios 4 postes del casco. La caja y el panel atornillados encima amarran las dos mitades |
+| B5 cuna (× 2) | 1 pieza, 254 × 115 | Lado base + lado cuello, 127 × 118 cada uno (× 2) | Cada mitad va atornillada al casco por su lengüeta. Entre mitades: brida 4 + 4 mm con 2 M3 en almohadillas bajas |
+
+**El ojal de amarre** estaba justo en x = 0, donde se parte el casco. Ahora hay **2 ojales**, uno por mitad, en x = ±21: el cabo de amarre va en pata de gallo (dos ramales a un nudo). Así no se corta el punto que recibe la carga y queda redundante.
+
+**¿Achicar en vez de partir?** No es viable sin perder flotación. El casco ya es más corto que la botella (270 mm, el cuello sobresale 21). Para bajar de 230 de largo habría que pasar a botellas de 500 ml, y con 4 × 500 ml la boya **vuelca al perder una botella** (ver la comparación de arriba). El ancho de 225,6 queda 4,4 mm bajo 230 y no se reduce, porque de él depende el GM de balanceo. Partir es la opción por defecto.
+
+**Soportes delgados (pregunta de la profesora).** Las costillas intermedias seguían por encima del eje de la botella como varillas de 2,4 × 3 mm y 41 mm de alto, en el lado del canal. Por encima del eje la botella se angosta, así que esas varillas no la tocan ni la sujetan. Lo que retiene a la botella hacia arriba, la única carga real en el agua, son las barras de B2 en el casco y las correas B6 en las cunas, atornilladas a los postes. Por eso **se eliminaron**:
+- las costillas intermedias quedan como sillas bajas de 4 mm, a ≤ 15 mm sobre el patín, con chaflán de 45° en la unión con el patín;
+- los postes de tornillo pasan de Ø8 a Ø10 y llevan un collar a 45° donde salen de la silla;
+- los postes de las correas también pasan a Ø10 y se corren 1 mm hacia afuera para no tocar la botella.
+
+Interruptores: `boya_pet.partir` y `boya_pet.topes_bajos` (`params.py`).
+
+| Resultado (slicer, agua de mar) | Antes | Ahora |
+|---|---|---|
+| Impreso | 864 g, 32,1 h, S/ 77,8 | **958 g, 39,6 h, S/ 86,3** |
+| Masa total con botellas y electrónica | 1740 g | 1834 g |
+| Calado | 39,5 mm | 40,8 mm |
+| Francobordo a la abertura más baja (PG7) | 82,0 mm | 80,7 mm (≥ 50) |
+| GM balanceo / cabeceo | 112 / 762 mm | 107 / 733 mm |
+| Reserva de flotación | 136 % | 124 % |
+| Con una botella perdida | sin espuma vuelca; con espuma 12 a 13° | igual (sin espuma vuelca; con espuma 13°) |
+
+Tornillería nueva: 8 M3 × 20 inox A2 con tuerca y arandela (6 en el casco, 1 por cada unión de cuna) y 2 pines impresos.
+
 ## Pendiente de medir o confirmar
 
 - Dimensiones reales de las botellas (cuerpo, largo, cuello, hombro) y su volumen: están como "estimado" en `flotacion.botellas`. Con otra marca cambia la ranura del cuello y la longitud de las cunas.

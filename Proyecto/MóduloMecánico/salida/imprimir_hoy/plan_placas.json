@@ -175,7 +175,7 @@
    ]
   },
   {
-   "nombre": "P14_boya_casco",
+   "nombre": "P14_boya_casco_mitad",
    "relleno": 40,
    "soportes": true,
    "paredes": 3,
@@ -183,13 +183,13 @@
    "fijo": true,
    "piezas": [
     [
-     "salida/imprimir_hoy/18_B1_casco_x1.stl",
-     1
+     "salida/imprimir_hoy/18_B1_casco_x2.stl",
+     2
     ]
    ]
   },
   {
-   "nombre": "P15_boya_cubierta",
+   "nombre": "P15_boya_cubierta_lisa",
    "relleno": 40,
    "soportes": false,
    "paredes": 3,
@@ -197,7 +197,21 @@
    "fijo": true,
    "piezas": [
     [
-     "salida/imprimir_hoy/19_B2_cubierta_x1.stl",
+     "salida/imprimir_hoy/19_B2_cubierta_lisa_x1.stl",
+     1
+    ]
+   ]
+  },
+  {
+   "nombre": "P19_boya_cubierta_mastil",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 4,
+   "fijo": true,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/24_B2_cubierta_mastil_x1.stl",
      1
     ]
    ]
@@ -220,15 +234,29 @@
    ]
   },
   {
-   "nombre": "P17_boya_cunas",
+   "nombre": "P17_boya_cunas_base",
    "relleno": 40,
-   "soportes": true,
+   "soportes": false,
    "paredes": 3,
    "grupo": 4,
    "fijo": true,
    "piezas": [
     [
-     "salida/imprimir_hoy/22_B5_cuna_x2.stl",
+     "salida/imprimir_hoy/22_B5_cuna_base_x2.stl",
+     2
+    ]
+   ]
+  },
+  {
+   "nombre": "P20_boya_cunas_cuello",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 4,
+   "fijo": true,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/25_B5_cuna_cuello_x2.stl",
      2
     ]
    ]

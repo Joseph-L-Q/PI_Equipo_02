@@ -45,6 +45,7 @@ STEPS = {
     "slicer": ["slicer.py"],
     "fem": ["fem.py"],
     "ficha": ["prototipos.py"],
+    "cama": ["cama.py"],
 }
 PROTOTYPES = ("P1_minimo", "P2_robusto", "P3_monocasco", "P4_estetico")
 PLANS = {
@@ -125,7 +126,8 @@ def main():
     print(f"Python {sys.version.split()[0]} - version '{ver}' - plan '{plan}{' + ensambles' if a.todo else ''}' - "
           f"logs en {log_dir}", flush=True)
     t0 = time.time()
-    ok = all([run(s, STEPS[s], log_dir) for s in plans(ver)[plan]])
+    ok = all([run(s, STEPS[s], log_dir) for s in plans(ver)[plan] + ["cama"]])    # usable bed 230 x 230 after every plan
+    print((log_dir / "cama.log").read_text(encoding="utf-8").strip(), flush=True)
     if a.todo:
         ok = ensambles(log_dir) and ok
     if a.onshape and ok:

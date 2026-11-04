@@ -150,8 +150,8 @@
   "soportes": true,
   "paredes": 3,
   "grupo": 2,
-  "g": 509.23,
-  "h": 16.13277777777778
+  "g": 509.32,
+  "h": 16.05638888888889
  },
  {
   "archivo": "15_M5s_capsula_tapa_pie_x2.stl",
@@ -176,26 +176,37 @@
   "h": 5.311944444444444
  },
  {
-  "archivo": "18_B1_casco_x1.stl",
-  "cant": 1,
+  "archivo": "18_B1_casco_x2.stl",
+  "cant": 2,
   "orient": "sin girar",
   "relleno": 40,
   "soportes": true,
   "paredes": 3,
   "grupo": 4,
-  "g": 213.6,
-  "h": 7.38
+  "g": 133.1,
+  "h": 5.24
  },
  {
-  "archivo": "19_B2_cubierta_x1.stl",
+  "archivo": "19_B2_cubierta_lisa_x1.stl",
   "cant": 1,
   "orient": "sin girar",
   "relleno": 40,
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 119.0,
-  "h": 5.8
+  "g": 63.7,
+  "h": 3.83
+ },
+ {
+  "archivo": "24_B2_cubierta_mastil_x1.stl",
+  "cant": 1,
+  "orient": "sin girar",
+  "relleno": 40,
+  "soportes": false,
+  "paredes": 3,
+  "grupo": 4,
+  "g": 79.1,
+  "h": 4.42
  },
  {
   "archivo": "20_B3_caja_x1.stl",
@@ -205,8 +216,8 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 171.0,
-  "h": 5.46
+  "g": 173.4,
+  "h": 5.59
  },
  {
   "archivo": "21_B4_tapa_x1.stl",
@@ -220,15 +231,26 @@
   "h": 2.1
  },
  {
-  "archivo": "22_B5_cuna_x2.stl",
+  "archivo": "22_B5_cuna_base_x2.stl",
   "cant": 2,
   "orient": "sin girar",
   "relleno": 40,
-  "soportes": true,
+  "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 141.0,
-  "h": 5.01
+  "g": 72.8,
+  "h": 2.98
+ },
+ {
+  "archivo": "25_B5_cuna_cuello_x2.stl",
+  "cant": 2,
+  "orient": "sin girar",
+  "relleno": 40,
+  "soportes": false,
+  "paredes": 3,
+  "grupo": 4,
+  "g": 76.2,
+  "h": 3.02
  },
  {
   "archivo": "23_B6_correa_x4.stl",
@@ -238,7 +260,7 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 5.1,
+  "g": 5.2,
   "h": 0.3
  }
 ]

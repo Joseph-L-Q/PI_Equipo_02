@@ -1,0 +1,345 @@
+[
+ {
+  "grupo": "boya",
+  "pieza": "B1_casco",
+  "bbox": [
+   132.0,
+   225.6,
+   85.4
+  ],
+  "cabe": true,
+  "pared_p1": 2.4,
+  "pared_p5": 2.4,
+  "antes": {
+   "bbox": [
+    254.0,
+    225.60000610351562,
+    85.4000015258789
+   ],
+   "wall": 2.0022159820003003
+  },
+  "esbelto": [
+   "varilla de costilla intermedia 2.4 x 3 mm (lado canal)",
+   41.50000000000001,
+   2.3999999999999986,
+   "poste M3 Ø10 libre sobre la silla, con collar",
+   68.0,
+   10.0
+  ]
+ },
+ {
+  "grupo": "boya",
+  "pieza": "B2_cubierta_lisa",
+  "bbox": [
+   127.0,
+   225.6,
+   113.4
+  ],
+  "cabe": true,
+  "pared_p1": 3.99,
+  "pared_p5": 4.0,
+  "antes": {
+   "bbox": [
+    254.0,
+    225.60000610351562,
+    136.4000015258789
+   ],
+   "wall": 2.9952699138530536
+  },
+  "esbelto": [
+   "columna del panel Ø12",
+   109.4,
+   12.0,
+   "columna del panel Ø12, con chaflán",
+   109.4,
+   12.0
+  ]
+ },
+ {
+  "grupo": "boya",
+  "pieza": "B2_cubierta_mastil",
+  "bbox": [
+   127.0,
+   225.6,
+   136.4
+  ],
+  "cabe": true,
+  "pared_p1": 2.99,
+  "pared_p5": 3.0,
+  "antes": {
+   "bbox": [
+    254.0,
+    225.60000610351562,
+    136.4000015258789
+   ],
+   "wall": 2.9952699138530536
+  },
+  "esbelto": [
+   "columna del panel Ø12",
+   109.4,
+   12.0,
+   "columna del panel Ø12, con chaflán",
+   109.4,
+   12.0
+  ]
+ },
+ {
+  "grupo": "boya",
+  "pieza": "B3_caja",
+  "bbox": [
+   166.8,
+   116.8,
+   74.4
+  ],
+  "cabe": true,
+  "pared_p1": 2.18,
+  "pared_p5": 2.4,
+  "antes": {
+   "bbox": [
+    166.8000030517578,
+    116.80000305175781,
+    74.4000015258789
+   ],
+   "wall": 1.9971125291851504
+  },
+  "esbelto": null
+ },
+ {
+  "grupo": "boya",
+  "pieza": "B4_tapa",
+  "bbox": [
+   166.8,
+   108.8,
+   4.0
+  ],
+  "cabe": true,
+  "pared_p1": 2.5,
+  "pared_p5": 2.5,
+  "antes": {
+   "bbox": [
+    166.8000030517578,
+    108.80000305175781,
+    4.0
+   ],
+   "wall": 2.4989999999999952
+  },
+  "esbelto": null
+ },
+ {
+  "grupo": "boya",
+  "pieza": "B5_cuna_base",
+  "bbox": [
+   127.0,
+   117.6,
+   85.4
+  ],
+  "cabe": true,
+  "pared_p1": 2.4,
+  "pared_p5": 2.4,
+  "antes": {
+   "bbox": [
+    254.0,
+    114.5987548828125,
+    85.4000015258789
+   ],
+   "wall": 2.002164843871496
+  },
+  "esbelto": [
+   "varilla de costilla intermedia 2.4 x 3 mm",
+   41.50000000000001,
+   2.3999999999999986,
+   "poste de correa Ø10 (libre sobre la pared)",
+   31.500000000000007,
+   10.0
+  ]
+ },
+ {
+  "grupo": "boya",
+  "pieza": "B5_cuna_cuello",
+  "bbox": [
+   127.0,
+   117.6,
+   85.4
+  ],
+  "cabe": true,
+  "pared_p1": 2.4,
+  "pared_p5": 2.4,
+  "antes": {
+   "bbox": [
+    254.0,
+    114.5987548828125,
+    85.4000015258789
+   ],
+   "wall": 2.002164843871496
+  },
+  "esbelto": [
+   "varilla de costilla intermedia 2.4 x 3 mm",
+   41.50000000000001,
+   2.3999999999999986,
+   "poste de correa Ø10 (libre sobre la pared)",
+   31.500000000000007,
+   10.0
+  ]
+ },
+ {
+  "grupo": "boya",
+  "pieza": "B6_correa",
+  "bbox": [
+   14.0,
+   105.8,
+   4.0
+  ],
+  "cabe": true,
+  "pared_p1": 4.0,
+  "pared_p5": 4.0,
+  "antes": {
+   "bbox": [
+    14.0,
+    103.80000305175781,
+    4.0
+   ],
+   "wall": 3.999
+  },
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M1s_caja_cuerpo",
+  "bbox": [
+   147.0,
+   146.0,
+   107.0
+  ],
+  "cabe": true,
+  "pared_p1": 2.26,
+  "pared_p5": 3.0,
+  "antes": null,
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M2_caja_tapa",
+  "bbox": [
+   63.0,
+   146.0,
+   147.0
+  ],
+  "cabe": true,
+  "pared_p1": 3.5,
+  "pared_p5": 3.63,
+  "antes": null,
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M3s_riel_gancho",
+  "bbox": [
+   141.5,
+   79.4,
+   50.0
+  ],
+  "cabe": true,
+  "pared_p1": 3.0,
+  "pared_p5": 4.0,
+  "antes": null,
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M3t_tapa_bolsillo",
+  "bbox": [
+   117.0,
+   57.0,
+   3.0
+  ],
+  "cabe": true,
+  "pared_p1": 3.0,
+  "pared_p5": 3.0,
+  "antes": null,
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M5s_capsula_tapa_pie",
+  "bbox": [
+   55.2,
+   64.0,
+   95.9
+  ],
+  "cabe": true,
+  "pared_p1": 3.0,
+  "pared_p5": 5.0,
+  "antes": null,
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M11_bandeja",
+  "bbox": [
+   115.0,
+   114.0,
+   30.0
+  ],
+  "cabe": true,
+  "pared_p1": 2.3,
+  "pared_p5": 3.0,
+  "antes": null,
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M11_bandeja_sup",
+  "bbox": [
+   115.0,
+   114.0,
+   3.0
+  ],
+  "cabe": true,
+  "pared_p1": 3.0,
+  "pared_p5": 3.0,
+  "antes": null,
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M4_capsula_cuerpo",
+  "bbox": [
+   44.0,
+   64.0,
+   64.0
+  ],
+  "cabe": true,
+  "pared_p1": 1.2,
+  "pared_p5": 2.8,
+  "antes": null,
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M6_capsula_bisel",
+  "bbox": [
+   42.0,
+   42.0,
+   2.5
+  ],
+  "cabe": true,
+  "pared_p1": 2.25,
+  "pared_p5": 2.5,
+  "antes": null,
+  "esbelto": null
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M7_capsula_ventana",
+  "bbox": [
+   30.0,
+   30.0,
+   3.0
+  ],
+  "cabe": true,
+  "pared_p1": 3.0,
+  "pared_p5": 3.0,
+  "antes": null,
+  "esbelto": null
+ }
+]

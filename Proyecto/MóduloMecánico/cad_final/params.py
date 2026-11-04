@@ -509,7 +509,7 @@ BUOY_BATT_STANDOFF = p("boya.apoyo_bateria", 6.0, EST, VER, "Refuerzo M3 bajo el
 BUOY_TRAY_GAP = p("boya.aire_bateria_bandeja", 3.0, EST, VER, "Aire entre el portabaterias y la bandeja")
 BUOY_HOLDER_HOLES = p("boya.portabaterias_agujeros", (66.0, 56.0), EST, VER, "Paso de los 4 agujeros del portabaterias; medir")
 BUOY_TRAY_EDGE = p("boya.bandeja_borde", 2.0, EST, VER, "Margen de la bandeja alrededor de los modulos")
-BUOY_POST_D = p("boya.poste_D", 8.0, EST, VER, "Postes de la bandeja con inserto M3")
+BUOY_POST_D = p("boya.poste_D", 9.0, EST, VER, "Postes de la bandeja con inserto M3 (era 8: anillo de 2.0 alrededor del inserto Ø4; margen 04/11 >= 2.4)", 8.0)
 BUOY_POST_WALL_GAP = p("boya.poste_aire_pared", 1.0, EST, VER, "Aire entre poste y pared interior")
 BUOY_UMB_MARGIN = p("boya.umbilical_margen", 3.0, EST, VER, "Del borde de la contratuerca a la pared, ademas de GAP_WALL")
 BUOY_CABLE_CLEAR = p("boya.cable_aire", 1.0, EST, VER, "Aire entre el codo del umbilical y la bandeja")

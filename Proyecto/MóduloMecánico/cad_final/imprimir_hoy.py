@@ -34,8 +34,9 @@ NODE = [("08_M6_bisel", "M6_capsula_bisel", 2), ("09_M11_bandeja", "M11_bandeja"
         ("12_M4_capsula_cuerpo", "M4_capsula_cuerpo", 2), ("13_M2_caja_tapa", "M2_caja_tapa", 1),
         ("14_M1s_caja_cuerpo", "M1s_caja_cuerpo", 1), ("15_M5s_capsula_tapa_pie", "M5s_capsula_tapa_pie", 2)]
 WAIT = [("16_M3s_riel_gancho", "M3s_riel_gancho", 2)]     # LR1 left with separador.usar = False (correction 1)
-BUOY = [("18_B1_casco", "B1_casco", 1), ("19_B2_cubierta", "B2_cubierta", 1), ("20_B3_caja", "B3_caja", 1),
-        ("21_B4_tapa", "B4_tapa", 1), ("22_B5_cuna", "B5_cuna", 2), ("23_B6_correa", "B6_correa", 4)]
+BUOY = [("18_B1_casco", "B1_casco", 2), ("19_B2_cubierta_lisa", "B2_cubierta_lisa", 1), ("24_B2_cubierta_mastil", "B2_cubierta_mastil", 1),
+        ("20_B3_caja", "B3_caja", 1), ("21_B4_tapa", "B4_tapa", 1), ("22_B5_cuna_base", "B5_cuna_base", 2),
+        ("25_B5_cuna_cuello", "B5_cuna_cuello", 2), ("23_B6_correa", "B6_correa", 4)]   # B1, B2, B5 in halves (usable bed 230, 04/11)
 
 
 def cut(step, box, dst):
@@ -101,10 +102,12 @@ PLATES = [  # (plate name, files by number prefix): one infill, one support sett
     ("P06_bisel_y_bandejas", ["08", "09", "10"]), ("P07_tapas_bolsillo", ["11"]), ("P08_capsulas", ["12"]),
     ("P09_tapa_caja", ["13"]), ("P10_caja", ["14"]), ("P11_tapas_capsula_con_pie", ["15"]),
     ("P12_rieles_con_gancho", ["16"]),
-    ("P14_boya_casco", ["18"]), ("P15_boya_cubierta", ["19"]), ("P16_boya_caja_y_tapa", ["20", "21"]),
-    ("P17_boya_cunas", ["22"]), ("P18_boya_correas", ["23"])]
-FIXED = {"P14_boya_casco", "P15_boya_cubierta", "P17_boya_cunas"}   # 254 mm pieces: out of the excluded corner, no arrange;
-# the 2 cunas do not fit side by side, so P17 is one cuna printed twice (placas.py "veces")
+    ("P14_boya_casco_mitad", ["18"]), ("P15_boya_cubierta_lisa", ["19"]), ("P19_boya_cubierta_mastil", ["24"]),
+    ("P16_boya_caja_y_tapa", ["20", "21"]), ("P17_boya_cunas_base", ["22"]), ("P20_boya_cunas_cuello", ["25"]),
+    ("P18_boya_correas", ["23"])]
+FIXED = {"P14_boya_casco_mitad", "P15_boya_cubierta_lisa", "P19_boya_cubierta_mastil", "P17_boya_cunas_base", "P20_boya_cunas_cuello"}
+# 225.6 mm wide halves: out of the excluded corner, no arrange; 2 halves do not fit side by side, so a plate with
+# quantity 2 is one half printed twice (placas.py "veces")
 
 
 def plates(rows):

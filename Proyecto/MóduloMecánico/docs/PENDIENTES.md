@@ -2,6 +2,22 @@
 
 Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 
+## Bloqueos del 04/11/2026
+- **Corrección de concepto 3a (riel cerrado estanco, un solo volumen seco, cable plano por dentro, sin prensaestopas
+  intermedio): BLOQUEADA.** El mensaje traía el marcador "[pega aquí el prompt de corrección de concepto completo]" y
+  la cola menciona "pasos A a E", pero no llegaron. Para destrabarla, pegar el prompt. De ella dependen:
+  - el riel M3s (FS entre capas 2,72 < 3);
+  - el pie M5s (2,47 < 3);
+  - las paredes de M1s y M11 (2,0 a 2,3);
+  - el lastre nuevo y la lista de sellos;
+  - la explicación del agujero cuadrado de M1s y del agujero redondo del riel en la guía.
+- `M1m_caja_riel` de P3 y P4 mide 250 mm (> 230). No se imprime ahora; se resuelve con el riel de 3a.
+- **Onshape:** la API key no puede borrar (403). En LG_IMPRIMIR_P2 hay que borrar a mano las 4 pestañas "OLD 2026-11-01 …",
+  que ya están copiadas en LG_HISTORICO.
+- **Onshape:** los planos de B1, B2 y B5 que Melissa hizo a mano ("Drawing 1/2/5") muestran las piezas enteras. Las piezas
+  nuevas (mitades) se suben aparte; ella decide si rehace sus planos.
+- **SimScale:** no hay `SIMSCALE_API_KEY` en `cad_final/.env` (solo están las claves de Onshape). Ver `docs/GUIA_SIMSCALE.md`.
+
 ## Medidas físicas (no se pueden resolver desde la PC)
 - `aro.seccion`: hoy 8 mm estimado. Calibrador sobre la varilla del aro Ø200 real (MEDIDAS.md, fila 1).
 - KIT A real, PG7, peso del panel: sin medir (MEDIDAS.md).
