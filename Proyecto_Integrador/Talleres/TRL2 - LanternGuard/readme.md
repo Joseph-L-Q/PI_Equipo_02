@@ -329,6 +329,49 @@ La Solución preliminar 1 constituye la alternativa seleccionada por el equipo c
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia. Se presenta la vista general de LanternGuard y los detalles conceptuales de la boya de superficie, el módulo sumergido y la cápsula de cámara. El boceto corresponde a la Solución 1 de la matriz morfológica y considera los componentes y materiales seleccionados por el equipo. Las funciones de estimación volumétrica, gestión energética y recuperación local de fotografías requieren desarrollo o validación posterior.</em></p>
 
+#### Boceto 2 - Solución preliminar 2
+
+El segundo boceto representa una alternativa conceptual de LanternGuard basada en la Solución 2 de la matriz morfológica. Conserva la organización general del sistema mediante una boya de superficie y un módulo sumergido conectado por cable umbilical, pero plantea diferentes componentes electrónicos, materiales y mecanismos de adquisición, procesamiento y comunicación.
+
+**Descripción técnica y funcional:**
+
+* **Estrategia de muestreo:** Muestreo por umbral, basado en la activación del sistema ante un evento previamente definido. La condición de activación y sus parámetros deberán establecerse y validarse posteriormente.
+
+* **Boya de superficie (nodo boya):**
+  * **Alimentación:** Batería Li-Po de 10 000 mAh y módulo BMS para protección y gestión de la batería.
+  * **Control y procesamiento:** Raspberry Pi Zero 2 W, considerada para supervisar las funciones de la boya y realizar procesamiento local de la información.
+  * **Telemetría:** Módulo LoRa SX1276 para transmitir mensajes breves y metadatos hacia una estación receptora terrestre.
+  * **Comunicación interna:** Enlace RS-485 mediante cable umbilical con el módulo sumergido.
+  * **Visualización:** Dashboard web para consultar los resultados del monitoreo.
+
+* **Barra y módulo sumergido (nodo sumergido):**
+  * **Control:** Microcontrolador ESP32-WROOM-32U alojado en un compartimento electrónico protegido.
+  * **Registro de movimiento:** Sensor inercial MPU-6050 para obtener información de aceleración y movimiento durante las inspecciones.
+  * **Almacenamiento:** Memoria Flash W25Q128 como alternativa de almacenamiento electrónico, cuya capacidad disponible y suficiencia deberán evaluarse.
+  * **Estructura y protección:** Carcasa fabricable mediante impresión 3D en ABS, con recubrimiento de resina epóxica como alternativa de protección superficial.
+  * **Comunicación:** Transferencia de información hacia la boya mediante RS-485.
+
+* **Cápsulas de cámara:**
+  * **Captura:** Dos cámaras Arducam Mega de 5 MP con lente M12, orientadas hacia diferentes regiones de las mallas.
+  * **Iluminación:** Módulos LED infrarrojos para apoyar la adquisición de imágenes, cuya compatibilidad con las cámaras deberá verificarse.
+  * **Protección óptica:** Ventanas de vidrio templado marino y sellado mediante juntas O-ring.
+  * **Tratamiento superficial:** Film hidrofóbico PET como alternativa para reducir la acumulación de agua y suciedad sobre las ventanas ópticas, pendiente de evaluación en condiciones submarinas.
+
+* **Procesamiento y comunicación:**
+  * **Procesamiento local:** Se contempla utilizar la Raspberry Pi Zero 2 W para desarrollar procedimientos de análisis de imágenes orientados a estimar la cobertura visible y el volumen de bioincrustación.
+  * **Transmisión inalámbrica:** LoRa se utilizaría para mensajes breves y metadatos, mientras que las fotografías completas requerirían un procedimiento de transferencia local.
+  * **Notificación:** Dashboard web para visualizar indicadores, registros e historial de inspecciones.
+
+Esta alternativa utiliza componentes y materiales distintos de los seleccionados para el diseño principal de LanternGuard. Su representación permite comparar las posibilidades técnicas de la Solución 2 frente a las demás alternativas de la matriz morfológica.
+
+<p align="center"><strong><em>Figura 5. Boceto de la Solución preliminar 2 del sistema LanternGuard.</em></strong></p>
+
+<p align="center">
+  <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/b66c5076-6e49-4c28-863a-85913905350e" />
+</p>
+
+<p align="center"><em><strong>Nota.</strong> Elaboración propia. Se presenta la alternativa de diseño correspondiente a la Solución 2 de la matriz morfológica, considerando sus componentes electrónicos, materiales estructurales y funciones propuestas. Las características de procesamiento, comunicación y protección óptica deberán evaluarse y validarse durante etapas posteriores.</em></p>
+
 ### 3.4. Representación del modelado tridimensional
 
 Como parte del diseño conceptual de LanternGuard, se desarrolló un modelo tridimensional que representa la configuración estructural del módulo sumergido, la boya de superficie y su integración mediante un cable umbilical. El modelado permite visualizar la distribución de los componentes, los sistemas de soporte y la disposición física de los elementos que conforman la propuesta tecnológica.
