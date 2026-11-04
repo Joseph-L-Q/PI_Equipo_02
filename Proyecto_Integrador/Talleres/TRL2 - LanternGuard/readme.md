@@ -213,6 +213,33 @@ La Figura 1 presenta las entradas y salidas consideradas en el diseño conceptua
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia. Se representan los flujos de energía, materia, información y señales del sistema LanternGuard, considerando el monitoreo de la bioincrustación y la estimación propuesta de su cobertura visible y volumen.</em></p>
 
+#### Esquema de funciones del sistema LanternGuard
+
+El esquema de funciones de LanternGuard representa la organización de las funciones necesarias para el monitoreo de la bioincrustación en las mallas de las linternas utilizadas para el cultivo de concha de abanico (*Argopecten purpuratus*). A diferencia de la caja negra, este esquema permite identificar las funciones internas del sistema y las relaciones entre ellas mediante flujos de energía, materia, información y señales.
+
+Como se muestra en la Figura 2, la propuesta se organiza en seis bloques funcionales: sensores, actuadores, control y procesamiento, módulo eléctrico, módulo mecánico y comunicación.
+
+El **bloque de sensores** comprende la captura de imágenes submarinas mediante las cámaras Arducam Mega de 5 MP y el registro del movimiento del módulo sumergido mediante el acelerómetro LIS3DH. Asimismo, contempla la digitalización de las señales obtenidas y el envío de la información hacia el procesamiento. Estas funciones permiten disponer de fotografías de las regiones observadas de las mallas y de registros complementarios sobre el movimiento del dispositivo.
+
+El **bloque de actuadores** considera el encendido de la iluminación LED para favorecer la captura de fotografías submarinas y la indicación del estado de encendido o apagado del sistema. Como salidas se representan la energía lumínica y la señal indicadora del estado de funcionamiento. Estas funciones corresponden a los mecanismos de iluminación y señalización previstos para LanternGuard.
+
+El **bloque de control y procesamiento** contempla las funciones de monitorear el estado del sistema, gestionar los ciclos de trabajo y suspensión, identificar datos, sincronizar y validar la información de entrada, recibir fotografías y validar la calidad de las imágenes. Asimismo, incorpora la función de procesar y estimar la cobertura visible y el volumen de bioincrustación acumulada sobre las regiones observadas de las mallas. Para ello, el equipo propone desarrollar un algoritmo propio cuya metodología, requerimientos de información y precisión deberán establecerse y validarse en etapas posteriores. De acuerdo con la arquitectura conceptual de LanternGuard, el procesamiento de las fotografías completas se realizaría posteriormente en el servicio de procesamiento de imágenes, por lo que esta función se representa dentro del proceso general de control y procesamiento del sistema.
+
+El **módulo eléctrico** contempla las funciones de captar y convertir la energía solar, regular la carga, almacenar energía, medir el nivel de batería y distribuir y proteger el suministro eléctrico. Asimismo, considera el acondicionamiento de energía para los sensores, actuadores, procesamiento y control, y comunicación. Estas funciones tienen como finalidad proporcionar la alimentación eléctrica necesaria para el funcionamiento de los componentes y las inspecciones programadas.
+
+El **módulo mecánico** comprende las funciones de garantizar la hermeticidad subacuática, proteger los elementos electrónicos y sostener los componentes del dispositivo. También incorpora la función de reducir la adherencia de bioincrustación en la zona de captura, con el propósito de disminuir la acumulación de organismos sobre las superficies de protección de las cámaras y favorecer la obtención de fotografías. Esta función corresponde a una medida de protección del propio dispositivo y no implica que LanternGuard realice la limpieza de las mallas de cultivo. En este bloque, el agua de mar se representa como entrada y salida de materia, debido a las condiciones de operación del módulo sumergido.
+
+Finalmente, el **bloque de comunicación** comprende las funciones de transmitir datos e imágenes hacia el servicio en la nube, confirmar el envío de información, actualizar el historial de inspecciones, gestionar reportes, administrar el aplicativo y notificar al usuario. En la arquitectura propuesta, los mensajes breves de estado y los metadatos de las inspecciones se transmitirían mediante LoRa, mientras que las fotografías completas se recuperarían mediante una transferencia local posterior, cuyo medio específico aún debe definirse, para su envío al servicio de procesamiento de imágenes. Como salidas se contemplan los datos e imágenes, los indicadores de bioincrustación y volumen estimado, y las señales de alerta de mantenimiento. Estas funciones se consideran conceptuales y deberán implementarse y validarse durante las siguientes etapas de desarrollo.
+
+La Figura AF-2 presenta el esquema de funciones de LanternGuard, mostrando las relaciones entre los seis bloques funcionales y los flujos necesarios para su operación. Esta representación permite establecer una base para la elaboración de la matriz morfológica y la generación de alternativas de diseño.
+
+<p align="center"><strong><em>Figura 2. Esquema de funciones del sistema LanternGuard.</em></strong></p>
+
+<p align="center">
+<img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/84184189-fc87-4736-9f15-76c560fe6dfd" />
+</p>
+
+<p align="center"><em><strong>Nota.</strong> Elaboración propia. Se representan los bloques de sensores, actuadores, control y procesamiento, módulo eléctrico, módulo mecánico y comunicación, así como sus relaciones mediante flujos de energía, materia, información y señales. El esquema incluye la captura de imágenes submarinas, el registro de movimiento mediante el acelerómetro LIS3DH, la protección de los componentes frente al entorno marino, la gestión energética y la estimación propuesta de cobertura visible y volumen de bioincrustación. Las funciones de estimación volumétrica, comunicación y notificación deberán desarrollarse y validarse en etapas posteriores.</em></p>
 
 ### 3.4. Representación del modelado tridimensional
 
