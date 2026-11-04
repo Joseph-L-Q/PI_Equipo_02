@@ -231,7 +231,7 @@ El **módulo mecánico** comprende las funciones de garantizar la hermeticidad s
 
 Finalmente, el **bloque de comunicación** comprende las funciones de transmitir datos e imágenes hacia el servicio en la nube, confirmar el envío de información, actualizar el historial de inspecciones, gestionar reportes, administrar el aplicativo y notificar al usuario. En la arquitectura propuesta, los mensajes breves de estado y los metadatos de las inspecciones se transmitirían mediante LoRa, mientras que las fotografías completas se recuperarían mediante una transferencia local posterior, cuyo medio específico aún debe definirse, para su envío al servicio de procesamiento de imágenes. Como salidas se contemplan los datos e imágenes, los indicadores de bioincrustación y volumen estimado, y las señales de alerta de mantenimiento. Estas funciones se consideran conceptuales y deberán implementarse y validarse durante las siguientes etapas de desarrollo.
 
-La Figura AF-2 presenta el esquema de funciones de LanternGuard, mostrando las relaciones entre los seis bloques funcionales y los flujos necesarios para su operación. Esta representación permite establecer una base para la elaboración de la matriz morfológica y la generación de alternativas de diseño.
+La Figura 2 presenta el esquema de funciones de LanternGuard, mostrando las relaciones entre los seis bloques funcionales y los flujos necesarios para su operación. Esta representación permite establecer una base para la elaboración de la matriz morfológica y la generación de alternativas de diseño.
 
 <p align="center"><strong><em>Figura 2. Esquema de funciones del sistema LanternGuard.</em></strong></p>
 
