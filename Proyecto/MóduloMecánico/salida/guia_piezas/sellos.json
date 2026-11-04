@@ -1,0 +1,179 @@
+[
+ {
+  "n": 1,
+  "sello": "Tapa B4 sobre la caja seca B3",
+  "piezas": [
+   "B3_caja",
+   "B4_tapa"
+  ],
+  "tipo": "cordón O-ring Ø2 en ranura",
+  "protege": "La electrónica de la boya: PCB, Waveshare, portabaterías 3×18650 y RTC.",
+  "donde": [
+   "B4 N° 2",
+   "B4 N° 1",
+   "B3 N° 8"
+  ]
+ },
+ {
+  "n": 2,
+  "sello": "PG7 del umbilical en B3 (pared −X)",
+  "piezas": [
+   "B3_caja"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del cable umbilical (boya ↔ nodo) hacia la caja seca.",
+  "donde": [
+   "B3 N° 5"
+  ]
+ },
+ {
+  "n": 3,
+  "sello": "PG7 del cable solar en B3 (pared +X)",
+  "piezas": [
+   "B3_caja"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del cable del panel solar hacia la caja seca.",
+  "donde": [
+   "B3 N° 6"
+  ]
+ },
+ {
+  "n": 4,
+  "sello": "PG7 del pigtail de antena en B3 (pared +X)",
+  "piezas": [
+   "B3_caja",
+   "B2_cubierta_mastil"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del pigtail de la antena hacia la caja seca. El mástil de B2 solo guía el cable: no sella.",
+  "donde": [
+   "B3 N° 7",
+   "B2 mástil N° 5"
+  ]
+ },
+ {
+  "n": 5,
+  "sello": "Insertos M3 de la brida de B3",
+  "piezas": [
+   "B3_caja"
+  ],
+  "tipo": "inserto térmico ciego (no atraviesa la brida)",
+  "protege": "La brida no queda perforada y los tornillos quedan fuera del cordón: el agua no tiene camino por los tornillos.",
+  "donde": [
+   "B3 N° 2"
+  ]
+ },
+ {
+  "n": 6,
+  "sello": "Botellas PET selladas (flotación)",
+  "piezas": [
+   "B1_casco",
+   "B5_cuna_base",
+   "B5_cuna_cuello"
+  ],
+  "tipo": "tapón de rosca de fábrica (botella comprada)",
+  "protege": "El aire que flota la boya. El casco impreso NO es estanco: solo sostiene las botellas.",
+  "donde": [
+   "B1 N° 9",
+   "B1 N° 10",
+   "B5 cuello N° 5"
+  ]
+ },
+ {
+  "n": 7,
+  "sello": "Tapa M2 sobre la caja M1s",
+  "piezas": [
+   "M1s_caja_cuerpo",
+   "M2_caja_tapa"
+  ],
+  "tipo": "cordón O-ring Ø2 en ranura",
+  "protege": "La electrónica del nodo (bandejas M11) en la caja seca.",
+  "donde": [
+   "M2 N° 2",
+   "M2 N° 1",
+   "M1s N° 6"
+  ]
+ },
+ {
+  "n": 8,
+  "sello": "PG7 de cada cámara en las paredes de extremo de M1s (×2)",
+  "piezas": [
+   "M1s_caja_cuerpo",
+   "M3s_riel_gancho"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del Cat5e de cada cámara a la caja seca. El conducto del riel va inundado: el sello es el PG7, no el riel.",
+  "donde": [
+   "M1s N° 4",
+   "M3s N° 2"
+  ]
+ },
+ {
+  "n": 9,
+  "sello": "PG7 del umbilical en la tapa M2",
+  "piezas": [
+   "M2_caja_tapa"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del umbilical hacia la caja seca del nodo.",
+  "donde": [
+   "M2 N° 3"
+  ]
+ },
+ {
+  "n": 10,
+  "sello": "Insertos M3 de la brida de M1s y M4 del cojín",
+  "piezas": [
+   "M1s_caja_cuerpo"
+  ],
+  "tipo": "inserto térmico ciego",
+  "protege": "No perforan la caja: los 12 M3 de la tapa quedan fuera del cordón y los 8 M4 del cojín no pasan la pared.",
+  "donde": [
+   "M1s N° 5",
+   "M1s N° 3"
+  ]
+ },
+ {
+  "n": 11,
+  "sello": "Tapa M5s sobre la cápsula M4 (×2 cápsulas)",
+  "piezas": [
+   "M4_capsula_cuerpo",
+   "M5s_capsula_tapa_pie"
+  ],
+  "tipo": "cordón O-ring Ø2 en ranura",
+  "protege": "La cámara Arducam y el anillo LED dentro de cada cápsula.",
+  "donde": [
+   "M5s N° 2",
+   "M5s N° 1",
+   "M4 N° 1"
+  ]
+ },
+ {
+  "n": 12,
+  "sello": "PG7 de cada cápsula en M4 (×2)",
+  "piezas": [
+   "M4_capsula_cuerpo"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del Cat5e hacia el interior de la cápsula (cámara y LED).",
+  "donde": [
+   "M4 N° 2"
+  ]
+ },
+ {
+  "n": 13,
+  "sello": "Ventana de acrílico M7 en el frente de M4 (×2)",
+  "piezas": [
+   "M4_capsula_cuerpo",
+   "M6_capsula_bisel"
+  ],
+  "tipo": "asiento Ø30.4 con sellador (a definir)",
+  "protege": "El frente de la cápsula: la ventana deja pasar la luz y no el agua. A confirmar: el CAD solo define el asiento y el bisel M6 con 3 M2; no hay sellador especificado.",
+  "donde": [
+   "M4 N° 3",
+   "M6 N° 2",
+   "M6 N° 1"
+  ]
+ }
+]

@@ -40,7 +40,7 @@ Leer primero `docs/ESTADO.md` (sección 04/11), `docs/PENDIENTES.md` (bloqueos d
 - M1m de P3/P4.
 
 ## Lo que quedaba del BLOQUE 1 al cortar
-- **Guía de piezas (paso 4):** un subagente estaba escribiendo `cad_final/guia_piezas.py`. Debe generar:
+- **Guía de piezas (paso 4): HECHA** (18 páginas, `docs/GUIA_PIEZAS_LanternGuard.pdf`, en Drive 07_Documentos). Dudas abiertas: M11 (pasos M3 tapados por los postes, ventana Ø27), sellador de la ventana M7 "a definir". Sin revisar a ojo: B2 lisa, B5 cuello, B6, M3t, M6, M11 sup.
   - `salida/guia_piezas/*.png|pdf`;
   - `docs/GUIA_PIEZAS_LanternGuard.pdf` y `docs/GUIA_PIEZAS.md`;
   - `docs/ESTANQUEIDAD.md`;
