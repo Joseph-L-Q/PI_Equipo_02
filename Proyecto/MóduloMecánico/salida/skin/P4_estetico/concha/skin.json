@@ -1,0 +1,43 @@
+{
+ "prototipo": "P4_estetico",
+ "tema": "concha",
+ "volumen_cm3": 24.19,
+ "masa_100_g": 30.7,
+ "solidos": 1,
+ "brep_ok": false,
+ "pared_p1_mm": 0.47,
+ "pared_min_mm": 0.03,
+ "bbox_mm": [
+  130.0,
+  139.0,
+  5.6
+ ],
+ "dentro_de_la_tapa": true,
+ "margen_a_la_tapa_mm": 0.5,
+ "z_cambio_color_mm": 2.0,
+ "interferencias_mm3": {
+  "M2_caja_tapa": 0.05
+ },
+ "tornillos": 10,
+ "umbilical": [
+  -29.839745962149998,
+  42.49999999999999
+ ],
+ "bisagra": [
+  0.0,
+  -19.14944898632953
+ ],
+ "umbo_r": 11.1,
+ "costillas": 9,
+ "perla_logo": [
+  0.0,
+  -34.8,
+  31.1,
+  6.3
+ ],
+ "roce_perla_mm": 3.48,
+ "letra_mm": [
+  16.0,
+  20.0
+ ]
+}
