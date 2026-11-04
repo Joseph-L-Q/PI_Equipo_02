@@ -102,23 +102,51 @@ Esta alternativa utiliza componentes y materiales distintos de los seleccionados
 
 ---
 
-## Boceto 3 - Solución preliminar 3
 
-<img width="1600" height="900" alt="Boceto3" src="https://github.com/user-attachments/assets/8a7d94de-7a4d-4929-a2ab-c47256afb406" />
+#### Boceto 3 - Solución preliminar 3
 
-### Descripción técnica y funcional:
-* **Estrategia de Muestreo:** Muestreo adaptativo basado en algoritmos de control.
-* **Boya de Superficie (Nodo Boya):**
-  * **Alimentación:** Panel solar con controlador de carga solar dedicado y batería de gel plomo-ácido de 12V.
-  * **Procesamiento y Control:** Monoplaca Raspberry Pi Zero 2 W.
-  * **Interfaz e Indicadores:** Pantalla OLED de 0.96" para monitoreo de estado en la boya (ej.: voltaje de batería).
-  * **Telemetría:** Antena Wi-Fi SMA de 2.4 GHz para comunicación directa a router Wi-Fi en tierra.
-  * **Notificación al usuario:** Bot de automatización en WhatsApp.
-* **Barra y Módulo Sumergido (Nodo Sumergido):**
-  * **Procesamiento:** Monoplaca Raspberry Pi Zero 2 W alojada en el nodo sumergido.
-  * **Sensores de Proximidad y Almacenamiento:** Sensor ultrasónico UART A02YYUW y memoria Flash externa W25Q128.
-  * **Comunicación Interna:** Cable umbilical industrial RS-485.
-  * **Estructura y Protección:** Carcasa de PTFE mecanizada cubierta con lámina adhesiva de cobre como barrera *antifouling* y ventana con film hidrofóbico PET.
-* **Cápsulas de Cámara:**
-  * **Captura de Imagen:** Dos cámaras Arducam Mega 3MP (M02) montadas sobre soporte articulado con bisagra dentada.
-  * **Iluminación y Sellado:** Módulo de iluminación LED infrarrojo (IR) para baja perturbación de la biomasa, ventana de policarbonato transparente con film hidrofóbico y sellado mediante junta *O-ring*.
+El tercer boceto representa una alternativa conceptual de LanternGuard correspondiente a la Solución 3 de la matriz morfológica. Mantiene la configuración general de una boya de superficie conectada mediante un cable umbilical a un módulo sumergido, pero incorpora diferentes componentes electrónicos, materiales estructurales y alternativas de procesamiento y comunicación. Esta solución permite evaluar una configuración distinta a la seleccionada por el equipo para el desarrollo principal de LanternGuard.
+
+**Descripción técnica y funcional:**
+
+* **Estrategia de muestreo:**
+  * **Muestreo adaptativo:** Se propone ajustar los ciclos de adquisición de información mediante un algoritmo de control, considerando las condiciones registradas durante las inspecciones. Los criterios de adaptación deberán definirse y validarse posteriormente.
+
+* **Boya de superficie (nodo boya):**
+  * **Alimentación:** Panel solar, controlador de carga solar y batería de gel de plomo-ácido de 12 V para proporcionar energía al sistema.
+  * **Control y procesamiento:** Placa Raspberry Pi 4, considerada para gestionar las funciones de supervisión de la boya y realizar tareas de procesamiento de información.
+  * **Comunicación terrestre:** Módulo Ethernet W5500 como alternativa de comunicación mediante una conexión cableada hacia la infraestructura de red terrestre. Esta configuración requeriría definir el tendido físico y las condiciones de instalación del enlace.
+  * **Comunicación interna:** Cable umbilical RS-485 para intercambiar información con el módulo sumergido, mediante las interfaces de comunicación correspondientes.
+  * **Notificación al usuario:** Bot de WhatsApp como alternativa para presentar avisos, estados e información resumida de las inspecciones.
+
+* **Barra y módulo sumergido (nodo sumergido):**
+  * **Control:** Placa Raspberry Pi Zero 2 W, considerada para coordinar las funciones de adquisición de información en el módulo sumergido.
+  * **Registro de movimiento:** Acelerómetro BMA400 para obtener mediciones complementarias de aceleración y movimiento durante las inspecciones.
+  * **Almacenamiento:** Memoria EEPROM AT24C256 como alternativa para conservar parámetros de configuración y pequeños registros del sistema. El almacenamiento de fotografías completas requeriría un medio adicional por definir.
+  * **Comunicación interna:** Cable umbilical RS-485 que permite establecer la conexión de datos con la boya de superficie.
+  * **Estructura:** Carcasa y soportes fabricables mediante impresión 3D utilizando ASA, como alternativa de material estructural.
+  * **Protección superficial:** Lámina adhesiva de cobre aplicada sobre superficies no ópticas como alternativa para reducir la adherencia de organismos incrustantes. Su eficacia, resistencia al ambiente marino y compatibilidad ambiental deberán evaluarse.
+
+* **Cápsulas de cámara:**
+  * **Captura de imágenes:** Dos cámaras Arducam de 3 MP con lente M12, orientadas hacia diferentes regiones de las mallas de las linternas de cultivo.
+  * **Posicionamiento:** Soportes articulados para establecer las orientaciones de captura previstas en el diseño.
+  * **Iluminación:** Tira LED COB destinada a proporcionar iluminación durante la adquisición de fotografías.
+  * **Protección óptica:** Ventanas de policarbonato transparente y elementos de sellado mediante juntas O-ring.
+  * **Tratamiento superficial:** Spray repelente de agua como alternativa de protección de las ventanas ópticas. Su funcionamiento y durabilidad en condiciones de inmersión deberán evaluarse. La lámina de cobre no cubriría las superficies transparentes de captura.
+
+* **Procesamiento y comunicación:**
+  * **Procesamiento de imágenes:** Se contempla utilizar la Raspberry Pi 4 para desarrollar procedimientos de análisis de fotografías orientados a estimar la cobertura visible y el volumen de bioincrustación acumulada sobre las regiones observadas de las mallas. La metodología volumétrica aún requiere desarrollo y validación.
+  * **Transferencia de información:** La comunicación entre el módulo sumergido y la boya se realizaría mediante RS-485. Para el enlace terrestre, la alternativa contempla Ethernet mediante W5500, por lo que sería necesario implementar una conexión física adecuada.
+  * **Notificación:** Bot de WhatsApp destinado a presentar información resumida, indicadores y posibles avisos relacionados con el estado de las inspecciones.
+
+La Solución preliminar 3 constituye una alternativa tecnológica para comparar diferentes opciones de control, adquisición de imágenes, comunicación, protección estructural y presentación de resultados. Su configuración permite evaluar las posibilidades de estos componentes frente a las soluciones 1 y 2, sin representar el diseño finalmente seleccionado por el equipo.
+
+La Figura 3 presenta el tercer boceto de LanternGuard, mostrando la vista general del sistema y los detalles de la boya de superficie, el módulo sumergido y la cápsula de cámara.
+
+<p align="center"><strong><em>Figura 3. Boceto de la Solución preliminar 3 del sistema LanternGuard.</em></strong></p>
+
+<p align="center">
+  <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/81f18ad1-4dd5-4399-bbb1-aa01f13b42f3" />
+</p>
+
+<p align="center"><em><strong>Nota.</strong> Elaboración propia. Se presenta la alternativa conceptual correspondiente a la Solución 3 de la matriz morfológica, considerando el acelerómetro BMA400, las cámaras Arducam de 3 MP, el control mediante Raspberry Pi, la carcasa ASA, la comunicación Ethernet y la notificación mediante un bot de WhatsApp. Las funciones de estimación volumétrica, muestreo adaptativo y protección superficial requieren desarrollo o validación posterior.</em></p>
