@@ -5,53 +5,56 @@
 
 <p align="center"><strong>Informe de sustento científico y tecnológico</strong></p>
 
-## Información académica
+<h2 align="center">Información académica</h2>
 
-<table align="center">
-  <thead>
-    <tr>
-      <th>Campo</th>
-      <th>Información</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Proyecto</strong></td>
-      <td>LanternGuard</td>
-    </tr>
-    <tr>
-      <td><strong>Curso</strong></td>
-      <td>Proyecto Integrador</td>
-    </tr>
-    <tr>
-      <td><strong>Docentes</strong></td>
-      <td>
-        <ul>
-          <li>Umbert Lewis de la Cruz Rodriguez</li>
-          <li>Renzo Jose Chan Rios</li>
-          <li>Maria Angelica Rejas Nuñez</li>
-          <li>Harry Anderson Rivera Tito</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td><strong>Integrantes</strong></td>
-      <td>
-        <ul>
-          <li>Antezana De la Cruz, María</li>
-          <li>Santamaria Huaytan, Gabriela</li>
-          <li>Bustos Montañez, Melissa</li>
-          <li>Lombardi Quispe, Joseph</li>
-          <li>Palacios Tanaka, Yoichi</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td><strong>Periodo académico</strong></td>
-      <td>2026</td>
-    </tr>
-  </tbody>
-</table>
+<div align="center">
+  <table>
+    <thead>
+      <tr>
+        <th align="center">Campo</th>
+        <th align="center">Información</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Proyecto</strong></td>
+        <td align="center">LanternGuard</td>
+      </tr>
+      <tr>
+        <td><strong>Curso</strong></td>
+        <td align="center">Proyecto Integrador</td>
+      </tr>
+      <tr>
+        <td><strong>Docentes</strong></td>
+        <td>
+          <ul>
+            <li>Umbert Lewis de la Cruz Rodriguez</li>
+            <li>Renzo Jose Chan Rios</li>
+            <li>Maria Angelica Rejas Nuñez</li>
+            <li>Harry Anderson Rivera Tito</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Integrantes</strong></td>
+        <td>
+          <ul>
+            <li>Antezana De la Cruz, María</li>
+            <li>Santamaria Huaytan, Gabriela</li>
+            <li>Bustos Montañez, Melissa</li>
+            <li>Lombardi Quispe, Joseph</li>
+            <li>Palacios Tanaka, Yoichi</li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Periodo académico</strong></td>
+        <td align="center">2026</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 ## Presentación y alcance
 
