@@ -12,7 +12,8 @@ LanternGuard es un sistema de monitoreo diseñado para medir el porcentaje de bi
 
 La Caja Negra muestra las entradas y salidas principales que interactúan con nuestro sistema.
 
-<img width="1779" height="1459" alt="Caja negra" src="https://github.com/user-attachments/assets/aceb883c-00bb-40f2-84f6-c6b22b940538" />
+<img width="1302" height="1036" alt="Infografía de caja negra LanternGuard" src="https://github.com/user-attachments/assets/3f7e865f-e237-486b-bb3c-7287f40d3270" />
+
 
 ---
 
