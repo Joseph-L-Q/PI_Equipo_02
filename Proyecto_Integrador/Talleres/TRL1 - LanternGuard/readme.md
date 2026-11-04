@@ -58,11 +58,11 @@
 
 ## Presentación y alcance
 
-LanternGuard es una propuesta de desarrollo tecnológico orientada al monitoreo periódico de la bioincrustación (*biofouling*) en las mallas de las linternas utilizadas para el cultivo de conchas de abanico (*Argopecten purpuratus*). Su finalidad es obtener fotografías submarinas para estimar el porcentaje de cobertura visible por organismos incrustantes en regiones seleccionadas de las mallas y aportar información que apoye la planificación de inspecciones y actividades de mantenimiento. Para ello, se propone utilizar dos cámaras submarinas, un acelerómetro para registrar el movimiento del módulo y tecnologías de comunicación. El sistema está destinado al monitoreo: no realiza la limpieza de las linternas ni determina la cantidad total de bioincrustación de toda la estructura.
+LanternGuard es una propuesta de desarrollo tecnológico orientada al monitoreo periódico de la bioincrustación (*biofouling*) en las mallas de las linternas utilizadas para el cultivo de conchas de abanico (*Argopecten purpuratus*). Su finalidad es obtener fotografías submarinas para estimar el porcentaje de cobertura visible por organismos incrustantes en regiones seleccionadas de las mallas y proponer un algoritmo propio para estimar el volumen de bioincrustación acumulada en esas regiones. Para ello, se contemplan dos cámaras submarinas, un acelerómetro para registrar el movimiento del módulo, tecnologías de comunicación y un servicio posterior de procesamiento de imágenes. La estimación volumétrica es una función prevista cuya metodología y precisión aún deben desarrollarse y validarse. LanternGuard busca aportar información para planificar inspecciones y mantenimiento: no limpia las linternas ni pretende determinar la bioincrustación total de toda su estructura.
 
 El presente informe, correspondiente al TRL 1 establecido por CONCYTEC [[1]](#ref-1), se centra en la revisión de los principios científicos que sustentan estas tecnologías. Como antecedente, Loayza-Aguilar et al. [[2]](#ref-2) investigaron el control de la bioincrustación en linternas de cultivo de conchas de abanico en la bahía de Samanco, Perú, evidenciando la importancia de su mantenimiento.
 
-**Pregunta científica orientadora.** ¿Qué principios científicos sustentan la captura y el procesamiento de imágenes submarinas, el registro del movimiento mediante un acelerómetro y la comunicación de datos para estimar la cobertura visible de bioincrustación en regiones de mallas acuícolas?
+**Pregunta científica orientadora.** ¿Qué principios científicos sustentan la captura y el procesamiento de imágenes submarinas, el registro del movimiento mediante un acelerómetro y la comunicación de datos para estimar la cobertura visible de bioincrustación y formular una futura estimación de su volumen en regiones de mallas acuícolas?
 
 ## 1. Fundamentos científicos del fenómeno y principios de funcionamiento de las tecnologías
 
@@ -82,6 +82,8 @@ La segmentación permite diferenciar regiones de una imagen a partir de las cara
 
 Por su parte, Cappaert et al. [[9]](#ref-9) desarrollaron una herramienta que utiliza aprendizaje profundo para clasificar los píxeles en agua y elementos distintos del agua, con el propósito de estimar la obstrucción de redes utilizadas en salmonicultura. Ambos estudios proporcionan fundamentos computacionales para analizar imágenes de mallas acuícolas. LanternGuard toma estos principios como referencia para identificar regiones cubiertas por organismos incrustantes y formular una estimación de su porcentaje de cobertura visible en las zonas fotografiadas.
 
+La cobertura visible describe la proporción de área observada en una imagen, pero no equivale por sí sola al volumen tridimensional de los organismos adheridos. Para formular el algoritmo propio de estimación volumétrica se deberán definir referencias de escala, supuestos geométricos y un procedimiento que permita obtener o aproximar información sobre el relieve o espesor de la bioincrustación. Los antecedentes citados respaldan el análisis y la segmentación de imágenes, pero no demuestran que el volumen pueda estimarse con precisión mediante la configuración propuesta; esa función permanece pendiente de desarrollo y validación.
+
 ### 1.4. Sensor acelerómetro LIS3DH para detección de movimiento e inclinación
 
 Los acelerómetros microelectromecánicos (MEMS) funcionan mediante estructuras sensibles a la aceleración. En los sensores capacitivos, el desplazamiento de una masa interna produce variaciones de capacitancia eléctrica que se transforman en señales de medición. Yazdi, Ayazi y Najafi [[10]](#ref-10) estudiaron los principios de funcionamiento de estos sensores inerciales.
@@ -100,7 +102,7 @@ RS-485 es un estándar de comunicación eléctrica basado en la señalización d
 
 #### 1.5.3. Comunicación inalámbrica mediante Heltec WiFi LoRa 32 V3
 
-Para la comunicación inalámbrica de LanternGuard se consideran dos placas Heltec WiFi LoRa 32 V3, que incorporan el transceptor SX1262 [[14]](#ref-14). La tecnología LoRa utiliza modulación de espectro ensanchado por chirps (*Chirp Spread Spectrum*), basada en variaciones de frecuencia de la señal de radio para representar información digital. Augustin et al. [[15]](#ref-15) estudiaron esta tecnología y documentaron sus características de largo alcance, bajo consumo energético y velocidad de transmisión limitada. En LanternGuard, una placa estará ubicada en la boya para transmitir los datos y la otra en una estación receptora terrestre para recibirlos.
+Para la comunicación inalámbrica de LanternGuard se consideran dos placas Heltec WiFi LoRa 32 V3, que incorporan el transceptor SX1262 [[14]](#ref-14). La tecnología LoRa utiliza modulación de espectro ensanchado por chirps (*Chirp Spread Spectrum*), basada en variaciones de frecuencia de la señal de radio para representar información digital. Augustin et al. [[15]](#ref-15) estudiaron esta tecnología y documentaron sus características de largo alcance, bajo consumo energético y velocidad de transmisión limitada. En LanternGuard, una placa estaría ubicada en la boya para transmitir mensajes breves de estado, metadatos e indicadores resumidos cuando estén disponibles, y la otra en una estación receptora terrestre para recibirlos. Las fotografías completas no se enviarían por LoRa: tras su transferencia mediante RS-485 desde el módulo sumergido hacia la boya, se recuperarían mediante un procedimiento local posterior aún por definir, antes del procesamiento de imágenes.
 
 ### 1.6. Tecnologías auxiliares
 
@@ -143,7 +145,7 @@ Moreno Zuñiga [[21]](#ref-21) investigó la bioincrustación en redes de nylon 
 
 La revisión documental permitió identificar fundamentos científicos relacionados con la bioincrustación marina, la captura y procesamiento digital de imágenes submarinas, el registro de movimiento mediante acelerómetros y las tecnologías de comunicación. Estos conocimientos se sustentan en artículos científicos, estudios previos, documentación técnica, libros y tesis, conforme a las evidencias referenciales del TRL 1 establecidas por CONCYTEC.
 
-En conjunto, las fuentes revisadas proporcionan una base científica y tecnológica para LanternGuard, propuesta orientada a estimar la cobertura visible de bioincrustación en regiones fotografiadas de las mallas de las linternas utilizadas para el cultivo de conchas de abanico, con la finalidad de apoyar la planificación de inspecciones y mantenimiento, sin ejecutar labores de limpieza.
+En conjunto, las fuentes revisadas proporcionan una base científica y tecnológica para LanternGuard, propuesta orientada a estimar la cobertura visible de bioincrustación en regiones fotografiadas de las mallas de las linternas utilizadas para el cultivo de conchas de abanico. Sobre esa base, se contempla formular un algoritmo propio para estimar el volumen de bioincrustación en dichas regiones, aunque su fundamento geométrico específico y su precisión requieren desarrollo y validación posteriores. El propósito del sistema es apoyar la planificación de inspecciones y mantenimiento, sin ejecutar labores de limpieza ni extrapolar automáticamente los resultados a toda la linterna.
 
 ## Referencias bibliográficas
 
@@ -230,5 +232,3 @@ En conjunto, las fuentes revisadas proporcionan una base científica y tecnológ
 <a name="ref-21"></a>
 
 **[21]** V. S. Moreno Zuñiga, «Evaluación de la incrustación de biofouling en redes de nylon impregnados con nanopartículas de óxido de cobre en el cultivo de Argopecten purpuratus», tesis de maestría, Universidad Nacional de Tumbes, 2025. [https://repositorio.untumbes.edu.pe/items/22877110-0b7b-4710-b275-76ff452ec91d](https://repositorio.untumbes.edu.pe/items/22877110-0b7b-4710-b275-76ff452ec91d)
-
-
