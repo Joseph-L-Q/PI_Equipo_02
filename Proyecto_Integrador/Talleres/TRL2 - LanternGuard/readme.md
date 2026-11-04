@@ -902,6 +902,28 @@ La Figura 29 muestra el diseño preliminar de la interfaz del aplicativo Lantern
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia. Representación conceptual del aplicativo para visualizar capturas submarinas, porcentajes estimados de cobertura visible por bioincrustación y evolución temporal del monitoreo. Los datos mostrados son referenciales.</em></p>
 
+
+#### 3.7.1. Recorrido preliminar del usuario en el aplicativo LanternGuard
+
+Como complemento del diseño preliminar de la interfaz, se propone el recorrido del usuario dentro del aplicativo LanternGuard, con la finalidad de representar de manera ordenada las principales acciones que realizaría el acuicultor para consultar la información obtenida durante las inspecciones de las linternas de cultivo de concha de abanico (*Argopecten purpuratus*). Este recorrido permite identificar cómo el usuario accedería a los resultados del monitoreo y utilizaría la información disponible para apoyar las decisiones de inspección y mantenimiento.
+
+El recorrido inicia con el ingreso al aplicativo y la visualización del panel principal, donde se presentarían las linternas registradas, las últimas inspecciones realizadas y un resumen de los indicadores disponibles. A continuación, el usuario podría seleccionar una linterna específica y acceder a su ficha de información, en la cual se mostrarían las fotografías submarinas obtenidas durante las inspecciones.
+
+Posteriormente, el usuario podría consultar el porcentaje estimado de cobertura visible por bioincrustación en las regiones fotografiadas de las mallas. De manera complementaria, se contempla presentar el volumen estimado de bioincrustación acumulada, una vez que el algoritmo propio propuesto haya sido desarrollado y validado. Estos resultados se generarían a partir del procesamiento de las fotografías completas recuperadas mediante transferencia local, de acuerdo con la arquitectura conceptual de LanternGuard.
+
+Asimismo, el aplicativo permitiría comparar fotografías e indicadores correspondientes a diferentes inspecciones, revisar su evolución temporal y consultar reportes resumidos del monitoreo. Esta información facilitaría la identificación de cambios en las regiones observadas y serviría como apoyo para que el acuicultor evalúe la necesidad de programar nuevas inspecciones o actividades de mantenimiento. Finalmente, el usuario podría regresar al panel principal para consultar otra linterna o finalizar su sesión.
+
+La Figura 30 presenta el recorrido preliminar del usuario en el aplicativo LanternGuard, desde su ingreso al sistema hasta la consulta de resultados y la toma de decisiones relacionadas con el seguimiento de las linternas de cultivo.
+
+<p align="center"><strong><em>Figura 30. Recorrido preliminar del usuario en el aplicativo LanternGuard.</em></strong></p>
+
+<p align="center">
+  <img width="1491" height="940" alt="Flujo preliminar del usuario en LanternGuard" src="https://github.com/user-attachments/assets/5b7ff463-3b8e-4cab-a952-fc5c54df73ff" />
+</p>
+
+<p align="center"><em><strong>Nota.</strong> Elaboración propia. Se representa el recorrido conceptual del usuario en el aplicativo LanternGuard, desde el ingreso y la selección de una linterna hasta la consulta de fotografías, indicadores, historial y reportes para apoyar las decisiones de inspección y mantenimiento. La visualización del volumen estimado de bioincrustación está sujeta al desarrollo y validación del algoritmo correspondiente.</em></p>
+
+
 ---
 
 ## Referencias bibliográficas
