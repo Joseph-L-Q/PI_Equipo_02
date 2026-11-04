@@ -16,7 +16,7 @@ Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
   que ya están copiadas en LG_HISTORICO.
 - **Onshape:** los planos de B1, B2 y B5 que Melissa hizo a mano ("Drawing 1/2/5") muestran las piezas enteras. Las piezas
   nuevas (mitades) se suben aparte; ella decide si rehace sus planos.
-- **SimScale:** no hay `SIMSCALE_API_KEY` en `cad_final/.env` (solo están las claves de Onshape). Ver `docs/GUIA_SIMSCALE.md`.
+- **SimScale:** clave verificada el 04/11 (listar proyectos responde). El plan A va por API; no hace falta la guía manual.
 
 ## Medidas físicas (no se pueden resolver desde la PC)
 - `aro.seccion`: hoy 8 mm estimado. Calibrador sobre la varilla del aro Ø200 real (MEDIDAS.md, fila 1).

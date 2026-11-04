@@ -1,3 +1,19 @@
+# Estado LanternGuard CAD | 04/11/2026, 08:17 (en curso)
+
+| Bloque | Estado |
+|---|---|
+| 0 Respaldo | Listo: repo privado `IchiSieben/LanternGuard-CAD-backup` y `docs/RETOMAR_EN_OTRA_PC.md` |
+| Rama `cad/celosia-v2` | Lista: congela el concepto anterior |
+| 1 Márgenes + boya + regeneración | **En curso.** Listo: cama 230 con check, MARGENES.md, B1, B2 y B5 en mitades, topes bajos, 19 placas (2567 g, 92,3 h) en Drive `imprimir_hoy_04nov`. Falta: guía de piezas (en curso), planos A4 en Onshape y PDF v4. **El riel cerrado (3a) está bloqueado: falta el prompt** |
+| 2 Convención de nombres | Listo, salvo borrar a mano 4 pestañas "OLD" (la API no borra) |
+| 3 SimScale | Clave verificada: responde. Falta correr el plan A |
+| 4 Visor 3D | Pendiente |
+| 5 Cierre | Pendiente |
+
+Detalle y cola completa: `docs/HANDOFF_siguiente.md`. Bloqueos: `docs/PENDIENTES.md`.
+
+---
+
 # Estado de la sesión LanternGuard CAD (PC de casa, 30/10/2026)
 
 **TERMINADO: 21:52 (reloj de la PC).** Bloques 0 a G listos y con push. Documento para el equipo:

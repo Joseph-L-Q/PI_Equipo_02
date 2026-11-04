@@ -1,25 +1,81 @@
-# HANDOFF siguiente | LanternGuard CAD | después del 30/10/2026 (noche)
+# HANDOFF siguiente | LanternGuard CAD | 04/11/2026 (sesión de día, Yoichi ausente hasta la noche)
 
-Rama `cad/version-final` (PR #10 a main), todo con push. Leer primero `docs/LANTERNGUARD_ENTREGA.pdf` (resumen, tablas,
-links) y `docs/ESTADO.md`. Decisiones de la noche: `docs/DECISIONES.md` (raíz del repo). Bloques 0 a G del
-HANDOFF_2026-10-30_v2 terminados; REPORTE_CAD §11 tiene el detalle.
+La rama es `cad/version-final`. Cada paso tiene commit y push a `origin` (equipo) y a `personal` (respaldo privado `IchiSieben/LanternGuard-CAD-backup`).
+Leer primero `docs/ESTADO.md` (sección 04/11), `docs/PENDIENTES.md` (bloqueos del 04/11) y `docs/DECISIONES.md` (raíz del repo).
 
-## Estado
-- Nodo: P2 robusto para la piscina, P4 estético para presentar. Correcciones 1 a 4 aplicadas.
-- Boya: 4 × 1 L en cruz + espuma PU (863 g, 32 h). Se vuelve a 500 ml con `flotacion.botella = "500ml"`.
-- Impresión: 17 placas cortadas (2469 g, 84.7 h). 3MF en Drive `02_Imprimir_primero_probetas/imprimir_hoy_30oct_v2/`.
-- Onshape: abrir `LG_00_LEER_PRIMERO`; en P3, P4 y sistema usar la pestaña `ENSAMBLE_v2_completo`.
+## Hecho hoy
+- **Paso 0:** respaldo privado con todas las ramas. Hay una write key de ThingSpeak de un taller en el historial; ya era pública. `docs/RETOMAR_EN_OTRA_PC.md`.
+- **`cad/celosia-v2`:** congela el concepto anterior (riel en celosía y caja con PG7), commit 7a2bc7c.
+- **Convención de nombres (bloque 2, casi completo):**
+  - lo vigente va sin sufijo;
+  - LG_HISTORICO creado, con 4 STEP "OLD 2026-11-01 <pieza> (sin chaflan)";
+  - en LG_IMPRIMIR_P2 lo vigente quedó sin `_v1` ni `_v2`;
+  - pestaña CAMBIOS en LG_00_LEER_PRIMERO;
+  - herramienta: `cad_final/onshape_historico.py`;
+  - la API **no puede borrar** (403): las 4 "OLD …" de LG_IMPRIMIR_P2 se borran a mano;
+  - no había ninguna `zz_*`, porque Melissa las borró el 02/11 y rehizo los planos a mano como "Drawing 1 … 16". **Sus planos no se tocan.**
+- **Boya (pasos 2 y 3):** B1, B2 y B5 quedan en mitades ≤ 230.
+  - B1 son 2 mitades iguales con brida de 4 + 4 mm, 6 M3 inox y 2 pines;
+  - B2 se divide en lado liso y lado mástil;
+  - B5 se divide en lado base y lado cuello;
+  - 2 ojales de amarre en x = ±21;
+  - las costillas intermedias quedan como topes bajos de 4 mm (se eliminaron las varillas de 2,4 × 3 mm), y los postes pasan a Ø10 con collar;
+  - resultado: 958 g, 39,6 h, calado 40,8 mm, francobordo 80,7 mm, GM 107 / 733 mm;
+  - detalle en `docs/BOYA.md` §04/11; interruptores `boya_pet.partir` y `boya_pet.topes_bajos`.
+- **Márgenes (paso 1):**
+  - `impresora.cama_util = 230` y `cama.py`: `build.py` falla si una pieza se pasa;
+  - `docs/MARGENES.md` mide la pared con rayos;
+  - postes de la bandeja de B3 a Ø9;
+  - fuera de 230 solo queda M1m de P3/P4.
+- **Placas:** 19 placas sin fallas, **2567 g y 92,3 h** (nodo P2 previo a 3a, boya y probetas). En Drive `02_Imprimir_primero_probetas/imprimir_hoy_04nov/`.
+- **SimScale:**
+  - la clave de `cad_final/.env` (`SIMSCALE_API_KEY`) **responde**: se listaron 2 proyectos;
+  - el SDK se instaló desde `git+https://github.com/SimScaleGmbH/simscale-python-sdk.git` (en PyPI no está);
+  - **`docs/PENDIENTES.md` dice todavía que no hay clave: corregir esa línea.**
 
-## Los 5 siguientes pasos
-1. **Imprimir el grupo 1 (probetas P01 a P05, 207 g, 7.9 h)** y anotar resultados: holgura que entra justa (PB7), inserto
-   M4 (PB8), cierre de la junta (PB6), PB10 sobre la varilla real del aro, PB9 con una botella real de 1 L.
-2. **Medir** `aro.seccion` (calibrador sobre la varilla), el KIT A con la ESP32 puesta, el PG7 y la densidad a granel de
-   las tuercas M8 (pesar un vaso lleno). Cargar en `params.py` y correr `python cad_final/build.py --prototipo P2_robusto`.
-3. **Decidir con el equipo**: ángulo de cápsula 30° o 70° (P11 espera esto), límite de peso (nodo ≤ 3 kg y boya aparte),
-   botella 1 L o 500 ml, y qué hacer con la cuerda a 2.9 mm de la brida (opciones a, b, c en `docs/PROTOTIPOS.md`).
-4. Con las probetas bien: imprimir el grupo 2 (nodo P2 sin medidas pendientes, 1125 g, 34.9 h) y después P12 (rieles).
-   Volver a cortar con `python cad_final/imprimir_hoy.py` y `python cad_final/placas.py ../salida/imprimir_hoy/plan_placas.json`
-   si cambió alguna medida.
-5. Pendientes chicos: arreglar `cad_final/variantes.py` (firmas viejas); mover a mano en Onshape los 2 documentos viejos
-   a `LanternGuard/_historico` y arrastrar las pestañas de ensamble al primer lugar; crear un `client_id` propio de
-   rclone (el compartido se retira en 2026); poner precios en la hoja HARDWARE de BITACORA.xlsx.
+## Bloqueado
+**Corrección de concepto 3a** (riel cerrado estanco, un solo volumen seco, cable plano por dentro, sin prensaestopas intermedio, "pasos A a E"). El prompt nunca llegó: el mensaje traía el marcador "[pega aquí el prompt de corrección de concepto completo]". De ella dependen:
+- el riel M3s (FS entre capas 2,72) y el pie M5s (2,47);
+- el lastre nuevo y la lista de sellos definitiva;
+- M1m de P3/P4.
+
+## Lo que quedaba del BLOQUE 1 al cortar
+- **Guía de piezas (paso 4):** un subagente estaba escribiendo `cad_final/guia_piezas.py`. Debe generar:
+  - `salida/guia_piezas/*.png|pdf`;
+  - `docs/GUIA_PIEZAS_LanternGuard.pdf` y `docs/GUIA_PIEZAS.md`;
+  - `docs/ESTANQUEIDAD.md`;
+  - `salida/guia_piezas/{sellos,rasgos}.json`.
+
+  Revisa si esos archivos existen; si no, rehazlo. Después: commit y subir el PDF a Drive `07_Documentos/`.
+- **Planos A4 en Onshape** de las piezas nuevas o cambiadas: B1_casco (mitad), B2_cubierta_lisa, B2_cubierta_mastil, B3_caja, B5_cuna_base, B5_cuna_cuello y B6_correa.
+  - Se suben a LG_IMPRIMIR_P2 con la convención nueva (`PLANO_A4_<pieza>`, sin sufijo), con `planos_onshape.py --formato equipo`. Hay que adaptarlo: `V2_PIECES`, `A4_ORDER`, `PIECES` y `piece_v2` escriben `_v2`, y hay que quitarlo.
+  - Lo reemplazado se retira con `python cad_final/onshape_historico.py --doc LG_IMPRIMIR_P2 --tab <tab> --fecha 2026-11-04 --motivo "partida en mitades"` (B1_casco, B2_cubierta, B5_cuna y sus STEP). **No tocar los "Drawing N …" de Melissa.**
+  - Cupo de la API: 1549 llamadas usadas de ~2200 (`LIMIT_A4`); mira `onshape_calls.log`.
+- **PDF de planos unido v4** a Drive `04_Planos/PLANOS_A4_LanternGuard_v4.pdf`. En Drive solo se usa `rclone copy`; no se renombra nada.
+- **ESTADO.md** a Drive `07_Documentos/ESTADO.md` (`rclone copyto docs/ESTADO.md lgdrive:07_Documentos/ESTADO.md`).
+
+## COLA DE TRABAJO (texto íntegro del usuario, bloques 2 a 5)
+Después de CADA bloque: commit, push, actualiza docs/ESTADO.md (hora, qué terminó, qué falta, links, problemas) y súbelo a Drive LanternGuard_CAD/07_Documentos/ESTADO.md. Si algo bloquea, anótalo en docs/PENDIENTES.md y sigue con el siguiente bloque.
+
+BLOQUE 2. CONVENCIÓN DE NOMBRES. Lo vigente sin sufijo ni versión (B1_casco, PLANO_A4_B1_casco). Lo reemplazado se copia al documento LG_HISTORICO (créalo en la carpeta LanternGuard de Onshape) con nombre "OLD <fecha> <pieza> (<motivo>)" y se elimina de LG_IMPRIMIR_P2; si la API no permite copiar pestañas entre documentos, renómbralas con ese formato dentro de LG_IMPRIMIR_P2 y anótalo para moverlas a mano. Renombra también las zz_* que existan. En LG_00_LEER_PRIMERO, pestaña CAMBIOS con una línea por fecha.
+*(Estado: hecho, salvo el borrado a mano y actualizar CAMBIOS con lo del 04/11 cuando se suban las mitades.)*
+
+BLOQUE 3. SIMSCALE con la API oficial (pip install simscale-sdk). Clave en cad_final/.env como SIMSCALE_API_KEY: nunca la imprimas ni la subas a git. Script reutilizable cad_final/simscale_run.py (--pieza X). Proyecto "LanternGuard FEM 2026-11". Dos grupos:
+ A) NODO SUMERGIDO: M3s_riel (cerrado), M5s_capsula_tapa_pie, M1s_caja_cuerpo. Estático lineal, PETG (E 2,1 GPa, ν 0,38, ρ 1270 kg/m³, σ_adm 50 MPa). Apoyos y cargas iguales a cad_final/fem.py (150 N en el gancho; corriente 1,5 m/s como presión sobre la cápsula). Caras elegidas por posición y normal. Malla estándar 2.º orden.
+ B) BOYA: B3_caja y B2_cubierta (mitades) con peso de panel y electrónica + golpe de ola 200 N sobre la cubierta. Aclarar que flotación y estabilidad son analíticas (docs/BOYA.md).
+ Por pieza: subir STEP limpio, configurar, correr, esperar, descargar resultados y capturar von Mises (MPa), desplazamiento (mm), malla y condiciones de borde. Tabla: σmax, FS = 50/σmax, desplazamiento máx., comparación con el FEM local. PDF REPORTE_SIMSCALE_LanternGuard.pdf a Drive 06_SimScale/ con el link público de cada simulación.
+ Si la cuenta gratuita limita horas o malla, usa malla más gruesa y anótalo. Si un paso de la API no existe en el plan gratuito o no hay clave, deja el proyecto con geometría, material y condiciones cargadas y escribe en GUIA_SIMSCALE.md qué falta apretar a mano, con capturas de las caras a seleccionar (PyVista, caras resaltadas).
+*(Corrección del usuario: la clave SÍ existe en cad_final/.env línea 3. Cárgala desde .env como onshape_sync.py, sin imprimirla. Plan A, simulación real por API. Solo si una verificación falla, pega SOLO el código de error en PENDIENTES.md y cae al plan B. Verificada el 04/11: responde. El riel "cerrado" no existe hasta 3a: simular el M3s vigente y anotarlo.)*
+
+BLOQUE 4. VISOR 3D INTERACTIVO. Página HTML de un solo archivo con three.js (versión fija desde cdnjs), en docs/visor/index.html y subida a Drive 07_Documentos/visor/:
+ - Ensamble nodo + boya exportado a GLB, una malla por pieza con su código.
+ - Clic en una pieza: se resalta y muestra panel con nombre, función, material, gramos, horas, con qué se une, tornillos, y cada agujero explicado (reusa GUIA_PIEZAS).
+ - Botón "explotar" que separa las piezas; pasos de ensamble numerados que animan la colocación; sellos marcados en rojo (reusa ESTANQUEIDAD.md).
+ - Lista lateral, buscador, modo claro/oscuro, funciona en celular.
+
+BLOQUE 5. CIERRE. docs/ENTREGA_2026-11-04.md + PDF para el equipo (qué cambió y por qué, gramos y horas totales, lastre, lista de sellos, links a todo), a Drive 07_Documentos. docs/HANDOFF_siguiente.md actualizado. ESTADO.md final con "TERMINADO" y la hora. Resumen de 15 líneas con links.
+
+**Reporte final pedido antes (paso 4 del mensaje de las 07:40):**
+- gramos totales de nodo + boya + probetas, horas, lastre nuevo y lista de sellos;
+- si el total impreso pasa de 2,7 kg, avisarlo al inicio del resumen;
+- una respuesta de 3 líneas para la profesora sobre los soportes delgados (ver `docs/DECISIONES.md`, 04/11, "Soportes delgados del casco").
