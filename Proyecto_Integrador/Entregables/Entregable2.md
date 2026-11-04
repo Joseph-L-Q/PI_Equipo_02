@@ -37,7 +37,7 @@ Es el diagrama de bloques que muestra cómo funciona el sistema internamente div
 
 Presenta las diferentes alternativas de componentes y materiales evaluados para cumplir con cada función del diagrama.
 
-<img width="1580" height="3002" alt="Matriz Morfológica" src="https://github.com/user-attachments/assets/62fb1dd2-454a-4b45-a9f3-21780d3b00ca" />
+<img width="1133" height="1388" alt="image" src="https://github.com/user-attachments/assets/db6ce27a-030f-409d-ab5a-657d07e33508" />
 
 ---
 
