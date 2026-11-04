@@ -55,27 +55,50 @@ La Solución preliminar 1 constituye la alternativa seleccionada por el equipo c
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia. Se presenta la vista general de LanternGuard y los detalles conceptuales de la boya de superficie, el módulo sumergido y la cápsula de cámara. El boceto corresponde a la Solución 1 de la matriz morfológica y considera los componentes y materiales seleccionados por el equipo. Las funciones de estimación volumétrica, gestión energética y recuperación local de fotografías requieren desarrollo o validación posterior.</em></p>
 
+---
 
-## Boceto 2 - Solución preliminar 2
+#### Boceto 2 - Solución preliminar 2
 
-<img width="1600" height="900" alt="Boceto2" src="https://github.com/user-attachments/assets/e2a411e4-cf8b-418c-8029-81a71b572165" />
+El segundo boceto representa una alternativa conceptual de LanternGuard basada en la Solución 2 de la matriz morfológica. Conserva la organización general del sistema mediante una boya de superficie y un módulo sumergido conectado por cable umbilical, pero plantea diferentes componentes electrónicos, materiales y mecanismos de adquisición, procesamiento y comunicación.
 
-### Descripción técnica y funcional:
-* **Estrategia de Muestreo:** Muestreo por umbral (activación por eventos de detección).
-* **Boya de Superficie (Nodo Boya):**
-  * **Alimentación:** Batería Li-Po de 10,000 mAh gestionada por un módulo BMS (Protección y balanceo).
-  * **Procesamiento y Control:** Microcontrolador ESP32-WROOM-32U.
-  * **Interfaz e Indicadores:** Pulsador con anillo LED integrado.
-  * **Telemetría:** Módulo Ethernet W5500 con transmisión por cable Ethernet directo hacia una estación en tierra (router).
-  * **Notificación al usuario:** Dashboard web interactivo.
-* **Barra y Módulo Sumergido (Nodo Sumergido):**
-  * **Procesamiento:** Placa de alto rendimiento Arduino Portenta H7 en caja estanca central.
-  * **Sensores de Proximidad y Almacenamiento:** Sensor ToF Láser VL53L1X para medición precisa de distancia y memoria EEPROM AT24C256.
-  * **Comunicación Interna:** Cable umbilical industrial RS-485.
-  * **Estructura y Protección:** Carcasa de polietileno de alta densidad (HDPE) mecanizada con recubrimiento de resina epóxica *antifouling* y film hidrofóbico PET para limpieza óptica.
-* **Cápsulas de Cámara:**
-  * **Captura de Imagen:** Dos cámaras Arducam Mega 5MP (M02) ajustables mediante bisagra dentada.
-  * **Iluminación y Sellado:** Tira LED COB integrada para iluminación uniforme, ventana de vidrio templado marino con spray repelente de agua y sellado hermético por *O-ring*.
+**Descripción técnica y funcional:**
+
+* **Estrategia de muestreo:** Muestreo por umbral, basado en la activación del sistema ante un evento previamente definido. La condición de activación y sus parámetros deberán establecerse y validarse posteriormente.
+
+* **Boya de superficie (nodo boya):**
+  * **Alimentación:** Batería Li-Po de 10 000 mAh y módulo BMS para protección y gestión de la batería.
+  * **Control y procesamiento:** Raspberry Pi Zero 2 W, considerada para supervisar las funciones de la boya y realizar procesamiento local de la información.
+  * **Telemetría:** Módulo LoRa SX1276 para transmitir mensajes breves y metadatos hacia una estación receptora terrestre.
+  * **Comunicación interna:** Enlace RS-485 mediante cable umbilical con el módulo sumergido.
+  * **Visualización:** Dashboard web para consultar los resultados del monitoreo.
+
+* **Barra y módulo sumergido (nodo sumergido):**
+  * **Control:** Microcontrolador ESP32-WROOM-32U alojado en un compartimento electrónico protegido.
+  * **Registro de movimiento:** Sensor inercial MPU-6050 para obtener información de aceleración y movimiento durante las inspecciones.
+  * **Almacenamiento:** Memoria Flash W25Q128 como alternativa de almacenamiento electrónico, cuya capacidad disponible y suficiencia deberán evaluarse.
+  * **Estructura y protección:** Carcasa fabricable mediante impresión 3D en ABS, con recubrimiento de resina epóxica como alternativa de protección superficial.
+  * **Comunicación:** Transferencia de información hacia la boya mediante RS-485.
+
+* **Cápsulas de cámara:**
+  * **Captura:** Dos cámaras Arducam Mega de 5 MP con lente M12, orientadas hacia diferentes regiones de las mallas.
+  * **Iluminación:** Módulos LED infrarrojos para apoyar la adquisición de imágenes, cuya compatibilidad con las cámaras deberá verificarse.
+  * **Protección óptica:** Ventanas de vidrio templado marino y sellado mediante juntas O-ring.
+  * **Tratamiento superficial:** Film hidrofóbico PET como alternativa para reducir la acumulación de agua y suciedad sobre las ventanas ópticas, pendiente de evaluación en condiciones submarinas.
+
+* **Procesamiento y comunicación:**
+  * **Procesamiento local:** Se contempla utilizar la Raspberry Pi Zero 2 W para desarrollar procedimientos de análisis de imágenes orientados a estimar la cobertura visible y el volumen de bioincrustación.
+  * **Transmisión inalámbrica:** LoRa se utilizaría para mensajes breves y metadatos, mientras que las fotografías completas requerirían un procedimiento de transferencia local.
+  * **Notificación:** Dashboard web para visualizar indicadores, registros e historial de inspecciones.
+
+Esta alternativa utiliza componentes y materiales distintos de los seleccionados para el diseño principal de LanternGuard. Su representación permite comparar las posibilidades técnicas de la Solución 2 frente a las demás alternativas de la matriz morfológica.
+
+<p align="center"><strong><em>Figura 2. Boceto de la Solución preliminar 2 del sistema LanternGuard.</em></strong></p>
+
+<p align="center">
+  <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/b66c5076-6e49-4c28-863a-85913905350e" />
+</p>
+
+<p align="center"><em><strong>Nota.</strong> Elaboración propia. Se presenta la alternativa de diseño correspondiente a la Solución 2 de la matriz morfológica, considerando sus componentes electrónicos, materiales estructurales y funciones propuestas. Las características de procesamiento, comunicación y protección óptica deberán evaluarse y validarse durante etapas posteriores.</em></p>
 
 ---
 
