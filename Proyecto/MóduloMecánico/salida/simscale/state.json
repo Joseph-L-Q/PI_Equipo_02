@@ -1,0 +1,477 @@
+{
+ "B3_caja/caja_peso_y_ola": {
+  "gid": "152aac7d-0101-4ecb-9900-695d692013e9",
+  "sim_id": "16c2f2fb-c0f8-4049-9322-e0175699ffb8",
+  "mesh_op": "48685b43-143a-478a-9fa3-90945d22d1f5",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT3M",
+    "interval_min": "PT0S",
+    "interval_max": "PT9M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.11,
+    "interval_min": 0.0,
+    "interval_max": 0.31
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 1843385,
+    "interval_min": 1474708,
+    "interval_max": 2212062
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "631e5727-d42f-48b9-b8d5-57f7f4a00fb4",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "1c7cd130-4458-4432-9718-155db6a2b4c8",
+  "run_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.05,
+    "interval_min": 0.0,
+    "interval_max": 0.25
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT1M34.855092S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.0525
+  }
+ },
+ "B2_cubierta_lisa/cubierta_peso_y_ola": {
+  "gid": "43608cde-b910-435d-a0b4-abc92464b8fd",
+  "sim_id": "a472d34a-954c-46cf-9753-046f5d60cd1f",
+  "mesh_op": "cd5f393f-815b-412b-9fc3-2e0ae8a56342",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT3M",
+    "interval_min": "PT0S",
+    "interval_max": "PT9M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.1,
+    "interval_min": 0.0,
+    "interval_max": 0.3
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 649908,
+    "interval_min": 519926,
+    "interval_max": 779889
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "a6a2dfc8-cff7-4997-a96a-d13190fc3a24",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "ac74801e-40da-474d-b8c2-fe3b814fd280",
+  "run_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.08,
+    "interval_min": 0.0,
+    "interval_max": 0.28
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT1M39.750441S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.05527777777777778
+  }
+ },
+ "B2_cubierta_mastil/cubierta_peso_y_ola": {
+  "gid": "86b0d640-2d44-4c36-b787-397a0a203275",
+  "sim_id": "3c2c59ea-8bb9-473a-bf84-a20df698999b",
+  "mesh_op": "65cd9eaa-a0b8-4824-b740-bcb654c872a0",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.07,
+    "interval_min": 0.0,
+    "interval_max": 0.27
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 649908,
+    "interval_min": 519926,
+    "interval_max": 779889
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "5f0ca256-5ee4-4504-b7ad-1c4fb3caa8d2",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "6c8439a8-04a0-4bcd-8b04-242ce262e111",
+  "run_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.08,
+    "interval_min": 0.0,
+    "interval_max": 0.28
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT1M46.061678S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.058888888888888886
+  }
+ },
+ "M3s_riel_gancho/riel_agua": {
+  "gid": "4349b157-465a-4d02-ba9e-317cd773f6f6",
+  "sim_id": "633b313d-9ace-4eaf-ba44-8f94def22dc5",
+  "mesh_op": "25174c6d-9fc6-427f-9846-f8bd27973a05",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.06,
+    "interval_min": 0.0,
+    "interval_max": 0.26
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 1146068,
+    "interval_min": 916854,
+    "interval_max": 1375281
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "cac6935b-3aaa-49df-a833-f14e746966b8",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "f41d83a6-ac22-43b4-8821-5dda9c4ea023",
+  "run_estimate": {
+   "duration": {
+    "value": "PT4M",
+    "interval_min": "PT0S",
+    "interval_max": "PT10M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.12,
+    "interval_min": 0.0,
+    "interval_max": 0.32
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT3M36.083309S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.12
+  }
+ },
+ "M5s_capsula_tapa_pie/pie": {
+  "gid": "ca9808b7-8c25-4469-b889-0396f922d17c",
+  "sim_id": "df8a7fb4-3edb-447e-85ff-1d450ae2590f",
+  "mesh_op": "c330dc6a-7f58-4993-b906-ef0e51190813",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT1M",
+    "interval_min": "PT0S",
+    "interval_max": "PT7M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.04,
+    "interval_min": 0.0,
+    "interval_max": 0.24
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 137079,
+    "interval_min": 109663,
+    "interval_max": 164494
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "854dd42d-55c0-4a89-870f-ad6cff4c2adb",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "b57a7b42-7f20-4cc9-a32d-e5895e1fe5e7",
+  "run_estimate": {
+   "duration": {
+    "value": "PT1M",
+    "interval_min": "PT0S",
+    "interval_max": "PT7M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.04,
+    "interval_min": 0.0,
+    "interval_max": 0.24
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT48.115852S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.02666666666666667
+  }
+ },
+ "M1s_caja_cuerpo/izado": {
+  "gid": "0a9d1a1b-74a6-4d0a-b8f6-0591d6c81f0c",
+  "sim_id": "471ef147-0491-4e3b-8bf0-17f58b0833a6",
+  "mesh_op": "b88bac36-64b4-447c-9fdd-41cf5e7423bc",
+  "mesh_id": "00ce2c6d-b748-4da8-a3f2-ea0f396eb227",
+  "run_id": "9471aec2-f762-497f-a33f-15c6cfbde5f5",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "duration": "PT2M31.099055S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.08388888888888889
+  }
+ },
+ "B2_cubierta_lisa/cubierta_ola_vertical": {
+  "gid": "2231d703-bc65-4f09-8c40-7ec65e1d6632",
+  "sim_id": "fe4b2446-655f-4c26-998b-3856ce11b757",
+  "mesh_op": "0b7fd281-6fe9-44d3-86c0-1d26c5a02a58",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT3M",
+    "interval_min": "PT0S",
+    "interval_max": "PT9M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.1,
+    "interval_min": 0.0,
+    "interval_max": 0.3
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 649908,
+    "interval_min": 519926,
+    "interval_max": 779889
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "69fffb47-7406-4b97-a6d2-52998207e817",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "2fdb94b4-432f-419c-a3ae-a0633edbb1c4",
+  "run_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.08,
+    "interval_min": 0.0,
+    "interval_max": 0.28
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT41.458163S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.02277777777777778
+  }
+ },
+ "B2_cubierta_mastil/cubierta_ola_vertical": {
+  "gid": "386be0df-ae94-4b59-9c87-5690f5db5887",
+  "sim_id": "195640ad-e0a3-4fc3-9b87-2effc03666d9",
+  "mesh_op": "13ad6d22-a28e-4963-b8bb-ee1a4208620e",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.07,
+    "interval_min": 0.0,
+    "interval_max": 0.27
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 649908,
+    "interval_min": 519926,
+    "interval_max": 779889
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "3a90b627-c859-42fc-ac29-ecfc27432a26",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "07c59e1c-f313-4b7f-aba1-5ecbc740007e",
+  "run_estimate": {
+   "duration": {
+    "value": "PT1M",
+    "interval_min": "PT0S",
+    "interval_max": "PT7M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.04,
+    "interval_min": 0.0,
+    "interval_max": 0.24
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT36.357615S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.02
+  }
+ },
+ "B2_cubierta_lisa_lateral/cubierta_ola_lateral": {
+  "gid": "ca002805-b2b3-4fc6-9352-7e4734ae6061",
+  "sim_id": "712626db-921c-439f-b37e-0b4b5b5e903b",
+  "mesh_op": "b6a768c3-c7a1-4b59-a552-cbc417b99b93",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT3M",
+    "interval_min": "PT0S",
+    "interval_max": "PT9M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.1,
+    "interval_min": 0.0,
+    "interval_max": 0.3
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 649908,
+    "interval_min": 519926,
+    "interval_max": 779889
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "4906e8a5-ee68-46d9-b307-e762827a3853",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "38b759da-2f66-4f38-8828-72b118aafd35",
+  "run_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.08,
+    "interval_min": 0.0,
+    "interval_max": 0.28
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT47.127541S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.026111111111111113
+  }
+ },
+ "B2_cubierta_mastil_lateral/cubierta_ola_lateral": {
+  "gid": "a87959c3-f887-4996-9577-4cca2635070f",
+  "sim_id": "a946fdb1-a09a-4773-a67e-707fa50b3504",
+  "mesh_op": "3b247ccd-656c-438c-9b89-4b1066d8a6f2",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.07,
+    "interval_min": 0.0,
+    "interval_max": 0.27
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 649908,
+    "interval_min": 519926,
+    "interval_max": 779889
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "def05ef3-5df0-4531-beed-5f06a7be32e7",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "3790d11d-5e0c-4301-a741-f25362129a76",
+  "run_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.08,
+    "interval_min": 0.0,
+    "interval_max": 0.28
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT37.824135S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.020833333333333332
+  }
+ }
+}

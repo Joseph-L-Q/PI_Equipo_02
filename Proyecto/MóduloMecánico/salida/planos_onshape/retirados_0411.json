@@ -75,5 +75,19 @@
     "blob": "9db9a3ae9c834d270f5955d4",
     "copia_en_historico": "5b458b70e8072f6fba6bebc1",
     "nuevo_nombre": "OLD 2026-11-04 M4_capsula_cuerpo (riel cerrado estanco)"
+  },
+  "B2_cubierta_lisa": {
+    "motivo": "barras de 4 mm, FS 0.4 con la ola",
+    "estudio": "48c5f5533fefb7d10e73c955",
+    "blob": "d136d05f8e5a077320508b90",
+    "copia_en_historico": "18d4601fca4043ac17151459",
+    "nuevo_nombre": "OLD 2026-11-04 B2_cubierta_lisa (barras de 4 mm, FS 0.4 con la ola)"
+  },
+  "B2_cubierta_mastil": {
+    "motivo": "barras de 4 mm, FS 0.4 con la ola",
+    "estudio": "9e3e2cb617b1807f46973cd4",
+    "blob": "96fe4ba585a315ee0d1a49c8",
+    "copia_en_historico": "6dc989ccb03ef281568de131",
+    "nuevo_nombre": "OLD 2026-11-04 B2_cubierta_mastil (barras de 4 mm, FS 0.4 con la ola)"
   }
 }

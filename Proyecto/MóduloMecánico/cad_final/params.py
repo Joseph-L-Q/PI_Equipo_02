@@ -775,7 +775,7 @@ PET_POST_D = p("boya_pet.poste_D", 10.0, "equipo", VER, "Postes de tornillo del 
 PET_JOINT = p("boya_pet.union", (4.0, 12.0, 4.0, 0.2), EST, VER,
               "Union de mitades: brida por mitad, ancho de columna/almohadilla, pin de alineacion, holgura del pin (PB7)")
 PET_HULL_MAX = p("boya_pet.casco_largo_max", 254.0, EST, VER, "Largo del casco (era el limite de la cama de 256; con las mitades ya no limita, se mantiene para no cambiar la flotacion)")
-PET_COVER_T = p("boya_pet.cubierta_espesor", 4.0, EST, VER, "Barras de la cubierta atornillada (no estanca)")
+PET_COVER_T = p("boya_pet.cubierta_espesor", 8.0, EST, VER, "Barras de la cubierta atornillada (no estanca). 04/11: 4 -> 8, SimScale con el golpe de ola de 200 N daba FS 0.4 con 4 mm (el esfuerzo baja con el espesor al cuadrado)", 4.0)
 PET_BAR_W = p("boya_pet.barra_ancho", 14.0, EST, VER, "Ancho de las barras de la cubierta")
 PET_BOSS = p("boya_pet.cubierta_tornillo_y", 1.0, EST, VER, "Los 8 tornillos M3 cubierta-casco quedan a |y| = canal/2 - este valor (sobre las aletas del canal)")
 PET_PILLAR = p("boya_pet.pilar", (10.0, 6.0), EST, VER, "Pilares de la cubierta bajo las orejas de la caja: diametro, alto (francobordo y domo PG7)")

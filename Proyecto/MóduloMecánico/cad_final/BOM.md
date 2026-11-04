@@ -12,7 +12,7 @@ No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `s
 | modular D200 | 1229 | 82.0 | 110.64 |
 | nodo P2 robusto | 1532 | 47.7 | 137.84 |
 | nodo P4 estetico | 1352 | 46.0 | 121.66 |
-| boya PET 4 x 1 L | 958 | 39.6 | 86.26 |
+| boya PET 4 x 1 L | 1014 | 42.2 | 91.24 |
 
 El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 
@@ -69,8 +69,8 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M4_capsula_cuerpo | nodo P4 estetico | 2 | - | - | slicer | si | 100 % | 60 | slicer |
 | M6_capsula_bisel | nodo P4 estetico | 2 | - | - | slicer | no | 40 % | 2 | slicer |
 | B1_casco | boya PET 4 x 1 L | 2 | - | - | slicer | si | 40 % | 133 | slicer |
-| B2_cubierta_lisa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 64 | slicer |
-| B2_cubierta_mastil | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 79 | slicer |
+| B2_cubierta_lisa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 91 | slicer |
+| B2_cubierta_mastil | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 107 | slicer |
 | B3_caja | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 173 | slicer |
 | B4_tapa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 57 | slicer |
 | B5_cuna_base | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 73 | slicer |

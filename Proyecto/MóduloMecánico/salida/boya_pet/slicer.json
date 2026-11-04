@@ -16,9 +16,9 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 63.7,
-  "h": 3.83,
-  "costo_soles": 5.73,
+  "g": 91.4,
+  "h": 5.14,
+  "costo_soles": 8.23,
   "voladizo_mm2": 0.0
  },
  "B2_cubierta_mastil": {
@@ -27,9 +27,9 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 79.1,
-  "h": 4.42,
-  "costo_soles": 7.12,
+  "g": 106.8,
+  "h": 5.73,
+  "costo_soles": 9.62,
   "voladizo_mm2": 16.9
  },
  "B3_caja": {

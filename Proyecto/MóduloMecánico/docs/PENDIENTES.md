@@ -3,6 +3,12 @@
 Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 
 ## Bloqueos del 04/11/2026
+- **SimScale:**
+  - El plan gratuito no deja descargar los resultados de las corridas nuevas de B2 (cubierta de 8 mm) ni de la variante lateral (error 403 «export-source-locked»). La verificación de esas corridas se hizo con CalculiX local.
+  - Los enlaces de los proyectos no se pudieron probar sin sesión: abrirlos una vez en una ventana privada.
+  - En el proyecto B quedaron simulaciones repetidas, y la API no las puede borrar: se borran a mano.
+- **Golpe de ola lateral sobre el panel solar** (200 N con el panel haciendo de vela): las 4 columnas Ø12 no lo resisten (FS 0,15 con la cubierta de 4 mm). Las barras de 8 mm no lo arreglan. Opciones: un panel más bajo, columnas más gruesas o tirantes. Hay que decidir si ese caso es un requisito real.
+- **Onshape:** suman otras 4 pestañas «OLD 2026-11-04 … (barras de 4 mm…)» de B2 para borrar a mano en LG_IMPRIMIR_P2.
 - **Corrección de concepto 3a (riel cerrado): HECHA el 04/11 (bloque 1-FINAL).** Ver `docs/DECISIONES.md` (raíz del repo) y `docs/ESTANQUEIDAD.md`. Queda:
   - P3 y P4 (monocasco) siguen con el riel anterior. Si se imprime P4, hay que llevarle el riel cerrado y partir `M1m_caja_riel`, que mide 250 mm (> 230).
   - El cable plano real: medir su ancho y su espesor. El canal deja 22 mm de piso plano y 18 de alto, y el pase a la cápsula mide 8 × 22 mm.

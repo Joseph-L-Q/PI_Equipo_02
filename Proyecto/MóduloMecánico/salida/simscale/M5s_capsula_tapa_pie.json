@@ -1,0 +1,73 @@
+{
+ "pieza": "M5s_capsula_tapa_pie",
+ "grupo": "A",
+ "caso": "pie",
+ "titulo": "Tapa de capsula con pie: silla fija, 150 N + corriente en el frente de la capsula",
+ "notas": [
+  "Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 16.6 cm2, Cd = 1) = 1.92 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente."
+ ],
+ "seleccion": {
+  "fijos": [
+   {
+    "label": "agujeros de la silla (insertos M3 de la tapa del pie)",
+    "caras": 4,
+    "area_mm2": 301.6
+   }
+  ],
+  "cargas": [
+   {
+    "label": "150 N + arrastre en el frente, por un cuerpo rigido a los 4 M3 de la tapa",
+    "caras": 8,
+    "area_mm2": 407.2,
+    "fuerza_N": [
+     -1.916,
+     0,
+     -150.0
+    ]
+   }
+  ]
+ },
+ "material": {
+  "E_MPa": 2100.0,
+  "nu": 0.38,
+  "rho": 1270.0,
+  "sigma_adm_MPa": 50.0
+ },
+ "fineness": 5.0,
+ "project_id": "770997415227428031",
+ "geometry_id": "ca9808b7-8c25-4469-b889-0396f922d17c",
+ "sim_id": "df8a7fb4-3edb-447e-85ff-1d450ae2590f",
+ "run_id": "b57a7b42-7f20-4cc9-a32d-e5895e1fe5e7",
+ "mesh_id": "854dd42d-55c0-4a89-870f-ad6cff4c2adb",
+ "check": {
+  "severity": "SUCCESS",
+  "entries": []
+ },
+ "duracion": "PT48.115852S",
+ "compute": {
+  "type": "CPU_HOURS",
+  "value": 0.02666666666666667
+ },
+ "resultado": {
+  "nodos": 64557,
+  "celdas": 40394,
+  "sigma_max_MPa": 20.135244,
+  "sigma_p995_MPa": 7.282368160000003,
+  "sigma_max_en_mm": [
+   163.8000030517578,
+   -15.600000381469727,
+   -19.299999237060547
+  ],
+  "FS": 2.4832080505207683,
+  "FS_p995": 6.865898414012617,
+  "u_max_mm": 0.28894243857198654
+ },
+ "capturas": {
+  "vonmises": "M5s_capsula_tapa_pie_vonmises.png",
+  "desplazamiento": "M5s_capsula_tapa_pie_desplazamiento.png",
+  "malla": "M5s_capsula_tapa_pie_malla.png"
+ },
+ "enlace_resultado": "https://www.simscale.com/workbench/?pid=770997415227428031&rru=a4db17dd-ab0e-41c7-8789-b46fe337f847&ci=69c84c14-9979-468c-9470-72fca2815f8f&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT",
+ "enlace_proyecto": "https://www.simscale.com/workbench/?pid=770997415227428031",
+ "enlace_simulacion": "https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:df8a7fb4-3edb-447e-85ff-1d450ae2590f%2Cservice:SIMULATION%2Cstrategy:1"
+}

@@ -1,0 +1,74 @@
+{
+ "pieza": "M1s_caja_cuerpo",
+ "grupo": "A",
+ "caso": "izado",
+ "titulo": "Caja: colgada de los insertos M3 de la tapa, el riel con la capsula tira del cojin +X (150 N + corriente)",
+ "notas": [
+  "Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 16.6 cm2, Cd = 1) = 1.92 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente.",
+  "Caso propio (el FEM local no tiene la caja): la caja cuelga de la tapa como al izar por el asa; los insertos M3 de la tapa se toman como apoyos fijos y el riel con la capsula tira de los 4 M4 del cojin."
+ ],
+ "seleccion": {
+  "fijos": [
+   {
+    "label": "agujeros M3 de la brida de la tapa (16)",
+    "caras": 16,
+    "area_mm2": 1206.4
+   }
+  ],
+  "cargas": [
+   {
+    "label": "150 N + arrastre en el frente de la capsula, por un cuerpo rigido a los 4 M4 del cojin +X",
+    "caras": 4,
+    "area_mm2": 597.5,
+    "fuerza_N": [
+     -1.916,
+     0,
+     -150.0
+    ]
+   }
+  ]
+ },
+ "material": {
+  "E_MPa": 2100.0,
+  "nu": 0.38,
+  "rho": 1270.0,
+  "sigma_adm_MPa": 50.0
+ },
+ "fineness": 5.0,
+ "project_id": "770997415227428031",
+ "geometry_id": "0a9d1a1b-74a6-4d0a-b8f6-0591d6c81f0c",
+ "sim_id": "471ef147-0491-4e3b-8bf0-17f58b0833a6",
+ "run_id": "9471aec2-f762-497f-a33f-15c6cfbde5f5",
+ "mesh_id": "00ce2c6d-b748-4da8-a3f2-ea0f396eb227",
+ "check": {
+  "severity": "SUCCESS",
+  "entries": []
+ },
+ "duracion": "PT2M31.099055S",
+ "compute": {
+  "type": "CPU_HOURS",
+  "value": 0.08388888888888889
+ },
+ "resultado": {
+  "nodos": 281174,
+  "celdas": 176103,
+  "sigma_max_MPa": 25.362392,
+  "sigma_p995_MPa": 7.743479947500025,
+  "sigma_max_en_mm": [
+   64.19999694824219,
+   25.0,
+   32.70000076293945
+  ],
+  "FS": 1.9714228847184445,
+  "FS_p995": 6.457045196603428,
+  "u_max_mm": 0.4452614361658595
+ },
+ "capturas": {
+  "vonmises": "M1s_caja_cuerpo_vonmises.png",
+  "desplazamiento": "M1s_caja_cuerpo_desplazamiento.png",
+  "malla": "M1s_caja_cuerpo_malla.png"
+ },
+ "enlace_resultado": "https://www.simscale.com/workbench/?pid=770997415227428031&rru=327c9ab5-fd76-4ffc-9e8c-c2cd587eb1dc&ci=0a90a786-26b6-42c4-98ff-84672028d3a8&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT",
+ "enlace_proyecto": "https://www.simscale.com/workbench/?pid=770997415227428031",
+ "enlace_simulacion": "https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:471ef147-0491-4e3b-8bf0-17f58b0833a6%2Cservice:SIMULATION%2Cstrategy:1"
+}

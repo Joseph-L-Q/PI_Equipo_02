@@ -1,0 +1,94 @@
+{
+ "pieza": "B3_caja",
+ "grupo": "B",
+ "caso": "caja_peso_y_ola",
+ "titulo": "Caja seca: peso de la electronica y de la tapa + golpe de ola de 200 N de costado",
+ "notas": [
+  "Electronica 354 g (parametros del modelo, sin panel ni antena) y tapa 57.2 g, 1 g de gravedad.",
+  "La ola de 200 N se aplica entera contra una pared larga: caso exagerado (la caja va bajo el panel)."
+ ],
+ "seleccion": {
+  "fijos": [
+   {
+    "label": "4 orejas: huella de los pilares D10 bajo la oreja (atornilladas)",
+    "caras": 4,
+    "area_mm2": 277.8
+   }
+  ],
+  "cargas": [
+   {
+    "label": "peso de la electronica sobre el piso",
+    "caras": 1,
+    "area_mm2": 10019.8,
+    "fuerza_N": [
+     0,
+     0,
+     -3.473
+    ]
+   },
+   {
+    "label": "peso de la tapa B4 sobre el borde",
+    "caras": 1,
+    "area_mm2": 6101.9,
+    "fuerza_N": [
+     0,
+     0,
+     -0.561
+    ]
+   },
+   {
+    "label": "golpe de ola 200 N contra la pared +Y",
+    "caras": 1,
+    "area_mm2": 1167.6,
+    "fuerza_N": [
+     0,
+     200.0,
+     0
+    ]
+   }
+  ]
+ },
+ "material": {
+  "E_MPa": 2100.0,
+  "nu": 0.38,
+  "rho": 1270.0,
+  "sigma_adm_MPa": 50.0
+ },
+ "fineness": 5.0,
+ "project_id": "5890288887472164333",
+ "geometry_id": "152aac7d-0101-4ecb-9900-695d692013e9",
+ "sim_id": "16c2f2fb-c0f8-4049-9322-e0175699ffb8",
+ "run_id": "1c7cd130-4458-4432-9718-155db6a2b4c8",
+ "mesh_id": "631e5727-d42f-48b9-b8d5-57f7f4a00fb4",
+ "check": {
+  "severity": "SUCCESS",
+  "entries": []
+ },
+ "duracion": "PT1M34.855092S",
+ "compute": {
+  "type": "CPU_HOURS",
+  "value": 0.0525
+ },
+ "resultado": {
+  "nodos": 166902,
+  "celdas": 98078,
+  "sigma_max_MPa": 16.176925,
+  "sigma_p995_MPa": 6.290502707499993,
+  "sigma_max_en_mm": [
+   -27.100000381469727,
+   53.599998474121094,
+   168.6999969482422
+  ],
+  "FS": 3.090822266901775,
+  "FS_p995": 7.9484903393152315,
+  "u_max_mm": 1.0207815965829055
+ },
+ "capturas": {
+  "vonmises": "B3_caja_vonmises.png",
+  "desplazamiento": "B3_caja_desplazamiento.png",
+  "malla": "B3_caja_malla.png"
+ },
+ "enlace_resultado": "https://www.simscale.com/workbench/?pid=5890288887472164333&rru=683da982-b91d-410a-acdb-a3a4a78bdc26&ci=4062f2d9-9bf0-4f5d-aa56-bb3acb7bea23&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT",
+ "enlace_proyecto": "https://www.simscale.com/workbench/?pid=5890288887472164333",
+ "enlace_simulacion": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:16c2f2fb-c0f8-4049-9322-e0175699ffb8%2Cservice:SIMULATION%2Cstrategy:1"
+}

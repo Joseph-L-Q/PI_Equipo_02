@@ -199,8 +199,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P14_boya_casco_mitad.3mf"
   },
   "P15_boya_cubierta_lisa": {
-   "g": 63.3,
-   "h": 3.8,
+   "g": 91.0,
+   "h": 5.12,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -213,8 +213,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P15_boya_cubierta_lisa.3mf"
   },
   "P19_boya_cubierta_mastil": {
-   "g": 78.7,
-   "h": 4.4,
+   "g": 106.5,
+   "h": 5.71,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -288,7 +288,7 @@
   }
  },
  "total": {
-  "g": 2790.8,
-  "h": 93.44
+  "g": 2846.3,
+  "h": 96.07
  }
 }

@@ -18,7 +18,7 @@
 
 ## B2_cubierta_lisa (escala 1:4, 14 cotas automáticas)
 
-- front: alto total 113,4 (el borde es curvo)
+- front: alto total 117,4 (el borde es curvo)
 - front: separación 2x 6 entre nervios verticales (sin espacio)
 - top: separación 14 entre nervios verticales (sin espacio)
 - top: separación 42,5 entre nervios verticales (sin espacio)
@@ -29,11 +29,11 @@
 - top: posición de 4x Ø3,4 a 4 del borde (sin espacio)
 - top: 2x Ø12 (sin espacio)
 - top: Ø16 (más de 4 diámetros en la vista)
-- left: alto total 113,4 (el borde es curvo)
+- left: alto total 117,4 (el borde es curvo)
 
-## B2_cubierta_mastil (escala 1:4, 17 cotas automáticas)
+## B2_cubierta_mastil (escala 1:5, 16 cotas automáticas)
 
-- front: alto total 136,4 (el borde es curvo)
+- front: alto total 140,4 (el borde es curvo)
 - front: separación 6 entre nervios verticales (sin espacio)
 - front: separación 6 entre nervios verticales (sin espacio)
 - front: separación 43,5 entre nervios verticales (sin espacio)
@@ -46,12 +46,13 @@
 - top: posición de 4x Ø4 a 63,5 del borde (sin espacio)
 - top: posición de 4x Ø3,4 a 63,5 del borde (sin espacio)
 - top: 2x Ø12 (sin espacio)
+- top: 2x Ø10 (sin espacio)
 - top: Ø16 (más de 4 diámetros en la vista)
 - top: Ø8 (más de 4 diámetros en la vista)
 - top: Ø14 (más de 4 diámetros en la vista)
-- left: alto total 136,4 (el borde es curvo)
+- left: alto total 140,4 (el borde es curvo)
 - left: 2 separaciones más entre nervios verticales
-- left: posición de Ø7 a 16 del borde (sin espacio)
+- left: posición de Ø7 a 20 del borde (sin espacio)
 
 ## B3_caja (escala 1:2,5, 15 cotas automáticas)
 
