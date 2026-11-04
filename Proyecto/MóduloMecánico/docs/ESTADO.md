@@ -1,24 +1,31 @@
-# Estado LanternGuard CAD | 04/11/2026, 10:39 (en curso)
+# Estado LanternGuard CAD | 04/11/2026 | **TERMINADO: 11:45**
 
-**Aviso: el total impreso pasa de 2,7 kg: 2791 g (nodo P2 1530 g + boya 1027 g + probetas 233 g), 93,4 h, S/ 167 a S/ 60/kg.**
+**Aviso: el total impreso pasa de 2,7 kg. Son 2846 g (nodo P2 1530 g, boya 1083 g y probetas 233 g), 96,1 h y unos S/ 171 a S/ 60/kg.**
 
 | Bloque | Estado |
 |---|---|
 | 0 Respaldo | Listo: repo privado `IchiSieben/LanternGuard-CAD-backup` y `docs/RETOMAR_EN_OTRA_PC.md` |
-| Rama `cad/celosia-v2` | Lista: congela el concepto anterior |
-| 1-FINAL Riel cerrado | **Listo (commit 2534d00).** Caja, riel y cápsula forman un solo volumen seco, el cable plano va por dentro y no hay PG7 entre caja y cápsula. FS entre capas: riel 3,18, pie 3,80. Ventana M7 con junta plana y silicona marina. Bandeja M11 corregida. Lastre 1050 g. 19 placas en Drive `02_Imprimir_primero_probetas/imprimir_hoy_04nov_riel_cerrado/`. 13 planos `PLANO_A4_<pieza>` en LG_IMPRIMIR_P2, `04_Planos/PLANOS_A4_LanternGuard_v4.pdf` y `04_Planos/STL_por_pieza/`. **En curso:** la guía de piezas y ESTANQUEIDAD con el riel cerrado |
 | 1 Márgenes y boya | Listo: cama de 230 con chequeo, MARGENES.md, B1, B2 y B5 en mitades, topes bajos |
-| 2 Convención de nombres | Listo. Hay que borrar a mano en LG_IMPRIMIR_P2 las pestañas "OLD …", porque la API no borra |
-| 3 SimScale | En curso, por API. Dos proyectos: "LanternGuard nodo sumergido" y "LanternGuard boya" |
-| 4 Visor 3D | Listo: `docs/visor/index.html` en Drive `07_Documentos/visor/`. Se regenera con la guía nueva |
-| 5 Cierre | Pendiente |
+| 1-FINAL Riel cerrado | Listo. Un solo volumen seco, cable plano por dentro y sin PG7 intermedios. FS entre capas: riel 3,18 y pie 3,80. Lastre de 1050 g |
+| 2 Convención de nombres | Listo. Hay que borrar a mano las pestañas «OLD …» en LG_IMPRIMIR_P2 |
+| 3 SimScale | Listo, por API, con los proyectos A (nodo) y B (boya). La cubierta B2 se corrigió a barras de 8 mm (FS 3,0) |
+| 4 Visor 3D | Listo: `docs/visor/index.html` y Drive `07_Documentos/visor/` |
+| 5 Cierre | Listo: `docs/ENTREGA_2026-11-04.pdf` en Drive `07_Documentos` |
 
-Problemas:
+**Links:**
+- Drive: https://drive.google.com/drive/folders/1T8cv6NW7W2cESde3SLp9HgS4VRJMWwCO
+- LG_IMPRIMIR_P2: https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff
+- SimScale A: https://www.simscale.com/workbench/?pid=770997415227428031
+- SimScale B: https://www.simscale.com/workbench/?pid=5890288887472164333
+- Rama: https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/version-final
+
+**Problemas:**
 - La API de Onshape no borra (403).
-- La casilla SHEET de los planos sale "11" en vez de "1 of 1": corregir a mano.
-- P3 y P4 siguen con el riel anterior.
+- La casilla SHEET sale «11».
+- SimScale no deja descargar algunas corridas (403 «export-source-locked»).
+- Queda abierto el golpe lateral sobre el panel.
 
-Detalle y cola: `docs/HANDOFF_siguiente.md`. Bloqueos: `docs/PENDIENTES.md`. Decisiones: `docs/DECISIONES.md` (raíz).
+Detalle en `docs/PENDIENTES.md`.
 
 ---
 

@@ -41,10 +41,11 @@ En Mac se usa `setup_mac.sh`. Después se trabaja con `.venv\Scripts\python.exe 
 
 ## 4. Lo que se recrea a mano (no está en git ni en Drive)
 
-**`cad_final/.env`** (lo ignora `.gitignore`). Lleva estas dos variables:
+**`cad_final/.env`** (lo ignora `.gitignore`). Lleva estas tres variables:
 ```
 ONSHAPE_ACCESS_KEY=...
 ONSHAPE_SECRET_KEY=...
+SIMSCALE_API_KEY=...
 ```
 - Se generan en Onshape: *My account → Developer → API keys*, con permisos de lectura y escritura.
 - Las usan `onshape_sync.py`, `onshape_push.py` y `planos_onshape.py`.
@@ -58,7 +59,10 @@ ONSHAPE_SECRET_KEY=...
 
 Conviene crear un `client_id` propio porque el compartido de rclone se retira en 2026: https://rclone.org/drive/#making-your-own-client-id
 
-**SimScale.** No usa claves: los pasos son manuales (`SIMSCALE.md`). Los STEP están en Drive `06_SimScale`.
+**SimScale.** Desde el 04/11 se usa por API con `cad_final/simscale_run.py` (`--pieza X`, `--grupo A|B`, `--informe`).
+- La clave `SIMSCALE_API_KEY` sale de SimScale: *perfil → API keys*.
+- El SDK no está en PyPI: lo instala `requirements.txt` desde `git+https://github.com/SimScaleGmbH/simscale-python-sdk.git`.
+- El reporte va a Drive `06_SimScale`.
 
 Ninguna clave va al repo, a Drive ni a un chat.
 
