@@ -187,6 +187,31 @@ El indicador principal de LanternGuard será el porcentaje estimado de cobertura
 
 El acelerómetro LIS3DH permitiría registrar información sobre el movimiento del módulo durante la captura. Esta variable complementaría el análisis visual, sin sustituir la estimación de cobertura obtenida mediante las fotografías.
 
+
+### Análisis funcional y generación de alternativas de diseño
+
+Como parte del diseño conceptual de LanternGuard, se realiza el análisis funcional del sistema mediante la caja negra, el esquema de funciones, la matriz morfológica y tres bocetos de alternativas de diseño. Estas herramientas permiten identificar las funciones necesarias para el monitoreo de la bioincrustación y sustentar las soluciones consideradas antes del modelado tridimensional.
+
+#### Caja negra del sistema LanternGuard
+
+La caja negra permite identificar las principales entradas y salidas del sistema LanternGuard, clasificadas en flujos de energía, materia, información y señales, sin describir todavía el funcionamiento interno de sus componentes.
+
+Entre las entradas se consideran la energía solar, el agua de mar como medio de operación del módulo sumergido, las señales de encendido y control, y los parámetros de referencia necesarios para el monitoreo. Como salidas se incluyen la energía lumínica de los LED, la energía calorífica residual, el agua de mar y la información obtenida durante las inspecciones.
+
+Asimismo, LanternGuard contempla la captura de imágenes submarinas para estimar el porcentaje de cobertura visible y el volumen de bioincrustación acumulada sobre las regiones observadas de las mallas. La estimación volumétrica se realizará mediante un algoritmo propio, cuyo desarrollo y validación forman parte de las siguientes etapas del proyecto. Los resultados permitirán apoyar las decisiones de inspección y mantenimiento de las linternas.
+
+La Figura AF-1 presenta las entradas y salidas consideradas en el diseño conceptual de LanternGuard.
+
+<p align="center"><strong><em>Figura AF-1. Caja negra del sistema LanternGuard.</em></strong></p>
+
+<p align="center">
+<img width="1302" height="1036" alt="Infografía de caja negra LanternGuard" src="https://github.com/user-attachments/assets/5532407b-77fc-4fa2-9468-492b2be28218" />
+
+</p>
+
+<p align="center"><em><strong>Nota.</strong> Elaboración propia. Se representan los flujos de energía, materia, información y señales del sistema LanternGuard, considerando el monitoreo de la bioincrustación y la estimación propuesta de su cobertura visible y volumen.</em></p>
+
+
 ### 3.4. Representación del modelado tridimensional
 
 Como parte del diseño conceptual de LanternGuard, se desarrolló un modelo tridimensional que representa la configuración estructural del módulo sumergido, la boya de superficie y su integración mediante un cable umbilical. El modelado permite visualizar la distribución de los componentes, los sistemas de soporte y la disposición física de los elementos que conforman la propuesta tecnológica.
