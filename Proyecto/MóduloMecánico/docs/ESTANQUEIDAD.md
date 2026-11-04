@@ -1,33 +1,105 @@
-# Estanqueidad: sellos del concepto vigente
+# Estanqueidad del nodo y de la boya
 
-> **Concepto vigente antes de la corrección 3a; se actualiza cuando llegue.**
+Versión del 2026-11-04 · concepto vigente: **un solo volumen seco** en el nodo (caja + rieles + cápsulas), con el cable plano de las cámaras por dentro. Los números de la tabla se pueden buscar en la guía de piezas (`GUIA_PIEZAS_LanternGuard.pdf`).
 
-Lista de lo que mantiene seco cada volumen. Los números de la última columna son los de `GUIA_PIEZAS_LanternGuard.pdf` / `GUIA_PIEZAS.md`. Se genera con `cad_final/guia_piezas.py`; datos en `salida/guia_piezas/sellos.json`.
+## 1. La idea en dos frases
 
-| N° | Sello | Piezas | Tipo | Qué protege | Dónde lo ves en la guía |
+Antes, cada cámara tenía su propio cable que salía de la caja por un prensaestopas (PG7), corría por un riel abierto lleno de agua y entraba a la cápsula por otro PG7. Eran cuatro pasos de cable que podían gotear.
+
+Ahora la caja, los dos rieles y las dos cápsulas son **un solo espacio seco**: el cable plano de la cámara viaja por dentro, protegido, y las piezas se unen con cordones de goma planos. El único prensaestopas que queda en el nodo es el del cable umbilical, en la tapa M2.
+
+## 2. El dibujo
+
+En azul, el espacio que debe quedar seco. En rojo y numerado, cada sello. Los números son los de la tabla de abajo.
+
+![Volumen seco y sellos del nodo](../salida/guia_piezas/estanqueidad_nodo.png)
+
+El camino del cable de una cámara, siempre en seco: dentro de la caja → ventana de la pared de extremo → canal del riel → curva suave (radio 10 mm) → abertura bajo el riel → conducto de la pieza M5s → ranura de la tapa de la cápsula → cámara.
+
+## 3. Tabla de sellos
+
+Hay **7** sellos en el nodo (números 1 a 7) y **6** en la boya (números 8 a 13). Los de la boya no cambiaron.
+
+| N° | Sello | Cuántos | Cómo sella | Qué protege | Dónde verlo en la guía |
 |---|---|---|---|---|---|
-| 1 | Tapa B4 sobre la caja seca B3 | B3, B4 | cordón O-ring Ø2 en ranura | La electrónica de la boya: PCB, Waveshare, portabaterías 3×18650 y RTC. | B4 N° 2; B4 N° 1; B3 N° 8 |
-| 2 | PG7 del umbilical en B3 (pared −X) | B3 | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del cable umbilical (boya ↔ nodo) hacia la caja seca. | B3 N° 5 |
-| 3 | PG7 del cable solar en B3 (pared +X) | B3 | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del cable del panel solar hacia la caja seca. | B3 N° 6 |
-| 4 | PG7 del pigtail de antena en B3 (pared +X) | B3, B2 mástil | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del pigtail de la antena hacia la caja seca. El mástil de B2 solo guía el cable: no sella. | B3 N° 7; B2 mástil N° 5 |
-| 5 | Insertos M3 de la brida de B3 | B3 | inserto térmico ciego (no atraviesa la brida) | La brida no queda perforada y los tornillos quedan fuera del cordón: el agua no tiene camino por los tornillos. | B3 N° 2 |
-| 6 | Botellas PET selladas (flotación) | B1, B5 base, B5 cuello | tapón de rosca de fábrica (botella comprada) | El aire que flota la boya. El casco impreso NO es estanco: solo sostiene las botellas. | B1 N° 9; B1 N° 10; B5 cuello N° 5 |
-| 7 | Tapa M2 sobre la caja M1s | M1s, M2 | cordón O-ring Ø2 en ranura | La electrónica del nodo (bandejas M11) en la caja seca. | M2 N° 2; M2 N° 1; M1s N° 6 |
-| 8 | PG7 de cada cámara en las paredes de extremo de M1s (×2) | M1s, M3s | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del Cat5e de cada cámara a la caja seca. El conducto del riel va inundado: el sello es el PG7, no el riel. | M1s N° 4; M3s N° 2 |
-| 9 | PG7 del umbilical en la tapa M2 | M2 | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del umbilical hacia la caja seca del nodo. | M2 N° 3 |
-| 10 | Insertos M3 de la brida de M1s y M4 del cojín | M1s | inserto térmico ciego | No perforan la caja: los 12 M3 de la tapa quedan fuera del cordón y los 8 M4 del cojín no pasan la pared. | M1s N° 5; M1s N° 3 |
-| 11 | Tapa M5s sobre la cápsula M4 (×2 cápsulas) | M4, M5s | cordón O-ring Ø2 en ranura | La cámara Arducam y el anillo LED dentro de cada cápsula. | M5s N° 2; M5s N° 1; M4 N° 1 |
-| 12 | PG7 de cada cápsula en M4 (×2) | M4 | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del Cat5e hacia el interior de la cápsula (cámara y LED). | M4 N° 2 |
-| 13 | Ventana de acrílico M7 en el frente de M4 (×2) | M4, M6 | asiento Ø30.4 con sellador (a definir) | El frente de la cápsula: la ventana deja pasar la luz y no el agua. A confirmar: el CAD solo define el asiento y el bisel M6 con 3 M2; no hay sellador especificado. | M4 N° 3; M6 N° 2; M6 N° 1 |
+| 1 | Tapa M2 sobre la caja M1s | ×1 | cordón O-ring Ø2 en ranura | La electrónica del nodo (bandejas M11) y todo el volumen seco, que desde la caja se extiende por los rieles hasta las cápsulas. | M2 N° 2; M2 N° 1; M1s N° 6 |
+| 2 | Riel M3s ↔ caja M1s: cordón plano (×2) | ×2 | cordón de goma Ø2 NBR en ranura plana, 20 % de compresión (ranura 1.6 × 2.6 mm) | La unión entre la caja y cada riel, alrededor de la ventana por donde pasa el cable. | M3s N° 4; M3s N° 5; M1s N° 3; M1s N° 4 |
+| 3 | Almohadilla del riel M3s ↔ silla de M5s: cordón plano (×2) | ×2 | cordón de goma Ø2 NBR en ranura plana, 20 % de compresión | La unión entre el riel y la tapa de la cápsula, alrededor de la abertura de 8 × 22 mm por donde baja el cable. | M5s N° 2; M3s N° 6; M3s N° 8; M5s N° 4 |
+| 4 | Tapa M5s sobre la cápsula M4 (×2) | ×2 | cordón O-ring Ø2 en ranura | La cámara Arducam y el anillo LED dentro de cada cápsula. El cable plano entra por la ranura de esta tapa, que queda dentro del sello. | M5s N° 8; M5s N° 7; M4 N° 1 |
+| 5 | Ventana de acrílico M7: junta plana + silicona (×2) | ×2 | junta plana de silicona de 1 mm (Ø30 × Ø26.5) comprimida 20 % por el bisel M6 + cordón de silicona marina en el borde | El frente de cada cápsula: la ventana deja pasar la luz y no el agua. | M4 N° 2; M6 N° 2; M6 N° 1 |
+| 6 | PG7 del umbilical en la tapa M2 | ×1 | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del cable umbilical hacia la caja seca. Es el único prensaestopas que queda en el nodo. | M2 N° 3 |
+| 7 | Insertos ciegos que no perforan paredes |  | inserto térmico ciego (no atraviesa) | Los 12 M3 de la brida de M1s, los 8 M4 de los cojines y los 4 M3 de cada silla de M5s se enroscan en insertos ciegos: ningún tornillo abre un camino al interior. Los 4 M3 de la almohadilla del riel pasan por las alas, fuera del canal. | M1s N° 5; M1s N° 4; M5s N° 4; M3s N° 8 |
+| 8 | Tapa B4 sobre la caja seca B3 | ×1 | cordón O-ring Ø2 en ranura | La electrónica de la boya: PCB, Waveshare, portabaterías 3×18650 y RTC. | B4 N° 2; B4 N° 1; B3 N° 8 |
+| 9 | PG7 del umbilical en B3 (pared −X) | ×1 | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del cable umbilical (boya ↔ nodo) hacia la caja seca. | B3 N° 5 |
+| 10 | PG7 del cable solar en B3 (pared +X) | ×1 | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del cable del panel solar hacia la caja seca. | B3 N° 6 |
+| 11 | PG7 del pigtail de antena en B3 (pared +X) | ×1 | prensaestopas PG7 (Ø12.6) con contratuerca | El paso del pigtail de la antena hacia la caja seca. El mástil de B2 solo guía el cable: no sella. | B3 N° 7; B2 mástil N° 5 |
+| 12 | Insertos M3 de la brida de B3 |  | inserto térmico ciego (no atraviesa la brida) | La brida no queda perforada y los tornillos quedan fuera del cordón: el agua no tiene camino por los tornillos. | B3 N° 2 |
+| 13 | Botellas PET selladas (flotación) |  | tapón de rosca de fábrica (botella comprada) | El aire que flota la boya. El casco impreso NO es estanco: solo sostiene las botellas. | B1 N° 9; B1 N° 10; B5 cuello N° 5 |
 
-## Lo que NO es estanco a propósito
+Notas de la tabla:
 
-- Conducto del riel M3s: va inundado a propósito (el Cat5e tiene chaqueta exterior y entra por PG7 a la caja y a la cápsula).
-- Unión riel ↔ caja (4 M4) y pie M5s ↔ riel (2 M4): atornilladas, no estancas.
-- Bolsillos de lastre de M1s y sus tapas M3t: fuera del sello, entra agua.
-- Casco B1, cunas B5, correas B6 y cubierta B2 de la boya: estructura abierta; flotan las botellas.
+- **Cordón plano** = un cordón de goma NBR de Ø2 mm puesto en una ranura con forma de marco (1.6 mm de hondo × 2.6 mm de ancho). Al apretar los tornillos se aplasta un 20 % y llena la rendija. No se pega ni se estira: se coloca sin torcer.
+- **Insertos ciegos**: tuercas de latón que se funden dentro del plástico sin atravesarlo. Como no hay agujero de lado a lado, el agua no tiene camino por el tornillo. La excepción son los 4 tornillos de la almohadilla del riel (M3s), que pasan por las alas, fuera del canal.
 
-## Pendiente
+## 4. Lo que NO es estanco, a propósito
 
-- Sellador o junta de la ventana M7: no está especificado en el CAD.
-- Cambia con la corrección de concepto (riel cerrado estanco, cable por dentro): el conducto del riel y los PG7 de M1s/M3s se rehacen.
+- Bolsillos de lastre de M1s y sus tapas M3t: están fuera del sello y se llenan de agua. Es lo normal; el lastre son tuercas y arandelas a granel.
+- Gancho en C de M3s y su correa: están por fuera del riel, mojados siempre.
+- Las 4 alas de la almohadilla del riel (con los M3 que bajan a M5s): quedan fuera del canal. El agua puede tocarlas sin entrar.
+- Casco B1, cunas B5, correas B6 y cubierta B2 de la boya: estructura abierta; flotan las botellas PET (cerradas de fábrica).
+- Mástil de B2 (solo guía el cable del pigtail): no sella; el sello está en el PG7 de B3.
+
+Todo lo demás del nodo (caja, riel, conducto, cápsulas) sí debe quedar seco.
+
+## 5. Impresión de las piezas estancas
+
+Las piezas que forman el volumen seco (M1s, M2, M3s, M4, M5s y, en la boya, B3 y B4) se imprimen con el perfil estanco: **4 perímetros, 5 capas arriba y 5 abajo, 100 % de relleno**. Opcional: una capa de epoxi por dentro. Antes de armar, mire cada pieza contra una luz fuerte: si se ve luz a través de una pared, hay un hueco y esa pieza se reimprime.
+
+## 6. Cómo probar que no entra agua
+
+Regla general: **nunca ponga electrónica en una prueba de agua**. Dentro va papel de cocina seco: si al abrir está seco, el sello aguantó; si tiene manchas, ahí entró agua.
+
+### Paso 1. Montaje en seco (sin agua)
+
+1. Limpie las ranuras (sin rebabas ni polvo) y coloque cada cordón sin torcerlo: debe asomar un poco por encima de la ranura.
+2. Arme todo el nodo con los tornillos, apretando en cruz y de a poco (primero medio apriete en todos, luego el apriete final).
+3. Pase por todo el camino del cable una tira de papel del mismo ancho que el cable plano (22 mm): debe entrar por la ventana de la caja y salir por la ranura de la tapa de la cápsula sin atascarse ni doblarse en ángulo.
+4. Anote qué tornillos quedaron más flojos o más duros: son los primeros sospechosos si algo gotea.
+
+### Paso 2. Baño de cada subconjunto vacío
+
+Pruebe de lo pequeño a lo grande. En cada prueba: papel de cocina seco adentro, lastre para que se hunda (una piedra o pesas atadas por fuera), y un balde u otro recipiente donde quepa a 0.5 m de profundidad.
+
+| Subconjunto | Cómo prepararlo | Qué mirar al abrir |
+|---|---|---|
+| A. Una cápsula completa (M4 + M5s + M6 + M7 con su junta y silicona) | Cierre la abertura de la placa de M5s con una placa plana de prueba y su cordón (o con una tapa de acrílico). | Papel seco en la cámara; ninguna gota tras la ventana. |
+| B. Caja M1s con tapa M2 | Tape las dos ventanas de las paredes con placas planas de prueba y ponga el PG7 con el cable umbilical (o un tapón). | Papel seco en las bandejas; ninguna gota en la tapa. |
+| C. Un riel M3s con su silla M5s | Cierre la boca del riel contra una placa plana de prueba y la ranura de la tapa de M5s con cinta de buena calidad. | Papel seco dentro del canal y del conducto. |
+| D. Nodo completo (caja + 2 rieles + 2 cápsulas) | El nodo armado como irá en el agua, sin electrónica. | Papel seco en la caja, en los dos canales y en las dos cápsulas. |
+
+Pasos de cada prueba:
+
+1. Sumerja 30 minutos a 0.5 m. Saque, seque por fuera con un paño y abra sobre una mesa. Mire el papel.
+2. Si está seco, ponga papel nuevo y repita, esta vez **24 horas**.
+3. Al terminar, saque una foto del papel y anote la fecha, el subconjunto y el resultado.
+4. Pase al siguiente subconjunto solo si el anterior salió seco las 24 horas.
+
+### Paso 3. Piscina con peso, antes de la electrónica
+
+1. Arme el nodo completo con papel dentro y un peso de prueba que iguale la masa de la electrónica.
+2. Cuélguelo del aro como irá en la linterna y bájelo a la profundidad de trabajo prevista.
+3. Déjelo 2 horas. Saque, seque y revise el papel de la caja, de los dos rieles y de las dos cápsulas.
+4. Solo si todo está seco, se pasa a montar la electrónica real.
+
+### Si entra agua
+
+1. No arme de nuevo enseguida. Abra, saque el papel y mire **dónde** está mojado: la mancha apunta al sello que falló (la tabla de la sección 3 dice qué piezas lo forman).
+2. Causas más comunes: cordón torcido o pellizcado; un tornillo flojo en una esquina; ranura con rebaba o con polvo; pared impresa con huecos (se ve a contraluz); silicona de la ventana con un hueco.
+3. Corrija **una sola cosa** a la vez (por ejemplo, cordón nuevo, o una capa de epoxi, o rehacer la pieza) y repita la prueba completa de ese subconjunto, empezando de nuevo por los 30 minutos.
+4. Si falla dos veces en el mismo sello, anote la pieza y avise: puede ser un problema de diseño y no de armado.
+
+## 7. Por confirmar en las pruebas
+
+- La junta plana de silicona de la ventana (Ø30 × Ø26.5 × 1 mm) y el cordón de silicona marina son nuevos: la prueba de la cápsula (A) es la que confirma que bastan.
+- El cordón plano en forma de marco de la brida del riel y el de la silla de M5s tienen esquinas redondeadas: revise que el cordón no se pliegue en las esquinas al apretar.
+- Tornillo de las bandejas (M11): M3 × 38 inox (o M3 × 40 recortado 2 mm). Atraviesa 33 mm (bandeja 3 + poste 27 + bandeja 3) y entra 5 mm en el inserto de 6 mm sin tocar el fondo. Verificar con las piezas impresas.

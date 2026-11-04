@@ -88,7 +88,7 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | nodo simple | Disco de acrilico de la ventana | Ø30 x 3 | 2 |
 | nodo simple | Grillete o argolla de inox (izado) | M6 | 1 |
 | nodo simple | Prensaestopas PG7 con contratuerca (solo el umbilical, en la tapa M2) | PG7 | 1 |
-| nodo simple | Tornillo M3 x 45 inox A2, pasante: bandeja sup + poste + bandeja inf al inserto de la caja | M3 | 4 |
+| nodo simple | Tornillo M3 x 38 inox A2, pasante: bandeja sup + poste + bandeja inf al inserto de la caja | M3 | 4 |
 | nodo simple | Cordon de junta torica Ø2 NBR para las juntas planas riel-caja (x2) y riel-capsula (x2), +10 % | 420 mm | 1 |
 | nodo simple | Junta plana de la ventana M7: anillo plano de silicona de 1 mm | Ø30 x Ø26.5 | 2 |
 | nodo simple | Silicona marina (p. ej. Sikaflex-291i): cordon en el borde de cada ventana | cartucho 70 ml | 1 |

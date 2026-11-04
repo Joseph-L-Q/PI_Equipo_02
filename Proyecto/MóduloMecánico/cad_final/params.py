@@ -692,7 +692,7 @@ FOOT_PLATE_CLOSED = p("capsula.pie_placa_cerrado", 10.0, EST, VER,
 FOOT_WEB_CLOSED = p("capsula.pie_alma_cerrado", 30.0, EST, VER, "Ancho en y del alma de M5s con el ducto del cable plano adentro (22 + 2 x 4)")
 TRAY_THROUGH = p("bandeja.tornillo_pasante", True, EST, VER,
                  "Los postes de M11 estaban justo sobre los 4 agujeros M3 de la bandeja (el tornillo no entraba). Ahora el poste es un "
-                 "separador con agujero pasante: 1 M3 x 45 inox atraviesa bandeja superior + poste + bandeja inferior hasta el inserto de la caja")
+                 "separador con agujero pasante: 1 M3 x 38 inox atraviesa bandeja superior + poste + bandeja inferior hasta el inserto de la caja")
 SEAL_PRINT = p("impresion.estanca", dict(perimetros=4, capas_arriba=5, capas_abajo=5, relleno=1.0,
                                          piezas=("M1s", "M2", "M3s", "M4", "M5s", "B3", "B4")), EST, VER,
                "Perfil Orca para piezas estancas: ≥ 3 perímetros (se usan 4), 5 capas arriba y abajo, relleno 100 % (así las zonas "

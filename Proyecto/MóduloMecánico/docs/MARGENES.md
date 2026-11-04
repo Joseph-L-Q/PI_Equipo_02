@@ -26,7 +26,7 @@ Pared medida en el STL: percentil 1 del espesor local, con 3000 rayos hacia aden
 | M3s_riel_gancho | 142 × 79 | sí | 1.90 | Riel cerrado 36 × 30, paredes 6, sin ventanas. FS entre capas 2.72 → 3.18 (alma del gancho 20 → 26). El 1.9 medido es el labio de 1.5 entre la ranura de la junta y el canal (1.6 de alto), no una pared. |
 | M3t_tapa_bolsillo | 117 × 57 | sí | 3.00 |  |
 | M5s_capsula_tapa_pie | 51 × 64 | sí | 1.50 | Silla de 10 con 4 insertos M3 y junta; tapa 5 → 6. FS entre capas 2.47 → 3.80. El 1.5 medido es el labio entre la ranura de la junta y el pase del cable (1.6 de alto), no una pared. |
-| M11_bandeja | 115 × 114 | sí | 2.29 | 2.3 en la bandeja (no estructural, dentro de la caja). Postes pasantes para el M3 × 45; sin la ventana en ocho. |
+| M11_bandeja | 115 × 114 | sí | 2.29 | 2.3 en la bandeja (no estructural, dentro de la caja). Postes pasantes para el M3 × 38; sin la ventana en ocho. |
 | M11_bandeja_sup | 115 × 114 | sí | 3.00 |  |
 | M4_capsula_cuerpo | 45 × 64 | sí | 1.20 | 1.2 = tubo separador de luz del aro LED (óptico, no estructural). No se puede engrosar sin cambiar el aro: el agujero Ø19 del aro limita el diámetro exterior del tubo. Se ajusta cuando se mida el aro comprado (`aro_led.agujero`). |
 | M6_capsula_bisel | 42 × 42 | sí | 2.25 | 2.25 en el borde del bisel (no estructural). |

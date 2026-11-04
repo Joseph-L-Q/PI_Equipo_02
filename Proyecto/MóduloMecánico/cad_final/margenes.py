@@ -119,7 +119,7 @@ NOTES = {   # piece -> what the measured minimum is and what is done about it
                          "el agujero Ø19 del aro limita el diámetro exterior del tubo. Se ajusta cuando se mida el aro comprado (`aro_led.agujero`).",
     "M5s_capsula_tapa_pie": "Silla de 10 con 4 insertos M3 y junta; tapa 5 → 6. FS entre capas 2.47 → 3.80. El 1.5 medido es el labio entre la ranura de la junta y el pase del cable (1.6 de alto), no una pared.",
     "M6_capsula_bisel": "2.25 en el borde del bisel (no estructural).",
-    "M11_bandeja": "2.3 en la bandeja (no estructural, dentro de la caja). Postes pasantes para el M3 × 45; sin la ventana en ocho.",
+    "M11_bandeja": "2.3 en la bandeja (no estructural, dentro de la caja). Postes pasantes para el M3 × 38; sin la ventana en ocho.",
 }
 
 

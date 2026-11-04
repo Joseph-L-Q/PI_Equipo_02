@@ -155,7 +155,7 @@ def hardware(res, rb):
         ws = P.WINDOW_SEAL
         common = [c for c in common if not c[0].startswith(("Prensaestopas", "Tornillo M3 x 8 + inserto termico M3 (bandejas)"))]
         common += [("Prensaestopas PG7 con contratuerca (solo el umbilical, en la tapa M2)", "PG7", 1),
-                   ("Tornillo M3 x 45 inox A2, pasante: bandeja sup + poste + bandeja inf al inserto de la caja", "M3", n_tray),
+                   ("Tornillo M3 x 38 inox A2, pasante: bandeja sup + poste + bandeja inf al inserto de la caja", "M3", n_tray),
                    ("Cordon de junta torica Ø2 NBR para las juntas planas riel-caja (x2) y riel-capsula (x2), +10 %", f"{flat:.0f} mm", 1),
                    (f"Junta plana de la ventana M7: {ws['tipo']} de {ws['espesor']:g} mm", f"Ø{ws['d_ext']:g} x Ø{ws['d_int']:g}", 2),
                    ("Silicona marina (p. ej. Sikaflex-291i): cordon en el borde de cada ventana", "cartucho 70 ml", 1)]
