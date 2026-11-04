@@ -37,7 +37,7 @@ Es el diagrama de bloques que muestra cómo funciona el sistema internamente div
 
 Presenta las diferentes alternativas de componentes y materiales evaluados para cumplir con cada función del diagrama.
 
-<img width="1133" height="1388" alt="image" src="https://github.com/user-attachments/assets/db6ce27a-030f-409d-ab5a-657d07e33508" />
+<img width="1133" height="1388" alt="image" src="https://github.com/user-attachments/assets/d3f82f11-892d-4e52-bf2e-31b8d51dae8e" />
 
 ---
 
