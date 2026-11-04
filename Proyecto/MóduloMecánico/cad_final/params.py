@@ -406,13 +406,19 @@ def nut_corner_r():
 CAP_FRONT = p("capsula.frente", 6.0, EST, VER, "Pared frontal (ventana + hombro de 2.8)", 6.0)
 CAP_FLANGE = p("capsula.brida_ancho", 9.0, EST, VER, "Brida alrededor de la apertura trasera", 9.0)
 CAP_FLANGE_T = p("capsula.brida_espesor", 6.0, EST, VER, "", 6.0)
-CAP_LID_T = p("capsula.tapa", 5.0, EST, VER, "Espesor de la tapa M5", 5.0)
+CAP_LID_T = p("capsula.tapa", 6.0, EST, VER, "Espesor de la tapa M5. 04/11: 5 -> 6, el FEM del pie (riel cerrado) daba FS 2.99 entre capas junto a los 4 M3 de la tapa", 5.0)
 CAP_GLAND_X = p("capsula.pg7_x", 10.0, EST, VER, "Centro del PG7 desde la apertura trasera (pared inferior)", 10.0)
 CAP_SIDE_GAP = p("capsula.holgura_lateral", 2.5, EST, VER, "Camara 33 + 2 x 2.5 por lado = cavidad 38", 2.5)
 CAP_REAR_ZONE = p("capsula.zona_trasera", 23.0, EST, VER,
                   "Detras de la placa: curva del cable + contratuerca PG7 (50 - 25 - 2 de la P4 rev. B)", 23.0)
 CAP_LENS_GAP = p("capsula.holgura_lente", 0.5, EST, VER, "Punta del lente a la cara trasera de la ventana", 1.0)
-WIN_SEAT_DEPTH = p("ventana.asiento", 3.2, EST, VER, "Rebaje desde fuera; el agua empuja el disco al hombro", 3.2)
+WIN_SEAT_DEPTH = p("ventana.asiento", 3.8, EST, VER, "Rebaje desde fuera; el agua empuja el disco al hombro. 04/11: 3.0 de disco + "
+                   "0.8 de la junta plana comprimida (ventana.sello)", 3.2)
+WINDOW_SEAL = p("ventana.sello", dict(tipo="anillo plano de silicona", espesor=1.0, d_ext=30.0, d_int=26.5, compresion=0.20,
+                                      secundario="cordón de silicona marina (p. ej. Sikaflex-291i) en el borde del disco"), EST, VER,
+                "04/11: sello de M7. El hombro del asiento mide 2 mm (Ø30 / Ø26): no cabe la ranura de una tórica. Anillo plano de "
+                "lámina de silicona de 1 mm (Ø30 x Ø26.5) bajo el disco; el bisel M6 lo comprime 0.2 mm (20 %) al dejar el disco "
+                "a ras. Cordón de silicona marina en el borde como segunda barrera. Se cambia la junta sin reimprimir")
 LENS_APERTURE = p("ventana.apertura", 26.0, EST, VER,
                   "Apertura libre tras la ventana: deja pasar el anillo LED (Ø30) con 2.2 de hombro para el acrilico", 22.0)
 LED_RING_HOLE = p("aro_led.agujero", 19.0, EST, VER, "Ø interior supuesto del anillo LED; medir el comprado")
@@ -560,9 +566,9 @@ SIMPLE_HOOK_C = p("gancho.c", (0.4, 6.0, 12.0), EST, VER,
 SIMPLE_HOOK_STRAP = p("gancho.correa", True, "equipo", OK,
                       "M9s con ranura de correa (la correa evita que el nodo se levante del aro). False: sin ranura y con "
                       "la boca abocinada, se saca levantando (variante V3)")
-SIMPLE_HOOK_WEB = p("gancho.alma", 20.0, EST, VER,
+SIMPLE_HOOK_WEB = p("gancho.alma", 26.0, EST, VER,
                     "Ancho en X del alma del gancho en C (version simple); con 12 el FEM daba 17.6 MPa junto a la ranura de la correa "
-                    "(FS 1.25 entre capas) con los 150 N en un solo gancho", 12.0)
+                    "(FS 1.25 entre capas) con los 150 N en un solo gancho. 04/11: con 20 y el riel cerrado, FS 2.90 entre capas (< 3): 26", 20.0)
 SIMPLE_HOOK_BOLT_X = p("gancho.m4_x", 15.0, EST, VER, "|x| de los 2 M4 de la brida de M9s a tuercas en la ranura T")
 SIMPLE_CAP_TILT = p("capsula.angulo", 30.0, EST, VER,
                     "Inclinacion fija de las capsulas hacia abajo (version simple); se cambia reimprimiendo solo M5s")
@@ -663,6 +669,35 @@ UMB_SAG = p("umbilical.comba", 80.0, EST, VER, "Cuanto cuelga el umbilical bajo 
 # PROTOTIPOS P1..P4 (bloque B): `version` = nombre; simple.py los trata como la familia simple y escribe en
 # salida/prototipos/<version>/. Un valor de PROTO_CFG["P.."] solo cambia lo que dice; lo demas es el nodo V2.
 # =====================================================================================
+# 04/11/2026, corrección de concepto: caja + riel + cápsula = UN solo volumen seco, el cable plano va por dentro
+RAIL_TYPE = p("riel.tipo", "cerrado", "equipo", OK,
+              "cerrado: cajón hueco estanco con canal para cable plano, unido a caja y cápsula con junta plana y sin "
+              "prensaestopas intermedios. celosia: el concepto anterior (rama cad/celosia-v2), conducto inundado + 2 PG7 por cámara",
+              "celosia")
+RAIL_CLOSED = p("riel.cerrado", dict(canal_ancho=24.0, pared=6.0, alto=30.0, radio_canal=1.0, radio_curva=10.0,
+                                     pase_largo=8.0, pase_ancho=22.0), EST, VER,
+                "Riel cerrado: canal 24 de ancho x (alto - 2 paredes) = 18 de alto, esquinas R1 (22 de piso plano libre para el "
+                "cable); pared 6 (≥ 3 pedido; deja sitio a la ranura de la junta alrededor del canal: el riel mide 24 + 2 x 6 = 36 "
+                "de ancho). El cable baja a la cápsula por un pase de 8 x 22 en el piso, con el borde de entrada redondeado a R10 "
+                "(radio de curva del cable)")
+RAIL_SADDLE_PAD = p("riel.brida_silla", dict(espesor=6.0, semiancho=25.0, m3_x=17.0, m3_y=20.0), EST, VER,
+                    "Brida bajo el riel donde apoya la silla de M5s: 4 M3 inox desde arriba (cabeza junto al riel, accesible) "
+                    "a insertos M3 en la silla; separación 34 x 40 (≤ 40 pedido)")
+SEAL_FLAT = p("junta.plana", dict(cordon=2.0, compresion=0.20, ranura_prof=1.6, ranura_ancho=2.6, borde=1.5), "equipo", OK,
+              "Junta tórica plana de las uniones riel-caja y riel-cápsula: cordón Ø2 (NBR), 20 % de compresión -> ranura 1.6 de "
+              "profundidad, 2.6 de ancho (llenado 75 %), 1.5 de borde al canal")
+FOOT_PLATE_CLOSED = p("capsula.pie_placa_cerrado", 10.0, EST, VER,
+                      "Espesor de la placa de la silla de M5s con el riel cerrado: insertos M3 ciegos de 6 + 4 mm de fondo (la junta no se perfora). "
+                      "Con 8 el FEM daba FS 3.00 entre capas, justo", 8.0)
+FOOT_WEB_CLOSED = p("capsula.pie_alma_cerrado", 30.0, EST, VER, "Ancho en y del alma de M5s con el ducto del cable plano adentro (22 + 2 x 4)")
+TRAY_THROUGH = p("bandeja.tornillo_pasante", True, EST, VER,
+                 "Los postes de M11 estaban justo sobre los 4 agujeros M3 de la bandeja (el tornillo no entraba). Ahora el poste es un "
+                 "separador con agujero pasante: 1 M3 x 45 inox atraviesa bandeja superior + poste + bandeja inferior hasta el inserto de la caja")
+SEAL_PRINT = p("impresion.estanca", dict(perimetros=4, capas_arriba=5, capas_abajo=5, relleno=1.0,
+                                         piezas=("M1s", "M2", "M3s", "M4", "M5s", "B3", "B4")), EST, VER,
+               "Perfil Orca para piezas estancas: ≥ 3 perímetros (se usan 4), 5 capas arriba y abajo, relleno 100 % (así las zonas "
+               "de junta quedan macizas sin modificadores). Opcional: baño interior de epoxi")
+
 PROTOTYPES = ("P1_minimo", "P2_robusto", "P3_monocasco", "P4_estetico")
 PROTO_CFG = p("proto.perfiles", {
     "simple": dict(riel="solido", pared=4.0, gancho="c", monocasco=False, estetico=False, caja="v2", capsula="v2"),

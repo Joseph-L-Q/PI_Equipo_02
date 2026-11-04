@@ -1,0 +1,79 @@
+{
+  "B1_casco": {
+    "motivo": "partida en mitades",
+    "estudio": "36031f254206f313ee4cae01",
+    "blob": "4fe940472d160f38978f069f",
+    "copia_en_historico": "02d6020a3a8eee37dbfea6bc",
+    "nuevo_nombre": "OLD 2026-11-04 B1_casco (partida en mitades)"
+  },
+  "B2_cubierta": {
+    "motivo": "partida en mitades",
+    "estudio": "9720202c9b2dac16400a8d6e",
+    "blob": "9ee0d4debdf4b88d8d556e07",
+    "copia_en_historico": "8c736acddea511f89890b91d",
+    "nuevo_nombre": "OLD 2026-11-04 B2_cubierta (partida en mitades)"
+  },
+  "B5_cuna": {
+    "motivo": "partida en mitades",
+    "estudio": "e90e3869eefc65173d0c90ea",
+    "blob": "2d9fc2cf38978ebe5c9e4d4a",
+    "copia_en_historico": "fedf4d58cbb5a7323fdf0173",
+    "nuevo_nombre": "OLD 2026-11-04 B5_cuna (partida en mitades)"
+  },
+  "B3_caja": {
+    "motivo": "postes Ø9 y cama útil 230",
+    "estudio": "3598a7a31360a26138a8f017",
+    "blob": "2aa9772824a0101c88792c46",
+    "copia_en_historico": "425058d53609841030a81b28",
+    "nuevo_nombre": "OLD 2026-11-04 B3_caja (postes Ø9 y cama útil 230)"
+  },
+  "B6_correa": {
+    "motivo": "cama útil 230",
+    "estudio": "ba81228a303a1d865c28e343",
+    "blob": "69c6eb6394f1276ddd373b5c",
+    "copia_en_historico": "11e8aba617dc7194417ede53",
+    "nuevo_nombre": "OLD 2026-11-04 B6_correa (cama útil 230)"
+  },
+  "M1s_caja_cuerpo": {
+    "motivo": "riel cerrado estanco",
+    "estudio": "66b4e195ed6e0d746a0b1779",
+    "blob": "a2dff6a85a798c5d2ddf452d",
+    "copia_en_historico": "a8e394ccfb50e0c798a8e3c6",
+    "nuevo_nombre": "OLD 2026-11-04 M1s_caja_cuerpo (riel cerrado estanco)"
+  },
+  "M3s_riel_gancho": {
+    "motivo": "riel cerrado estanco",
+    "estudio": "64f251756f363a7984f88b6d",
+    "blob": "bf388791885c1621939324b8",
+    "copia_en_historico": "26aec290dc680b2e6fb436ce",
+    "nuevo_nombre": "OLD 2026-11-04 M3s_riel_gancho (riel cerrado estanco)"
+  },
+  "M5s_capsula_tapa_pie": {
+    "motivo": "riel cerrado estanco",
+    "estudio": "d78e18ce5f3d0a1993bea919",
+    "blob": "285923e1eb4f42f11c369d4a",
+    "copia_en_historico": "15755465c34dd7559b6fe2d7",
+    "nuevo_nombre": "OLD 2026-11-04 M5s_capsula_tapa_pie (riel cerrado estanco)"
+  },
+  "M11_bandeja": {
+    "motivo": "riel cerrado estanco",
+    "estudio": "4e10e2a21bf2a9d2348ab919",
+    "blob": "120ac2c5694f0051d29f9b58",
+    "copia_en_historico": "34909cf9f1b01649891f4538",
+    "nuevo_nombre": "OLD 2026-11-04 M11_bandeja (riel cerrado estanco)"
+  },
+  "M11_bandeja_sup": {
+    "motivo": "riel cerrado estanco",
+    "estudio": "44bb7798a2f027f8aa038fbc",
+    "blob": "7723ce47e95cb71a19092efa",
+    "copia_en_historico": "0f268a3836c98daad604e288",
+    "nuevo_nombre": "OLD 2026-11-04 M11_bandeja_sup (riel cerrado estanco)"
+  },
+  "M4_capsula_cuerpo": {
+    "motivo": "riel cerrado estanco",
+    "estudio": "4bfdc7cde848b22c29d6e11c",
+    "blob": "9db9a3ae9c834d270f5955d4",
+    "copia_en_historico": "5b458b70e8072f6fba6bebc1",
+    "nuevo_nombre": "OLD 2026-11-04 M4_capsula_cuerpo (riel cerrado estanco)"
+  }
+}

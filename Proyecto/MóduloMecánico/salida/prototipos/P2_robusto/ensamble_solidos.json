@@ -12,7 +12,7 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 384828.2
+   "volumen_mm3": 387667.4
   },
   {
    "nombre": "M2_caja_tapa",
@@ -26,14 +26,14 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 39913.5
+   "volumen_mm3": 43658.9
   },
   {
    "nombre": "M11_bandeja_sup",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 38059.4
+   "volumen_mm3": 39210.7
   },
   {
    "nombre": "M3t_tapa_bolsillo_izq",
@@ -54,35 +54,35 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 127777.8
+   "volumen_mm3": 116666.7
   },
   {
    "nombre": "lastre_der",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 127777.8
+   "volumen_mm3": 116666.7
   },
   {
    "nombre": "M3s_riel_gancho_der",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 97416.9
+   "volumen_mm3": 150862.0
   },
   {
    "nombre": "M5s_capsula_tapa_pie_der",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 74090.0
+   "volumen_mm3": 77120.5
   },
   {
    "nombre": "M4_capsula_cuerpo_der",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 45954.5
+   "volumen_mm3": 46951.2
   },
   {
    "nombre": "M6_capsula_bisel_der",
@@ -103,21 +103,21 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 97416.9
+   "volumen_mm3": 150862.0
   },
   {
    "nombre": "M5s_capsula_tapa_pie_izq",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 74090.0
+   "volumen_mm3": 77120.5
   },
   {
    "nombre": "M4_capsula_cuerpo_izq",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 45954.5
+   "volumen_mm3": 46951.2
   },
   {
    "nombre": "M6_capsula_bisel_izq",

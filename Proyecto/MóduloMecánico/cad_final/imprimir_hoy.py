@@ -67,8 +67,11 @@ def main():
             shutil.copy2(src, dst)
         else:
             SL.oriented_stl(src, orient, dst)
+        wt = SL.sealed(Path(src).stem)
+        if wt:
+            inf, walls = round(P.SEAL_PRINT["relleno"] * 100), P.SEAL_PRINT["perimetros"]
         rows.append(dict(archivo=dst.name, cant=qty, orient=orient or "ya orientada", relleno=inf, soportes=sup,
-                         paredes=walls or 3, grupo=group, g=g, h=h))
+                         paredes=walls or 3, grupo=group, g=g, h=h, estanca=wt))
 
     for name, f, q, inf, sup, walls in PROBES_OLD:
         add(name, OLD / f, None, q, inf, sup, walls, 1)
@@ -118,7 +121,7 @@ def plates(rows):
         assert len(keys) == 1, f"{name}: mezcla rellenos/soportes {keys}"
         inf, sup, walls = keys.pop()
         out.append(dict(nombre=name, relleno=inf, soportes=sup, paredes=walls, grupo=rs[0]["grupo"],
-                        **({"fijo": True} if name in FIXED else {}), piezas=[[f"salida/imprimir_hoy/{r['archivo']}", r["cant"]] for r in rs]))
+                        **({"fijo": True} if name in FIXED else {}), estanca=any(r["estanca"] for r in rs), piezas=[[f"salida/imprimir_hoy/{r['archivo']}", r["cant"]] for r in rs]))
     return out
 
 

@@ -1,0 +1,197 @@
+# Cotas que no se pudieron poner automáticamente (planos A4)
+
+## B1_casco (escala 1:4, 19 cotas automáticas)
+
+- front: ancho total 132 (el borde es curvo)
+- front: espesor 1 (sin espacio)
+- front: separación 5 entre nervios verticales (sin espacio)
+- front: separación 49,5 entre nervios verticales (sin espacio)
+- front: separación 5 entre nervios verticales (sin espacio)
+- front: separación 5 entre nervios verticales (sin espacio)
+- front: separación 58,5 entre nervios verticales (sin espacio)
+- top: ancho total 131 (el borde es curvo)
+- top: posición de 4x Ø4 a 4 del borde (sin espacio)
+- top: posición de 4x Ø4 a 89,8 del borde (sin espacio)
+- top: 2x Ø10 (sin espacio)
+- left: 3 separaciones más entre nervios verticales
+- left: 4x Ø3,4 (sin espacio)
+
+## B2_cubierta_lisa (escala 1:4, 14 cotas automáticas)
+
+- front: alto total 113,4 (el borde es curvo)
+- front: separación 2x 6 entre nervios verticales (sin espacio)
+- top: separación 14 entre nervios verticales (sin espacio)
+- top: separación 42,5 entre nervios verticales (sin espacio)
+- top: separación 14 entre nervios verticales (sin espacio)
+- top: separación 42,5 entre nervios verticales (sin espacio)
+- top: separación 14 entre nervios verticales (sin espacio)
+- top: posición de 4x Ø4 a 63,5 del borde (sin espacio)
+- top: posición de 4x Ø3,4 a 4 del borde (sin espacio)
+- top: 2x Ø12 (sin espacio)
+- top: Ø16 (más de 4 diámetros en la vista)
+- left: alto total 113,4 (el borde es curvo)
+
+## B2_cubierta_mastil (escala 1:4, 17 cotas automáticas)
+
+- front: alto total 136,4 (el borde es curvo)
+- front: separación 6 entre nervios verticales (sin espacio)
+- front: separación 6 entre nervios verticales (sin espacio)
+- front: separación 43,5 entre nervios verticales (sin espacio)
+- front: separación 7 entre nervios verticales (sin espacio)
+- front: separación 7 entre nervios verticales (sin espacio)
+- top: separación 14 entre nervios verticales (sin espacio)
+- top: separación 42,5 entre nervios verticales (sin espacio)
+- top: separación 14 entre nervios verticales (sin espacio)
+- top: separación 56,5 entre nervios verticales (sin espacio)
+- top: posición de 4x Ø4 a 63,5 del borde (sin espacio)
+- top: posición de 4x Ø3,4 a 63,5 del borde (sin espacio)
+- top: 2x Ø12 (sin espacio)
+- top: Ø16 (más de 4 diámetros en la vista)
+- top: Ø8 (más de 4 diámetros en la vista)
+- top: Ø14 (más de 4 diámetros en la vista)
+- left: alto total 136,4 (el borde es curvo)
+- left: 2 separaciones más entre nervios verticales
+- left: posición de Ø7 a 16 del borde (sin espacio)
+
+## B3_caja (escala 1:2,5, 15 cotas automáticas)
+
+- front: separación 6 entre nervios verticales (sin espacio)
+- front: separación 134,8 entre nervios verticales (sin espacio)
+- front: separación 6 entre nervios verticales (sin espacio)
+- front: separación 57,4 entre nervios horizontales (sin espacio)
+- front: separación 10 entre nervios horizontales (sin espacio)
+- front: separación 7 entre nervios horizontales (sin espacio)
+- top: espesor 2x 2 (sin espacio)
+- top: separación 12,4 entre nervios verticales (sin espacio)
+- top: separación 138 entre nervios verticales (sin espacio)
+- top: separación 12,4 entre nervios verticales (sin espacio)
+- top: separación 12,4 entre nervios horizontales (sin espacio)
+- top: posición de 18x Ø4 a 2,8 del borde (sin espacio)
+- top: posición de 18x Ø4 a 6,8 del borde (sin espacio)
+- top: posición de 8x Ø9 a 18,9 del borde (sin espacio)
+- top: posición de 8x Ø9 a 24,9 del borde (sin espacio)
+- top: 4x Ø13 (sin espacio)
+- left: separación 57,4 entre nervios horizontales (sin espacio)
+- left: separación 10 entre nervios horizontales (sin espacio)
+- left: separación 7 entre nervios horizontales (sin espacio)
+- left: Ø12,6 (sin espacio)
+
+## B4_tapa (escala -, - cotas automáticas)
+
+- pieza sin cambios: se conserva su plano (plano A4 del 31/10)
+
+## B5_cuna_base (escala 1:2,5, 15 cotas automáticas)
+
+- front: espesor 4 (sin espacio)
+- front: separación 71,1 entre nervios verticales (sin espacio)
+- front: separación 5 entre nervios verticales (sin espacio)
+- front: separación 5 entre nervios verticales (sin espacio)
+- front: separación 41,9 entre nervios verticales (sin espacio)
+- top: posición de 2x Ø4 a 80,1 del borde (sin espacio)
+- top: posición de 2x Ø10 a 80,1 del borde (sin espacio)
+
+## B5_cuna_cuello (escala 1:2,5, 17 cotas automáticas)
+
+- front: espesor 4 (sin espacio)
+- front: separación 41,9 entre nervios verticales (sin espacio)
+- front: separación 5 entre nervios verticales (sin espacio)
+- front: separación 5 entre nervios verticales (sin espacio)
+- front: separación 71,1 entre nervios verticales (sin espacio)
+- top: posición de 2x Ø4 a 46,9 del borde (sin espacio)
+- top: 2x Ø10 (sin espacio)
+- left: 2x Ø3,4 (sin espacio)
+
+## B6_correa (escala 1:2, 8 cotas automáticas)
+
+- top: posición de 2x Ø3,4 a 7 del borde (sin espacio)
+
+## M1s_caja_cuerpo (escala 1:3, 16 cotas automáticas)
+
+- front: separación 5 entre nervios verticales (sin espacio)
+- front: separación 117 entre nervios verticales (sin espacio)
+- front: separación 5 entre nervios verticales (sin espacio)
+- front: separación 30 entre nervios horizontales (sin espacio)
+- front: separación 59 entre nervios horizontales (sin espacio)
+- front: separación 10 entre nervios horizontales (sin espacio)
+- front: separación 8 entre nervios horizontales (sin espacio)
+- top: separación 14 entre nervios verticales (sin espacio)
+- top: separación 119 entre nervios verticales (sin espacio)
+- top: separación 14 entre nervios verticales (sin espacio)
+- top: posición de 16x Ø4 a 5 del borde (sin espacio)
+- top: posición de 16x Ø4 a 5 del borde (sin espacio)
+- top: posición de 4x Ø8 a 22 del borde (sin espacio)
+- top: posición de 4x Ø8 a 22 del borde (sin espacio)
+- left: separación 89 entre nervios horizontales (sin espacio)
+- left: separación 10 entre nervios horizontales (sin espacio)
+- left: separación 8 entre nervios horizontales (sin espacio)
+- left: 4x Ø5,6 (sin espacio)
+
+## M2_caja_tapa (escala -, - cotas automáticas)
+
+- pieza sin cambios: se conserva su plano (plano A4 del 31/10)
+
+## M3s_riel_gancho (escala 1:2, 11 cotas automáticas)
+
+- front: alto total 79,4 (el borde es curvo)
+- front: separación 6 entre nervios verticales (sin espacio)
+- front: separación 135,5 entre nervios verticales (sin espacio)
+- front: separación 6 entre nervios horizontales (sin espacio)
+- front: separación 30 entre nervios horizontales (sin espacio)
+- left: espesor 2x 1,5 (sin espacio)
+- left: separación 13,3 entre nervios horizontales (sin espacio)
+- left: separación 10,3 entre nervios horizontales (sin espacio)
+- left: separación 6 entre nervios horizontales (sin espacio)
+- left: separación 18 entre nervios horizontales (sin espacio)
+- left: 4x Ø4,2 (sin espacio)
+
+## M3t_tapa_bolsillo (escala -, - cotas automáticas)
+
+- pieza sin cambios: se conserva su plano (plano A4 del 31/10)
+
+## M4_capsula_cuerpo (escala 1:2, 10 cotas automáticas)
+
+- front: separación 6 entre nervios verticales (sin espacio)
+- front: separación 39 entre nervios verticales (sin espacio)
+- front: espesor 2x 3 (sin espacio)
+- top: separación 6 entre nervios verticales (sin espacio)
+- top: separación 39 entre nervios verticales (sin espacio)
+- left: separación 13 entre nervios horizontales (sin espacio)
+- left: separación 38 entre nervios horizontales (sin espacio)
+- left: separación 13 entre nervios horizontales (sin espacio)
+- left: 4x Ø3,4 (sin espacio)
+- left: Ø16,4 (sin espacio)
+- left: Ø18,8 (sin espacio)
+
+## M5s_capsula_tapa_pie (escala 1:2, 14 cotas automáticas)
+
+- front: ancho total 51,4 (el borde es curvo)
+- front: alto total 70,4 (el borde es curvo)
+- top: espesor 1,3 (sin espacio)
+- top: posición de 4x Ø4 a 9,4 del borde (sin espacio)
+- top: posición de 4x Ø3,4 a 7,4 del borde (sin espacio)
+- top: posición de 4x Ø3,4 a 4,5 del borde (sin espacio)
+- left: espesor 2x 0,8 (sin espacio)
+- left: separación 6,5 entre nervios horizontales (sin espacio)
+- left: separación 38 entre nervios horizontales (sin espacio)
+- left: separación 6,4 entre nervios horizontales (sin espacio)
+- left: separación 10 entre nervios horizontales (sin espacio)
+
+## M6_capsula_bisel (escala -, - cotas automáticas)
+
+- pieza sin cambios: se conserva su plano (plano A4 del 31/10)
+
+## M11_bandeja (escala 1:2, 7 cotas automáticas)
+
+- front: alto total 30 (el borde es curvo)
+- front: espesor 4x 4 (sin espacio)
+- top: posición de 4x Ø8 a 6 del borde (sin espacio)
+- top: 4x Ø3,4 (sin espacio)
+- left: alto total 30 (el borde es curvo)
+
+## M11_bandeja_sup (escala 1:2, 10 cotas automáticas)
+
+- front: espesor 2x 2 (sin espacio)
+
+## SKIN_concha (escala -, - cotas automáticas)
+
+- pieza sin cambios: se conserva su plano (plano A4 del 31/10)

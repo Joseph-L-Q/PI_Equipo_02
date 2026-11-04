@@ -91,11 +91,22 @@ def infill_pct(relleno):
     return max(vals) if vals else None
 
 
-def process_for(base, supports, dst, infill=None):
+def sealed(stem):
+    """Piece of a watertight volume (params impresion.estanca): node box, lid, rail, capsule, lid+foot; buoy box and lid."""
+    import params as P
+    return any(stem.startswith(k + "_") for k in P.SEAL_PRINT["piezas"])
+
+
+def process_for(base, supports, dst, infill=None, watertight=False):
     data = json.loads(Path(base).read_text(encoding="utf-8"))
     data.update(OVERRIDES)
     if infill is not None:
         data["sparse_infill_density"] = f"{infill}%"
+    if watertight:                     # impresion.estanca: >= 3 walls (4), 5 top and 5 bottom layers, 100 % infill
+        import params as P
+        sp = P.SEAL_PRINT
+        data.update(wall_loops=str(sp["perimetros"]), top_shell_layers=str(sp["capas_arriba"]),
+                    bottom_shell_layers=str(sp["capas_abajo"]), sparse_infill_density=f"{round(sp['relleno'] * 100)}%")
     data["enable_support"] = "1" if supports else "0"
     data["name"] = f"{data.get('name', 'proceso')} LanternGuard {'con' if supports else 'sin'} soportes"
     Path(dst).write_text(json.dumps(data, indent=1), encoding="utf-8")
@@ -149,7 +160,7 @@ def main(profile_dir=PROFILES):
         oriented_stl(folder / f"{stem}.stl", info["orient"], stl)
         proc = work / f"proceso_{stem}.json"
         infill = infill_pct(info.get("relleno"))
-        process_for(prof["process"], info["soportes"], proc, infill)
+        process_for(prof["process"], info["soportes"], proc, infill, sealed(stem))
         rc, gc, log = slice_one(prof, stl, proc, work / stem)
         got = read_gcode(gc) if gc else None
         if not got:

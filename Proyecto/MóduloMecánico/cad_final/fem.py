@@ -46,7 +46,7 @@ def geometry():
     front = (ax + SM.cap_pt(xf, 0)[0], 0.0, az + SM.cap_pt(xf, 0)[1])
     lid_pts = [(ax + SM.cap_pt(CP.cap_dims()[4] + P.CAP_LID_T / 2, z)[0], y, az + SM.cap_pt(CP.cap_dims()[4] + P.CAP_LID_T / 2, z)[1])
                for y, z in CP.cap_screw_pts()]
-    return dict(x_flange=SM.x_flange(lay), bx=foot["bx"], bz=foot["bz"], ring=(SM.R_RING, SM.Z_RAIL - P.HOOK_DROP),
+    return dict(x_flange=SM.x_flange(lay), bx=foot["bx"], bz=foot["bz"], pts=foot.get("pts", []), ring=(SM.R_RING, SM.Z_RAIL - P.HOOK_DROP),
                 front=front, lid_pts=lid_pts)
 
 
@@ -190,6 +190,11 @@ def main():
     seat = lambda bb: near(bb, x=rx, z=rz, tol=ri + 1.0) and (bb[5] - bb[2]) <= 2 * ri + 1.0 and (bb[3] - bb[0]) <= 2 * ri + 1.0  # noqa: E731
     flange = lambda bb: abs(bb[0] - g["x_flange"]) < 0.05 and abs(bb[3] - g["x_flange"]) < 0.05  # noqa: E731
     saddle = lambda bb: any(near(bb, x=x, z=g["bz"], tol=P.M4_CLEAR) for x in g["bx"]) and (bb[3] - bb[0]) <= P.M4_CLEAR + 0.5  # noqa: E731
+    if g["pts"]:     # closed rail: the 4 vertical M3 of the saddle (clearance holes in the rail pad, insert holes in M5s)
+        def saddle(bb):
+            c = ((bb[0] + bb[3]) / 2, (bb[1] + bb[4]) / 2)
+            return (any(math.dist(c, p) < 1.0 for p in g["pts"]) and bb[3] - bb[0] <= P.M3_INSERT_HOLE + 0.5
+                    and bb[4] - bb[1] <= P.M3_INSERT_HOLE + 0.5 and bb[5] - bb[2] > 0.5)
 
     def lid_holes(bb):
         c = ((bb[0] + bb[3]) / 2, (bb[1] + bb[4]) / 2, (bb[2] + bb[5]) / 2)

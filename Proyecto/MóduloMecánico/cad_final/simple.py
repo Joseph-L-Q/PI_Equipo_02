@@ -48,12 +48,20 @@ MOD = HERE.parent
 OUT = MOD / "salida" / P.SALIDA_REL
 LR_OUT = MOD / "salida" / "linterna_prueba" if P.VERSION == "simple" else OUT / "lr1"
 CFG = P.CFG                                     # per-version flags (params.PROTO_CFG): the prototypes P1..P4 are the same code
-MONO, TRUSS_ON, ESTET = CFG["monocasco"], CFG["riel"] == "celosia", CFG["estetico"]
+CLOSED = P.RAIL_TYPE == "cerrado" and not P.CFG["monocasco"]   # P3/P4 (monocoque) keep the old rail: PENDIENTES; 04/11: one dry volume box + rail + capsule, flat cable inside, no PG7 between them
+MONO, TRUSS_ON, ESTET = CFG["monocasco"], CFG["riel"] == "celosia" and not CLOSED, CFG["estetico"]
 HOOK_STYLE = CFG["gancho"]
 X_CUT = P.MONO_CUT
 Z0, YAX, ZAX = cq.Vector(0, 0, 0), cq.Vector(0, 1, 0), cq.Vector(0, 0, 1)
 
 S, W = P.RAIL_SECTION, CFG["pared"]
+RC = P.RAIL_CLOSED
+if CLOSED:
+    S, W = RC["alto"], RC["pared"]
+SY = RC["canal_ancho"] / 2 + RC["pared"] if CLOSED else S / 2     # half width of the rail (closed: 22 + 2 x 6 = 34)
+CH_W, CH_H = RC["canal_ancho"], S - 2 * W                           # free channel of the closed rail (24 x 18, R1: 22 flat)
+SP = P.RAIL_SADDLE_PAD
+SF = P.SEAL_FLAT
 XT = P.SIMPLE_RAIL_L / 2
 LAY_OUTER = (0.0, 0.0, 0.0)  # box outer size, set by set_pad
 X_PAD = 0.0                   # x of the rail flange / pad face; set by set_pad(lay) from the layout
@@ -71,9 +79,12 @@ RHO_W = P.SEAWATER_DENSITY
 SUPPORT_MM2 = 300.0       # overhang area above which the piece is printed with supports (bitacora)
 INFILL = {"M1": 1.0, "M2": 1.0, "M4": 1.0, "M5s": 1.0, "M3t": 1.0, "M11": 0.4, "M6": 0.4, "riel": 0.4, "gancho": 1.0,
           "LR1": 0.4}   # bitacora J: sealed boxes, sealed lids and hooks 100 %, rail, saddle/foot zones and tray 40 %
+if CLOSED:
+    INFILL["riel"] = P.SEAL_PRINT["relleno"]     # the closed rail is part of the dry volume: sealed-piece profile
 EXTRA = {}
 QTY = {}
-SEALS = dict(tapa_caja=1, tapa_capsula=2, ventana=2, pg7_caja=2, pg7_capsula=2)   # gasketed or glanded watertight joints
+SEALS = (dict(tapa_caja=1, tapa_capsula=2, ventana=2, junta_riel_caja=2, junta_riel_capsula=2) if CLOSED else
+         dict(tapa_caja=1, tapa_capsula=2, ventana=2, pg7_caja=2, pg7_capsula=2))   # gasketed or glanded watertight joints
 K_M1 = "M1m_caja_riel" if MONO else "M1s_caja_cuerpo"
 K_RAIL = "M3s_riel_gancho"
 K_M5 = "M5m_extremo_pie" if MONO else "M5s_capsula_tapa_pie"
@@ -138,6 +149,31 @@ def perimeter(ci, val, ext):
     return pick
 
 
+def rring(plane, off, c, w, h, r, band, depth):
+    """Rounded-rectangle groove band (centreline w x h, corner r, width band) from the plane offset off, depth along its normal."""
+    sel = {"YZ": "|X", "XY": "|Z"}[plane]
+    o = cq.Workplane(plane).workplane(offset=off).center(*c).rect(w + band, h + band).extrude(depth).edges(sel).fillet(r + band / 2)
+    i = cq.Workplane(plane).workplane(offset=off).center(*c).rect(w - band, h - band).extrude(depth).edges(sel).fillet(max(0.3, r - band / 2))
+    return o.cut(i)
+
+
+def channel_yz(x0, x1, grow=0.0):
+    """Free channel of the closed rail (rounded corners) from x0 to x1, centred on Z_G."""
+    rr = RC["radio_canal"]
+    return cq.Workplane("YZ").workplane(offset=x0).center(0, Z_G).rect(CH_W + 2 * grow, CH_H + 2 * grow).extrude(x1 - x0).edges("|X").fillet(rr + grow)
+
+
+def groove_around(w, h):
+    """Centreline size and corner of the flat O-ring groove around an opening w x h (corner RC radio_canal)."""
+    off = SF["borde"] + SF["ranura_ancho"] / 2
+    return w + 2 * off, h + 2 * off, RC["radio_canal"] + off
+
+
+def saddle_pts(xs):
+    """(x, y) of the 4 M3 between the rail saddle pad and the M5s saddle (closed rail)."""
+    return [(xs + sx * SP["m3_x"], sy * SP["m3_y"]) for sx in (1, -1) for sy in (1, -1)]
+
+
 def pad_bolts():
     """(y, z) of the 4 M4 between the rail flange and the end-wall pad."""
     return [(sy * 20.0, Z_G + sz * 10.0) for sy in (1, -1) for sz in (1, -1)]
@@ -168,8 +204,12 @@ def box_body_low(lay, depth, bolts=True):
         xa, xb = sorted((sg * (ol / 2 - 1.0), sg * (ol / 2 + pad_t)))
         m1 = m1.union(_box(xa, xb, -hw, hw, 0.0, Z_G + PAD_BORE / 2 + 4.0))   # the bore must not touch the top face
         xo = sg * (ol / 2 + pad_t)
-        m1 = m1.cut(_cyl((sg * ol / 2, 0, Z_G), (sg, 0, 0), PAD_BORE / 2, pad_t + 1))
-        m1 = m1.cut(_cyl((sg * (ol / 2 - P.BOX_WALL - 1), 0, Z_G), (sg, 0, 0), P.PG7_HOLE / 2, P.BOX_WALL + 2))
+        if CLOSED:       # dry window into the rail channel (same size), sealed by the O-ring of the rail flange: no PG7 here
+            xw0, xw1 = sorted((sg * (ol / 2 - P.BOX_WALL - 1), sg * (ol / 2 + pad_t + 1)))
+            m1 = m1.cut(channel_yz(xw0, xw1))
+        else:
+            m1 = m1.cut(_cyl((sg * ol / 2, 0, Z_G), (sg, 0, 0), PAD_BORE / 2, pad_t + 1))
+            m1 = m1.cut(_cyl((sg * (ol / 2 - P.BOX_WALL - 1), 0, Z_G), (sg, 0, 0), P.PG7_HOLE / 2, P.BOX_WALL + 2))
         for y, z in (pad_bolts() if bolts else []):
             m1 = m1.cut(_cyl((xo + sg * 0.01, y, z), (-sg, 0, 0), P.M4_INSERT_HOLE / 2, P.M4_INSERT_DEPTH))
     d = pocket_dims(depth)
@@ -253,6 +293,8 @@ def ballast_solids(depth, g_side, rho):
 
 def gland_nuts(lay):
     """PG7 locknuts inside the end walls (hex along X), to check them against the trays and the modules."""
+    if CLOSED:
+        return []
     ol = lay.box_outer()[0]
     af = P.PG7_NUT_AF
     out = []
@@ -269,8 +311,11 @@ def trays_low(lay):
     L = lay.cav[0]
     r = P.nut_corner_r() + 2.0
     out = {}
-    for k, t in CC.trays(lay).items():
-        for sg in (1, -1):
+    import copy
+    lay_t = copy.copy(lay)
+    lay_t.floor_glands = []          # no floor glands in this version: the 2 access holes made the figure-eight window of M11
+    for k, t in CC.trays(lay_t).items():
+        for sg in ([] if CLOSED else (1, -1)):
             xa, xb = sorted((sg * (L / 2 - P.PG7_INNER_H - 2.0), sg * (L / 2 + 1)))
             t = t.cut(_box(xa, xb, -r, r, -10, 200))
         out[k] = t
@@ -291,7 +336,7 @@ def hook(strap=None, holes=True, style=None):
     zt = P.HOOK_DROP
     wy = P.STRAP_W / 2 + P.JAW_WALL
     wx = P.SIMPLE_HOOK_WEB / 2
-    fy = max(S / 2, wy)
+    fy = max(SY, wy)
     h = _box(-fl_l / 2, fl_l / 2, -fy, fy, zt - fl_t, zt)
     h = h.union(_box(-wx, wx, -wy, wy, ro - wall / 2, zt - fl_t + 0.01))
     h = h.union(_cyl((0, -seat / 2, 0), (0, 1, 0), ro, seat))
@@ -443,6 +488,8 @@ def rail_piece(lay, foot, kind="half", strap=None, hook_on=True):
     z0, end = Z_RAIL, P.RAIL_TIP_END_T
     xa, xb = {"half": (x_f, XT), "stub": (x_f, X_CUT), "end": (X_CUT, XT)}[kind]
     fl = {"half": (x_f, x_f + fl_t), "stub": (X_CUT - fl_t, X_CUT), "end": (X_CUT, X_CUT + fl_t)}[kind]
+    if CLOSED and kind == "half":
+        return closed_rail(foot, strap, hook_on)
     tube = _box(xa, xb, -S / 2, S / 2, z0, z0 + S)
     if ESTET:
         tube = soften("riel tubo", tube, lambda e: abs(e.endPoint().y - e.startPoint().y) < 1e-6
@@ -475,6 +522,36 @@ def rail_piece(lay, foot, kind="half", strap=None, hook_on=True):
     return r
 
 
+def closed_rail(foot, strap=None, hook_on=True):
+    """Closed watertight rail half (04/11): solid-walled box 34 x 30 from the box pad to the tip, free channel 22 x 18 (R3)
+    from the flange face to the saddle, where the flat cable turns down (entry edge R10) through a 8 x 22 opening in the floor
+    and the saddle pad. Flange face: O-ring groove around the channel + the 4 M4 of the pad. Saddle pad: 4 M3 down into the
+    inserts of M5s, the O-ring groove is in the saddle plate (M5s). Closed tip, no gland, C hook fused."""
+    x_f, fl_t, hw = X_PAD, P.SIMPLE_GLAND_PAD[1], P.SIMPLE_GLAND_PAD[2]
+    z0, xs, pl = Z_RAIL, foot["xs"], RC["pase_largo"]
+    pt, rb = SP["espesor"], RC["radio_curva"]
+    r = _box(x_f, XT, -SY, SY, z0, z0 + S).union(_box(x_f, x_f + fl_t, -hw, hw, z0, z0 + S))
+    r = r.union(_box(foot["x0"], foot["x1"], -SP["semiancho"], SP["semiancho"], z0 - pt, z0))
+    r = r.cut(channel_yz(x_f - 1, xs + pl / 2))
+    # opening down to the capsule: 8 (x) x 22 (y), through floor and pad; inboard entry edge rounded R10 for the cable bend
+    pw = RC["pase_ancho"]
+    r = r.cut(_box(xs - pl / 2, xs + pl / 2, -pw / 2, pw / 2, z0 - pt - 1, z0 + W))
+    xe, ze = xs - pl / 2, z0 + W
+    round_cut = _box(xe - rb, xe, -pw / 2, pw / 2, ze - rb, ze).cut(_cyl((xe - rb, -pw / 2 - 1, ze - rb), (0, 1, 0), rb, pw + 2))
+    r = r.cut(round_cut)
+    gw, gh, gr = groove_around(CH_W, CH_H)
+    r = r.cut(rring("YZ", x_f, (0, Z_G), gw, gh, gr, SF["ranura_ancho"], SF["ranura_prof"]))
+    for y, z in pad_bolts():
+        r = r.cut(_cyl((x_f - 1, y, z), (1, 0, 0), P.M4_CLEAR / 2, fl_t + 2))
+    for x, y in saddle_pts(xs):
+        r = r.cut(_cyl((x, y, z0 - pt - 1), (0, 0, 1), P.M3_CLEAR / 2, pt + 2))
+        r = r.cut(_cyl((x, y, z0), (0, 0, 1), 6.5 / 2, 5.0))          # head relief: the M3 head touches the rail side wall
+    if hook_on:
+        hk = hook(strap, holes=False).translate((R_RING, 0, Z_RAIL - P.HOOK_DROP))
+        r = r.union(hk.intersect(_box(x_f, XT, -50, 50, -200, 200)))
+    return r
+
+
 def rail_half(lay, foot, strap=None, hook_on=True):
     return rail_piece(lay, foot, "half", strap, hook_on)
 
@@ -499,7 +576,9 @@ def capsule_pose(lay, parts):
     the rail between the hook flange and the tip. afuera (V1): the saddle before the old side exit, capsule outboard."""
     fl, ft, _ = P.SIMPLE_FOOT
     th = math.radians(P.SIMPLE_CAP_TILT)
-    z_pb = Z_RAIL - ft
+    if CLOSED:
+        ft = P.FOOT_PLATE_CLOSED
+    z_pb = Z_RAIL - (SP["espesor"] if CLOSED else 0.0) - ft
     bbs = [cap_rot(parts[k]).BoundingBox() for k in ("M4", "lid", "M6")]
     zmax, xmin, xmax = max(b.zmax for b in bbs), min(b.xmin for b in bbs), max(b.xmax for b in bbs)
     az = z_pb - P.SIMPLE_FOOT_GAP - zmax
@@ -518,7 +597,8 @@ def capsule_pose(lay, parts):
         ax = xs + min(max(off, fl / 2), 80.0) - cap_pt(xl, 0)[0]
     xs = min(max(xs, lo), hi)
     sp, zb = P.SIMPLE_FOOT_BOLTS
-    return ax, az, dict(x0=xs - fl / 2, x1=xs + fl / 2, xs=xs, bx=(xs - sp / 2, xs + sp / 2), bz=Z_RAIL + zb, z_pb=z_pb)
+    return ax, az, dict(x0=xs - fl / 2, x1=xs + fl / 2, xs=xs, bx=(xs - sp / 2, xs + sp / 2), bz=Z_RAIL + zb, z_pb=z_pb,
+                        z_j=z_pb + ft, pts=saddle_pts(xs) if CLOSED else [])
 
 
 def place_cap(shape, ax, az):
@@ -527,6 +607,8 @@ def place_cap(shape, ax, az):
 
 def lid_with_foot(lid, ax, az, foot):
     """M5s in the box frame (+X side): lid plate + web + saddle (plate under the rail, two cheeks, 2 M4 across)."""
+    if CLOSED:
+        return lid_with_foot_closed(lid, ax, az, foot)
     fl, ft, fc = P.SIMPLE_FOOT
     x0, x1, z_pb = foot["x0"], foot["x1"], foot["z_pb"]
     yo = S / 2 + P.FIT_CLEAR + fc
@@ -545,6 +627,48 @@ def lid_with_foot(lid, ax, az, foot):
     m5 = saddle.union(web).union(cq.Workplane().add(place_cap(lid, ax, az)))
     for x in ([] if MONO else foot["bx"]):
         m5 = m5.cut(_cyl((x, -yo - 1, foot["bz"]), (0, 1, 0), P.M4_CLEAR / 2, 2 * yo + 2))
+    return m5
+
+
+def duct_pts(ax, az, foot):
+    """XZ outline points of the flat-cable duct in M5s: the 8 mm opening at the joint plane down to a 8 mm slot through the lid."""
+    xs, pl, zb = foot["xs"], RC["pase_largo"], foot["z_pb"]
+    xl = CP.cap_dims()[4]
+    top = [(xs - pl / 2, zb), (xs + pl / 2, zb)]       # straight down through the saddle plate first (box in lid_with_foot_closed)
+    lid = [(ax + cap_pt(x, z)[0], az + cap_pt(x, z)[1]) for x in (xl - 0.5, xl + P.CAP_LID_T + 0.5) for z in (pl / 2, -pl / 2)]
+    return top + lid
+
+
+def lid_with_foot_closed(lid, ax, az, foot):
+    """M5s with the closed rail: saddle plate (8, 4 blind M3 inserts, O-ring groove around the cable opening on its top face),
+    web 30 wide with the flat-cable duct inside, fused to the capsule lid, which gets the 8 x 22 cable slot (no PG7)."""
+    from scipy.spatial import ConvexHull
+    fl = P.SIMPLE_FOOT[0]
+    ft = P.FOOT_PLATE_CLOSED
+    x0, x1, z_pb, zj = foot["x0"], foot["x1"], foot["z_pb"], foot["z_j"]
+    hwp = SP["semiancho"]
+    plate = _box(x0, x1, -hwp, hwp, z_pb, zj)
+    xl = CP.cap_dims()[4]
+    hw = CP.cap_dims()[3] / 2 - 4.0
+    dp = duct_pts(ax, az, foot)
+    pts = [(x0, z_pb), (x1, z_pb)] + [(ax + cap_pt(xl + 1.0, z)[0], az + cap_pt(xl + 1.0, z)[1]) for z in (hw, -hw)]
+    pts += [(x + dx, z + dz) for x, z in dp[:2] for dx in (-4, 4) for dz in (-4, 4) if z + dz <= zj]
+    pts += [(ax + cap_pt(xl - 0.5, z)[0], az + cap_pt(xl - 0.5, z)[1]) for z in (RC["pase_largo"] / 2 + 4, -RC["pase_largo"] / 2 - 4)]   # 4 mm of wall around the duct, outside the capsule
+    hull = ConvexHull(np.array(pts))
+    poly = [tuple(map(float, pts[i])) for i in hull.vertices]
+    yw = P.FOOT_WEB_CLOSED / 2
+    web = cq.Workplane("XZ").workplane(offset=-yw).polyline(poly).close().extrude(2 * yw)
+    m5 = plate.union(web.intersect(_box(x0 - 200, x1 + 200, -yw, yw, -400, zj))).union(cq.Workplane().add(place_cap(lid, ax, az)))
+    dh = ConvexHull(np.array(dp))
+    dpoly = [tuple(map(float, dp[i])) for i in dh.vertices]
+    duct = cq.Workplane("XZ").workplane(offset=-RC["pase_ancho"] / 2).polyline(dpoly).close().extrude(RC["pase_ancho"])
+    xs, pl = foot["xs"], RC["pase_largo"]
+    duct = duct.union(_box(xs - pl / 2, xs + pl / 2, -RC["pase_ancho"] / 2, RC["pase_ancho"] / 2, z_pb - 0.5, zj + 0.5))
+    m5 = m5.cut(duct)
+    gw, gh, gr = groove_around(pl, RC["pase_ancho"])
+    m5 = m5.cut(rring("XY", zj - SF["ranura_prof"], (xs, 0), gw, gh, min(gr, gw / 2 - 0.5), SF["ranura_ancho"], SF["ranura_prof"] + 0.01))
+    for x, y in foot["pts"]:
+        m5 = m5.cut(_cyl((x, y, zj - P.M3_INSERT_DEPTH), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.01))
     return m5
 
 
@@ -868,6 +992,10 @@ def hand_calcs(lay, rail, x_load, x_front, foot):
     Mf = F * abs(x_front - foot["xs"])
     fb = F / 2 + Mf / sp
     bear = fb / (2 * P.M4_CLEAR * W)
+    if CLOSED:       # 4 M3 in tension (inserts of the saddle): the moment pulls the inboard pair; shear-out of the insert wall
+        sp = 2 * SP["m3_x"]
+        fb = F / 4 + Mf / sp / 2
+        bear = fb / (math.pi * P.M3_INSERT_HOLE * P.M3_INSERT_DEPTH)
     out["pie"] = dict(M=Mf, por_m4=fb, aplast=bear, fs=P.PETG_YIELD / bear, fs_z=P.PETG_YIELD_Z / bear)
     return out
 
@@ -875,6 +1003,15 @@ def hand_calcs(lay, rail, x_load, x_front, foot):
 def cable_run(lay, ax, az):
     """Cat5e per camera: box slack + gland + straight conduit from the end wall to the tip hole + loop to the capsule
     PG7 + inside the capsule + spare (no bend chamber any more)."""
+    if CLOSED:       # flat cable: box slack + channel to the saddle + R10 bend + duct to the lid + inside the capsule + spare
+        a = P.CABLE_ALLOW
+        foot = capsule_pose(lay, capsule_parts())[2]
+        xl = CP.cap_dims()[4]
+        lid_c = (ax + cap_pt(xl, 0)[0], az + cap_pt(xl, 0)[1])
+        rail = foot["xs"] - lay.box_outer()[0] / 2 + math.pi / 2 * RC["radio_curva"]
+        loop = math.dist((foot["xs"], foot["z_j"]), lid_c)
+        total = a["caja"] + rail + loop + a["capsula"] + a["holgura"]
+        return dict(rail=rail, loop=loop, total=total, spi=total > P.SPI_TEST_LIMIT)
     _, out_h, _, _, _, x0, _ = CP.cap_dims()
     g = (ax + cap_pt(x0 + P.CAP_GLAND_X, -out_h / 2)[0], 0.0, az + cap_pt(x0 + P.CAP_GLAND_X, -out_h / 2)[1])
     ex = (XT, 0.0, Z_RAIL + W + TIP_HOLE / 2)

@@ -211,7 +211,7 @@
    107.0
   ],
   "cabe": true,
-  "pared_p1": 2.26,
+  "pared_p1": 2.25,
   "pared_p5": 3.0,
   "antes": null,
   "esbelto": null
@@ -239,8 +239,8 @@
    50.0
   ],
   "cabe": true,
-  "pared_p1": 3.0,
-  "pared_p5": 4.0,
+  "pared_p1": 1.9,
+  "pared_p5": 6.0,
   "antes": null,
   "esbelto": null
  },
@@ -262,13 +262,13 @@
   "grupo": "nodo P2",
   "pieza": "M5s_capsula_tapa_pie",
   "bbox": [
-   55.2,
+   51.4,
    64.0,
-   95.9
+   70.4
   ],
   "cabe": true,
-  "pared_p1": 3.0,
-  "pared_p5": 5.0,
+  "pared_p1": 1.5,
+  "pared_p5": 4.0,
   "antes": null,
   "esbelto": null
  },
@@ -281,8 +281,8 @@
    30.0
   ],
   "cabe": true,
-  "pared_p1": 2.3,
-  "pared_p5": 3.0,
+  "pared_p1": 2.29,
+  "pared_p5": 2.3,
   "antes": null,
   "esbelto": null
  },
@@ -304,13 +304,13 @@
   "grupo": "nodo P2",
   "pieza": "M4_capsula_cuerpo",
   "bbox": [
-   44.0,
+   45.0,
    64.0,
    64.0
   ],
   "cabe": true,
   "pared_p1": 1.2,
-  "pared_p5": 2.8,
+  "pared_p5": 2.2,
   "antes": null,
   "esbelto": null
  },

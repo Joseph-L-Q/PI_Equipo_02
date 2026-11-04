@@ -58,3 +58,5 @@ salida/simple/ENSAMBLE_sistema_simple_v2_nombres.step
 
 # 3MF que salieron de la lista (no se suben a Drive)
 salida/imprimir_hoy/3mf/_obsoleto/
+salida/_tmp/
+salida/planos_onshape/cache_vistas/

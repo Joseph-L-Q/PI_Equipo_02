@@ -51,8 +51,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P03_probeta_junta.3mf"
   },
   "P04_probeta_gancho": {
-   "g": 72.1,
-   "h": 2.89,
+   "g": 91.9,
+   "h": 3.24,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -79,8 +79,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P05_probeta_bahia_botella.3mf"
   },
   "P06_bisel_y_bandejas": {
-   "g": 75.5,
-   "h": 2.9,
+   "g": 80.3,
+   "h": 2.98,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -115,8 +115,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P07_tapas_bolsillo.3mf"
   },
   "P08_capsulas": {
-   "g": 119.1,
-   "h": 3.96,
+   "g": 121.3,
+   "h": 3.94,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -129,8 +129,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P08_capsulas.3mf"
   },
   "P09_tapa_caja": {
-   "g": 181.2,
-   "h": 5.11,
+   "g": 181.1,
+   "h": 5.06,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -143,8 +143,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P09_tapa_caja.3mf"
   },
   "P10_caja": {
-   "g": 509.3,
-   "h": 16.06,
+   "g": 513.3,
+   "h": 16.2,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -157,8 +157,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P10_caja.3mf"
   },
   "P11_tapas_capsula_con_pie": {
-   "g": 192.4,
-   "h": 5.8,
+   "g": 187.3,
+   "h": 5.16,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -171,8 +171,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P11_tapas_capsula_con_pie.3mf"
   },
   "P12_rieles_con_gancho": {
-   "g": 274.0,
-   "h": 10.41,
+   "g": 399.7,
+   "h": 12.34,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -227,10 +227,10 @@
    "tresmf": "salida/imprimir_hoy/3mf/P19_boya_cubierta_mastil.3mf"
   },
   "P16_boya_caja_y_tapa": {
-   "g": 230.1,
-   "h": 7.57,
+   "g": 302.5,
+   "h": 6.88,
    "veces": 1,
-   "relleno": 40,
+   "relleno": 100,
    "soportes": false,
    "piezas": [
     [
@@ -288,7 +288,7 @@
   }
  },
  "total": {
-  "g": 2567.1,
-  "h": 92.34
+  "g": 2790.8,
+  "h": 93.44
  }
 }

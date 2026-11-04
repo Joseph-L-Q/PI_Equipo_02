@@ -145,9 +145,24 @@ def hardware(res, rb):
               ("Prensaestopas PG7 con contratuerca (3 caja + 2 capsulas)", "PG7", 5),
               ("Disco de acrilico de la ventana", f"Ø{P.WIN_DIA:g} x {P.WIN_T:g}", 2),
               ("Grillete o argolla de inox (izado)", "M6", 1)]
+    common_mod = list(common)
+    if P.RAIL_TYPE == "cerrado":       # 04/11: one dry volume, flat cable inside, no PG7 between box and capsules
+        rc, sf = P.RAIL_CLOSED, P.SEAL_FLAT
+        off = sf["borde"] + sf["ranura_ancho"] / 2
+        g_box = 2 * (rc["canal_ancho"] + rc["alto"] - 2 * rc["pared"] + 4 * off)
+        g_sad = 2 * (rc["pase_largo"] + rc["pase_ancho"] + 4 * off)
+        flat = round(2 * (g_box + g_sad) * 1.1 / 10) * 10
+        ws = P.WINDOW_SEAL
+        common = [c for c in common if not c[0].startswith(("Prensaestopas", "Tornillo M3 x 8 + inserto termico M3 (bandejas)"))]
+        common += [("Prensaestopas PG7 con contratuerca (solo el umbilical, en la tapa M2)", "PG7", 1),
+                   ("Tornillo M3 x 45 inox A2, pasante: bandeja sup + poste + bandeja inf al inserto de la caja", "M3", n_tray),
+                   ("Cordon de junta torica Ø2 NBR para las juntas planas riel-caja (x2) y riel-capsula (x2), +10 %", f"{flat:.0f} mm", 1),
+                   (f"Junta plana de la ventana M7: {ws['tipo']} de {ws['espesor']:g} mm", f"Ø{ws['d_ext']:g} x Ø{ws['d_int']:g}", 2),
+                   ("Silicona marina (p. ej. Sikaflex-291i): cordon en el borde de cada ventana", "cartucho 70 ml", 1)]
+    pie = ([("Tornillo M3 x 16 inox A2 + inserto termico M3 (brida del riel a la silla de M5s)", "M3", 8)]
+           if P.RAIL_TYPE == "cerrado" else [("Tornillo M4 x 45 + tuerca (pie de las capsulas)", "M4", 4)])
     simple = common + [("Tornillo M4 x 20 + inserto termico M4 (bridas del riel a la caja)", "M4", 8),
-                       ("Tornillo M3 x 8 avellanado + inserto M3 (tapas del bolsillo)", "M3", 4),
-                       ("Tornillo M4 x 45 + tuerca (pie de las capsulas)", "M4", 4),
+                       ("Tornillo M3 x 8 avellanado + inserto M3 (tapas del bolsillo)", "M3", 4), *pie,
                        ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Lastre a granel: tuercas y arandelas M8 de inox", f"{lastre_g:.0f} g", 1)]
     bl = 2 * ((BS.LI + BS.L) / 2 + (BS.WI + BS.Wd) / 2) * 1.1
     boya = [("Tornillo M3 x 12 + inserto M3 (tapa de la boya)", "M3", len(BS.screw_pts())),
@@ -161,7 +176,7 @@ def hardware(res, rb):
             ("Tapon de la boca de llenado de los flotadores (o sello con PETG)", "Ø10", 4),
             ("Manguera flexible U1 de referencia", f"Ø{P.UMB_HOSE_D:g}", 1),
             ("Cabo de amarre C1 boya-linterna", "Ø4", 1)]
-    modular = common + [("Tornillo M4 x 12 + inserto termico M4 (riel a la caja)", "M4", 4),
+    modular = common_mod + [("Tornillo M4 x 12 + inserto termico M4 (riel a la caja)", "M4", 4),
                         ("Varilla roscada M8 (8.8)", "451 mm", 1), ("Tuerca M8", "M8", 2), ("Arandela ancha DIN 9021", "M8", 2),
                         ("Tornillo M4 x 14 + tuerca (uniones de tramos)", "M4", 8),
                         ("Tornillo M3 x 8 avellanado + inserto M3 (tapa del bolsillo)", "M3", 4),

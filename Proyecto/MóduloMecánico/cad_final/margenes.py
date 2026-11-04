@@ -113,13 +113,13 @@ NOTES = {   # piece -> what the measured minimum is and what is done about it
     "B5_cuna_base": "2.4 = paredes laterales (no estructurales). Postes de correa Ø8 → Ø10.",
     "B5_cuna_cuello": "Igual que el lado base.",
     "B6_correa": "",
-    "M1s_caja_cuerpo": "2.0 en los techos de los bolsillos (no estructural). **Pendiente 3a** (la caja cambia con el volumen seco único).",
-    "M3s_riel_gancho": "FS entre capas 2.72 < 3. **Pendiente 3a**: el riel pasa a cerrado y estanco.",
+    "M1s_caja_cuerpo": "2.0 en los techos de los bolsillos de lastre (fuera del volumen seco, no estructural). Ventana 24 × 18 al canal del riel en cada extremo (sin PG7).",
+    "M3s_riel_gancho": "Riel cerrado 36 × 30, paredes 6, sin ventanas. FS entre capas 2.72 → 3.18 (alma del gancho 20 → 26). El 1.9 medido es el labio de 1.5 entre la ranura de la junta y el canal (1.6 de alto), no una pared.",
     "M4_capsula_cuerpo": "1.2 = tubo separador de luz del aro LED (óptico, no estructural). No se puede engrosar sin cambiar el aro: "
                          "el agujero Ø19 del aro limita el diámetro exterior del tubo. Se ajusta cuando se mida el aro comprado (`aro_led.agujero`).",
-    "M5s_capsula_tapa_pie": "FS entre capas 2.47 < 3. **Pendiente 3a**.",
+    "M5s_capsula_tapa_pie": "Silla de 10 con 4 insertos M3 y junta; tapa 5 → 6. FS entre capas 2.47 → 3.80. El 1.5 medido es el labio entre la ranura de la junta y el pase del cable (1.6 de alto), no una pared.",
     "M6_capsula_bisel": "2.25 en el borde del bisel (no estructural).",
-    "M11_bandeja": "2.3 en la bandeja (no estructural, dentro de la caja). **Pendiente 3a**.",
+    "M11_bandeja": "2.3 en la bandeja (no estructural, dentro de la caja). Postes pasantes para el M3 × 45; sin la ventana en ocho.",
 }
 
 
@@ -144,7 +144,7 @@ def write_md(rows):
         es = f"{e[0]} ({e[1] / e[2]:.1f}) → {e[3]} ({e[4] / e[5]:.1f})" if e else "—"
         L.append(f"| {r['pieza']} | {bb0}{r['bbox'][0]:.0f} × {r['bbox'][1]:.0f} | {'sí' if r['cabe'] else '**NO**'} | {w0}{r['pared_p1']:.2f} | "
                  f"{es} | {NOTES.get(r['pieza'], '')} |")
-    L += ["", "## Nodo P2 robusto (antes de la corrección de concepto 3a)", "",
+    L += ["", "## Nodo P2 robusto (riel cerrado, 04/11)", "",
           "| Pieza | Caja X × Y (mm) | Cabe en 230 | Pared p1 | Nota |", "|---|---|---|---|---|"]
     for r in rows:
         if r["grupo"] == "boya":
@@ -153,14 +153,15 @@ def write_md(rows):
                  f"{NOTES.get(r['pieza'], '')} |")
     L += ["", "## Fuera de la cama útil", "",
           "- `M1m_caja_riel` de P3 y P4 (monocasco: caja y riel en una pieza) mide 250 mm. No se imprime ahora (la piscina usa P2). "
-          "Si P4 se presenta impreso, hay que partirlo o rediseñarlo junto con el riel de 3a.", "",
+          "P3/P4 siguen con el riel anterior: si P4 se presenta impreso, hay que llevarle el riel cerrado y partirlo.", "",
           "## FS entre capas (FEM local, CalculiX)", "",
           "| Pieza | FS a lo largo | FS entre capas | Objetivo ≥ 3 |", "|---|---|---|---|",
-          "| M3s riel (agua 150 N) | 5.56 | 2.72 | **no**: el riel en celosía se reemplaza por el riel cerrado de 3a, que debe dar FS ≥ 3 |",
-          "| M5s pie de la tapa de cápsula | 5.04 | 2.47 | **no**: se refuerza con 3a (la cápsula cambia con el volumen seco único) |",
+          "| M3s riel cerrado (agua 150 N) | 6.50 | 3.18 | **sí** (antes, en celosía: 5.56 / 2.72) |",
+          "| M3s riel cerrado (izado 150 N) | 11.19 | 5.47 | **sí** |",
+          "| M5s pie de la tapa de cápsula | 7.77 | 3.80 | **sí** (antes 5.04 / 2.47) |",
           "| Boya (B1 a B6) | — | — | sin FEM local: cargas bajas (flotación); el análisis de SimScale de B2 y B3 va en el bloque 3 |", "",
-          "Las piezas del nodo que no cumplen quedan **pendientes de la corrección de concepto 3a**. No se refuerza ahora el riel "
-          "en celosía, porque 3a lo reemplaza. Ver `docs/PENDIENTES.md`."]
+          "El 04/11 se aplicó la corrección de concepto: riel cerrado y un solo volumen seco. Todo lo estructural del nodo P2 "
+          "cumple FS ≥ 3 entre capas (FEM local con CalculiX, `salida/prototipos/P2_robusto/fem/fem.json`)."]
     (MOD / "docs" / "MARGENES.md").write_text("\n".join(L) + "\n", encoding="utf-8")
 
 

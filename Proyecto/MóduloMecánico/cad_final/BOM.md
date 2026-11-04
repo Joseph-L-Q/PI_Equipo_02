@@ -10,9 +10,9 @@ No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `s
 | linterna de prueba | 0 | 0.0 | 0.00 |
 | boya simple | 1943 | 129.5 | 174.89 |
 | modular D200 | 1229 | 82.0 | 110.64 |
-| nodo P2 robusto | 1400 | 46.7 | 126.02 |
+| nodo P2 robusto | 1532 | 47.7 | 137.84 |
 | nodo P4 estetico | 1352 | 46.0 | 121.66 |
-| boya PET 4 x 1 L | 863 | 32.0 | 77.69 |
+| boya PET 4 x 1 L | 958 | 39.6 | 86.26 |
 
 El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 
@@ -50,14 +50,14 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M12_perilla | modular D200 | 4 | 30.0 × 30.0 × 12.0 | 6.7 | X180 | no | 40 % | 6 | estimado |
 | M13_casquillo_D8 | modular D200 | 2 | 15.7 × 20.0 × 13.5 | 1.6 | X-90 | no | 40 % | 2 | estimado |
 | M14_pestillo | modular D200 | 2 | 12.0 × 35.2 × 3.6 | 0.9 | X+90 | no | 40 % | 1 | estimado |
-| M1s_caja_cuerpo | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 509 | slicer |
+| M1s_caja_cuerpo | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 513 | slicer |
 | M2_caja_tapa | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 181 | slicer |
-| M3s_riel_gancho | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 137 | slicer |
+| M3s_riel_gancho | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 200 | slicer |
 | M3t_tapa_bolsillo | nodo P2 robusto | 2 | - | - | slicer | no | 100 % | 24 | slicer |
-| M5s_capsula_tapa_pie | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 96 | slicer |
-| M11_bandeja | nodo P2 robusto | 1 | - | - | slicer | no | 40 % | 38 | slicer |
-| M11_bandeja_sup | nodo P2 robusto | 1 | - | - | slicer | no | 40 % | 34 | slicer |
-| M4_capsula_cuerpo | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 60 | slicer |
+| M5s_capsula_tapa_pie | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 94 | slicer |
+| M11_bandeja | nodo P2 robusto | 1 | - | - | slicer | no | 40 % | 42 | slicer |
+| M11_bandeja_sup | nodo P2 robusto | 1 | - | - | slicer | no | 40 % | 35 | slicer |
+| M4_capsula_cuerpo | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 61 | slicer |
 | M6_capsula_bisel | nodo P2 robusto | 2 | - | - | slicer | no | 40 % | 2 | slicer |
 | M1m_caja_riel | nodo P4 estetico | 1 | - | - | slicer | si | 100 % | 675 | slicer |
 | M2_caja_tapa | nodo P4 estetico | 1 | - | - | slicer | si | 100 % | 171 | slicer |
@@ -68,11 +68,13 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M11_bandeja_sup | nodo P4 estetico | 1 | - | - | slicer | no | 40 % | 31 | slicer |
 | M4_capsula_cuerpo | nodo P4 estetico | 2 | - | - | slicer | si | 100 % | 60 | slicer |
 | M6_capsula_bisel | nodo P4 estetico | 2 | - | - | slicer | no | 40 % | 2 | slicer |
-| B1_casco | boya PET 4 x 1 L | 1 | - | - | slicer | si | 40 % | 214 | slicer |
-| B2_cubierta | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 119 | slicer |
-| B3_caja | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 171 | slicer |
+| B1_casco | boya PET 4 x 1 L | 2 | - | - | slicer | si | 40 % | 133 | slicer |
+| B2_cubierta_lisa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 64 | slicer |
+| B2_cubierta_mastil | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 79 | slicer |
+| B3_caja | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 173 | slicer |
 | B4_tapa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 57 | slicer |
-| B5_cuna | boya PET 4 x 1 L | 2 | - | - | slicer | si | 40 % | 141 | slicer |
+| B5_cuna_base | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 73 | slicer |
+| B5_cuna_cuello | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 76 | slicer |
 | B6_correa | boya PET 4 x 1 L | 4 | - | - | slicer | no | 40 % | 5 | slicer |
 
 ## Hardware
@@ -80,16 +82,19 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | Grupo | Item | Medida | Cantidad |
 |---|---|---|---|
 | nodo simple | Tornillo M3 x 12 + inserto termico M3 (tapa de la caja) | M3 | 12 |
-| nodo simple | Tornillo M3 x 8 + inserto termico M3 (bandejas) | M3 | 4 |
 | nodo simple | Tornillo M3 x 16 + tuerca (capsulas) | M3 | 8 |
 | nodo simple | Tornillo M2 autorroscante (bisel) | M2 x 6 | 6 |
 | nodo simple | Cordon de junta torica Ø2 (caja + 2 capsulas, +10 %) | 970 mm | 1 |
-| nodo simple | Prensaestopas PG7 con contratuerca (3 caja + 2 capsulas) | PG7 | 5 |
 | nodo simple | Disco de acrilico de la ventana | Ø30 x 3 | 2 |
 | nodo simple | Grillete o argolla de inox (izado) | M6 | 1 |
+| nodo simple | Prensaestopas PG7 con contratuerca (solo el umbilical, en la tapa M2) | PG7 | 1 |
+| nodo simple | Tornillo M3 x 45 inox A2, pasante: bandeja sup + poste + bandeja inf al inserto de la caja | M3 | 4 |
+| nodo simple | Cordon de junta torica Ø2 NBR para las juntas planas riel-caja (x2) y riel-capsula (x2), +10 % | 420 mm | 1 |
+| nodo simple | Junta plana de la ventana M7: anillo plano de silicona de 1 mm | Ø30 x Ø26.5 | 2 |
+| nodo simple | Silicona marina (p. ej. Sikaflex-291i): cordon en el borde de cada ventana | cartucho 70 ml | 1 |
 | nodo simple | Tornillo M4 x 20 + inserto termico M4 (bridas del riel a la caja) | M4 | 8 |
 | nodo simple | Tornillo M3 x 8 avellanado + inserto M3 (tapas del bolsillo) | M3 | 4 |
-| nodo simple | Tornillo M4 x 45 + tuerca (pie de las capsulas) | M4 | 4 |
+| nodo simple | Tornillo M3 x 16 inox A2 + inserto termico M3 (brida del riel a la silla de M5s) | M3 | 8 |
 | nodo simple | Correa textil | 25 x 300 mm | 2 |
 | nodo simple | Lastre a granel: tuercas y arandelas M8 de inox | 1140 g | 1 |
 | boya simple | Tornillo M3 x 12 + inserto M3 (tapa de la boya) | M3 | 16 |

@@ -3,15 +3,10 @@
 Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 
 ## Bloqueos del 04/11/2026
-- **Corrección de concepto 3a (riel cerrado estanco, un solo volumen seco, cable plano por dentro, sin prensaestopas
-  intermedio): BLOQUEADA.** El mensaje traía el marcador "[pega aquí el prompt de corrección de concepto completo]" y
-  la cola menciona "pasos A a E", pero no llegaron. Para destrabarla, pegar el prompt. De ella dependen:
-  - el riel M3s (FS entre capas 2,72 < 3);
-  - el pie M5s (2,47 < 3);
-  - las paredes de M1s y M11 (2,0 a 2,3);
-  - el lastre nuevo y la lista de sellos;
-  - la explicación del agujero cuadrado de M1s y del agujero redondo del riel en la guía.
-- `M1m_caja_riel` de P3 y P4 mide 250 mm (> 230). No se imprime ahora; se resuelve con el riel de 3a.
+- **Corrección de concepto 3a (riel cerrado): HECHA el 04/11 (bloque 1-FINAL).** Ver `docs/DECISIONES.md` (raíz del repo) y `docs/ESTANQUEIDAD.md`. Queda:
+  - P3 y P4 (monocasco) siguen con el riel anterior. Si se imprime P4, hay que llevarle el riel cerrado y partir `M1m_caja_riel`, que mide 250 mm (> 230).
+  - El cable plano real: medir su ancho y su espesor. El canal deja 22 mm de piso plano y 18 de alto, y el pase a la cápsula mide 8 × 22 mm.
+  - Hacer la probeta de la junta plana (`probeta.junta`) con el cordón Ø2 NBR que se compre, y la prueba de estanqueidad de `ESTANQUEIDAD.md`.
 - **Onshape:** la API key no puede borrar (403). En LG_IMPRIMIR_P2 hay que borrar a mano las 4 pestañas "OLD 2026-11-01 …",
   que ya están copiadas en LG_HISTORICO.
 - **Onshape:** los planos de B1, B2 y B5 que Melissa hizo a mano ("Drawing 1/2/5") muestran las piezas enteras. Las piezas
@@ -61,3 +56,12 @@ Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
   - B5_cuna: 4x Ø4 en frontal y superior, alto 114.6, Ø83.
   - Completas: M3t, M11_bandeja_sup, B4, B6.
 - Revisar a ojo: en M1s y B1 algunos textos de diámetro quedan encima de una línea de cota vecina (el control de choques mira los textos, no las líneas).
+
+## Planos A4 del 04/11/2026 (a mano en Onshape)
+- **Borrar a mano** (la API no borra) en LG_IMPRIMIR_P2: las 4 "OLD 2026-11-01 …" y las nuevas "OLD 2026-11-04 …" de B1_casco, B2_cubierta, B3_caja, B5_cuna, B6_correa, M1s_caja_cuerpo, M3s_riel_gancho, M5s_capsula_tapa_pie, M11_bandeja, M11_bandeja_sup y M4_capsula_cuerpo (cada una: estudio y `.step`). El estudio ya está copiado en LG_HISTORICO. Ojo: los Drawing de Melissa 1, 2, 3, 5, 6, 7, 9, 11, 12, 14, 15 apuntan a esos estudios viejos.
+- **SHEET**: la API no llena la casilla; los planos nuevos muestran "11" en vez de "1 of 1". Corregir a mano en cada plano.
+- Cotas que el script no pudo poner (completar a mano): `salida/planos_onshape/COTAS_A_MANO_A4_v4.md`. En B1 faltan el ancho 132 y el 131 (bordes curvos) y hay textos de cota que se pisan; revisar a ojo.
+- B3_caja: la nota de chaflanes del plano dice "postes bandeja Ø8"; son Ø9.
+- M1s_caja_cuerpo: la nota de chaflanes viene de los datos del 01/11 y puede no describir el riel cerrado; revisarla.
+- B2 y B5 en mitades: sin cota de chaflán (agregar a mano si se pide).
+- Los dibujos con script de B4, M2, M3t, M6 y SKIN ya no existen en Onshape; para el PDF v4 se usaron sus PDF del 31/10 (piezas sin cambios).

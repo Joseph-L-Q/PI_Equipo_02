@@ -133,9 +133,9 @@
   {
    "pieza": "P2_robusto/M5s_capsula_tapa_pie",
    "bbox": [
-    55.2,
+    51.4,
     64.0,
-    95.9
+    70.4
    ],
    "cabe": true
   },
@@ -160,7 +160,7 @@
   {
    "pieza": "P2_robusto/M4_capsula_cuerpo",
    "bbox": [
-    44.0,
+    45.0,
     64.0,
     64.0
    ],

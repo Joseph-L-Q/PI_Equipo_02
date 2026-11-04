@@ -16,3 +16,5 @@ vtk==9.6.2
 openpyxl==3.1.5
 gmsh==4.13.1
 rtree==1.4.1
+python-dotenv==1.0.1
+simscale-sdk @ git+https://github.com/SimScaleGmbH/simscale-python-sdk.git

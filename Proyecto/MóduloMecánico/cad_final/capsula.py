@@ -122,6 +122,9 @@ def capsule_body():
     for (y, z) in cap_screw_pts():
         body = body.cut(cq.Workplane("YZ").workplane(offset=x0).center(y, z).circle(M3_CLEAR / 2).extrude(CAP_FLANGE_T))
     # PG7 cable gland on the bottom wall, near the rear
+    import params as _P
+    if getattr(_P, "RAIL_TYPE", "celosia") == "cerrado" and _P.VERSION != "modular" and not _P.CFG.get("monocasco", False):
+        return body          # closed rail (04/11): the flat cable comes in through the lid M5s, no PG7 in the capsule
     gx = x0 + CAP_GLAND_X
     body = body.cut(cq.Workplane("XY").workplane(offset=-out_h / 2).center(gx, 0).circle(PG7_HOLE / 2).extrude(CAP_WALL))
     return body
@@ -162,7 +165,7 @@ def _ring_yz(l, w, r, band, x_start, depth):
 
 def window_disc():
     _, _, _, _, _, _, x_front = cap_dims()
-    return cq.Workplane("YZ").workplane(offset=x_front - WIN_SEAT_DEPTH).circle(WIN_DIA / 2).extrude(WIN_T)
+    return cq.Workplane("YZ").workplane(offset=x_front - WIN_T).circle(WIN_DIA / 2).extrude(WIN_T)   # flush: the flat gasket is under it
 
 
 def bezel():

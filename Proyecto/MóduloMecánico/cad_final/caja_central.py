@@ -8,6 +8,7 @@ The handle and the flange/skirt follow cad/parts.py (box_lid, box_body) with dif
 import math
 
 import cadquery as cq
+import params as _P
 
 import layout as LY
 from params import (BASE_M4_BOSS, BASE_M4_PTS, BOX_FLANGE, BOX_FLANGE_T, BOX_FLOOR, BOX_LID_T, BOX_SCREW_PITCH,
@@ -165,7 +166,7 @@ def trays(lay):
             if x0 <= a0 and a1 <= x1 and abs(it.z[0] - zt) < 1e-6:
                 t = t.union(_box(a0, a1, b0, b1, zt, it.z[1]) if it.shape == "box" else
                             cq.Workplane("XY").workplane(offset=zt).center(*it.xy[:2]).circle(it.xy[2])
-                            .extrude(it.z[1] - zt).faces(">Z").workplane().hole(M3_CLEAR, 6.0))
+                            .extrude(it.z[1] - zt).faces(">Z").workplane().hole(M3_CLEAR, None if _P.TRAY_THROUGH else 6.0))
         out[name] = t
     if lay.floors == 2:
         x0, x1, y0, y1 = lay.tray_upper

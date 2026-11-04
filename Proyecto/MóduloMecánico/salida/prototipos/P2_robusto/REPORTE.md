@@ -8,14 +8,14 @@ No editar a mano: se regenera con `python cad_final/build.py --rapido` cuando `v
 
 | Pieza | Archivo (`salida/simple/stl`, `step`) | Cant. | BRep/BOP | Estanco | Cuerpos | Bbox en la orientacion (mm) | Voladizo mm² | Espesor p1 | Masa al 100 % g |
 |---|---|---|---|---|---|---|---|---|---|
-| M1 caja baja con bolsillos | M1s_caja_cuerpo | 1 | ok | si | 1 | 147.0 x 146.0 x 107.0 (sin girar) | 14515 |  | 489 |
+| M1 caja baja con bolsillos | M1s_caja_cuerpo | 1 | ok | si | 1 | 147.0 x 146.0 x 107.0 (sin girar) | 14901 |  | 492 |
 | M2 caja, tapa con asa | M2_caja_tapa | 1 | ok | si | 1 | 63.0 x 146.0 x 147.0 (Y+90) | 1461 |  | 173 |
-| M3s riel con gancho, mitad | M3s_riel_gancho | 2 | ok | si | 1 | 141.5 x 79.4 x 50.0 (X+90) | 6684 | 2.91 | 124 |
+| M3s riel con gancho, mitad | M3s_riel_gancho | 2 | ok | si | 1 | 141.5 x 79.4 x 50.0 (X+90) | 7689 | 1.50 | 192 |
 | M3t tapa del bolsillo | M3t_tapa_bolsillo | 2 | ok | si | 1 | 117.0 x 57.0 x 3.0 (X180) | 0 |  | 25 |
-| M5s tapa con pie | M5s_capsula_tapa_pie | 2 | ok | si | 1 | 55.2 x 64.0 x 95.9 (sin girar) | 1571 | 2.83 | 94 |
-| M11 bandeja (M11_bandeja) | M11_bandeja | 1 | ok | si | 1 | 115.0 x 114.0 x 30.0 (sin girar) | 36 |  | 51 |
-| M11 bandeja (M11_bandeja_sup) | M11_bandeja_sup | 1 | ok | si | 1 | 115.0 x 114.0 x 3.0 (sin girar) | 0 |  | 48 |
-| M4 capsula, cuerpo | M4_capsula_cuerpo | 2 | ok | si | 1 | 64.0 x 64.0 x 44.0 (Y-90) | 1038 |  | 58 |
+| M5s tapa con pie | M5s_capsula_tapa_pie | 2 | ok | si | 1 | 51.4 x 64.0 x 70.4 (X180) | 868 | 1.36 | 98 |
+| M11 bandeja (M11_bandeja) | M11_bandeja | 1 | ok | si | 1 | 115.0 x 114.0 x 30.0 (sin girar) | 0 |  | 55 |
+| M11 bandeja (M11_bandeja_sup) | M11_bandeja_sup | 1 | ok | si | 1 | 115.0 x 114.0 x 3.0 (sin girar) | 0 |  | 50 |
+| M4 capsula, cuerpo | M4_capsula_cuerpo | 2 | ok | si | 1 | 64.0 x 64.0 x 45.0 (Y-90) | 998 |  | 60 |
 | M6 bisel | M6_capsula_bisel | 2 | ok | si | 1 | 42.0 x 42.0 x 2.5 (Y+90) | 0 |  | 2 |
 | M7 ventana (acrilico) | M7_capsula_ventana | 2 | ok | si | 1 | 30.0 x 30.0 x 3.0 (Y+90) | 0 |  | 3 |
 
@@ -28,22 +28,22 @@ Masa por pieza con su relleno (100 % cajas estancas, tapas con junta y ganchos; 
 
 | Concepto | Bandeja 40 % | Bandeja 100 % |
 |---|---|---|
-| caja (M1 con bolsillos + M2 + bandejas + electronica) | 871 | 879 |
-| riel con ganchos (2 M3s) | 200 | 200 |
+| caja (M1 con bolsillos + M2 + bandejas + electronica) | 880 | 889 |
+| riel con ganchos (2 M3s) | 383 | 383 |
 | tapas del bolsillo (2 M3t) | 51 | 51 |
-| capsulas (M4, M5, M6, M7, contenido) | 385 | 385 |
+| capsulas (M4, M5, M6, M7, contenido) | 395 | 395 |
 | tornilleria y correas | 40 | 40 |
-| Nodo sin lastre g | 1546 | 1555 |
-| Desplaza cm³ | 2139 | 2139 |
-| Peso aparente sin lastre g | -647 | -638 |
-| Lastre que deja el peso aparente en la ventana (200 a 500 g), total g | 973 a 1318 | 963 a 1308 |
-| **Lastre puesto g (total, mitad por bolsillo)** | **1150** (575) | **1150** (575) |
-| **Peso aparente con ese lastre g** | **+354** | **+363** |
-| **Peso en aire g** | **2696** | **2705** |
+| Nodo sin lastre g | 1749 | 1758 |
+| Desplaza cm³ | 2260 | 2260 |
+| Peso aparente sin lastre g | -568 | -559 |
+| Lastre que deja el peso aparente en la ventana (200 a 500 g), total g | 882 a 1227 | 872 a 1216 |
+| **Lastre puesto g (total, mitad por bolsillo)** | **1050** (525) | **1050** (525) |
+| **Peso aparente con ese lastre g** | **+346** | **+355** |
+| **Peso en aire g** | **2799** | **2808** |
 
-Rango de lastre que mantiene ambos casos en la ventana: **973 a 1308 g** en total. El granel llena 25.6 de 30 mm del bolsillo (85 %); en el maximo del rango llenaria 29.1 mm (cabe). Con tuercas y arandelas M8 de inox, a granel: 1145 g en total, 25.5 mm llenos. Con perdigon de plomo en bolsa: 1096 g en total, 16.9 mm llenos.
+Rango de lastre que mantiene ambos casos en la ventana: **882 a 1216 g** en total. El granel llena 23.3 de 30 mm del bolsillo (78 %); en el maximo del rango llenaria 27.0 mm (cabe). Con tuercas y arandelas M8 de inox, a granel: 1054 g en total, 23.4 mm llenos. Con perdigon de plomo en bolsa: 1009 g en total, 15.5 mm llenos.
 
-Estabilidad: centro de masa a 42.3 y de empuje a 62.4 sobre el aro, BG = **20.0 mm**.
+Estabilidad: centro de masa a 41.1 y de empuje a 59.7 sobre el aro, BG = **18.6 mm**.
 
 ## 3. Linterna de prueba, cuerdas y camaras
 
@@ -51,14 +51,14 @@ Aro Ø200, malla de referencia, **4 cuerdas** que suben rectas del aro (atadas p
 
 | Concepto | Valor |
 |---|---|
-| Nodo sobre el centro de la varilla del aro | de -40 a 181 mm |
+| Nodo sobre el centro de la varilla del aro | de -51 a 181 mm |
 | Azimut de las cuerdas en el marco del nodo (riel en X) | 45, 135, 225, 315 grados |
 | Codo de las cuerdas / punto de amarre sobre el aro | 195 / **400 mm** (`linterna.nudo_h`) |
 | **Aire cuerda-brazo** (exigido 10) | **48.0 mm** |
-| **Aire cuerda-capsula** (exigido 10) | **68.3 mm** |
+| **Aire cuerda-capsula** (exigido 10) | **71.4 mm** |
 | Aire cuerda-caja (brida de la tapa; informativo) | 2.9 mm |
 | Aro y red contra el nodo | sin contacto |
-| Camara en Ø200: lente a la red | 38 mm, campo diagonal 53 mm, FUERA del enfoque (80 mm a infinito, estimado) |
+| Camara en Ø200: lente a la red | 42 mm, campo diagonal 58 mm, FUERA del enfoque (80 mm a infinito, estimado) |
 | Camara en Ø500 | el eje optico no corta la red |
 
 FOV 70 grados diagonal (estimado, sin ficha). El aro LED rodea el lente: ilumina el encuadre si su haz es al menos tan ancho como el FOV (dato del LED por confirmar).
@@ -67,18 +67,18 @@ FOV 70 grados diagonal (estimado, sin ficha). El aro LED rodea el lente: ilumina
 
 Ninguna (umbral 0.01 mm³).
 
-Contratuercas de los PG7 de las paredes contra bandeja, modulos y caja: 0.00 mm³ (la bandeja tiene una muesca en cada extremo). Los M4 del pie pasan 7.4 mm sobre el Cat5e.
+Contratuercas de los PG7 de las paredes contra bandeja, modulos y caja: 0.00 mm³ (la bandeja tiene una muesca en cada extremo). Los M4 del pie pasan 6.4 mm sobre el Cat5e.
 
 ## 5. Verificacion a mano (150 N de manipulacion en una capsula)
 
-- **Riel en los ganchos (en el agua):** M = F·|x_capsula − 100| = 8066 N·mm; seccion en x = 142: I = 51806 mm⁴, c = 15.9; σ = 2.5 MPa → FS 18.2 / 8.9 entre capas.
-- **Brida del riel a la caja, izado por el asa:** M = 12041 N·mm sobre 4 insertos M4 con 20 de brazo: **339 N por inserto** (PB8). En el agua, sobre los ganchos: 27 N.
+- **Riel en los ganchos (en el agua):** M = F·|x_capsula − 100| = 8625 N·mm; seccion en x = 142: I = 69402 mm⁴, c = 15.0; σ = 1.9 MPa → FS 24.1 / 11.8 entre capas.
+- **Brida del riel a la caja, izado por el asa:** M = 12600 N·mm sobre 4 insertos M4 con 20 de brazo: **353 N por inserto** (PB8). En el agua, sobre los ganchos: 29 N.
 - **Gancho en C (fusionado) con 150 N** (la capsula cuelga junto a su gancho: uno solo lleva la carga):** σ = 7.7 MPa → FS 5.8 / 2.9 entre capas.
-- **Pie de la capsula:** M = 7850 N·mm, 337 N por M4 sobre las paredes de 5 del riel: 8.0 MPa → FS 5.6 / **2.7** entre capas (cumple FS ≥ 2 sin inserto ni pared de 6: la capsula mirando adentro queda bajo la silla y la palanca es corta).
+- **Pie de la capsula:** M = 7400 N·mm, 146 N por M4 sobre las paredes de 6 del riel: 1.9 MPa → FS 23.2 / **11.3** entre capas (cumple FS ≥ 2 sin inserto ni pared de 6: la capsula mirando adentro queda bajo la silla y la palanca es corta).
 
 ## 6. Cable
 
-Por camara: 60 + 25 + conducto 152 (recto, sin curva) + bucle 83 + 30 + 30 = **380 mm** (requiere prueba SPI a 8 y 4 MHz).
+Por camara: 60 + 25 + conducto 137 (recto, sin curva) + bucle 40 + 30 + 30 = **297 mm** (alcanza el cable de fabrica de 300).
 
 ## 7. Chequeos que fallaron
 
@@ -91,4 +91,4 @@ Por camara: 60 + 25 + conducto 152 (recto, sin curva) + bucle 83 + 30 + 30 = **3
 ## 8. Constantes de modulo
 
 - `PAD_BORE` = 30: agujero del cojin para la llave de vaso del PG7. `POCKET_END` = 8: paredes extremas de los bolsillos con los insertos M3 de M3t. `TIP_HOLE` = 8: salida del cable en la punta. `HOOK_CLR` = 10: aire entre el gancho y la capsula.
-- Tiempo de `simple.py`: 35 s.
+- Tiempo de `simple.py`: 51 s.

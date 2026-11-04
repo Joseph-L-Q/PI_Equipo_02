@@ -103,7 +103,7 @@ def placed_out_of_exclusion(src, work):
 def slice_plate(prof, plate, out_dir, cap_dir):
     work = Path(tempfile.mkdtemp(prefix="placa_"))
     proc = work / "proceso.json"
-    SL.process_for(prof["process"], plate.get("soportes", False), proc, plate.get("relleno"))
+    SL.process_for(prof["process"], plate.get("soportes", False), proc, plate.get("relleno"), plate.get("estanca", False))
     if plate.get("paredes"):
         d = json.loads(proc.read_text(encoding="utf-8"))
         d["wall_loops"] = str(plate["paredes"])

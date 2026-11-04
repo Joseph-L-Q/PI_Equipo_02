@@ -47,7 +47,8 @@ PIECES = [(c, P2 / "step" / f"{c}.step", P2 / "stl" / f"{c}.stl", q) for c, q in
     ("M1s_caja_cuerpo", 1), ("M2_caja_tapa", 1), ("M3s_riel_gancho", 2), ("M3t_tapa_bolsillo", 2),
     ("M4_capsula_cuerpo", 2), ("M5s_capsula_tapa_pie", 2), ("M6_capsula_bisel", 2), ("M11_bandeja", 1),
     ("M11_bandeja_sup", 1))] + [(c, BOYA / "step" / f"{c}.step", BOYA / "stl" / f"{c}.stl", q) for c, q in (
-    ("B1_casco", 1), ("B2_cubierta", 1), ("B3_caja", 1), ("B4_tapa", 1), ("B5_cuna", 2), ("B6_correa", 4))]
+    ("B1_casco", 2), ("B2_cubierta_lisa", 1), ("B2_cubierta_mastil", 1), ("B3_caja", 1), ("B4_tapa", 1),
+    ("B5_cuna_base", 2), ("B5_cuna_cuello", 2), ("B6_correa", 4))]
 
 # sheet (A3 landscape, mm): drawing frame and the standard Onshape title block measured on the first PDF
 SHEET = (420.0, 297.0)
@@ -495,9 +496,10 @@ def piece(code, step, qty, c=None, redo=False):
 
 # ---------------------------------------------------------------- --formato equipo (A4, Melissa's B1 as the model)
 SKIN_STEP = MOD / "salida" / "skin" / "P2_robusto" / "concha" / "SKIN_concha.step"
-A4_ORDER = ["B2_cubierta", "B3_caja", "B4_tapa", "B5_cuna", "B6_correa", "M1s_caja_cuerpo", "M2_caja_tapa",
+A4_ORDER = ["B1_casco", "B2_cubierta_lisa", "B2_cubierta_mastil", "B3_caja", "B4_tapa", "B5_cuna_base", "B5_cuna_cuello",
+            "B6_correa", "M1s_caja_cuerpo", "M2_caja_tapa",
             "M3s_riel_gancho", "M3t_tapa_bolsillo", "M4_capsula_cuerpo", "M5s_capsula_tapa_pie", "M6_capsula_bisel",
-            "M11_bandeja", "M11_bandeja_sup", "SKIN_concha_v1"]
+            "M11_bandeja", "M11_bandeja_sup", "SKIN_concha"]
 MELISSA_B1 = "50788a3701406af8a0f183a5"          # "Drawing 1 B1_casco", drawn by hand: exported as is, never modified
 COMPANY = "LANTERNGUARD"
 OUT_A4 = OUT / "pdf_a4"
@@ -518,7 +520,7 @@ TB_NOTES = [
     ("L", 156.23, 42.43, 1.219, 13.1, "DRAWN"), ("L", 156.23, 37.86, 1.219, 13.1, "CHECKED"),
     ("L", 156.23, 33.29, 1.219, 13.1, "APPROVED"), ("C", 176.51, 32.10, 1.024, 15.2, "----"),
     ("C", 204.13, 32.10, 1.024, 9.5, "----"), ("L", 156.23, 19.57, 1.219, 26.1, "MATERIAL"),
-    ("C", 168.89, 15.33, 1.829, 26.7, "PETG"), ("L", 182.90, 19.57, 1.219, 26.1, "FINISH"),
+    ("C", 168.89, 15.33, 1.829, 26.7, "PETG"), ("C", 204.13, 42.43, 1.0, 9.3, "<DATE>"), ("L", 182.90, 19.57, 1.219, 26.1, "FINISH"),
     ("L", 209.57, 37.48, 1.219, 9.3, "TITLE"), ("C", 247.95, 30.73, 2.926, 70.5, "<CODE>"),
     ("L", 209.43, 21.70, 0.975, 9.4, "SIZE"), ("L", 218.96, 21.70, 0.975, 59.7, "DWG NO."),
     ("L", 279.92, 21.70, 0.975, 7.5, "REV."), ("C", 283.57, 18.76, 3.658, 6.9, "-"),
@@ -535,7 +537,7 @@ def text_w(s, h):
 def title_notes(code):
     out = []
     for mode, x, y, h, cell, txt in TB_NOTES:
-        txt = txt.replace("<CODE>", code)
+        txt = txt.replace("<CODE>", code).replace("<DATE>", time.strftime("%Y-%m-%d"))
         lines, cur = [], ""
         for w in txt.split():
             if cur and text_w(cur + " " + w, h) > min(cell - 0.6, 19.5 * h):     # Onshape wraps a note past ~20 x its height
@@ -567,7 +569,7 @@ def best_layout(lo, hi):
 
 def a4_pieces():
     by = {c: (st, q) for c, st, _, q in PIECES}
-    by["SKIN_concha_v1"] = (SKIN_STEP, 1)
+    by["SKIN_concha"] = (SKIN_STEP, 1)
     return [(c, *by[c]) for c in A4_ORDER]
 
 
@@ -779,6 +781,8 @@ def dims_a4(name, vid, geom, box, centre_uv, s, taken, blocked, used):
 
 def piece_a4(code, step, qty, c, ctx, redo=False, chamfer=None):
     n0 = OS.year_total()
+    if chamfer is None:
+        chamfer = chamfer_for(code)
     if n0 > LIMIT_A4:
         raise SystemExit(f"cupo: {n0} llamadas en el año, por encima de {LIMIT_A4}; paro antes de {code}")
     t0 = time.time()
@@ -893,8 +897,17 @@ def piece_a4(code, step, qty, c, ctx, redo=False, chamfer=None):
     return a4
 
 
-V2_PIECES = ("B2_cubierta", "B3_caja", "B5_cuna", "M1s_caja_cuerpo")      # chamfer correction of 01/11/2026
 CHAMFERS = MOD / "salida" / "correccion_chaflan" / "chaflanes.json"
+
+
+def chamfer_for(code):
+    """Chamfer data (01/11/2026) only for the pieces whose chamfer list still describes them: the halves of B2 and B5
+    changed their supports on 04/11, so they get no callout (listed in PENDIENTES)."""
+    data = json.loads(CHAMFERS.read_text(encoding="utf-8")) if CHAMFERS.exists() else {}
+    ch = data.get(code) if code in ("B3_caja", "M1s_caja_cuerpo") else None
+    if ch and code == "B3_caja":                                      # the bandeja posts are Ø9 since 04/11 (MARGENES.md)
+        ch = {**ch, "lineas": [ln.replace("Ø8", "Ø9") for ln in ch["lineas"]]}
+    return ch
 
 
 def chamfer_dim(vdata, s, ch, taken, blocked):
@@ -1020,30 +1033,13 @@ def note_free(lines, h, taken, blocked):
                                               "textHeight": h}}
 
 
-def piece_v2(code, c, ctx, redo=False):
-    """Chamfer correction: the v1 Part Studio and its PLANO_A4_ are renamed zz_v1_ (kept), then <code>_v2 is pushed and
-    drawn in the same A4 format with the 'Chaflán c x 45°' callout."""
-    R = reg()
-    did, wid = R["documento"]["did"], R["documento"]["wid"]
-    rec = R["piezas"][code]
-    for eid, new in ((rec.get("partstudio"), f"zz_v1_{rec.get('pestana', code)}"),
-                     (rec.get("a4", {}).get("drawing"), f"zz_v1_PLANO_A4_{code}")):
-        if eid and eid in ctx["elements"] and not ctx["elements"][eid].startswith("zz_v1_"):
-            c.call("POST", f"/metadata/d/{did}/w/{wid}/e/{eid}",
-                   {"properties": [{"propertyId": ctx["name_pid"], "value": new}]})
-            ctx["elements"][eid] = new
-            rec.setdefault("v1_renombrado", []).append(new)
-            R["piezas"][code] = rec
-            save(R)
-    ch = json.loads(CHAMFERS.read_text(encoding="utf-8"))[code]
-    by = {cd: (st, q) for cd, st, q in a4_pieces()}
-    step, qty = by[code]
-    return piece_a4(f"{code}_v2", step, qty, c, ctx, redo=redo, chamfer=ch)
-
-
 def CAJETIN(code):
     """Drawing properties that fill the ISO title block (names as Onshape reports them; missing ones are ignored)."""
-    return {"Title 1": code, "Drawn by": "Equipo 02 UPCH", "Description": f"{COMPANY} - {code}"}
+    # Onshape fills "Date drawn" with the creation time when "Drawn by" is set and prints it in the DATE cell; a plain
+    # yyyy-mm-dd string is not a valid date for the API, so it clears the field, and the date is then a note (title_notes)
+    # in the same cell: one date only, as Melissa's drawings show.
+    return {"Title 1": code, "Drawn by": "Equipo 02 UPCH", "Description": f"{COMPANY} - {code}",
+            "Date drawn": time.strftime("%Y-%m-%d")}
 
 
 def a4_context(c):
@@ -1065,32 +1061,32 @@ def melissa_b1(c):
     return pdf
 
 
-def merge_a4(v3=False):
-    """Cover + B1 (Melissa) + the 15 A4 drawings -> PLANOS_A4_LanternGuard.pdf; the cover lists, per piece, the
-    dimensions that the script could not place."""
+def merge_a4(melissa=None, tag="v4"):
+    """Cover + the current A4 drawings -> PLANOS_A4_LanternGuard_<tag>.pdf. Pieces drawn by this script use their own PDF;
+    those in `melissa` ({code: (pdf path, label)}) are unchanged pieces and keep their earlier PDF. The cover lists,
+    per piece, the dimensions that the script could not place."""
     import html
     import subprocess
     import tempfile
     from pypdf import PdfReader, PdfWriter
     from entrega_pdf import EDGE
     R = reg()
+    melissa = melissa or {}
     rows, files, md = [], [], ["# Cotas que no se pudieron poner automáticamente (planos A4)", ""]
-    b1 = OUT_A4 / "PLANO_A4_B1_casco.pdf"
-    order = [("B1_casco", 1)] + [(cd, q) for cd, _, q in a4_pieces()]
-    if v3:                                                            # the chamfer-corrected pieces replace their v1
-        order = [(f"{cd}_v2" if R.get("piezas", {}).get(f"{cd}_v2", {}).get("a4", {}).get("pdf") else cd, q) for cd, q in order]
+    order = [(cd, q) for cd, _, q in a4_pieces()]
     for code, q in order:
         a4 = R.get("piezas", {}).get(code, {}).get("a4", {})
-        f = b1 if code == "B1_casco" else (MOD / a4["pdf"] if a4.get("pdf") else None)
-        ok = f is not None and f.exists()
-        if ok:
-            files.append(f)
-        if code == "B1_casco":
-            esc, n, mano = "1:4", "a mano (Melissa)", "plano hecho a mano por Melissa; se exporta tal cual"
+        if code in melissa:
+            f = melissa[code][0]
+            esc, n, mano = "-", "-", f"pieza sin cambios: se conserva su plano ({melissa[code][1]})"
         else:
+            f = MOD / a4["pdf"] if a4.get("pdf") else None
             esc = {"2:5": "1:2,5"}.get(a4.get("escala"), a4.get("escala", "-"))
             n = a4.get("cotas", {}).get("creadas", "-")
             mano = "; ".join(a4.get("cotas", {}).get("a_mano", []) + [f"falló {t}: {e}" for t, e in a4.get("cotas", {}).get("fallidas", [])]) or "ninguna"
+        ok = f is not None and Path(f).exists()
+        if ok:
+            files.append(f)
         md += [f"## {code} (escala {esc}, {n} cotas automáticas)", ""] + [f"- {x}" for x in mano.split("; ")] + [""]
         rows.append(f"<tr><td class=c>{len(files) if ok else '-'}</td><td><b>{html.escape(code)}</b></td>"
                     f"<td class=c>{q}</td><td class=c>{esc}</td><td class=c>{n}</td>"
@@ -1105,7 +1101,7 @@ th {{ background: #e8eef3; text-align: left; }} .c {{ text-align: center; }}
 <h1>LANTERNGUARD · planos de fabricación (formato del equipo)</h1>
 <div class="sub">Equipo 02 UPCH · PETG · ISO A4 horizontal, primer diedro, cotas en mm · {time.strftime('%d/%m/%Y')} ·
 documento Onshape LG_IMPRIMIR_P2: {html.escape(R['documento']['url'])}</div>
-<table><tr><th>N°</th><th>Pieza</th><th>Cant.</th><th>Escala</th><th>Cotas auto</th>
+<table><tr><th>Hoja</th><th>Pieza</th><th>Cant.</th><th>Escala</th><th>Cotas auto</th>
 <th>Cotas que no se pudieron poner automáticamente (completar a mano en Onshape)</th></tr>{''.join(rows)}</table>
 </body></html>"""
     tmp = Path(tempfile.mkdtemp(prefix="portada_a4_"))
@@ -1117,8 +1113,8 @@ documento Onshape LG_IMPRIMIR_P2: {html.escape(R['documento']['url'])}</div>
     for f in [cover] + files:
         for pg in PdfReader(str(f)).pages:
             w.add_page(pg)
-    (OUT / ("COTAS_A_MANO_A4_v3.md" if v3 else "COTAS_A_MANO_A4.md")).write_text("\n".join(md), encoding="utf-8")
-    out = OUT / ("PLANOS_A4_LanternGuard_v3.pdf" if v3 else "PLANOS_A4_LanternGuard.pdf")
+    (OUT / f"COTAS_A_MANO_A4_{tag}.md").write_text("\n".join(md), encoding="utf-8")
+    out = OUT / f"PLANOS_A4_LanternGuard_{tag}.pdf"
     with open(out, "wb") as fh:
         w.write(fh)
     print(out, len(w.pages), "paginas,", len(files), "planos")
@@ -1247,18 +1243,11 @@ def main():
     ap.add_argument("--formato", choices=["a3", "equipo"], default="a3",
                     help="equipo: ISO A4 horizontal como el B1_casco de Melissa, pestañas PLANO_A4_<pieza>")
     ap.add_argument("--melissa", action="store_true", help="con --formato equipo: exporta el B1 de Melissa tal cual")
-    ap.add_argument("--v2", help="con --formato equipo: piezas con el chaflán (B2_cubierta,B3_caja,B5_cuna,M1s_caja_cuerpo"
-                                 " o 'todas'): pestañas <pieza>_v2 y PLANO_A4_<pieza>_v2; las v1 pasan a zz_v1_")
     a = ap.parse_args()
     if a.formato == "equipo":
         use_format("equipo")
-        c = client() if (a.pieza or a.todas or a.melissa or a.v2) else None
-        ctx = a4_context(c) if (a.pieza or a.todas or a.v2) else None
-        for code in (V2_PIECES if a.v2 == "todas" else (a.v2.split(",") if a.v2 else [])):
-            try:
-                piece_v2(code, c, ctx, redo=a.rehacer)
-            except (OS.OnshapeError, KeyError, IndexError, StopIteration) as e:
-                print(code, "v2 FALLO:", str(e)[:300])
+        c = client() if (a.pieza or a.todas or a.melissa) else None
+        ctx = a4_context(c) if (a.pieza or a.todas) else None
         todo = [p for p in a4_pieces() if a.todas or p[0] in (a.pieza or "").split(",")]
         for code, step, q in todo:
             if a.todas and reg().get("piezas", {}).get(code, {}).get("a4", {}).get("pdf"):
@@ -1270,7 +1259,7 @@ def main():
         if a.melissa:
             print(melissa_b1(c))
         if a.unir:
-            merge_a4(v3=any(reg().get("piezas", {}).get(f"{k}_v2", {}).get("a4", {}).get("pdf") for k in V2_PIECES))
+            merge_a4()
         return 0
     if a.documento:
         document()
