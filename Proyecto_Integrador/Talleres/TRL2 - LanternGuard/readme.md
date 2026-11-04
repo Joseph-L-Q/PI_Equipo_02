@@ -278,8 +278,56 @@ La Figura 3 presenta la matriz morfológica de LanternGuard, mostrando las funci
 <p align="center">
 <img width="1133" height="1388" alt="image" src="https://github.com/user-attachments/assets/a02a78c8-6fab-4a22-adc0-afaa2d7d666d" />
 </p>
-
 <p align="center"><em><strong>Nota.</strong> Elaboración propia. La matriz presenta 16 funciones organizadas en seis módulos funcionales, con tres alternativas de solución para cada función. Las líneas roja, verde y azul representan las combinaciones propuestas. La Solución 1 corresponde a la configuración elegida como referencia por el equipo. La estimación volumétrica, los tratamientos de protección superficial y determinados aspectos de comunicación y gestión energética requieren desarrollo o validación posterior.</em></p>
+
+#### Boceto 1 - Solución preliminar 1
+
+El primer boceto representa la configuración conceptual de LanternGuard correspondiente a la Solución 1 de la matriz morfológica. Se muestra la integración de una boya de superficie con un módulo sumergido instalado sobre una linterna de cultivo de concha de abanico (*Argopecten purpuratus*), así como los principales componentes electrónicos, estructurales y de comunicación considerados en la propuesta.
+
+**Descripción técnica y funcional:**
+
+* **Estrategia de muestreo:**
+  * Inspecciones periódicas programadas cada 15 días, con una duración aproximada de cinco minutos para la adquisición de información.
+  * Uso previsto de temporización y modos de bajo consumo energético (*deep sleep*) entre inspecciones.
+
+* **Boya de superficie (nodo boya):**
+  * **Alimentación:** Panel solar, baterías recargables de ion-litio 18650 y circuitos de regulación y gestión energética. Se contempla el regulador LM2596 para acondicionamiento de tensión; la configuración definitiva de carga solar deberá completarse.
+  * **Control y comunicación:** Placa Heltec WiFi LoRa 32 V3, que integra un microcontrolador ESP32-S3 y un transceptor LoRa SX1262.
+  * **Programación:** Reloj de tiempo real DS3231 para coordinar las inspecciones.
+  * **Control de alimentación:** Interruptor de encendido y apagado.
+  * **Comunicación con el módulo sumergido:** Enlace cableado RS-485 mediante transceptores MAX3485 y cable umbilical.
+  * **Telemetría:** Transmisión de mensajes breves, estados y metadatos de inspección mediante LoRa hacia una estación receptora terrestre.
+
+* **Barra y módulo sumergido (nodo sumergido):**
+  * **Control:** Microcontrolador ESP32-S3-DevKitC-1-N16R8, ubicado dentro de un compartimento electrónico protegido.
+  * **Registro de movimiento:** Acelerómetro triaxial LIS3DH para obtener información complementaria sobre el movimiento y la inclinación del módulo.
+  * **Almacenamiento:** Módulo microSD mediante interfaz SPI para almacenar las fotografías y los registros obtenidos durante las inspecciones.
+  * **Comunicación interna:** Cable umbilical RS-485 para la transferencia de información entre el módulo sumergido y la boya.
+  * **Estructura:** Barra de soporte y piezas estructurales fabricables mediante impresión 3D con material PETG.
+  * **Protección:** Compartimento electrónico estanco y medidas de protección frente al ambiente marino.
+
+* **Cápsulas de cámara:**
+  * **Captura de imágenes:** Dos cámaras Arducam Mega de 5 MP con enfoque automático, orientadas hacia diferentes regiones de las mallas.
+  * **Posicionamiento:** Soportes de cámara que permiten establecer las orientaciones de captura previstas en el diseño.
+  * **Iluminación:** Aros LED de luz blanca para favorecer la adquisición de fotografías submarinas.
+  * **Protección óptica:** Ventanas transparentes de acrílico y elementos de sellado mediante juntas O-ring.
+  * **Protección superficial:** Aplicación propuesta de un tratamiento antifouling y de un recubrimiento transparente hidrofóbico para reducir la adherencia de organismos y favorecer las condiciones de las ventanas ópticas. Su eficacia deberá evaluarse posteriormente.
+
+* **Comunicación, procesamiento y visualización:**
+  * **Recepción terrestre:** Estación receptora basada en Heltec WiFi LoRa 32 V3 para recibir los mensajes transmitidos desde la boya.
+  * **Fotografías completas:** Almacenamiento y recuperación mediante una transferencia local posterior, cuyo procedimiento específico aún debe definirse.
+  * **Procesamiento de imágenes:** Servicio de procesamiento destinado a estimar el porcentaje de cobertura visible de bioincrustación y desarrollar un algoritmo propio para estimar el volumen acumulado en las regiones analizadas.
+  * **Notificación al usuario:** Aplicativo LanternGuard para visualizar fotografías, resultados e historial de inspecciones, sin limitar su uso exclusivamente a dispositivos móviles.
+
+La Solución preliminar 1 constituye la alternativa seleccionada por el equipo como base para el diseño conceptual de LanternGuard. Su configuración permite integrar las funciones de adquisición de imágenes submarinas, registro de movimiento, alimentación, protección estructural y comunicación, orientadas al monitoreo periódico de la bioincrustación.
+
+<p align="center"><strong><em>Figura 4. Boceto de la Solución preliminar 1 del sistema LanternGuard.</em></strong></p>
+
+<p align="center">
+ <img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/a5e23aaf-b8f5-4b65-97db-a3880adfd248" />
+</p>
+
+<p align="center"><em><strong>Nota.</strong> Elaboración propia. Se presenta la vista general de LanternGuard y los detalles conceptuales de la boya de superficie, el módulo sumergido y la cápsula de cámara. El boceto corresponde a la Solución 1 de la matriz morfológica y considera los componentes y materiales seleccionados por el equipo. Las funciones de estimación volumétrica, gestión energética y recuperación local de fotografías requieren desarrollo o validación posterior.</em></p>
 
 ### 3.4. Representación del modelado tridimensional
 
