@@ -1,16 +1,24 @@
-# Estado LanternGuard CAD | 04/11/2026, 08:17 (en curso)
+# Estado LanternGuard CAD | 04/11/2026, 10:39 (en curso)
+
+**Aviso: el total impreso pasa de 2,7 kg: 2791 g (nodo P2 1530 g + boya 1027 g + probetas 233 g), 93,4 h, S/ 167 a S/ 60/kg.**
 
 | Bloque | Estado |
 |---|---|
 | 0 Respaldo | Listo: repo privado `IchiSieben/LanternGuard-CAD-backup` y `docs/RETOMAR_EN_OTRA_PC.md` |
 | Rama `cad/celosia-v2` | Lista: congela el concepto anterior |
-| 1 Márgenes + boya + regeneración | **En curso.** Listo: cama 230 con check, MARGENES.md, B1, B2 y B5 en mitades, topes bajos, 19 placas (2567 g, 92,3 h) en Drive `imprimir_hoy_04nov`. Falta: guía de piezas (en curso), planos A4 en Onshape y PDF v4. **El riel cerrado (3a) está bloqueado: falta el prompt** |
-| 2 Convención de nombres | Listo, salvo borrar a mano 4 pestañas "OLD" (la API no borra) |
-| 3 SimScale | Clave verificada: responde. Falta correr el plan A |
-| 4 Visor 3D | Pendiente |
+| 1-FINAL Riel cerrado | **Listo (commit 2534d00).** Caja, riel y cápsula forman un solo volumen seco, el cable plano va por dentro y no hay PG7 entre caja y cápsula. FS entre capas: riel 3,18, pie 3,80. Ventana M7 con junta plana y silicona marina. Bandeja M11 corregida. Lastre 1050 g. 19 placas en Drive `02_Imprimir_primero_probetas/imprimir_hoy_04nov_riel_cerrado/`. 13 planos `PLANO_A4_<pieza>` en LG_IMPRIMIR_P2, `04_Planos/PLANOS_A4_LanternGuard_v4.pdf` y `04_Planos/STL_por_pieza/`. **En curso:** la guía de piezas y ESTANQUEIDAD con el riel cerrado |
+| 1 Márgenes y boya | Listo: cama de 230 con chequeo, MARGENES.md, B1, B2 y B5 en mitades, topes bajos |
+| 2 Convención de nombres | Listo. Hay que borrar a mano en LG_IMPRIMIR_P2 las pestañas "OLD …", porque la API no borra |
+| 3 SimScale | En curso, por API. Dos proyectos: "LanternGuard nodo sumergido" y "LanternGuard boya" |
+| 4 Visor 3D | Listo: `docs/visor/index.html` en Drive `07_Documentos/visor/`. Se regenera con la guía nueva |
 | 5 Cierre | Pendiente |
 
-Detalle y cola completa: `docs/HANDOFF_siguiente.md`. Bloqueos: `docs/PENDIENTES.md`.
+Problemas:
+- La API de Onshape no borra (403).
+- La casilla SHEET de los planos sale "11" en vez de "1 of 1": corregir a mano.
+- P3 y P4 siguen con el riel anterior.
+
+Detalle y cola: `docs/HANDOFF_siguiente.md`. Bloqueos: `docs/PENDIENTES.md`. Decisiones: `docs/DECISIONES.md` (raíz).
 
 ---
 
