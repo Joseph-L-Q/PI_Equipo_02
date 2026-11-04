@@ -21,7 +21,7 @@ La Caja Negra muestra las entradas y salidas principales que interactúan con nu
 
 Es el diagrama de bloques que muestra cómo funciona el sistema internamente dividiéndose por módulos.
 
-<img width="2320" height="2227" alt="Esquema de funciones" src="https://github.com/user-attachments/assets/0278e1ff-b66a-468c-83db-0fd8aa2daa1d" />
+<img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/3f6ca343-322f-41d5-8032-b7a748461584" />
 
 ### Módulos del Sistema:
 * **Módulo Mecánico:** Encargado de la hermeticidad de la carcasa bajo el agua, la barrera contra el biofouling y el soporte físico de los componentes.
