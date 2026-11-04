@@ -57,7 +57,8 @@
 
 ## Presentación
 
-LanternGuard es una propuesta tecnológica orientada al monitoreo periódico de la bioincrustación en las mallas de las linternas utilizadas para el cultivo suspendido de concha de abanico (*Argopecten purpuratus*). El sistema contempla la integración de cámaras submarinas, sensores complementarios y tecnologías de comunicación para obtener información visual sobre el estado de estas estructuras.
+LanternGuard es una propuesta tecnológica orientada al monitoreo periódico de la bioincrustación en las mallas de las linternas utilizadas para el cultivo suspendido de concha de abanico (*Argopecten purpuratus*). El sistema contempla la integración de dos cámaras submarinas Arducam Mega de 5 MP, un acelerómetro LIS3DH y tecnologías de comunicación para obtener información sobre el estado de las regiones observadas de las mallas. Mediante el procesamiento digital de imágenes, se propone estimar el porcentaje de cobertura visible y desarrollar un algoritmo propio para estimar el volumen de bioincrustación acumulada en dichas regiones. Esta información permitirá apoyar las decisiones de inspección y mantenimiento, sin que LanternGuard realice actividades de limpieza.
+
 
 La presente propuesta se formula considerando los indicadores referenciales del nivel de madurez tecnológica TRL 2 establecidos en el Anexo 1 de la Directiva N.º 001-2022-CONCYTEC-P [\[1\]](#ref-1).
 
@@ -80,6 +81,8 @@ Qiu, Pakrashi y Ghosh [\[4\]](#ref-4) desarrollaron un procedimiento para evalua
 De manera complementaria, Cappaert et al. [\[5\]](#ref-5) desarrollaron una herramienta de procesamiento de imágenes para estimar la oclusión en redes utilizadas en la acuicultura de salmones. Su procedimiento emplea técnicas de segmentación basadas en aprendizaje profundo para diferenciar regiones de agua y no agua, considerando además el área ocupada por la estructura de la malla. Los autores reportaron una precisión media de prueba cercana al 93,5 % en la clasificación de píxeles de las imágenes evaluadas. Este estudio proporciona fundamentos para la identificación y clasificación de elementos presentes en fotografías submarinas, aspectos relevantes para el análisis visual propuesto en LanternGuard.
 
 A partir de estos antecedentes, LanternGuard propone analizar fotografías submarinas para identificar las zonas visibles cubiertas por organismos incrustantes y estimar su proporción respecto al área de referencia seleccionada para el análisis. Para ello, se contempla la delimitación de regiones de interés, la diferenciación entre los organismos y la estructura de la malla, así como el tratamiento de variaciones de iluminación, turbidez y perspectiva. Estos criterios permitirán orientar la definición conceptual del procedimiento de procesamiento de imágenes.
+
+De manera complementaria, LanternGuard contempla desarrollar un algoritmo propio orientado a estimar el volumen de bioincrustación acumulada sobre las regiones fotografiadas de las mallas. A diferencia del porcentaje de cobertura visible, la estimación volumétrica requerirá establecer criterios geométricos, referencias de escala y un procedimiento de cálculo que considere las limitaciones de las imágenes submarinas. Esta función se encuentra en etapa conceptual y su metodología y precisión deberán validarse posteriormente.
 
 ### 1.3. Sustento para la arquitectura de adquisición y comunicación
 
@@ -154,9 +157,9 @@ Por otro lado, el software original desarrollado para la adquisición y el proce
 
 En el cultivo suspendido de concha de abanico (*Argopecten purpuratus*), las mallas de las linternas están expuestas a la acumulación de organismos incrustantes que pueden obstruir progresivamente sus aberturas. Las investigaciones sobre bioincrustación han evidenciado la importancia de este fenómeno en las estructuras acuícolas y su relación con las condiciones de cultivo y circulación del agua [\[2\]](#ref-2), [\[3\]](#ref-3). Ante esta problemática, se identifica la necesidad de disponer de información visual periódica y comparable sobre el estado de las mallas para apoyar la planificación de las inspecciones y actividades de mantenimiento.
 
-**Objetivo general.** Formular conceptualmente un sistema de monitoreo periódico de la bioincrustación en las mallas de las linternas utilizadas para el cultivo de *Argopecten purpuratus*, mediante la captura de imágenes submarinas y mediciones complementarias, con la finalidad de estimar el porcentaje de cobertura visible por organismos incrustantes en las regiones observadas y proporcionar información que apoye las decisiones de inspección y mantenimiento.
+**Objetivo general.** Formular conceptualmente un sistema de monitoreo periódico de la bioincrustación en las mallas de las linternas utilizadas para el cultivo de *Argopecten purpuratus*, mediante la captura y el procesamiento de imágenes submarinas y el registro de mediciones complementarias, con la finalidad de estimar el porcentaje de cobertura visible y desarrollar un algoritmo propio orientado a estimar el volumen de bioincrustación acumulada en las regiones observadas, proporcionando información que apoye las decisiones de inspección y mantenimiento.
 
-**Alcance.** La propuesta se centra en la estimación de la cobertura visible de bioincrustación en las regiones de malla capturadas por las cámaras, por lo que sus resultados no representarán necesariamente el estado completo de cada linterna ni la cantidad total de organismos incrustantes presentes. Asimismo, LanternGuard está orientado al monitoreo de la bioincrustación y no contempla realizar actividades de limpieza.
+**Alcance.** La propuesta comprende el monitoreo periódico de regiones seleccionadas de las mallas mediante dos cámaras submarinas y el registro del movimiento del módulo mediante el acelerómetro LIS3DH. Se contempla estimar el porcentaje de cobertura visible y el volumen de bioincrustación acumulada mediante procesamiento digital de imágenes. Los resultados corresponderán a las regiones analizadas y no representarán necesariamente la totalidad de la linterna. La metodología de estimación volumétrica deberá desarrollarse y validarse en etapas posteriores. LanternGuard está orientado al monitoreo y no contempla realizar la limpieza de las mallas de cultivo.
 
 ### 3.2. Arquitectura funcional propuesta
 
@@ -169,7 +172,8 @@ LanternGuard se organiza en cuatro elementos principales: módulo sumergido, boy
 | **Módulo sumergido** | ESP32-S3-DevKitC-1-N16R8, dos cámaras Arducam Mega 5 MP, acelerómetro LIS3DH, microSD, iluminación y transceptor MAX3485. Integración mediante placa universal perforada. | Capturar imágenes submarinas, registrar mediciones complementarias, almacenar temporalmente la información y transferirla a la boya mediante RS-485. |
 | **Boya de superficie** | Heltec WiFi LoRa 32 V3, RTC DS3231, transceptor MAX3485 y PCB personalizada. Se contempla alimentación mediante panel solar, batería y circuito de gestión energética, además de almacenamiento temporal. | Coordinar las inspecciones programadas, recibir los datos y fotografías del módulo sumergido, conservarlos temporalmente y enviar mediante LoRa información resumida de las inspecciones; las fotografías completas se recuperarían por transferencia local posterior. |
 | **Estación receptora terrestre** | Receptor Heltec WiFi LoRa 32 V3 y equipo informático con acceso a internet. | Recibir por LoRa los mensajes breves de las inspecciones y gestionar, después de la recuperación local de las fotografías completas, su envío al servicio de procesamiento. |
-| **Servicio de procesamiento de imágenes** | Sistema de almacenamiento y procesamiento digital de imágenes, por configurar. | Procesar las fotografías recibidas, identificar las regiones cubiertas por organismos incrustantes, estimar el porcentaje de cobertura visible de bioincrustación y presentar los resultados del monitoreo. |
+| **Servicio de procesamiento de imágenes** | Sistema de almacenamiento y procesamiento digital de imágenes, por configurar, que contempla el desarrollo de un algoritmo propio de estimación volumétrica. | Procesar las fotografías recuperadas, identificar las regiones cubiertas por organismos incrustantes, estimar el porcentaje de cobertura visible y desarrollar la estimación del volumen de bioincrustación acumulada en las regiones analizadas, para presentar los resultados en el aplicativo. |
+
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia a partir de la arquitectura conceptual propuesta para LanternGuard.</em></p>
 
@@ -184,6 +188,8 @@ LanternGuard contempla realizar inspecciones periódicas cada 15 días, con una 
 Las fotografías y mediciones obtenidas se almacenarían inicialmente en una tarjeta microSD del módulo sumergido y posteriormente se transferirían a la boya mediante comunicación RS-485. La boya conservaría temporalmente las fotografías completas; estas no se enviarían por LoRa, sino que se recuperarían mediante una transferencia local posterior, cuyo medio aún debe definirse. El enlace LoRa se reservaría para mensajes breves de estado y metadatos de las inspecciones, así como indicadores resumidos cuando estén disponibles. Una vez recibidas las fotografías completas en tierra, se gestionarían su almacenamiento y envío al servicio de procesamiento de imágenes, donde se estimaría la cobertura visible de bioincrustación para presentarla en el aplicativo. Los cinco minutos previstos corresponden únicamente a la adquisición de información y no incluyen las etapas posteriores de transferencia y procesamiento.
 
 El indicador principal de LanternGuard será el porcentaje estimado de cobertura visible por bioincrustación en regiones seleccionadas de las mallas. Para su obtención, se propone analizar las fotografías mediante técnicas de procesamiento de imágenes que permitan identificar las zonas ocupadas por organismos incrustantes y diferenciarlas de la estructura de la malla. El cálculo se planteará a partir de la proporción de área visible cubierta por bioincrustación respecto al área de referencia definida para cada región de análisis. Asimismo, se contempla comparar regiones equivalentes en inspecciones sucesivas, considerando las variaciones de iluminación, turbidez y perspectiva. La definición del procedimiento se apoyará en los antecedentes de análisis de imágenes submarinas [\[4\]](#ref-4), [\[5\]](#ref-5).
+
+Como indicador complementario, se propone estimar el volumen de bioincrustación acumulada sobre las regiones fotografiadas de las mallas, mediante un algoritmo propio desarrollado por el equipo. Su formulación requerirá definir un procedimiento de estimación geométrica, referencias de escala y criterios para interpretar las imágenes obtenidas. Esta estimación se realizaría en el servicio de procesamiento de imágenes, una vez recuperadas las fotografías completas. El algoritmo, sus requerimientos técnicos y su precisión deberán desarrollarse y validarse en etapas posteriores.
 
 El acelerómetro LIS3DH permitiría registrar información sobre el movimiento del módulo durante la captura. Esta variable complementaría el análisis visual, sin sustituir la estimación de cobertura obtenida mediante las fotografías.
 
@@ -240,6 +246,40 @@ La Figura 2 presenta el esquema de funciones de LanternGuard, mostrando las rela
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia. Se representan los bloques de sensores, actuadores, control y procesamiento, módulo eléctrico, módulo mecánico y comunicación, así como sus relaciones mediante flujos de energía, materia, información y señales. El esquema incluye la captura de imágenes submarinas, el registro de movimiento mediante el acelerómetro LIS3DH, la protección de los componentes frente al entorno marino, la gestión energética y la estimación propuesta de cobertura visible y volumen de bioincrustación. Las funciones de estimación volumétrica, comunicación y notificación deberán desarrollarse y validarse en etapas posteriores.</em></p>
+
+#### Matriz morfológica del sistema LanternGuard
+
+La matriz morfológica de LanternGuard se elaboró a partir del análisis funcional del sistema, con la finalidad de identificar y comparar alternativas tecnológicas para el monitoreo de la bioincrustación en las mallas de las linternas utilizadas para el cultivo de concha de abanico (*Argopecten purpuratus*). Esta herramienta permite organizar las posibles soluciones de cada función y establecer combinaciones que orientan el diseño conceptual del dispositivo.
+
+La matriz presenta 16 funciones distribuidas en seis módulos: sensores, actuadores, control y procesamiento, módulo eléctrico, módulo mecánico y comunicación. Para cada función se plantearon tres alternativas, denominadas Solución 1, Solución 2 y Solución 3, identificadas mediante códigos de portadores de función y representadas por líneas verticales de color rojo, verde y azul, respectivamente.
+
+En el **módulo de sensores**, se presentan alternativas para registrar el movimiento y capturar imágenes submarinas. La Solución 1 contempla el acelerómetro LIS3DH y dos cámaras Arducam Mega de 5 MP con enfoque automático, componentes considerados en el diseño de LanternGuard.
+
+El **módulo de actuadores** comprende la función de encender la iluminación durante las capturas fotográficas. Se comparan alternativas de iluminación LED, seleccionándose en la primera solución un aro LED de luz blanca para favorecer la observación de las regiones de las mallas.
+
+En el **módulo de control y procesamiento**, se presentan alternativas para controlar el módulo sumergido, gestionar la comunicación y supervisión desde la boya, así como procesar la información obtenida. La Solución 1 contempla el ESP32-S3-DevKitC-1-N16R8 para el módulo sumergido y la placa Heltec WiFi LoRa 32 V3 para la boya. Asimismo, se considera la función de estimar la cobertura visible y el volumen de bioincrustación mediante un algoritmo propio. De acuerdo con la arquitectura conceptual, el análisis de las fotografías completas se realizaría posteriormente en un servicio de procesamiento, cuyo desarrollo y validación están pendientes.
+
+La matriz también considera la **gestión de los ciclos de trabajo y suspensión**, proponiendo en la primera solución inspecciones periódicas mediante programación temporal y modos de ahorro energético. Esta función permitirá organizar la activación del sistema durante los periodos previstos para la adquisición de información.
+
+En el **módulo eléctrico**, se comparan alternativas de almacenamiento y acondicionamiento de energía. La propuesta contempla una batería recargable de ion-litio, circuitos de regulación eléctrica y el aprovechamiento de energía solar para contribuir a la alimentación del sistema. La configuración definitiva de la gestión energética deberá completarse y verificarse durante el desarrollo de la propuesta.
+
+El **módulo mecánico** comprende las funciones de sostener y proteger los componentes, garantizar la hermeticidad subacuática, reducir la adherencia de bioincrustación y mantener las condiciones de las ventanas ópticas. Para la fabricación de la carcasa se consideran PETG, ABS y ASA. El equipo seleccionó PETG como material de referencia por su disponibilidad, facilidad de fabricación mediante impresión 3D y conveniencia económica para el proyecto. Asimismo, se plantean alternativas de ventanas transparentes y tratamientos superficiales destinados a disminuir la adherencia de organismos incrustantes sobre las zonas de captura. La eficacia y compatibilidad de estos tratamientos deberán evaluarse posteriormente.
+
+Finalmente, el **módulo de comunicación** contempla alternativas para transmitir información, almacenar registros y notificar al usuario. La arquitectura seleccionada de LanternGuard utiliza comunicación LoRa para enviar mensajes breves y metadatos de las inspecciones, mientras que las fotografías completas se conservarían para una transferencia local posterior, cuyo medio específico aún debe definirse. También se propone utilizar almacenamiento microSD y un aplicativo LanternGuard para visualizar la información obtenida. Como alternativas de presentación se consideran un dashboard web y un bot de WhatsApp.
+
+Las tres soluciones se representan mediante rutas verticales que permiten identificar las alternativas correspondientes a cada función. La tabla inferior presenta la secuencia de códigos de los portadores de función utilizados en cada combinación.
+
+De las alternativas planteadas, el equipo adoptó la **Solución 1** como base del diseño conceptual de LanternGuard, considerando la compatibilidad de sus principales componentes con la arquitectura propuesta, su disponibilidad y las condiciones económicas del proyecto. Esta selección orienta los modelos tridimensionales y los diseños electrónicos presentados en los siguientes apartados.
+
+La Figura 3 presenta la matriz morfológica de LanternGuard, mostrando las funciones consideradas, las alternativas tecnológicas propuestas y las tres rutas de solución.
+
+<p align="center"><strong><em>Figura 3. Matriz morfológica del sistema LanternGuard.</em></strong></p>
+
+<p align="center">
+<img width="1133" height="1388" alt="image" src="https://github.com/user-attachments/assets/a02a78c8-6fab-4a22-adc0-afaa2d7d666d" />
+</p>
+
+<p align="center"><em><strong>Nota.</strong> Elaboración propia. La matriz presenta 16 funciones organizadas en seis módulos funcionales, con tres alternativas de solución para cada función. Las líneas roja, verde y azul representan las combinaciones propuestas. La Solución 1 corresponde a la configuración elegida como referencia por el equipo. La estimación volumétrica, los tratamientos de protección superficial y determinados aspectos de comunicación y gestión energética requieren desarrollo o validación posterior.</em></p>
 
 ### 3.4. Representación del modelado tridimensional
 
@@ -709,7 +749,7 @@ En conjunto, los modelos tridimensionales y los esquemáticos electrónicos perm
 
 ### 3.7. Propuesta preliminar de interfaz del aplicativo LanternGuard
 
-Como complemento de la arquitectura tecnológica de LanternGuard, se propone el desarrollo de un aplicativo destinado a visualizar y organizar la información obtenida durante las inspecciones de las linternas de cultivo. Su finalidad será presentar el porcentaje estimado de cobertura visible por bioincrustación (biofouling) en las regiones de malla fotografiadas, facilitando al acuicultor el seguimiento de la acumulación de organismos incrustantes y la evaluación de la necesidad de realizar actividades de limpieza.
+Como complemento de la arquitectura tecnológica de LanternGuard, se propone el desarrollo de un aplicativo destinado a visualizar y organizar la información obtenida durante las inspecciones de las linternas de cultivo. Su finalidad será presentar el porcentaje estimado de cobertura visible por bioincrustación y, cuando el algoritmo correspondiente haya sido desarrollado y validado, el volumen estimado de bioincrustación acumulada en las regiones fotografiadas. Esta información permitirá al acuicultor realizar el seguimiento del estado de las mallas y apoyar las decisiones relacionadas con su inspección y mantenimiento.
 
 La interfaz propuesta contempla un panel de monitoreo que presenta la cantidad de linternas registradas, las fechas de captura y los indicadores de biofouling. Asimismo, incorpora la visualización de fotografías submarinas, gráficos de evolución temporal y una sección de comparación de imágenes correspondientes a diferentes inspecciones. Esta organización busca facilitar la interpretación de la información y el seguimiento de los cambios observados en las mallas.
 
