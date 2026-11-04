@@ -65,8 +65,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P04_probeta_gancho.3mf"
   },
   "P05_probeta_bahia_botella": {
-   "g": 45.1,
-   "h": 2.13,
+   "g": 51.2,
+   "h": 2.38,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -143,8 +143,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P09_tapa_caja.3mf"
   },
   "P10_caja": {
-   "g": 509.2,
-   "h": 16.13,
+   "g": 509.3,
+   "h": 16.06,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -184,37 +184,51 @@
    ],
    "tresmf": "salida/imprimir_hoy/3mf/P12_rieles_con_gancho.3mf"
   },
-  "P14_boya_casco": {
-   "g": 213.6,
-   "h": 7.38,
-   "veces": 1,
+  "P14_boya_casco_mitad": {
+   "g": 264.2,
+   "h": 10.34,
+   "veces": 2,
    "relleno": 40,
    "soportes": true,
    "piezas": [
     [
-     "salida/imprimir_hoy/18_B1_casco_x1.stl",
-     1
+     "salida/imprimir_hoy/18_B1_casco_x2.stl",
+     2
     ]
    ],
-   "tresmf": "salida/imprimir_hoy/3mf/P14_boya_casco.3mf"
+   "tresmf": "salida/imprimir_hoy/3mf/P14_boya_casco_mitad.3mf"
   },
-  "P15_boya_cubierta": {
-   "g": 119.0,
-   "h": 5.8,
+  "P15_boya_cubierta_lisa": {
+   "g": 63.3,
+   "h": 3.8,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
    "piezas": [
     [
-     "salida/imprimir_hoy/19_B2_cubierta_x1.stl",
+     "salida/imprimir_hoy/19_B2_cubierta_lisa_x1.stl",
      1
     ]
    ],
-   "tresmf": "salida/imprimir_hoy/3mf/P15_boya_cubierta.3mf"
+   "tresmf": "salida/imprimir_hoy/3mf/P15_boya_cubierta_lisa.3mf"
+  },
+  "P19_boya_cubierta_mastil": {
+   "g": 78.7,
+   "h": 4.4,
+   "veces": 1,
+   "relleno": 40,
+   "soportes": false,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/24_B2_cubierta_mastil_x1.stl",
+     1
+    ]
+   ],
+   "tresmf": "salida/imprimir_hoy/3mf/P19_boya_cubierta_mastil.3mf"
   },
   "P16_boya_caja_y_tapa": {
-   "g": 227.8,
-   "h": 7.44,
+   "g": 230.1,
+   "h": 7.57,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -230,23 +244,37 @@
    ],
    "tresmf": "salida/imprimir_hoy/3mf/P16_boya_caja_y_tapa.3mf"
   },
-  "P17_boya_cunas": {
-   "g": 282.0,
-   "h": 10.03,
+  "P17_boya_cunas_base": {
+   "g": 145.7,
+   "h": 5.96,
    "veces": 2,
    "relleno": 40,
-   "soportes": true,
+   "soportes": false,
    "piezas": [
     [
-     "salida/imprimir_hoy/22_B5_cuna_x2.stl",
+     "salida/imprimir_hoy/22_B5_cuna_base_x2.stl",
      2
     ]
    ],
-   "tresmf": "salida/imprimir_hoy/3mf/P17_boya_cunas.3mf"
+   "tresmf": "salida/imprimir_hoy/3mf/P17_boya_cunas_base.3mf"
+  },
+  "P20_boya_cunas_cuello": {
+   "g": 152.5,
+   "h": 6.04,
+   "veces": 2,
+   "relleno": 40,
+   "soportes": false,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/25_B5_cuna_cuello_x2.stl",
+     2
+    ]
+   ],
+   "tresmf": "salida/imprimir_hoy/3mf/P20_boya_cunas_cuello.3mf"
   },
   "P18_boya_correas": {
-   "g": 20.1,
-   "h": 0.86,
+   "g": 20.4,
+   "h": 0.87,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -260,7 +288,7 @@
   }
  },
  "total": {
-  "g": 2468.5,
-  "h": 84.69
+  "g": 2567.1,
+  "h": 92.34
  }
 }
