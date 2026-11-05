@@ -1,0 +1,29 @@
+LanternGuard - placas para imprimir (05/11/2026, diseño para mar)
+
+USAR SOLO ESTOS ARCHIVOS. imprimir_hoy_2026-11-04_noche y las carpetas anteriores son versiones viejas (copia en OLD/).
+Bambu Lab P1P, boquilla 0,4, PETG. Cada 3MF ya trae el perfil de esa placa. Las piezas estancas (caja, tapa, rieles, capsulas, tapas con pie, caja y tapa de la boya) van con 4 perimetros, 5 capas arriba y abajo, relleno 100 %.
+Orden: 1 probetas (P01-P05), 2 piezas sin medidas pendientes, 3 rieles (P12) despues de medir el aro, 4 boya, 5 skin.
+Cambios del 05/11: caja M1s y tapa M2 con chaflan de 6 mm en las esquinas (P09, P10); casco B1 con postes de 16 mm y parches de amarre (P14); cubiertas B2 con barras de 26 x 20 mm, columnas de 14 mm y tirantes (P15, P19).
+
+P01_probetas_calibracion                10.1 g   0.58 h  S/   0.61  sin soportes
+P02_probeta_inserto_M4                  22.8 g   0.86 h  S/   1.37  sin soportes
+P03_probeta_junta                       57.1 g   1.41 h  S/   3.43  sin soportes
+P04_probeta_gancho                     100.9 g   3.21 h  S/   6.05  con soportes
+P05_probeta_bahia_botella               68.3 g   3.03 h  S/   4.10  sin soportes
+P06_bisel_y_bandejas                    80.3 g   2.98 h  S/   4.82  sin soportes
+P07_tapas_bolsillo                      84.5 g   1.63 h  S/   5.07  sin soportes
+P13_marcos_bolsillo                    102.6 g   3.77 h  S/   6.16  sin soportes
+P08_capsulas                           154.5 g   3.97 h  S/   9.27  con soportes
+P09_tapa_caja                          194.1 g   4.80 h  S/  11.65  con soportes
+P10_caja                               436.2 g   9.25 h  S/  26.17  con soportes
+P11_tapas_capsula_con_pie              194.4 g   5.32 h  S/  11.66  con soportes
+P12_rieles_con_gancho                  434.2 g  12.11 h  S/  26.05  con soportes
+P14_boya_casco_mitad                   343.7 g  14.29 h  S/  20.62  con soportes  (2 veces; los gramos ya son de las 2)
+P15_boya_cubierta_lisa                 209.3 g  10.39 h  S/  12.56  sin soportes
+P19_boya_cubierta_mastil               229.5 g  11.36 h  S/  13.77  sin soportes
+P16_boya_caja_y_tapa                   358.5 g   7.86 h  S/  21.51  sin soportes
+P17_boya_cunas_base                    158.6 g   6.51 h  S/   9.52  sin soportes  (2 veces; los gramos ya son de las 2)
+P20_boya_cunas_cuello                  162.9 g   6.56 h  S/   9.77  sin soportes  (2 veces; los gramos ya son de las 2)
+P18_boya_correas                        24.1 g   1.05 h  S/   1.45  sin soportes
+
+TOTAL 3426.6 g, 110.9 h, S/ 205.60 a S/ 60 el kg. Rollos de 1 kg: 4 (con 10 % de purga y pruebas).

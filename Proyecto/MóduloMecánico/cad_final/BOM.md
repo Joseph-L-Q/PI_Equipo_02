@@ -10,9 +10,9 @@ No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `s
 | linterna de prueba | 0 | 0.0 | 0.00 |
 | boya simple | 1943 | 129.5 | 116.59 |
 | modular D200 | 1229 | 82.0 | 73.76 |
-| nodo P2 robusto | 1684 | 45.0 | 101.03 |
+| nodo P2 robusto | 1683 | 45.0 | 100.98 |
 | nodo P4 estetico | 1352 | 46.0 | 81.11 |
-| boya PET 4 x 1 L | 1105 | 46.9 | 66.28 |
+| boya PET 4 x 1 L | 1385 | 59.7 | 83.08 |
 
 **Lo que se imprime hoy: nodo P2 robusto + boya PET 4 x 1 L** (mas las probetas; total por placa en `salida/imprimir_hoy/3mf/placas.json`). Las otras filas son versiones anteriores, solo para comparar: no se suman.
 
@@ -52,7 +52,7 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M12_perilla | modular D200 | 4 | 30.0 × 30.0 × 12.0 | 6.7 | X180 | no | 40 % | 6 | estimado |
 | M13_casquillo_D8 | modular D200 | 2 | 15.7 × 20.0 × 13.5 | 1.6 | X-90 | no | 40 % | 2 | estimado |
 | M14_pestillo | modular D200 | 2 | 12.0 × 35.2 × 3.6 | 0.9 | X+90 | no | 40 % | 1 | estimado |
-| M1s_caja_cuerpo | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 437 | slicer |
+| M1s_caja_cuerpo | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 436 | slicer |
 | M2_caja_tapa | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 194 | slicer |
 | M3s_riel_gancho | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 217 | slicer |
 | M3t_tapa_bolsillo | nodo P2 robusto | 2 | - | - | slicer | no | 100 % | 42 | slicer |
@@ -71,9 +71,9 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M11_bandeja_sup | nodo P4 estetico | 1 | - | - | slicer | no | 40 % | 31 | slicer |
 | M4_capsula_cuerpo | nodo P4 estetico | 2 | - | - | slicer | si | 100 % | 60 | slicer |
 | M6_capsula_bisel | nodo P4 estetico | 2 | - | - | slicer | no | 40 % | 2 | slicer |
-| B1_casco | boya PET 4 x 1 L | 2 | - | - | slicer | si | 40 % | 148 | slicer |
-| B2_cubierta_lisa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 93 | slicer |
-| B2_cubierta_mastil | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 117 | slicer |
+| B1_casco | boya PET 4 x 1 L | 2 | - | - | slicer | si | 40 % | 173 | slicer |
+| B2_cubierta_lisa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 210 | slicer |
+| B2_cubierta_mastil | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 230 | slicer |
 | B3_caja | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 175 | slicer |
 | B4_tapa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 79 | slicer |
 | B5_cuna_base | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 79 | slicer |
@@ -103,7 +103,7 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | nodo simple | Lastre a granel: tuercas y arandelas M8 de inox | 1140 g | 1 |
 | boya PET 4 x 1 L | Tornillo M3 x 25 inox A2 + tuerca (union de las mitades de B1, columnas del canal y almohadillas) | M3 | 6 |
 | boya PET 4 x 1 L | Pin impreso de alineacion de B1 (sin ferreteria; Ø5) | Ø5 | 2 |
-| boya PET 4 x 1 L | Tornillo M3 x 16 inox A2 + inserto M3 (B2, cada mitad a sus 4 postes de B1) | M3 | 8 |
+| boya PET 4 x 1 L | Tornillo M3 x 30 inox A2 + inserto M3 (B2, cada mitad a sus 4 postes de B1; las barras altas pasan de 8 mm) | M3 | 8 |
 | boya PET 4 x 1 L | Tornillo M3 x 12 inox A2 + inserto M3 (orejas de B3 a los pilares de B2) | M3 | 4 |
 | boya PET 4 x 1 L | Tornillo M3 x 16 inox A2 + inserto M3 ciego (tapa B4 a la brida de B3) | M3 | 14 |
 | boya PET 4 x 1 L | Tornillo M3 x 8 inox A2 + inserto M3 (portabaterias a los standoffs de B3) | M3 | 4 |
@@ -115,8 +115,9 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | boya PET 4 x 1 L | Cordon de junta torica Ø2 NBR (tapa B4, +10 %) | 540 mm | 1 |
 | boya PET 4 x 1 L | Prensaestopas PG7 con contratuerca (B3: umbilical, cable solar, pigtail de antena) | PG7 | 3 |
 | boya PET 4 x 1 L | Botella PET de 1 L, tapon de fabrica sellado | 1 L | 4 |
-| boya PET 4 x 1 L | Espuma de poliuretano en spray (relleno de huecos del casco) | 909 cm3 | 1 |
-| boya PET 4 x 1 L | Ojal de amarre: grillete inox A2 al parche del casco (pata de gallo, uno por mitad) | Ø10.5 | 2 |
+| boya PET 4 x 1 L | Espuma de poliuretano de celda cerrada en spray, 30 kg/m3 (OBLIGATORIA: rellena todos los huecos entre botellas y ranuras de las 4 bahias; 55 g). Comprar 1 lata de 750 ml (rinde unos 1500 a 2500 cm3 libres): alcanza para un llenado | 1818 cm3 | 1 |
+| boya PET 4 x 1 L | Ojal de amarre: tornillo M10 inox A2 con arandela grande Ø30 y tuerca nylock, al parche del casco (uno por mitad), con grillete inox A2 | Ø10.5 | 2 |
+| boya PET 4 x 1 L | Pata de gallo de amarre: 2 ramales de cabo trenzado Ø6 de 350 mm (rotura >= 3 kN cada uno), ojo cosido en cada punta; angulo entre ramales 60 grados (cada ramal lleva 300/(2 cos 30) = 173 N con el tiron de diseno de 300 N); se unen en un anillo inox A2 al que va el cabo C1 | 350 mm | 2 |
 | boya PET 4 x 1 L | Manguera flexible U1 de referencia | Ø10 | 1 |
 | boya PET 4 x 1 L | Cabo de amarre C1 boya-linterna | Ø4 | 1 |
 | modular D200 | Tornillo M3 x 12 + inserto termico M3 (tapa de la caja) | M3 | 12 |

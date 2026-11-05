@@ -5,13 +5,13 @@ Modo sin API de Onshape: las piezas cambiadas quedan como STEP con `IMPORTAR.md`
 | Bloque | Estado |
 |---|---|
 | 1 Diseño para mar | Hecho. Panel lateral 200 N: FS 3,02 entre capas (era 0,41). Ola sobre la cubierta: FS 3,7. Cabo 300 N con pata de gallo de dos ramales: FS 3,2. Espuma PU obligatoria: con una botella perdida GM 85/506 mm (era 38). Holgura cuerda-caja 3,2 mm con chaflán de 6 mm en M1s y M2 |
-| 2 Regenerar y publicar | En curso |
+| 2 Regenerar y publicar | Hecho. 20 placas sin fallas: 3427 g, 110,9 h, S/ 206 (4 rollos de 1 kg). Cubiertas B2 sin soportes (0,1 y 0,4 %). 5 STEP + `00_ENSAMBLE` (32 sólidos) con `IMPORTAR.md` en Drive `01_Onshape_importar/2026-11-05/`. `PLANOS_A4_LanternGuard_v6.pdf` en `04_Planos`. STL por pieza, visor, BITACORA, BOM, BOYA.pdf, reporte de SimScale y CARGAS_CONJUNTO subidos; lo viejo en `OLD/2026-11-05/` |
 | 3 Cierre | Pendiente |
 
 **Problemas abiertos:**
 - Si la espuma llena solo la mitad de los huecos, la boya vuelca al perder una botella. Control al armar: pesar la lata antes y después (≥ 55 g de espuma).
 - Con una botella perdida la boya escora 11,6° (criterio propio 10°).
-- La boya impresa pesa 1394 g (antes 1105 g) y tarda 60 h.
+- La boya impresa pesa 1385 g (antes 1105 g) y tarda 59,7 h.
 
 ---
 

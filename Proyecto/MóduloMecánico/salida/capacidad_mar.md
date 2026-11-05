@@ -4,11 +4,11 @@ Cada parrafo dice hasta que fuerza llega la pieza antes de que sus capas se desp
 
 ## Golpe lateral sobre el panel (B2, cada mitad con los 200 N enteros)
 
-La carga del caso es 200 N y las capas aguantan 3.0 veces eso: la pieza llega hasta unos 604 N y lo seguro es no pasar de 201 N. Eso equivale a agua empujando a 4.4 m/s (la pieza llegaria al limite con 7.5 m/s); en olas seria una ola de unos 5.55 m con 4 s entre crestas o de unos 8.32 m con 6 s. Area de lo que queda sobre el agua visto de lado (caja y tapa 147 x 81 mm, 2 columnas, mastil, canto del panel) = 173 cm2, Cd 1.2; velocidad del agua que la empuja con la carga segura; ola de aguas profundas, v = pi*H/T. Cada mitad se calcula con los 200 N enteros (en la boya completa se reparten entre las dos), asi que es conservador.
+La carga del caso es 200 N y las capas aguantan 3.4 veces eso: la pieza llega hasta unos 684 N y lo seguro es no pasar de 228 N. Eso equivale a agua empujando a 4.6 m/s (la pieza llegaria al limite con 8.0 m/s); en olas seria una ola de unos 5.9 m con 4 s entre crestas o de unos 8.85 m con 6 s. Area de lo que queda sobre el agua visto de lado (caja y tapa 147 x 81 mm, 2 columnas, mastil, canto del panel) = 173 cm2, Cd 1.2; velocidad del agua que la empuja con la carga segura; ola de aguas profundas, v = pi*H/T. Cada mitad se calcula con los 200 N enteros (en la boya completa se reparten entre las dos), asi que es conservador.
 
 ## Golpe de ola vertical sobre las barras de la cubierta (B2, cada mitad con los 200 N enteros)
 
-La carga del caso es 200 N y las capas aguantan 3.7 veces eso: la pieza llega hasta unos 744 N y lo seguro es no pasar de 248 N. Eso equivale a agua empujando a 5.5 m/s (la pieza llegaria al limite con 9.6 m/s); en olas seria una ola de unos 7.06 m con 4 s entre crestas o de unos 10.59 m con 6 s. Area en planta de las barras de una media cubierta = 157 cm2 (el resto es hueco), Cd 1.0, agua que cae a v sobre las barras; v = pi*H/T de una ola de aguas profundas.
+La carga del caso es 200 N y las capas aguantan 4.8 veces eso: la pieza llega hasta unos 958 N y lo seguro es no pasar de 319 N. Eso equivale a agua empujando a 5.8 m/s (la pieza llegaria al limite con 10.1 m/s); en olas seria una ola de unos 7.4 m con 4 s entre crestas o de unos 11.1 m con 6 s. Area en planta de las barras de una media cubierta = 184 cm2 (el resto es hueco), Cd 1.0, agua que cae a v sobre las barras; v = pi*H/T de una ola de aguas profundas.
 
 ## Tiron del cabo de amarre repartido en la pata de gallo (B1, 2 ramales a 60 grados, 173 N cada uno con 300 N de tiron)
 

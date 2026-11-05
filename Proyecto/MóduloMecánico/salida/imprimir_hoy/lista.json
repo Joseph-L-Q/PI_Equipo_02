@@ -163,8 +163,8 @@
   "soportes": true,
   "paredes": 4,
   "grupo": 2,
-  "g": 194.37,
-  "h": 4.813055555555556,
+  "g": 194.13,
+  "h": 4.804166666666666,
   "estanca": true
  },
  {
@@ -175,8 +175,8 @@
   "soportes": true,
   "paredes": 4,
   "grupo": 2,
-  "g": 436.76,
-  "h": 9.268611111111111,
+  "g": 436.17,
+  "h": 9.254166666666666,
   "estanca": true
  },
  {
@@ -211,8 +211,8 @@
   "soportes": true,
   "paredes": 3,
   "grupo": 4,
-  "g": 147.9,
-  "h": 6.03,
+  "g": 172.8,
+  "h": 7.21,
   "estanca": false
  },
  {
@@ -223,8 +223,8 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 92.9,
-  "h": 5.24,
+  "g": 209.7,
+  "h": 10.41,
   "estanca": false
  },
  {
@@ -235,8 +235,8 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 116.6,
-  "h": 6.05,
+  "g": 229.9,
+  "h": 11.38,
   "estanca": false
  },
  {

@@ -249,6 +249,34 @@ def piece_types(sl_node, sl_boya, lista):
     return tipos
 
 
+CAP_NAMES = {"B2_cubierta_lisa_lateral": ("Golpe lateral de ola sobre el panel solar", "B2"),
+             "B2_cubierta_mastil": ("Ola que cae sobre la cubierta", "B2"),
+             "B1_casco_cabo": ("Tirón del cabo de amarre (pata de gallo de 2 ramales)", "B1"),
+             "M5s_capsula_tapa_pie": ("Nodo colgado del gancho con corriente de 1,5 m/s", "M3s, M5s, M1s")}
+
+
+def capacidad():
+    """Rows 'aguanta hasta' for the viewer and the delivery, from salida/capacidad_mar.json (capacidad_mar.py)."""
+    d = rj(MOD / "salida" / "capacidad_mar.json")
+    out = []
+    for c in (d or {}).get("casos", []):
+        nom, pz = CAP_NAMES.get(c["pieza"], (c["caso"], c["pieza"]))
+        e = c.get("equivalente", {})
+        k = lambda v: f"{v:.1f}".replace(".", ",")
+        if "H_T4s_m_segura" in e:
+            eq = (f"agua que golpea a {k(e['velocidad_agua_segura_m_s'])} m/s. Una ola de 4 s rompe antes de los 3 m de alto, "
+                  f"así que aguanta cualquier ola normal de ese periodo; el límite lo pone un golpe directo de ola rompiente")
+        elif "arrastre_a_1_5_m_s_N" in e:
+            eq = (f"la corriente de 1,5 m/s empuja solo {k(e['arrastre_a_1_5_m_s_N'])} N; el límite lo pone el peso colgado, "
+                  f"no la corriente")
+        else:
+            eq = (f"la linterna tendría que arrastrarse en agua a {k(e.get('velocidad_agua_segura_m_s', 0))} m/s, mucho más que "
+                  f"cualquier corriente de la costa; si un ramal se rompe, el margen baja a la mitad")
+        out.append(dict(caso=nom, piezas=pz, carga_N=c["carga_N"], fs_capas=c["fs_capas"], aguanta_N=c["aguanta_hasta_N"],
+                        segura_N=c["segura_N"], equivalente=eq))
+    return out
+
+
 def main():
     t0 = time.time()
     geo = rj(V.SIDECAR)
@@ -494,7 +522,7 @@ def main():
                  no_estanco=no_est, pendiente=pend, pasos=steps, herraje=herraje, totales=tot,
                  impresion=dict(grupos=impresion_grupos, perfil_estanco=perfil, perfiles_orca=orca, tips_estanca=TIPS_ESTANCA,
                                 tips_generales=TIPS_GENERALES, probetas=PROBETAS_ES and {k: dict(nombre=v[0], texto=v[1]) for k, v in PROBETAS_ES.items()}),
-                 pruebas=pruebas, resultados=resultados)
+                 pruebas=pruebas, resultados=dict(resultados, capacidad=capacidad()))
     (OUT / "datos.json").write_text(json.dumps(datos, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     write_html(datos)
     print(f"datos.json {(OUT / 'datos.json').stat().st_size / 1e3:.0f} kB · {len(piezas)} meshes · {len(seals)} sellos · {len(steps)} pasos · "

@@ -914,8 +914,16 @@ def chamfer_for(code):
         return grp(c, {"base de los elementos esbeltos": [c, cm]}, [f"base de elementos esbeltos: {f(c)}", f"(hasta {f(cm)} donde cabe)"])
     if code == "M1s_caja_cuerpo":
         c, cm, w = PR.CHAMFER_BASE, PR.CHAMFER_BASE_MAX, PR.BOX_WINDOW_CHAMFER
-        return grp(w, {"ventana al canal del riel (2 esquinas de arriba)": [w, w], "base de los soportes": [cm, c]},
-                   [f"ventana al canal: {f(w)}", f"base de soportes: {f(c)} a {f(cm)}"])
+        e = PR.BOX_CORNER_CH.get("P2_robusto", 0.0) if isinstance(PR.BOX_CORNER_CH, dict) else PR.BOX_CORNER_CH
+        g = {"ventana al canal del riel (2 esquinas de arriba)": [w, w], "base de los soportes": [cm, c]}
+        lines = [f"ventana al canal: {f(w)}", f"base de soportes: {f(c)} a {f(cm)}"]
+        if e:
+            g["4 esquinas de la brida, en planta"] = [e, e]
+            lines.append(f"esquinas de la brida (planta): {f(e)}")
+        return grp(w, g, lines)
+    if code == "M2_caja_tapa":
+        e = PR.BOX_CORNER_CH.get("P2_robusto", 0.0) if isinstance(PR.BOX_CORNER_CH, dict) else PR.BOX_CORNER_CH
+        return grp(e, {"4 esquinas en planta (holgura de la cuerda)": [e, e]}, [f"4 esquinas en planta: {f(e)}"]) if e else None
     if code == "M3s_riel_gancho":
         t = PR.RAIL_CHAMFER_TOP
         return grp(t, {"canal del riel (2 esquinas de arriba)": [t, t]}, [f"esquinas del canal: {f(t)}"])

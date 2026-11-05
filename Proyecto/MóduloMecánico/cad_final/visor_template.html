@@ -536,6 +536,8 @@ function rResultados(){
   h+=`</div>`;});
  const done=new Set(R.casos.map(c=>c.pieza));const miss=[...new Set(Object.values(P).filter(i=>i.kind==="impresa").map(i=>i.code))].filter(c=>![...done].some(d=>d===c||d.startsWith(c)));
  if(miss.length)h+=`<h3>Sin simulación todavía</h3><div>${miss.map(c=>`<span class="chip">${esc(c)}</span>`).join("")}</div><p class="lead">Pendiente.</p>`;
+ if(R.capacidad&&R.capacidad.length){h+=`<h3>Cuánto aguanta en el mar</h3><p class="lead">«Aguanta hasta» es la fuerza con la que las capas de la impresión empezarían a despegarse. Lo seguro es un tercio de eso.</p>`;
+  R.capacidad.forEach(c=>{h+=`<div class="card"><b>${esc(c.caso)}</b><small>${esc(c.piezas)} · carga de prueba ${nf(c.carga_N,0)} N · margen entre capas ${nf(c.fs_capas,2)}</small><dl><dt>Aguanta hasta</dt><dd>${nf(c.aguanta_N,0)} N</dd><dt>Seguro hasta</dt><dd>${nf(c.segura_N,0)} N</dd><dt>En el mar</dt><dd>${esc(c.equivalente)}</dd></dl></div>`;});}
  if(R.convenciones)h+=`<p class="lead"><small>${esc(R.convenciones)}</small></p>`;
  pbody.innerHTML=h;
 }

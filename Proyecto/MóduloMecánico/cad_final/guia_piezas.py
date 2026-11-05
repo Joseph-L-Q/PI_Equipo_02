@@ -385,7 +385,7 @@ PIEZAS += [
                dict(D=3.4, ax="z"), key="pasos"),
              A("union", "Pilares con inserto M3", "Dos pilares Ø10 bajo las orejas de la caja: inserto M3 (Ø4.0) para el tornillo de la oreja de B3.",
                dict(D=4.0, ax="z", z=(80, 120)), key="pilares"),
-             A("union", "Columnas del panel con inserto M3", f"Dos columnas Ø{PR.PET_COLUMN_D:g} con tirante y marco, e inserto M3 (Ø4.0) en la punta para el panel solar.",
+             A("union", "Columnas del panel con inserto M3", f"Dos columnas Ø{PR.PET_COLUMN_D:g} con tirante, e inserto M3 (Ø4.0) en la punta para el panel solar.",
                dict(D=4.0, ax="z", z=(150, 210)), key="columnas"),
              A("cable", "Hueco del mástil Ø8", f"Mástil Ø{PR.PET_MAST[0]:g} con hueco interior Ø{PR.PET_MAST[1]:g} desde z = 99 hasta la punta. Por dentro sube el pigtail de la antena (un cable corto con el conector de antena).",
                dict(D=8.0, ax="z"), key="mastil", tol=2),

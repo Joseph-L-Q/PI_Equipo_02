@@ -14,23 +14,23 @@
   "nombre": "B2 cubierta lado lisa",
   "qty": 1,
   "orientacion": "sin girar",
-  "soportes": true,
+  "soportes": false,
   "relleno_pct": 40,
-  "g": 213.5,
-  "h": 10.49,
-  "costo_soles": 12.81,
-  "voladizo_mm2": 1938.6
+  "g": 209.7,
+  "h": 10.41,
+  "costo_soles": 12.58,
+  "voladizo_mm2": 140.0
  },
  "B2_cubierta_mastil": {
   "nombre": "B2 cubierta lado mastil",
   "qty": 1,
   "orientacion": "sin girar",
-  "soportes": true,
+  "soportes": false,
   "relleno_pct": 40,
-  "g": 235.8,
-  "h": 11.78,
-  "costo_soles": 14.15,
-  "voladizo_mm2": 1966.9
+  "g": 229.9,
+  "h": 11.38,
+  "costo_soles": 13.8,
+  "voladizo_mm2": 168.3
  },
  "B3_caja": {
   "nombre": "B3 caja seca",

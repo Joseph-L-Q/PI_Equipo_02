@@ -65,8 +65,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P04_probeta_gancho.3mf"
   },
   "P05_probeta_bahia_botella": {
-   "g": 52.5,
-   "h": 2.46,
+   "g": 68.3,
+   "h": 3.03,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -143,8 +143,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P08_capsulas.3mf"
   },
   "P09_tapa_caja": {
-   "g": 194.4,
-   "h": 4.81,
+   "g": 194.1,
+   "h": 4.8,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -157,8 +157,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P09_tapa_caja.3mf"
   },
   "P10_caja": {
-   "g": 436.8,
-   "h": 9.27,
+   "g": 436.2,
+   "h": 9.25,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -199,8 +199,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P12_rieles_con_gancho.3mf"
   },
   "P14_boya_casco_mitad": {
-   "g": 294.0,
-   "h": 11.93,
+   "g": 343.7,
+   "h": 14.29,
    "veces": 2,
    "relleno": 40,
    "soportes": true,
@@ -213,8 +213,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P14_boya_casco_mitad.3mf"
   },
   "P15_boya_cubierta_lisa": {
-   "g": 92.5,
-   "h": 5.22,
+   "g": 209.3,
+   "h": 10.39,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -227,8 +227,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P15_boya_cubierta_lisa.3mf"
   },
   "P19_boya_cubierta_mastil": {
-   "g": 116.2,
-   "h": 6.02,
+   "g": 229.5,
+   "h": 11.36,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -302,7 +302,7 @@
   }
  },
  "total": {
-  "g": 3131.9,
-  "h": 97.53
+  "g": 3426.6,
+  "h": 110.94
  }
 }

@@ -17,16 +17,16 @@
    "caso": "golpe lateral sobre el panel (B2, cada mitad con los 200 N enteros)",
    "pieza": "B2_cubierta_lisa_lateral",
    "carga_N": 200.0,
-   "fs_capas": 3.02,
-   "aguanta_hasta_N": 604,
-   "segura_N": 201,
+   "fs_capas": 3.42,
+   "aguanta_hasta_N": 684,
+   "segura_N": 228,
    "area_proyectada_m2": 0.0173,
    "Cd": 1.2,
    "equivalente": {
-    "velocidad_agua_aguanta_m_s": 7.5,
-    "velocidad_agua_segura_m_s": 4.4,
-    "H_T4s_m_segura": 5.55,
-    "H_T6s_m_segura": 8.32
+    "velocidad_agua_aguanta_m_s": 8.0,
+    "velocidad_agua_segura_m_s": 4.6,
+    "H_T4s_m_segura": 5.9,
+    "H_T6s_m_segura": 8.85
    },
    "justificacion_mar": "Area de lo que queda sobre el agua visto de lado (caja y tapa 147 x 81 mm, 2 columnas, mastil, canto del panel) = 173 cm2, Cd 1.2; velocidad del agua que la empuja con la carga segura; ola de aguas profundas, v = pi*H/T. Cada mitad se calcula con los 200 N enteros (en la boya completa se reparten entre las dos), asi que es conservador."
   },
@@ -34,18 +34,18 @@
    "caso": "golpe de ola vertical sobre las barras de la cubierta (B2, cada mitad con los 200 N enteros)",
    "pieza": "B2_cubierta_mastil",
    "carga_N": 200.0,
-   "fs_capas": 3.72,
-   "aguanta_hasta_N": 744,
-   "segura_N": 248,
-   "area_proyectada_m2": 0.0157,
+   "fs_capas": 4.79,
+   "aguanta_hasta_N": 958,
+   "segura_N": 319,
+   "area_proyectada_m2": 0.0184,
    "Cd": 1.0,
    "equivalente": {
-    "velocidad_agua_aguanta_m_s": 9.6,
-    "velocidad_agua_segura_m_s": 5.5,
-    "H_T4s_m_segura": 7.06,
-    "H_T6s_m_segura": 10.59
+    "velocidad_agua_aguanta_m_s": 10.1,
+    "velocidad_agua_segura_m_s": 5.8,
+    "H_T4s_m_segura": 7.4,
+    "H_T6s_m_segura": 11.1
    },
-   "justificacion_mar": "Area en planta de las barras de una media cubierta = 157 cm2 (el resto es hueco), Cd 1.0, agua que cae a v sobre las barras; v = pi*H/T de una ola de aguas profundas."
+   "justificacion_mar": "Area en planta de las barras de una media cubierta = 184 cm2 (el resto es hueco), Cd 1.0, agua que cae a v sobre las barras; v = pi*H/T de una ola de aguas profundas."
   },
   {
    "caso": "tiron del cabo de amarre repartido en la pata de gallo (B1, 2 ramales a 60 grados, 173 N cada uno con 300 N de tiron)",

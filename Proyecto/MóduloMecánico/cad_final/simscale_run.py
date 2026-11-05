@@ -787,7 +787,7 @@ def process(piece, a, api_holder, state):
 
 LOCAL = {"M3s_riel_gancho": "riel_agua", "M5s_capsula_tapa_pie": "pie"}      # SimScale piece -> case of the local CalculiX (fem.json)
 ORDEN = ["M3s_riel_gancho", "M5s_capsula_tapa_pie", "M1s_caja_cuerpo", "B3_caja", "B2_cubierta_lisa", "B2_cubierta_mastil",
-         "B2_cubierta_lisa_lateral", "B2_cubierta_mastil_lateral"]
+         "B2_cubierta_lisa_lateral", "B2_cubierta_mastil_lateral", "B1_casco_cabo"]
 
 
 CORRECCION_8MM = '### Corrección del mismo día: cubierta de la boya con barras de 8 mm\n\nCon barras de 4 mm la cubierta no aguantaba la ola (tabla de arriba). Por eso **las barras de B2 pasaron de 4 a 8 mm** (`boya_pet.cubierta_espesor`). La boya sigue estable: calado 41,6 mm, francobordo 83,9 mm, GM 101/710 mm, 1014 g impresos.\n\nLa simulación con la cubierta nueva **corrió en SimScale** (proyecto B), pero el plan gratuito no dejó descargar el resultado: devolvió el error 403 «export-source-locked». Por eso se verificó en la computadora con CalculiX, usando el mismo golpe de 200 N sobre las barras y la cubierta sujeta en sus agujeros M3. Antes se comprobó que el cálculo local da lo mismo que SimScale con la cubierta vieja:\n\n| Media cubierta | Barras | σ p99.5 (MPa) | FS = 50/σ p99.5 | σ pico (MPa) | Flecha (mm) | Fuente |\n|---|---|---|---|---|---|---|\n| B2 lisa | 4 mm | 58,6 | 0,85 | 120 | 35,5 | local (SimScale: 58,6 y 34,5: coincide) |\n| B2 lisa | **8 mm** | **16,4** | **3,0** | 38,7 | **5,2** | local |\n| B2 mástil | **8 mm** | **16,3** | **3,1** | 34,1 | **5,3** | local |\n\nLa cubierta de 8 mm **cumple** el golpe vertical de 200 N con FS 3 (sin contar los picos de los bordes de los agujeros), aunque cada mitad recibe los 200 N enteros, lo que es exagerado. Queda pendiente el golpe **lateral** sobre el panel solar, que hace de vela: lo resisten las 4 columnas Ø12 del panel, no las barras. Ver `docs/PENDIENTES.md`.\n\n**Cómo leer «σ máx.» y «σ p99.5».** «σ máx.» es el valor de un solo punto de la malla, en el borde de un agujero o en el lugar donde se aplica la carga. Ese pico sale de cómo se modela, no de la pieza. Por eso el cálculo local usa el percentil 99,5, que ignora el 0,5 % de puntos más altos. Con ese criterio, el riel da FS 11, el pie de la cápsula FS 6,8 y la caja M1s FS 6,5 frente a 50 MPa. Además, el cálculo local verifica la resistencia **entre capas**, que es la mitad: 22 MPa. Ahí el riel da FS 3,2 y el pie FS 3,8.\n'
@@ -827,7 +827,11 @@ def informe():
                     f"{img('condiciones')}\n\n{img('vonmises')}\n\n{img('desplazamiento')}\n\n{img('malla')}\n")
     lat = R.get("B2_cubierta_mastil_lateral") or R.get("B2_cubierta_lisa_lateral")
     lat_txt = ""
-    if lat:
+    if lat and lat["fs_capas"] >= 3:
+        lat_txt = (f"- **Golpe lateral de 200 N sobre el panel: cumple (05/11, diseño para mar).** Panel a 15 mm, columnas Ø14 con chaflán, "
+                   f"4 tirantes y barras altas en las líneas de tornillos. σ sin picos {lat['sigma_p995']:.1f} MPa (FS {lat['fs_p995']:.2f} en el plano, "
+                   f"{lat['fs_capas']:.2f} entre capas), desplazamiento {lat['umax_mm']:.1f} mm, con los 200 N enteros en una sola mitad.")
+    elif lat:
         half = lat["sigma_p995"] / 2
         lat_txt = (f"- **Golpe lateral de 200 N sobre el panel (cubierta de 8 mm): {'cumple' if lat['cumple'] else 'NO cumple'}.** σ sin picos {lat['sigma_p995']:.1f} MPa (FS {lat['fs_p995']:.2f} en el plano, "
                    f"{lat['fs_capas']:.2f} entre capas), desplazamiento {lat['umax_mm']:.0f} mm. Los 200 N entran enteros por las 2 columnas de una sola mitad (exagerado). Si se reparten entre las dos "
