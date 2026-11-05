@@ -124,7 +124,7 @@ def slicer_of(g, stem, slicer):
 
 def hardware(res, rb):
     """[(group, item, size, quantity)] counted from the models where they fix them."""
-    import boya_simple as BS
+    import boya_pet as BP
     import caja_central as CC
     import capsula as CP
     import layout
@@ -136,6 +136,7 @@ def hardware(res, rb):
     _, _, fl_w, fl_h, *_ = CP.cap_dims()
     cap_cord = 2 * ((CP.CAP_CAV_W + fl_w - P.CAP_FLANGE) / 2 + (CP.CAP_CAV_H + fl_h - P.CAP_FLANGE) / 2)
     cord = round((box_cord + 2 * cap_cord) * 1.1 / 10) * 10
+    std_n = lambda t: next(n for n in (6, 8, 10, 12, 16, 20, 25) if n >= t)
     lastre_g = res["lastre"]["total_g"]
     common = [("Tornillo M3 x 12 + inserto termico M3 (tapa de la caja)", "M3", n_lid),
               ("Tornillo M3 x 8 + inserto termico M3 (bandejas)", "M3", n_tray),
@@ -162,20 +163,44 @@ def hardware(res, rb):
     pie = ([("Tornillo M3 x 16 inox A2 + inserto termico M3 (brida del riel a la silla de M5s)", "M3", 8)]
            if P.RAIL_TYPE == "cerrado" else [("Tornillo M4 x 45 + tuerca (pie de las capsulas)", "M4", 4)])
     simple = common + [("Tornillo M4 x 20 + inserto termico M4 (bridas del riel a la caja)", "M4", 8),
-                       ("Tornillo M3 x 8 avellanado + inserto M3 (tapas del bolsillo)", "M3", 4), *pie,
+                       (f"Tornillo M3 x {std_n(P.PLATE_POCKET_WALL + P.M3_INSERT_DEPTH)} inox A2 avellanado + inserto M3 ciego (2 tapas M3t a los marcos M3f)", "M3", 4),
+                       (f"Tornillo M3 x {std_n(P.PLATE_POCKET_WALL + P.M3_INSERT_DEPTH)} inox A2 avellanado + inserto M3 ciego (2 marcos M3f a las orejas de M1s)", "M3", 4), *pie,
                        ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Lastre a granel: tuercas y arandelas M8 de inox", f"{lastre_g:.0f} g", 1)]
-    bl = 2 * ((BS.LI + BS.L) / 2 + (BS.WI + BS.Wd) / 2) * 1.1
-    boya = [("Tornillo M3 x 12 + inserto M3 (tapa de la boya)", "M3", len(BS.screw_pts())),
-            ("Tornillo M3 + inserto M3 (portabaterias y bandeja)", "M3", 8),
-            ("Tornillo M3 x 30 + inserto M3 (largueros a la tapa)", "M3", 4),
-            ("Tornillo M3 + inserto M3 (panel a los largueros)", "M3", 4),
-            ("Perno M5 x 120 inox + inserto M5 (flotadores)", "M5", 8),
-            ("Tornillo M5 + inserto M5 (ojal de amarre)", "M5", 1),
-            ("Cordon de junta torica Ø2 (tapa de la boya, +10 %)", f"{round(bl / 10) * 10:.0f} mm", 1),
-            ("Prensaestopas PG7 (umbilical y panel)", "PG7", 2),
-            ("Tapon de la boca de llenado de los flotadores (o sello con PETG)", "Ø10", 4),
-            ("Manguera flexible U1 de referencia", f"Ø{P.UMB_HOSE_D:g}", 1),
-            ("Cabo de amarre C1 boya-linterna", "Ø4", 1)]
+    bd = BP.dims(P.FLOT_BOTTLE, P.FLOT_COUNT)
+    ins = P.M3_INSERT_DEPTH
+    std = lambda t: next(n for n in (6, 8, 10, 12, 16, 20, 25, 30, 35, 40) if n >= t)
+    n_lid = len(BP.screw_pts(bd))
+    n_boss = 2 * sum(1 for _, k in BP.rib_x(bd) if k != "mid0")
+    n_ear, n_col = len(BP.box_ear_pts(bd)), len(BP.col_pts(bd))
+    n_j1 = len(BP.joint_b1(bd)[0])
+    n_pin = len(BP.joint_b1(bd)[1])
+    n_cradle = 2
+    n_j5 = n_cradle * len(BP.joint_b5(bd)[0])
+    n_tg = n_cradle * len(bd["tongue_y"])
+    n_post = n_cradle * 2 * 2
+    n_strap = 4
+    n_hold, n_tray_b = 4, 4
+    oc = round(2 * ((bd["Lx"] + 2 * BP.GROOVE_OFF) + (bd["Wy"] + 2 * BP.GROOVE_OFF)) * 1.1 / 10) * 10
+    fj = 4 * P.PET_JOINT[0]
+    boya = [(f"Tornillo M3 x {std(fj + 4)} inox A2 + tuerca (union de las mitades de B1, columnas del canal y almohadillas)", "M3", n_j1),
+            (f"Pin impreso de alineacion de B1 (sin ferreteria; Ø{P.PET_JOINT[2]:g})", f"Ø{P.PET_JOINT[2]:g}", n_pin),
+            (f"Tornillo M3 x {std(P.PET_COVER_T + ins)} inox A2 + inserto M3 (B2, cada mitad a sus 4 postes de B1)", "M3", n_boss),
+            (f"Tornillo M3 x {std(P.PET_EAR[2] + ins)} inox A2 + inserto M3 (orejas de B3 a los pilares de B2)", "M3", n_ear),
+            (f"Tornillo M3 x {std(P.PET_LID_T + ins)} inox A2 + inserto M3 ciego (tapa B4 a la brida de B3)", "M3", n_lid),
+            ("Tornillo M3 x 8 inox A2 + inserto M3 (portabaterias a los standoffs de B3)", "M3", n_hold),
+            ("Tornillo M3 x 8 inox A2 + inserto M3 (bandeja de la PCB y el Waveshare a los postes de B3)", "M3", n_tray_b),
+            ("Tornillo M3 x 8 inox A2 + inserto M3 (panel solar a las columnas de B2)", "M3", n_col),
+            (f"Tornillo M3 x {std(bd['rib'] + ins + 4)} inox A2 + inserto M3 (cunas B5: lenguetas a la costilla del extremo de B1)", "M3", n_tg),
+            (f"Tornillo M3 x {std(fj + 4)} inox A2 + tuerca (union de las mitades de cada cuna B5)", "M3", n_j5),
+            (f"Tornillo M3 x {std(P.PET_STRAP[1] + ins)} inox A2 + inserto M3 (correas B6 a los postes de las cunas)", "M3", 2 * n_strap),
+            ("Cordon de junta torica Ø2 NBR (tapa B4, +10 %)", f"{oc:.0f} mm", 1),
+            ("Prensaestopas PG7 con contratuerca (B3: umbilical, cable solar, pigtail de antena)", "PG7", 3),
+            ("Botella PET de 1 L, tapon de fabrica sellado", "1 L", P.FLOT_COUNT)]
+    if P.FLOT_FILL == "espuma_PU":
+        boya.append(("Espuma de poliuretano en spray (relleno de huecos del casco)", f"{BP.foam_volume_mm3(bd) * P.FLOT_FOAM_FILL / 1000:.0f} cm3", 1))
+    boya += [("Ojal de amarre: grillete inox A2 al parche del casco (pata de gallo, uno por mitad)", f"Ø{P.PET_EYE[2]:g}", 2),
+             ("Manguera flexible U1 de referencia", f"Ø{P.UMB_HOSE_D:g}", 1),
+             ("Cabo de amarre C1 boya-linterna", "Ø4", 1)]
     modular = common_mod + [("Tornillo M4 x 12 + inserto termico M4 (riel a la caja)", "M4", 4),
                         ("Varilla roscada M8 (8.8)", "451 mm", 1), ("Tuerca M8", "M8", 2), ("Arandela ancha DIN 9021", "M8", 2),
                         ("Tornillo M4 x 14 + tuerca (uniones de tramos)", "M4", 8),
@@ -183,7 +208,7 @@ def hardware(res, rb):
                         ("Perno M4 hexagonal (perillas) + tuerca en la ranura T", "M4", 4),
                         ("Perno M4 x 20 + tuerca mariposa (bisagras)", "M4", 2), ("Pivote M3 del pestillo", "M3", 2),
                         ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Pletina de inox", "25 x 5 x 100", 4)]
-    return ([("nodo simple", *h) for h in simple] + [("boya simple", *h) for h in boya]
+    return ([("nodo simple", *h) for h in simple] + [("boya PET 4 x 1 L", *h) for h in boya]
             + [("modular D200", *h) for h in modular])
 
 

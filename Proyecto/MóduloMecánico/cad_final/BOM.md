@@ -1,18 +1,18 @@
 # BOM y bitacora del prototipo simple (generado por `bitacora.py`)
 
-No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `salida/simple/BITACORA.xlsx`. Masa por pieza = la del calculo de flotacion (piel + relleno de cada pieza: 100 % cajas estancas, tapas con junta y ganchos; 40 % riel, bandejas y bisel). Parametros de costo (estimados): densidad 1.27 g/cm³, 15 g/h, 90 soles/kg. Fuente: slicer (OrcaSlicer) en el nodo.
+No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `salida/simple/BITACORA.xlsx`. Masa por pieza = la del calculo de flotacion (piel + relleno de cada pieza: 100 % cajas estancas, tapas con junta y ganchos; 40 % riel, bandejas y bisel). Parametros de costo (estimados): densidad 1.27 g/cm³, 15 g/h, 60 soles/kg. Fuente: slicer (OrcaSlicer) en el nodo.
 
 ## Resumen
 
 | Grupo | Masa impresa g | Horas | Costo filamento S/ |
 |---|---|---|---|
-| nodo simple | 1358 | 47.0 | 122.26 |
+| nodo simple | 1358 | 47.0 | 81.51 |
 | linterna de prueba | 0 | 0.0 | 0.00 |
-| boya simple | 1943 | 129.5 | 174.89 |
-| modular D200 | 1229 | 82.0 | 110.64 |
-| nodo P2 robusto | 1532 | 47.7 | 137.84 |
-| nodo P4 estetico | 1352 | 46.0 | 121.66 |
-| boya PET 4 x 1 L | 1014 | 42.2 | 91.24 |
+| boya simple | 1943 | 129.5 | 116.59 |
+| modular D200 | 1229 | 82.0 | 73.76 |
+| nodo P2 robusto | 1684 | 45.0 | 101.03 |
+| nodo P4 estetico | 1352 | 46.0 | 81.11 |
+| boya PET 4 x 1 L | 1105 | 46.9 | 66.28 |
 
 El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 
@@ -50,14 +50,15 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M12_perilla | modular D200 | 4 | 30.0 × 30.0 × 12.0 | 6.7 | X180 | no | 40 % | 6 | estimado |
 | M13_casquillo_D8 | modular D200 | 2 | 15.7 × 20.0 × 13.5 | 1.6 | X-90 | no | 40 % | 2 | estimado |
 | M14_pestillo | modular D200 | 2 | 12.0 × 35.2 × 3.6 | 0.9 | X+90 | no | 40 % | 1 | estimado |
-| M1s_caja_cuerpo | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 513 | slicer |
-| M2_caja_tapa | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 181 | slicer |
-| M3s_riel_gancho | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 200 | slicer |
-| M3t_tapa_bolsillo | nodo P2 robusto | 2 | - | - | slicer | no | 100 % | 24 | slicer |
-| M5s_capsula_tapa_pie | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 94 | slicer |
+| M1s_caja_cuerpo | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 437 | slicer |
+| M2_caja_tapa | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 194 | slicer |
+| M3s_riel_gancho | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 217 | slicer |
+| M3t_tapa_bolsillo | nodo P2 robusto | 2 | - | - | slicer | no | 100 % | 42 | slicer |
+| M5s_capsula_tapa_pie | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 97 | slicer |
+| M3f_marco_bolsillo | nodo P2 robusto | 2 | - | - | slicer | no | 40 % | 52 | slicer |
 | M11_bandeja | nodo P2 robusto | 1 | - | - | slicer | no | 40 % | 42 | slicer |
 | M11_bandeja_sup | nodo P2 robusto | 1 | - | - | slicer | no | 40 % | 35 | slicer |
-| M4_capsula_cuerpo | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 61 | slicer |
+| M4_capsula_cuerpo | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 77 | slicer |
 | M6_capsula_bisel | nodo P2 robusto | 2 | - | - | slicer | no | 40 % | 2 | slicer |
 | M1m_caja_riel | nodo P4 estetico | 1 | - | - | slicer | si | 100 % | 675 | slicer |
 | M2_caja_tapa | nodo P4 estetico | 1 | - | - | slicer | si | 100 % | 171 | slicer |
@@ -68,14 +69,14 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M11_bandeja_sup | nodo P4 estetico | 1 | - | - | slicer | no | 40 % | 31 | slicer |
 | M4_capsula_cuerpo | nodo P4 estetico | 2 | - | - | slicer | si | 100 % | 60 | slicer |
 | M6_capsula_bisel | nodo P4 estetico | 2 | - | - | slicer | no | 40 % | 2 | slicer |
-| B1_casco | boya PET 4 x 1 L | 2 | - | - | slicer | si | 40 % | 133 | slicer |
-| B2_cubierta_lisa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 91 | slicer |
-| B2_cubierta_mastil | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 107 | slicer |
-| B3_caja | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 173 | slicer |
-| B4_tapa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 57 | slicer |
-| B5_cuna_base | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 73 | slicer |
-| B5_cuna_cuello | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 76 | slicer |
-| B6_correa | boya PET 4 x 1 L | 4 | - | - | slicer | no | 40 % | 5 | slicer |
+| B1_casco | boya PET 4 x 1 L | 2 | - | - | slicer | si | 40 % | 148 | slicer |
+| B2_cubierta_lisa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 93 | slicer |
+| B2_cubierta_mastil | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 117 | slicer |
+| B3_caja | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 175 | slicer |
+| B4_tapa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 79 | slicer |
+| B5_cuna_base | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 79 | slicer |
+| B5_cuna_cuello | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 81 | slicer |
+| B6_correa | boya PET 4 x 1 L | 4 | - | - | slicer | no | 40 % | 6 | slicer |
 
 ## Hardware
 
@@ -84,7 +85,7 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | nodo simple | Tornillo M3 x 12 + inserto termico M3 (tapa de la caja) | M3 | 12 |
 | nodo simple | Tornillo M3 x 16 + tuerca (capsulas) | M3 | 8 |
 | nodo simple | Tornillo M2 autorroscante (bisel) | M2 x 6 | 6 |
-| nodo simple | Cordon de junta torica Ø2 (caja + 2 capsulas, +10 %) | 970 mm | 1 |
+| nodo simple | Cordon de junta torica Ø2 (caja + 2 capsulas, +10 %) | 980 mm | 1 |
 | nodo simple | Disco de acrilico de la ventana | Ø30 x 3 | 2 |
 | nodo simple | Grillete o argolla de inox (izado) | M6 | 1 |
 | nodo simple | Prensaestopas PG7 con contratuerca (solo el umbilical, en la tapa M2) | PG7 | 1 |
@@ -93,26 +94,34 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | nodo simple | Junta plana de la ventana M7: anillo plano de silicona de 1 mm | Ø30 x Ø26.5 | 2 |
 | nodo simple | Silicona marina (p. ej. Sikaflex-291i): cordon en el borde de cada ventana | cartucho 70 ml | 1 |
 | nodo simple | Tornillo M4 x 20 + inserto termico M4 (bridas del riel a la caja) | M4 | 8 |
-| nodo simple | Tornillo M3 x 8 avellanado + inserto M3 (tapas del bolsillo) | M3 | 4 |
+| nodo simple | Tornillo M3 x 12 inox A2 avellanado + inserto M3 ciego (2 tapas M3t a los marcos M3f) | M3 | 4 |
+| nodo simple | Tornillo M3 x 12 inox A2 avellanado + inserto M3 ciego (2 marcos M3f a las orejas de M1s) | M3 | 4 |
 | nodo simple | Tornillo M3 x 16 inox A2 + inserto termico M3 (brida del riel a la silla de M5s) | M3 | 8 |
 | nodo simple | Correa textil | 25 x 300 mm | 2 |
 | nodo simple | Lastre a granel: tuercas y arandelas M8 de inox | 1140 g | 1 |
-| boya simple | Tornillo M3 x 12 + inserto M3 (tapa de la boya) | M3 | 16 |
-| boya simple | Tornillo M3 + inserto M3 (portabaterias y bandeja) | M3 | 8 |
-| boya simple | Tornillo M3 x 30 + inserto M3 (largueros a la tapa) | M3 | 4 |
-| boya simple | Tornillo M3 + inserto M3 (panel a los largueros) | M3 | 4 |
-| boya simple | Perno M5 x 120 inox + inserto M5 (flotadores) | M5 | 8 |
-| boya simple | Tornillo M5 + inserto M5 (ojal de amarre) | M5 | 1 |
-| boya simple | Cordon de junta torica Ø2 (tapa de la boya, +10 %) | 900 mm | 1 |
-| boya simple | Prensaestopas PG7 (umbilical y panel) | PG7 | 2 |
-| boya simple | Tapon de la boca de llenado de los flotadores (o sello con PETG) | Ø10 | 4 |
-| boya simple | Manguera flexible U1 de referencia | Ø10 | 1 |
-| boya simple | Cabo de amarre C1 boya-linterna | Ø4 | 1 |
+| boya PET 4 x 1 L | Tornillo M3 x 25 inox A2 + tuerca (union de las mitades de B1, columnas del canal y almohadillas) | M3 | 6 |
+| boya PET 4 x 1 L | Pin impreso de alineacion de B1 (sin ferreteria; Ø5) | Ø5 | 2 |
+| boya PET 4 x 1 L | Tornillo M3 x 16 inox A2 + inserto M3 (B2, cada mitad a sus 4 postes de B1) | M3 | 8 |
+| boya PET 4 x 1 L | Tornillo M3 x 12 inox A2 + inserto M3 (orejas de B3 a los pilares de B2) | M3 | 4 |
+| boya PET 4 x 1 L | Tornillo M3 x 16 inox A2 + inserto M3 ciego (tapa B4 a la brida de B3) | M3 | 14 |
+| boya PET 4 x 1 L | Tornillo M3 x 8 inox A2 + inserto M3 (portabaterias a los standoffs de B3) | M3 | 4 |
+| boya PET 4 x 1 L | Tornillo M3 x 8 inox A2 + inserto M3 (bandeja de la PCB y el Waveshare a los postes de B3) | M3 | 4 |
+| boya PET 4 x 1 L | Tornillo M3 x 8 inox A2 + inserto M3 (panel solar a las columnas de B2) | M3 | 4 |
+| boya PET 4 x 1 L | Tornillo M3 x 16 inox A2 + inserto M3 (cunas B5: lenguetas a la costilla del extremo de B1) | M3 | 8 |
+| boya PET 4 x 1 L | Tornillo M3 x 25 inox A2 + tuerca (union de las mitades de cada cuna B5) | M3 | 4 |
+| boya PET 4 x 1 L | Tornillo M3 x 12 inox A2 + inserto M3 (correas B6 a los postes de las cunas) | M3 | 8 |
+| boya PET 4 x 1 L | Cordon de junta torica Ø2 NBR (tapa B4, +10 %) | 540 mm | 1 |
+| boya PET 4 x 1 L | Prensaestopas PG7 con contratuerca (B3: umbilical, cable solar, pigtail de antena) | PG7 | 3 |
+| boya PET 4 x 1 L | Botella PET de 1 L, tapon de fabrica sellado | 1 L | 4 |
+| boya PET 4 x 1 L | Espuma de poliuretano en spray (relleno de huecos del casco) | 909 cm3 | 1 |
+| boya PET 4 x 1 L | Ojal de amarre: grillete inox A2 al parche del casco (pata de gallo, uno por mitad) | Ø10.5 | 2 |
+| boya PET 4 x 1 L | Manguera flexible U1 de referencia | Ø10 | 1 |
+| boya PET 4 x 1 L | Cabo de amarre C1 boya-linterna | Ø4 | 1 |
 | modular D200 | Tornillo M3 x 12 + inserto termico M3 (tapa de la caja) | M3 | 12 |
 | modular D200 | Tornillo M3 x 8 + inserto termico M3 (bandejas) | M3 | 4 |
 | modular D200 | Tornillo M3 x 16 + tuerca (capsulas) | M3 | 8 |
 | modular D200 | Tornillo M2 autorroscante (bisel) | M2 x 6 | 6 |
-| modular D200 | Cordon de junta torica Ø2 (caja + 2 capsulas, +10 %) | 970 mm | 1 |
+| modular D200 | Cordon de junta torica Ø2 (caja + 2 capsulas, +10 %) | 980 mm | 1 |
 | modular D200 | Prensaestopas PG7 con contratuerca (3 caja + 2 capsulas) | PG7 | 5 |
 | modular D200 | Disco de acrilico de la ventana | Ø30 x 3 | 2 |
 | modular D200 | Grillete o argolla de inox (izado) | M6 | 1 |
