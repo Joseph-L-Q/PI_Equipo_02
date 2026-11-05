@@ -1,18 +1,26 @@
-"""Interactive 3D viewer of LanternGuard (node + buoy).
+r"""Interactive 3D manual of LanternGuard (node + buoy): geometry half.
 
-Run from cad_final:  ..\\.venv\\Scripts\\python.exe visor.py
-Writes  docs/visor/lanternguard.glb  and  docs/visor/index.html  (the GLB is embedded in the page as base64,
-the guide data as JSON, so the page opens offline from disk or Drive; only three.js comes from cdnjs).
+Regenerate everything with ONE command (from cad_final):
 
-Everything is read at run time (STEP assemblies, slicer.json, rasgos.json, GUIA_PIEZAS.md, ESTANQUEIDAD.md), so
-a re-run picks up a regenerated node or an updated seal list.
+    ..\.venv\Scripts\python.exe visor.py && ..\.venv\Scripts\python.exe visor_datos.py
+    (visor.py already calls visor_datos at the end; the second call only matters when the CAD did not change and
+     you just want to refresh slicer / FEM / simulation data: it takes ~3 s because it does not read the STEP files)
+
+visor.py  : reads the two STEP assemblies, tessellates the pieces and writes
+            docs/visor/modelo.glb       one mesh per piece named with its code (B1_casco_a/_b, M3s_riel_gancho_der, ...),
+                                        seals as SELLO_nn meshes (red), bottles / lantern / electronics as REF_* (gray ghosts)
+            salida/_tmp/visor_geometria.json   sidecar for visor_datos.py: explosion offsets, bounding boxes, hole positions
+                                        of every feature placed in the assembly frame (piece STEP -> assembly by a 48-matrix
+                                        best-fit search; pieces that do not fit within 1 mm get no markers)
+visor_datos.py : docs/visor/datos.json, index.html and LanternGuard_visor.html (single file, GLB + JSON embedded).
 """
-import base64
+import itertools
 import json
 import math
 import re
 import sys
 import time
+import unicodedata
 from pathlib import Path
 
 import numpy as np
@@ -29,7 +37,10 @@ RASGOS = MOD / "salida" / "guia_piezas" / "rasgos.json"
 SELLOS_JSON = MOD / "salida" / "guia_piezas" / "sellos.json"
 GUIA_MD = MOD / "docs" / "GUIA_PIEZAS.md"
 ESTANQ_MD = MOD / "docs" / "ESTANQUEIDAD.md"
-TEMPLATE = HERE / "visor_template.html"
+NODE_STEPS = MOD / "salida" / "prototipos" / "P2_robusto" / "step"     # one STEP per piece (frame of guia_piezas / rasgos.json)
+BUOY_STEPS = MOD / "salida" / "boya_pet" / "step"
+SIDECAR = MOD / "salida" / "_tmp" / "visor_geometria.json"
+ALIGN_TOL = 1.0                          # mm: mean distance (piece STEP vs assembly body) accepted for placing hole markers
 
 BUOY_SHIFT = (620.0, 0.0, 300.0)        # mm, buoy origin in the node frame (beside the node, not at true distance)
 DROP = {"REF_boya", "REF_umbilical"}     # node placeholders replaced by the real buoy and a drawn umbilical
@@ -183,10 +194,21 @@ def parse_estanq(md, sellos_json):
 
 
 # ----------------------------------------------------------------------------- name resolution
+def ren(nm):
+    """STEP body name -> public mesh name: halves _a/_b, every reference body REF_*."""
+    nm = re.sub(r"_mitad_1$", "_a", nm)
+    nm = re.sub(r"_mitad_2$", "_b", nm)
+    if nm.startswith("ref_"):
+        nm = "REF_" + nm[4:]
+    if nm.startswith("lastre"):
+        nm = "REF_" + nm
+    return nm
+
+
 def base_key(name):
     """Instance name -> guide / slicer key (drops side and half suffixes)."""
     n = re.sub(r"_(izq|der)$", "", name)
-    n = re.sub(r"_mitad_\d+$", "", n)
+    n = re.sub(r"^(B1_casco)_[ab]$", r"\1", n)
     n = re.sub(r"^(B5_cuna)_[DI]_(base|cuello)$", r"\1_\2", n)
     n = re.sub(r"^(B6_correa)_[DI]\d+$", r"\1", n)
     return n
@@ -204,8 +226,8 @@ def side_of(name):
         return "lado izquierdo"
     if name.endswith("_der") or re.search(r"_D(_|\d|$)", name):
         return "lado derecho"
-    m = re.search(r"_mitad_(\d)$", name)
-    return f"mitad {m.group(1)}" if m else ""
+    m = re.search(r"^B1_casco_([ab])$", name)
+    return f"mitad {m.group(1).upper()}" if m else ""
 
 
 REF_ES = {
@@ -213,10 +235,10 @@ REF_ES = {
     "REF_linterna_malla": "Malla de la linterna (referencia)", "REF_linterna_piso": "Piso de la linterna (referencia)",
     "REF_cuerda": "Cuerda de la linterna (referencia)", "REF_cabo": "Cabo de amarre (referencia)",
     "REF_estructura_punto_fijo": "Estructura del punto fijo (referencia)", "REF_umbilical": "Cable umbilical (dibujo)",
-    "lastre_": "Lastre: tuercas y arandelas M8 a granel",
-    "ref_batt": "Portabaterías con 3 celdas 18650 (referencia)", "ref_pcb": "Placa electrónica (referencia)",
-    "ref_ws": "Módulo Waveshare (referencia)", "ref_rtc": "Reloj RTC (referencia)", "ref_panel": "Panel solar 170 × 170 (referencia)",
-    "ref_botella": "Botella PET de flotación (referencia)",
+    "REF_lastre": "Lastre: tuercas y arandelas M8 a granel",
+    "REF_batt": "Portabaterías con 3 celdas 18650 (referencia)", "REF_pcb": "Placa electrónica (referencia)",
+    "REF_ws": "Módulo Waveshare (referencia)", "REF_rtc": "Reloj RTC (referencia)", "REF_panel": "Panel solar 170 × 170 (referencia)",
+    "REF_botella": "Botella PET de flotación (referencia)",
 }
 
 JOINS = {
@@ -243,11 +265,11 @@ JOINS = {
 def material_of(name, kind):
     if kind == "impresa":
         return "PETG (impresa 3D, Bambu P1P)"
-    if name.startswith("lastre"):
+    if name.startswith("REF_lastre"):
         return "Acero: tuercas y arandelas M8 a granel"
     if "ventana" in name:
         return "Acrílico (comprado)"
-    if name.startswith("ref_botella"):
+    if name.startswith("REF_botella"):
         return "PET (botella comprada)"
     return "No se imprime: pieza comprada o dibujo de referencia"
 
@@ -270,7 +292,7 @@ def offset_for(name, c, group, gc):
             return (0, 0, 55)
         if name.startswith("M3t"):
             return (0, 0, -120)
-        if name.startswith("lastre"):
+        if name.startswith("REF_lastre"):
             return (0, 0, -70)
         if name.startswith("M3s"):
             return (s * 90, 0, 0)
@@ -298,11 +320,11 @@ def offset_for(name, c, group, gc):
         return (0, sgn(cy) * 120, -60)
     if n.startswith("B6_"):
         return (0, sgn(cy) * 40, 70)
-    if n in ("ref_batt", "ref_pcb", "ref_ws", "ref_rtc"):
+    if n in ("REF_batt", "REF_pcb", "REF_ws", "REF_rtc"):
         return (0, 0, 245)
-    if n == "ref_panel":
+    if n == "REF_panel":
         return (0, 0, 380)
-    if n.startswith("ref_botella"):
+    if n.startswith("REF_botella"):
         return (0, sgn(cy) * 70, 20)
     v = np.array([cx, cy, cz], float)
     nv = np.linalg.norm(v)
@@ -311,19 +333,19 @@ def offset_for(name, c, group, gc):
 
 STEPS = [
     ("nodo", "Caja del nodo", "Empieza por la caja seca M1s: es el cuerpo del nodo y todo lo demás se atornilla a ella.", [r"^M1s"]),
-    ("nodo", "Lastre en los bolsillos", "Mete las tuercas y arandelas M8 en los dos bolsillos de abajo y ciérralos con las tapas M3t (2 tornillos cada una). Entra agua: es normal.", [r"^lastre", r"^M3t"]),
+    ("nodo", "Lastre en los bolsillos", "Mete las tuercas y arandelas M8 en los dos bolsillos de abajo y ciérralos con las tapas M3t (2 tornillos cada una). Entra agua: es normal.", [r"^REF_lastre", r"^M3t"]),
     ("nodo", "Bandejas de la electrónica", "Atornilla la bandeja inferior y la superior a los 4 postes del piso de la caja (zona seca).", [r"^M11"]),
     ("nodo", "Tapa con asa", "Pon el cordón de goma Ø2 en la ranura de la tapa M2 y apriétala con 12 tornillos M3. El umbilical sale por su prensaestopas.", [r"^M2_"]),
     ("nodo", "Rieles con gancho", "Cada riel M3s se atornilla a un costado de la caja con 4 tornillos M4. El gancho en C cuelga del aro de la linterna.", [r"^M3s"]),
     ("nodo", "Cápsulas de cámara", "En la punta de cada riel va la cápsula: cuerpo M4, tapa con pie M5s, bisel M6 y ventana de acrílico.", [r"^M4_", r"^M5s", r"^M6_", r"^REF_M7"]),
     ("nodo", "Linterna, aro y cuerdas", "Piezas de referencia: el aro, la malla, los pisos y las cuerdas donde cuelga el nodo.", [r"^REF_aro", r"^REF_linterna", r"^REF_cuerda", r"^REF_cabo", r"^REF_estructura"]),
     ("boya", "Casco de la boya", "Une las dos mitades del casco B1 (6 tornillos M3 y un pin de alineación).", [r"^B1_"]),
-    ("boya", "Cunas y botellas", "Atornilla las cunas B5 al casco y apoya las cuatro botellas PET selladas: son las que hacen flotar la boya.", [r"^B5_", r"^ref_botella"]),
+    ("boya", "Cunas y botellas", "Atornilla las cunas B5 al casco y apoya las cuatro botellas PET selladas: son las que hacen flotar la boya.", [r"^B5_", r"^REF_botella"]),
     ("boya", "Correas", "Las correas B6 abrazan las botellas desde arriba para que no se salgan.", [r"^B6_"]),
     ("boya", "Cubierta", "Las dos mitades de la cubierta B2 se atornillan a los postes del casco (4 M3 cada una).", [r"^B2_"]),
-    ("boya", "Caja seca y electrónica", "Dentro de la caja B3 van las baterías, la placa, el módulo Waveshare y el reloj. Se fija a la cubierta por sus orejas.", [r"^B3_", r"^ref_batt", r"^ref_pcb", r"^ref_ws", r"^ref_rtc"]),
+    ("boya", "Caja seca y electrónica", "Dentro de la caja B3 van las baterías, la placa, el módulo Waveshare y el reloj. Se fija a la cubierta por sus orejas.", [r"^B3_", r"^REF_batt", r"^REF_pcb", r"^REF_ws", r"^REF_rtc"]),
     ("boya", "Tapa de la caja seca", "Cordón O-ring Ø2 en la ranura y tornillos M3 a los insertos de la brida de B3.", [r"^B4_"]),
-    ("boya", "Panel solar", "El panel de 170 × 170 se atornilla a las cuatro columnas de la cubierta.", [r"^ref_panel"]),
+    ("boya", "Panel solar", "El panel de 170 × 170 se atornilla a las cuatro columnas de la cubierta.", [r"^REF_panel"]),
     ("nodo", "Cable umbilical", "Une la tapa del nodo con la caja seca de la boya. Va flojo, con curva, para que el oleaje no lo tense.", [r"^REF_umbilical"]),
 ]
 
@@ -349,19 +371,203 @@ def seal_parts(seal, names):
     return sorted(hit)
 
 
+
+
+# ----------------------------------------------------------------------------- piece STEP -> assembly placement
+def _mats48():
+    out = []
+    for perm in itertools.permutations(range(3)):
+        for sg in itertools.product([1, -1], repeat=3):
+            M = np.zeros((3, 3))
+            for i, p in enumerate(perm):
+                M[i, p] = sg[i]
+            out.append(M)
+    return out
+
+
+R48 = _mats48()
+
+
+def align(piece_mesh, inst_mesh):
+    """Best of the 48 axis-aligned (mirrors included) placements of a piece STEP onto its assembly body.
+    Returns (mean distance mm, M 3x3, t) with  world = M @ p + t."""
+    from scipy.spatial import cKDTree
+    tree = cKDTree(inst_mesh.vertices)
+    pv = piece_mesh.vertices
+    sample = pv[np.random.RandomState(0).choice(len(pv), min(1500, len(pv)), replace=False)]
+    ic = (inst_mesh.bounds[0] + inst_mesh.bounds[1]) / 2
+    pc = (piece_mesh.bounds[0] + piece_mesh.bounds[1]) / 2
+    best = None
+    for M in R48:
+        d = tree.query((sample - pc) @ M.T + ic)[0].mean()
+        if best is None or d < best[0]:
+            best = (d, M)
+    d, M = best
+    return float(d), M, ic - M @ pc
+
+
+def g3(p):
+    """world mm Z-up -> glTF metres Y-up (the frame of modelo.glb and of the viewer)."""
+    return [round(float(p[0]) * 0.001, 5), round(float(p[2]) * 0.001, 5), round(float(-p[1]) * 0.001, 5)]
+
+
+# ----------------------------------------------------------------------------- seal geometry
+def tube(pts, radius, closed=True, sections=6):
+    """Cylinder segments through a polyline (the same trick as the umbilical)."""
+    pts = [np.array(p, float) for p in pts]
+    if closed:
+        pts = pts + [pts[0]]
+    segs = []
+    for a, b in zip(pts[:-1], pts[1:]):
+        d = b - a
+        L = float(np.linalg.norm(d))
+        if L < 1e-6:
+            continue
+        cyl = trimesh.creation.cylinder(radius=radius, height=L, sections=sections)
+        z = np.array([0, 0, 1.0])
+        axis = np.cross(z, d / L)
+        ang = math.acos(max(-1, min(1, float(z @ (d / L)))))
+        T = trimesh.transformations.rotation_matrix(ang, axis) if np.linalg.norm(axis) > 1e-9 else np.eye(4)
+        T[:3, 3] = (a + b) / 2
+        cyl.apply_transform(T)
+        segs.append(cyl)
+    return trimesh.util.concatenate(segs)
+
+
+def rounded_loop(corners):
+    """Four groove corners (any order) -> closed polyline with rounded corners (Chaikin, 3 passes)."""
+    c = np.array(corners, float)
+    ctr = c.mean(0)
+    u, s, vt = np.linalg.svd(c - ctr)
+    e1, e2 = vt[0], vt[1]
+    order = np.argsort(np.arctan2((c - ctr) @ e2, (c - ctr) @ e1))
+    pts = c[order]
+    for _ in range(3):
+        n = len(pts)
+        new = []
+        for i in range(n):
+            a, b = pts[i], pts[(i + 1) % n]
+            new += [0.75 * a + 0.25 * b, 0.25 * a + 0.75 * b]
+        pts = np.array(new)
+    return pts
+
+
+def ring(center, axis, R, r):
+    """Torus of major radius R and tube radius r around `axis` (unit) at `center`."""
+    t = trimesh.creation.torus(major_radius=R, minor_radius=r, major_sections=32, minor_sections=8)
+    z = np.array([0, 0, 1.0])
+    ax = np.cross(z, axis)
+    ang = math.acos(max(-1, min(1, float(z @ axis))))
+    T = trimesh.transformations.rotation_matrix(ang, ax) if np.linalg.norm(ax) > 1e-9 else np.eye(4)
+    T[:3, 3] = center
+    t.apply_transform(T)
+    return t
+
+
+def sphere(c, r):
+    s = trimesh.creation.icosphere(subdivisions=1, radius=r)
+    s.apply_translation(c)
+    return s
+
+
+SEAL_R = 1.7           # mm, drawn cord radius (real cord is 1.0): slightly fat so that it reads in the viewer
+
+
+def code_to_key(code, keys):
+    """'M2' / 'B5 base' / 'B2 mástil' (as written in sellos.json 'donde') -> piece key."""
+    tok = code.strip().split()
+    pre = tok[0]
+    rest = " ".join(tok[1:]).lower().replace("á", "a")
+    for k in keys:
+        if k.startswith(pre + "_"):
+            if rest and rest not in k:
+                continue
+            return k
+    return None
+
+
+def build_seals(seals, inst, meshes, rasgos):
+    """{seal n: {host instance: mesh}}. `inst` = {name: dict(key, M, t, ok)}. One mesh per host so that in the
+    exploded view each ring travels with the piece that carries its groove."""
+    out = {}
+    by_key = {}
+    for nm, d in inst.items():
+        by_key.setdefault(d["key"], []).append(nm)
+
+    for s in seals:
+        n = s["n"]
+        parts = {}                                    # host -> [meshes]
+        low = (s["sello"] + " " + s["tipo"]).lower()
+        refs = []
+        for dd in s.get("donde", []):
+            m = re.match(r"(.+?) N° (\d+)", dd)
+            if m:
+                k = code_to_key(m.group(1), list(rasgos))
+                if k:
+                    refs.append((k, int(m.group(2))))
+        for k, num in refs:
+            rs = rasgos.get(k, [])
+            if not 0 < num <= len(rs):
+                continue
+            r = rs[num - 1]
+            for nm in by_key.get(k, []):
+                d = inst[nm]
+                if not d["ok"]:
+                    continue
+                pts = [d["M"] @ np.array(p, float) + d["t"] for p in r["puntos"]]
+                if "pg7" in low and "PG7" in r["tipo"]:
+                    bb = meshes[nm][2].bounds
+                    c = np.array(pts[0])
+                    faces = [(abs(c[i] - bb[j][i]), i) for i in range(3) for j in range(2)]
+                    ax = np.zeros(3)
+                    ax[min(faces)[1]] = 1
+                    parts.setdefault(nm, []).append(ring(c, ax, 6.3, SEAL_R))
+                elif len(pts) == 4 and "Ranura" in r["tipo"]:
+                    parts.setdefault(nm, []).append(tube(rounded_loop(pts), SEAL_R))
+                elif "inserto" in low and "Inserto" in r["tipo"]:
+                    parts.setdefault(nm, []).extend(sphere(p, 2.6) for p in pts)
+        if "ventana" in low:
+            for nm, (g, kind, m) in meshes.items():
+                if nm.startswith("REF_M7"):
+                    ext = m.bounds[1] - m.bounds[0]
+                    ax = np.zeros(3)
+                    ax[int(np.argmin(ext))] = 1
+                    c = (m.bounds[0] + m.bounds[1]) / 2
+                    c = c + ax * (ext[int(np.argmin(ext))] / 2)
+                    parts.setdefault(nm, []).append(ring(c, ax, 14.0, SEAL_R))
+        if "tapón" in low or "tapon" in low:
+            cunas = [m.bounds.mean(0) for nm, (g, kind, m) in meshes.items() if nm.startswith("B5_cuna") and nm.endswith("cuello")]
+            for nm, (g, kind, m) in meshes.items():
+                if nm.startswith("REF_botella") and cunas:
+                    ext = m.bounds[1] - m.bounds[0]
+                    a = int(np.argmax(ext))
+                    c = m.bounds.mean(0)
+                    cn = min(cunas, key=lambda q: np.linalg.norm(q - c))
+                    sg = 1.0 if cn[a] >= c[a] else -1.0
+                    ax = np.zeros(3)
+                    ax[a] = 1
+                    cc = c.copy()
+                    cc[a] = c[a] + sg * (ext[a] / 2 - 12)
+                    parts.setdefault(nm, []).append(ring(cc, ax, 13.0, SEAL_R))
+        out[n] = {h: trimesh.util.concatenate(ms) for h, ms in parts.items()}
+    return out
+
+
 # ----------------------------------------------------------------------------- main
 def main():
     t0 = time.time()
     OUT.mkdir(parents=True, exist_ok=True)
+    SIDECAR.parent.mkdir(parents=True, exist_ok=True)
+    import cadquery as cq
     scene = trimesh.Scene()
-    parts = {}
     node = read_named_step(NODE_STEP)
     buoy = read_named_step(BUOY_STEP)
     print(f"node: {len(node)} bodies ({NODE_STEP.name}, {time.strftime('%d/%m %H:%M', time.localtime(NODE_STEP.stat().st_mtime))}); buoy: {len(buoy)} bodies", flush=True)
 
     meshes = {}
     for group, items, shift in (("nodo", node, (0, 0, 0)), ("boya", buoy, BUOY_SHIFT)):
-        for nm, sh in items:
+        for nm0, sh in items:
+            nm = ren(nm0)
             if nm in DROP:
                 continue
             printed = bool(re.match(r"^[BM]\d+", nm))
@@ -377,78 +583,76 @@ def main():
         bb = b3.bounds
         meshes["REF_umbilical"] = ("nodo", "ref", umbilical_mesh((0, 0, top), (bb[0][0], (bb[0][1] + bb[1][1]) / 2, (bb[0][2] + bb[1][2]) / 2)))
 
+    # piece STEP -> assembly placement (for hole markers and seal rings)
+    rasgos = read_json(RASGOS)
+    inst, cache = {}, {}
+    for nm, (group, kind, m) in meshes.items():
+        if kind != "impresa":
+            continue
+        key = base_key(nm)
+        f = (NODE_STEPS if group == "nodo" else BUOY_STEPS) / f"{key}.step"
+        ok, d, M, t = False, None, np.eye(3), np.zeros(3)
+        if f.exists():
+            if key not in cache:
+                cache[key] = tessellate(cq.importers.importStep(str(f)).val(), TRI_BUDGET_PRINTED)
+            d, M, t = align(cache[key], m)
+            ok = d <= ALIGN_TOL
+        print(f"  placement {nm:28s} {'ok ' if ok else 'NO '} {'' if d is None else f'{d:.2f} mm'}", flush=True)
+        inst[nm] = dict(key=key, M=M, t=t, ok=ok, d=d)
+
+    sellos = read_json(SELLOS_JSON)
+    seal_meshes = build_seals(sellos if isinstance(sellos, list) else [], inst, meshes, rasgos)
+
     # buoy group centre (for radial rules)
     bm = [m.bounds for n, (g, k, m) in meshes.items() if g == "boya"]
     gc = tuple((np.min([b[0] for b in bm], 0) + np.max([b[1] for b in bm], 0)) / 2) if bm else (0, 0, 0)
 
-    guia = parse_guia(GUIA_MD)
-    rasgos = read_json(RASGOS)
-    sl = {**read_json(NODE_SLICER), **read_json(BUOY_SLICER)}
-    seals, no_est, pend = parse_estanq(ESTANQ_MD, read_json(SELLOS_JSON))
-    names = list(meshes)
-
+    geo, sin3d = {}, []
     for nm, (group, kind, m) in meshes.items():
         c = (m.bounds[0] + m.bounds[1]) / 2
         off = offset_for(nm, c, group, gc)
-        key = base_key(nm)
-        gk = lookup(guia, key)
-        rk = lookup(rasgos, key)
-        sk = lookup(sl, key)
-        ref_es = next((v for k, v in REF_ES.items() if nm.startswith(k)), None)
-        titulo = (guia[gk]["titulo"] if gk and kind == "impresa" else ref_es) or nm.replace("_", " ")
-        side = side_of(nm)
-        info = dict(group=group, kind=kind, code=key if kind == "impresa" else nm,
-                    titulo=titulo + (f" ({side})" if side else ""),
-                    funcion=guia[gk]["funcion"] if gk and kind == "impresa" else (ref_es or "Pieza de referencia."),
-                    material=material_of(nm, kind), offset=[off[0], off[2], -off[1]],
-                    centro=[float(c[0]), float(c[2]), float(-c[1])])
-        if sk and kind == "impresa":
-            s = sl[sk]
-            info.update(g=round(float(s["g"]), 1), h=round(float(s["h"]), 2), qty=s.get("qty"), relleno=s.get("relleno_pct"),
-                        soportes=s.get("soportes"))
-        elif nm.startswith("lastre"):
-            info.update(g=575.0, h=None)
-        j = JOINS.get(key)
-        if j:
-            info["une"] = j
-        rs = rasgos.get(rk, []) if rk and kind == "impresa" else []
-        info["rasgos"] = [dict(n=r["n"], tipo=r["tipo"], diam=r.get("diam"), texto=r["texto"], cat=r.get("categoria"), cant=len(r.get("puntos") or [1])) for r in rs]
-        info["tornillos"] = [f"{r['tipo']}{' Ø' + str(r['diam']) if r.get('diam') else ''} ×{len(r.get('puntos') or [1])}"
-                             for r in rs if r.get("categoria") == "union"]
-        if not rs and kind == "impresa":
-            info["rasgos_nota"] = "Esta pieza todavía no tiene ficha de agujeros en la guía."
-        info["sellos"] = [s["n"] for s in seals if nm in seal_parts(s, names)]
-        parts[nm] = info
-        scene.add_geometry(zup_to_gltf(m.copy()), node_name=nm, geom_name=nm)
+        e = dict(group=group, kind=kind, key=base_key(nm) if kind == "impresa" else nm,
+                 centro=g3(c), offset=[round(off[0] * 0.001, 5), round(off[2] * 0.001, 5), round(-off[1] * 0.001, 5)],
+                 bbox=[g3(m.bounds[0]), g3(m.bounds[1])])
+        if kind == "impresa":
+            d = inst[nm]
+            e["colocacion"] = dict(ok=d["ok"], error_mm=None if d["d"] is None else round(d["d"], 2))
+            if d["ok"]:
+                rs = rasgos.get(d["key"], [])
+                e["rasgos_pts"] = {str(r["n"]): [g3(d["M"] @ np.array(p, float) + d["t"]) for p in r["puntos"]] for r in rs}
+        geo[nm] = e
+        mm = m.copy()
+        if kind == "ref" and nm != "REF_umbilical":
+            mm.visual.face_colors = [150, 160, 170, 110]
+        scene.add_geometry(zup_to_gltf(mm), node_name=nm, geom_name=nm)
 
-    # steps (regex over instance names); leftovers go to a last step
-    steps, used = [], set()
-    for grp, tit, txt, pats in STEPS:
-        ps = [n for n in names if any(re.search(p, n) for p in pats) and n not in used]
-        if ps:
-            used.update(ps)
-            steps.append(dict(titulo=tit, texto=txt, partes=ps, grupo=grp))
-    rest = [n for n in names if n not in used]
-    if rest:
-        steps.append(dict(titulo="Otras piezas", texto="Piezas nuevas que todavía no tienen paso propio en el visor.", partes=rest, grupo="nodo"))
-    for i, s in enumerate(steps):
-        for n in s["partes"]:
-            parts[n]["paso"] = i
-
-    seal_out = [dict(s, partes=seal_parts(s, names)) for s in seals]
+    for n, hosts in sorted(seal_meshes.items()):
+        s = next(x for x in sellos if x["n"] == n)
+        slug = re.sub(r"[^A-Za-z0-9]+", "_", unicodedata.normalize("NFKD", s["sello"]).encode("ascii", "ignore").decode()).strip("_")[:32]
+        if not hosts:
+            print(f"  seal {n}: no 3D geometry (list only)")
+            sin3d.append(n)
+            continue
+        for host, m in sorted(hosts.items()):
+            nm = f"SELLO_{n:02d}_{slug}" + (f"__{host}" if len(hosts) > 1 else "")
+            c = (m.bounds[0] + m.bounds[1]) / 2
+            geo[nm] = dict(group=geo[host]["group"], kind="sello", key=nm, n=n, host=host,
+                           centro=g3(c), offset=geo[host]["offset"], bbox=[g3(m.bounds[0]), g3(m.bounds[1])])
+            mm = m.copy()
+            mm.visual.face_colors = [214, 40, 40, 255]
+            scene.add_geometry(zup_to_gltf(mm), node_name=nm, geom_name=nm)
 
     glb = scene.export(file_type="glb", include_normals=False)
-    (OUT / "lanternguard.glb").write_bytes(glb)
+    (OUT / "modelo.glb").write_bytes(glb)
     stamp = lambda p: f"{p.name} ({time.strftime('%d/%m %H:%M', time.localtime(p.stat().st_mtime))})"   # noqa: E731
-    data = dict(partes=parts, pasos=steps, sellos=seal_out, no_estanco=no_est, pendiente=pend,
-                generado=time.strftime("%d/%m/%Y %H:%M"), fuentes=dict(nodo=stamp(NODE_STEP), boya=stamp(BUOY_STEP)))
-    html = TEMPLATE.read_text(encoding="utf-8")
-    html = html.replace("/*__DATA__*/null", json.dumps(data, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/"))
-    html = html.replace("__GLB_B64__", base64.b64encode(glb).decode("ascii"))
-    (OUT / "index.html").write_text(html, encoding="utf-8")
+    SIDECAR.write_text(json.dumps(dict(piezas=geo, sellos_sin_3d=sin3d, fuentes=dict(nodo=stamp(NODE_STEP), boya=stamp(BUOY_STEP)),
+                                       generado=time.strftime("%d/%m/%Y %H:%M")), ensure_ascii=False), encoding="utf-8")
     tri = sum(len(m.faces) for _, _, m in meshes.values())
-    print(f"{len(parts)} parts, {tri} triangles, glb {len(glb) / 1e6:.2f} MB, html {(OUT / 'index.html').stat().st_size / 1e6:.2f} MB, "
-          f"{len(steps)} steps, {len(seals)} seals, {time.time() - t0:.0f}s", flush=True)
+    print(f"{len(geo)} meshes ({sum(1 for v in geo.values() if v.get('kind') == 'sello')} seal meshes), {tri} triangles, "
+          f"glb {len(glb) / 1e6:.2f} MB, {time.time() - t0:.0f}s", flush=True)
+    if "--sin-datos" not in sys.argv:
+        import visor_datos
+        visor_datos.main()
 
 
 if __name__ == "__main__":
