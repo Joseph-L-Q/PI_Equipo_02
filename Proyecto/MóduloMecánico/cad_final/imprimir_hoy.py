@@ -31,7 +31,7 @@ PROBES_OLD = [("01_PB7_peine_holguras", "01_PB7_peine_holguras_x1.stl", 1, 40, F
               ("05_PB6_junta_tapa", "05_PB6_junta_tapa_x1.stl", 1, 100, False, None)]
 NODE = [("08_M6_bisel", "M6_capsula_bisel", 2), ("09_M11_bandeja", "M11_bandeja", 1),
         ("10_M11_bandeja_sup", "M11_bandeja_sup", 1), ("11_M3t_tapa_bolsillo", "M3t_tapa_bolsillo", 2),
-        ("12_M4_capsula_cuerpo", "M4_capsula_cuerpo", 2), ("13_M2_caja_tapa", "M2_caja_tapa", 1),
+        ("17_M3f_marco_bolsillo", "M3f_marco_bolsillo", 2), ("12_M4_capsula_cuerpo", "M4_capsula_cuerpo", 2), ("13_M2_caja_tapa", "M2_caja_tapa", 1),
         ("14_M1s_caja_cuerpo", "M1s_caja_cuerpo", 1), ("15_M5s_capsula_tapa_pie", "M5s_capsula_tapa_pie", 2)]
 WAIT = [("16_M3s_riel_gancho", "M3s_riel_gancho", 2)]     # LR1 left with separador.usar = False (correction 1)
 BUOY = [("18_B1_casco", "B1_casco", 2), ("19_B2_cubierta_lisa", "B2_cubierta_lisa", 1), ("24_B2_cubierta_mastil", "B2_cubierta_mastil", 1),
@@ -102,7 +102,7 @@ def main():
 PLATES = [  # (plate name, files by number prefix): one infill, one support setting, one wall count per plate
     ("P01_probetas_calibracion", ["01", "02"]), ("P02_probeta_inserto_M4", ["03"]), ("P03_probeta_junta", ["04", "05"]),
     ("P04_probeta_gancho", ["06"]), ("P05_probeta_bahia_botella", ["07"]),
-    ("P06_bisel_y_bandejas", ["08", "09", "10"]), ("P07_tapas_bolsillo", ["11"]), ("P08_capsulas", ["12"]),
+    ("P06_bisel_y_bandejas", ["08", "09", "10"]), ("P07_tapas_bolsillo", ["11"]), ("P13_marcos_bolsillo", ["17"]), ("P08_capsulas", ["12"]),
     ("P09_tapa_caja", ["13"]), ("P10_caja", ["14"]), ("P11_tapas_capsula_con_pie", ["15"]),
     ("P12_rieles_con_gancho", ["16"]),
     ("P14_boya_casco_mitad", ["18"]), ("P15_boya_cubierta_lisa", ["19"]), ("P19_boya_cubierta_mastil", ["24"]),

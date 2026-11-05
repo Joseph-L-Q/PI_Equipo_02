@@ -1,0 +1,177 @@
+{
+ "PB7_peine_holguras": {
+  "g_total": 7.0,
+  "g_soporte": 0.0,
+  "g_pieza": 7.0,
+  "pct": 0.0,
+  "h": 0.36
+ },
+ "PB7_pines": {
+  "g_total": 1.6,
+  "g_soporte": 0.0,
+  "g_pieza": 1.6,
+  "pct": 0.0,
+  "h": 0.27
+ },
+ "PB8_inserto_M4": {
+  "g_total": 5.1,
+  "g_soporte": 0.1,
+  "g_pieza": 5.0,
+  "pct": 1.8,
+  "h": 0.38
+ },
+ "PB6_junta_base": {
+  "g_total": 23.1,
+  "g_soporte": 0.0,
+  "g_pieza": 23.1,
+  "pct": 0.0,
+  "h": 0.83
+ },
+ "PB6_junta_tapa": {
+  "g_total": 11.5,
+  "g_soporte": 0.8,
+  "g_pieza": 10.7,
+  "pct": 7.0,
+  "h": 0.54
+ },
+ "PB10_gancho_tramo": {
+  "g_total": 49.1,
+  "g_soporte": 11.1,
+  "g_pieza": 38.0,
+  "pct": 29.1,
+  "h": 2.48
+ },
+ "PB9_bahia_botella": {
+  "g_total": 49.4,
+  "g_soporte": 0.9,
+  "g_pieza": 48.5,
+  "pct": 1.8,
+  "h": 2.25
+ },
+ "M6_bisel": {
+  "g_total": 2.0,
+  "g_soporte": 0.0,
+  "g_pieza": 2.0,
+  "pct": 0.0,
+  "h": 0.19
+ },
+ "M11_bandeja": {
+  "g_total": 38.3,
+  "g_soporte": 0.0,
+  "g_pieza": 38.3,
+  "pct": 0.0,
+  "h": 1.51
+ },
+ "M11_bandeja_sup": {
+  "g_total": 31.2,
+  "g_soporte": 0.0,
+  "g_pieza": 31.2,
+  "pct": 0.0,
+  "h": 0.87
+ },
+ "M3t_tapa_bolsillo": {
+  "g_total": 21.3,
+  "g_soporte": 0.0,
+  "g_pieza": 21.3,
+  "pct": 0.0,
+  "h": 0.72
+ },
+ "M4_capsula_cuerpo": {
+  "g_total": 77.3,
+  "g_soporte": 1.2,
+  "g_pieza": 76.1,
+  "pct": 1.6,
+  "h": 2.04
+ },
+ "M2_caja_tapa": {
+  "g_total": 194.4,
+  "g_soporte": 3.5,
+  "g_pieza": 190.9,
+  "pct": 1.8,
+  "h": 4.81
+ },
+ "M1s_caja_cuerpo": {
+  "g_total": 436.8,
+  "g_soporte": 2.0,
+  "g_pieza": 434.7,
+  "pct": 0.5,
+  "h": 9.27
+ },
+ "M5s_capsula_tapa_pie": {
+  "g_total": 97.3,
+  "g_soporte": 4.0,
+  "g_pieza": 93.3,
+  "pct": 4.2,
+  "h": 2.8
+ },
+ "M3s_riel_gancho": {
+  "g_total": 217.1,
+  "g_soporte": 23.7,
+  "g_pieza": 193.5,
+  "pct": 12.2,
+  "h": 6.14
+ },
+ "M3f_marco_bolsillo": {
+  "g_total": 45.1,
+  "g_soporte": 0.0,
+  "g_pieza": 45.1,
+  "pct": 0.0,
+  "h": 1.39
+ },
+ "B1_casco": {
+  "g_total": 133.8,
+  "g_soporte": 5.4,
+  "g_pieza": 128.4,
+  "pct": 4.2,
+  "h": 4.93
+ },
+ "B2_cubierta_lisa": {
+  "g_total": 76.0,
+  "g_soporte": 0.0,
+  "g_pieza": 76.0,
+  "pct": 0.0,
+  "h": 4.17
+ },
+ "B3_caja": {
+  "g_total": 230.6,
+  "g_soporte": 8.9,
+  "g_pieza": 221.7,
+  "pct": 4.0,
+  "h": 5.98
+ },
+ "B4_tapa": {
+  "g_total": 135.2,
+  "g_soporte": 0.0,
+  "g_pieza": 135.2,
+  "pct": 0.0,
+  "h": 2.52
+ },
+ "B5_cuna_base": {
+  "g_total": 75.7,
+  "g_soporte": 3.6,
+  "g_pieza": 72.1,
+  "pct": 5.0,
+  "h": 3.03
+ },
+ "B6_correa": {
+  "g_total": 5.2,
+  "g_soporte": 0.0,
+  "g_pieza": 5.2,
+  "pct": 0.0,
+  "h": 0.28
+ },
+ "B2_cubierta_mastil": {
+  "g_total": 96.8,
+  "g_soporte": 0.4,
+  "g_pieza": 96.5,
+  "pct": 0.4,
+  "h": 4.81
+ },
+ "B5_cuna_cuello": {
+  "g_total": 78.6,
+  "g_soporte": 3.6,
+  "g_pieza": 74.9,
+  "pct": 4.9,
+  "h": 3.06
+ }
+}

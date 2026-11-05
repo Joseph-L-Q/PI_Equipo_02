@@ -72,12 +72,19 @@ CABLE_Z = Z_RAIL + W + P.CAT5E_D / 2             # the Cat5e lies on the conduit
 PAD_BORE = 30.0           # socket access to the PG7 body through the pad (constants listed in the report)
 POCKET_END = 8.0          # end walls of the ballast pockets, they hold the vertical M3 inserts of M3t
 BALLAST_TOP_GAP = 0.9     # air over the bulk ballast at the top of its range: the pocket ceiling chamfer stays out of it
+
+
+def nosup(v):
+    """Value of a support-free tuning param (impresion.nodo_sin_soportes = False turns every one of them off: previous design)."""
+    return v if P.NODE_NOSUP else 0.0
+
+
 TIP_HOLE = 8.0            # cable hole in the end wall at the tip of the rail
 HOOK_CLR = 10.0           # x gap between the hook web and the innermost point of the capsule
 NET_STEEL = FA.NET_STEEL
 RHO_W = P.SEAWATER_DENSITY
 SUPPORT_MM2 = 300.0       # overhang area above which the piece is printed with supports (bitacora)
-INFILL = {"M1": 1.0, "M2": 1.0, "M4": 1.0, "M5s": 1.0, "M3t": 1.0, "M11": 0.4, "M6": 0.4, "riel": 0.4, "gancho": 1.0,
+INFILL = {"M1": 1.0, "M2": 1.0, "M4": 1.0, "M5s": 1.0, "M3t": 1.0, "M3f": 0.4, "M11": 0.4, "M6": 0.4, "riel": 0.4, "gancho": 1.0,
           "LR1": 0.4}   # bitacora J: sealed boxes, sealed lids and hooks 100 %, rail, saddle/foot zones and tray 40 %
 if CLOSED:
     INFILL["riel"] = P.SEAL_PRINT["relleno"]     # the closed rail is part of the dry volume: sealed-piece profile
@@ -157,10 +164,31 @@ def rring(plane, off, c, w, h, r, band, depth):
     return o.cut(i)
 
 
-def channel_yz(x0, x1, grow=0.0):
-    """Free channel of the closed rail (rounded corners) from x0 to x1, centred on Z_G."""
+def channel_yz(x0, x1, grow=0.0, top_chamfer=0.0):
+    """Free channel of the closed rail (rounded corners) from x0 to x1, centred on Z_G. top_chamfer > 0: the two TOP corners
+    are cut at 45 degrees by that much (the flat floor of 22 and the free height of 18 stay), so the roof bridges less than
+    impresion.puente_max when the piece is printed on its side or upright."""
     rr = RC["radio_canal"]
-    return cq.Workplane("YZ").workplane(offset=x0).center(0, Z_G).rect(CH_W + 2 * grow, CH_H + 2 * grow).extrude(x1 - x0).edges("|X").fillet(rr + grow)
+    ch = (cq.Workplane("YZ").workplane(offset=x0).center(0, Z_G).rect(CH_W + 2 * grow, CH_H + 2 * grow).extrude(x1 - x0)
+          .edges("|X").fillet(rr + grow))
+    if top_chamfer > 0:
+        hw, hh, c = CH_W / 2 + grow, CH_H / 2 + grow, top_chamfer
+        # the chamfer line runs through (hw, hh - c) and (hw - c, hh): extend it by 1 mm beyond the corner on both ends
+        pts = [(-hw - 1, -hh - 1), (hw + 1, -hh - 1), (hw + 1, hh - c - 1), (hw - c - 1, hh + 1), (-hw + c + 1, hh + 1),
+               (-hw - 1, hh - c - 1)]
+        prism = cq.Workplane("YZ").workplane(offset=x0 - 1).center(0, Z_G).polyline(pts).close().extrude(x1 - x0 + 2)
+        ch = ch.intersect(prism)
+    return ch
+
+
+def teardrop_x(x_from, x_to, y, z, r):
+    """Hole of radius r along X between x_from and x_to as a teardrop (point up at 45 degrees): prints without supports when the
+    piece lies as modelled. Same cross-section as a round hole plus the triangle above it."""
+    k = r / math.sqrt(2)
+    xa, xb = min(x_from, x_to), max(x_from, x_to)
+    circ = cq.Workplane("YZ").workplane(offset=xa).center(y, z).circle(r).extrude(xb - xa)
+    tri = cq.Workplane("YZ").workplane(offset=xa).polyline([(y - k, z + k), (y + k, z + k), (y, z + r * math.sqrt(2))]).close().extrude(xb - xa)
+    return circ.union(tri)
 
 
 def groove_around(w, h):
@@ -206,14 +234,27 @@ def box_body_low(lay, depth, bolts=True):
         xo = sg * (ol / 2 + pad_t)
         if CLOSED:       # dry window into the rail channel (same size), sealed by the O-ring of the rail flange: no PG7 here
             xw0, xw1 = sorted((sg * (ol / 2 - P.BOX_WALL - 1), sg * (ol / 2 + pad_t + 1)))
-            m1 = m1.cut(channel_yz(xw0, xw1))
+            m1 = m1.cut(channel_yz(xw0, xw1, top_chamfer=nosup(P.BOX_WINDOW_CHAMFER)))
         else:
             m1 = m1.cut(_cyl((sg * ol / 2, 0, Z_G), (sg, 0, 0), PAD_BORE / 2, pad_t + 1))
             m1 = m1.cut(_cyl((sg * (ol / 2 - P.BOX_WALL - 1), 0, Z_G), (sg, 0, 0), P.PG7_HOLE / 2, P.BOX_WALL + 2))
         for y, z in (pad_bolts() if bolts else []):
-            m1 = m1.cut(_cyl((xo + sg * 0.01, y, z), (-sg, 0, 0), P.M4_INSERT_HOLE / 2, P.M4_INSERT_DEPTH))
+            if P.NODE_NOSUP:        # teardrop insert hole (point up): a horizontal round hole needs supports
+                m1 = m1.cut(teardrop_x(xo + sg * 0.01, xo + sg * 0.01 - sg * P.M4_INSERT_DEPTH, y, z, P.M4_INSERT_HOLE / 2))
+            else:
+                m1 = m1.cut(_cyl((xo + sg * 0.01, y, z), (-sg, 0, 0), P.M4_INSERT_HOLE / 2, P.M4_INSERT_DEPTH))
     d = pocket_dims(depth)
-    for sy in (1, -1):
+    if P.NODE_NOSUP:
+        # the ballast pockets are the separate piece M3f_marco_bolsillo: M1s keeps a flat floor underside on the bed. Four lugs on
+        # the long walls, flush with that underside, carry the blind M3 inserts that tie M3f to it (outside the dry volume)
+        lg = P.FRAME_LUGS
+        for sy in (1, -1):
+            for sx in (1, -1):
+                xl = sx * lg["x"]
+                ya, yb = sorted((sy * (ow / 2 - 1.0), sy * (ow / 2 + lg["saliente"])))
+                m1 = m1.union(_box(xl - lg["ancho"] / 2, xl + lg["ancho"] / 2, ya, yb, 0.0, lg["alto"]))
+                m1 = m1.cut(_cyl((xl, sy * (ow / 2 + lg["saliente"] / 2), -0.01), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.01))
+    for sy in ([] if P.NODE_NOSUP else (1, -1)):
         ya, yb = sorted((sy * 1.0, sy * (d["y1"] + d["w"])))
         outer = _box(-d["x_out"], d["x_out"], ya, yb, -d["depth"], 0.01)
         ia, ib = sorted((sy * d["y0"], sy * d["y1"]))
@@ -244,7 +285,7 @@ def m1_feet(lay, d):
         feet.append(CH.fit(K_M1, f"boss de la bandeja (Ø{P.TRAY_BOSS_D:g})#{i}", lambda k, x=x, y=y: CH.cone(x, y, fz, P.TRAY_BOSS_D / 2, k),
                            inside, ko))
     c = P.PLATE_CLR                                    # bulk ballast at the top of its range fills up to 0.9 mm under the
-    for sy in (1, -1):                                 # ceiling (29.05 of 30, resultados lastre.altura_en_el_maximo_mm)
+    for sy in ([] if P.NODE_NOSUP else (1, -1)):       # ceiling (29.05 of 30, resultados lastre.altura_en_el_maximo_mm); no pockets in M1s now
         ya, yb = sorted((sy * (d["y0"] + c), sy * (d["y1"] - c)))
         bal = _box(-P.PLATE_L / 2, P.PLATE_L / 2, ya, yb, -d["depth"], -BALLAST_TOP_GAP)
         feet.append(CH.fit(K_M1, f"paredes del bolsillo de lastre con el piso (por dentro)#{sy}",
@@ -263,6 +304,29 @@ def pocket_cover(depth):
         cone = cq.Solid.makeCone(dk / 2 + 0.01, P.M3_CLEAR / 2, (dk - P.M3_CLEAR) / 2 + 0.01, cq.Vector(x, d["yc"], zc - 0.01), ZAX)
         c = c.cut(cq.Workplane().add(cone)).cut(_cyl((x, d["yc"], zc - 1), (0, 0, 1), P.M3_CLEAR / 2, w + 2))
     return c
+
+
+def pocket_frame(depth):
+    """M3f in the box frame, +Y pocket (the -Y one is the same part turned 180 deg about Z): the 4 walls of the ballast pocket
+    (open at both ends: the floor underside of M1s is its roof, M3t its floor) and 2 tabs under the lugs of M1s with a
+    countersunk M3 clearance hole each. Printed on its top face (the one against M1s), so it needs no support."""
+    d = pocket_dims(depth)
+    w = d["w"]
+    yb = d["y1"] + w
+    ring = _box(-d["x_out"], d["x_out"], 1.0, yb, -depth, 0.0).cut(
+        _box(-d["lin"] / 2, d["lin"] / 2, d["y0"], d["y1"], -depth - 1, 1.0))
+    for x in (-d["x_ins"], d["x_ins"]):
+        ring = ring.cut(_cyl((x, d["yc"], -depth - 0.01), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.01))
+    lg = P.FRAME_LUGS
+    ow = LAY_OUTER[1]
+    dk = P.M3_CSK_HEAD[0]
+    for sx in (1, -1):
+        xl = sx * lg["x"]
+        yh = ow / 2 + lg["saliente"] / 2
+        ring = ring.union(_box(xl - lg["ancho"] / 2, xl + lg["ancho"] / 2, yb - 1.0, ow / 2 + lg["saliente"], -w, 0.0))
+        cone = cq.Solid.makeCone(dk / 2 + 0.01, P.M3_CLEAR / 2, (dk - P.M3_CLEAR) / 2 + 0.01, cq.Vector(xl, yh, -w - 0.01), ZAX)
+        ring = ring.cut(cq.Workplane().add(cone)).cut(_cyl((xl, yh, -w - 1), (0, 0, 1), P.M3_CLEAR / 2, w + 2))
+    return ring
 
 
 def plates(depth, k):
@@ -371,6 +435,13 @@ def hook(strap=None, holes=True, style=None):
         flare = ri + 0.6 * wall
         h = h.cut(cq.Workplane("XZ").workplane(offset=-wy - 1).polyline(
             [(-ri, 0.01), (ri, 0.01), (flare, -ro - 1), (-flare, -ro - 1)]).close().extrude(2 * wy + 2))
+    if CLOSED and P.NODE_NOSUP and style == "c":
+        # the hook web (33 wide) floats 7.5 mm over the bed when M3s lies on its side: two ribs under its -Y face
+        nrib, wrib = P.RAIL_BED_RIBS["n"], P.RAIL_BED_RIBS["ancho"]
+        za, zb = ro - wall / 2, zt - fl_t
+        for i in range(1, nrib + 1):
+            zc = za + (zb - za) * i / (nrib + 1)
+            h = h.union(_box(-wx, wx, -P.SIMPLE_GLAND_PAD[2], -wy + 0.5, zc - wrib / 2, zc + wrib / 2))
     if holes:
         for x in (-P.SIMPLE_HOOK_BOLT_X, P.SIMPLE_HOOK_BOLT_X):
             h = h.cut(_cyl((x, 0, zt - fl_t - 1), (0, 0, 1), P.M4_CLEAR / 2, fl_t + 2))
@@ -532,7 +603,7 @@ def closed_rail(foot, strap=None, hook_on=True):
     pt, rb = SP["espesor"], RC["radio_curva"]
     r = _box(x_f, XT, -SY, SY, z0, z0 + S).union(_box(x_f, x_f + fl_t, -hw, hw, z0, z0 + S))
     r = r.union(_box(foot["x0"], foot["x1"], -SP["semiancho"], SP["semiancho"], z0 - pt, z0))
-    r = r.cut(channel_yz(x_f - 1, xs + pl / 2))
+    r = r.cut(channel_yz(x_f - 1, xs + pl / 2, top_chamfer=nosup(P.RAIL_CHAMFER_TOP)))
     # opening down to the capsule: 8 (x) x 22 (y), through floor and pad; inboard entry edge rounded R10 for the cable bend
     pw = RC["pase_ancho"]
     r = r.cut(_box(xs - pl / 2, xs + pl / 2, -pw / 2, pw / 2, z0 - pt - 1, z0 + W))
@@ -546,6 +617,16 @@ def closed_rail(foot, strap=None, hook_on=True):
     for x, y in saddle_pts(xs):
         r = r.cut(_cyl((x, y, z0 - pt - 1), (0, 0, 1), P.M3_CLEAR / 2, pt + 2))
         r = r.cut(_cyl((x, y, z0), (0, 0, 1), 6.5 / 2, 5.0))          # head relief: the M3 head touches the rail side wall
+    nrib, wrib = (P.RAIL_BED_RIBS["n"], P.RAIL_BED_RIBS["ancho"]) if P.NODE_NOSUP else (0, 0.0)
+    if nrib:
+        # M3s prints on its side (-Y face down) and the 50 wide saddle pad lifts the 36 wide rail 7 mm over the bed: continuous
+        # ribs under that face cut its span to <= impresion.puente_max. They stop short of the 4 M3 heads of the saddle.
+        xs_ = foot["xs"]
+        segs = [(x_f + fl_t, xs_ - SP["m3_x"] - 5.0), (xs_ - SP["m3_x"] + 5.0, xs_ + SP["m3_x"] - 5.0), (xs_ + SP["m3_x"] + 5.0, XT)]
+        for i in range(1, nrib + 1):
+            zc = z0 + S * i / (nrib + 1)
+            for xa, xb in segs:
+                r = r.union(_box(xa, xb, -SP["semiancho"], -SY + 0.5, zc - wrib / 2, zc + wrib / 2))
     if hook_on:
         hk = hook(strap, holes=False).translate((R_RING, 0, Z_RAIL - P.HOOK_DROP))
         r = r.union(hk.intersect(_box(x_f, XT, -50, 50, -200, 200)))
@@ -719,7 +800,7 @@ def lid_edges(m2):
 SIDE = {1: "der", -1: "izq"}      # rail halves, capsules, hooks: der = +X, izq = -X (top view, X to the right)
 
 
-def assemble(an, half, m5s, cover, cp, ax, az, ballast, m1, trays, strap=False):
+def assemble(an, half, m5s, cover, cp, ax, az, ballast, m1, trays, strap=False, frame=None):
     """name -> (shape, group) of the whole node in the box frame. The names are the ones of the assembly STEP: printed parts by
     code and stem (pocket parts izq = +Y, der = -Y), bought bodies REF_*, ballast lastre_izq / lastre_der. strap=True adds the
     strap loops (render only)."""
@@ -727,6 +808,8 @@ def assemble(an, half, m5s, cover, cp, ax, az, ballast, m1, trays, strap=False):
     node = {K_M1: (solid(m1), "caja"), "M2_caja_tapa": (solid(an["m2"]), "caja")}
     node.update({kk: (solid(t), "caja") for kk, t in trays.items()})
     node.update({"M3t_tapa_bolsillo_izq": (solid(cover), "lastre_t"), "M3t_tapa_bolsillo_der": (put(cover, -1), "lastre_t")})
+    if frame is not None:
+        node.update({"M3f_marco_bolsillo_izq": (solid(frame), "caja"), "M3f_marco_bolsillo_der": (put(frame, -1), "caja")})
     node.update({kk: (b, "lastre") for kk, b in ballast.items()})
     z_rod = Z_RAIL - P.HOOK_DROP
     for side in (1, -1):
@@ -1090,6 +1173,7 @@ def main():
     m1 = solid(sanitize(central_mono(lay, depth, foot) if MONO else box_body_low(lay, depth)))
     trays = {kk: solid(sanitize(t)) for kk, t in trays_low(lay).items()}
     cover = solid(pocket_cover(depth))
+    frame = solid(sanitize(pocket_frame(depth))) if P.NODE_NOSUP else None
     print("caja", f"{time.time() - t0:.0f}s", "exterior", [round(v, 1) for v in lay.box_outer()], flush=True)
 
     # pieces
@@ -1112,6 +1196,8 @@ def main():
                 process("M5s tapa con pie", m5s, K_M5, stl, step)]
     if clamp is not None:
         rows.append(process("M9c abrazadera (media luna del gancho)", clamp, "M9c_abrazadera", stl, step, thick=False))
+    if frame is not None:
+        rows.append(process("M3f marco del bolsillo de lastre", frame, "M3f_marco_bolsillo", stl, step, thick=False, orient_name="X180"))
     for kk, t in trays.items():
         rows.append(process(f"M11 bandeja ({kk})", t, kk, stl, step, thick=False))
     rows += [process("M4 capsula, cuerpo", cp["M4"], "M4_capsula_cuerpo", stl, step, thick=False),
@@ -1157,6 +1243,8 @@ def main():
               K_M5: piece_mass(m5s, INFILL["M5s"]), "M4_capsula_cuerpo": piece_mass(cp["M4"].val(), INFILL["M4"]),
               "M6_capsula_bisel": piece_mass(cp["M6"].val(), INFILL["M6"]),
               "M7_capsula_ventana": P.ACRYLIC_DENSITY * cp["M7"].val().Volume() / 1000}
+    if frame is not None:
+        masses["M3f_marco_bolsillo"] = piece_mass(frame, INFILL["M3f"])
     if not MONO:
         rail_only = solid(rail_half(lay, foot, hook_on=False))
         hook_part = half.cut(rail_only)
@@ -1179,12 +1267,14 @@ def main():
             parts_g["riel con ganchos (2 M3s)"] = 2 * masses[K_RAIL]
         if clamp is not None:
             parts_g["abrazaderas (2 M9c)"] = 2 * masses["M9c_abrazadera"]
+        if frame is not None:
+            parts_g["marcos de los bolsillos (2 M3f)"] = 2 * masses["M3f_marco_bolsillo"]
         parts_g.update({"tapas del bolsillo (2 M3t)": 2 * masses["M3t_tapa_bolsillo"],
                         "capsulas (M4, M5, M6, M7, contenido)": 2 * (masses["M4_capsula_cuerpo"] + masses[K_M5]
                                                                    + masses["M6_capsula_bisel"] + masses["M7_capsula_ventana"] + P.CAPSULE_CONTENT_G),
                         "tornilleria y correas": P.SIMPLE_HARDWARE_G})
         env = m1.fuse(CC.cavity_tool(lay).val())
-        disp = (env.Volume() + an["m2"].Volume() + rail_vol + clamp_vol + 2 * cover.Volume()
+        disp = (env.Volume() + an["m2"].Volume() + rail_vol + clamp_vol + 2 * cover.Volume() + (2 * frame.Volume() if frame is not None else 0.0)
                 + 2 * (cp["M4"].val().Volume() + m5s.Volume() + cp["M6"].val().Volume() + cp["M7"].val().Volume() + air)) / 1000 \
             + P.SIMPLE_HARDWARE_G / P.STEEL_DENSITY
         node_g = sum(parts_g.values())
@@ -1193,6 +1283,11 @@ def main():
                       g_lo=(lo - app0) / net, g_mid=(mid - app0) / net, g_hi=(hi - app0) / net)
     f0 = P.INFILL_CASES[0]
     g_tot = max(0.0, round(bal[f0]["g_mid"] / 10.0) * 10.0)      # grams of ballast in the node, 10 g steps (both pockets)
+    # the air mass limit (params peso_aire_max_kg) caps the ballast when the printed parts weigh more (block 1.3: 5 mm walls): the
+    # window of the apparent weight (0.2 to 0.5 kgf) still has to hold, so it only goes down to the low end of it
+    g_air = math.floor((P.AIR_MASS_MAX_KG * 1000 - max(b["node_g"] for b in bal.values())) / 10.0) * 10.0
+    if g_air < g_tot and g_air >= max(max(0.0, b["g_lo"]) for b in bal.values()) + 10.0:
+        g_tot = g_air
     g_side = g_tot / 2
     g_rng = (max(max(0.0, b["g_lo"]) for b in bal.values()), min(b["g_hi"] for b in bal.values()))
     for f, b in bal.items():
@@ -1221,7 +1316,7 @@ def main():
     print("lastre", f"{g_tot:.0f} g en 2 bolsillos de {depth:g} mm ({h_b:.1f} mm llenos), rango {g_rng[0]:.0f} a {g_rng[1]:.0f} g, "
           f"peso aparente {bal[f0]['app']:+.0f} g, {time.time() - t0:.0f}s", flush=True)
 
-    node = assemble(an, half, m5s, cover, cp, ax, az, ballast, m1, trays)
+    node = assemble(an, half, m5s, cover, cp, ax, az, ballast, m1, trays, frame=frame)
     z_rod = Z_RAIL - P.HOOK_DROP
 
     # interferences inside the node (touching faces give ~0), PG7 nuts inside the box
@@ -1255,6 +1350,8 @@ def main():
     m_pts += [(t.Center().z, piece_mass(t, f)) for t in trays.values()]
     m_pts += [((b.z[0] + b.z[1]) / 2, P.COMPONENTS[key][3]) for _, key, b in lay.modules]
     m_pts.append((P.BOX_FLOOR + lay.cav[2] / 2, elec - sum(P.COMPONENTS[key][3] for _, key, _ in lay.modules)))
+    if frame is not None:
+        m_pts.append((frame.Center().z, 2 * masses["M3f_marco_bolsillo"]))
     m_pts += [(cover.Center().z, 2 * masses["M3t_tapa_bolsillo"]),
               (node["M4_capsula_cuerpo_der"][0].Center().z, 2 * (masses["M4_capsula_cuerpo"] + P.CAPSULE_CONTENT_G)),
               (xr.Center().z, 2 * masses[K_M5]), (Z_RAIL + S / 2, P.SIMPLE_HARDWARE_G)]
@@ -1265,7 +1362,8 @@ def main():
     m_pts += [(b.Center().z, g_side) for b in ballast.values()]
     air_w = place_cap(cav.cut(cp["M4"].val()), ax, az)
     env_box = m1.fuse(CC.cavity_tool(lay).val())
-    b_pts = [(env_box.Center().z, env_box.Volume()), (an["m2"].Center().z, an["m2"].Volume()),
+    b_pts = [(env_box.Center().z, env_box.Volume()), (an["m2"].Center().z, an["m2"].Volume())] + (
+        [(frame.Center().z, 2 * frame.Volume())] if frame is not None else []) + [
              (cover.Center().z, 2 * cover.Volume()),
              (node["M4_capsula_cuerpo_der"][0].Center().z, 2 * cp["M4"].val().Volume()), (xr.Center().z, 2 * m5s.Volume()),
              (air_w.Center().z, 2 * air_w.Volume())] + [(b.Center().z, g_side / bulk["solido"] * 1000) for b in ballast.values()]
@@ -1387,7 +1485,7 @@ def main():
     x_front = (ax + cap_pt(CP.cap_dims()[6], 0)[0])
     calc = hand_calcs(lay, half, x_load, x_front, foot)
     cab = cable_run(lay, ax, az)
-    QTY.update({K_M1: 1, "M2_caja_tapa": 1, "M3t_tapa_bolsillo": 2, K_M5: 2, "M4_capsula_cuerpo": 2, "M6_capsula_bisel": 2,
+    QTY.update({K_M1: 1, "M2_caja_tapa": 1, "M3t_tapa_bolsillo": 2, K_M5: 2, **({"M3f_marco_bolsillo": 2} if frame is not None else {}), "M4_capsula_cuerpo": 2, "M6_capsula_bisel": 2,
                 "M7_capsula_ventana": 2})
     QTY.update({kk: 1 for kk in trays})
     if not MONO:
@@ -1423,7 +1521,7 @@ def save_results(rows, masses, bal, bsum, zg, zb, clr, h_sep_min, z_rod, z_apex,
     out_w, out_h, *_ = CP.cap_dims()
     _, _, _, _, _, x0, x_front = CP.cap_dims()
     infill_of = {"M1s_caja_cuerpo": "M1", "M1m_caja_riel": "M1", "M2_caja_tapa": "M2", "M3s_riel_gancho": "riel",
-                 "M3t_tapa_bolsillo": "M3t", "M5s_capsula_tapa_pie": "M5s", "M5m_extremo_pie": "M5s", "M4_capsula_cuerpo": "M4",
+                 "M3t_tapa_bolsillo": "M3t", "M3f_marco_bolsillo": "M3f", "M5s_capsula_tapa_pie": "M5s", "M5m_extremo_pie": "M5s", "M4_capsula_cuerpo": "M4",
                  "M6_capsula_bisel": "M6", "LR1_separador": "LR1", "M9c_abrazadera": "gancho"}
     piezas = {}
     for r in rows:

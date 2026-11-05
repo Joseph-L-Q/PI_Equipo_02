@@ -43,7 +43,7 @@ Notas de la tabla:
 
 ## 4. Lo que NO es estanco, a propósito
 
-- Bolsillos de lastre de M1s y sus tapas M3t: están fuera del sello y se llenan de agua. Es lo normal; el lastre son tuercas y arandelas a granel.
+- Bolsillos de lastre: desde el 04/11 son la pieza M3f (marco, atornillado a 4 orejas de M1s) y sus tapas M3t. Están fuera del sello y se llenan de agua; la unión M3f-M1s es mecánica, no lleva sello (las orejas son ciegas, no perforan la caja). Es lo normal. Es lo normal; el lastre son tuercas y arandelas a granel.
 - Gancho en C de M3s y su correa: están por fuera del riel, mojados siempre.
 - Las 4 alas de la almohadilla del riel (con los M3 que bajan a M5s): quedan fuera del canal. El agua puede tocarlas sin entrar.
 - Casco B1, cunas B5, correas B6 y cubierta B2 de la boya: estructura abierta; flotan las botellas PET (cerradas de fábrica).

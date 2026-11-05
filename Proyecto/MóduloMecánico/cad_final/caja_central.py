@@ -129,13 +129,24 @@ def box_lid(lay):
     span = HANDLE_GRIP + 2 * leg
     handle = cq.Workplane("XZ").workplane(offset=-6).center(0, zt + HANDLE_H / 2).rect(span, HANDLE_H).extrude(12)
     hw, wall_h = HANDLE_GRIP / 2, 8.0
-    roof = HANDLE_H - 10 - wall_h
+    # support-free: the 45 degree roof planes close the window up to a flat of impresion.puente_max (was HANDLE_H - 10 - wall_h,
+    # a 42 mm flat bridge); the bar over the window keeps >= 5
+    roof = (HANDLE_GRIP - _P.BRIDGE_MAX) / 2 if _P.NODE_NOSUP else HANDLE_H - 10 - wall_h
+    assert not _P.NODE_NOSUP or HANDLE_H - wall_h - roof >= 5.0, "asa.alto: la barra sobre la ventana queda por debajo de 5"
     window = (cq.Workplane("XZ").workplane(offset=-6)
               .polyline([(-hw, zt), (hw, zt), (hw, zt + wall_h), (hw - roof, zt + wall_h + roof),
                          (-hw + roof, zt + wall_h + roof), (-hw, zt + wall_h)]).close().extrude(12))
     handle = handle.cut(window).edges("|Y").fillet(3)
     eo, ei, _ = HANDLE_EYE
-    eye = cq.Workplane("XZ").workplane(offset=-6).center(0, eye_center(lay)[2]).circle(eo / 2).circle(ei / 2).extrude(12)
+    ez = eye_center(lay)[2]
+    eye = cq.Workplane("XZ").workplane(offset=-6).center(0, ez).circle(eo / 2).extrude(12)
+    if _P.NODE_NOSUP:        # teardrop hole, point up (a round horizontal hole needs supports)
+        k, r = ei / 2 / math.sqrt(2), ei / 2
+        hole = (cq.Workplane("XZ").workplane(offset=-7).center(0, ez).circle(r).extrude(14)
+                .union(cq.Workplane("XZ").workplane(offset=-7).polyline([(-k, ez + k), (k, ez + k), (0, ez + r * math.sqrt(2))]).close().extrude(14)))
+    else:
+        hole = cq.Workplane("XZ").workplane(offset=-7).center(0, ez).circle(ei / 2).extrude(14)
+    eye = eye.cut(hole)
     return lid.union(handle).union(eye)
 
 

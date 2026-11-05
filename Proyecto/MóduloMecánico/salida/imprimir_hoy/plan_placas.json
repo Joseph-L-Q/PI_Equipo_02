@@ -117,6 +117,20 @@
    ]
   },
   {
+   "nombre": "P13_marcos_bolsillo",
+   "relleno": 40,
+   "soportes": false,
+   "paredes": 3,
+   "grupo": 2,
+   "estanca": false,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/17_M3f_marco_bolsillo_x2.stl",
+     2
+    ]
+   ]
+  },
+  {
    "nombre": "P08_capsulas",
    "relleno": 100,
    "soportes": true,

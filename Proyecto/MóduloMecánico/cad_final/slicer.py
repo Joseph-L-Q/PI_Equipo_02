@@ -108,6 +108,8 @@ def process_for(base, supports, dst, infill=None, watertight=False):
         data.update(wall_loops=str(sp["perimetros"]), top_shell_layers=str(sp["capas_arriba"]),
                     bottom_shell_layers=str(sp["capas_abajo"]), sparse_infill_density=f"{round(sp['relleno'] * 100)}%")
     data["enable_support"] = "1" if supports else "0"
+    if supports:                       # block 1.3 (04/11 night): where a support must remain it is the tree type (less plastic, easier to remove)
+        data["support_type"] = "tree(auto)"
     data["name"] = f"{data.get('name', 'proceso')} LanternGuard {'con' if supports else 'sin'} soportes"
     Path(dst).write_text(json.dumps(data, indent=1), encoding="utf-8")
 

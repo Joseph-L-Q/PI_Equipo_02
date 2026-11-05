@@ -100,6 +100,15 @@ def capsule_body():
     body = cq.Workplane("YZ").workplane(offset=x0).rect(out_w, out_h).extrude(L).edges("|X").fillet(3)
     flange = cq.Workplane("YZ").workplane(offset=x0).rect(fl_w, fl_h).extrude(CAP_FLANGE_T).edges("|X").fillet(4)
     body = body.union(flange)
+    import params as _P0
+    if getattr(_P0, "NODE_NOSUP", False) and getattr(_P0, "RAIL_TYPE", "celosia") == "cerrado" and not _P0.CFG.get("monocasco", False):
+        # block 1.3 (04/11 night): 45 degree skirt under the flange (on its window side), so the capsule prints window face down
+        # with no supports: the flange would otherwise hang CAP_FLANGE mm out over the bed
+        s0 = cq.Sketch().rect(fl_w, fl_h).vertices().fillet(4)
+        s1 = cq.Sketch().rect(out_w, out_h).vertices().fillet(3)
+        skirt = (cq.Workplane("YZ").workplane(offset=x0 + CAP_FLANGE_T).placeSketch(
+            s0, s1.moved(cq.Location(cq.Vector(0, 0, CAP_FLANGE)))).loft())
+        body = body.union(skirt)
     body = body.cut(capsule_cavity())
     # opaque separator tube standing on the front wall: LED ring outside it, lens inside it
     tube = cq.Workplane("YZ").workplane(offset=x_fi - LED_STACK).circle(TUBE_R).extrude(LED_STACK)

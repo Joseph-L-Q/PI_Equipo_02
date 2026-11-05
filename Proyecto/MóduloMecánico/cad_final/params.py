@@ -196,7 +196,7 @@ INSERT_COUPON = p("probeta.inserto_M4", (40.0, 30.0), EST, VER,
 
 # probetas (Fase B): constantes de forma que propuso el modelado; Fase C reutiliza las del gancho/pestillo/perilla
 COUPON_L = p("probeta.tramo_L", 40.0, EST, VER, "PB2/PB3 rail length per segment")
-JAW_WALL = p("gancho.pared", 4.0, EST, VER, "minimum wall around the hook seat")
+JAW_WALL = p("gancho.pared", 5.0, EST, VER, "minimum wall around the hook seat (jaws beside the strap slot: 5, laboratorio 04/11)", 4.0)
 JAW_LIP_H = p("gancho.labio_alto", 10.0, EST, VER, "height of the upper lip that carries the latch pivot")
 STRAP_SLOT_T = p("correa.ranura_t", 3.0, EST, VER, "strap slot thickness (slot is STRAP_W x this)")
 STEM_H = p("gancho.vastago_alto", 20.0, EST, VER, "stem above the jaw, carries the M4 hole to bolt PB1 to PB2")
@@ -234,8 +234,8 @@ LED_SEPARATOR = p("aro_led.separador", (1.2, 3.0), EST, VER,
 
 # ---------------------------------------------------------------- caja central (M1, M2)
 ESP32_BASE = p("esp32.base", "sin_base", "equipo", OK, "Por defecto sin KIT A; 'kit_a' es la alternativa")
-BOX_WALL = p("caja.pared", 4.0, "equipo", OK, "A 1 m la presion no manda (0.0101 MPa)", 5.0)
-BOX_FLOOR = p("caja.fondo", 4.0, "equipo", OK, "Igual que la pared", 6.0)
+BOX_WALL = p("caja.pared", 5.0, "equipo", OK, "A 1 m la presion no manda (0.0101 MPa); 5 = minimo de todo elemento vertical esbelto (laboratorio 04/11)", 4.0)
+BOX_FLOOR = p("caja.fondo", 5.0, "equipo", OK, "Igual que la pared (5, laboratorio 04/11)", 4.0)
 BOX_LID_T = p("caja.tapa", 5.0, EST, VER, "Ranura de 1.5 deja 3.5 bajo la junta", 6.0)
 BOX_FLANGE = p("caja.brida_ancho", 10.0, EST, VER, "Ranura + inserto M3 (agujero 4.0) con 3 mm de pared", 9.0)
 BOX_FLANGE_T = p("caja.brida_espesor", 8.0, EST, VER, "Inserto M3 de 5.7 + 2 de fondo", 6.0)
@@ -257,11 +257,12 @@ BASE_M4_PTS = p("caja.base_m4", ((40.0, 20.0), (40.0, -20.0), (-40.0, 20.0), (-4
                 "se aprieta desde abajo",
                 ((51.5, 6.0), (51.5, -6.0), (-51.5, 6.0), (-51.5, -6.0)))
 BASE_M4_BOSS = p("caja.base_m4_boss", (10.0, 6.0), EST, VER, "Ø x alto del refuerzo interior del inserto M4")
-HANDLE_H = p("asa.alto", 42.0, "equipo", OK, "Asa con ojal para el cabo", 42.0)
+HANDLE_H = p("asa.alto", 60.0, "equipo", OK, "Asa con ojal para el cabo; 60 (era 42) para que la ventana de 90 cierre con planos a 45 grados y un plano de 10 (sin soportes, 04/11 noche), con 12 de barra arriba", 42.0)
 HANDLE_GRIP = p("asa.agarre", 90.0, EST, VER, "Ancho de mano con guante", 90.0)
-HANDLE_EYE = p("asa.ojal", (20.0, 10.0, 6.0), EST, VER,
+HANDLE_EYE = p("asa.ojal", (25.0, 10.0, 8.0), EST, VER,
                "Ojal del cabo sobre el asa: Ø exterior, Ø interior, altura del centro sobre el asa (de cad/parts.py). "
-               "En Ø100 y Ø200 tambien se amarran ahi las 4 cuerdas de la linterna")
+               "En Ø100 y Ø200 tambien se amarran ahi las 4 cuerdas de la linterna. 04/11 noche: Ø20 -> Ø25 para que el agujero en gota "
+               "(punta arriba) deje >= 5 de anillo en la punta")
 
 # prensaestopas
 PG7_HOLE = p("pg7.agujero", 12.6, EST, VER, "Rosca PG7 12.5", 12.6)
@@ -297,7 +298,7 @@ TRAY_SPLIT = p("bandeja.partir", "auto", EST, VER,
 LAYOUT_FLOORS = p("caja.pisos", "auto", "equipo", OK,
                   "Se comparan 1 y 2 pisos y se usa el de menor aire sellado; 1 o 2 lo fuerzan")
 TRAY2_POST_D = p("bandeja.poste_D", 8.0, EST, VER, "Postes del piso superior (2 pisos), con M3")
-TRAY_CRADLE_T = p("bandeja.cuna_apoyo", 4.0, EST, VER, "Repisas de la cuna bajo los extremos cortos de la ESP32")
+TRAY_CRADLE_T = p("bandeja.cuna_apoyo", 5.0, EST, VER, "Repisas de la cuna bajo los extremos cortos de la ESP32 (5, laboratorio 04/11)", 4.0)
 TRAY_BOSS_D = p("bandeja.boss_D", 8.0, EST, VER, "Refuerzo del fondo con inserto M3 que sujeta la bandeja")
 TRAY_BOSS_INSET = p("bandeja.boss_margen", 6.0, EST, VER, "Centro del refuerzo al borde de la bandeja")
 
@@ -340,7 +341,7 @@ PLATE_L = p("lastre.pletina_largo", 100.0, EST, VER,
             "Largo de cada trozo: el bolsillo (|x| <= 53.5) deja libre la zona de la union (|x| > 55) para que la "
             "extension entre de costado", 130.0)
 PLATE_SIDES = p("lastre.pletina_lados", 2, EST, VER, "Una pila a cada lado de la camara, simetricas")
-PLATE_POCKET_WALL = p("lastre.bolsillo_pletina_pared", 3.0, EST, VER, "Pared y tapa del bolsillo de la pletina")
+PLATE_POCKET_WALL = p("lastre.bolsillo_pletina_pared", 5.0, EST, VER, "Pared y tapa del bolsillo de la pletina (5, laboratorio 04/11)", 3.0)
 PLATE_CLR = p("lastre.holgura_pletina", 0.5, EST, VER, "Holgura de la pletina en su bolsillo")
 PLATE_POCKET_LAYERS = p("lastre.bolsillo_capacidad", 4, EST, VER,
                         "Pletinas por lado que entran en cada bolsillo (fase_a.py verifica que alcance en todos los aros)")
@@ -365,7 +366,7 @@ CAMERA_CABLE = p("camara.cable_incluido", 300.0, "fabricante", VER, "Medir el re
 LED_RING = p("aro_led.envolvente", (30.0, 3.0), EST, VER, "Ø exterior x espesor, sin comprar")
 WIN_DIA = p("ventana.diametro", 30.0, EST, VER, "Acrilico, cubre lente + LED", 30.0)
 WIN_T = p("ventana.espesor", 3.0, EST, VER, "", 3.0)
-CAP_WALL = p("capsula.pared", 4.0, "equipo", OK, "", 4.0)
+CAP_WALL = p("capsula.pared", 5.0, "equipo", OK, "5 = minimo de todo elemento vertical esbelto (laboratorio 04/11)", 4.0)
 HINGE_TEETH = p("bisagra.dientes", 36, "equipo", OK, "Bisagra dentada M4 se conserva", 36)
 CAM_TILT_DEG = p("bisagra.inclinacion", 40.0, EST, VER, "Multiplo de 10", 40.0)
 CAPSULE_SET_G = p("masa.capsula_set", 93.1, EST, VER,
@@ -687,6 +688,27 @@ RAIL_SADDLE_PAD = p("riel.brida_silla", dict(espesor=6.0, semiancho=25.0, m3_x=1
 SEAL_FLAT = p("junta.plana", dict(cordon=2.0, compresion=0.20, ranura_prof=1.6, ranura_ancho=2.6, borde=1.5), "equipo", OK,
               "Junta tórica plana de las uniones riel-caja y riel-cápsula: cordón Ø2 (NBR), 20 % de compresión -> ranura 1.6 de "
               "profundidad, 2.6 de ancho (llenado 75 %), 1.5 de borde al canal")
+# ---- block 1.3 (04/11 night): node pieces printed without supports -------------------------------------------------
+NODE_NOSUP = p("impresion.nodo_sin_soportes", True, "equipo", VER,
+               "Interruptor de la tanda 1.3 (04/11 noche): True = las piezas del nodo se dibujan para imprimirse sin soportes (techos a 45 "
+               "grados, huecos en gota, chaflanes bajo los voladizos, costillas de apoyo); False = el diseno anterior", False)
+BRIDGE_MAX = p("impresion.puente_max", 10.0, "equipo", OK,
+               "Luz horizontal maxima sin soporte (laboratorio 04/11): techos, ventanas y bolsillos se cierran con chaflan a 45 grados "
+               "o se hacen en gota; lo plano que queda no pasa de esta luz", None)
+FRAME_LUGS = p("lastre.orejas_marco", dict(x=45.0, ancho=20.0, saliente=14.0, alto=12.0), "equipo", VER,
+               "Los bolsillos de lastre (bajo el piso de M1s, fuera del volumen seco) salen de M1s como pieza propia M3f_marco_bolsillo: "
+               "M1s queda con el piso plano sobre la cama (sin soportes). El marco se ata con 2 M3 por bolsillo a 4 orejas de M1s "
+               "(x = +-este valor, ancho en x, saliente de la pared, alto), con inserto M3 ciego desde abajo. False en "
+               "impresion.nodo_sin_soportes: los bolsillos van dentro de M1s como antes", None)
+RAIL_CHAMFER_TOP = p("riel.canal_chaflan_techo", 8.0, "equipo", VER,
+                     "Canal del riel: las dos esquinas de arriba llevan un chaflan a 45 grados de este lado (el piso plano de 22 y el alto "
+                     "libre de 18 no cambian); con el riel de lado el techo queda en 10 de luz. 0 = esquinas R1 (anterior)", 0.0)
+BOX_WINDOW_CHAMFER = p("caja.ventana_chaflan", 7.0, "equipo", VER,
+                       "Ventana de 24 x 18 de M1s al canal del riel: chaflan a 45 grados en las dos esquinas de arriba (queda un techo plano "
+                       "de 10); la cara plana del cordon y su ranura (en el riel) no se tocan. 0 = esquinas R1 (anterior)", 0.0)
+RAIL_BED_RIBS = p("riel.apoyos_cama", dict(ancho=6.0, n=2), "equipo", VER,
+                  "M3s se imprime de lado y la silla (50 de ancho) lo levanta 7 mm sobre la cama: dos costillas continuas de este ancho "
+                  "bajo la cara de abajo cortan la luz a menos de 10. n = 0: sin costillas (anterior)", None)
 FOOT_PLATE_CLOSED = p("capsula.pie_placa_cerrado", 10.0, EST, VER,
                       "Espesor de la placa de la silla de M5s con el riel cerrado: insertos M3 ciegos de 6 + 4 mm de fondo (la junta no se perfora). "
                       "Con 8 el FEM daba FS 3.00 entre capas, justo", 8.0)

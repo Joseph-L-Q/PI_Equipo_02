@@ -461,8 +461,8 @@ CABLE_RUTA = ("Camino completo, todo en seco: dentro de la caja M1s → ventana 
               "curva de radio 10 → abertura bajo el riel → conducto de M5s → ranura de la tapa de la cápsula → cámara.")
 PIEZAS += [
     dict(id="M1s_caja_cuerpo", grupo="Nodo P2", step=NODO / "M1s_caja_cuerpo.step", titulo="M1s · Caja del nodo (cuerpo)",
-         sub="Caja seca del nodo (127 × 126 × 77 mm). La caja, los dos rieles y las dos cápsulas forman UN solo volumen seco: el cable plano de cada cámara va por dentro, sin prensaestopas. "
-             "Cada extremo tiene una ventana al canal del riel. Abajo, los bolsillos de lastre. La cierra la tapa M2. x a lo largo de los rieles, z arriba.",
+         sub="Caja seca del nodo (129 × 128 × 78 mm, paredes de 5), que se imprime sin soportes. La caja, los dos rieles y las dos cápsulas forman UN solo volumen seco: el cable plano de cada cámara va por dentro, sin prensaestopas. "
+             "Cada extremo tiene una ventana al canal del riel. El piso queda plano sobre la cama; los bolsillos de lastre son la pieza aparte M3f, que se atornilla a cuatro orejas. La cierra la tapa M2. x a lo largo de los rieles, z arriba.",
          views=[(60, 30), (215, -35)],
          items=[
              IGN(dict(D=2.0, ax="x")),
@@ -486,13 +486,11 @@ PIEZAS += [
                [(0, -68, 66), (-68, 0, 66)], key="falda", tol=5),
              A("mont", "Insertos M3 de los bosses de la bandeja", "Cuatro bosses Ø8 sobre el piso con inserto M3 (ciego). Un solo tornillo M3 × 38 de acero inoxidable por boss atraviesa la bandeja superior, el poste y la bandeja inferior y se enrosca aquí ([[M11_bandeja:postes]]). Cada boss nace del piso con un chaflán de 45°.",
                dict(D=4.0, ax="z", z=(5, 15)), key="bosses", tol=3),
-             A("union", "Insertos M3 de los bolsillos", "Cuatro insertos M3 (Ø4.0) en el fondo de los bolsillos (2 por bolsillo): ahí se atornillan los M3 avellanados de la tapa M3t.",
-               dict(D=4.0, ax="z", z=(-40, -10)), key="ins_m3t", tol=3),
-             M("forma", "Bolsillos de lastre", "Dos cajones de 100 × 50 × 30 mm bajo el piso (uno por lado), abiertos por abajo y fuera del sello. Llevan las tuercas y arandelas M8 a granel (575 g por bolsillo, 1150 g en total) y se cierran con M3t. Entra agua: es lo normal.",
-               [(0, 29.5, -14), (0, -29.5, -14)], key="bolsillos", tol=6),
+             M("union", "Orejas M3 del marco de lastre", "Cuatro orejas de 20 × 14 × 12 mm en las paredes largas, a ras del piso, con un inserto M3 ciego cada una (desde abajo). Ahí se atornillan los dos marcos M3f (uno por bolsillo), fuera del volumen seco. Los bolsillos ya no van dentro de M1s: así el piso queda plano y sin soportes.",
+               [(45, 71, 6), (-45, 71, 6), (45, -71, 6), (-45, -71, 6)], key="orejas", tol=8),
          ]),
     dict(id="M2_caja_tapa", grupo="Nodo P2", step=NODO / "M2_caja_tapa.step", titulo="M2 · Tapa de la caja con asa",
-         sub="Cierra la caja M1s. Lleva el asa para cargar con guante, el ojo de anclaje del cabo y el PG7 del umbilical, que es el único prensaestopas que queda en el nodo. Se imprime girada (Y+90). Aquí z crece hacia arriba (asa arriba).",
+         sub="Cierra la caja M1s. Lleva el asa para cargar con guante, el ojo de anclaje del cabo y el PG7 del umbilical, que es el único prensaestopas que queda en el nodo. Se imprime sin girar (sin soportes). Aquí z crece hacia arriba (asa arriba).",
          views=[(40, 35), (40, -40)],
          items=[
              IGN(dict(D=6.0, ax="y")),
@@ -504,7 +502,7 @@ PIEZAS += [
                dict(D=12.6, ax="z"), key="pg7", tol=2),
              A("union", "Ojo de anclaje Ø10", "Ojo Ø10 en lo alto del asa, con eje en Y: aquí se amarra el cabo que sube a la linterna / línea larga.",
                dict(D=10, ax="y"), key="ojo", tol=3),
-             M("forma", "Asa en arco", "Asa de 12 mm de grosor con apertura para guante. El techo de la ventana va a 45° para imprimir sin soportes.",
+             M("forma", "Asa en arco", "Asa de 12 mm de grosor y 60 mm de alto, con apertura para guante. El techo de la ventana cierra con dos planos a 45° y un plano de 10 mm (puente máximo), y el ojo de anclaje es un agujero en gota con la punta arriba: se imprime sin soportes.",
                [(-25, 6, 122), (-47, 6, 92)], key="asa", tol=5),
          ]),
     dict(id="M3s_riel_gancho", grupo="Nodo P2", step=NODO / "M3s_riel_gancho.step", titulo="M3s · Riel cerrado con gancho (una mitad)",
@@ -517,7 +515,7 @@ PIEZAS += [
              M("cable", "Recorrido del cable (resumen)", "El cable plano de la cámara va por dentro del riel, seco. " + CABLE_RUTA + " "
                "Ya no hay prensaestopas PG7 en el riel ni en la caja: el cable pasa de una pieza a otra por aberturas selladas con cordón plano. Puntos marcados: boca del canal en la brida, canal, y abertura bajo el riel.",
                [(73.5, 0, 13.7), (140, 0, 13.7), (185, 0, -4.3)], key="ruta", tol=1000),
-             M("cable", "Canal interior seco 24 × 18", "El riel es un tubo cerrado de 36 × 30 mm de afuera. Por dentro, un canal de 24 × 18 mm con esquinas redondeadas (R1) y un piso plano de 22 mm donde se apoya el cable plano. Paredes de 6 mm, sin ventanas. Es parte del volumen seco: el agua no entra.",
+             M("cable", "Canal interior seco 24 × 18", "El riel es un tubo cerrado de 36 × 30 mm de afuera. Por dentro, un canal de 24 × 18 mm con esquinas redondeadas (R1) y un piso plano de 22 mm donde se apoya el cable plano. Paredes de 6 mm, sin ventanas. El techo del canal se cierra con dos chaflanes de 45° (8 mm) para imprimir sin soportes. Es parte del volumen seco: el agua no entra.",
                [(140, 0, 13.7)], key="canal", tol=1000),
              M("forma", "Punta cerrada", "El extremo del riel está cerrado con pared de 6 mm (antes tenía un agujero Ø8 para el cable): el cable no sale por aquí, baja por la abertura de abajo ([[M3s_riel_gancho:abertura]]).",
                [(213, 0, 13.7)], key="punta", tol=5),
@@ -540,9 +538,9 @@ PIEZAS += [
          sub="Placa de 3 mm que cierra por abajo cada bolsillo de lastre de la caja. Se imprimen 2 (una por bolsillo). Plana en la cama.",
          views=[(30, -40)],
          items=[
-             A("union", "Pasos M3 avellanados", "Dos pasos M3 (Ø3.4) con avellanado: la cabeza queda al ras del fondo. Los M3 de 8 mm entran a los insertos del fondo del bolsillo ([[M1s_caja_cuerpo:ins_m3t]]).",
+             A("union", "Pasos M3 avellanados", "Dos pasos M3 (Ø3.4) con avellanado: la cabeza queda al ras del fondo. Los M3 de 8 mm entran a los insertos del marco M3f, que cuelga de M1s.",
                dict(D=3.4, ax="z"), key="pasos", tol=2),
-             M("forma", "Placa de cierre", "Placa de 107 × 35 × 3 mm que retiene el lastre a granel. No es estanca: el bolsillo está fuera del sello.",
+             M("forma", "Placa de cierre", "Placa de 107 × 35 × 3 mm que cierra por abajo el marco M3f y retiene el lastre a granel. No es estanca: el bolsillo está fuera del sello.",
                [(0, 29, -31.5)], key="placa", tol=3),
          ]),
     dict(id="M4_capsula_cuerpo", grupo="Nodo P2", step=NODO / "M4_capsula_cuerpo.step", titulo="M4 · Cápsula de cámara (cuerpo)",

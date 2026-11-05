@@ -97,25 +97,25 @@
   {
    "pieza": "P2_robusto/M1s_caja_cuerpo",
    "bbox": [
-    147.0,
-    146.0,
-    107.0
+    149.0,
+    156.0,
+    78.0
    ],
    "cabe": true
   },
   {
    "pieza": "P2_robusto/M2_caja_tapa",
    "bbox": [
-    63.0,
-    146.0,
-    147.0
+    149.0,
+    148.0,
+    85.5
    ],
    "cabe": true
   },
   {
    "pieza": "P2_robusto/M3s_riel_gancho",
    "bbox": [
-    141.5,
+    140.5,
     79.4,
     50.0
    ],
@@ -125,17 +125,26 @@
    "pieza": "P2_robusto/M3t_tapa_bolsillo",
    "bbox": [
     117.0,
-    57.0,
-    3.0
+    61.0,
+    5.0
    ],
    "cabe": true
   },
   {
    "pieza": "P2_robusto/M5s_capsula_tapa_pie",
    "bbox": [
-    51.4,
-    64.0,
-    70.4
+    51.9,
+    66.0,
+    72.2
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M3f_marco_bolsillo",
+   "bbox": [
+    117.0,
+    77.0,
+    30.0
    ],
    "cabe": true
   },
@@ -160,9 +169,9 @@
   {
    "pieza": "P2_robusto/M4_capsula_cuerpo",
    "bbox": [
-    45.0,
-    64.0,
-    64.0
+    66.0,
+    66.0,
+    45.0
    ],
    "cabe": true
   },
@@ -367,7 +376,7 @@
   {
    "pieza": "boya_pet/B1_casco",
    "bbox": [
-    132.0,
+    133.0,
     225.6,
     85.4
    ],
@@ -376,18 +385,18 @@
   {
    "pieza": "boya_pet/B2_cubierta_lisa",
    "bbox": [
-    127.0,
+    131.0,
     225.6,
-    113.4
+    119.9
    ],
    "cabe": true
   },
   {
    "pieza": "boya_pet/B2_cubierta_mastil",
    "bbox": [
-    127.0,
+    131.0,
     225.6,
-    136.4
+    142.9
    ],
    "cabe": true
   },
@@ -405,15 +414,15 @@
    "bbox": [
     166.8,
     108.8,
-    4.0
+    6.5
    ],
    "cabe": true
   },
   {
    "pieza": "boya_pet/B5_cuna_base",
    "bbox": [
-    127.0,
-    117.6,
+    131.0,
+    118.6,
     85.4
    ],
    "cabe": true
@@ -421,8 +430,8 @@
   {
    "pieza": "boya_pet/B5_cuna_cuello",
    "bbox": [
-    127.0,
-    117.6,
+    131.0,
+    118.6,
     85.4
    ],
    "cabe": true
@@ -432,7 +441,7 @@
    "bbox": [
     14.0,
     105.8,
-    4.0
+    5.0
    ],
    "cabe": true
   },
@@ -530,60 +539,69 @@
    "pieza": "imprimir_hoy/11_M3t_tapa_bolsillo_x2",
    "bbox": [
     117.0,
-    57.0,
-    3.0
+    61.0,
+    5.0
    ],
    "cabe": true
   },
   {
    "pieza": "imprimir_hoy/12_M4_capsula_cuerpo_x2",
    "bbox": [
-    64.0,
-    64.0,
-    44.0
+    66.0,
+    66.0,
+    45.0
    ],
    "cabe": true
   },
   {
    "pieza": "imprimir_hoy/13_M2_caja_tapa_x1",
    "bbox": [
-    63.0,
-    146.0,
-    147.0
+    149.0,
+    148.0,
+    85.5
    ],
    "cabe": true
   },
   {
    "pieza": "imprimir_hoy/14_M1s_caja_cuerpo_x1",
    "bbox": [
-    147.0,
-    146.0,
-    107.0
+    149.0,
+    156.0,
+    78.0
    ],
    "cabe": true
   },
   {
    "pieza": "imprimir_hoy/15_M5s_capsula_tapa_pie_x2",
    "bbox": [
-    55.2,
-    64.0,
-    95.9
+    51.9,
+    66.0,
+    72.2
    ],
    "cabe": true
   },
   {
    "pieza": "imprimir_hoy/16_M3s_riel_gancho_x2",
    "bbox": [
-    141.5,
+    140.5,
     79.4,
     50.0
    ],
    "cabe": true
   },
   {
+   "pieza": "imprimir_hoy/17_M3f_marco_bolsillo_x2",
+   "bbox": [
+    117.0,
+    77.0,
+    30.0
+   ],
+   "cabe": true
+  },
+  {
    "pieza": "imprimir_hoy/18_B1_casco_x2",
    "bbox": [
-    132.0,
+    133.0,
     225.6,
     85.4
    ],
@@ -592,9 +610,9 @@
   {
    "pieza": "imprimir_hoy/19_B2_cubierta_lisa_x1",
    "bbox": [
-    127.0,
+    131.0,
     225.6,
-    113.4
+    119.9
    ],
    "cabe": true
   },
@@ -612,15 +630,15 @@
    "bbox": [
     166.8,
     108.8,
-    4.0
+    6.5
    ],
    "cabe": true
   },
   {
    "pieza": "imprimir_hoy/22_B5_cuna_base_x2",
    "bbox": [
-    127.0,
-    117.6,
+    131.0,
+    118.6,
     85.4
    ],
    "cabe": true
@@ -630,24 +648,24 @@
    "bbox": [
     14.0,
     105.8,
-    4.0
+    5.0
    ],
    "cabe": true
   },
   {
    "pieza": "imprimir_hoy/24_B2_cubierta_mastil_x1",
    "bbox": [
-    127.0,
+    131.0,
     225.6,
-    136.4
+    142.9
    ],
    "cabe": true
   },
   {
    "pieza": "imprimir_hoy/25_B5_cuna_cuello_x2",
    "bbox": [
-    127.0,
-    117.6,
+    131.0,
+    118.6,
     85.4
    ],
    "cabe": true

@@ -127,32 +127,44 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 2,
-  "g": 23.72,
-  "h": 0.5533333333333333,
+  "g": 42.29,
+  "h": 0.8663888888888889,
+  "estanca": false
+ },
+ {
+  "archivo": "17_M3f_marco_bolsillo_x2.stl",
+  "cant": 2,
+  "orient": "X180",
+  "relleno": 40,
+  "soportes": false,
+  "paredes": 3,
+  "grupo": 2,
+  "g": 51.76,
+  "h": 1.9525,
   "estanca": false
  },
  {
   "archivo": "12_M4_capsula_cuerpo_x2.stl",
   "cant": 2,
-  "orient": "Y-90",
+  "orient": "Y+90",
   "relleno": 100,
   "soportes": true,
   "paredes": 4,
   "grupo": 2,
-  "g": 60.71,
+  "g": 77.31,
   "h": 2.0430555555555556,
   "estanca": true
  },
  {
   "archivo": "13_M2_caja_tapa_x1.stl",
   "cant": 1,
-  "orient": "Y+90",
+  "orient": "sin girar",
   "relleno": 100,
   "soportes": true,
   "paredes": 4,
   "grupo": 2,
-  "g": 181.05,
-  "h": 5.059722222222222,
+  "g": 194.37,
+  "h": 4.813055555555556,
   "estanca": true
  },
  {
@@ -163,8 +175,8 @@
   "soportes": true,
   "paredes": 4,
   "grupo": 2,
-  "g": 513.28,
-  "h": 16.1975,
+  "g": 436.76,
+  "h": 9.268611111111111,
   "estanca": true
  },
  {
@@ -175,8 +187,8 @@
   "soportes": true,
   "paredes": 4,
   "grupo": 2,
-  "g": 93.69,
-  "h": 2.7158333333333333,
+  "g": 97.27,
+  "h": 2.7955555555555556,
   "estanca": true
  },
  {
@@ -187,8 +199,8 @@
   "soportes": true,
   "paredes": 4,
   "grupo": 3,
-  "g": 199.91,
-  "h": 6.251111111111111,
+  "g": 217.13,
+  "h": 6.1369444444444445,
   "estanca": true
  },
  {
@@ -199,8 +211,8 @@
   "soportes": true,
   "paredes": 3,
   "grupo": 4,
-  "g": 133.1,
-  "h": 5.24,
+  "g": 147.9,
+  "h": 6.03,
   "estanca": false
  },
  {
@@ -211,8 +223,8 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 91.4,
-  "h": 5.14,
+  "g": 92.9,
+  "h": 5.24,
   "estanca": false
  },
  {
@@ -223,8 +235,8 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 106.8,
-  "h": 5.73,
+  "g": 116.6,
+  "h": 6.05,
   "estanca": false
  },
  {
@@ -235,8 +247,8 @@
   "soportes": false,
   "paredes": 4,
   "grupo": 4,
-  "g": 173.4,
-  "h": 5.59,
+  "g": 175.0,
+  "h": 5.72,
   "estanca": true
  },
  {
@@ -247,8 +259,8 @@
   "soportes": false,
   "paredes": 4,
   "grupo": 4,
-  "g": 57.2,
-  "h": 2.1,
+  "g": 78.6,
+  "h": 3.35,
   "estanca": true
  },
  {
@@ -259,8 +271,8 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 72.8,
-  "h": 2.98,
+  "g": 79.3,
+  "h": 3.26,
   "estanca": false
  },
  {
@@ -271,8 +283,8 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 76.2,
-  "h": 3.02,
+  "g": 81.4,
+  "h": 3.28,
   "estanca": false
  },
  {
@@ -283,8 +295,8 @@
   "soportes": false,
   "paredes": 3,
   "grupo": 4,
-  "g": 5.2,
-  "h": 0.3,
+  "g": 6.1,
+  "h": 0.34,
   "estanca": false
  }
 ]
