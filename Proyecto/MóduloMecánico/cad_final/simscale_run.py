@@ -850,7 +850,7 @@ Los enlaces abren la simulación en SimScale (proyecto público del plan gratuit
 
 ## Límites y avisos
 
-- Las corridas de SimScale de la cubierta con barras de 8 mm terminaron bien pero el plan gratuito devolvió 403 «export-source-locked» al descargar el resultado; por eso esas piezas salen con FEM local.
+- Las 8 corridas de SimScale de la tanda final (geometría del 04/11, 21:38 boya y 21:57 nodo) terminaron bien, pero el plan gratuito devolvió 403 «export-source-locked» al descargar cada resultado; por eso todas las piezas salen con FEM local (el enlace abre la simulación en SimScale).
   No se usaron capturas del visor web de SimScale: la clave de la API no inicia sesión en la página y no hay una sesión abierta.
 - El enlace de cada proyecto es el que usa el sitio para proyectos compartidos (`workbench/?pid=...`). El plan gratuito deja los proyectos públicos (contienen solo geometría y resultados de estas piezas);
   desde el script no se puede comprobar el acceso sin iniciar sesión, conviene abrirlo una vez en una ventana privada.

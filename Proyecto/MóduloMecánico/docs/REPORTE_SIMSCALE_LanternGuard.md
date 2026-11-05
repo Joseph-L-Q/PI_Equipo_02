@@ -21,14 +21,14 @@ SimScale (plan gratuito, por su API) y, cuando SimScale no entrega el resultado 
 
 | Pieza | Caso | Fuente | σ máx. (MPa) | FS = 50/σ máx. | σ p99.5 (MPa) | FS entre capas (22/σ p99.5) | Desplaz. (mm) | Local: σ máx. / desplaz. | SimScale: σ máx. / desplaz. | Veredicto | Enlace |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| M3s_riel_gancho | Riel con gancho colgado del anillo: capsula con 150 N hacia abajo + corriente de 1.5 m/s | **SimScale** | 15.6 | 3.20 | 4.4 | 4.98 | 1.53 | 16.4 / 1.54 | 15.6 / 1.53 | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=770997415227428031&rru=40540ee4-cc22-408f-85b0-624c8b916226&ci=eb506738-a210-4cff-89a3-5b1f52367445&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT) |
-| M5s_capsula_tapa_pie | Tapa de capsula con pie: silla fija, 150 N + corriente en el frente de la capsula | **SimScale** | 20.1 | 2.48 | 7.3 | 3.02 | 0.29 | 15.5 / 0.28 | 20.1 / 0.29 | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=770997415227428031&rru=a4db17dd-ab0e-41c7-8789-b46fe337f847&ci=69c84c14-9979-468c-9470-72fca2815f8f&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT) |
-| M1s_caja_cuerpo | Caja: colgada de los insertos M3 de la tapa, el riel con la capsula tira del cojin +X (150 N + corriente) | **SimScale** | 25.4 | 1.97 | 7.7 | 2.84 | 0.45 | 21.6 / 0.44 | 25.4 / 0.45 | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=770997415227428031&rru=327c9ab5-fd76-4ffc-9e8c-c2cd587eb1dc&ci=0a90a786-26b6-42c4-98ff-84672028d3a8&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT) |
-| B3_caja | Caja seca: peso de la electronica y de la tapa + golpe de ola de 200 N de costado | **FEM local** | 12.3 | 4.05 | 5.6 | 3.91 | 1.01 | 12.3 / 1.01 | no hay | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:16c2f2fb-c0f8-4049-9322-e0175699ffb8%2Cservice:SIMULATION%2Cstrategy:1) |
-| B2_cubierta_lisa | Media cubierta: peso de la caja y del panel + golpe de ola de 200 N vertical sobre las barras | **FEM local** | 32.0 | 1.56 | 13.3 | 1.65 | 5.33 | 32.0 / 5.33 | no hay | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:fe4b2446-655f-4c26-998b-3856ce11b757%2Cservice:SIMULATION%2Cstrategy:1) |
-| B2_cubierta_mastil | Media cubierta: peso de la caja y del panel + golpe de ola de 200 N vertical sobre las barras | **FEM local** | 32.6 | 1.53 | 13.4 | 1.65 | 5.43 | 32.6 / 5.43 | no hay | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:195640ad-e0a3-4fc3-9b87-2effc03666d9%2Cservice:SIMULATION%2Cstrategy:1) |
-| B2_cubierta_lisa_lateral | Media cubierta: peso de la caja y del panel + golpe de ola de 200 N lateral sobre el panel | **FEM local** | 82.5 | 0.61 | 52.7 | 0.42 | 47.02 | 82.5 / 47.02 | no hay | **NO cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:712626db-921c-439f-b37e-0b4b5b5e903b%2Cservice:SIMULATION%2Cstrategy:1) |
-| B2_cubierta_mastil_lateral | Media cubierta: peso de la caja y del panel + golpe de ola de 200 N lateral sobre el panel | **FEM local** | 85.0 | 0.59 | 51.9 | 0.42 | 47.06 | 85.0 / 47.06 | no hay | **NO cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:a946fdb1-a09a-4773-a67e-707fa50b3504%2Cservice:SIMULATION%2Cstrategy:1) |
+| M3s_riel_gancho | Riel con gancho colgado del anillo: capsula con 150 N hacia abajo + corriente de 1.5 m/s | **FEM local** | 16.9 | 2.96 | 6.4 | 3.44 | 1.47 | 16.9 / 1.47 | no hay | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:288d6bda-8d82-402b-a6f2-7d2cccd2a913%2Cservice:SIMULATION%2Cstrategy:1) |
+| M5s_capsula_tapa_pie | Tapa de capsula con pie: silla fija, 150 N + corriente en el frente de la capsula | **FEM local** | 17.0 | 2.95 | 6.6 | 3.35 | 0.30 | 17.0 / 0.30 | no hay | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:1e5436ec-c92b-43e7-8438-86a9eb22d7b4%2Cservice:SIMULATION%2Cstrategy:1) |
+| M1s_caja_cuerpo | Caja: colgada de los insertos M3 de la tapa, el riel con la capsula tira del cojin +X (150 N + corriente) | **FEM local** | 18.9 | 2.65 | 5.9 | 3.74 | 0.31 | 18.9 / 0.31 | no hay | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:6936e052-5dc1-4552-aa16-9e394ce3c29e%2Cservice:SIMULATION%2Cstrategy:1) |
+| B3_caja | Caja seca: peso de la electronica y de la tapa + golpe de ola de 200 N de costado | **FEM local** | 12.3 | 4.07 | 5.5 | 3.97 | 0.99 | 12.3 / 0.99 | no hay | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:49ee5788-0087-4653-8c60-84a48bf61ff1%2Cservice:SIMULATION%2Cstrategy:1) |
+| B2_cubierta_lisa | Media cubierta: peso de la caja y del panel + golpe de ola de 200 N vertical sobre las barras | **FEM local** | 34.2 | 1.46 | 13.4 | 1.65 | 5.34 | 34.2 / 5.34 | no hay | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:c3704cf9-d345-48d5-bd74-23e0498e84b0%2Cservice:SIMULATION%2Cstrategy:1) |
+| B2_cubierta_mastil | Media cubierta: peso de la caja y del panel + golpe de ola de 200 N vertical sobre las barras | **FEM local** | 34.6 | 1.44 | 13.4 | 1.64 | 5.50 | 34.6 / 5.50 | no hay | **cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:cad9c74c-c3b0-4a84-91f6-677d0dafeb04%2Cservice:SIMULATION%2Cstrategy:1) |
+| B2_cubierta_lisa_lateral | Media cubierta: peso de la caja y del panel + golpe de ola de 200 N lateral sobre el panel | **FEM local** | 91.8 | 0.54 | 53.7 | 0.41 | 46.29 | 91.8 / 46.29 | no hay | **NO cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:fd4db8a5-6f03-495c-864d-0ca180edebbe%2Cservice:SIMULATION%2Cstrategy:1) |
+| B2_cubierta_mastil_lateral | Media cubierta: peso de la caja y del panel + golpe de ola de 200 N lateral sobre el panel | **FEM local** | 91.6 | 0.55 | 52.5 | 0.42 | 46.40 | 91.6 / 46.40 | no hay | **NO cumple** | [abrir](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:20e49dc4-4483-4d80-a2eb-1d7f35f411d9%2Cservice:SIMULATION%2Cstrategy:1) |
 
 Lectura: «cumple» = FS ≥ 1 con σ máx. y con σ p99.5 en los dos sentidos; «cumple sin picos» = pasa con p99.5 pero el pico puntual supera 50 MPa (criterio propio, no normativo).
 Los enlaces abren la simulación en SimScale (proyecto público del plan gratuito).
@@ -68,16 +68,16 @@ La cubierta de 8 mm **cumple** el golpe vertical de 200 N con FS 3 (sin contar l
 
 Riel con gancho colgado del anillo: capsula con 150 N hacia abajo + corriente de 1.5 m/s.
 
-- Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 16.6 cm2, Cd = 1) = 1.92 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente.
+- Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 18.1 cm2, Cd = 1) = 2.09 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente.
 
 **Caras elegidas (verificadas por conteo y área):**
 
 - Apoyo fijo: asiento de la C del gancho (colgado del anillo) → 3 caras, 392.0 mm²
-- Carga: 150 N + arrastre en el frente de la capsula, por un cuerpo rigido a la silla → 4 caras, 256.4 mm², fuerza [-1.916, 0, -150.0] N
+- Carga: 150 N + arrastre en el frente de la capsula, por un cuerpo rigido a la silla → 4 caras, 256.4 mm², fuerza [-2.087, 0, -150.0] N
 
-**Resultado (SimScale):** σ máxima 15.62 MPa (FS 3.20); σ sin el 0.5 % de picos 4.42 MPa (FS 11.32 en el plano de las capas con 50 MPa; FS **entre capas** 4.98 con 22 MPa); desplazamiento máximo 1.53 mm; malla de 259277 elementos.
+**Resultado (FEM local):** σ máxima 16.90 MPa (FS 2.96); σ sin el 0.5 % de picos 6.40 MPa (FS 7.81 en el plano de las capas con 50 MPa; FS **entre capas** 3.44 con 22 MPa); desplazamiento máximo 1.47 mm; malla de 40355 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
 
-[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=770997415227428031) · [Simulación](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:633b313d-9ace-4eaf-ba44-8f94def22dc5%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=770997415227428031&rru=40540ee4-cc22-408f-85b0-624c8b916226&ci=eb506738-a210-4cff-89a3-5b1f52367445&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT)
+[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=770997415227428031) · [Simulación](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:288d6bda-8d82-402b-a6f2-7d2cccd2a913%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:288d6bda-8d82-402b-a6f2-7d2cccd2a913%2Cservice:SIMULATION%2Cstrategy:1)
 
 Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6 mm (magenta = pasa del tope).
 
@@ -98,11 +98,11 @@ Tapa de capsula con pie: silla fija, 150 N + corriente en el frente de la capsul
 **Caras elegidas (verificadas por conteo y área):**
 
 - Apoyo fijo: agujeros de la silla (insertos M3 de la tapa del pie) → 4 caras, 301.6 mm²
-- Carga: 150 N + arrastre en el frente, por un cuerpo rigido a los 4 M3 de la tapa → 8 caras, 407.2 mm², fuerza [-1.916, 0, -150.0] N
+- Carga: 150 N + arrastre en el frente, por un cuerpo rigido a los 4 M3 de la tapa → 8 caras, 407.2 mm², fuerza [-2.087, 0, -150.0] N
 
-**Resultado (SimScale):** σ máxima 20.14 MPa (FS 2.48); σ sin el 0.5 % de picos 7.28 MPa (FS 6.87 en el plano de las capas con 50 MPa; FS **entre capas** 3.02 con 22 MPa); desplazamiento máximo 0.29 mm; malla de 40394 elementos.
+**Resultado (FEM local):** σ máxima 16.96 MPa (FS 2.95); σ sin el 0.5 % de picos 6.58 MPa (FS 7.60 en el plano de las capas con 50 MPa; FS **entre capas** 3.35 con 22 MPa); desplazamiento máximo 0.30 mm; malla de 20901 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
 
-[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=770997415227428031) · [Simulación](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:df8a7fb4-3edb-447e-85ff-1d450ae2590f%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=770997415227428031&rru=a4db17dd-ab0e-41c7-8789-b46fe337f847&ci=69c84c14-9979-468c-9470-72fca2815f8f&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT)
+[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=770997415227428031) · [Simulación](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:1e5436ec-c92b-43e7-8438-86a9eb22d7b4%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:1e5436ec-c92b-43e7-8438-86a9eb22d7b4%2Cservice:SIMULATION%2Cstrategy:1)
 
 Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6 mm (magenta = pasa del tope).
 
@@ -118,17 +118,17 @@ Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6
 
 Caja: colgada de los insertos M3 de la tapa, el riel con la capsula tira del cojin +X (150 N + corriente).
 
-- Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 16.6 cm2, Cd = 1) = 1.92 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente.
+- Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 18.1 cm2, Cd = 1) = 2.09 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente.
 - Caso propio (el FEM local no tiene la caja): la caja cuelga de la tapa como al izar por el asa; los insertos M3 de la tapa se toman como apoyos fijos y el riel con la capsula tira de los 4 M4 del cojin.
 
 **Caras elegidas (verificadas por conteo y área):**
 
 - Apoyo fijo: agujeros M3 de la brida de la tapa (16) → 16 caras, 1206.4 mm²
-- Carga: 150 N + arrastre en el frente de la capsula, por un cuerpo rigido a los 4 M4 del cojin +X → 4 caras, 597.5 mm², fuerza [-1.916, 0, -150.0] N
+- Carga: 150 N + arrastre en el frente de la capsula, por un cuerpo rigido a los 4 M4 del cojin +X → 4 caras, 448.1 mm², fuerza [-2.087, 0, -150.0] N
 
-**Resultado (SimScale):** σ máxima 25.36 MPa (FS 1.97); σ sin el 0.5 % de picos 7.74 MPa (FS 6.46 en el plano de las capas con 50 MPa; FS **entre capas** 2.84 con 22 MPa); desplazamiento máximo 0.45 mm; malla de 176103 elementos.
+**Resultado (FEM local):** σ máxima 18.87 MPa (FS 2.65); σ sin el 0.5 % de picos 5.89 MPa (FS 8.49 en el plano de las capas con 50 MPa; FS **entre capas** 3.74 con 22 MPa); desplazamiento máximo 0.31 mm; malla de 91736 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
 
-[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=770997415227428031) · [Simulación](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:471ef147-0491-4e3b-8bf0-17f58b0833a6%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=770997415227428031&rru=327c9ab5-fd76-4ffc-9e8c-c2cd587eb1dc&ci=0a90a786-26b6-42c4-98ff-84672028d3a8&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT)
+[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=770997415227428031) · [Simulación](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:6936e052-5dc1-4552-aa16-9e394ce3c29e%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:6936e052-5dc1-4552-aa16-9e394ce3c29e%2Cservice:SIMULATION%2Cstrategy:1)
 
 Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6 mm (magenta = pasa del tope).
 
@@ -150,13 +150,13 @@ Caja seca: peso de la electronica y de la tapa + golpe de ola de 200 N de costad
 **Caras elegidas (verificadas por conteo y área):**
 
 - Apoyo fijo: 4 orejas: huella de los pilares D10 bajo la oreja (atornilladas) → 4 caras, 277.8 mm²
-- Carga: peso de la electronica sobre el piso → 1 caras, 10019.8 mm², fuerza [0, 0, -3.473] N
+- Carga: peso de la electronica sobre el piso → 1 caras, 9121.6 mm², fuerza [0, 0, -3.473] N
 - Carga: peso de la tapa B4 sobre el borde → 1 caras, 6101.9 mm², fuerza [0, 0, -0.561] N
 - Carga: golpe de ola 200 N contra la pared +Y → 1 caras, 1167.6 mm², fuerza [0, 200.0, 0] N
 
-**Resultado (FEM local):** σ máxima 12.34 MPa (FS 4.05); σ sin el 0.5 % de picos 5.63 MPa (FS 8.88 en el plano de las capas con 50 MPa; FS **entre capas** 3.91 con 22 MPa); desplazamiento máximo 1.01 mm; malla de 56643 elementos. Motivo: SimScale corrió otra geometría (B3_caja_50dfd164); la actual es B3_caja_311c2c56.
+**Resultado (FEM local):** σ máxima 12.30 MPa (FS 4.07); σ sin el 0.5 % de picos 5.55 MPa (FS 9.02 en el plano de las capas con 50 MPa; FS **entre capas** 3.97 con 22 MPa); desplazamiento máximo 0.99 mm; malla de 57034 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
 
-[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:16c2f2fb-c0f8-4049-9322-e0175699ffb8%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:16c2f2fb-c0f8-4049-9322-e0175699ffb8%2Cservice:SIMULATION%2Cstrategy:1)
+[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:49ee5788-0087-4653-8c60-84a48bf61ff1%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:49ee5788-0087-4653-8c60-84a48bf61ff1%2Cservice:SIMULATION%2Cstrategy:1)
 
 Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6 mm (magenta = pasa del tope).
 
@@ -180,11 +180,11 @@ Media cubierta: peso de la caja y del panel + golpe de ola de 200 N vertical sob
 - Apoyo fijo: huella de los 4 bosses D10 del casco bajo los agujeros M3 → 4 caras, 269.7 mm²
 - Carga: peso de la caja (1/4 por pilar) → 2 caras, 131.9 mm², fuerza [0, 0, -2.856] N
 - Carga: peso del panel (1/4 por columna) → 2 caras, 201.1 mm², fuerza [0, 0, -1.717] N
-- Carga: golpe de ola vertical de 200 N sobre las barras → 2 caras, 11108.9 mm², fuerza [0, 0, -200.0] N
+- Carga: golpe de ola vertical de 200 N sobre las barras → 5 caras, 10722.5 mm², fuerza [0, 0, -200.0] N
 
-**Resultado (FEM local):** σ máxima 31.97 MPa (FS 1.56); σ sin el 0.5 % de picos 13.30 MPa (FS 3.76 en el plano de las capas con 50 MPa; FS **entre capas** 1.65 con 22 MPa); desplazamiento máximo 5.33 mm; malla de 28134 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
+**Resultado (FEM local):** σ máxima 34.20 MPa (FS 1.46); σ sin el 0.5 % de picos 13.37 MPa (FS 3.74 en el plano de las capas con 50 MPa; FS **entre capas** 1.65 con 22 MPa); desplazamiento máximo 5.34 mm; malla de 30046 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
 
-[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:fe4b2446-655f-4c26-998b-3856ce11b757%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:fe4b2446-655f-4c26-998b-3856ce11b757%2Cservice:SIMULATION%2Cstrategy:1)
+[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:c3704cf9-d345-48d5-bd74-23e0498e84b0%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:c3704cf9-d345-48d5-bd74-23e0498e84b0%2Cservice:SIMULATION%2Cstrategy:1)
 
 Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6 mm (magenta = pasa del tope).
 
@@ -208,12 +208,12 @@ Media cubierta: peso de la caja y del panel + golpe de ola de 200 N vertical sob
 - Apoyo fijo: huella de los 4 bosses D10 del casco bajo los agujeros M3 → 4 caras, 269.7 mm²
 - Carga: peso de la caja (1/4 por pilar) → 2 caras, 131.9 mm², fuerza [0, 0, -2.856] N
 - Carga: peso del panel (1/4 por columna) → 2 caras, 201.1 mm², fuerza [0, 0, -1.717] N
-- Carga: antena → 1 caras, 103.7 mm², fuerza [0, 0, -0.196] N
-- Carga: golpe de ola vertical de 200 N sobre las barras → 2 caras, 10885.3 mm², fuerza [0, 0, -200.0] N
+- Carga: antena → 1 caras, 204.2 mm², fuerza [0, 0, -0.196] N
+- Carga: golpe de ola vertical de 200 N sobre las barras → 6 caras, 10382.2 mm², fuerza [0, 0, -200.0] N
 
-**Resultado (FEM local):** σ máxima 32.58 MPa (FS 1.53); σ sin el 0.5 % de picos 13.36 MPa (FS 3.74 en el plano de las capas con 50 MPa; FS **entre capas** 1.65 con 22 MPa); desplazamiento máximo 5.43 mm; malla de 32122 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
+**Resultado (FEM local):** σ máxima 34.63 MPa (FS 1.44); σ sin el 0.5 % de picos 13.45 MPa (FS 3.72 en el plano de las capas con 50 MPa; FS **entre capas** 1.64 con 22 MPa); desplazamiento máximo 5.50 mm; malla de 35805 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
 
-[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:195640ad-e0a3-4fc3-9b87-2effc03666d9%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:195640ad-e0a3-4fc3-9b87-2effc03666d9%2Cservice:SIMULATION%2Cstrategy:1)
+[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:cad9c74c-c3b0-4a84-91f6-677d0dafeb04%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:cad9c74c-c3b0-4a84-91f6-677d0dafeb04%2Cservice:SIMULATION%2Cstrategy:1)
 
 Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6 mm (magenta = pasa del tope).
 
@@ -238,9 +238,9 @@ Media cubierta: peso de la caja y del panel + golpe de ola de 200 N lateral sobr
 - Carga: peso de la caja (1/4 por pilar) → 2 caras, 131.9 mm², fuerza [0, 0, -2.856] N
 - Carga: peso del panel + golpe de ola 200 N (en +Y) sobre las columnas → 2 caras, 201.1 mm², fuerza [0, 200.0, -1.717] N
 
-**Resultado (FEM local):** σ máxima 82.48 MPa (FS 0.61); σ sin el 0.5 % de picos 52.66 MPa (FS 0.95 en el plano de las capas con 50 MPa; FS **entre capas** 0.42 con 22 MPa); desplazamiento máximo 47.02 mm; malla de 28134 elementos. Motivo: SimScale corrió otra geometría (B2_cubierta_lisa_lateral_d0c015b8); la actual es B2_cubierta_lisa_lateral_6d5b6744.
+**Resultado (FEM local):** σ máxima 91.84 MPa (FS 0.54); σ sin el 0.5 % de picos 53.72 MPa (FS 0.93 en el plano de las capas con 50 MPa; FS **entre capas** 0.41 con 22 MPa); desplazamiento máximo 46.29 mm; malla de 30046 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
 
-[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:712626db-921c-439f-b37e-0b4b5b5e903b%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:712626db-921c-439f-b37e-0b4b5b5e903b%2Cservice:SIMULATION%2Cstrategy:1)
+[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:fd4db8a5-6f03-495c-864d-0ca180edebbe%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:fd4db8a5-6f03-495c-864d-0ca180edebbe%2Cservice:SIMULATION%2Cstrategy:1)
 
 Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6 mm (magenta = pasa del tope).
 
@@ -264,11 +264,11 @@ Media cubierta: peso de la caja y del panel + golpe de ola de 200 N lateral sobr
 - Apoyo fijo: huella de los 4 bosses D10 del casco bajo los agujeros M3 → 4 caras, 269.7 mm²
 - Carga: peso de la caja (1/4 por pilar) → 2 caras, 131.9 mm², fuerza [0, 0, -2.856] N
 - Carga: peso del panel + golpe de ola 200 N (en +Y) sobre las columnas → 2 caras, 201.1 mm², fuerza [0, 200.0, -1.717] N
-- Carga: antena → 1 caras, 103.7 mm², fuerza [0, 0, -0.196] N
+- Carga: antena → 1 caras, 204.2 mm², fuerza [0, 0, -0.196] N
 
-**Resultado (FEM local):** σ máxima 85.01 MPa (FS 0.59); σ sin el 0.5 % de picos 51.93 MPa (FS 0.96 en el plano de las capas con 50 MPa; FS **entre capas** 0.42 con 22 MPa); desplazamiento máximo 47.06 mm; malla de 32122 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
+**Resultado (FEM local):** σ máxima 91.60 MPa (FS 0.55); σ sin el 0.5 % de picos 52.48 MPa (FS 0.95 en el plano de las capas con 50 MPa; FS **entre capas** 0.42 con 22 MPa); desplazamiento máximo 46.40 mm; malla de 35805 elementos. Motivo: la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked).
 
-[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:a946fdb1-a09a-4773-a67e-707fa50b3504%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:a946fdb1-a09a-4773-a67e-707fa50b3504%2Cservice:SIMULATION%2Cstrategy:1)
+[Proyecto en SimScale](https://www.simscale.com/workbench/?pid=5890288887472164333) · [Simulación](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:20e49dc4-4483-4d80-a2eb-1d7f35f411d9%2Cservice:SIMULATION%2Cstrategy:1) · [Resultado](https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:20e49dc4-4483-4d80-a2eb-1d7f35f411d9%2Cservice:SIMULATION%2Cstrategy:1)
 
 Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6 mm (magenta = pasa del tope).
 
@@ -282,19 +282,19 @@ Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6
 
 ## Qué dicen los resultados
 
-- **M3s_riel_gancho** (SimScale): FS 3.20 (pico), 11.3 sin picos, 4.98 entre capas, 1.53 mm.
-- **M5s_capsula_tapa_pie** (SimScale): FS 2.48 (pico), 6.9 sin picos, 3.02 entre capas, 0.29 mm.
-- **M1s_caja_cuerpo** (SimScale): FS 1.97 (pico), 6.5 sin picos, 2.84 entre capas, 0.45 mm.
-- **B3_caja** (FEM local): FS 4.05 (pico), 8.9 sin picos, 3.91 entre capas, 1.01 mm.
-- **B2_cubierta_lisa** (FEM local): FS 1.56 (pico), 3.8 sin picos, 1.65 entre capas, 5.33 mm.
-- **B2_cubierta_mastil** (FEM local): FS 1.53 (pico), 3.7 sin picos, 1.65 entre capas, 5.43 mm.
-- **B2_cubierta_lisa_lateral** (FEM local): FS 0.61 (pico), 0.9 sin picos, 0.42 entre capas, 47.02 mm.
-- **B2_cubierta_mastil_lateral** (FEM local): FS 0.59 (pico), 1.0 sin picos, 0.42 entre capas, 47.06 mm.
-- **Golpe lateral de 200 N sobre el panel (cubierta de 8 mm): NO cumple.** σ sin picos 51.9 MPa (FS 0.96 en el plano, 0.42 entre capas), desplazamiento 47 mm. Los 200 N entran enteros por las 2 columnas de una sola mitad (exagerado). Si se reparten entre las dos mitades (100 N cada una; el esfuerzo es proporcional a la carga) queda σ ≈ 26 MPa: FS 1.9 en el plano pero 0.85 entre capas, es decir, **las columnas Ø12 no cumplirían entre capas** aun con el reparto. La flecha de decenas de mm también muestra que la cubierta se dobla mucho.
+- **M3s_riel_gancho** (FEM local): FS 2.96 (pico), 7.8 sin picos, 3.44 entre capas, 1.47 mm.
+- **M5s_capsula_tapa_pie** (FEM local): FS 2.95 (pico), 7.6 sin picos, 3.35 entre capas, 0.30 mm.
+- **M1s_caja_cuerpo** (FEM local): FS 2.65 (pico), 8.5 sin picos, 3.74 entre capas, 0.31 mm.
+- **B3_caja** (FEM local): FS 4.07 (pico), 9.0 sin picos, 3.97 entre capas, 0.99 mm.
+- **B2_cubierta_lisa** (FEM local): FS 1.46 (pico), 3.7 sin picos, 1.65 entre capas, 5.34 mm.
+- **B2_cubierta_mastil** (FEM local): FS 1.44 (pico), 3.7 sin picos, 1.64 entre capas, 5.50 mm.
+- **B2_cubierta_lisa_lateral** (FEM local): FS 0.54 (pico), 0.9 sin picos, 0.41 entre capas, 46.29 mm.
+- **B2_cubierta_mastil_lateral** (FEM local): FS 0.55 (pico), 0.9 sin picos, 0.42 entre capas, 46.40 mm.
+- **Golpe lateral de 200 N sobre el panel (cubierta de 8 mm): NO cumple.** σ sin picos 52.5 MPa (FS 0.95 en el plano, 0.42 entre capas), desplazamiento 46 mm. Los 200 N entran enteros por las 2 columnas de una sola mitad (exagerado). Si se reparten entre las dos mitades (100 N cada una; el esfuerzo es proporcional a la carga) queda σ ≈ 26 MPa: FS 1.9 en el plano pero 0.84 entre capas, es decir, **las columnas Ø12 no cumplirían entre capas** aun con el reparto. La flecha de decenas de mm también muestra que la cubierta se dobla mucho.
 
 ## Límites y avisos
 
-- Las corridas de SimScale de la cubierta con barras de 8 mm terminaron bien pero el plan gratuito devolvió 403 «export-source-locked» al descargar el resultado; por eso esas piezas salen con FEM local.
+- Las 8 corridas de SimScale de la tanda final (geometría del 04/11, 21:38 boya y 21:57 nodo) terminaron bien, pero el plan gratuito devolvió 403 «export-source-locked» al descargar cada resultado; por eso todas las piezas salen con FEM local (el enlace abre la simulación en SimScale).
   No se usaron capturas del visor web de SimScale: la clave de la API no inicia sesión en la página y no hay una sesión abierta.
 - El enlace de cada proyecto es el que usa el sitio para proyectos compartidos (`workbench/?pid=...`). El plan gratuito deja los proyectos públicos (contienen solo geometría y resultados de estas piezas);
   desde el script no se puede comprobar el acceso sin iniciar sesión, conviene abrirlo una vez en una ventana privada.
