@@ -38,8 +38,8 @@
    },
    {
     "label": "golpe de ola vertical de 200 N sobre las barras",
-    "caras": 2,
-    "area_mm2": 11108.9,
+    "caras": 5,
+    "area_mm2": 10722.5,
     "fuerza_N": [
      0,
      0,

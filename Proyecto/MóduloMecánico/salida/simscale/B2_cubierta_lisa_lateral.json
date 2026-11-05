@@ -44,41 +44,5 @@
   "rho": 1270.0,
   "sigma_adm_MPa": 50.0
  },
- "fineness": 5.0,
- "project_id": "5890288887472164333",
- "geometry_id": "ca002805-b2b3-4fc6-9352-7e4734ae6061",
- "sim_id": "712626db-921c-439f-b37e-0b4b5b5e903b",
- "run_id": "38b759da-2f66-4f38-8828-72b118aafd35",
- "mesh_id": "4906e8a5-ee68-46d9-b307-e762827a3853",
- "check": {
-  "severity": "SUCCESS",
-  "entries": []
- },
- "duracion": "PT47.127541S",
- "compute": {
-  "type": "CPU_HOURS",
-  "value": 0.026111111111111113
- },
- "resultado": {
-  "nodos": 36852,
-  "celdas": 20858,
-  "sigma_max_MPa": 332.997344,
-  "sigma_p995_MPa": 190.78992968000023,
-  "sigma_max_en_mm": [
-   -62.79999923706055,
-   -28.700000762939453,
-   85.4000015258789
-  ],
-  "FS": 0.1501513477536926,
-  "FS_p995": 0.26206833916162037,
-  "u_max_mm": 173.65591244416268
- },
- "capturas": {
-  "vonmises": "B2_cubierta_lisa_lateral_vonmises.png",
-  "desplazamiento": "B2_cubierta_lisa_lateral_desplazamiento.png",
-  "malla": "B2_cubierta_lisa_lateral_malla.png"
- },
- "enlace_resultado": "https://www.simscale.com/workbench/?pid=5890288887472164333&rru=62868e1f-ad1c-4b00-b03c-517a9634fac4&ci=f1805b6e-bfb6-4645-99c7-fff6f5c7bd6b&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT",
- "enlace_proyecto": "https://www.simscale.com/workbench/?pid=5890288887472164333",
- "enlace_simulacion": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:712626db-921c-439f-b37e-0b4b5b5e903b%2Cservice:SIMULATION%2Cstrategy:1"
+ "fineness": 5.0
 }

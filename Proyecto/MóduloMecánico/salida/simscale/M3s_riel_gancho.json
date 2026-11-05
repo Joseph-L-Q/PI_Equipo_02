@@ -4,7 +4,7 @@
  "caso": "riel_agua",
  "titulo": "Riel con gancho colgado del anillo: capsula con 150 N hacia abajo + corriente de 1.5 m/s",
  "notas": [
-  "Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 16.6 cm2, Cd = 1) = 1.92 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente."
+  "Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 18.1 cm2, Cd = 1) = 2.09 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente."
  ],
  "seleccion": {
   "fijos": [
@@ -20,7 +20,7 @@
     "caras": 4,
     "area_mm2": 256.4,
     "fuerza_N": [
-     -1.916,
+     -2.087,
      0,
      -150.0
     ]
@@ -33,41 +33,5 @@
   "rho": 1270.0,
   "sigma_adm_MPa": 50.0
  },
- "fineness": 5.0,
- "project_id": "770997415227428031",
- "geometry_id": "4349b157-465a-4d02-ba9e-317cd773f6f6",
- "sim_id": "633b313d-9ace-4eaf-ba44-8f94def22dc5",
- "run_id": "f41d83a6-ac22-43b4-8821-5dda9c4ea023",
- "mesh_id": "cac6935b-3aaa-49df-a833-f14e746966b8",
- "check": {
-  "severity": "SUCCESS",
-  "entries": []
- },
- "duracion": "PT3M36.083309S",
- "compute": {
-  "type": "CPU_HOURS",
-  "value": 0.12
- },
- "resultado": {
-  "nodos": 383102,
-  "celdas": 259277,
-  "sigma_max_MPa": 15.623768,
-  "sigma_p995_MPa": 4.415473364999999,
-  "sigma_max_en_mm": [
-   108.0999984741211,
-   -6.0,
-   -34.79999923706055
-  ],
-  "FS": 3.2002523334959916,
-  "FS_p995": 11.323814202194834,
-  "u_max_mm": 1.53424813329873
- },
- "capturas": {
-  "vonmises": "M3s_riel_gancho_vonmises.png",
-  "desplazamiento": "M3s_riel_gancho_desplazamiento.png",
-  "malla": "M3s_riel_gancho_malla.png"
- },
- "enlace_resultado": "https://www.simscale.com/workbench/?pid=770997415227428031&rru=40540ee4-cc22-408f-85b0-624c8b916226&ci=eb506738-a210-4cff-89a3-5b1f52367445&ct=SOLUTION_FIELD&mt=SIMULATION_RESULT",
- "enlace_proyecto": "https://www.simscale.com/workbench/?pid=770997415227428031",
- "enlace_simulacion": "https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:633b313d-9ace-4eaf-ba44-8f94def22dc5%2Cservice:SIMULATION%2Cstrategy:1"
+ "fineness": 5.0
 }

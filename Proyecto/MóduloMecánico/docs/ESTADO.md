@@ -1,19 +1,29 @@
-# Estado LanternGuard CAD | encargo del 04/11 noche | actualizado 22:14
+# Estado LanternGuard CAD | encargo del 04/11 noche | **TERMINADO: 22:54**
 
 **Aviso: el total impreso pasa de 3 kg. Son 3132 g en 20 placas (probetas 243 g, nodo P2 1682 g, boya 1207 g), 97,5 h, S/ 188 a S/ 60/kg.**
 
 | Bloque | Estado |
 |---|---|
-| 1 Correcciones del laboratorio | **Hecho 22:14.** Mínimo 5 mm en elementos esbeltos, revisado en el build (`esbelto.py`: 32 elementos, 0 bajo 5 mm; 4 excepciones documentadas, que no son elementos esbeltos), con chaflán de 45° en la base. Boya en mitades con lengüeta, pasadores y tornillos A2. Nodo sin soportes: M1s 22,3 → 0,5 %, M2 18,8 → 1,8 %, M4 14,8 → 1,6 %, M3s 20,9 → 12,2 % (excepción documentada). M1s no se dividió. Pieza nueva M3f (marco del bolsillo de lastre). FS entre capas: riel 3,37, pie 3,79, izado 5,83. Lastre 980 g. 3MF en Drive `02_Imprimir_primero_probetas/imprimir_hoy_2026-11-04_noche/` |
-| 2 Publicar piezas y planos | En curso. La cuota de Onshape (≈ 400 llamadas) no alcanza para todos los planos: los que no entren salen en local con el mismo formato |
-| 3 SimScale con imágenes | En curso: tanda final sobre la geometría nueva |
-| 4 Visor 3D | Hecho (pendiente regenerar con la geometría final) |
-| 5 Entrega | Pendiente |
+| 1 Correcciones del laboratorio | Hecho. Mínimo 5 mm en elementos esbeltos, revisado en el build, con chaflán de 45°. Boya en mitades con lengüeta, pasadores y tornillos A2. Nodo sin soportes: M1s 22,3 → 0,5 %, M2 1,8 %, M4 1,6 %, M3s 12,2 % (excepción). M3f es nueva. Lastre 980 g |
+| 2 Publicar piezas y planos | Hecho. 17 piezas en Onshape, `00_ENSAMBLE` con 32 sólidos (igual que el STEP), 12 planos en Onshape y 5 en local por la cuota. PDF v5, `STL_por_pieza` y `OLD/` en Drive `04_Planos` |
+| 3 SimScale | Hecho. 8 corridas en A y B; las descargas dan 403, así que las imágenes son del FEM local, marcado. Nodo con FS entre capas ≥ 3,35. **El golpe lateral sobre el panel no cumple** |
+| 4 Visor 3D | Hecho. Drive `07_Documentos/visor/LanternGuard_visor.html` (doble clic). Sin hosting: no hay CLI ni conexión |
+| 5 Entrega | Hecho. `ENTREGA_2026-11-05.pdf`, `BITACORA.xlsx` y `BOM.md` en `07_Documentos` |
 
-**Problemas abiertos:**
-- Golpe lateral de 200 N sobre el panel solar: **no cumple** (FS 0,93 en p99,5 y 0,42 entre capas).
-- Boya con una botella perdida: GM de balanceo 38 mm (objetivo 40).
-- Holgura entre la cuerda y la caja: 1,5 mm (antes 2,9), porque la caja creció 2 mm.
+**Links:**
+- Drive: https://drive.google.com/drive/folders/1T8cv6NW7W2cESde3SLp9HgS4VRJMWwCO
+- Onshape: https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff
+- SimScale A: https://www.simscale.com/workbench/?pid=770997415227428031
+- SimScale B: https://www.simscale.com/workbench/?pid=5890288887472164333
+- Rama: https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/version-final
+
+**Problemas:**
+- El golpe lateral sobre el panel falla (FS 0,41 entre capas).
+- La boya con una botella perdida queda con GM 38 (objetivo 40).
+- La holgura entre la cuerda y la caja es de 1,5 mm.
+- Quedan unas 89 llamadas de Onshape en el año.
+- SimScale bloquea las descargas (403).
+- Hay que limpiar a mano lo viejo en Onshape y en Drive (`PENDIENTES.md`).
 
 ---
 

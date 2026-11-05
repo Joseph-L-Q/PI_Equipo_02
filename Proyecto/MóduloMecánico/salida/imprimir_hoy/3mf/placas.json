@@ -51,8 +51,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P03_probeta_junta.3mf"
   },
   "P04_probeta_gancho": {
-   "g": 91.9,
-   "h": 3.24,
+   "g": 100.9,
+   "h": 3.21,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -65,8 +65,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P04_probeta_gancho.3mf"
   },
   "P05_probeta_bahia_botella": {
-   "g": 51.2,
-   "h": 2.38,
+   "g": 52.5,
+   "h": 2.46,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -101,8 +101,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P06_bisel_y_bandejas.3mf"
   },
   "P07_tapas_bolsillo": {
-   "g": 47.4,
-   "h": 1.0,
+   "g": 84.5,
+   "h": 1.63,
    "veces": 1,
    "relleno": 100,
    "soportes": false,
@@ -114,9 +114,23 @@
    ],
    "tresmf": "salida/imprimir_hoy/3mf/P07_tapas_bolsillo.3mf"
   },
+  "P13_marcos_bolsillo": {
+   "g": 102.6,
+   "h": 3.77,
+   "veces": 1,
+   "relleno": 40,
+   "soportes": false,
+   "piezas": [
+    [
+     "salida/imprimir_hoy/17_M3f_marco_bolsillo_x2.stl",
+     2
+    ]
+   ],
+   "tresmf": "salida/imprimir_hoy/3mf/P13_marcos_bolsillo.3mf"
+  },
   "P08_capsulas": {
-   "g": 121.3,
-   "h": 3.94,
+   "g": 154.5,
+   "h": 3.97,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -129,8 +143,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P08_capsulas.3mf"
   },
   "P09_tapa_caja": {
-   "g": 181.1,
-   "h": 5.06,
+   "g": 194.4,
+   "h": 4.81,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -143,8 +157,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P09_tapa_caja.3mf"
   },
   "P10_caja": {
-   "g": 513.3,
-   "h": 16.2,
+   "g": 436.8,
+   "h": 9.27,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -157,8 +171,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P10_caja.3mf"
   },
   "P11_tapas_capsula_con_pie": {
-   "g": 187.3,
-   "h": 5.16,
+   "g": 194.4,
+   "h": 5.32,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -171,8 +185,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P11_tapas_capsula_con_pie.3mf"
   },
   "P12_rieles_con_gancho": {
-   "g": 399.7,
-   "h": 12.34,
+   "g": 434.2,
+   "h": 12.11,
    "veces": 1,
    "relleno": 100,
    "soportes": true,
@@ -185,8 +199,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P12_rieles_con_gancho.3mf"
   },
   "P14_boya_casco_mitad": {
-   "g": 264.2,
-   "h": 10.34,
+   "g": 294.0,
+   "h": 11.93,
    "veces": 2,
    "relleno": 40,
    "soportes": true,
@@ -199,8 +213,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P14_boya_casco_mitad.3mf"
   },
   "P15_boya_cubierta_lisa": {
-   "g": 91.0,
-   "h": 5.12,
+   "g": 92.5,
+   "h": 5.22,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -213,8 +227,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P15_boya_cubierta_lisa.3mf"
   },
   "P19_boya_cubierta_mastil": {
-   "g": 106.5,
-   "h": 5.71,
+   "g": 116.2,
+   "h": 6.02,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -227,8 +241,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P19_boya_cubierta_mastil.3mf"
   },
   "P16_boya_caja_y_tapa": {
-   "g": 302.5,
-   "h": 6.88,
+   "g": 358.5,
+   "h": 7.86,
    "veces": 1,
    "relleno": 100,
    "soportes": false,
@@ -245,8 +259,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P16_boya_caja_y_tapa.3mf"
   },
   "P17_boya_cunas_base": {
-   "g": 145.7,
-   "h": 5.96,
+   "g": 158.6,
+   "h": 6.51,
    "veces": 2,
    "relleno": 40,
    "soportes": false,
@@ -259,8 +273,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P17_boya_cunas_base.3mf"
   },
   "P20_boya_cunas_cuello": {
-   "g": 152.5,
-   "h": 6.04,
+   "g": 162.9,
+   "h": 6.56,
    "veces": 2,
    "relleno": 40,
    "soportes": false,
@@ -273,8 +287,8 @@
    "tresmf": "salida/imprimir_hoy/3mf/P20_boya_cunas_cuello.3mf"
   },
   "P18_boya_correas": {
-   "g": 20.4,
-   "h": 0.87,
+   "g": 24.1,
+   "h": 1.05,
    "veces": 1,
    "relleno": 40,
    "soportes": false,
@@ -288,7 +302,7 @@
   }
  },
  "total": {
-  "g": 2846.3,
-  "h": 96.07
+  "g": 3131.9,
+  "h": 97.53
  }
 }

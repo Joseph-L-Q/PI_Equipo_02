@@ -39,7 +39,7 @@
    {
     "label": "antena",
     "caras": 1,
-    "area_mm2": 103.7,
+    "area_mm2": 204.2,
     "fuerza_N": [
      0,
      0,
@@ -48,8 +48,8 @@
    },
    {
     "label": "golpe de ola vertical de 200 N sobre las barras",
-    "caras": 2,
-    "area_mm2": 10885.3,
+    "caras": 6,
+    "area_mm2": 10382.2,
     "fuerza_N": [
      0,
      0,
