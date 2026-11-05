@@ -114,7 +114,7 @@
    "condiciones": "resultados/M5s_capsula_tapa_pie/condiciones.png"
   },
   "notas": [
-   "Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 16.6 cm2, Cd = 1) = 1.92 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente."
+   "Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 18.1 cm2, Cd = 1) = 2.09 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente."
   ]
  },
  "M1s_caja_cuerpo": {
