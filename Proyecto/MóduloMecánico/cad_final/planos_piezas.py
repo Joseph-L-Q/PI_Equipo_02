@@ -229,6 +229,124 @@ def sheet(pz, shape, out=OUT):
     return s
 
 
+def _c(v, nd=1):
+    """Number with decimal comma, no trailing zeros ("12,5", "10")."""
+    return f"{v:.{nd}f}".rstrip("0").rstrip(".").replace(".", ",") if nd else f"{round(v)}"
+
+
+def sheet_equipo(code, step, qty, out, date="2026-11-04", chamfer=None, material="PETG"):
+    """Local drawing in the team's format (same as planos_onshape --formato equipo): ISO A4 landscape, first angle, mm with
+    decimal comma, ISO title block (TITLE / LANTERNGUARD / DRAWN / DATE / MATERIAL / SCALE / SHEET) at x 124..287, y 10..49
+    of a 10 mm frame. Front, top, left side and isometric views; overall dimensions of each view, hole list and chamfer
+    note. Marked 'Plano generado en local (cuota de la API de Onshape)'. Returns (pdf path, scale text, notes list)."""
+    shape = cq.importers.importStep(str(step)).val()
+    fig = plt.figure(figsize=(297 / 25.4, 210 / 25.4))
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_xlim(0, 297)
+    ax.set_ylim(0, 210)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    ax.add_patch(Rectangle((10, 10), 277, 190, fill=False, lw=1.0))
+    raw = {k: project(shape, n, vx) for k, (n, vx) in VIEWS.items()}
+    iso = project(shape, *ISO)
+    ext = {k: extent(v) for k, v in raw.items()}
+    sz = {k: e[1] - e[0] for k, e in ext.items()}
+    std = (2.0, 1.0, 0.5, 0.4, 1 / 3, 0.25, 0.2, 0.125, 0.1)
+    s = next((sc for sc in std if sz["frente"][0] * sc <= 98 and sz["frente"][1] * sc + sz["planta"][1] * sc <= 104
+              and sz["lado"][0] * sc <= 128 and sz["lado"][1] * sc <= 80), std[-1])
+    # left column: front above, top below; right: side on top, isometric under it, above the title block
+    fx0, fy_top = 26.0, 192.0
+    fy0 = fy_top - 8 - sz["frente"][1] * s
+    origin = {"frente": (fx0, fy0), "planta": (fx0, fy0 - 32 - sz["planta"][1] * s),
+              "lado": (146.0, fy_top - 8 - sz["lado"][1] * s)}
+    paper = {}
+    for k, polys in raw.items():
+        o = np.array(origin[k]) - ext[k][0] * s
+        paper[k] = [o + s * pl for pl in polys]
+        for pl in paper[k]:
+            ax.plot(pl[:, 0], pl[:, 1], color="black", lw=LW_VIS, solid_capstyle="round")
+        lo, hi = extent(paper[k])
+        ax.text((lo[0] + hi[0]) / 2, lo[1] - 9.5, {"frente": "FRONTAL", "planta": "SUPERIOR", "lado": "LATERAL"}[k], ha="center",
+                va="top", fontsize=6.5, color="#444")
+
+    def hdim(k, off, label):
+        lo, hi = extent(paper[k])
+        pa, pb = dim(ax, (lo[0], hi[1]), (hi[0], hi[1]), hi[1] + off)
+        ax.text((pa[0] + pb[0]) / 2, pa[1] + 0.8, label, ha="center", va="bottom", fontsize=7)
+
+    def vdim(k, off, label):
+        lo, hi = extent(paper[k])
+        pa, pb = dim(ax, (lo[0], lo[1]), (lo[0], hi[1]), lo[0] - off, vertical=True)
+        ax.text(pa[0] - 0.8, (pa[1] + pb[1]) / 2, label, ha="right", va="center", rotation=90, fontsize=7)
+    hdim("frente", 6, _c(sz["frente"][0]))
+    vdim("frente", 6, _c(sz["frente"][1]))
+    hdim("planta", 6, _c(sz["planta"][0]))
+    vdim("planta", 6, _c(sz["planta"][1]))
+    hdim("lado", 6, _c(sz["lado"][0]))
+    vdim("lado", 6, _c(sz["lado"][1]))
+    # isometric in the free area under the side view
+    lo_l, hi_l = extent(paper["lado"])
+    ilo, ihi = extent(iso)
+    isz = ihi - ilo
+    box = (125.0, 78.0, 160.0, max(10.0, lo_l[1] - 22 - 78.0))
+    si = min(s * 2, box[2] / max(isz[0], 1e-6), box[3] / max(isz[1], 1e-6))
+    io = np.array([box[0] + (box[2] - isz[0] * si) / 2, box[1] + box[3] - isz[1] * si]) - ilo * si
+    for pl in iso:
+        q = io + si * pl
+        ax.plot(q[:, 0], q[:, 1], color="#333", lw=LW_THIN, solid_capstyle="round")
+    ax.text(box[0] + box[2] / 2, box[1] + box[3] - isz[1] * si - 2, "ISOMÉTRICA (sin escala)", ha="center", va="top",
+            fontsize=6.5, color="#444")
+    # hole list (concave full cylinders), chamfer note
+    notes = []
+    try:
+        import planos_onshape as PO
+        hs = PO.holes(step)
+        groups = {}
+        for _, _, r in hs:
+            groups[round(2 * r, 2)] = groups.get(round(2 * r, 2), 0) + 1
+        if groups:
+            notes.append("Agujeros: " + "; ".join(f"{n}x Ø{_c(d, 2)}" for d, n in sorted(groups.items())))
+    except Exception as e:  # noqa: BLE001
+        notes.append(f"(lista de agujeros no disponible: {str(e)[:40]})")
+    if chamfer:
+        notes += chamfer["lineas"][1:] and ["Chaflán 45°: " + "; ".join(chamfer["lineas"][1:])]
+    notes.append("Espesores, separación de nervios y posición de agujeros: ver cotas a mano (COTAS_A_MANO).")
+    y = 50.0 + 4 * (len(notes) + 1)
+    # title block: the standard layout of the Onshape A4 sheet of the team
+    tx0, ty0, tx1, ty1 = 124.0, 10.0, 287.0, 49.0
+    ax.add_patch(Rectangle((tx0, ty0), tx1 - tx0, ty1 - ty0, fill=False, lw=1.0))
+    for yy in (ty0 + 13, ty0 + 26):
+        ax.plot([tx0, tx1], [yy, yy], color="black", lw=LW_THIN)
+    for xx in (tx0 + 54, tx0 + 108):
+        ax.plot([xx, xx], [ty0, ty0 + 26], color="black", lw=LW_THIN)
+    ax.plot([tx0 + 81, tx0 + 81], [ty0 + 26, ty1], color="black", lw=LW_THIN)
+
+    def cell(x, yb, label, value, size=8):
+        ax.text(x + 1.5, yb + 11.3, label, fontsize=4.5, color="#555", va="top")
+        ax.text(x + 1.5, yb + 5.0, value, fontsize=size, va="center")
+    cell(tx0, ty0 + 26, "TITLE", code, 9)
+    cell(tx0 + 81, ty0 + 26, "COMPANY", "LANTERNGUARD", 8)
+    cell(tx0, ty0 + 13, "DRAWN", "Equipo 02 UPCH")
+    cell(tx0 + 54, ty0 + 13, "DATE", date)
+    cell(tx0 + 108, ty0 + 13, "MATERIAL", material)
+    sc = f"{_c(s)}:1" if s >= 1 else f"1:{_c(1 / s)}"
+    cell(tx0, ty0, "SCALE", sc)
+    cell(tx0 + 54, ty0, "SHEET", "1 of 1")
+    cell(tx0 + 108, ty0, "QTY", f"{qty}")
+    ax.text(tx0 + 2, ty1 + 3.2, f"Cantidad: {qty}   ·   Material: {material}   ·   Cotas en mm   ·   Proyección: primer diedro (ISO)",
+            fontsize=5.8, va="bottom")
+    ax.text(tx0 + 2, ty1 + 7.2, "Plano generado en local (cuota de la API de Onshape)", fontsize=6.3, weight="bold",
+            va="bottom", color="#a00000")
+    for i, t in enumerate(notes):
+        ax.text(tx0 + 2, ty1 + 11.5 + 3.6 * (len(notes) - 1 - i), t, fontsize=5.6, va="bottom")
+    out.mkdir(parents=True, exist_ok=True)
+    pdf = out / f"PLANO_A4_{code}_local.pdf"
+    fig.savefig(pdf, metadata={"CreationDate": None})
+    fig.savefig(out / f"PLANO_A4_{code}_local.png", dpi=110, facecolor="white")
+    plt.close(fig)
+    return pdf, sc, notes
+
+
 def infill_txt(r):
     return "no se imprime (acrílico)" if r is None else f"{round(r * 100)} %" if isinstance(r, (int, float)) else str(r)
 

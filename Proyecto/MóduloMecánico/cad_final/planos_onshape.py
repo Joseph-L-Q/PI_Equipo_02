@@ -901,13 +901,28 @@ CHAMFERS = MOD / "salida" / "correccion_chaflan" / "chaflanes.json"
 
 
 def chamfer_for(code):
-    """Chamfer data (01/11/2026) only for the pieces whose chamfer list still describes them: the halves of B2 and B5
-    changed their supports on 04/11, so they get no callout (listed in PENDIENTES)."""
-    data = json.loads(CHAMFERS.read_text(encoding="utf-8")) if CHAMFERS.exists() else {}
-    ch = data.get(code) if code in ("B3_caja", "M1s_caja_cuerpo") else None
-    if ch and code == "B3_caja":                                      # the bandeja posts are Ø9 since 04/11 (MARGENES.md)
-        ch = {**ch, "lineas": [ln.replace("Ø8", "Ø9") for ln in ch["lineas"]]}
-    return ch
+    """Chamfer callout data. 04/11 night: built from params (chaflan.*, riel.canal_chaflan_techo, caja.ventana_chaflan)
+    instead of the 01/11 list, which described the old supports. Only pieces that carry such a chamfer get one: buoy
+    B1, B2, B3, B5 (base of the slender elements, 45 deg, chaflan.base_boya, up to its _max where it fits), M1s (base of
+    the supports + window to the rail channel) and M3s (rail channel top corners). The others get no callout."""
+    import params as PR
+    def grp(c, groups, lines):
+        return {"c": float(c), "texto": "Chaflanes a 45° (mm)", "grupos": groups, "lineas": ["Chaflanes a 45°:"] + lines}
+    f = lambda v: f"{v:g}".replace(".", ",")
+    if code.startswith(("B1_", "B2_", "B3_", "B5_")):
+        c, cm = PR.PET_CHAMFER, PR.PET_CHAMFER_MAX
+        return grp(c, {"base de los elementos esbeltos": [c, cm]}, [f"base de elementos esbeltos: {f(c)}", f"(hasta {f(cm)} donde cabe)"])
+    if code == "M1s_caja_cuerpo":
+        c, cm, w = PR.CHAMFER_BASE, PR.CHAMFER_BASE_MAX, PR.BOX_WINDOW_CHAMFER
+        return grp(w, {"ventana al canal del riel (2 esquinas de arriba)": [w, w], "base de los soportes": [cm, c]},
+                   [f"ventana al canal: {f(w)}", f"base de soportes: {f(c)} a {f(cm)}"])
+    if code == "M3s_riel_gancho":
+        t = PR.RAIL_CHAMFER_TOP
+        return grp(t, {"canal del riel (2 esquinas de arriba)": [t, t]}, [f"esquinas del canal: {f(t)}"])
+    if code in ("M5s_capsula_tapa_pie", "M3f_marco_bolsillo", "M11_bandeja"):
+        c, cm = PR.CHAMFER_BASE, PR.CHAMFER_BASE_MAX
+        return grp(c, {"base de los soportes": [c, cm]}, [f"base de soportes: {f(c)} a {f(cm)}"])
+    return None
 
 
 def chamfer_dim(vdata, s, ch, taken, blocked):

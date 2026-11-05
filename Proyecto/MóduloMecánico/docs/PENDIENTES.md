@@ -72,3 +72,12 @@ Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 - M1s_caja_cuerpo: la nota de chaflanes viene de los datos del 01/11 y puede no describir el riel cerrado; revisarla.
 - B2 y B5 en mitades: sin cota de chaflán (agregar a mano si se pide).
 - Los dibujos con script de B4, M2, M3t, M6 y SKIN ya no existen en Onshape; para el PDF v4 se usaron sus PDF del 31/10 (piezas sin cambios).
+
+## Bloque 2.1 de Onshape (04/11, noche): lo que queda a mano
+- **Borrar a mano** en LG_IMPRIMIR_P2 las pestañas "OLD 2026-11-04 …": 17 estudios con su `.step` ("geometría anterior"), los dibujos "OLD … PLANO_A4_…" (12 reemplazados por uno nuevo y 5 por plano local) y las de las tandas anteriores (la API no borra, 403). No se copiaron a LG_HISTORICO esta vez; si hace falta el historial, git guarda los STEP.
+- **Campo SHEET** del cajetín: los 12 planos de Onshape dicen "11" en vez de "1 of 1" (la API no lo llena); corregirlo a mano.
+- **Planos que no entraron en la cuota** (hay plano local en el PDF v5, rotulado así): M5s_capsula_tapa_pie, M11_bandeja, M11_bandeja_sup, M3t_tapa_bolsillo y B6_correa. Si se quiere versión Onshape: `python planos_0511.py --dibujar <pieza>` (unas 20 llamadas cada una) cuando haya cupo. M6_capsula_bisel usa el plano de Onshape del 31/10 (el modelo no cambió).
+- **Cotas a mano**: la lista de lo que falta por plano está en `docs/COTAS_A_MANO.md` y en la portada del PDF v5. Los planos locales solo traen cotas generales, lista de agujeros y nota de chaflán.
+- **00_ENSAMBLE**: la boya está corrida 700 mm a un lado del nodo (no hay marco de amarre en el modelo); si se quiere en su posición real, hay que definir ese marco.
+- **Melissa**: sus "Drawing 1 … 16" no se tocaron; los desactualizados siguen así (ver tabla en `docs/CAMBIOS.md`).
+- Quedan sin renombrar los dibujos "PLANO_A4_<pieza>" de pestañas viejas como "Assembly 1", "BOM : Assembly 1" y "Part Studio 1" (del documento original).

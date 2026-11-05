@@ -1,0 +1,296 @@
+{
+  "M1s_caja_cuerpo": {
+    "retirado": {
+      "estudio": "d5bb3bf33f6766369ce5187b",
+      "blob": "8654876df7a0515ac3f86302",
+      "nombre": "OLD 2026-11-04 M1s_caja_cuerpo (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "8e413411bf83600c15f8edd9",
+    "estudio": "5914d0394f2471519531b33e"
+  },
+  "M2_caja_tapa": {
+    "retirado": {
+      "estudio": "7be4d8e0feeb49eb0d16b166",
+      "blob": "d9efdeabbe8a447be1c13331",
+      "nombre": "OLD 2026-11-04 M2_caja_tapa (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "fbc807f5286e3c3761a20305",
+    "estudio": "bef90bb8908ee61e1ad93d36"
+  },
+  "M3s_riel_gancho": {
+    "retirado": {
+      "estudio": "6b2c7e92667e0aedb1f38d6d",
+      "blob": "69b7a41b4e1f094494a70e2f",
+      "nombre": "OLD 2026-11-04 M3s_riel_gancho (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "a8d502615aeb7d4b67edbe0a",
+    "estudio": "9758a91f4e2d9add367f7b96"
+  },
+  "M3t_tapa_bolsillo": {
+    "retirado": {
+      "estudio": "d6434ebdd3ed32bbe24ea0ea",
+      "blob": "544a584d1b195e29b18149d6",
+      "nombre": "OLD 2026-11-04 M3t_tapa_bolsillo (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "46f0c11e186bad4b684f51a6",
+    "estudio": "f3f31556c0bc0ca214c29413"
+  },
+  "M3f_marco_bolsillo": {
+    "subido": true,
+    "blob": "af76efd6b1537e3ebbd96a38",
+    "estudio": "dc6cfe27b762bc4c70e3f992"
+  },
+  "M4_capsula_cuerpo": {
+    "retirado": {
+      "estudio": "3a242480936d14a233754d6e",
+      "blob": "e1d0f698096e03285c8a0588",
+      "nombre": "OLD 2026-11-04 M4_capsula_cuerpo (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "a7d1810faefe2dd55c18a441",
+    "estudio": "a4498a67ccb5ddfa9818cee5"
+  },
+  "M5s_capsula_tapa_pie": {
+    "retirado": {
+      "estudio": "596ef633262a011b4b4b0556",
+      "blob": "623938b42916159448db7df3",
+      "nombre": "OLD 2026-11-04 M5s_capsula_tapa_pie (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "ddee892c4a299f9a5e32f1f2",
+    "estudio": "a292e1e1a073ffda6cf1985d"
+  },
+  "M11_bandeja": {
+    "retirado": {
+      "estudio": "35afb939e172981161d9df13",
+      "blob": "63070d9ae5acd765acd8668e",
+      "nombre": "OLD 2026-11-04 M11_bandeja (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "13209348d7f920ad0f0da23b",
+    "estudio": "968a893c373cbf5def0740ee"
+  },
+  "M11_bandeja_sup": {
+    "retirado": {
+      "estudio": "98c8af5b01c1364828d357a5",
+      "blob": "937ebfe377ce37fb6afcf031",
+      "nombre": "OLD 2026-11-04 M11_bandeja_sup (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "1ee0786cc12780371d3e6202",
+    "estudio": "6a13f64d22de33ab2fb71218"
+  },
+  "B1_casco": {
+    "retirado": {
+      "estudio": "ca647468f933468f309ff8b8",
+      "blob": "632a702902e2ed7cf136ed4d",
+      "nombre": "OLD 2026-11-04 B1_casco (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "766f4289b82884571fcb0db3",
+    "estudio": "db4ec4eb1c4513b9dd6a3e8c"
+  },
+  "B2_cubierta_lisa": {
+    "retirado": {
+      "estudio": "55da237ae03eef6cc6bf8bc7",
+      "blob": "518e29703abc6376f700c3f5",
+      "nombre": "OLD 2026-11-04 B2_cubierta_lisa (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "bbb3b93e69ba6232fc352ca2",
+    "estudio": "ff4fdd5a9e430d00b581901b"
+  },
+  "B2_cubierta_mastil": {
+    "retirado": {
+      "estudio": "72c592b294509ae7146b0482",
+      "blob": "8798035d60e223947c274379",
+      "nombre": "OLD 2026-11-04 B2_cubierta_mastil (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "b68cebd08e0dfa2c9a8a7235",
+    "estudio": "ed1133f7a48ca24eb407fff0"
+  },
+  "B3_caja": {
+    "retirado": {
+      "estudio": "156bb8a69e2623e8d8fc8fb0",
+      "blob": "431f9da34efda8077e16f9aa",
+      "nombre": "OLD 2026-11-04 B3_caja (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "379bd3dd105223b12fa7f7ca",
+    "estudio": "fb05dd6028ed6e653fd05700"
+  },
+  "B4_tapa": {
+    "retirado": {
+      "estudio": "0f5dd92177c3b8aefa67a680",
+      "blob": "bb882f2edeb58b33fb721aef",
+      "nombre": "OLD 2026-11-04 B4_tapa (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "eb5802c0ccae4c11809c498a",
+    "estudio": "abafadb7c5ae3a54a455d283"
+  },
+  "B5_cuna_base": {
+    "retirado": {
+      "estudio": "ccba9d2f3c94aef495a4291b",
+      "blob": "3c8b6b8b6cd5165d26ff9cd4",
+      "nombre": "OLD 2026-11-04 B5_cuna_base (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "031b247c7ca70b93effcea79",
+    "estudio": "5280c14539ec0245277d4db1"
+  },
+  "B5_cuna_cuello": {
+    "retirado": {
+      "estudio": "0ebc71069aaccd4997aec35f",
+      "blob": "98b6f41e26a672b5ac34c731",
+      "nombre": "OLD 2026-11-04 B5_cuna_cuello (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "19ad48c57b74d98158a3e2e5",
+    "estudio": "7dca36bd75680f2c89038352"
+  },
+  "B6_correa": {
+    "retirado": {
+      "estudio": "7717d391cc51a0d5411690cb",
+      "blob": "905200c15446fb021824cd42",
+      "nombre": "OLD 2026-11-04 B6_correa (geometría anterior)"
+    },
+    "subido": true,
+    "blob": "20b14422923d09d17f4ad5e2",
+    "estudio": "8191491a2cd0da1f7b12b808"
+  },
+  "ensamble": {
+    "solidos_step": 32,
+    "piezas": [
+      "M1s_caja_cuerpo",
+      "M2_caja_tapa",
+      "M11_bandeja",
+      "M11_bandeja_sup",
+      "M3t_tapa_bolsillo_izq",
+      "M3t_tapa_bolsillo_der",
+      "M3f_marco_bolsillo_izq",
+      "M3f_marco_bolsillo_der",
+      "lastre_izq",
+      "lastre_der",
+      "M3s_riel_gancho_der",
+      "M5s_capsula_tapa_pie_der",
+      "M4_capsula_cuerpo_der",
+      "M6_capsula_bisel_der",
+      "M3s_riel_gancho_izq",
+      "M5s_capsula_tapa_pie_izq",
+      "M4_capsula_cuerpo_izq",
+      "M6_capsula_bisel_izq",
+      "B1_casco_mitad_1",
+      "B1_casco_mitad_2",
+      "B2_cubierta_lisa",
+      "B2_cubierta_mastil",
+      "B3_caja",
+      "B4_tapa",
+      "B5_cuna_D_base",
+      "B5_cuna_D_cuello",
+      "B6_correa_D1",
+      "B6_correa_D2",
+      "B5_cuna_I_base",
+      "B5_cuna_I_cuello",
+      "B6_correa_I1",
+      "B6_correa_I2"
+    ],
+    "blob": "f9e1aa7099f63158746d378e",
+    "estado": "DONE",
+    "resultado": [
+      "20017cb1735d070465ee76b5"
+    ],
+    "fallo": null,
+    "estudio": "20017cb1735d070465ee76b5",
+    "solidos_onshape": 32,
+    "nombres_onshape": [
+      "M1s_caja_cuerpo",
+      "M2_caja_tapa",
+      "M11_bandeja",
+      "M11_bandeja_sup",
+      "M3t_tapa_bolsillo_izq",
+      "M3t_tapa_bolsillo_der",
+      "M3f_marco_bolsillo_izq",
+      "M3f_marco_bolsillo_der",
+      "lastre_izq",
+      "lastre_der",
+      "M3s_riel_gancho_der",
+      "M5s_capsula_tapa_pie_der",
+      "M4_capsula_cuerpo_der",
+      "M6_capsula_bisel_der",
+      "M3s_riel_gancho_izq",
+      "M5s_capsula_tapa_pie_izq",
+      "M4_capsula_cuerpo_izq",
+      "M6_capsula_bisel_izq",
+      "B1_casco_mitad_1",
+      "B1_casco_mitad_2",
+      "B2_cubierta_lisa",
+      "B2_cubierta_mastil",
+      "B3_caja",
+      "B4_tapa",
+      "B5_cuna_D_base",
+      "B5_cuna_D_cuello",
+      "B6_correa_D1",
+      "B6_correa_D2",
+      "B5_cuna_I_base",
+      "B5_cuna_I_cuello",
+      "B6_correa_I1",
+      "B6_correa_I2"
+    ],
+    "verificado": true
+  },
+  "local": {
+    "M5s_capsula_tapa_pie": {
+      "pdf": "salida\\planos_onshape\\pdf_a4_local\\PLANO_A4_M5s_capsula_tapa_pie_local.pdf",
+      "escala": "1:2",
+      "notas": [
+        "Agujeros: 4x Ø4",
+        "Chaflán 45°: base de soportes: 1,5 a 2",
+        "Espesores, separación de nervios y posición de agujeros: ver cotas a mano (COTAS_A_MANO)."
+      ]
+    },
+    "M11_bandeja": {
+      "pdf": "salida\\planos_onshape\\pdf_a4_local\\PLANO_A4_M11_bandeja_local.pdf",
+      "escala": "1:2",
+      "notas": [
+        "Agujeros: 4x Ø3,4",
+        "Chaflán 45°: base de soportes: 1,5 a 2",
+        "Espesores, separación de nervios y posición de agujeros: ver cotas a mano (COTAS_A_MANO)."
+      ]
+    },
+    "M11_bandeja_sup": {
+      "pdf": "salida\\planos_onshape\\pdf_a4_local\\PLANO_A4_M11_bandeja_sup_local.pdf",
+      "escala": "1:2",
+      "notas": [
+        "Agujeros: 4x Ø3,4",
+        "Espesores, separación de nervios y posición de agujeros: ver cotas a mano (COTAS_A_MANO)."
+      ]
+    },
+    "M3t_tapa_bolsillo": {
+      "pdf": "salida\\planos_onshape\\pdf_a4_local\\PLANO_A4_M3t_tapa_bolsillo_local.pdf",
+      "escala": "1:2",
+      "notas": [
+        "Agujeros: 2x Ø3,4",
+        "Espesores, separación de nervios y posición de agujeros: ver cotas a mano (COTAS_A_MANO)."
+      ]
+    },
+    "B6_correa": {
+      "pdf": "salida\\planos_onshape\\pdf_a4_local\\PLANO_A4_B6_correa_local.pdf",
+      "escala": "1:2",
+      "notas": [
+        "Agujeros: 2x Ø3,4",
+        "Espesores, separación de nervios y posición de agujeros: ver cotas a mano (COTAS_A_MANO)."
+      ]
+    }
+  },
+  "cambios_tab": {
+    "id": "70a232a2d83651636df32859",
+    "nombre": "CAMBIOS",
+    "actualizada": true
+  }
+}
