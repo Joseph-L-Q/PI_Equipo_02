@@ -1,3 +1,27 @@
+# Estado LanternGuard CAD | aros, estación de tierra y planos nuevos (05/11)
+
+**El aro LR2 de 8,5 mm NO cumple:** FS entre capas 0,54 (0,48 en el pico de flexión) con 2 kg + 150 N. No se cambió el diámetro. Propuesta sin aplicar: aro Ø16,5 y asiento Ø16,8. Detalle, supuestos y lista de verificación en `docs/ARO_Y_ESTACION.md`.
+
+| Bloque | Estado |
+|---|---|
+| LR2_aro y PB_aro | STEP y STL en `salida/aro/`. `aro.seccion` 8,5 real, holgura 0,15: M3s no cambia. No subidos a Onshape ni a Drive |
+| T1_caja y T2_tapa | STEP y STL en `salida/tierra/`, 124 g. Medidas del Heltec y la batería sin confirmar. No subidos a Onshape ni a Drive |
+
+## Planos nuevos en LG_IMPRIMIR_P2
+Los 5 `PLANO_A4_*` apuntan a las pestañas vigentes. Se borraron los 5 planos viejos y sus OLD (Part Studio y `.step`). Quedan 28 OLD, todas usadas por los «Drawing N» de Melissa, que no se tocaron. Sin referencias rotas. 97 llamadas.
+
+| Pieza | Plano | Cotas por API | Cotas a mano |
+|---|---|---|---|
+| M1s_caja_cuerpo | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/740f34822d2dbb305df48f48) | 18 | 17 |
+| M2_caja_tapa | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/0c80d12f9d8423d7505f19cd) | 10 | 3 |
+| B1_casco | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/a00a08da6785d3533161a858) | 20 | 13 |
+| B2_cubierta_lisa | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/25e0e3db18a41e920aa0e0c9) | 16 | 9 |
+| B2_cubierta_mastil | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/3a048c8e2da45fc76052dda2) | 17 | 19 |
+
+Las cotas a mano no cupieron o salen de bordes curvos. Falta corregir SHEET «11» → «1 of 1» si estos planos heredan ese defecto. No se exportó PDF por API: el vigente sigue siendo `PLANOS_A4_LanternGuard_v6.pdf`.
+
+---
+
 # Estado LanternGuard CAD | limpieza de pestañas OLD en LG_IMPRIMIR_P2 (05/11) | **TERMINADO**
 
 De 91 pestañas OLD se borraron 53 y quedaron 38 (19 Part Studios y sus 19 `.step`). Después de la limpieza, los 28 Drawings no tienen referencias rotas.

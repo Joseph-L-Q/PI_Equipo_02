@@ -564,11 +564,27 @@ SIMPLE_RAIL_L = p("simple.riel_L", 430.0, "equipo", OK,
 SIMPLE_JOINT_EAR = p("simple.union_oreja", (10.0, 8.0), EST, VER,
                      "Orejas de la union plana a cada lado de la camara, sobre el bolsillo del lastre: ancho en y fuera de "
                      "la pared, espesor en x de cada mitad. 2 M3 por oreja (4 en total) con tuerca, a lo largo del riel")
-RING_SECTION = p("aro.seccion", 8.0, EST, VER, "Diametro de la varilla del aro Ø200 real: fija la C de M9s; medir")
-SIMPLE_HOOK_C = p("gancho.c", (0.4, 6.0, 12.0), EST, VER,
+RING_SECTION = p("aro.seccion", 8.5, "equipo", OK, "Aro impreso LR2_aro (05/11): seccion REAL, ya no estimada. Es el asiento del gancho (Ø8.8) menos 0.3 de juego", 8.0)
+SIMPLE_HOOK_C = p("gancho.c", (0.15, 6.0, 12.0), EST, VER,
+                  "05/11: holgura 0.4 -> 0.15 con aro.seccion 8 -> 8.5: el asiento sigue en Ø8.8 y M3s no cambia. "
                   "M9s: holgura sobre la varilla, pared de la C y largo del asiento sobre la varilla (la curva del aro "
                   "Ø200 corre la varilla 0.18 mm en 12, 1.4 mm en 33). Pared 6 (antes 4): con la capsula junto al gancho, en el agua un "
                   "solo gancho lleva los 150 N y el FEM daba FS 1.25 entre capas con 4", (0.4, 4.0, 12.0))
+AROS = p("aro.impreso", dict(D=200.0, cantidad=4, juego=0.3, plano_base=0.5, relleno=1.0), "equipo", OK,
+         "LR2_aro: Ø al eje, cantidad, juego seccion-asiento, base aplanada para asentar en la cama, relleno")
+ARO_FEM = p("aro.fem", dict(masa_piso_kg=2.0, manipulacion_N=150.0, cuerdas=4), EST, VER,
+            "Supuesto del FEM: cada aro cuelga de 4 cuerdas a 90 grados y lleva su piso de malla con conchas (2 kg, sin pesar) "
+            "+ 150 N de manipulacion en el punto medio entre 2 cuerdas; los pisos de abajo cuelgan de las cuerdas, no del aro")
+TIERRA = p("tierra.medidas", dict(heltec=(50.2, 25.5), heltec_pcb=1.6, heltec_sobre_pcb=5.0, heltec_poste=8.0,
+                                  heltec_agujeros=(44.0, 19.5), oled=(25.0, 14.0), oled_x=24.0, usb_z=1.6, bateria=(50.0, 34.0, 10.0),
+                                  sma_d=6.5, sma_cara=12.0, sma_zona=8.0), EST, VER,
+           "Estacion LoRa de tierra: Heltec WiFi LoRa 32 V3 y LiPo galleta tipo 103450 (Ah sin definir). Medidas tipicas y agujeros "
+           "de la placa SIN medir: calibrar con la placa real antes de imprimir")
+TIERRA_CAJA = p("tierra.caja", dict(holgura=3.0, pared=3.0, fondo=3.0, alto_int=22.0, tapa=6.0, ranura_pared=2.4, reborde=3.0,
+                                    torre_d=10.0, pestana=(22.0, 22.0, 6.0), ojal=(5.5, 12.0), usb=(24.0, 12.0), tapon=(30.0, 13.0, 4.0),
+                                    ventana_rebaje=(6.0, 2.2), poste_d=8.5, inserto_m25=(3.5, 5.0)), EST, VER,
+                "T1_caja y T2_tapa, intemperie sin sumergir: junta de cordon NBR Ø2 (junta.*), 4 M3 inox A4 a insertos, ventana OLED con "
+                "acrilico pegado, tapon de silicona en USB/PRG/RST, SMA de mamparo con su junta")
 SIMPLE_HOOK_STRAP = p("gancho.correa", True, "equipo", OK,
                       "M9s con ranura de correa (la correa evita que el nodo se levante del aro). False: sin ranura y con "
                       "la boca abocinada, se saca levantando (variante V3)")

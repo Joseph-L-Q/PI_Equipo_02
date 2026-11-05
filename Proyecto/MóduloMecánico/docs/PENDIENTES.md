@@ -31,7 +31,7 @@ Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 - **SimScale:** clave verificada el 04/11 (listar proyectos responde). El plan A va por API; no hace falta la guía manual.
 
 ## Medidas físicas (no se pueden resolver desde la PC)
-- `aro.seccion`: hoy 8 mm estimado. Calibrador sobre la varilla del aro Ø200 real (MEDIDAS.md, fila 1).
+- `aro.seccion`: 8,5 mm real desde el 05/11 (aro impreso LR2_aro). No cumple FS con 150 N: decidir la sección en `ARO_Y_ESTACION.md`.
 - KIT A real, PG7, peso del panel: sin medir (MEDIDAS.md).
 
 ## Decisiones abiertas del equipo
