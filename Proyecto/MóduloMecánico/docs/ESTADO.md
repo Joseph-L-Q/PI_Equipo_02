@@ -1,3 +1,16 @@
+# Estado LanternGuard CAD | subida a Onshape del 05/11 | **NO SE SUBIÓ NADA: la clave no autentica**
+
+La clave de API entregada el 05/11 no es reconocida por Onshape: `sessioninfo` responde vacío (204) igual que sin clave, con Basic y con HMAC, y la prueba de escritura da 401 «Unauthenticated API request». No hay proxy y el formato de la clave es correcto. Hay que revisarla o crear otra.
+
+| Punto | Estado |
+|---|---|
+| LG_IMPRIMIR_P2 | Sin cambios: ninguna pestaña renombrada, subida ni borrada |
+| 6 STEP | Listos en `salida/onshape_importar/2026-11-05/`; sólidos locales 1, 1, 1, 1, 1 y 32 |
+| Permiso de escritura | Sin comprobar: el 401 llega antes. Si la clave nueva da 403, falta compartir la carpeta LanternGuard con Melissa como Can edit |
+| Pestañas OLD | 79 anteriores al 05/11, sin borrar. Revisar antes los «Drawing N»: B5_cuna y B2_cubierta solo existen como OLD |
+
+---
+
 # Estado LanternGuard CAD | encargo del 05/11 (diseño para mar) | **TERMINADO: 05:32**
 
 Modo sin API de Onshape: las piezas cambiadas quedan como STEP con `IMPORTAR.md` para subirlas a mano.
