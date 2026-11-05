@@ -14,6 +14,8 @@ No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `s
 | nodo P4 estetico | 1352 | 46.0 | 81.11 |
 | boya PET 4 x 1 L | 1105 | 46.9 | 66.28 |
 
+**Lo que se imprime hoy: nodo P2 robusto + boya PET 4 x 1 L** (mas las probetas; total por placa en `salida/imprimir_hoy/3mf/placas.json`). Las otras filas son versiones anteriores, solo para comparar: no se suman.
+
 El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 
 ## Piezas

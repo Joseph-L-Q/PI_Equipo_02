@@ -403,7 +403,9 @@ def write_md(rows, hw, res, rb, slicer):
          "## Resumen", "", "| Grupo | Masa impresa g | Horas | Costo filamento S/ |", "|---|---|---|---|"]
     for g, v in t.items():
         L.append(f"| {g} | {v['masa']:.0f} | {v['horas']:.1f} | {v['costo']:.2f} |")
-    L += ["", "El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).", "",
+    L += ["", "**Lo que se imprime hoy: nodo P2 robusto + boya PET 4 x 1 L** (mas las probetas; total por placa en "
+          "`salida/imprimir_hoy/3mf/placas.json`). Las otras filas son versiones anteriores, solo para comparar: no se suman.",
+          "", "El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).", "",
           "## Piezas", "", "| Pieza | Grupo | Cant. | X × Y × Z mm | Volumen cm³ | Orientacion | Soportes | Relleno | Masa por pieza g | Fuente |",
           "|---|---|---|---|---|---|---|---|---|---|"]
     for g, stem, q, desc, vol, bb, orient, sup, rel, mu in rows:
