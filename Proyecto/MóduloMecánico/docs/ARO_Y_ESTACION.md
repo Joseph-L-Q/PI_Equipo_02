@@ -57,7 +57,7 @@ En los 12 mm de asiento la curva del aro se desvía 0,18 mm. Con 0,15 de holgura
 ### Antes de imprimir
 - **Medir el Heltec y la batería:** todas las medidas son típicas. La distancia entre agujeros (44 × 19,5) y la posición de la pantalla son **estimadas**; confirma también que tu placa tenga agujeros M2,5 y que los postes no toquen los pines.
 - **PRG y RST:** comparten el puerto del USB-C. No verifiqué en qué cara de la placa están ni si se alcanzan por ahí.
-- **Compresión de la junta:** el paso de tornillos es 76,2 × 83,2 mm y `caja.m3_paso_max` pide 76 como máximo. Con 4 tornillos, como se pidió, el lado largo se pasa un poco; probar con agua a chorro.
+- **Compresión de la junta:** el paso de tornillos es 76,2 × 83,2 mm y `caja.paso_tornillos` pide 76 como máximo. Con 4 tornillos, como se pidió, el lado largo se pasa un poco; probar con agua a chorro.
 - **Compras:** tapón de silicona de 30 × 13 × 4 mm, acrílico de 31 × 20 × 2 mm pegado con sellador, SMA de mamparo con su junta. La pared lisa de 3 mm es el asiento de la SMA.
 
 ## Gramos estimados (sin OrcaSlicer, PETG 1,27 g/cm³, 100 % relleno)
