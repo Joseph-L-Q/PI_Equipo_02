@@ -286,6 +286,25 @@ NODO = ROOT / "salida" / "prototipos" / "P2_robusto" / "step"
 OUT = ROOT / "salida" / "guia_piezas"
 DOCS = ROOT / "docs"
 
+import params as PR  # noqa: E402
+import boya_pet  # noqa: E402
+
+_D = boya_pet.dims(PR.FLOT_BOTTLE, PR.FLOT_COUNT)
+J0, JW, JP, JC = PR.PET_JOINT
+YC = _D["wc"] / 2 - JW / 2
+YW = _D["WH"] / 2 - JW / 2
+NECK_D = round(2 * _D["neck_slot_r"], 2)
+NECK = (NECK_D - 0.1, NECK_D + 0.1)
+PIN_HOLE = round(JP + 2 * JC, 2)
+EYE_X = boya_pet.eye_x(_D)
+BAR = f"{PR.PET_BAR_W:g} × {PR.PET_COVER_T:g}"
+CH = f"{PR.PET_CHAMFER:g}"
+
+
+def _bb(path):
+    b = cq.importers.importStep(str(path)).val().BoundingBox()
+    return f"{b.xlen:.0f} × {b.ylen:.0f} × {b.zlen:.0f}"
+
 
 def A(cat, tipo, texto, spec, diam=None, key=None, tol=0.0):
     """Item whose anchors are detected holes (spec: dict or list of dicts, see match())."""
@@ -312,33 +331,35 @@ PIEZAS += [
          sub="Estructura que sostiene las botellas PET. Se imprime 2 veces: la segunda mitad es esta misma pieza girada 180° (x = 0 es la unión). Ejes: x a lo largo de las botellas, z arriba.",
          views=[(215, 33), (38, 38)],
          items=[
-             A("union", "Tornillos de unión de las mitades", "Paso M3 (Ø3.4) en x = 0. Seis M3×20 inox con tuerca cruzan las dos bridas de 4 + 4 mm: 4 en las columnas del canal (y = ±19) y 2 en las almohadillas bajas de las paredes (y = ±107).",
-               dict(D=3.4, ax="x", x=(-6, 2)), key="union"),
-             M("ajuste", "Pin Ø4 de alineación", "Pin impreso Ø4 en x = 0 (y = +19, z = 28) que entra en el alojamiento de la otra mitad. Garantiza que las dos mitades coinciden antes de apretar los M3.",
-               [(2.0, 19.0, 28.0)], diam="4.0", key="pin", tol=4),
-             A("ajuste", "Alojamiento del pin", "Agujero Ø4.4 (pin 4 + holgura 0.2) en y = −19: recibe el pin de la otra mitad.",
-               dict(D=4.4, ax="x"), key="aloj"),
+             A("union", "Tornillos de unión de las mitades", f"Paso M3 (Ø{PR.M3_CLEAR:g}) en x = 0. Seis M3×25 inox con tuerca cruzan las dos bridas de {J0:g} + {J0:g} mm: 4 en las columnas del canal (y = ±{YC:g}) y 2 en las almohadillas bajas de las paredes (y = ±{YW:.1f}).",
+               dict(D=3.4, ax="x", x=(-10, 2)), key="union"),
+             M("ajuste", f"Pin Ø{JP:g} de alineación", f"Pin impreso Ø{JP:g} en x = 0 (y = +{YC:g}, z = 30) que entra en el alojamiento de la otra mitad. Garantiza que las dos mitades coinciden antes de apretar los M3.",
+               [(2.0, YC, 30.0)], diam=f"{JP:g}", key="pin", tol=4),
+             A("ajuste", "Alojamiento del pin", f"Agujero Ø{PIN_HOLE:g} (pin {JP:g} + holgura {JC:g} por lado) en y = −{YC:g}: recibe el pin de la otra mitad.",
+               dict(D=PIN_HOLE, ax="x"), key="aloj"),
+             M("ajuste", "Lengüeta y ranura de la unión", f"Lengüeta de {PR.PET_KEY[1]:g} × {PR.PET_KEY[1]:g} mm que sale {PR.PET_KEY[0]:g} mm de la brida (z = 19) en la columna del lado +y; en la otra mitad entra en una ranura con {JC:g} mm de holgura. Como las dos mitades son la misma pieza girada 180°, cada mitad lleva lengüeta de un lado y ranura del otro. Alinea y toma el esfuerzo cortante que no deben tomar los tornillos.",
+               [(3.5, YC, 19.0)], diam=f"{PR.PET_KEY[1]:g}", key="llave", tol=4),
              A("union", "Pasos M3 hacia las cunas", "Cuatro pasos M3 (Ø3.4) en la costilla del extremo. Los tornillos vienen de las bahías del casco y se enroscan en los insertos de las lengüetas de las cunas B5.",
                dict(D=3.4, ax="x", x=(-130, -120)), key="cunas"),
              A("union", "Insertos M3 de los postes", "Inserto térmico M3 (Ø4.0 × 6) en la punta de cada poste: reciben los 4 tornillos M3 con que se atornilla la cubierta B2 (cada mitad de B2 va a sus propios 4 postes).",
                dict(D=4.0, ax="z"), key="insertos"),
-             M("forma", "Poste Ø10", "Cuatro postes Ø10 que nacen del piso y suben hasta el inserto. Pasaron de Ø8 a Ø10 el 04/11; los del medio llevan un collar a 45° donde salen de la silla baja.",
-               [(-123, 23, 70), (-123, -23, 70), (-63.5, 23, 70), (-63.5, -23, 70)], diam="10", key="postes", tol=7),
-             A("cable", "Ojal de amarre", "Agujero Ø10.5 en el parche de la quilla. Hay uno por mitad (x = ±21): el cabo de amarre va en pata de gallo, con dos ramales a un nudo. Es independiente del umbilical.",
-               dict(D=10.5, ax="z"), key="ojal", tol=3),
+             M("forma", "Poste Ø10", f"Cuatro postes Ø{PR.PET_POST_D:g} que nacen del piso y suben hasta el inserto. Pasaron de Ø8 a Ø{PR.PET_POST_D:g} el 04/11; los del medio llevan un collar a 45° donde salen de la silla baja.",
+               [(-123, 23, 70), (-123, -23, 70), (-63.5, 23, 70), (-63.5, -23, 70)], diam=f"{PR.PET_POST_D:g}", key="postes", tol=7),
+             A("cable", "Ojal de amarre", f"Agujero Ø{PR.PET_EYE[2]:g} en el parche de la quilla. Hay uno por mitad (x = ±{EYE_X:g}): el cabo de amarre va en pata de gallo, con dos ramales a un nudo. Es independiente del umbilical.",
+               dict(D=PR.PET_EYE[2], ax="z"), key="ojal", tol=9),
              M("cable", "Canal central", "Hueco de 50 mm entre las dos bahías (y = ±25), sin costillas. Por aquí baja el cable umbilical y caben el domo del PG7 y la contratuerca de la caja B3.",
                [(-95, 0, 2.5), (-30, 0, 2.5)], key="canal", tol=1000),
-             A("forma", "Silla baja de la botella", "Ranura en U Ø83 (botella Ø80 + 1.5 de holgura). Desde el 04/11 las costillas intermedias son sillas bajas (≤ 15 mm sobre el patín) y no varillas de 2.4×3. Lo que sujeta la botella hacia arriba son las barras de B2 y las correas.",
-               dict(D=83, ax="x"), key="silla"),
-             A("forma", "Ranura del cuello", "Ranura Ø32 en la costilla del extremo (bahía y = −69): por ella asoma el cuello de la botella, unos 21 mm fuera del casco.",
-               dict(D=32, ax="x"), key="cuello"),
+             A("forma", "Silla baja de la botella", f"Ranura en U Ø83 (botella Ø80 + 1.5 de holgura). Desde el 04/11 las costillas intermedias son sillas bajas (≤ {PR.PET_STOP_H:g} mm sobre el patín) de {PR.PET_RIB:g} mm de espesor. Lo que sujeta la botella hacia arriba son las barras de B2 y las correas.",
+               dict(D=(80.9, 83.1), ax="x"), key="silla"),
+             A("forma", "Ranura del cuello", f"Ranura Ø{NECK_D:g} en la costilla del extremo (bahía y = −69): por ella asoma el cuello de la botella, unos 21 mm fuera del casco. El diámetro sale del cálculo del casco (boya_pet.neck_slot_r), no es un número fijo.",
+               dict(D=NECK, ax="x"), key="cuello"),
              M("forma", "Rombo de aligeramiento", "Ventana en rombo en la costilla del extremo de la base de la botella (bahía y = +69). Ahorra material y, con caras a 45°, se imprime sin puentes.",
                [(-125.0, 68.9, 43.9)], key="rombo", tol=6),
              M("forma", "Ventanas hexagonales", "Cuatro ventanas hexagonales en la pared exterior (2 por bahía visible). Aligeran la pared y sirven para inyectar la espuma de poliuretano que da reserva de flotación.",
                [(-94.25, 112.8, 27), (-31.75, 112.8, 27), (-94.25, -112.8, 27), (-31.75, -112.8, 27)], key="hex", tol=4),
-             M("forma", "Patín bajo la botella", "Piso de 2.4 mm y 24 mm de ancho bajo cada botella: es lo único que toca la botella por abajo. El resto del fondo queda abierto para que escurra el agua.",
+             M("forma", "Patín bajo la botella", f"Piso de {PR.PET_WALL:g} mm y 24 mm de ancho bajo cada botella: es lo único que toca la botella por abajo. El resto del fondo queda abierto para que escurra el agua.",
                [(-95, 68.9, 2.4), (-95, -68.9, 2.4)], key="patin", tol=3),
-             M("forma", "Chaflán 45° en la base de los soportes", "Chaflanes de 45° donde costillas y postes nacen del patín: evitan voladizos y soportes de impresión (corrección de la jefa de práctica).",
+             M("forma", "Chaflán 45° en la base de los soportes", f"Chaflanes de 45° × {CH} mm donde costillas y postes nacen del patín: evitan voladizos y soportes de impresión (corrección de la jefa de práctica).",
                [(-63.5, 80, 4), (-63.5, -80, 4), (-63.5, 23, 17.4), (-63.5, -23, 17.4)], key="chaflan", tol=5),
          ]),
     dict(id="B2_cubierta_lisa", grupo="Boya", step=BOYA / "B2_cubierta_lisa.step", titulo="B2 · Cubierta, lado liso",
@@ -351,9 +372,9 @@ PIEZAS += [
                dict(D=4.0, ax="z", z=(80, 120)), key="pilares"),
              A("union", "Columnas del panel con inserto M3", "Dos columnas Ø12 que suben 107 mm. Inserto M3 (Ø4.0) en la punta: el panel solar de 170×170 se atornilla a las cuatro columnas (2 por mitad), 25 mm sobre la tapa.",
                dict(D=4.0, ax="z", z=(150, 210)), key="columnas"),
-             M("forma", "Barras de 14 × 4 mm", "Barras que cruzan sobre las botellas: no las dejan salir hacia arriba. Los huecos entre barras son por donde se inyecta la espuma. La barra de x = 0 es nueva: cierra el marco de cada mitad.",
-               [(-63.5, 0, 89.4), (-4, -40, 89.4), (-30, 68.9, 89.4)], key="barras", tol=3),
-             M("forma", "Pie a 45° de pilares y columnas", "Chaflán de 45° en la base de pilares y columnas sobre las barras (chaflán de la base de soportes): imprime sin soporte.",
+             M("forma", f"Barras de {BAR} mm", f"Barras de {BAR} mm que cruzan sobre las botellas: no las dejan salir hacia arriba. Los huecos entre barras son por donde se inyecta la espuma. La barra de x = 0 es nueva: cierra el marco de cada mitad.",
+               [(-63.5, 23, 93.4), (-123, -23, 93.4)], key="barras", tol=3),
+             M("forma", "Pie a 45° de pilares y columnas", f"Chaflán de 45° × {CH} mm en la base de pilares y columnas sobre las barras: imprime sin soporte.",
                [(-69, 51.4, 90.5), (-69, -51.4, 90.5), (-70, 68.9, 91), (-70, -68.9, 91)], key="pie45", tol=5),
          ]),
     dict(id="B2_cubierta_mastil", grupo="Boya", step=BOYA / "B2_cubierta_mastil.step", titulo="B2 · Cubierta, lado mástil",
@@ -366,21 +387,21 @@ PIEZAS += [
                dict(D=4.0, ax="z", z=(80, 120)), key="pilares"),
              A("union", "Columnas del panel con inserto M3", "Dos columnas Ø12 con inserto M3 (Ø4.0) en la punta para el panel solar.",
                dict(D=4.0, ax="z", z=(150, 210)), key="columnas"),
-             A("cable", "Hueco del mástil Ø8", "Mástil Ø14 con hueco interior Ø8 desde z = 95 hasta la punta. Por dentro sube el pigtail de la antena (un cable corto con el conector de antena).",
+             A("cable", "Hueco del mástil Ø8", f"Mástil Ø{PR.PET_MAST[0]:g} con hueco interior Ø{PR.PET_MAST[1]:g} desde z = 99 hasta la punta. Por dentro sube el pigtail de la antena (un cable corto con el conector de antena).",
                dict(D=8.0, ax="z"), key="mastil", tol=2),
              A("cable", "Puerto del pigtail Ø7", "Agujero Ø7 en el mástil hacia la caja: por aquí sale el pigtail y va a un PG7 de la cara +X de B3 ([[B3_caja:pg7_pig]]).",
                dict(D=7.0, ax="x"), key="puerto", tol=4),
-             M("forma", "Barras y barra de costura", "Marco de barras de 14 × 4 mm; la barra en x = 0 cierra este marco. Igual que en el lado liso: retiene las botellas y deja huecos para la espuma.",
-               [(63.5, 0, 89.4), (4, -40, 89.4), (30, 68.9, 89.4)], key="barras", tol=3),
-             M("forma", "Pie a 45° de pilares y columnas", "Chaflán de 45° en la base de pilares, columnas y mástil (chaflán de la base de soportes).",
+             M("forma", "Barras y barra de costura", f"Marco de barras de {BAR} mm; la barra en x = 0 cierra este marco. Igual que en el lado liso: retiene las botellas y deja huecos para la espuma.",
+               [(63.5, 23, 93.4), (123, -23, 93.4)], key="barras", tol=3),
+             M("forma", "Pie a 45° de pilares y columnas", f"Chaflán de 45° × {CH} mm en la base de pilares, columnas y mástil.",
                [(69, 51.4, 90.5), (69, -51.4, 90.5), (70, 68.9, 91), (70, -68.9, 91)], key="pie45", tol=5),
          ]),
     dict(id="B3_caja", grupo="Boya", step=BOYA / "B3_caja.step", titulo="B3 · Caja seca",
-         sub="Caja hermética de la electrónica de la boya (PCB, Waveshare, portabaterías 3×18650, RTC). Paredes de 2.4 mm con brida de 10 × 7 mm. Se cierra con la tapa B4.",
+         sub=f"Caja hermética de la electrónica de la boya (PCB, Waveshare, portabaterías 3×18650, RTC). Paredes de {PR.PET_BOX_WALL:g} mm con brida de {PR.PET_FLANGE[0]:g} × {PR.PET_FLANGE[1]:g} mm. Se cierra con la tapa B4.",
          views=[(215, 30), (35, 38)],
          items=[
              IGN(dict(D=6.0, ax="z", len=(30, 100))),
-             A("union", "Pasos M3 de las orejas", "Cuatro orejas de 14×14×4 mm en las esquinas. Un M3 por oreja entra al inserto del pilar de B2 ([[B2_cubierta_lisa:pilares]]): así la caja queda fija a la cubierta.",
+             A("union", "Pasos M3 de las orejas", f"Cuatro orejas de {PR.PET_EAR[0]:g}×{PR.PET_EAR[1]:g}×{PR.PET_EAR[2]:g} mm en las esquinas. Un M3 por oreja entra al inserto del pilar de B2 ([[B2_cubierta_lisa:pilares]]): así la caja queda fija a la cubierta.",
                dict(D=3.4, ax="z"), key="orejas"),
              A("sello", "Insertos M3 de la brida", "Diez insertos térmicos M3 (Ø4.0 × 6) en la brida de 7 mm. Los tornillos de la tapa B4 los aprietan. Son ciegos (no atraviesan) y quedan afuera del cordón.",
                dict(D=4.0, ax="z", z=(160, 175)), key="ins_brida"),
@@ -394,11 +415,11 @@ PIEZAS += [
                dict(D=12.6, ax="x", x=(0, 100), y=(-40, 0)), key="pg7_solar", tol=3),
              A("cable", "PG7 del pigtail de antena", "Agujero Ø12.6 en la pared +X (y = +25): entra el pigtail que viene del mástil de B2 ([[B2_cubierta_mastil:puerto]]).",
                dict(D=12.6, ax="x", x=(0, 100), y=(0, 40)), key="pg7_pig", tol=3),
-             M("sello", "Brida plana con chaflán 45°", "Brida de 10 mm de ancho y 7 de espesor. Su cara superior, plana, es donde aprieta el cordón de la tapa (ver [[B4_tapa:groove]]). Abajo lleva un chaflán de 45° para imprimir sin soportes.",
+             M("sello", "Brida plana con chaflán 45°", f"Brida de {PR.PET_FLANGE[0]:g} mm de ancho y {PR.PET_FLANGE[1]:g} de espesor. Su cara superior, plana, es donde aprieta el cordón de la tapa (ver [[B4_tapa:groove]]). Abajo lleva un chaflán de 45° para imprimir sin soportes.",
                [(0, -53, 169.8), (-70, 0, 169.8)], key="brida", tol=3),
          ]),
     dict(id="B4_tapa", grupo="Boya", step=BOYA / "B4_tapa.step", titulo="B4 · Tapa de la caja seca",
-         sub="Tapa plana de 4 mm de B3. Se imprime con la ranura hacia arriba (girada 180°). Aquí está el sello que mantiene seca la electrónica.",
+         sub=f"Tapa plana de {PR.PET_LID_T:g} mm de B3. Se imprime con la ranura hacia arriba (girada 180°). Aquí está el sello que mantiene seca la electrónica.",
          views=[(215, 30), (215, -40)],
          items=[
              IGN(dict(D=16.0, ax="z")),
@@ -411,19 +432,19 @@ PIEZAS += [
          sub="Cuna que sostiene una botella a lo largo de Y en cada extremo del casco. Mitad del lado de la base de la botella; se imprime 2 veces (una por cuna). Aquí x = 0 es la unión con el lado cuello.",
          views=[(215, 33), (38, 38)],
          items=[
-             A("union", "Pasos M3 de unión de las mitades", "Dos pasos M3 (Ø3.4) en almohadillas bajas en x = 0: un M3 por lado une esta mitad con la del cuello (brida 4 + 4 mm).",
+             A("union", "Pasos M3 de unión de las mitades", f"Dos pasos M3 (Ø3.4) en almohadillas bajas en x = 0: un M3 por lado une esta mitad con la del cuello (brida {J0:g} + {J0:g} mm). Sin pin redondo: la lengüeta vertical de la almohadilla alinea las dos mitades.",
                dict(D=3.4, ax="x"), key="union"),
-             A("union", "Insertos M3 de las lengüetas", "Inserto M3 (Ø4.0 × 6, eje en Y) en cada lengüeta de 12 × 14 mm que sale hacia el casco. El tornillo entra desde la bahía de B1, cruza la costilla del extremo ([[B1_casco:cunas]]) y rosca aquí.",
+             A("union", "Insertos M3 de las lengüetas", f"Inserto M3 (Ø4.0 × 6, eje en Y) en cada lengüeta de {PR.PET_TONGUE[0]:g} × {PR.PET_TONGUE[1]:g} mm que sale hacia el casco. El tornillo entra desde la bahía de B1, cruza la costilla del extremo ([[B1_casco:cunas]]) y rosca aquí.",
                dict(D=4.0, ax="y"), key="lenguetas"),
-             A("union", "Insertos M3 de los postes de correa", "Dos postes Ø10 (corridos 1 mm afuera para no tocar la botella) con inserto M3: reciben los tornillos de la correa B6.",
+             A("union", "Insertos M3 de los postes de correa", f"Dos postes Ø{PR.PET_POST_D:g} (corridos 1 mm afuera para no tocar la botella) con inserto M3: reciben los tornillos de la correa B6.",
                dict(D=4.0, ax="z"), key="postes"),
              A("forma", "Silla baja de la botella", "Ranuras en U Ø83 en la costilla del medio y en la de la unión: guían la botella; las correas B6 la sujetan hacia arriba.",
-               dict(D=83, ax="x"), key="silla"),
+               dict(D=(80.9, 83.1), ax="x"), key="silla"),
              M("forma", "Rombo de aligeramiento", "Ventana en rombo en la costilla del extremo de la base de la botella (cerrada: la base de la botella la toca). Ahorra material y se imprime sin puentes.",
                [(-125.0, 0, 43.9)], key="rombo", tol=6),
              M("forma", "Ventanas hexagonales", "Cuatro ventanas hexagonales (2 por pared): aligeran y dejan inyectar espuma de poliuretano.",
                [(-94.25, 43.9, 27), (-31.75, 43.9, 27), (-94.25, -43.9, 27), (-31.75, -43.9, 27)], key="hex", tol=4),
-             M("forma", "Chaflán 45° en la base de los soportes", "Chaflanes de 45° en la unión de costillas, lengüetas y postes con el patín: sin voladizos ni soportes.",
+             M("forma", "Chaflán 45° en la base de los soportes", f"Chaflanes de 45° × {CH} mm en la unión de costillas, lengüetas y postes con el patín: sin voladizos ni soportes.",
                [(-63.5, 12, 4), (-63.5, -12, 4), (-46.9, 50, 7)], key="chaflan", tol=6),
          ]),
     dict(id="B5_cuna_cuello", grupo="Boya", step=BOYA / "B5_cuna_cuello.step", titulo="B5 · Cuna, lado cuello",
@@ -434,15 +455,15 @@ PIEZAS += [
                dict(D=3.4, ax="x"), key="union"),
              A("union", "Insertos M3 de las lengüetas", "Inserto M3 (Ø4.0, eje en Y) en cada lengüeta: reciben los tornillos que vienen del casco B1.",
                dict(D=4.0, ax="y"), key="lenguetas"),
-             A("union", "Insertos M3 de los postes de correa", "Dos postes Ø10 con inserto M3 (Ø4.0) para la correa B6.",
+             A("union", "Insertos M3 de los postes de correa", f"Dos postes Ø{PR.PET_POST_D:g} con inserto M3 (Ø4.0) para la correa B6.",
                dict(D=4.0, ax="z"), key="postes"),
              A("forma", "Silla baja de la botella", "Ranuras en U Ø83 que guían la botella.",
-               dict(D=83, ax="x"), key="silla"),
-             A("forma", "Ranura del cuello", "Ranura Ø32 en la costilla del extremo: por aquí asoma el cuello de la botella.",
-               dict(D=32, ax="x"), key="cuello"),
+               dict(D=(80.9, 83.1), ax="x"), key="silla"),
+             A("forma", "Ranura del cuello", f"Ranura Ø{NECK_D:g} en la costilla del extremo: por aquí asoma el cuello de la botella.",
+               dict(D=NECK, ax="x"), key="cuello"),
              M("forma", "Ventanas hexagonales", "Cuatro ventanas hexagonales (2 por pared): aligeran y dejan inyectar espuma.",
                [(94.25, 43.9, 27), (31.75, 43.9, 27), (94.25, -43.9, 27), (31.75, -43.9, 27)], key="hex", tol=4),
-             M("forma", "Chaflán 45° en la base de los soportes", "Chaflanes de 45° en la unión de costillas, lengüetas y postes con el patín.",
+             M("forma", "Chaflán 45° en la base de los soportes", f"Chaflanes de 45° × {CH} mm en la unión de costillas, lengüetas y postes con el patín.",
                [(63.5, 12, 4), (63.5, -12, 4), (46.9, 50, 7)], key="chaflan", tol=6),
          ]),
     dict(id="B6_correa", grupo="Boya", step=BOYA / "B6_correa.step", titulo="B6 · Correa",
@@ -451,8 +472,8 @@ PIEZAS += [
          items=[
              A("union", "Pasos M3 en los extremos", "Dos agujeros M3 (Ø3.4) a 92 mm entre centros: se atornillan a los insertos de los postes de la cuna ([[B5_cuna_base:postes]]).",
                dict(D=3.4, ax="z"), key="pasos"),
-             M("forma", "Banda plana de 14 × 4 mm", "Banda que pasa por encima de la botella y la sujeta hacia arriba contra la silla baja de la cuna.",
-               [(0, 0, 4)], key="banda", tol=2),
+             M("forma", f"Banda plana de {PR.PET_STRAP[0]:g} × {PR.PET_STRAP[1]:g} mm", "Banda que pasa por encima de la botella y la sujeta hacia arriba contra la silla baja de la cuna.",
+               [(0, 0, 5)], key="banda", tol=2),
          ]),
 ]
 
@@ -486,8 +507,8 @@ PIEZAS += [
                [(0, -68, 66), (-68, 0, 66)], key="falda", tol=5),
              A("mont", "Insertos M3 de los bosses de la bandeja", "Cuatro bosses Ø8 sobre el piso con inserto M3 (ciego). Un solo tornillo M3 × 38 de acero inoxidable por boss atraviesa la bandeja superior, el poste y la bandeja inferior y se enrosca aquí ([[M11_bandeja:postes]]). Cada boss nace del piso con un chaflán de 45°.",
                dict(D=4.0, ax="z", z=(5, 15)), key="bosses", tol=3),
-             M("union", "Orejas M3 del marco de lastre", "Cuatro orejas de 20 × 14 × 12 mm en las paredes largas, a ras del piso, con un inserto M3 ciego cada una (desde abajo). Ahí se atornillan los dos marcos M3f (uno por bolsillo), fuera del volumen seco. Los bolsillos ya no van dentro de M1s: así el piso queda plano y sin soportes.",
-               [(45, 71, 6), (-45, 71, 6), (45, -71, 6), (-45, -71, 6)], key="orejas", tol=8),
+             A("union", "Orejas M3 del marco de lastre", f"Cuatro orejas de {PR.FRAME_LUGS['ancho']:g} × {PR.FRAME_LUGS['saliente']:g} × {PR.FRAME_LUGS['alto']:g} mm en las paredes largas, a ras del piso, con un inserto M3 ciego cada una (desde abajo). Ahí se atornillan los dos marcos M3f (uno por bolsillo), fuera del volumen seco. Los bolsillos ya no van dentro de M1s: así el piso queda plano y sin soportes.",
+               dict(D=4.0, ax="z", z=(0, 4.5)), key="orejas", tol=8),
          ]),
     dict(id="M2_caja_tapa", grupo="Nodo P2", step=NODO / "M2_caja_tapa.step", titulo="M2 · Tapa de la caja con asa",
          sub="Cierra la caja M1s. Lleva el asa para cargar con guante, el ojo de anclaje del cabo y el PG7 del umbilical, que es el único prensaestopas que queda en el nodo. Se imprime sin girar (sin soportes). Aquí z crece hacia arriba (asa arriba).",
@@ -502,7 +523,7 @@ PIEZAS += [
                dict(D=12.6, ax="z"), key="pg7", tol=2),
              A("union", "Ojo de anclaje Ø10", "Ojo Ø10 en lo alto del asa, con eje en Y: aquí se amarra el cabo que sube a la linterna / línea larga.",
                dict(D=10, ax="y"), key="ojo", tol=3),
-             M("forma", "Asa en arco", "Asa de 12 mm de grosor y 60 mm de alto, con apertura para guante. El techo de la ventana cierra con dos planos a 45° y un plano de 10 mm (puente máximo), y el ojo de anclaje es un agujero en gota con la punta arriba: se imprime sin soportes.",
+             M("forma", "Asa en arco", f"Asa de 12 mm de grosor y {PR.HANDLE_H:g} mm de alto, con apertura para guante. El techo de la ventana cierra con dos planos a 45° y un plano de 10 mm (puente máximo), y el ojo de anclaje es un agujero en gota con la punta arriba: se imprime sin soportes.",
                [(-25, 6, 122), (-47, 6, 92)], key="asa", tol=5),
          ]),
     dict(id="M3s_riel_gancho", grupo="Nodo P2", step=NODO / "M3s_riel_gancho.step", titulo="M3s · Riel cerrado con gancho (una mitad)",
@@ -534,17 +555,28 @@ PIEZAS += [
              A("union", "Asiento en C del gancho", "C abierta de Ø8.8 (varilla del aro Ø8 + 0.4 de holgura): el nodo cae sobre la varilla del aro de la linterna. El alma del gancho (26 mm de ancho) está fundida al riel y lleva una ranura para una correa de 25 × 3.",
                dict(D=8.8, ax="y"), key="gancho", tol=3),
          ]),
+    dict(id="M3f_marco_bolsillo", grupo="Nodo P2", step=NODO / "M3f_marco_bolsillo.step", titulo="M3f · Marco del bolsillo de lastre",
+         sub=f"Marco de {_bb(NODO / 'M3f_marco_bolsillo.step')} mm (paredes de {PR.PLATE_POCKET_WALL:g}) que guarda el lastre a granel (tuercas y arandelas M8). Se imprime ×2 (uno por bolsillo), sin soportes. Se atornilla por arriba a las orejas de la caja M1s y se cierra por abajo con la placa M3t. Queda fuera del volumen seco: se moja y no sella.",
+         views=[(40, 30), (215, -35)],
+         items=[
+             A("union", "Pasos M3 de las orejas", f"Dos pasos M3 (Ø{PR.M3_CLEAR:g}) en las orejas del marco: los tornillos suben a los insertos ciegos de las orejas de M1s ([[M1s_caja_cuerpo:orejas]]), desde abajo, sin perforar la caja.",
+               dict(D=3.4, ax="z", z=(-6, 1)), key="orejas", tol=3),
+             A("union", "Insertos M3 de la placa", "Dos insertos térmicos M3 (Ø4.0 × 6) por marco: reciben los M3 con cabeza avellanada de la placa de cierre ([[M3t_tapa_bolsillo:pasos]]).",
+               dict(D=4.0, ax="z", z=(-35, -20)), key="insertos", tol=3),
+             M("forma", "Bolsillo de lastre", f"Hueco abierto por abajo donde cae el lastre a granel. Paredes de {PR.PLATE_POCKET_WALL:g} mm. Es la pieza que antes estaba dentro de M1s: sacarla deja el piso de la caja plano y sin soportes.",
+               [(0, 39.5, -15)], key="bolsillo", tol=1000),
+         ]),
     dict(id="M3t_tapa_bolsillo", grupo="Nodo P2", step=NODO / "M3t_tapa_bolsillo.step", titulo="M3t · Tapa del bolsillo de lastre",
-         sub="Placa de 3 mm que cierra por abajo cada bolsillo de lastre de la caja. Se imprimen 2 (una por bolsillo). Plana en la cama.",
+         sub=f"Placa de {PR.PLATE_POCKET_WALL:g} mm que cierra por abajo cada marco de lastre M3f. Se imprimen 2 (una por marco). Plana en la cama.",
          views=[(30, -40)],
          items=[
-             A("union", "Pasos M3 avellanados", "Dos pasos M3 (Ø3.4) con avellanado: la cabeza queda al ras del fondo. Los M3 de 8 mm entran a los insertos del marco M3f, que cuelga de M1s.",
+             A("union", "Pasos M3 avellanados", "Dos pasos M3 (Ø3.4) con avellanado: la cabeza queda al ras del fondo. Los M3 de 8 mm entran a los insertos del marco M3f ([[M3f_marco_bolsillo:insertos]]), que cuelga de M1s.",
                dict(D=3.4, ax="z"), key="pasos", tol=2),
-             M("forma", "Placa de cierre", "Placa de 107 × 35 × 3 mm que cierra por abajo el marco M3f y retiene el lastre a granel. No es estanca: el bolsillo está fuera del sello.",
-               [(0, 29, -31.5)], key="placa", tol=3),
+             M("forma", "Placa de cierre", f"Placa de {_bb(NODO / 'M3t_tapa_bolsillo.step')} mm que cierra por abajo el marco M3f y retiene el lastre a granel. No es estanca: el bolsillo está fuera del sello.",
+               [(0, 31.5, -35.0)], key="placa", tol=3),
          ]),
     dict(id="M4_capsula_cuerpo", grupo="Nodo P2", step=NODO / "M4_capsula_cuerpo.step", titulo="M4 · Cápsula de cámara (cuerpo)",
-         sub="Caja seca de la cámara Arducam Mega 5 MP, con anillo LED y ventana de acrílico. Ya no tiene prensaestopas: el cable plano entra por una ranura de la tapa M5s. Brida de 4 mm que se cierra con la tapa M5s. Hay una por lado (×2). x es el eje óptico (adelante = +x).",
+         sub=f"Caja seca de la cámara Arducam Mega 5 MP, con anillo LED y ventana de acrílico. Ya no tiene prensaestopas: el cable plano entra por una ranura de la tapa M5s. Brida de {PR.CAP_FLANGE_T:g} mm que se cierra con la tapa M5s. Hay una por lado (×2). x es el eje óptico (adelante = +x).",
          views=[(35, 25), (215, 25)],
          items=[
              IGN(dict(D=4.0, ax="x", len=(30, 50))),
@@ -660,7 +692,7 @@ SELLOS = [
          protege="El aire que flota la boya. El casco impreso NO es estanco: solo sostiene las botellas.", refs=[("B1_casco", "silla"), ("B1_casco", "cuello"), ("B5_cuna_cuello", "cuello")], cant=""),
 ]
 NO_ESTANCO = [
-    "Bolsillos de lastre de M1s y sus tapas M3t: están fuera del sello y se llenan de agua. Es lo normal; el lastre son tuercas y arandelas a granel.",
+    "Marcos de lastre M3f y sus placas M3t: están fuera del sello y se llenan de agua. Es lo normal; el lastre son tuercas y arandelas a granel.",
     "Gancho en C de M3s y su correa: están por fuera del riel, mojados siempre.",
     "Las 4 alas de la almohadilla del riel (con los M3 que bajan a M5s): quedan fuera del canal. El agua puede tocarlas sin entrar.",
     "Casco B1, cunas B5, correas B6 y cubierta B2 de la boya: estructura abierta; flotan las botellas PET (cerradas de fábrica).",
@@ -919,8 +951,8 @@ def estanqueidad_md(sellos):
          "![Volumen seco y sellos del nodo](../salida/guia_piezas/estanqueidad_nodo.png)", "",
          "El camino del cable de una cámara, siempre en seco: dentro de la caja → ventana de la pared de extremo → canal del riel → curva suave (radio 10 mm) → abertura bajo el riel → conducto de la pieza M5s → ranura de la tapa de la cápsula → cámara.", "",
          "## 3. Tabla de sellos", "",
-         "Hay **{}** sellos en el nodo (números 1 a 7) y **{}** en la boya (números 8 a {}). Los de la boya no cambiaron.".format(
-             sum(1 for s in sellos if s["zona"] == "nodo"), sum(1 for s in sellos if s["zona"] == "boya"), len(sellos)), "",
+         "Hay **{}** sellos en el nodo (números 1 a 7) y **{}** en la boya (números 8 a {}). Los de la boya no cambiaron de tipo; la tapa B4 ahora mide {:g} mm (la ranura de 1.5 deja 5 mm bajo el cordón).".format(
+             sum(1 for s in sellos if s["zona"] == "nodo"), sum(1 for s in sellos if s["zona"] == "boya"), len(sellos), PR.PET_LID_T), "",
          "| N° | Sello | Cuántos | Cómo sella | Qué protege | Dónde verlo en la guía |", "|---|---|---|---|---|---|"]
     for s in sellos:
         L.append(f"| {s['n']} | {s['sello']} | {s['cant']} | {s['tipo']} | {s['protege']} | {'; '.join(s['donde'])} |")
@@ -930,36 +962,51 @@ def estanqueidad_md(sellos):
           "## 4. Lo que NO es estanco, a propósito", ""] + [f"- {x}" for x in NO_ESTANCO]
     L += ["", "Todo lo demás del nodo (caja, riel, conducto, cápsulas) sí debe quedar seco.", "",
           "## 5. Impresión de las piezas estancas", "",
-          "Las piezas que forman el volumen seco (M1s, M2, M3s, M4, M5s y, en la boya, B3 y B4) se imprimen con el perfil estanco: **4 perímetros, 5 capas arriba y 5 abajo, 100 % de relleno**. "
+          f"Las piezas que forman el volumen seco (M1s, M2, M3s, M4, M5s y, en la boya, B3 y B4) se imprimen con el perfil estanco: **4 perímetros, 5 capas arriba y 5 abajo, 100 % de relleno**. "
+          f"Las paredes del nodo (caja, fondo, cápsula, gancho) miden {PR.BOX_WALL:g} mm; la caja de la boya, {PR.PET_BOX_WALL:g} mm, y su tapa B4, {PR.PET_LID_T:g} mm. "
+          "Los marcos de lastre M3f y sus placas M3t quedan **fuera** del sello: no necesitan el perfil estanco ni prueba de agua. "
           "Opcional: una capa de epoxi por dentro. Antes de armar, mire cada pieza contra una luz fuerte: si se ve luz a través de una pared, hay un hueco y esa pieza se reimprime.", "",
           "## 6. Cómo probar que no entra agua", "",
-          "Regla general: **nunca ponga electrónica en una prueba de agua**. Dentro va papel de cocina seco: si al abrir está seco, el sello aguantó; si tiene manchas, ahí entró agua.", "",
+          f"Regla general: **nunca ponga electrónica en una prueba de agua**. Dentro va papel de cocina seco: si al abrir está seco, el sello aguantó; si tiene manchas, ahí entró agua. "
+          f"**Todas las pruebas de agua son de 30 minutos a {PR.DESIGN_DEPTH_M:g} m de profundidad** (la profundidad de diseño; ahí la presión es de solo {PR.DESIGN_PRESSURE * 1000:.0f} kPa, así que lo que falla es el sello, no la pared). "
+          "El orden es siempre el mismo: primero la probeta P03, después cada volumen seco por separado, al final el conjunto armado.", "",
+          "### Paso 0. Probeta P03 (la prueba más barata)", "",
+          "1. Imprima la probeta de junta **P03** con el perfil estanco. Ponga el cordón de Ø2 en la ranura y cierre con los 4 M3.",
+          "2. Papel seco adentro; sumerja 30 minutos a 1 m. Abra y mire el papel.",
+          "3. Si la P03 falla, no siga: ninguna caja va a aguantar. Corrija el cordón, la ranura o la impresión y repita la P03.", "",
+          "**Cómo comparar dos impresiones** (otro filamento, otra temperatura, 4 o 5 perímetros): imprima dos P03 que cambien **una sola cosa**, hágales la misma prueba y compare el papel de cada una. Después abra y mire con luz fuerte, en este orden:",
+          "- **Capas**: líneas de luz entre capas o pelos de plástico en las paredes; una capa mal pegada deja pasar el agua por la pared aunque el sello esté bien.",
+          "- **Puentes**: el techo de la ranura y de las ventanas; si el puente quedó caído o con hilos, el cordón no asienta parejo.",
+          "- **Roscas e insertos**: el inserto debe quedar derecho y al ras; mire que no haya plástico rebordeado ni grietas alrededor del tornillo.",
+          "- **Cordón**: marca pareja y continua en todo el contorno; un tramo sin marca es un tramo sin presión.",
+          "Anote cuál impresión quedó seca, cuál mojada y en qué zona del papel. La que quede seca con la marca de cordón más pareja es la que se usa para las piezas finales.", "",
           "### Paso 1. Montaje en seco (sin agua)", "",
           "1. Limpie las ranuras (sin rebabas ni polvo) y coloque cada cordón sin torcerlo: debe asomar un poco por encima de la ranura.",
           "2. Arme todo el nodo con los tornillos, apretando en cruz y de a poco (primero medio apriete en todos, luego el apriete final).",
           "3. Pase por todo el camino del cable una tira de papel del mismo ancho que el cable plano (22 mm): debe entrar por la ventana de la caja y salir por la ranura de la tapa de la cápsula sin atascarse ni doblarse en ángulo.",
           "4. Anote qué tornillos quedaron más flojos o más duros: son los primeros sospechosos si algo gotea.", "",
           "### Paso 2. Baño de cada subconjunto vacío", "",
-          "Pruebe de lo pequeño a lo grande. En cada prueba: papel de cocina seco adentro, lastre para que se hunda (una piedra o pesas atadas por fuera), y un balde u otro recipiente donde quepa a 0.5 m de profundidad.", "",
+          f"Pruebe de lo pequeño a lo grande. En cada prueba: papel de cocina seco adentro, lastre para que se hunda (una piedra o pesas atadas por fuera), y un balde, tanque o piscina donde quepa a {PR.DESIGN_DEPTH_M:g} m de profundidad (medidos desde la parte más alta de la pieza hasta la superficie).", "",
           "| Subconjunto | Cómo prepararlo | Qué mirar al abrir |", "|---|---|---|",
           "| A. Una cápsula completa (M4 + M5s + M6 + M7 con su junta y silicona) | Cierre la abertura de la placa de M5s con una placa plana de prueba y su cordón (o con una tapa de acrílico). | Papel seco en la cámara; ninguna gota tras la ventana. |",
           "| B. Caja M1s con tapa M2 | Tape las dos ventanas de las paredes con placas planas de prueba y ponga el PG7 con el cable umbilical (o un tapón). | Papel seco en las bandejas; ninguna gota en la tapa. |",
           "| C. Un riel M3s con su silla M5s | Cierre la boca del riel contra una placa plana de prueba y la ranura de la tapa de M5s con cinta de buena calidad. | Papel seco dentro del canal y del conducto. |",
-          "| D. Nodo completo (caja + 2 rieles + 2 cápsulas) | El nodo armado como irá en el agua, sin electrónica. | Papel seco en la caja, en los dos canales y en las dos cápsulas. |", "",
+          "| D. Nodo completo (caja + 2 rieles + 2 cápsulas) | El nodo armado como irá en el agua, sin electrónica. Los marcos de lastre M3f pueden ir puestos: se mojan y no importa. | Papel seco en la caja, en los dos canales y en las dos cápsulas. |",
+          "| E. Caja seca de la boya B3 con tapa B4 | Cierre con el cordón y los 10 M3; PG7 con tapón en los tres pasos. | Papel seco; ninguna gota bajo la tapa. |", "",
           "Pasos de cada prueba:", "",
-          "1. Sumerja 30 minutos a 0.5 m. Saque, seque por fuera con un paño y abra sobre una mesa. Mire el papel.",
-          "2. Si está seco, ponga papel nuevo y repita, esta vez **24 horas**.",
+          f"1. Sumerja **30 minutos a {PR.DESIGN_DEPTH_M:g} m**. Saque, seque por fuera con un paño y abra sobre una mesa. Mire el papel.",
+          "2. Si está seco, ponga papel nuevo y repita, esta vez **24 horas** a la misma profundidad.",
           "3. Al terminar, saque una foto del papel y anote la fecha, el subconjunto y el resultado.",
           "4. Pase al siguiente subconjunto solo si el anterior salió seco las 24 horas.", "",
           "### Paso 3. Piscina con peso, antes de la electrónica", "",
           "1. Arme el nodo completo con papel dentro y un peso de prueba que iguale la masa de la electrónica.",
-          "2. Cuélguelo del aro como irá en la linterna y bájelo a la profundidad de trabajo prevista.",
-          "3. Déjelo 2 horas. Saque, seque y revise el papel de la caja, de los dos rieles y de las dos cápsulas.",
+          f"2. Cuélguelo del aro como irá en la linterna y bájelo a {PR.DESIGN_DEPTH_M:g} m (con la boya armada, también el conjunto boya + nodo entero).",
+          "3. Déjelo 30 minutos. Saque, seque y revise el papel de la caja, de los dos rieles y de las dos cápsulas.",
           "4. Solo si todo está seco, se pasa a montar la electrónica real.", "",
           "### Si entra agua", "",
           "1. No arme de nuevo enseguida. Abra, saque el papel y mire **dónde** está mojado: la mancha apunta al sello que falló (la tabla de la sección 3 dice qué piezas lo forman).",
           "2. Causas más comunes: cordón torcido o pellizcado; un tornillo flojo en una esquina; ranura con rebaba o con polvo; pared impresa con huecos (se ve a contraluz); silicona de la ventana con un hueco.",
-          "3. Corrija **una sola cosa** a la vez (por ejemplo, cordón nuevo, o una capa de epoxi, o rehacer la pieza) y repita la prueba completa de ese subconjunto, empezando de nuevo por los 30 minutos.",
+          "3. Corrija **una sola cosa** a la vez (por ejemplo, cordón nuevo, o una capa de epoxi, o rehacer la pieza) y repita la prueba completa de ese subconjunto, empezando de nuevo por los 30 minutos a 1 m (y la P03 si cambió la impresión).",
           "4. Si falla dos veces en el mismo sello, anote la pieza y avise: puede ser un problema de diseño y no de armado.", "",
           "## 7. Por confirmar en las pruebas", "",
           "- La junta plana de silicona de la ventana (Ø30 × Ø26.5 × 1 mm) y el cordón de silicona marina son nuevos: la prueba de la cápsula (A) es la que confirma que bastan.",
@@ -1036,7 +1083,10 @@ def main():
     # seals
     sellos = []
     for i, s in enumerate(SELLOS, 1):
-        donde = [f"{cod(pid)} N° {numbers[(pid, key)]}" for pid, key in s["refs"]]
+        missing = [r for r in s["refs"] if r not in numbers]
+        if missing:
+            print("AVISO: rasgo no encontrado en la geometría, se omite de la tabla de sellos:", missing)
+        donde = [f"{cod(pid)} N° {numbers[(pid, key)]}" for pid, key in s["refs"] if (pid, key) in numbers]
         sellos.append(dict(n=i, sello=s["sello"], piezas=s["piezas"], tipo=s["tipo"], protege=s["protege"], donde=donde, zona=s["zona"], cant=s["cant"]))
     (OUT / "sellos.json").write_text(json.dumps(sellos, ensure_ascii=False, indent=1), encoding="utf-8")
     seal_figure(str(OUT / "estanqueidad_nodo.png"))

@@ -4,41 +4,41 @@
    "n": 1,
    "tipo": "Tornillos de unión de las mitades",
    "diam": "3.4",
-   "texto": "Paso M3 (Ø3.4) en x = 0. Seis M3×20 inox con tuerca cruzan las dos bridas de 4 + 4 mm: 4 en las columnas del canal (y = ±19) y 2 en las almohadillas bajas de las paredes (y = ±107).",
+   "texto": "Paso M3 (Ø3.4) en x = 0. Seis M3×25 inox con tuerca cruzan las dos bridas de 5 + 5 mm: 4 en las columnas del canal (y = ±17) y 2 en las almohadillas bajas de las paredes (y = ±104.8).",
    "punto": [
-    -4.0,
-    -106.8,
-    7.5
+    -7.5,
+    -17.0,
+    9.0
    ],
    "puntos": [
     [
-     -4.0,
-     -106.8,
+     -7.5,
+     -17.0,
+     9.0
+    ],
+    [
+     -7.5,
+     17.0,
+     9.0
+    ],
+    [
+     -5.0,
+     -104.8,
      7.5
     ],
     [
-     -4.0,
-     -19.0,
-     12.0
+     -5.0,
+     -17.0,
+     44.9
     ],
     [
-     -4.0,
-     -19.0,
-     43.9
+     -5.0,
+     17.0,
+     44.9
     ],
     [
-     -4.0,
-     19.0,
-     12.0
-    ],
-    [
-     -4.0,
-     19.0,
-     43.9
-    ],
-    [
-     -4.0,
-     106.8,
+     -5.0,
+     104.8,
      7.5
     ]
    ],
@@ -46,19 +46,19 @@
   },
   {
    "n": 2,
-   "tipo": "Pin Ø4 de alineación",
-   "diam": "4.0",
-   "texto": "Pin impreso Ø4 en x = 0 (y = +19, z = 28) que entra en el alojamiento de la otra mitad. Garantiza que las dos mitades coinciden antes de apretar los M3.",
+   "tipo": "Pin Ø5 de alineación",
+   "diam": "5",
+   "texto": "Pin impreso Ø5 en x = 0 (y = +17, z = 30) que entra en el alojamiento de la otra mitad. Garantiza que las dos mitades coinciden antes de apretar los M3.",
    "punto": [
     2.0,
-    19.0,
-    28.0
+    17.000000000000007,
+    30.0
    ],
    "puntos": [
     [
      2.0,
-     19.0,
-     28.0
+     17.000000000000007,
+     30.0
     ]
    ],
    "categoria": "ajuste"
@@ -66,50 +66,69 @@
   {
    "n": 3,
    "tipo": "Alojamiento del pin",
-   "diam": "4.4",
-   "texto": "Agujero Ø4.4 (pin 4 + holgura 0.2) en y = −19: recibe el pin de la otra mitad.",
+   "diam": "5.4",
+   "texto": "Agujero Ø5.4 (pin 5 + holgura 0.2 por lado) en y = −17: recibe el pin de la otra mitad.",
    "punto": [
-    -2.5,
-    -19.0,
-    28.0
+    -3.0,
+    -17.0,
+    30.0
    ],
    "puntos": [
     [
-     -2.5,
-     -19.0,
-     28.0
+     -3.0,
+     -17.0,
+     30.0
     ]
    ],
    "categoria": "ajuste"
   },
   {
    "n": 4,
+   "tipo": "Lengüeta y ranura de la unión",
+   "diam": "6",
+   "texto": "Lengüeta de 6 × 6 mm que sale 4 mm de la brida (z = 19) en la columna del lado +y; en la otra mitad entra en una ranura con 0.2 mm de holgura. Como las dos mitades son la misma pieza girada 180°, cada mitad lleva lengüeta de un lado y ranura del otro. Alinea y toma el esfuerzo cortante que no deben tomar los tornillos.",
+   "punto": [
+    3.5,
+    17.000000000000007,
+    19.0
+   ],
+   "puntos": [
+    [
+     3.5,
+     17.000000000000007,
+     19.0
+    ]
+   ],
+   "categoria": "ajuste"
+  },
+  {
+   "n": 5,
    "tipo": "Pasos M3 hacia las cunas",
    "diam": "3.4",
    "texto": "Cuatro pasos M3 (Ø3.4) en la costilla del extremo. Los tornillos vienen de las bahías del casco y se enroscan en los insertos de las lengüetas de las cunas B5.",
    "punto": [
-    -125.0,
+    -124.5,
     -90.9,
     7.0
    ],
    "puntos": [
     [
-     -125.0,
+     -124.5,
      -90.9,
      7.0
     ],
     [
-     -125.0,
+     -124.5,
      -46.9,
      7.0
     ],
     [
-     -125.0,
+     -124.5,
      46.9,
      7.0
     ],
     [
-     -125.0,
+     -124.5,
      90.9,
      7.0
     ]
@@ -117,7 +136,7 @@
    "categoria": "union"
   },
   {
-   "n": 5,
+   "n": 6,
    "tipo": "Insertos M3 de los postes",
    "diam": "4.0",
    "texto": "Inserto térmico M3 (Ø4.0 × 6) en la punta de cada poste: reciben los 4 tornillos M3 con que se atornilla la cubierta B2 (cada mitad de B2 va a sus propios 4 postes).",
@@ -151,7 +170,7 @@
    "categoria": "union"
   },
   {
-   "n": 6,
+   "n": 7,
    "tipo": "Poste Ø10",
    "diam": "10",
    "texto": "Cuatro postes Ø10 que nacen del piso y suben hasta el inserto. Pasaron de Ø8 a Ø10 el 04/11; los del medio llevan un collar a 45° donde salen de la silla baja.",
@@ -185,18 +204,18 @@
    "categoria": "forma"
   },
   {
-   "n": 7,
+   "n": 8,
    "tipo": "Ojal de amarre",
    "diam": "10.5",
-   "texto": "Agujero Ø10.5 en el parche de la quilla. Hay uno por mitad (x = ±21): el cabo de amarre va en pata de gallo, con dos ramales a un nudo. Es independiente del umbilical.",
+   "texto": "Agujero Ø10.5 en el parche de la quilla. Hay uno por mitad (x = ±23): el cabo de amarre va en pata de gallo, con dos ramales a un nudo. Es independiente del umbilical.",
    "punto": [
-    -21.0,
+    -23.0,
     0.0,
     4.0
    ],
    "puntos": [
     [
-     -21.0,
+     -23.0,
      0.0,
      4.0
     ]
@@ -204,7 +223,7 @@
    "categoria": "cable"
   },
   {
-   "n": 8,
+   "n": 9,
    "tipo": "Canal central",
    "diam": null,
    "texto": "Hueco de 50 mm entre las dos bahías (y = ±25), sin costillas. Por aquí baja el cable umbilical y caben el domo del PG7 y la contratuerca de la caja B3.",
@@ -228,10 +247,10 @@
    "categoria": "cable"
   },
   {
-   "n": 9,
+   "n": 10,
    "tipo": "Silla baja de la botella",
    "diam": "83",
-   "texto": "Ranura en U Ø83 (botella Ø80 + 1.5 de holgura). Desde el 04/11 las costillas intermedias son sillas bajas (≤ 15 mm sobre el patín) y no varillas de 2.4×3. Lo que sujeta la botella hacia arriba son las barras de B2 y las correas.",
+   "texto": "Ranura en U Ø83 (botella Ø80 + 1.5 de holgura). Desde el 04/11 las costillas intermedias son sillas bajas (≤ 15 mm sobre el patín) de 5 mm de espesor. Lo que sujeta la botella hacia arriba son las barras de B2 y las correas.",
    "punto": [
     -63.5,
     -68.9,
@@ -249,12 +268,12 @@
      43.9
     ],
     [
-     -2.0,
+     -2.5,
      -68.9,
      43.9
     ],
     [
-     -2.0,
+     -2.5,
      68.9,
      43.9
     ]
@@ -262,18 +281,18 @@
    "categoria": "forma"
   },
   {
-   "n": 10,
+   "n": 11,
    "tipo": "Ranura del cuello",
-   "diam": "32",
-   "texto": "Ranura Ø32 en la costilla del extremo (bahía y = −69): por ella asoma el cuello de la botella, unos 21 mm fuera del casco.",
+   "diam": "35.33",
+   "texto": "Ranura Ø35.33 en la costilla del extremo (bahía y = −69): por ella asoma el cuello de la botella, unos 21 mm fuera del casco. El diámetro sale del cálculo del casco (boya_pet.neck_slot_r), no es un número fijo.",
    "punto": [
-    -125.0,
+    -124.5,
     -68.9,
     43.9
    ],
    "puntos": [
     [
-     -125.0,
+     -124.5,
      -68.9,
      43.9
     ]
@@ -281,7 +300,7 @@
    "categoria": "forma"
   },
   {
-   "n": 11,
+   "n": 12,
    "tipo": "Rombo de aligeramiento",
    "diam": null,
    "texto": "Ventana en rombo en la costilla del extremo de la base de la botella (bahía y = +69). Ahorra material y, con caras a 45°, se imprime sin puentes.",
@@ -300,7 +319,7 @@
    "categoria": "forma"
   },
   {
-   "n": 12,
+   "n": 13,
    "tipo": "Ventanas hexagonales",
    "diam": null,
    "texto": "Cuatro ventanas hexagonales en la pared exterior (2 por bahía visible). Aligeran la pared y sirven para inyectar la espuma de poliuretano que da reserva de flotación.",
@@ -334,7 +353,7 @@
    "categoria": "forma"
   },
   {
-   "n": 13,
+   "n": 14,
    "tipo": "Patín bajo la botella",
    "diam": null,
    "texto": "Piso de 2.4 mm y 24 mm de ancho bajo cada botella: es lo único que toca la botella por abajo. El resto del fondo queda abierto para que escurra el agua.",
@@ -358,10 +377,10 @@
    "categoria": "forma"
   },
   {
-   "n": 14,
+   "n": 15,
    "tipo": "Chaflán 45° en la base de los soportes",
    "diam": null,
-   "texto": "Chaflanes de 45° donde costillas y postes nacen del patín: evitan voladizos y soportes de impresión (corrección de la jefa de práctica).",
+   "texto": "Chaflanes de 45° × 3 mm donde costillas y postes nacen del patín: evitan voladizos y soportes de impresión (corrección de la jefa de práctica).",
    "punto": [
     -63.5,
     80.0,
@@ -397,7 +416,7 @@
    "n": 1,
    "tipo": "Pasos M3 al casco",
    "diam": "3.4",
-   "texto": "Cuatro pasos M3 (Ø3.4) en las barras: los tornillos entran a los insertos de los postes de B1 (N° 5 de B1).",
+   "texto": "Cuatro pasos M3 (Ø3.4) en las barras: los tornillos entran a los insertos de los postes de B1 (N° 6 de B1).",
    "punto": [
     -123.0,
     -23.0,
@@ -435,18 +454,18 @@
    "punto": [
     -63.5,
     -51.4,
-    97.4
+    98.4
    ],
    "puntos": [
     [
      -63.5,
      -51.4,
-     97.4
+     98.4
     ],
     [
      -63.5,
      51.4,
-     97.4
+     98.4
     ]
    ],
    "categoria": "union"
@@ -459,47 +478,42 @@
    "punto": [
     -63.5,
     -68.9,
-    199.8
+    202.3
    ],
    "puntos": [
     [
      -63.5,
      -68.9,
-     199.8
+     202.3
     ],
     [
      -63.5,
      68.9,
-     199.8
+     202.3
     ]
    ],
    "categoria": "union"
   },
   {
    "n": 4,
-   "tipo": "Barras de 14 × 4 mm",
+   "tipo": "Barras de 14 × 8 mm",
    "diam": null,
-   "texto": "Barras que cruzan sobre las botellas: no las dejan salir hacia arriba. Los huecos entre barras son por donde se inyecta la espuma. La barra de x = 0 es nueva: cierra el marco de cada mitad.",
+   "texto": "Barras de 14 × 8 mm que cruzan sobre las botellas: no las dejan salir hacia arriba. Los huecos entre barras son por donde se inyecta la espuma. La barra de x = 0 es nueva: cierra el marco de cada mitad.",
    "punto": [
     -63.5,
-    0.0,
-    89.4
+    23.0,
+    93.4
    ],
    "puntos": [
     [
      -63.5,
-     0.0,
-     89.4
+     23.0,
+     93.4
     ],
     [
-     -4.0,
-     -40.0,
-     89.4
-    ],
-    [
-     -30.0,
-     68.9,
-     89.4
+     -123.0,
+     -23.0,
+     93.4
     ]
    ],
    "categoria": "forma"
@@ -508,7 +522,7 @@
    "n": 5,
    "tipo": "Pie a 45° de pilares y columnas",
    "diam": null,
-   "texto": "Chaflán de 45° en la base de pilares y columnas sobre las barras (chaflán de la base de soportes): imprime sin soporte.",
+   "texto": "Chaflán de 45° × 3 mm en la base de pilares y columnas sobre las barras: imprime sin soporte.",
    "punto": [
     -69.0,
     51.4,
@@ -582,18 +596,18 @@
    "punto": [
     63.5,
     -51.4,
-    97.4
+    98.4
    ],
    "puntos": [
     [
      63.5,
      -51.4,
-     97.4
+     98.4
     ],
     [
      63.5,
      51.4,
-     97.4
+     98.4
     ]
    ],
    "categoria": "union"
@@ -606,18 +620,18 @@
    "punto": [
     63.5,
     -68.9,
-    199.8
+    202.3
    ],
    "puntos": [
     [
      63.5,
      -68.9,
-     199.8
+     202.3
     ],
     [
      63.5,
      68.9,
-     199.8
+     202.3
     ]
    ],
    "categoria": "union"
@@ -626,17 +640,17 @@
    "n": 4,
    "tipo": "Hueco del mástil Ø8",
    "diam": "8.0",
-   "texto": "Mástil Ø14 con hueco interior Ø8 desde z = 95 hasta la punta. Por dentro sube el pigtail de la antena (un cable corto con el conector de antena).",
+   "texto": "Mástil Ø18 con hueco interior Ø8 desde z = 99 hasta la punta. Por dentro sube el pigtail de la antena (un cable corto con el conector de antena).",
    "punto": [
-    120.0,
+    118.0,
     0.0,
-    162.6
+    163.9
    ],
    "puntos": [
     [
-     120.0,
+     118.0,
      0.0,
-     162.6
+     163.9
     ]
    ],
    "categoria": "cable"
@@ -647,13 +661,13 @@
    "diam": "7.0",
    "texto": "Agujero Ø7 en el mástil hacia la caja: por aquí sale el pigtail y va a un PG7 de la cara +X de B3 (N° 7 de B3).",
    "punto": [
-    114.5,
+    111.5,
     0.0,
     105.4
    ],
    "puntos": [
     [
-     114.5,
+     111.5,
      0.0,
      105.4
     ]
@@ -664,27 +678,22 @@
    "n": 6,
    "tipo": "Barras y barra de costura",
    "diam": null,
-   "texto": "Marco de barras de 14 × 4 mm; la barra en x = 0 cierra este marco. Igual que en el lado liso: retiene las botellas y deja huecos para la espuma.",
+   "texto": "Marco de barras de 14 × 8 mm; la barra en x = 0 cierra este marco. Igual que en el lado liso: retiene las botellas y deja huecos para la espuma.",
    "punto": [
     63.5,
-    0.0,
-    89.4
+    23.0,
+    93.4
    ],
    "puntos": [
     [
      63.5,
-     0.0,
-     89.4
+     23.0,
+     93.4
     ],
     [
-     4.0,
-     -40.0,
-     89.4
-    ],
-    [
-     30.0,
-     68.9,
-     89.4
+     123.0,
+     -23.0,
+     93.4
     ]
    ],
    "categoria": "forma"
@@ -693,7 +702,7 @@
    "n": 7,
    "tipo": "Pie a 45° de pilares y columnas",
    "diam": null,
-   "texto": "Chaflán de 45° en la base de pilares, columnas y mástil (chaflán de la base de soportes).",
+   "texto": "Chaflán de 45° × 3 mm en la base de pilares, columnas y mástil.",
    "punto": [
     69.0,
     51.4,
@@ -729,32 +738,32 @@
    "n": 1,
    "tipo": "Pasos M3 de las orejas",
    "diam": "3.4",
-   "texto": "Cuatro orejas de 14×14×4 mm en las esquinas. Un M3 por oreja entra al inserto del pilar de B2 (N° 2 de B2 lisa): así la caja queda fija a la cubierta.",
+   "texto": "Cuatro orejas de 14×14×5 mm en las esquinas. Un M3 por oreja entra al inserto del pilar de B2 (N° 2 de B2 lisa): así la caja queda fija a la cubierta.",
    "punto": [
     -63.5,
     -51.4,
-    101.4
+    101.9
    ],
    "puntos": [
     [
      -63.5,
      -51.4,
-     101.4
+     101.9
     ],
     [
      -63.5,
      51.4,
-     101.4
+     101.9
     ],
     [
      63.5,
      -51.4,
-     101.4
+     101.9
     ],
     [
      63.5,
      51.4,
-     101.4
+     101.9
     ]
    ],
    "categoria": "union"
@@ -831,28 +840,28 @@
    "punto": [
     -50.0,
     -28.0,
-    105.8
+    106.8
    ],
    "puntos": [
     [
      -50.0,
      -28.0,
-     105.8
+     106.8
     ],
     [
      -50.0,
      28.0,
-     105.8
+     106.8
     ],
     [
      16.0,
      -28.0,
-     105.8
+     106.8
     ],
     [
      16.0,
      28.0,
-     105.8
+     106.8
     ]
    ],
    "categoria": "mont"
@@ -982,58 +991,58 @@
    "punto": [
     -80.6,
     -51.6,
-    175.8
+    177.0
    ],
    "puntos": [
     [
      -80.6,
      -51.6,
-     175.8
+     177.0
     ],
     [
      -80.6,
      0.0,
-     175.8
+     177.0
     ],
     [
      -80.6,
      51.6,
-     175.8
+     177.0
     ],
     [
      -26.9,
      -51.6,
-     175.8
+     177.0
     ],
     [
      -26.9,
      51.6,
-     175.8
+     177.0
     ],
     [
      26.9,
      -51.6,
-     175.8
+     177.0
     ],
     [
      26.9,
      51.6,
-     175.8
+     177.0
     ],
     [
      80.6,
      -51.6,
-     175.8
+     177.0
     ],
     [
      80.6,
      0.0,
-     175.8
+     177.0
     ],
     [
      80.6,
      51.6,
-     175.8
+     177.0
     ]
    ],
    "categoria": "union"
@@ -1078,22 +1087,22 @@
    "n": 1,
    "tipo": "Pasos M3 de unión de las mitades",
    "diam": "3.4",
-   "texto": "Dos pasos M3 (Ø3.4) en almohadillas bajas en x = 0: un M3 por lado une esta mitad con la del cuello (brida 4 + 4 mm).",
+   "texto": "Dos pasos M3 (Ø3.4) en almohadillas bajas en x = 0: un M3 por lado une esta mitad con la del cuello (brida 5 + 5 mm). Sin pin redondo: la lengüeta vertical de la almohadilla alinea las dos mitades.",
    "punto": [
-    -4.0,
-    -37.9,
-    6.5
+    -5.0,
+    -37.1,
+    7.0
    ],
    "puntos": [
     [
-     -4.0,
-     -37.9,
-     6.5
+     -5.0,
+     -37.1,
+     7.0
     ],
     [
-     -4.0,
-     37.9,
-     6.5
+     -5.0,
+     37.1,
+     7.0
     ]
    ],
    "categoria": "union"
@@ -1102,21 +1111,21 @@
    "n": 2,
    "tipo": "Insertos M3 de las lengüetas",
    "diam": "4.0",
-   "texto": "Inserto M3 (Ø4.0 × 6, eje en Y) en cada lengüeta de 12 × 14 mm que sale hacia el casco. El tornillo entra desde la bahía de B1, cruza la costilla del extremo (N° 4 de B1) y rosca aquí.",
+   "texto": "Inserto M3 (Ø4.0 × 6, eje en Y) en cada lengüeta de 12 × 14 mm que sale hacia el casco. El tornillo entra desde la bahía de B1, cruza la costilla del extremo (N° 5 de B1) y rosca aquí.",
    "punto": [
     -90.9,
-    63.7,
+    64.7,
     7.0
    ],
    "puntos": [
     [
      -90.9,
-     63.7,
+     64.7,
      7.0
     ],
     [
      -46.9,
-     63.7,
+     64.7,
      7.0
     ]
    ],
@@ -1149,21 +1158,26 @@
   {
    "n": 4,
    "tipo": "Silla baja de la botella",
-   "diam": "83",
+   "diam": "81/83",
    "texto": "Ranuras en U Ø83 en la costilla del medio y en la de la unión: guían la botella; las correas B6 la sujetan hacia arriba.",
    "punto": [
-    -63.5,
+    -3.0,
     0.0,
     43.9
    ],
    "puntos": [
+    [
+     -3.0,
+     0.0,
+     43.9
+    ],
     [
      -63.5,
      0.0,
      43.9
     ],
     [
-     -2.0,
+     -2.5,
      0.0,
      43.9
     ]
@@ -1227,7 +1241,7 @@
    "n": 7,
    "tipo": "Chaflán 45° en la base de los soportes",
    "diam": null,
-   "texto": "Chaflanes de 45° en la unión de costillas, lengüetas y postes con el patín: sin voladizos ni soportes.",
+   "texto": "Chaflanes de 45° × 3 mm en la unión de costillas, lengüetas y postes con el patín: sin voladizos ni soportes.",
    "punto": [
     -63.5,
     12.0,
@@ -1260,20 +1274,20 @@
    "diam": "3.4",
    "texto": "Dos pasos M3 (Ø3.4) en x = 0: unen esta mitad con la del lado base.",
    "punto": [
-    4.0,
-    -37.9,
-    6.5
+    5.0,
+    -37.1,
+    7.0
    ],
    "puntos": [
     [
-     4.0,
-     -37.9,
-     6.5
+     5.0,
+     -37.1,
+     7.0
     ],
     [
-     4.0,
-     37.9,
-     6.5
+     5.0,
+     37.1,
+     7.0
     ]
    ],
    "categoria": "union"
@@ -1285,18 +1299,18 @@
    "texto": "Inserto M3 (Ø4.0, eje en Y) en cada lengüeta: reciben los tornillos que vienen del casco B1.",
    "punto": [
     46.9,
-    63.7,
+    64.7,
     7.0
    ],
    "puntos": [
     [
      46.9,
-     63.7,
+     64.7,
      7.0
     ],
     [
      90.9,
-     63.7,
+     64.7,
      7.0
     ]
    ],
@@ -1329,16 +1343,21 @@
   {
    "n": 4,
    "tipo": "Silla baja de la botella",
-   "diam": "83",
+   "diam": "81/83",
    "texto": "Ranuras en U Ø83 que guían la botella.",
    "punto": [
-    2.0,
+    3.0,
     0.0,
     43.9
    ],
    "puntos": [
     [
-     2.0,
+     3.0,
+     0.0,
+     43.9
+    ],
+    [
+     2.5,
      0.0,
      43.9
     ],
@@ -1353,16 +1372,16 @@
   {
    "n": 5,
    "tipo": "Ranura del cuello",
-   "diam": "32",
-   "texto": "Ranura Ø32 en la costilla del extremo: por aquí asoma el cuello de la botella.",
+   "diam": "35.33",
+   "texto": "Ranura Ø35.33 en la costilla del extremo: por aquí asoma el cuello de la botella.",
    "punto": [
-    125.0,
+    124.5,
     0.0,
     43.9
    ],
    "puntos": [
     [
-     125.0,
+     124.5,
      0.0,
      43.9
     ]
@@ -1407,7 +1426,7 @@
    "n": 7,
    "tipo": "Chaflán 45° en la base de los soportes",
    "diam": null,
-   "texto": "Chaflanes de 45° en la unión de costillas, lengüetas y postes con el patín.",
+   "texto": "Chaflanes de 45° × 3 mm en la unión de costillas, lengüetas y postes con el patín.",
    "punto": [
     63.5,
     12.0,
@@ -1442,37 +1461,37 @@
    "punto": [
     0.0,
     -45.9,
-    2.0
+    2.5
    ],
    "puntos": [
     [
      0.0,
      -45.9,
-     2.0
+     2.5
     ],
     [
      0.0,
      45.9,
-     2.0
+     2.5
     ]
    ],
    "categoria": "union"
   },
   {
    "n": 2,
-   "tipo": "Banda plana de 14 × 4 mm",
+   "tipo": "Banda plana de 14 × 5 mm",
    "diam": null,
    "texto": "Banda que pasa por encima de la botella y la sujeta hacia arriba contra la silla baja de la cuna.",
    "punto": [
     0.0,
     0.0,
-    4.0
+    5.0
    ],
    "puntos": [
     [
      0.0,
      0.0,
-     4.0
+     5.0
     ]
    ],
    "categoria": "forma"
@@ -1552,50 +1571,50 @@
    "diam": "5.6",
    "texto": "Cuatro insertos térmicos M4 (Ø5.6 × 8.5) por cojín, en cuadro de 40 × 20 mm, alrededor de la ventana. Reciben los 4 tornillos M4 de la brida del riel (N° 5 de M3s) y aprietan el cordón plano. Ciegos: no perforan la pared.",
    "punto": [
-    -69.3,
+    -70.3,
     -20.0,
-    3.7
+    4.7
    ],
    "puntos": [
     [
-     -69.3,
+     -70.3,
      -20.0,
-     3.7
+     4.7
     ],
     [
-     -69.3,
+     -70.3,
      -20.0,
-     23.7
+     24.7
     ],
     [
-     -69.3,
+     -70.3,
      20.0,
-     3.7
+     4.7
     ],
     [
-     -69.3,
+     -70.3,
      20.0,
-     23.7
+     24.7
     ],
     [
-     69.3,
+     70.3,
      -20.0,
-     3.7
+     4.7
     ],
     [
-     69.3,
+     70.3,
      -20.0,
-     23.7
+     24.7
     ],
     [
-     69.3,
+     70.3,
      20.0,
-     3.7
+     4.7
     ],
     [
-     69.3,
+     70.3,
      20.0,
-     23.7
+     24.7
     ]
    ],
    "categoria": "union"
@@ -1606,70 +1625,70 @@
    "diam": "4.0",
    "texto": "Doce insertos térmicos M3 (Ø4.0 × 6) en la brida: los 12 tornillos de la tapa M2 los aprietan y comprimen el cordón O-ring. Ciegos y fuera del cordón.",
    "punto": [
-    -68.5,
-    -68.0,
-    74.0
+    -69.5,
+    -69.0,
+    75.0
    ],
    "puntos": [
     [
-     -68.5,
-     -68.0,
-     74.0
+     -69.5,
+     -69.0,
+     75.0
     ],
     [
-     -68.5,
-     -22.7,
-     74.0
+     -69.5,
+     -23.0,
+     75.0
     ],
     [
-     -68.5,
-     22.7,
-     74.0
+     -69.5,
+     23.0,
+     75.0
     ],
     [
-     -68.5,
-     68.0,
-     74.0
+     -69.5,
+     69.0,
+     75.0
     ],
     [
-     -22.8,
-     -68.0,
-     74.0
+     -23.2,
+     -69.0,
+     75.0
     ],
     [
-     -22.8,
-     68.0,
-     74.0
+     -23.2,
+     69.0,
+     75.0
     ],
     [
-     22.8,
-     -68.0,
-     74.0
+     23.2,
+     -69.0,
+     75.0
     ],
     [
-     22.8,
-     68.0,
-     74.0
+     23.2,
+     69.0,
+     75.0
     ],
     [
-     68.5,
-     -68.0,
-     74.0
+     69.5,
+     -69.0,
+     75.0
     ],
     [
-     68.5,
-     -22.7,
-     74.0
+     69.5,
+     -23.0,
+     75.0
     ],
     [
-     68.5,
-     22.7,
-     74.0
+     69.5,
+     23.0,
+     75.0
     ],
     [
-     68.5,
-     68.0,
-     74.0
+     69.5,
+     69.0,
+     75.0
     ]
    ],
    "categoria": "sello"
@@ -1730,89 +1749,65 @@
    "punto": [
     -51.5,
     -51.0,
-    9.0
+    10.0
    ],
    "puntos": [
     [
      -51.5,
      -51.0,
-     9.0
+     10.0
     ],
     [
      -51.5,
      51.0,
-     9.0
+     10.0
     ],
     [
      51.5,
      -51.0,
-     9.0
+     10.0
     ],
     [
      51.5,
      51.0,
-     9.0
+     10.0
     ]
    ],
    "categoria": "mont"
   },
   {
    "n": 9,
-   "tipo": "Insertos M3 de los bolsillos",
+   "tipo": "Orejas M3 del marco de lastre",
    "diam": "4.0",
-   "texto": "Cuatro insertos M3 (Ø4.0) en el fondo de los bolsillos (2 por bolsillo): ahí se atornillan los M3 avellanados de la tapa M3t.",
+   "texto": "Cuatro orejas de 20 × 14 × 12 mm en las paredes largas, a ras del piso, con un inserto M3 ciego cada una (desde abajo). Ahí se atornillan los dos marcos M3f (uno por bolsillo), fuera del volumen seco. Los bolsillos ya no van dentro de M1s: así el piso queda plano y sin soportes.",
    "punto": [
-    -54.5,
-    -29.5,
-    -27.0
+    -45.0,
+    -71.0,
+    3.0
    ],
    "puntos": [
     [
-     -54.5,
-     -29.5,
-     -27.0
+     -45.0,
+     -71.0,
+     3.0
     ],
     [
-     -54.5,
-     29.5,
-     -27.0
+     -45.0,
+     71.0,
+     3.0
     ],
     [
-     54.5,
-     -29.5,
-     -27.0
+     45.0,
+     -71.0,
+     3.0
     ],
     [
-     54.5,
-     29.5,
-     -27.0
+     45.0,
+     71.0,
+     3.0
     ]
    ],
    "categoria": "union"
-  },
-  {
-   "n": 10,
-   "tipo": "Bolsillos de lastre",
-   "diam": null,
-   "texto": "Dos cajones de 100 × 50 × 30 mm bajo el piso (uno por lado), abiertos por abajo y fuera del sello. Llevan las tuercas y arandelas M8 a granel (575 g por bolsillo, 1150 g en total) y se cierran con M3t. Entra agua: es lo normal.",
-   "punto": [
-    0.0,
-    29.5,
-    -14.0
-   ],
-   "puntos": [
-    [
-     0.0,
-     29.5,
-     -14.0
-    ],
-    [
-     0.0,
-     -29.5,
-     -14.0
-    ]
-   ],
-   "categoria": "forma"
   }
  ],
  "M2_caja_tapa": [
@@ -1822,70 +1817,70 @@
    "diam": "3.4",
    "texto": "Doce pasos M3 (Ø3.4): los tornillos entran a los doce insertos de la brida de M1s (N° 5 de M1s) y aprietan el cordón.",
    "punto": [
-    -68.5,
-    -68.0,
-    79.5
+    -69.5,
+    -69.0,
+    80.5
    ],
    "puntos": [
     [
-     -68.5,
-     -68.0,
-     79.5
+     -69.5,
+     -69.0,
+     80.5
     ],
     [
-     -68.5,
-     -22.7,
-     79.5
+     -69.5,
+     -23.0,
+     80.5
     ],
     [
-     -68.5,
-     22.7,
-     79.5
+     -69.5,
+     23.0,
+     80.5
     ],
     [
-     -68.5,
-     68.0,
-     79.5
+     -69.5,
+     69.0,
+     80.5
     ],
     [
-     -22.8,
-     -68.0,
-     79.5
+     -23.2,
+     -69.0,
+     80.5
     ],
     [
-     -22.8,
-     68.0,
-     79.5
+     -23.2,
+     69.0,
+     80.5
     ],
     [
-     22.8,
-     -68.0,
-     79.5
+     23.2,
+     -69.0,
+     80.5
     ],
     [
-     22.8,
-     68.0,
-     79.5
+     23.2,
+     69.0,
+     80.5
     ],
     [
-     68.5,
-     -68.0,
-     79.5
+     69.5,
+     -69.0,
+     80.5
     ],
     [
-     68.5,
-     -22.7,
-     79.5
+     69.5,
+     -23.0,
+     80.5
     ],
     [
-     68.5,
-     22.7,
-     79.5
+     69.5,
+     23.0,
+     80.5
     ],
     [
-     68.5,
-     68.0,
-     79.5
+     69.5,
+     69.0,
+     80.5
     ]
    ],
    "categoria": "union"
@@ -1896,30 +1891,30 @@
    "diam": "12",
    "texto": "Ranura rectangular de 2.6 × 1.5 mm en la cara inferior, a mitad de camino entre la cavidad y la línea de tornillos. Cordón de goma Ø2. Se marcan las 4 esquinas redondeadas (R6); la ranura sigue el contorno.",
    "punto": [
+    -59.8,
     -59.3,
-    -58.8,
-    77.8
+    78.8
    ],
    "puntos": [
     [
+     -59.8,
      -59.3,
-     -58.8,
-     77.8
+     78.8
     ],
     [
+     -59.8,
+     59.3,
+     78.8
+    ],
+    [
+     59.8,
      -59.3,
-     58.8,
-     77.8
+     78.8
     ],
     [
+     59.8,
      59.3,
-     -58.8,
-     77.8
-    ],
-    [
-     59.3,
-     58.8,
-     77.8
+     78.8
     ]
    ],
    "categoria": "sello"
@@ -1932,13 +1927,13 @@
    "punto": [
     -27.8,
     42.5,
-    79.5
+    80.5
    ],
    "puntos": [
     [
      -27.8,
      42.5,
-     79.5
+     80.5
     ]
    ],
    "categoria": "cable"
@@ -1951,13 +1946,13 @@
    "punto": [
     0.0,
     0.0,
-    130.0
+    151.0
    ],
    "puntos": [
     [
      0.0,
      0.0,
-     130.0
+     151.0
     ]
    ],
    "categoria": "union"
@@ -1966,7 +1961,7 @@
    "n": 5,
    "tipo": "Asa en arco",
    "diam": null,
-   "texto": "Asa de 12 mm de grosor con apertura para guante. El techo de la ventana va a 45° para imprimir sin soportes.",
+   "texto": "Asa de 12 mm de grosor y 60 mm de alto, con apertura para guante. El techo de la ventana cierra con dos planos a 45° y un plano de 10 mm (puente máximo), y el ojo de anclaje es un agujero en gota con la punta arriba: se imprime sin soportes.",
    "punto": [
     -25.0,
     6.0,
@@ -2021,7 +2016,7 @@
    "n": 2,
    "tipo": "Canal interior seco 24 × 18",
    "diam": null,
-   "texto": "El riel es un tubo cerrado de 36 × 30 mm de afuera. Por dentro, un canal de 24 × 18 mm con esquinas redondeadas (R1) y un piso plano de 22 mm donde se apoya el cable plano. Paredes de 6 mm, sin ventanas. Es parte del volumen seco: el agua no entra.",
+   "texto": "El riel es un tubo cerrado de 36 × 30 mm de afuera. Por dentro, un canal de 24 × 18 mm con esquinas redondeadas (R1) y un piso plano de 22 mm donde se apoya el cable plano. Paredes de 6 mm, sin ventanas. El techo del canal se cierra con dos chaflanes de 45° (8 mm) para imprimir sin soportes. Es parte del volumen seco: el agua no entra.",
    "punto": [
     140.0,
     0.0,
@@ -2061,30 +2056,30 @@
    "diam": "10.2",
    "texto": "Ranura en la cara de la brida (la que mira a la caja), alrededor de la boca del canal: 2.6 mm de ancho × 1.6 de hondo. Lleva un cordón de goma Ø2 en forma de marco (NBR, se comprime 20 %). Al apretar los 4 M4 contra el cojín de la caja, el cordón sella la unión riel ↔ caja (N° 3 de M1s). Se marcan las 4 esquinas redondeadas; la ranura sigue el contorno.",
    "punto": [
-    74.3,
+    75.3,
     -11.0,
-    5.7
+    6.7
    ],
    "puntos": [
     [
-     74.3,
+     75.3,
      -11.0,
-     5.7
+     6.7
     ],
     [
-     74.3,
+     75.3,
      -11.0,
-     21.7
+     22.7
     ],
     [
-     74.3,
+     75.3,
      11.0,
-     5.7
+     6.7
     ],
     [
-     74.3,
+     75.3,
      11.0,
-     21.7
+     22.7
     ]
    ],
    "categoria": "sello"
@@ -2095,30 +2090,30 @@
    "diam": "4.2",
    "texto": "Cuatro pasos M4 (Ø4.2) en la brida de 25 mm de ancho: los 4 tornillos M4 que atan el riel al cojín de la caja (N° 4 de M1s) y comprimen el cordón plano (N° 4).",
    "punto": [
-    77.0,
+    78.0,
     -20.0,
-    3.7
+    4.7
    ],
    "puntos": [
     [
-     77.0,
+     78.0,
      -20.0,
-     3.7
+     4.7
     ],
     [
-     77.0,
+     78.0,
      -20.0,
-     23.7
+     24.7
     ],
     [
-     77.0,
+     78.0,
      20.0,
-     3.7
+     4.7
     ],
     [
-     77.0,
+     78.0,
      20.0,
-     23.7
+     24.7
     ]
    ],
    "categoria": "union"
@@ -2169,28 +2164,28 @@
    "punto": [
     168.0,
     -20.0,
-    -4.3
+    -3.3
    ],
    "puntos": [
     [
      168.0,
      -20.0,
-     -4.3
+     -3.3
     ],
     [
      168.0,
      20.0,
-     -4.3
+     -3.3
     ],
     [
      202.0,
      -20.0,
-     -4.3
+     -3.3
     ],
     [
      202.0,
      20.0,
-     -4.3
+     -3.3
     ]
    ],
    "categoria": "union"
@@ -2203,28 +2198,28 @@
    "punto": [
     168.0,
     -20.0,
-    1.2
+    2.2
    ],
    "puntos": [
     [
      168.0,
      -20.0,
-     1.2
+     2.2
     ],
     [
      168.0,
      20.0,
-     1.2
+     2.2
     ],
     [
      202.0,
      -20.0,
-     1.2
+     2.2
     ],
     [
      202.0,
      20.0,
-     1.2
+     2.2
     ]
    ],
    "categoria": "forma"
@@ -2237,16 +2232,85 @@
    "punto": [
     100.0,
     0.0,
-    -41.3
+    -40.3
    ],
    "puntos": [
     [
      100.0,
      0.0,
-     -41.3
+     -40.3
     ]
    ],
    "categoria": "union"
+  }
+ ],
+ "M3f_marco_bolsillo": [
+  {
+   "n": 1,
+   "tipo": "Pasos M3 de las orejas",
+   "diam": "3.4",
+   "texto": "Dos pasos M3 (Ø3.4) en las orejas del marco: los tornillos suben a los insertos ciegos de las orejas de M1s (N° 9 de M1s), desde abajo, sin perforar la caja.",
+   "punto": [
+    -45.0,
+    71.0,
+    -1.7
+   ],
+   "puntos": [
+    [
+     -45.0,
+     71.0,
+     -1.7
+    ],
+    [
+     45.0,
+     71.0,
+     -1.7
+    ]
+   ],
+   "categoria": "union"
+  },
+  {
+   "n": 2,
+   "tipo": "Insertos M3 de la placa",
+   "diam": "4.0",
+   "texto": "Dos insertos térmicos M3 (Ø4.0 × 6) por marco: reciben los M3 con cabeza avellanada de la placa de cierre (N° 1 de M3t).",
+   "punto": [
+    -54.5,
+    31.5,
+    -27.0
+   ],
+   "puntos": [
+    [
+     -54.5,
+     31.5,
+     -27.0
+    ],
+    [
+     54.5,
+     31.5,
+     -27.0
+    ]
+   ],
+   "categoria": "union"
+  },
+  {
+   "n": 3,
+   "tipo": "Bolsillo de lastre",
+   "diam": null,
+   "texto": "Hueco abierto por abajo donde cae el lastre a granel. Paredes de 5 mm. Es la pieza que antes estaba dentro de M1s: sacarla deja el piso de la caja plano y sin soportes.",
+   "punto": [
+    0.0,
+    39.5,
+    -15.0
+   ],
+   "puntos": [
+    [
+     0.0,
+     39.5,
+     -15.0
+    ]
+   ],
+   "categoria": "forma"
   }
  ],
  "M3t_tapa_bolsillo": [
@@ -2254,22 +2318,22 @@
    "n": 1,
    "tipo": "Pasos M3 avellanados",
    "diam": "3.4",
-   "texto": "Dos pasos M3 (Ø3.4) con avellanado: la cabeza queda al ras del fondo. Los M3 de 8 mm entran a los insertos del fondo del bolsillo (N° 9 de M1s).",
+   "texto": "Dos pasos M3 (Ø3.4) con avellanado: la cabeza queda al ras del fondo. Los M3 de 8 mm entran a los insertos del marco M3f (N° 2 de M3f), que cuelga de M1s.",
    "punto": [
     -54.5,
-    29.5,
-    -30.7
+    31.5,
+    -31.7
    ],
    "puntos": [
     [
      -54.5,
-     29.5,
-     -30.7
+     31.5,
+     -31.7
     ],
     [
      54.5,
-     29.5,
-     -30.7
+     31.5,
+     -31.7
     ]
    ],
    "categoria": "union"
@@ -2278,17 +2342,17 @@
    "n": 2,
    "tipo": "Placa de cierre",
    "diam": null,
-   "texto": "Placa de 107 × 35 × 3 mm que retiene el lastre a granel. No es estanca: el bolsillo está fuera del sello.",
+   "texto": "Placa de 117 × 61 × 5 mm que cierra por abajo el marco M3f y retiene el lastre a granel. No es estanca: el bolsillo está fuera del sello.",
    "punto": [
     0.0,
-    29.0,
-    -31.5
+    31.5,
+    -35.0
    ],
    "puntos": [
     [
      0.0,
-     29.0,
-     -31.5
+     31.5,
+     -35.0
     ]
    ],
    "categoria": "forma"
@@ -2302,29 +2366,29 @@
    "texto": "Cuatro pasos M3 (Ø3.4) en las esquinas de la brida: M3 con tuerca unen la tapa M5s y aprietan el cordón O-ring Ø2 (N° 8 de M5s).",
    "punto": [
     25.0,
-    -27.5,
-    -27.5
+    -28.5,
+    -28.5
    ],
    "puntos": [
     [
      25.0,
-     -27.5,
-     -27.5
+     -28.5,
+     -28.5
     ],
     [
      25.0,
-     -27.5,
-     27.5
+     -28.5,
+     28.5
     ],
     [
      25.0,
-     27.5,
-     -27.5
+     28.5,
+     -28.5
     ],
     [
      25.0,
-     27.5,
-     27.5
+     28.5,
+     28.5
     ]
    ],
    "categoria": "union"
@@ -2473,28 +2537,28 @@
    "punto": [
     182.0,
     -10.0,
-    -8.1
+    -7.1
    ],
    "puntos": [
     [
      182.0,
      -10.0,
-     -8.1
+     -7.1
     ],
     [
      182.0,
      10.0,
-     -8.1
+     -7.1
     ],
     [
      188.0,
      -10.0,
-     -8.1
+     -7.1
     ],
     [
      188.0,
      10.0,
-     -8.1
+     -7.1
     ]
    ],
    "categoria": "sello"
@@ -2526,28 +2590,28 @@
    "punto": [
     168.0,
     -20.0,
-    -10.3
+    -9.3
    ],
    "puntos": [
     [
      168.0,
      -20.0,
-     -10.3
+     -9.3
     ],
     [
      168.0,
      20.0,
-     -10.3
+     -9.3
     ],
     [
      202.0,
      -20.0,
-     -10.3
+     -9.3
     ],
     [
      202.0,
      20.0,
-     -10.3
+     -9.3
     ]
    ],
    "categoria": "union"
@@ -2596,30 +2660,30 @@
    "diam": "3.4",
    "texto": "Cuatro pasos M3 (Ø3.4) en las esquinas de la placa: M3 con tuerca contra M4 (N° 1 de M4). Apretados, comprimen el cordón.",
    "punto": [
-    163.5,
-    -27.5,
-    -24.7
+    163.0,
+    -28.5,
+    -23.7
    ],
    "puntos": [
     [
-     163.5,
-     -27.5,
-     -24.7
+     163.0,
+     -28.5,
+     -23.7
     ],
     [
-     163.5,
-     27.5,
-     -24.7
+     163.0,
+     28.5,
+     -23.7
     ],
     [
-     191.0,
-     -27.5,
-     -72.4
+     191.5,
+     -28.5,
+     -73.1
     ],
     [
-     191.0,
-     27.5,
-     -72.4
+     191.5,
+     28.5,
+     -73.1
     ]
    ],
    "categoria": "union"
@@ -2630,30 +2694,30 @@
    "diam": "10.6",
    "texto": "Ranura rectangular de 2.6 × 1.5 mm en la cara interior de la tapa, entre la cavidad y los M3. Cordón de goma Ø2. Se marcan sus 4 esquinas (R4).",
    "punto": [
-    165.7,
-    -19.2,
-    -33.0
+    165.4,
+    -19.8,
+    -32.4
    ],
    "puntos": [
     [
-     165.7,
-     -19.2,
-     -33.0
+     165.4,
+     -19.8,
+     -32.4
     ],
     [
-     165.7,
-     19.2,
-     -33.0
+     165.4,
+     19.8,
+     -32.4
     ],
     [
-     184.9,
-     -19.2,
-     -66.3
+     185.2,
+     -19.8,
+     -66.6
     ],
     [
-     184.9,
-     19.2,
-     -66.3
+     185.2,
+     19.8,
+     -66.6
     ]
    ],
    "categoria": "sello"
@@ -2737,28 +2801,28 @@
    "punto": [
     -51.5,
     -51.0,
-    27.0
+    28.0
    ],
    "puntos": [
     [
      -51.5,
      -51.0,
-     27.0
+     28.0
     ],
     [
      -51.5,
      51.0,
-     27.0
+     28.0
     ],
     [
      51.5,
      -51.0,
-     27.0
+     28.0
     ],
     [
      51.5,
      51.0,
-     27.0
+     28.0
     ]
    ],
    "categoria": "union"
@@ -2792,28 +2856,28 @@
    "punto": [
     -51.5,
     -51.0,
-    43.5
+    44.5
    ],
    "puntos": [
     [
      -51.5,
      -51.0,
-     43.5
+     44.5
     ],
     [
      -51.5,
      51.0,
-     43.5
+     44.5
     ],
     [
      51.5,
      -51.0,
-     43.5
+     44.5
     ],
     [
      51.5,
      51.0,
-     43.5
+     44.5
     ]
    ],
    "categoria": "union"

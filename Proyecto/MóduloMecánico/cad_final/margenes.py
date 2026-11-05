@@ -64,6 +64,18 @@ def slender():
     }
 
 
+def esbeltos(stem):
+    """Slender elements of the enforced registry (esbelto.py + esbelto_nodo.py) that belong to this piece: [(name, t, ok)]."""
+    import esbelto as E
+    code = stem.split("_")[0]
+    out = []
+    for n, t in E.registro() + E._nodo():
+        first = n.replace("nodo: ", "").split(" ")[0].split("/")
+        if code in first:
+            out.append((n.replace("nodo: ", ""), t, t >= P.SLENDER_T_MIN - 1e-9))
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--antes", default="1fc425c")
@@ -98,27 +110,31 @@ def main():
         key = next((k for k in sl if stem.startswith(k)), None)
         rows.append(dict(grupo=grp, pieza=stem, bbox=[round(v, 1) for v in bb], cabe=bb[0] <= P.BED_USE[0] and bb[1] <= P.BED_USE[1],
                          pared_p1=round(w1, 2) if w1 else None, pared_p5=round(w5, 2) if w5 else None, antes=prev,
-                         esbelto=sl.get(key)))
+                         esbelto=sl.get(key), esb=esbeltos(stem)))
         print(f"{stem:22s} bbox {bb[0]:6.1f} x {bb[1]:6.1f}  pared p1 {w1:5.2f}", flush=True)
     (SAL / "margenes.json").write_text(json.dumps(rows, indent=1, ensure_ascii=False), encoding="utf-8")
     write_md(rows)
 
 
 NOTES = {   # piece -> what the measured minimum is and what is done about it
-    "B1_casco": "2.4 = paredes laterales con ventanas (no estructurales). Costillas 3 → 4 → 5 mm; varillas de 2.4 × 3 mm eliminadas (topes bajos); lengüetas y ranuras en las columnas de unión.",
-    "B2_cubierta_lisa": "Barras de 8 mm; 4 lengüetas verticales en la barra de la costura.",
-    "B2_cubierta_mastil": "Pared del mástil 3 → 5 (Ø18 / Ø8).",
+    "B1_casco": "2.4 = paredes laterales con ventanas y patín (no estructurales; excepción declarada). Costillas 3 → 4 → 5 mm; varillas de 2.4 × 3 mm eliminadas (topes bajos); brida de unión 5 + 5, columnas de 16, pin Ø5, lengüeta y ranura en las columnas; chaflán de 45° × 3 en la base de postes y costillas.",
+    "B2_cubierta_lisa": "Barras de 14 × 8 mm; 4 lengüetas verticales en la barra de la costura; orejas de la caja de 5; pilares Ø10.",
+    "B2_cubierta_mastil": "Pared del mástil 3 → 5 (Ø18 / Ø8); mismas barras, pilares y columnas que el lado liso.",
     "B3_caja": "Postes de la bandeja Ø8 → Ø9: el anillo alrededor del inserto Ø4 pasa de 2.0 a 2.5 (la malla facetada lo mide 2.2). Paredes de 2.4 = placas apoyadas en sus 4 bordes.",
-    "B4_tapa": "2.5 bajo la ranura de la junta.",
-    "B5_cuna_base": "2.4 = paredes laterales (no estructurales). Postes de correa Ø8 → Ø10.",
+    "B4_tapa": "Tapa de 6.5 mm: quedan 5 bajo la ranura de la junta (antes 2.5).",
+    "B5_cuna_base": "2.4 = paredes laterales (no estructurales). Postes de correa Ø8 → Ø10; lengüeta vertical en vez de pin; lengüetas de 12 × 14.",
     "B5_cuna_cuello": "Igual que el lado base.",
-    "B6_correa": "",
-    "M1s_caja_cuerpo": "2.0 en los techos de los bolsillos de lastre (fuera del volumen seco, no estructural). Ventana 24 × 18 al canal del riel en cada extremo (sin PG7).",
-    "M3s_riel_gancho": "Riel cerrado 36 × 30, paredes 6, sin ventanas. FS entre capas 2.72 → 3.18 (alma del gancho 20 → 26). El 1.9 medido es el labio de 1.5 entre la ranura de la junta y el canal (1.6 de alto), no una pared.",
-    "M4_capsula_cuerpo": "1.2 = tubo separador de luz del aro LED (óptico, no estructural). No se puede engrosar sin cambiar el aro: "
+    "B6_correa": "Correa de 14 × 5 (antes 14 × 4).",
+    "M1s_caja_cuerpo": "Paredes y fondo de 5. Sin soportes: el piso es plano porque los bolsillos de lastre pasaron al marco M3f (4 orejas M3 de 20 × 14 × 12); ventana con techo a 45°. Ventana 24 × 18 al canal del riel en cada extremo (sin PG7).",
+    "M3s_riel_gancho": "Riel cerrado 36 × 30, paredes 6, sin ventanas; pared del gancho 5; 2 costillas de apoyo de 6 bajo el riel y techo del canal a 45° (sin soportes casi todo: 12.2 % aceptado). FS entre capas 2.72 → 3.18 (alma del gancho 20 → 26). El 1.9 medido es el labio de 1.5 entre la ranura de la junta y el canal (1.6 de alto), no una pared.",
+    "M4_capsula_cuerpo": "Pared de 5, brida de 6, falda a 45° bajo la brida. 1.2 = tubo separador de luz del aro LED (óptico, no estructural). No se puede engrosar sin cambiar el aro: "
                          "el agujero Ø19 del aro limita el diámetro exterior del tubo. Se ajusta cuando se mida el aro comprado (`aro_led.agujero`).",
     "M5s_capsula_tapa_pie": "Silla de 10 con 4 insertos M3 y junta; tapa 5 → 6. FS entre capas 2.47 → 3.80. El 1.5 medido es el labio entre la ranura de la junta y el pase del cable (1.6 de alto), no una pared.",
+    "M2_caja_tapa": "Tapa sin girar y sin soportes; asa de 60 con ventana de techo a 45° y ojo en gota.",
+    "M3f_marco_bolsillo": "Marco del bolsillo de lastre (×2), fuera del sello, atornillado a las 4 orejas de M1s; paredes de 5.",
+    "M3t_tapa_bolsillo": "Placa de 5 que cierra el marco M3f (fuera del sello).",
     "M6_capsula_bisel": "2.25 en el borde del bisel (no estructural).",
+    "M11_bandeja_sup": "Bandeja de 3 sin postes propios.",
     "M11_bandeja": "2.3 en la bandeja (no estructural, dentro de la caja). Postes pasantes para el M3 × 38; sin la ventana en ocho.",
 }
 
@@ -151,6 +167,18 @@ def write_md(rows):
             continue
         L.append(f"| {r['pieza']} | {r['bbox'][0]:.0f} × {r['bbox'][1]:.0f} | {'sí' if r['cabe'] else '**NO**'} | {r['pared_p1']:.2f} | "
                  f"{NOTES.get(r['pieza'], '')} |")
+    L += ["", "## Elementos esbeltos por pieza (registro con control, `esbelto.py` + `esbelto_nodo.py`)", "",
+          f"Cada elemento declarado debe medir al menos **{P.SLENDER_T_MIN:g} mm**; si no, `esbelto.py` sale con error y `build.py` / `boya_pet.py` no construyen. "
+          "Espesor = lado fino (pared, costilla, oreja, barra) o diámetro (poste, columna).", "",
+          "| Pieza | Elemento | Espesor (mm) | ¿Cumple? |", "|---|---|---|---|"]
+    for r in rows:
+        for n, t, ok in r.get("esb") or []:
+            L.append(f"| {r['pieza']} | {n} | {t:.1f} | {'sí' if ok else '**NO**'} |")
+        if not r.get("esb"):
+            L.append(f"| {r['pieza']} | — (sin elementos esbeltos declarados) | — | — |")
+    import esbelto as E
+    L += ["", "Excepciones declaradas (más finas que el mínimo, con su motivo):", ""]
+    L += [f"- {n}: **{t:g} mm**. {why}" for n, t, why in E.EXCEPCIONES]
     L += ["", "## Fuera de la cama útil", "",
           "- `M1m_caja_riel` de P3 y P4 (monocasco: caja y riel en una pieza) mide 250 mm. No se imprime ahora (la piscina usa P2). "
           "P3/P4 siguen con el riel anterior: si P4 se presenta impreso, hay que llevarle el riel cerrado y partirlo.", "",

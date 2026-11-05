@@ -3,7 +3,7 @@
   "grupo": "boya",
   "pieza": "B1_casco",
   "bbox": [
-   132.0,
+   133.0,
    225.6,
    85.4
   ],
@@ -25,15 +25,57 @@
    "poste M3 Ø10 libre sobre la silla, con collar",
    68.0,
    10.0
+  ],
+  "esb": [
+   [
+    "B1/B5 costillas y topes bajos (boya_pet.costilla)",
+    5.0,
+    true
+   ],
+   [
+    "B1/B5 brida de union por mitad (boya_pet.union[0])",
+    5.0,
+    true
+   ],
+   [
+    "B1/B5 ancho de columna y almohadilla de union (boya_pet.union[1])",
+    16.0,
+    true
+   ],
+   [
+    "B1/B2 pin de alineacion (boya_pet.union[2])",
+    5.0,
+    true
+   ],
+   [
+    "B1/B2/B5 lengueta de union, seccion (boya_pet.llave[1])",
+    6.0,
+    true
+   ],
+   [
+    "B1/B5 pared de fondo de la ranura de la lengueta (2 brida - salida - holgura)",
+    5.5,
+    true
+   ],
+   [
+    "B1 postes M3 de la cubierta (boya_pet.poste_D)",
+    10.0,
+    true
+   ],
+   [
+    "B1 parche de amarre (boya_pet.ojal[1])",
+    8.0,
+    true
+   ]
   ]
  },
  {
   "grupo": "boya",
   "pieza": "B2_cubierta_lisa",
   "bbox": [
-   127.0,
+   131.0,
    225.6,
-   117.4
+   119.9
   ],
   "cabe": true,
   "pared_p1": 3.99,
@@ -48,24 +90,61 @@
   },
   "esbelto": [
    "columna del panel Ø12",
-   109.4,
+   111.9,
    12.0,
    "columna del panel Ø12, con chaflán",
-   109.4,
+   111.9,
    12.0
+  ],
+  "esb": [
+   [
+    "B1/B2 pin de alineacion (boya_pet.union[2])",
+    5.0,
+    true
+   ],
+   [
+    "B1/B2/B5 lengueta de union, seccion (boya_pet.llave[1])",
+    6.0,
+    true
+   ],
+   [
+    "B2 barras de la cubierta, espesor (boya_pet.cubierta_espesor)",
+    8.0,
+    true
+   ],
+   [
+    "B2 barras de la cubierta, ancho (boya_pet.barra_ancho)",
+    14.0,
+    true
+   ],
+   [
+    "B2 pilares bajo la caja (boya_pet.pilar[0])",
+    10.0,
+    true
+   ],
+   [
+    "B2 columnas del panel (boya_pet.columna_D)",
+    12.0,
+    true
+   ],
+   [
+    "B2 mastil, pared ((D - d) / 2) (boya_pet.mastil)",
+    5.0,
+    true
+   ]
   ]
  },
  {
   "grupo": "boya",
   "pieza": "B2_cubierta_mastil",
   "bbox": [
-   127.0,
+   131.0,
    225.6,
-   140.4
+   142.9
   ],
   "cabe": true,
-  "pared_p1": 2.99,
-  "pared_p5": 3.0,
+  "pared_p1": 4.0,
+  "pared_p5": 4.99,
   "antes": {
    "bbox": [
     254.0,
@@ -76,11 +155,48 @@
   },
   "esbelto": [
    "columna del panel Ø12",
-   109.4,
+   111.9,
    12.0,
    "columna del panel Ø12, con chaflán",
-   109.4,
+   111.9,
    12.0
+  ],
+  "esb": [
+   [
+    "B1/B2 pin de alineacion (boya_pet.union[2])",
+    5.0,
+    true
+   ],
+   [
+    "B1/B2/B5 lengueta de union, seccion (boya_pet.llave[1])",
+    6.0,
+    true
+   ],
+   [
+    "B2 barras de la cubierta, espesor (boya_pet.cubierta_espesor)",
+    8.0,
+    true
+   ],
+   [
+    "B2 barras de la cubierta, ancho (boya_pet.barra_ancho)",
+    14.0,
+    true
+   ],
+   [
+    "B2 pilares bajo la caja (boya_pet.pilar[0])",
+    10.0,
+    true
+   ],
+   [
+    "B2 columnas del panel (boya_pet.columna_D)",
+    12.0,
+    true
+   ],
+   [
+    "B2 mastil, pared ((D - d) / 2) (boya_pet.mastil)",
+    5.0,
+    true
+   ]
   ]
  },
  {
@@ -92,7 +208,7 @@
    74.4
   ],
   "cabe": true,
-  "pared_p1": 2.18,
+  "pared_p1": 2.15,
   "pared_p5": 2.4,
   "antes": {
    "bbox": [
@@ -102,7 +218,29 @@
    ],
    "wall": 1.9971125291851504
   },
-  "esbelto": null
+  "esbelto": null,
+  "esb": [
+   [
+    "B3 orejas de la caja (boya_pet.oreja[2])",
+    5.0,
+    true
+   ],
+   [
+    "B3 brida de la caja (boya_pet.brida[1])",
+    7.0,
+    true
+   ],
+   [
+    "B3 postes de la bandeja (boya.poste_D)",
+    9.0,
+    true
+   ],
+   [
+    "B3 refuerzos del portabaterias (boya.apoyo_bateria_D)",
+    9.0,
+    true
+   ]
+  ]
  },
  {
   "grupo": "boya",
@@ -110,11 +248,11 @@
   "bbox": [
    166.8,
    108.8,
-   4.0
+   6.5
   ],
   "cabe": true,
-  "pared_p1": 2.5,
-  "pared_p5": 2.5,
+  "pared_p1": 5.0,
+  "pared_p5": 5.0,
   "antes": {
    "bbox": [
     166.8000030517578,
@@ -123,14 +261,21 @@
    ],
    "wall": 2.4989999999999952
   },
-  "esbelto": null
+  "esbelto": null,
+  "esb": [
+   [
+    "B4 tapa bajo la ranura de la junta (tapa_espesor - ranura_prof)",
+    5.0,
+    true
+   ]
+  ]
  },
  {
   "grupo": "boya",
   "pieza": "B5_cuna_base",
   "bbox": [
-   127.0,
-   117.6,
+   131.0,
+   118.6,
    85.4
   ],
   "cabe": true,
@@ -151,14 +296,51 @@
    "poste de correa Ø10 (libre sobre la pared)",
    31.500000000000007,
    10.0
+  ],
+  "esb": [
+   [
+    "B1/B5 costillas y topes bajos (boya_pet.costilla)",
+    5.0,
+    true
+   ],
+   [
+    "B1/B5 brida de union por mitad (boya_pet.union[0])",
+    5.0,
+    true
+   ],
+   [
+    "B1/B5 ancho de columna y almohadilla de union (boya_pet.union[1])",
+    16.0,
+    true
+   ],
+   [
+    "B1/B2/B5 lengueta de union, seccion (boya_pet.llave[1])",
+    6.0,
+    true
+   ],
+   [
+    "B1/B5 pared de fondo de la ranura de la lengueta (2 brida - salida - holgura)",
+    5.5,
+    true
+   ],
+   [
+    "B5 lengueta de la cuna, ancho (boya_pet.lengueta[0])",
+    12.0,
+    true
+   ],
+   [
+    "B5 lengueta de la cuna, alto (boya_pet.lengueta[1])",
+    14.0,
+    true
+   ]
   ]
  },
  {
   "grupo": "boya",
   "pieza": "B5_cuna_cuello",
   "bbox": [
-   127.0,
-   117.6,
+   131.0,
+   118.6,
    85.4
   ],
   "cabe": true,
@@ -179,6 +361,43 @@
    "poste de correa Ø10 (libre sobre la pared)",
    31.500000000000007,
    10.0
+  ],
+  "esb": [
+   [
+    "B1/B5 costillas y topes bajos (boya_pet.costilla)",
+    5.0,
+    true
+   ],
+   [
+    "B1/B5 brida de union por mitad (boya_pet.union[0])",
+    5.0,
+    true
+   ],
+   [
+    "B1/B5 ancho de columna y almohadilla de union (boya_pet.union[1])",
+    16.0,
+    true
+   ],
+   [
+    "B1/B2/B5 lengueta de union, seccion (boya_pet.llave[1])",
+    6.0,
+    true
+   ],
+   [
+    "B1/B5 pared de fondo de la ranura de la lengueta (2 brida - salida - holgura)",
+    5.5,
+    true
+   ],
+   [
+    "B5 lengueta de la cuna, ancho (boya_pet.lengueta[0])",
+    12.0,
+    true
+   ],
+   [
+    "B5 lengueta de la cuna, alto (boya_pet.lengueta[1])",
+    14.0,
+    true
+   ]
   ]
  },
  {
@@ -187,11 +406,11 @@
   "bbox": [
    14.0,
    105.8,
-   4.0
+   5.0
   ],
   "cabe": true,
-  "pared_p1": 4.0,
-  "pared_p5": 4.0,
+  "pared_p1": 5.0,
+  "pared_p5": 5.0,
   "antes": {
    "bbox": [
     14.0,
@@ -200,77 +419,153 @@
    ],
    "wall": 3.999
   },
-  "esbelto": null
+  "esbelto": null,
+  "esb": [
+   [
+    "B6 correa, espesor (boya_pet.correa[1])",
+    5.0,
+    true
+   ],
+   [
+    "B6 correa, ancho (boya_pet.correa[0])",
+    14.0,
+    true
+   ]
+  ]
  },
  {
   "grupo": "nodo P2",
   "pieza": "M1s_caja_cuerpo",
   "bbox": [
-   147.0,
-   146.0,
-   107.0
+   149.0,
+   156.0,
+   78.0
   ],
   "cabe": true,
-  "pared_p1": 2.25,
-  "pared_p5": 3.0,
+  "pared_p1": 2.59,
+  "pared_p5": 5.0,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": [
+   [
+    "M1s pared de la caja",
+    5.0,
+    true
+   ],
+   [
+    "M1s fondo de la caja",
+    5.0,
+    true
+   ]
+  ]
  },
  {
   "grupo": "nodo P2",
   "pieza": "M2_caja_tapa",
   "bbox": [
-   63.0,
-   146.0,
-   147.0
+   149.0,
+   148.0,
+   85.5
   ],
   "cabe": true,
   "pared_p1": 3.5,
-  "pared_p5": 3.63,
+  "pared_p5": 5.0,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": [
+   [
+    "M2 barra del asa sobre la ventana",
+    12.0,
+    true
+   ],
+   [
+    "M2 anillo del ojo en la punta de la gota",
+    5.4289321881345245,
+    true
+   ]
+  ]
  },
  {
   "grupo": "nodo P2",
   "pieza": "M3s_riel_gancho",
   "bbox": [
-   141.5,
+   140.5,
    79.4,
    50.0
   ],
   "cabe": true,
-  "pared_p1": 1.9,
+  "pared_p1": 2.92,
   "pared_p5": 6.0,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": [
+   [
+    "M3s costilla de apoyo en la cama",
+    6.0,
+    true
+   ],
+   [
+    "M3s pared del gancho",
+    5.0,
+    true
+   ]
+  ]
  },
  {
   "grupo": "nodo P2",
   "pieza": "M3t_tapa_bolsillo",
   "bbox": [
    117.0,
-   57.0,
-   3.0
+   61.0,
+   5.0
   ],
   "cabe": true,
-  "pared_p1": 3.0,
-  "pared_p5": 3.0,
+  "pared_p1": 5.0,
+  "pared_p5": 5.0,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": []
  },
  {
   "grupo": "nodo P2",
   "pieza": "M5s_capsula_tapa_pie",
   "bbox": [
-   51.4,
-   64.0,
-   70.4
+   51.9,
+   66.0,
+   72.2
   ],
   "cabe": true,
   "pared_p1": 1.5,
   "pared_p5": 4.0,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": []
+ },
+ {
+  "grupo": "nodo P2",
+  "pieza": "M3f_marco_bolsillo",
+  "bbox": [
+   117.0,
+   77.0,
+   30.0
+  ],
+  "cabe": true,
+  "pared_p1": 5.0,
+  "pared_p5": 5.0,
+  "antes": null,
+  "esbelto": null,
+  "esb": [
+   [
+    "M3f pared del bolsillo de lastre",
+    5.0,
+    true
+   ],
+   [
+    "M3f oreja de M1s (ancho)",
+    20.0,
+    true
+   ]
+  ]
  },
  {
   "grupo": "nodo P2",
@@ -284,7 +579,14 @@
   "pared_p1": 2.29,
   "pared_p5": 2.3,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": [
+   [
+    "M11 repisa de la cuna",
+    5.0,
+    true
+   ]
+  ]
  },
  {
   "grupo": "nodo P2",
@@ -298,21 +600,35 @@
   "pared_p1": 3.0,
   "pared_p5": 3.0,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": [
+   [
+    "M11 repisa de la cuna",
+    5.0,
+    true
+   ]
+  ]
  },
  {
   "grupo": "nodo P2",
   "pieza": "M4_capsula_cuerpo",
   "bbox": [
-   45.0,
-   64.0,
-   64.0
+   66.0,
+   66.0,
+   45.0
   ],
   "cabe": true,
   "pared_p1": 1.2,
   "pared_p5": 2.2,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": [
+   [
+    "M4 pared de la capsula",
+    5.0,
+    true
+   ]
+  ]
  },
  {
   "grupo": "nodo P2",
@@ -326,7 +642,8 @@
   "pared_p1": 2.25,
   "pared_p5": 2.5,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": []
  },
  {
   "grupo": "nodo P2",
@@ -340,6 +657,7 @@
   "pared_p1": 3.0,
   "pared_p5": 3.0,
   "antes": null,
-  "esbelto": null
+  "esbelto": null,
+  "esb": []
  }
 ]
