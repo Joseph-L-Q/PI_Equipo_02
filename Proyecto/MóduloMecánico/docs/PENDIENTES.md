@@ -81,3 +81,13 @@ Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 - **00_ENSAMBLE**: la boya está corrida 700 mm a un lado del nodo (no hay marco de amarre en el modelo); si se quiere en su posición real, hay que definir ese marco.
 - **Melissa**: sus "Drawing 1 … 16" no se tocaron; los desactualizados siguen así (ver tabla en `docs/CAMBIOS.md`).
 - Quedan sin renombrar los dibujos "PLANO_A4_<pieza>" de pestañas viejas como "Assembly 1", "BOM : Assembly 1" y "Part Studio 1" (del documento original).
+
+## Encargo del 04/11 noche: lo que queda a mano
+- **Drive, borrar a mano** (ya están copiados en `OLD/`):
+  - `02_Imprimir_primero_probetas/imprimir_hoy_04nov*` y `*_30oct*`;
+  - `04_Planos/PLANOS_A4_LanternGuard{,_v2,_v3,_v4}.pdf`, `PLANOS_ONSHAPE_P2.pdf`, `PLANO_*.pdf` y `COTAS_A_MANO_A4.md`;
+  - `04_Planos/STL_por_pieza/B2_cubierta.stl` y `B5_cuna.stl`;
+  - `07_Documentos/visor/lanternguard.glb`.
+- **Boya con una botella perdida:** GM de balanceo 38 mm (objetivo 40). Opciones: botellas un poco más separadas o lastre bajo el casco.
+- **Holgura cuerda–caja del nodo:** 1,5 mm (antes 2,9), porque la caja creció 2 mm por la pared de 5. Revisar al armar con la linterna real.
+- **Riel M3s:** queda con 12,2 % de soporte (excepción documentada en DECISIONES).

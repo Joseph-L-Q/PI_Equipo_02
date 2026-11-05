@@ -403,7 +403,7 @@ PIEZAS += [
              IGN(dict(D=6.0, ax="z", len=(30, 100))),
              A("union", "Pasos M3 de las orejas", f"Cuatro orejas de {PR.PET_EAR[0]:g}×{PR.PET_EAR[1]:g}×{PR.PET_EAR[2]:g} mm en las esquinas. Un M3 por oreja entra al inserto del pilar de B2 ([[B2_cubierta_lisa:pilares]]): así la caja queda fija a la cubierta.",
                dict(D=3.4, ax="z"), key="orejas"),
-             A("sello", "Insertos M3 de la brida", "Diez insertos térmicos M3 (Ø4.0 × 6) en la brida de 7 mm. Los tornillos de la tapa B4 los aprietan. Son ciegos (no atraviesan) y quedan afuera del cordón.",
+             A("sello", "Insertos M3 de la brida", "Catorce insertos térmicos M3 (Ø4.0 × 6) en la brida de 7 mm. Los tornillos de la tapa B4 los aprietan. Son ciegos (no atraviesan) y quedan afuera del cordón.",
                dict(D=4.0, ax="z", z=(160, 175)), key="ins_brida"),
              A("mont", "Standoffs del portabaterías", "Cuatro standoffs Ø9 con inserto M3: sostienen el portabaterías 3×18650 separado del piso.",
                dict(D=4.0, ax="z", z=(95, 110)), key="standoff"),
@@ -423,7 +423,7 @@ PIEZAS += [
          views=[(215, 30), (215, -40)],
          items=[
              IGN(dict(D=16.0, ax="z")),
-             A("union", "Pasos M3 de la tapa", "Diez pasos M3 (Ø3.4): los tornillos entran a los diez insertos de la brida de B3 ([[B3_caja:ins_brida]]) y comprimen el cordón.",
+             A("union", "Pasos M3 de la tapa", "Catorce pasos M3 (Ø3.4): los tornillos entran a los catorce insertos de la brida de B3 ([[B3_caja:ins_brida]]) y comprimen el cordón.",
                dict(D=3.4, ax="z"), key="pasos"),
              M("sello", "Ranura del cordón O-ring", "Ranura rectangular de 2.6 mm de ancho × 1.5 de hondo en la cara inferior, 2.8 mm afuera de la pared. Lleva un cordón de goma Ø2 mm (25 % de compresión) que aprieta contra la brida plana de B3.",
                [(0, 47.2, 169.8), (0, -47.2, 169.8), (76.2, 0, 169.8), (-76.2, 0, 169.8)], key="groove", tol=3),

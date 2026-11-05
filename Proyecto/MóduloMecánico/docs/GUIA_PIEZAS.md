@@ -64,7 +64,7 @@ Caja hermética de la electrónica de la boya (PCB, Waveshare, portabaterías 3�
 ![B3_caja](../salida/guia_piezas/B3_caja.png)
 
 1. **Pasos M3 de las orejas** Ø3.4 ×4 _(tornillo / unión)_. Cuatro orejas de 14×14×5 mm en las esquinas. Un M3 por oreja entra al inserto del pilar de B2 (N° 2 de B2 lisa): así la caja queda fija a la cubierta.
-2. **Insertos M3 de la brida** Ø4.0 ×10 _(sello / agua)_. Diez insertos térmicos M3 (Ø4.0 × 6) en la brida de 7 mm. Los tornillos de la tapa B4 los aprietan. Son ciegos (no atraviesan) y quedan afuera del cordón.
+2. **Insertos M3 de la brida** Ø4.0 ×10 _(sello / agua)_. Catorce insertos térmicos M3 (Ø4.0 × 6) en la brida de 7 mm. Los tornillos de la tapa B4 los aprietan. Son ciegos (no atraviesan) y quedan afuera del cordón.
 3. **Standoffs del portabaterías** Ø4.0 ×4 _(montaje de piezas internas)_. Cuatro standoffs Ø9 con inserto M3: sostienen el portabaterías 3×18650 separado del piso.
 4. **Postes de la bandeja** Ø4.0 ×4 _(montaje de piezas internas)_. Cuatro postes Ø9 con inserto M3 en la punta: sostienen la bandeja donde van la PCB y el Waveshare.
 5. **PG7 del umbilical** Ø12.6 _(cable)_. Agujero Ø12.6 en la pared −X (z = 30 mm sobre el piso interior). Entra el cable umbilical que baja al nodo; la contratuerca va por dentro y el prensaestopas aprieta el cable. Sella el paso.
@@ -78,7 +78,7 @@ Tapa plana de 6.5 mm de B3. Se imprime con la ranura hacia arriba (girada 180°)
 
 ![B4_tapa](../salida/guia_piezas/B4_tapa.png)
 
-1. **Pasos M3 de la tapa** Ø3.4 ×10 _(tornillo / unión)_. Diez pasos M3 (Ø3.4): los tornillos entran a los diez insertos de la brida de B3 (N° 2 de B3) y comprimen el cordón.
+1. **Pasos M3 de la tapa** Ø3.4 ×10 _(tornillo / unión)_. Catorce pasos M3 (Ø3.4): los tornillos entran a los catorce insertos de la brida de B3 (N° 2 de B3) y comprimen el cordón.
 2. **Ranura del cordón O-ring** ×4 _(sello / agua)_. Ranura rectangular de 2.6 mm de ancho × 1.5 de hondo en la cara inferior, 2.8 mm afuera de la pared. Lleva un cordón de goma Ø2 mm (25 % de compresión) que aprieta contra la brida plana de B3.
 
 ## B5 · Cuna, lado base
