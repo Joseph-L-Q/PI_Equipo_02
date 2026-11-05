@@ -106,7 +106,11 @@ def prep_b3(info):
 def prep_b2(info):
     import params as P
     zmin = min(f["bb"][2] for f in info)
-    return [(x, y, zmin, 5.0) for x, y in holes_xy(info, P.M3_CLEAR, zmin, zmin + P.PET_COVER_T)]       # footprint of the D10 hull bosses
+    circ = [(x, y, zmin, 5.0) for x, y in holes_xy(info, P.M3_CLEAR, zmin, zmin + max(P.PET_COVER_T, P.PET_XBAR[1]))]       # footprint of the D10 hull bosses
+    ztop = zmin + max(P.PET_COVER_T, P.PET_XBAR[1]) + P.PET_PILLAR[1]
+    if P.PET_PILLAR[1] <= 0.01:      # pillar flush with the tall bar: imprint its D10 footprint so the box weight has its own face
+        circ += [(x, y, ztop, P.PET_PILLAR[0] / 2) for x, y in holes_xy(info, P.M3_INSERT_HOLE, ztop - P.M3_INSERT_DEPTH - 0.5, ztop + 0.05)]
+    return circ
 
 
 def name_step(sh, faces, out):
@@ -187,6 +191,37 @@ def case_b3(info, step):
                        "La ola de 200 N se aplica entera contra una pared larga: caso exagerado (la caja va bajo el panel)."])
 
 
+CABLE_N = 300.0
+BRIDLE_HALF_ANGLE = 30.0          # deg: the 2-leg bridle (one leg per hull half) opens 60 deg, each leg carries CABLE_N / (2 cos 30) = 173 N
+
+
+def prep_b1(info):
+    """Washer seat (D16) imprinted on the top face of the mooring pad around the eye hole, so the vertical part of the line pull has its own face."""
+    import params as P
+    eh = [f for f in info if f["type"] == "CYLINDER" and f["bb"][2] < 0.5 and f["bb"][5] < P.PET_EYE[1] + 0.5 and abs((f["bb"][3] - f["bb"][0]) - P.PET_EYE[2]) < 0.3]
+    return [((f["bb"][0] + f["bb"][3]) / 2, (f["bb"][1] + f["bb"][4]) / 2, P.PET_EYE[1], 8.0) for f in eh]
+
+
+def case_b1_cabo(info, step):
+    """B1 half: mooring pull of 300 N shared by the 2-leg bridle: ONE leg of 173 N per hull half, 45 deg down and towards the hull centre.
+    The vertical part bears on the nut/washer (D16) over the eye hole, the horizontal part on the hole wall. The hull hangs from the bottles through the
+    cover bars: the 4 D10 bosses of the half are held at the top (the bars clamp the bottle there)."""
+    import params as P
+    zt = max(f["bb"][5] for f in info)
+    eyes = [i for i, f in enumerate(info) if f["type"] == "CYLINDER" and f["bb"][2] < 0.5 and f["bb"][5] < P.PET_EYE[1] + 0.5 and abs((f["bb"][3] - f["bb"][0]) - P.PET_EYE[2]) < 0.3]
+    seat = pick(info, lambda f: planar(f, nz=1) and abs(f["bb"][5] - P.PET_EYE[1]) < 0.05 and 100 < f["area"] < 400 and abs((f["bb"][3] - f["bb"][0]) - 16.0) < 0.5)
+    bosses = pick(info, lambda f: planar(f, nz=1) and abs(f["bb"][5] - zt) < 0.05 and f["area"] < 200)
+    leg_n = CABLE_N / (2.0 * math.cos(math.radians(BRIDLE_HALF_ANGLE)))
+    c45 = leg_n * math.sqrt(0.5)
+    return dict(name="casco_cabo", titulo="Casco B1 (mitad): tiron de 300 N repartido en 2 ramales: 173 N en el ojal de esta mitad, a 45 grados",
+                fixed=[("topes de los 4 bosses D10 (las barras de B2 sujetan la botella ahi)", bosses)],
+                loads=[dict(kind="force", label="componente vertical (122 N) sobre la arandela D16 del ojal", idx=seat, force_N=(0, 0, -c45)),
+                       dict(kind="force", label="componente horizontal (122 N) sobre la pared del agujero del ojal", idx=eyes, force_N=(c45, 0, 0))],
+                gravity=False,
+                notes=["Pata de gallo a 60 grados entre ramales: cada ramal lleva 300 / (2 cos 30) = 173 N (122 N vertical + 122 N horizontal a 45 grados). El casco cuelga de las botellas por las barras "
+                       "de B2 atornilladas a los 4 bosses de esta mitad; el empuje de las botellas es la reaccion."])
+
+
 def case_b2(info, step, variant="vertical"):
     """B2 deck half: bolted to the hull bosses (M3 clearance holes in the bars), loaded by the box pillars and panel columns."""
     import params as P
@@ -194,9 +229,10 @@ def case_b2(info, step, variant="vertical"):
     bm = P.BUOY_MASS
     # pillars, panel columns and the mast: small planar +Z faces, told apart by their diameter
     bar_top = zmin + P.PET_COVER_T
+    pil_top = zmin + max(P.PET_COVER_T, P.PET_XBAR[1]) + P.PET_PILLAR[1]
     dia = lambda f: f["bb"][3] - f["bb"][0]          # noqa: E731
     top_of = lambda D, z: pick(info, lambda f: planar(f, nz=1) and abs(dia(f) - D) < 0.3 and abs(f["bb"][5] - z) < 0.5)   # noqa: E731
-    pil_tops = top_of(P.PET_PILLAR[0], bar_top + P.PET_PILLAR[1])
+    pil_tops = top_of(P.PET_PILLAR[0], pil_top)
     col_tops = pick(info, lambda f: planar(f, nz=1) and abs(dia(f) - P.PET_COLUMN_D) < 0.3 and f["bb"][5] > bar_top + 30)
     mast = pick(info, lambda f: planar(f, nz=1) and abs(dia(f) - P.PET_MAST[0]) < 0.3 and f["bb"][5] > bar_top + 100)
     # supports: imprinted D10 footprints of the hull bosses under the M3 holes of the bars
@@ -215,7 +251,7 @@ def case_b2(info, step, variant="vertical"):
     if mast:
         loads.append(dict(kind="force", label="antena", idx=mast, force_N=(0, 0, -bm["antena"] * 1e-3 * G)))
     if not lateral:
-        bars = pick(info, lambda f: planar(f, nz=1) and abs(f["bb"][5] - bar_top) < 0.05 and f["area"] > 300)
+        bars = pick(info, lambda f: planar(f, nz=1) and bar_top - 0.05 < f["bb"][5] < pil_top + 0.05 and f["area"] > 300 and abs(dia(f) - P.PET_PILLAR[0]) > 0.3)
         loads.append(dict(kind="force", label="golpe de ola vertical de 200 N sobre las barras", idx=bars, force_N=(0, 0, -WAVE_N)))
     notes = [f"Caja completa {box_total:.0f} g repartida en 4 pilares (cada mitad carga 2); panel {bm['panel']} g en 4 columnas (cada mitad carga 2)."]
     if lateral:
@@ -302,6 +338,7 @@ def case_a(piece, info, step):
 
 PIECES = {
     "B3_caja": dict(grupo="B", step=STEP_B / "B3_caja.step", case=case_b3, prep=prep_b3),
+    "B1_casco_cabo": dict(grupo="B", step=STEP_B / "B1_casco.step", case=case_b1_cabo, prep=prep_b1),
     "B2_cubierta_lisa": dict(grupo="B", step=STEP_B / "B2_cubierta_lisa.step", case=case_b2, prep=prep_b2),
     "B2_cubierta_mastil": dict(grupo="B", step=STEP_B / "B2_cubierta_mastil.step", case=case_b2, prep=prep_b2),
     "B2_cubierta_lisa_lateral": dict(grupo="B", step=STEP_B / "B2_cubierta_lisa.step", case=lambda i, s: case_b2(i, s, "lateral"), prep=prep_b2),

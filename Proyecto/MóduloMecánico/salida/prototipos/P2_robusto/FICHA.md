@@ -10,8 +10,8 @@ Nodo del aro de prueba Ø200 (version simple V2 como base) con estas diferencias
 
 | Pieza | Cant. | g c/u (slicer) | h c/u | Orientacion | Soportes | Relleno |
 |---|---|---|---|---|---|---|
-| M1 caja baja con bolsillos | 1 | 436.8 | 9.27 | sin girar | si | 1.0 |
-| M2 caja, tapa con asa | 1 | 194.4 | 4.81 | sin girar | si | 1.0 |
+| M1 caja baja con bolsillos | 1 | 436.2 | 9.25 | sin girar | si | 1.0 |
+| M2 caja, tapa con asa | 1 | 194.1 | 4.80 | sin girar | si | 1.0 |
 | M3t tapa del bolsillo | 2 | 42.3 | 0.87 | X180 | no | 1.0 |
 | M5s tapa con pie | 2 | 97.3 | 2.80 | X180 | si | 1.0 |
 | M3f marco del bolsillo de lastre | 2 | 51.8 | 1.95 | X180 | no | 0.4 |
@@ -24,7 +24,7 @@ Nodo del aro de prueba Ø200 (version simple V2 como base) con estas diferencias
 
 Piezas impresas por nodo: **16** de 10 tipos, mas 2 ventanas de acrilico.
 
-Masa impresa del nodo (slicer, sin lastre ni tornilleria): **1684 g**; tiempo **45.0 h**; filamento **S/ 151.55** (a S/ 90 el kg, estimado).
+Masa impresa del nodo (slicer, sin lastre ni tornilleria): **1683 g**; tiempo **45.0 h**; filamento **S/ 100.98** (a S/ 60 el kg, estimado).
 
 ## Sellos y juntas
 
@@ -33,7 +33,7 @@ Masa impresa del nodo (slicer, sin lastre ni tornilleria): **1684 g**; tiempo **
 
 ## Peso
 
-- En aire: **2988 g** (bandeja al 40 %), con el lastre.
+- En aire: **2987 g** (bandeja al 40 %), con el lastre.
 - **Lastre a granel** (tuercas y arandelas M8 de inox, a granel, densidad aparente 4.5 g/cm3, estimada): **980 g** en total (490 g por bolsillo, un bolsillo por lado, 100 x 50 x 30 mm). Llena 21.8 de 30 mm. Rango de lastre que deja el peso aparente en la ventana: 870 a 1204 g. Con perdigon de plomo: 997 g.
 - Aparente en agua de mar: **+296 g** (40 %) / +305 g (100 %); ventana exigida 200 a 500 g.
 
@@ -56,7 +56,7 @@ Calculo a mano (simple.py, conservador, no es FEM): riel 24.6 / 12.0, pie 23.2 /
 ## Cambios del 30/10 noche (tanda 3)
 
 - **Sin separador ni apice.** La linterna de prueba es el aro, la malla de referencia, 4 cuerdas que suben rectas del aro (a 45 grados del riel, los brazos quedan entre cuerdas) y van a un solo nudo, y un cabo del nudo a la linea larga.
-- **Aire cuerda-brazo 48.0 mm y cuerda-capsula 70.4 mm** (se exigen 10; el build falla si no). Cuerda-caja (brida de la tapa): 1.5 mm, informativo.
+- **Aire cuerda-brazo 48.0 mm y cuerda-capsula 70.4 mm** (se exigen 10; el build falla si no). Cuerda-caja (brida de la tapa): 3.2 mm, informativo.
 - **Lastre a granel** en vez de pletinas: 980 g, un bolsillo por lado cerrado por M3t; peso aparente +296 g (40 %) / +305 g (100 %); caja 129 x 128 x 78 mm (V2: 127 x 126 x 77).
 - **Ensamble con nombres** (`REF_*` para lo no impreso, `lastre_izq`/`lastre_der`) y `ensamble_solidos.json` con el conteo de solidos.
 

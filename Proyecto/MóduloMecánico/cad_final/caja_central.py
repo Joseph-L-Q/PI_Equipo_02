@@ -17,6 +17,21 @@ from params import (BASE_M4_BOSS, BASE_M4_PTS, BOX_FLANGE, BOX_FLANGE_T, BOX_FLO
                     PG7_INNER_H, PG7_NUT_AF, POCKET_DEPTH, POCKET_IN_BOX, POCKET_L, POCKET_RAIL_GAP, POCKET_WALL,
                     RAIL_SECTION, TRAY2_POST_D, TRAY_BOSS_D, TRAY_STANDOFF, TRAY_T)
 from layout import tray_boss_pts
+import params as _PP
+
+
+def corner_ch():
+    """Plan chamfer leg (mm) of the 4 vertical corners of the flange and the lid for this version (0 = round R6)."""
+    return float(_PP.BOX_CORNER_CH.get(_PP.VERSION, 0.0))
+
+
+def _flange_sketch(out_l, out_w):
+    sk = cq.Sketch().rect(out_l + 2 * BOX_FLANGE, out_w + 2 * BOX_FLANGE).vertices()
+    return sk.chamfer(corner_ch()) if corner_ch() > 0 else sk.fillet(6)
+
+
+def _flange_prism(z0, h, out_l, out_w):
+    return cq.Workplane("XY").workplane(offset=z0).placeSketch(_flange_sketch(out_l, out_w)).extrude(h)
 
 
 # ------------------------------------------------------------------ positions
@@ -28,6 +43,10 @@ def screw_pts(lay):
     ny = math.ceil(2 * b / BOX_SCREW_PITCH)
     pts = [(-a + 2 * a * k / nx, s * b) for k in range(nx + 1) for s in (1, -1)]
     pts += [(s * a, -b + 2 * b * k / ny) for k in range(1, ny) for s in (1, -1)]
+    c = corner_ch()
+    if c > 0:    # corner chamfer: slide the 4 corner screws along the long edge until the insert hole keeps 5 mm to the chamfer plane
+        xmax = (out_l / 2 + BOX_FLANGE) + (out_w / 2 + BOX_FLANGE) - c - b - (M3_INSERT_HOLE / 2 + 5.0) * math.sqrt(2)
+        pts = [((math.copysign(min(abs(x), xmax), x), y) if abs(abs(x) - a) < 1e-6 and abs(abs(y) - b) < 1e-6 else (x, y)) for x, y in pts]
     return pts
 
 
@@ -56,12 +75,11 @@ def cavity_tool(lay):
 def box_body(lay):
     out_l, out_w, out_h = lay.box_outer()
     body = cq.Workplane("XY").rect(out_l, out_w).extrude(out_h).edges("|Z").fillet(5)
-    flange = (cq.Workplane("XY").workplane(offset=out_h - BOX_FLANGE_T)
-              .rect(out_l + 2 * BOX_FLANGE, out_w + 2 * BOX_FLANGE).extrude(BOX_FLANGE_T).edges("|Z").fillet(6))
+    flange = _flange_prism(out_h - BOX_FLANGE_T, BOX_FLANGE_T, out_l, out_w)
     z_sk = out_h - BOX_FLANGE_T
     # rounded like the body (r5) and the flange (r6): sharp loft corners left knife edges outside both fillets
     s0 = cq.Sketch().rect(out_l, out_w).vertices().fillet(5)
-    s1 = cq.Sketch().rect(out_l + 2 * BOX_FLANGE, out_w + 2 * BOX_FLANGE).vertices().fillet(6)
+    s1 = _flange_sketch(out_l, out_w)
     skirt = (cq.Workplane("XY").workplane(offset=z_sk - BOX_FLANGE)
              .placeSketch(s0, s1.moved(cq.Location(cq.Vector(0, 0, BOX_FLANGE)))).loft())
     body = body.union(flange).union(skirt).cut(cavity_tool(lay))
@@ -108,8 +126,7 @@ def box_lid(lay):
     out_l, out_w, out_h = lay.box_outer()
     L, W, _ = lay.cav
     z0 = out_h
-    lid = (cq.Workplane("XY").workplane(offset=z0).rect(out_l + 2 * BOX_FLANGE, out_w + 2 * BOX_FLANGE)
-           .extrude(BOX_LID_T).edges("|Z").fillet(6))
+    lid = _flange_prism(z0, BOX_LID_T, out_l, out_w)
     for (x, y) in screw_pts(lay):
         lid = lid.cut(cq.Workplane("XY").workplane(offset=z0).center(x, y).circle(M3_CLEAR / 2).extrude(BOX_LID_T))
     # O-ring groove on the inner face, midway between the cavity and the screw line

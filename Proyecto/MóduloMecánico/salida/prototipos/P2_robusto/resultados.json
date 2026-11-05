@@ -8,11 +8,11 @@
     156.0,
     78.0
    ],
-   "voladizo_mm2": 902.6809557493185,
+   "voladizo_mm2": 847.4092877107292,
    "soportes": true,
-   "volumen_cm3": 368.0072145248507,
+   "volumen_cm3": 367.48193336529306,
    "relleno": 1.0,
-   "masa_g": 467.3691624465604
+   "masa_g": 466.70205537392224
   },
   "M2_caja_tapa": {
    "nombre": "M2 caja, tapa con asa",
@@ -24,9 +24,9 @@
    ],
    "voladizo_mm2": 1575.6484991460593,
    "soportes": true,
-   "volumen_cm3": 160.4361173805804,
+   "volumen_cm3": 160.23063070293423,
    "relleno": 1.0,
-   "masa_g": 203.7538690733371
+   "masa_g": 203.49290099272648
   },
   "M3s_riel_gancho": {
    "nombre": "M3s riel con gancho, mitad",
@@ -226,11 +226,11 @@
   "total_g": 980.0,
   "por_bolsillo_g": 490.0,
   "rango_total_g": [
-   869.6268475639039,
-   1203.9252870740386
+   869.832578640196,
+   1204.1310181503306
   ],
   "altura_mm": 21.77777777777778,
-  "altura_en_el_maximo_mm": 26.753895268311968,
+  "altura_en_el_maximo_mm": 26.75846707000735,
   "bolsillo_mm": 30.0,
   "bolsillo_cm3": 150.0,
   "ocupacion": 0.725925925925926,
@@ -244,37 +244,37 @@
   "alternativas": {
    "tuercas_m8": {
     "nombre": "tuercas y arandelas M8 de inox, a granel",
-    "total_g": 1041.9904839275403,
-    "altura_mm": 23.15534408727867
+    "total_g": 1042.1962150038323,
+    "altura_mm": 23.15991588897405
    },
    "perdigon_plomo": {
     "nombre": "perdigon de plomo en bolsa",
-    "total_g": 996.9036502475915,
-    "altura_mm": 15.336979234578333
+    "total_g": 997.1004793588822,
+    "altura_mm": 15.340007374752034
    }
   }
  },
  "peso": {
   "40": {
-   "aire_g": 2988.0210011198137,
-   "aparente_g": 296.0525851896406,
-   "sin_lastre_g": -556.7955160761821,
+   "aire_g": 2987.092925966565,
+   "aparente_g": 295.8735470694497,
+   "sin_lastre_g": -556.974554196373,
    "lastre_g": 980.0,
-   "lastre_min_g": 869.6268475639039,
-   "lastre_max_g": 1214.3541202911765
+   "lastre_min_g": 869.832578640196,
+   "lastre_max_g": 1214.5598513674686
   },
   "100": {
-   "aire_g": 2997.096726229665,
-   "aparente_g": 305.1283102994918,
-   "sin_lastre_g": -547.719790966331,
+   "aire_g": 2996.168651076416,
+   "aparente_g": 304.9492721793009,
+   "sin_lastre_g": -547.8988290865218,
    "lastre_g": 980.0,
-   "lastre_min_g": 859.1980143467657,
-   "lastre_max_g": 1203.9252870740386
+   "lastre_min_g": 859.4037454230578,
+   "lastre_max_g": 1204.1310181503306
   }
  },
- "bg_mm": 16.766984034236657,
+ "bg_mm": 16.773996707578174,
  "apice_sobre_aro": 400.0,
- "aire_min": 47.95334659381327,
+ "aire_min": 47.95332334215608,
  "fs": {
   "riel": 24.55425284683144,
   "riel_capas": 12.004301391784258,
@@ -287,8 +287,8 @@
  "cable_mm": 297.11452303827343,
  "zmax_sobre_aro": 203.8397459621556,
  "zmin_sobre_aro": -52.863448015713,
- "cg_sobre_aro": 41.64035253046595,
- "cb_sobre_aro": 58.407336564702604,
+ "cg_sobre_aro": 41.61772902260328,
+ "cb_sobre_aro": 58.39172573018145,
  "piezas_impresas": 16,
  "tipos_impresos": 10,
  "camaras": [
@@ -357,9 +357,9 @@
  "celosia_ventanas": {},
  "redondeos": {},
  "aire_cuerdas": {
-  "brazo": 47.95334659381327,
+  "brazo": 47.95332334215608,
   "capsula": 70.39736864946566,
-  "caja": 1.493537661546294
+  "caja": 3.2373320974091424
  },
  "cuerdas": {
   "azimut_en_el_marco_del_nodo": [
@@ -371,21 +371,21 @@
   "codo_sobre_aro": 217.8397459621556,
   "nudo_sobre_aro": 400.0,
   "por_cuerda": {
-   "brazo/REF_cuerda_1": 47.95337540308156,
-   "brazo/REF_cuerda_2": 47.95334659381327,
-   "brazo/REF_cuerda_3": 47.95339174575648,
-   "brazo/REF_cuerda_4": 47.95349751463492,
-   "brazo/REF_cabo": 336.30903592244664,
+   "brazo/REF_cuerda_1": 47.95332334215608,
+   "brazo/REF_cuerda_2": 47.953395686323134,
+   "brazo/REF_cuerda_3": 47.95333817017443,
+   "brazo/REF_cuerda_4": 47.95334886578193,
+   "brazo/REF_cabo": 336.3158694662071,
    "capsula/REF_cuerda_1": 70.39736864946566,
    "capsula/REF_cuerda_2": 70.39736864946568,
    "capsula/REF_cuerda_3": 70.39736864946566,
    "capsula/REF_cuerda_4": 70.3973686494657,
-   "capsula/REF_cabo": 397.45574006734614,
-   "caja/REF_cuerda_1": 1.4943088615873892,
-   "caja/REF_cuerda_2": 1.493537661546294,
-   "caja/REF_cuerda_3": 1.4968272404077192,
-   "caja/REF_cuerda_4": 1.4977008401536867,
-   "caja/REF_cabo": 194.16839796666605
+   "capsula/REF_cabo": 397.44928892490935,
+   "caja/REF_cuerda_1": 3.2411122466119533,
+   "caja/REF_cuerda_2": 3.2373320974091424,
+   "caja/REF_cuerda_3": 3.238198829241055,
+   "caja/REF_cuerda_4": 3.2384506209684476,
+   "caja/REF_cabo": 194.16780009420333
   }
  },
  "ensamble": {
@@ -394,6 +394,6 @@
   "no_validos": []
  },
  "avisos": [
-  "cuerda-caja (brida de la tapa) a 1.5 mm, menos que los 10 que se piden a brazos y capsulas"
+  "cuerda-caja (brida de la tapa) a 3.2 mm, menos que los 10 que se piden a brazos y capsulas"
  ]
 }

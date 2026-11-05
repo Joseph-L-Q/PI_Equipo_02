@@ -12,14 +12,14 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 368007.2
+   "volumen_mm3": 367481.9
   },
   {
    "nombre": "M2_caja_tapa",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 160436.1
+   "volumen_mm3": 160230.6
   },
   {
    "nombre": "M11_bandeja",

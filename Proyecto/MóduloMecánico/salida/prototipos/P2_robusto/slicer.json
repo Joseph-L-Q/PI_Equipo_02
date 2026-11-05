@@ -1,14 +1,14 @@
 {
  "M1s_caja_cuerpo": {
-  "g": 436.76,
-  "h": 9.268611111111111,
+  "g": 436.17,
+  "h": 9.254166666666666,
   "soportes": true,
   "relleno_pct": 100,
   "gcode": "salida/prototipos/P2_robusto/gcode/M1s_caja_cuerpo.gcode"
  },
  "M2_caja_tapa": {
-  "g": 194.37,
-  "h": 4.813055555555556,
+  "g": 194.13,
+  "h": 4.804166666666666,
   "soportes": true,
   "relleno_pct": 100,
   "gcode": "salida/prototipos/P2_robusto/gcode/M2_caja_tapa.gcode"

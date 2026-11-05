@@ -1,3 +1,20 @@
+# Estado LanternGuard CAD | encargo del 05/11 (diseño para mar) | 02:33
+
+Modo sin API de Onshape: las piezas cambiadas quedan como STEP con `IMPORTAR.md` para subirlas a mano.
+
+| Bloque | Estado |
+|---|---|
+| 1 Diseño para mar | Hecho. Panel lateral 200 N: FS 3,02 entre capas (era 0,41). Ola sobre la cubierta: FS 3,7. Cabo 300 N con pata de gallo de dos ramales: FS 3,2. Espuma PU obligatoria: con una botella perdida GM 85/506 mm (era 38). Holgura cuerda-caja 3,2 mm con chaflán de 6 mm en M1s y M2 |
+| 2 Regenerar y publicar | En curso |
+| 3 Cierre | Pendiente |
+
+**Problemas abiertos:**
+- Si la espuma llena solo la mitad de los huecos, la boya vuelca al perder una botella. Control al armar: pesar la lata antes y después (≥ 55 g de espuma).
+- Con una botella perdida la boya escora 11,6° (criterio propio 10°).
+- La boya impresa pesa 1394 g (antes 1105 g) y tarda 60 h.
+
+---
+
 # Estado LanternGuard CAD | encargo del 04/11 noche | **TERMINADO: 22:54**
 
 **Aviso: el total impreso pasa de 3 kg. Son 3132 g en 20 placas (probetas 243 g, nodo P2 1682 g, boya 1207 g), 97,5 h, S/ 188 a S/ 60/kg.**

@@ -4,11 +4,11 @@
 
 | Magnitud | Valor |
 |---|---|
-| Masa total boya | 1980 g |
-| Calado | 42.9 mm |
-| Francobordo a la abertura mas baja de la caja | 82.6 mm |
-| Reserva | 107 % |
-| GM balanceo / cabeceo | 95 / 683 mm |
+| Masa total boya | 2297 g |
+| Calado | 47.4 mm |
+| Francobordo a la abertura mas baja de la caja | 85.1 mm |
+| Reserva | 79 % |
+| GM balanceo / cabeceo | 72 / 577 mm |
 
 ## Chequeos geometricos que fallaron
 
@@ -16,6 +16,8 @@
 
 ## Objetivos no cumplidos
 
-- masa impresa 1105 g > 700
-- tiempo 46.9 h > 25
+- masa impresa 1394 g > 700
+- tiempo 60.2 h > 25
 - con una botella perdida (sin espuma) no cumple: flota derecha, GM > 0, escora pequena y abertura sobre el agua
+- con una botella perdida (espuma_huecos) no cumple GM >= 40 (peor 85 / 506), escora <= 10 o abertura sobre el agua
+- con una botella perdida (espuma_50) no cumple GM >= 40 (peor -49 / -116), escora <= 10 o abertura sobre el agua

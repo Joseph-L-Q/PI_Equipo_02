@@ -175,7 +175,8 @@ def dims(bottle, n):
     d["pillar_h"] = P.PET_PILLAR[1]
     d["z_cover"] = d["z_top"]
     d["z_cover_top"] = d["z_top"] + P.PET_COVER_T
-    d["z0"] = d["z_cover_top"] + d["pillar_h"]                      # box floor bottom
+    d["z_bar"] = d["z_top"] + max(P.PET_COVER_T, P.PET_XBAR[1])        # top of the two tall screw-line bars (columns, pillars, mast stand on it)
+    d["z0"] = d["z_bar"] + d["pillar_h"]                            # box floor bottom
     d["z_lid"] = d["z0"] + d["HB"]
     d["z_lid_top"] = d["z_lid"] + P.PET_LID_T
     d["z_panel0"] = d["z_lid_top"] + P.PET_PANEL_LIFT
@@ -187,7 +188,7 @@ def dims(bottle, n):
 
 def boss_y(d):
     """|y| of the cover bolts: just inside the channel fin so the boss is fused to it."""
-    return d["wc"] / 2 - P.PET_BOSS - (P.PET_POST_D / 2 - 4.0)      # the old posts were 8: a thicker post grows towards the channel
+    return d["wc"] / 2 - P.PET_BOSS - (P.PET_POST_B1 / 2 - 4.0)      # the old posts were 8: a thicker post grows towards the channel
 
 
 def boss_x(d, x):
@@ -309,9 +310,14 @@ def b1_cruz(d):
         tt = 2 * jf if (x == 0.0 and P.PET_SPLIT) else t
         h = h.union(box(x - tt / 2, x + tt / 2, -wc / 2 - 0.5, wc / 2 + 0.5, 0, wall))
     ew, et, eh = P.PET_EYE
-    for xe in ((-eye_x(d), eye_x(d)) if P.PET_SPLIT else (0.0,)):              # split: one mooring eye per half (2-leg bridle)
-        h = h.union(box(xe - ew / 2, xe + ew / 2, -(wc / 2 + 1.0), wc / 2 + 1.0, 0, et).cut(cyl((xe, 0, -1), (0, 0, 1), eh / 2, et + 2)))
-    rp = P.PET_POST_D / 2
+    for sg in ((-1, 1) if P.PET_SPLIT else ()):                                 # split: one mooring eye per half (2-leg bridle), C2 symmetric, UNDER a cover post
+        xp, yp = sg * d["L1"], sg * boss_y(d)                                    # (the line pulls the post in tension; before, the eye hung from the thin keel ties: FS 0.24 at 300 N)
+        xh = xp - sg * EYE_OFF
+        pad = box(min(xp + sg * 5.0, xh - sg * (eh / 2 + 7.5)), max(xp + sg * 5.0, xh - sg * (eh / 2 + 7.5)), yp - ew / 2, yp + ew / 2, 0, et)
+        h = h.union(pad.cut(cyl((xh, yp, -1), (0, 0, 1), eh / 2, et + 2)))
+    if not P.PET_SPLIT:
+        h = h.union(box(-ew / 2, ew / 2, -(wc / 2 + 1.0), wc / 2 + 1.0, 0, et).cut(cyl((0, 0, -1), (0, 0, 1), eh / 2, et + 2)))
+    rp = P.PET_POST_B1 / 2
     zs = wall + P.PET_STOP_H
     for x, kind in rib_x(d):                                                     # M3 insert posts for the cover
         if kind == "mid0":
@@ -334,9 +340,12 @@ def b1_cruz(d):
     return h
 
 
+EYE_OFF = 20.0      # mm from the cover post to the eye hole (towards the hull centre)
+
+
 def eye_x(d):
-    """x of the two mooring eyes when the hull is split: the pad overlaps the joint column by 1 mm (fused to it)."""
-    return 2 * P.PET_JOINT[0] + P.PET_EYE[0] / 2 - 1.0
+    """|x| of the hole of the two mooring eyes when the hull is split (under the cover posts at x = +-L1, EYE_OFF towards the centre)."""
+    return d["L1"] - EYE_OFF
 
 
 def joint_b1(d):
@@ -516,46 +525,77 @@ def col_pts(d):
     return [(d["X0"] + sx * d["L1"], sy * d["col_y"]) for sx in (1, -1) for sy in (1, -1)]
 
 
+def brace(d, x, sg, sec, yl):
+    """Diagonal brace of the panel column at (x, sg * col_y): YZ-plane strip of thickness sec and width PET_BAR_W (along x), from just under the
+    column top down and OUTWARD to |y| = yl on the tall bar; a flat 45 deg foot is added by the caller's chamfer pass."""
+    zc = d["z_bar"]
+    rc = P.PET_COLUMN_D / 2
+    a = (sg * (d["col_y"] + rc * 0.3), zc + (d["z_panel0"] - zc) * 0.9)
+    b = (sg * yl, zc)
+    ux, uz = b[0] - a[0], b[1] - a[1]
+    n = math.hypot(ux, uz)
+    nx, nz = -uz / n * sec / 2, ux / n * sec / 2
+    pts = [(a[0] + nx, a[1] + nz), (a[0] - nx, a[1] - nz), (b[0] - nx, b[1] - nz), (b[0] + nx, b[1] + nz)]
+    w = cq.Workplane("YZ").polyline(pts).close().extrude(P.PET_BAR_W).translate((x - P.PET_BAR_W / 2, 0, 0))
+    return w.intersect(cq.Workplane("XY").box(400, 400, 400, centered=(True, True, False)).translate((0, 0, zc - 0.1)))
+
+
 def b2_cubierta(d):
     LH, WH, zt, ct, bw = d["LH"], d["WH"], d["z_cover"], P.PET_COVER_T, P.PET_BAR_W
     zb = d["z_cover_top"]
+    zc = d["z_bar"]                                                  # columns, pillars and mast stand on the tall bars
     c = None
+    xw, xt, xy, xe = P.PET_XBAR                                       # the two screw lines of each half: width x height of the tall part, its half-length in y, end bars too
+    xw, xt = max(xw, bw), max(xt, ct)
     bars = [box(x - bw / 2, x + bw / 2, -WH / 2, WH / 2, zt, zb) for x in (d["X0"] - d["L1"], d["X0"] + d["L1"])]
+    bars += [box(x - xw / 2, x + xw / 2, -xy, xy, zt, zt + xt) for x in (d["X0"] - d["L1"], d["X0"] + d["L1"])]
+    ew_, et_ = (xw, xt) if xe else (bw, ct)
     bars += [box(LH / 2 - bw, LH / 2, -WH / 2, WH / 2, zt, zb), box(-LH / 2, -LH / 2 + bw, -WH / 2, WH / 2, zt, zb)]
+    bars += [box(LH / 2 - ew_, LH / 2, -xy, xy, zt, zt + et_), box(-LH / 2, -LH / 2 + ew_, -xy, xy, zt, zt + et_)]
     bars += [box(-LH / 2, LH / 2, s * d["yb"] - bw / 2, s * d["yb"] + bw / 2, zt, zb) for s in (1, -1)]
     if P.PET_SPLIT:                                                  # seam crossbar: each half is a closed frame on its own 4 M3
         bars.append(box(-bw, bw, -WH / 2, WH / 2, zt, zb))
     mo_ = P.PET_MAST[0]
-    bars.append(box(LH / 2 - mo_, LH / 2 - bw, -mo_ / 2, mo_ / 2, zt, zb))     # pad: the Ø18 mast is wider than the 14 mm end bar
+    bars.append(box(LH / 2 - mo_, LH / 2 - bw, -mo_ / 2, mo_ / 2, zt, zc))     # pad: the Ø18 mast is wider than the 14 mm end bar
     for b in bars:
         c = b if c is None else c.union(b)
     for x, kind in rib_x(d):                                         # clearance holes for the M3 into the hull bosses
         if kind != "mid0":
             for s in (1, -1):
-                c = c.cut(cyl((boss_x(d, x), s * boss_y(d), zt - 1), (0, 0, 1), P.M3_CLEAR / 2, ct + 2))
+                c = c.cut(cyl((boss_x(d, x), s * boss_y(d), zt - 1), (0, 0, 1), P.M3_CLEAR / 2, xt + 2))
+                hb = xt if (xe or abs(x) < d["LH"] / 4 * 3 / 2) else ct               # bar height at this screw
+                c = c.cut(cyl((boss_x(d, x), s * boss_y(d), zt + hb - 4.0), (0, 0, 1), 3.75, 5.0))      # counterbore: the head sinks, the box floor sits 1 mm above the bar
     pd, ph = P.PET_PILLAR
     for x, y in box_ear_pts(d):                                      # pillars under the ears of the box
-        c = c.union(cyl((x, y, zb - 0.1), (0, 0, 1), pd / 2, ph + 0.1))
-        c = c.cut(cyl((x, y, zb + ph - P.M3_INSERT_DEPTH), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.1))
+        c = c.union(cyl((x, y, zc - 0.1), (0, 0, 1), pd / 2, ph + 0.1))
+        c = c.cut(cyl((x, y, zc + ph - P.M3_INSERT_DEPTH), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.1))
     for x, y in col_pts(d):                                          # panel columns
-        c = c.union(cyl((x, y, zb - 0.1), (0, 0, 1), P.PET_COLUMN_D / 2, d["z_panel0"] - zb + 0.1))
+        c = c.union(cyl((x, y, zc - 0.1), (0, 0, 1), P.PET_COLUMN_D / 2, d["z_panel0"] - zc + 0.1))
         c = c.cut(cyl((x, y, d["z_panel0"] - P.M3_INSERT_DEPTH), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.1))
     mo, mi, _ = P.PET_MAST
     xm = d["x_mast"]
-    c = c.union(cyl((xm, 0, zb - 0.1), (0, 0, 1), mo / 2, d["z_mast"] - zb + 0.1))
-    c = c.cut(cyl((xm, 0, zb + 6.0), (0, 0, 1), mi / 2, d["z_mast"] - zb))
-    c = c.cut(cyl((xm + 1, 0, zb + 12.0), (-1, 0, 0), 3.5, mo))      # pigtail port towards the box
+    c = c.union(cyl((xm, 0, zc - 0.1), (0, 0, 1), mo / 2, d["z_mast"] - zc + 0.1))
+    c = c.cut(cyl((xm, 0, zc + 6.0), (0, 0, 1), mi / 2, d["z_mast"] - zc))
+    c = c.cut(cyl((xm + 1, 0, zc + 12.0), (-1, 0, 0), 3.5, mo))      # pigtail port towards the box
+    bs, byl = P.PET_BRACE
+    if bs > 0:                                                       # 4 printed diagonal braces, column -> outward -> the tall bar (YZ plane)
+        for x, y in col_pts(d):
+            c = c.union(brace(d, x, 1 if y > 0 else -1, bs, byl))
+    fw, fh = P.PET_FRAME
+    if fw > 0:                                                       # frame under the panel: a beam joining the two column tops of each half
+        for x in (d["X0"] - d["L1"], d["X0"] + d["L1"]):
+            c = c.union(box(x - fw / 2, x + fw / 2, -d["col_y"], d["col_y"], d["z_panel0"] - fh, d["z_panel0"]))
     if CH.on():                                                      # 45 deg feet of pillars, columns and mast on the bars
-        rects = [(x - bw / 2, x + bw / 2, -WH / 2, WH / 2) for x in (d["X0"] - d["L1"], d["X0"] + d["L1"])]
-        rects += [(LH / 2 - bw, LH / 2, -WH / 2, WH / 2), (-LH / 2, -LH / 2 + bw, -WH / 2, WH / 2), (LH / 2 - mo_, LH / 2 - bw, -mo_ / 2, mo_ / 2)]
+        rects = [(x - xw / 2, x + xw / 2, -xy, xy) for x in (d["X0"] - d["L1"], d["X0"] + d["L1"])]
+        rects += [(LH / 2 - ew_, LH / 2, -xy, xy), (-LH / 2, -LH / 2 + ew_, -xy, xy), (LH / 2 - mo_, LH / 2 - bw, -mo_ / 2, mo_ / 2)]
         rects += [(-LH / 2, LH / 2, s * d["yb"] - bw / 2, s * d["yb"] + bw / 2) for s in (1, -1)]
-        heads = [CH.head_keepout(boss_x(d, x), s * boss_y(d), zb) for x, kind in rib_x(d) if kind != "mid0" for s in (1, -1)]
-        plate = lambda k: CH.slab(rects, zb, k)
-        feet = [CH.fit("B2_cubierta", f"pilar bajo oreja de la caja (Ø{pd:g})#{i}", lambda k, x=x, y=y: CH.cone(x, y, zb, pd / 2, k),
-                       plate, heads) for i, (x, y) in enumerate(box_ear_pts(d))]
+        heads = [CH.head_keepout(boss_x(d, x), s * boss_y(d), zc) for x, kind in rib_x(d) if kind != "mid0" for s in (1, -1)]
+        plate = lambda k: CH.slab(rects, zc, k)
+        feet = [CH.fit("B2_cubierta", f"pilar bajo oreja de la caja (Ø{pd:g})#{i}", lambda k, x=x, y=y: CH.cone(x, y, zc, pd / 2, k),
+                       plate, heads) for i, (x, y) in enumerate(box_ear_pts(d)) if ph > max(CH.sizes() + [0.0])]     # a stub lower than the foot would poke into the box floor
         feet += [CH.fit("B2_cubierta", f"columna del panel (Ø{P.PET_COLUMN_D:g})#{i}",
-                        lambda k, x=x, y=y: CH.cone(x, y, zb, P.PET_COLUMN_D / 2, k), plate, heads) for i, (x, y) in enumerate(col_pts(d))]
-        feet.append(CH.fit("B2_cubierta", f"mástil de antena (Ø{mo:g})", lambda k: CH.cone(xm, 0, zb, mo / 2, k), plate, heads))
+                        lambda k, x=x, y=y: CH.cone(x, y, zc, P.PET_COLUMN_D / 2, k), plate, heads) for i, (x, y) in enumerate(col_pts(d))]
+        feet.append(CH.fit("B2_cubierta", f"mástil de antena (Ø{mo:g})", lambda k: CH.cone(xm, 0, zc, mo / 2, k), plate, heads))
         c = CH.add(c, feet)
     return c
 
@@ -711,12 +751,19 @@ def dummies(d):
 
 
 # ---------------------------------------------------------------- flotation
-def foam_volume_mm3(d):
-    """Void between the slots and the round bottles inside every bay (the estimated fill factor applies later)."""
-    tot = 0.0
+def foam_split(d):
+    """(bays, channel) foam volumes in mm3 = the voids (fill 1.0): the gaps between the slots and the round bottles in every bay, plus
+    the central channel above the keel ties (the umbilical duct and the PG7 dome take the rest: flotacion.espuma_canal is the fraction used)."""
+    bays = 0.0
     for _x0, _x1, _y0, _y1, bay in d["bays"]:
-        tot += d["slot_w"] * (d["z_top"] - d["wall"]) * bay - math.pi * d["r"] ** 2 * min(d["Lb"], bay)
-    return max(0.0, tot)
+        bays += d["slot_w"] * (d["z_top"] - d["wall"]) * bay - math.pi * d["r"] ** 2 * min(d["Lb"], bay)
+    ch = d["wc"] * (d["z_top"] - d["wall"]) * (d["LH"] - 2 * d["rib"]) * P.FLOT_CHANNEL_FOAM if d["layout"] == "cruz" else 0.0
+    return max(0.0, bays), ch
+
+
+def foam_volume_mm3(d):
+    """Void volume the PU foam fills at fill 1.0 (bays + channel); the fill factor (flotacion.espuma_llenado) applies later."""
+    return sum(foam_split(d))
 
 
 def eff_bottle(d):
@@ -835,9 +882,14 @@ def sealed_points(d, lost=None, foam_mm3=0.0):
     Ps.append(p_)
     Ws.append(w_)
     if foam_mm3:
+        vb, vc = foam_split(d)
         tot = sum((b[1] - b[0]) * (b[3] - b[2]) for b in d["bays"])
         for x0, x1, y0, y1, _bay in d["bays"]:
-            p_, w_ = _pts_box(x0, x1, y0, y1, d["wall"], d["z_top"], vol=foam_mm3 * (x1 - x0) * (y1 - y0) / tot, n=(8, 6, 6))
+            p_, w_ = _pts_box(x0, x1, y0, y1, d["wall"], d["z_top"], vol=foam_mm3 * vb / (vb + vc) * (x1 - x0) * (y1 - y0) / tot, n=(8, 6, 6))
+            Ps.append(p_)
+            Ws.append(w_)
+        if vc > 0:
+            p_, w_ = _pts_box(-(d["LH"] / 2 - d["rib"]), d["LH"] / 2 - d["rib"], -d["wc"] / 2, d["wc"] / 2, d["wall"], d["z_top"], vol=foam_mm3 * vc / (vb + vc), n=(8, 4, 6))
             Ps.append(p_)
             Ws.append(w_)
     return np.vstack(Ps), np.concatenate(Ws)
@@ -893,6 +945,40 @@ def attitude(d, M, cg, lost=None, foam_mm3=0.0, open_pt=None):
     if open_pt is not None:
         pz = ((np.array(open_pt) - cg) @ _rotm(phi, th).T)[2]
         out["francobordo_abertura_mm"] = float(pz - h)
+    return out
+
+
+def _tri(shape, tol=0.2):
+    import trimesh
+    vs, fs = shape.tessellate(tol, 0.3)
+    return trimesh.Trimesh([(v.x, v.y, v.z) for v in vs], fs, process=True)
+
+
+def lock_check(d, parts, play_max=6.0, step=0.25):
+    """Free play of each bottle along +-X, +-Y, +-Z: the smallest rigid translation (mm) at which sampled points of the bottle (body, shoulder,
+    neck) enter a printed part. None = no part stops it within play_max (that axis is free). The straps / cover bars count as the Z stop."""
+    import trimesh
+    meshes = {k: _tri(v) for k, v in parts.items()}
+    out = []
+    for bi, (base, direc) in enumerate(bottle_bases(d)):
+        dm = bottle_dummy(d, base, direc).val()
+        bm = _tri(dm, 0.5)
+        pts = trimesh.sample.sample_surface_even(bm, 4000)[0]
+        row = dict(botella=bi + 1, eje=d["bots"][bi]["axis"], juego={})
+        for name, vec in (("+X", (1, 0, 0)), ("-X", (-1, 0, 0)), ("+Y", (0, 1, 0)), ("-Y", (0, -1, 0)), ("+Z", (0, 0, 1)), ("-Z", (0, 0, -1))):
+            hit, who = None, ""
+            k = 1
+            while k * step <= play_max + 1e-9 and hit is None:
+                q = pts + np.array(vec) * (k * step)
+                for nm, m in meshes.items():
+                    lo, hi = m.bounds
+                    sel = np.all((q >= lo) & (q <= hi), axis=1)
+                    if sel.any() and m.contains(q[sel]).sum() >= 3:
+                        hit, who = k * step, nm
+                        break
+                k += 1
+            row["juego"][name] = dict(mm=hit, tope=who)
+        out.append(row)
     return out
 
 
@@ -1106,17 +1192,27 @@ def run(bottle, n, out, do_slice, render_png=True):
     # one bottle lost, each bottle in turn, without and with the estimated foam
     perdida = {}
     foam_disp = foam_V
-    for tag, fm in (("sin_espuma", 0.0), ("con_espuma_estimada", foam_disp if P.FLOT_FILL == "espuma_PU" else 0.0)):
+    voids = foam_volume_mm3(d)
+    # foam: none; the design fill (flotacion.espuma_llenado, 1.0 = foam volume = the voids); the conservative fill for the sea (0.5 of the voids)
+    for tag, fm in (("sin_espuma", 0.0), ("espuma_huecos", voids * P.FLOT_FOAM_FILL), ("espuma_50", voids * P.FLOT_FOAM_FILL_CONS)):
         rows_l = []
+        dm_foam = (fm - foam_V) * P.FLOT_FOAM_DENSITY * 1e-6 if tag != "sin_espuma" else -foam_V * P.FLOT_FOAM_DENSITY * 1e-6     # g: foam mass of this variant minus the one in M
+        Mv = M + dm_foam
+        cgv = tuple((M * cg[k] + dm_foam * v) / Mv for k, v in enumerate((d["X0"], 0.0, d["zc"])))
         for i, b_ in enumerate(d["bots"]):
-            Mi = M - d["m_bottle"]
-            cgi = tuple((M * cg[k] - d["m_bottle"] * v) / Mi for k, v in enumerate((b_["x"], b_["y"], d["zc"])))
+            Mi = Mv - d["m_bottle"]
+            cgi = tuple((Mv * cgv[k] - d["m_bottle"] * v) / Mi for k, v in enumerate((b_["x"], b_["y"], d["zc"])))
             h1 = hydro(d, Mi, cgi[2], cgi[:2], lost=i, foam_mm3=fm)
             at = attitude(d, Mi, cgi, i, fm, open_pt)
             rows_l.append(dict(botella_perdida=i + 1, eje=b_["axis"], x=round(b_["x"], 1), y=round(b_["y"], 1), masa_g=Mi,
                                empuje_restante_g=(n - 1) * d["V"] * P.SEAWATER_DENSITY, vertical=h1, equilibrio=at))
         perdida[tag] = rows_l
     res["una_botella_perdida"] = perdida
+    res["amarre_botellas"] = lock_check(d, parts)
+    for r_ in res["amarre_botellas"]:
+        libres = [k for k, v in r_["juego"].items() if v["mm"] is None]
+        if libres:
+            fails.append(f"botella {r_['botella']}: sin tope en {libres} (juego > 6 mm)")
     res["piezas_cabe_cama"] = all(r_["mc"]["fits_bed"] for r_ in rows)
     res["total_impreso_g"], res["total_impreso_h"] = tot_g, tot_h
     res["costo_soles"] = tot_g * P.FILAMENT_PRICE / 1000
@@ -1129,13 +1225,17 @@ def run(bottle, n, out, do_slice, render_png=True):
     for tag in perdida:
         peor = max(perdida[tag], key=lambda r_: (not r_["equilibrio"]["estable"], r_["equilibrio"]["inclinacion_deg"]))
         eq_ = peor["equilibrio"]
-        ok = (eq_["converge"] and eq_["estable"] and eq_["GM_roll"] > 0 and eq_["GM_pitch"] > 0 and eq_["inclinacion_deg"] <= TILT_MAX
+        gm_r = min(r_["equilibrio"]["GM_roll"] for r_ in perdida[tag])
+        gm_p = min(r_["equilibrio"]["GM_pitch"] for r_ in perdida[tag])
+        ok = (eq_["converge"] and gm_r >= GM_TARGET and gm_p >= GM_TARGET and eq_["estable"] and eq_["GM_roll"] > 0 and eq_["GM_pitch"] > 0 and eq_["inclinacion_deg"] <= TILT_MAX
               and eq_.get("francobordo_abertura_mm", -1) > 0 and peor["vertical"].get("flota"))
         res[f"veredicto_perdida_{tag}"] = dict(cumple=bool(ok), peor_botella=peor["botella_perdida"], inclinacion_deg=eq_["inclinacion_deg"],
-                                               GM_roll=eq_["GM_roll"], GM_pitch=eq_["GM_pitch"], francobordo_abertura_mm=eq_.get("francobordo_abertura_mm"),
+                                               GM_roll=eq_["GM_roll"], GM_pitch=eq_["GM_pitch"], GM_roll_min=gm_r, GM_pitch_min=gm_p, francobordo_abertura_mm=eq_.get("francobordo_abertura_mm"),
                                                equilibrio_estable=eq_["estable"])
         if not ok and tag == "sin_espuma":
             objetivos.append("con una botella perdida (sin espuma) no cumple: flota derecha, GM > 0, escora pequena y abertura sobre el agua")
+        elif not ok:
+            objetivos.append(f"con una botella perdida ({tag}) no cumple GM >= {GM_TARGET:g} (peor {gm_r:.0f} / {gm_p:.0f}), escora <= {TILT_MAX:g} o abertura sobre el agua")
     res["fallas"] = fails
     res["objetivos_no_cumplidos"] = objetivos
     res["interferencias"] = [(a, b, v) for a, b, v in inter]

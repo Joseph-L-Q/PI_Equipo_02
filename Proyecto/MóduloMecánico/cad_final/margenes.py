@@ -56,7 +56,7 @@ def slender():
     col_h = d["z_panel0"] - d["z_cover_top"]
     return {
         "B1_casco": (f"varilla de costilla intermedia {up_t:.1f} x 3 mm (lado canal)", up_h, up_t,
-                     f"poste M3 Ø{P.PET_POST_D:g} libre sobre la silla, con collar", post_free, P.PET_POST_D),
+                     f"poste M3 Ø{P.PET_POST_B1:g} libre sobre la silla, con collar", post_free, P.PET_POST_B1),
         "B5_cuna": (f"varilla de costilla intermedia {up_t:.1f} x 3 mm", up_h, up_t,
                     f"poste de correa Ø{P.PET_POST_D:g} (libre sobre la pared)", strap_free, P.PET_POST_D),
         "B2_cubierta": (f"columna del panel Ø{P.PET_COLUMN_D:g}", col_h, P.PET_COLUMN_D,
@@ -167,6 +167,7 @@ def write_md(rows):
             continue
         L.append(f"| {r['pieza']} | {r['bbox'][0]:.0f} × {r['bbox'][1]:.0f} | {'sí' if r['cabe'] else '**NO**'} | {r['pared_p1']:.2f} | "
                  f"{NOTES.get(r['pieza'], '')} |")
+    L += ["", 'Aire entre cuerdas y caja (05/11): las 4 cuerdas suben a 45° junto a las esquinas de la brida de la tapa. Con paredes de 5 mm la brida creció a 149 × 148 y el aire bajó a 1.5 mm (antes 2.9). Se cortó un chaflán de 6 mm en las 4 esquinas de la brida de M1s y de la tapa M2 (`caja.chaflan_esquina`, solo P2): ahora las cuerdas pasan a 3.2 mm (3.24, 3.24, 3.24, 3.24). Las dos piezas tienen el mismo contorno, por eso había que cortar las dos. Los 4 tornillos de esquina se corrieron 5.9 mm sobre el borde para dejar 5 mm de material junto al inserto; la ranura de la junta no se toca (queda a 10 mm del chaflán). Sigue por debajo de los 10 mm que se piden a brazos y cápsulas: es un aviso, no una falla.']
     L += ["", "## Elementos esbeltos por pieza (registro con control, `esbelto.py` + `esbelto_nodo.py`)", "",
           f"Cada elemento declarado debe medir al menos **{P.SLENDER_T_MIN:g} mm**; si no, `esbelto.py` sale con error y `build.py` / `boya_pet.py` no construyen. "
           "Espesor = lado fino (pared, costilla, oreja, barra) o diámetro (poste, columna).", "",

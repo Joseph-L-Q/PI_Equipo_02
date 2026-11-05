@@ -149,3 +149,55 @@ Tornillería nueva: 8 M3 × 20 inox A2 con tuerca y arandela (6 en el casco, 1 p
 - El criterio de "escora pequeña" (10 grados) es propio, no del dueño.
 - Hidrostática de formas simples: sin oleaje, viento ni tensión del umbilical; no es una certificación.
 - Si el umbilical con el PG7 a 30 mm del piso interior se puede tender dentro de la caja sin chocar con el portabaterías (la reserva de 14 mm junto a la pared -X lo permite en el modelo, sin comprobar con el cable real).
+
+## 05/11/2026: panel que aguanta golpes, espuma obligatoria y lo que aguanta en el mar
+
+**Panel lateral (golpe de 200 N de lado).** Antes las capas de la cubierta aguantaban 0.41 veces el golpe (había que llegar a 3). Se probó en orden y se acumuló lo que hacía falta:
+
+| Paso (se suma al anterior) | Qué es | Resultado |
+|---|---|---|
+| Partida | panel a 25 mm, columnas Ø12 | 0.41 entre capas (0.54 en general) |
+| a. | panel a 15 mm sobre la tapa (`boya_pet.panel_elevacion`) | 0.46 |
+| b. | columnas de Ø14 con chaflán de 3 mm (`boya_pet.columna_D`) | 0.52 |
+| c. | 4 tirantes impresos de 10 mm (`boya_pet.tirante`) | 0.53 |
+| d. | marco de 14 x 12 mm bajo el panel (`boya_pet.marco_panel`) | 0.75 |
+| e. | barras altas de 20 x 20 mm en las dos líneas de tornillos y en el extremo (`boya_pet.barra_cruz`), pilares de 1 mm | **3.05 (lisa) y 3.13 (mástil) entre capas; 2.7 en el plano 6.2; flecha 2.2 mm** |
+
+Lo que se rompía no eran las columnas sino las barras de la cubierta, que se doblaban sobre las dos líneas de tornillos; por eso hizo falta subirles la altura. Cada mitad de B2 pasa de 93 g a 214 g (lisa) y de 117 g a 236 g (mástil). El panel libra la tapa B4 y el mástil de la antena. Ola vertical de 200 N sobre la cubierta: 3.7 entre capas. Para volver atrás, cada paso es un valor de `params.py` (poner `0` en tirante o marco, 25 en elevación, 12 en columna).
+
+**Espuma de poliuretano: obligatoria.** `flotacion.relleno = "espuma_PU"` queda fijo. La espuma (30 kg/m3) rellena todos los huecos entre botellas, ranuras y bahías (unos 1.8 litros, 54 g) y entra por las ventanas hexagonales y por los huecos entre barras. Sin espuma la boya vuelca si se pierde una botella. Se calcula con el volumen de huecos al 100 % (`flotacion.espuma_llenado = 1.0`); el supuesto viejo de 50 % se sigue calculando como control.
+
+| Una botella perdida, peor caso | GM balanceo / cabeceo (mm) | Escora | Abertura sobre el agua |
+|---|---|---|---|
+| Sin espuma | negativo: vuelca | 68° | bajo el agua |
+| Espuma en todos los huecos (obligatoria) | **85 / 506** (objetivo 40) | 11.6° (criterio propio 10°) | 87 mm |
+| Espuma solo al 50 % (control) | -49 / -116: **vuelca** | 68° | bajo el agua |
+
+Con la espuma llena el GM pasa con holgura (antes 38 en el peor caso) y la boya queda estable, pero la escora de 11.6° pasa 1.6° del criterio propio. **Falla abierta:** si la espuma llena solo la mitad de los huecos, con la cubierta más pesada la boya vuelca al perder una botella; no se encontró reserva que lo arregle (ver la quinta botella más abajo). Por eso al armar hay que comprobar que la espuma llene bien (pesar el spray usado: unos 55 g).
+
+**Armado de la espuma (paso nuevo).** Después de atornillar casco, cunas y correas con las 4 botellas ya selladas y antes de cerrar la cubierta B2: (1) agitar el spray 1 minuto, (2) inyectar por las ventanas hexagonales y por los huecos entre barras, de abajo hacia arriba, en capas finas, (3) esperar 30 minutos entre capas, (4) cortar lo que sobresalga y atornillar B2. La lista de materiales incluye la lata de 750 ml (`bitacora.py`).
+
+**Las botellas no se mueven.** Se midió cuánto se puede desplazar cada botella en cada dirección antes de chocar con una pieza impresa (máximo 2.25 mm, todas ≤ 2.3 mm):
+
+| Botella | ±X | ±Y | +Z (arriba) | -Z (abajo) |
+|---|---|---|---|---|
+| 1 y 2 (en el casco) | 1.25 a 2.0 mm (costilla y hombro del cuello) | 1.25 a 1.75 mm (ranura del cuello y paredes) | 1.75 mm (barras de la cubierta B2) | 0.75 mm (patín del casco) |
+| 3 y 4 (en las cunas) | 1.0 mm (paredes de la cuna) | 1.25 a 2.25 mm (cuello y base de la cuna) | 1.75 mm (correa B6) | 0.75 mm (patín de la cuna) |
+
+**Amarre (tirón del cabo de 300 N a 45°): ahora cumple.** Se probó en orden, con el elemento local de cada mitad del casco (FS entre capas):
+
+| Paso | Qué es | FS entre capas | g de B1 (mitad) |
+|---|---|---|---|
+| 0 | ojal en la quilla delgada, un ramal con los 300 N | 0.24 | 148 |
+| 1 | ojal bajo el poste de la cubierta (parche 28 x 10), un ramal con 300 N | 0.71 | 145 |
+| d | pata de gallo de dos ramales a 60° (cada uno 300/(2 cos 30) = 173 N) con el parche anterior | 1.2 | 145 |
+| b | postes de la cubierta de Ø10 a Ø16 (`boya_pet.poste_cubierta_D`), ojal a 20 mm del poste | 2.9 | ~170 (estimado) |
+| **final** | parche de 34 x 14 mm (`boya_pet.ojal`) | **3.20** (FS general 2.4, flecha 2.1 mm) | **173** (+28 en total) |
+
+No se probó subir el ojal a las barras (a): el cabo tira desde la quilla, y un amarre alto inclinaría la boya. Tampoco hizo falta un yugo impreso (c). **Hay que hacer la pata de gallo:** dos ramales de cabo trenzado Ø6 de 350 mm con ojos cosidos (rotura mayor de 3 kN cada uno), a 60° entre sí, unidos en un anillo inox al que va el cabo de amarre. Cada ramal va a un tornillo M10 inox A2 con arandela grande y tuerca nylock en el parche de su mitad (en la lista de materiales). Si un ramal se rompe, el otro carga los 300 N completos y el margen baja a menos de la mitad. Los postes más gruesos mueven los tornillos de la cubierta de y = ±23 a ±20 mm; la cubierta se recalculó (golpe lateral 3.02 y 3.11, ola vertical 3.77 y 3.72).
+
+**¿Una quinta botella en el canal?** No. Se probó con una botella de 1 L entera en el centro (el mejor caso posible; una de 500 ml ayuda menos): con la espuma al 50 % la peor botella perdida sigue con GM de 23 / 39 mm (hace falta 40) y 18° de escora, y además no cabe entre los postes ni deja libre el paso del umbilical. Se mantiene el diseño: **riesgo conocido** si la espuma llena solo la mitad de los huecos; comprobar al armar que se usaron al menos 55 g de espuma (pesar la lata antes y después).
+
+**Cuánto aguanta en el mar** (cuentas en `salida/capacidad_mar.md` y `.json`). Golpe lateral en el panel: seguro hasta unos 200 N, equivalente a agua empujando a 4.4 m/s. Golpe vertical sobre la cubierta: seguro hasta 250 N (5.6 m/s). Nodo colgado del gancho con corriente de 1.5 m/s: seguro hasta unos 170 N; la corriente solo suma 2 N, el límite es el peso que cuelga. Cabo de amarre (pata de gallo): seguro hasta unos 320 N de tirón total (agua a 18 m/s sobre la cápsula).
+
+**Resultado de impresión (laminador):** 1394 g, 60.2 h, S/ 83.66 a S/ 60 el kilo (antes 1105 g, 46.9 h). Masa total 2297 g, calado 47.4 mm, francobordo 85.1 mm, GM 72 / 577 mm.

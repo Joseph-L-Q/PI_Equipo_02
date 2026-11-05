@@ -1,0 +1,81 @@
+{
+ "supuestos": {
+  "rho_agua_kg_m3": 1025.0,
+  "Cd_cuerpo_romo": 1.2,
+  "Cd_capsula": 1.0,
+  "olas": "aguas profundas, teoria lineal, velocidad de la particula en la superficie v = pi*H/T",
+  "periodos_s": [
+   4.0,
+   6.0
+  ],
+  "fs_objetivo": 3.0,
+  "material": "PETG, entre capas 22 MPa",
+  "lineal": "el esfuerzo es proporcional a la carga"
+ },
+ "casos": [
+  {
+   "caso": "golpe lateral sobre el panel (B2, cada mitad con los 200 N enteros)",
+   "pieza": "B2_cubierta_lisa_lateral",
+   "carga_N": 200.0,
+   "fs_capas": 3.02,
+   "aguanta_hasta_N": 604,
+   "segura_N": 201,
+   "area_proyectada_m2": 0.0173,
+   "Cd": 1.2,
+   "equivalente": {
+    "velocidad_agua_aguanta_m_s": 7.5,
+    "velocidad_agua_segura_m_s": 4.4,
+    "H_T4s_m_segura": 5.55,
+    "H_T6s_m_segura": 8.32
+   },
+   "justificacion_mar": "Area de lo que queda sobre el agua visto de lado (caja y tapa 147 x 81 mm, 2 columnas, mastil, canto del panel) = 173 cm2, Cd 1.2; velocidad del agua que la empuja con la carga segura; ola de aguas profundas, v = pi*H/T. Cada mitad se calcula con los 200 N enteros (en la boya completa se reparten entre las dos), asi que es conservador."
+  },
+  {
+   "caso": "golpe de ola vertical sobre las barras de la cubierta (B2, cada mitad con los 200 N enteros)",
+   "pieza": "B2_cubierta_mastil",
+   "carga_N": 200.0,
+   "fs_capas": 3.72,
+   "aguanta_hasta_N": 744,
+   "segura_N": 248,
+   "area_proyectada_m2": 0.0157,
+   "Cd": 1.0,
+   "equivalente": {
+    "velocidad_agua_aguanta_m_s": 9.6,
+    "velocidad_agua_segura_m_s": 5.5,
+    "H_T4s_m_segura": 7.06,
+    "H_T6s_m_segura": 10.59
+   },
+   "justificacion_mar": "Area en planta de las barras de una media cubierta = 157 cm2 (el resto es hueco), Cd 1.0, agua que cae a v sobre las barras; v = pi*H/T de una ola de aguas profundas."
+  },
+  {
+   "caso": "tiron del cabo de amarre repartido en la pata de gallo (B1, 2 ramales a 60 grados, 173 N cada uno con 300 N de tiron)",
+   "pieza": "B1_casco_cabo",
+   "carga_N": 300.0,
+   "fs_capas": 3.2,
+   "aguanta_hasta_N": 960,
+   "segura_N": 320,
+   "area_proyectada_m2": 0.0018,
+   "Cd": 1.0,
+   "equivalente": {
+    "velocidad_agua_aguanta_m_s": 32.2,
+    "velocidad_agua_segura_m_s": 18.6
+   },
+   "justificacion_mar": "El cabo tira de la boya con el arrastre de la linterna (frente de la capsula 18 cm2, Cd 1.0) mas su propio peso en el agua; se compara solo con el arrastre de la capsula (el cabo, la manguera y el cuerpo de la linterna suman mas, por eso el valor es optimista en velocidad). El tiron de olas no se incluye: depende de la longitud del cabo. La carga es el tiron TOTAL de la pata de gallo (cada ramal lleva 300 / (2 cos 30) = 173 N); si un ramal se rompe, el otro lleva todo y el resultado baja a la mitad o menos."
+  },
+  {
+   "caso": "nodo colgado del gancho: 150 N hacia abajo y corriente de 1.5 m/s (M3s, M5s, M1s)",
+   "pieza": "M5s_capsula_tapa_pie",
+   "carga_N": 150.0,
+   "fs_capas": 3.35,
+   "aguanta_hasta_N": 503,
+   "segura_N": 168,
+   "area_proyectada_m2": 0.0018,
+   "Cd": 1.0,
+   "equivalente": {
+    "arrastre_a_1_5_m_s_N": 2.1,
+    "velocidad_agua_si_toda_la_carga_segura_fuera_corriente_m_s": 13.4
+   },
+   "justificacion_mar": "La carga del caso es casi toda peso del nodo (150 N); el arrastre de una corriente de 1.5 m/s sobre la capsula (18 cm2, Cd 1.0) es solo 2.1 N. La corriente no es el limite: el limite es cuanto peso cuelga del gancho."
+  }
+ ]
+}

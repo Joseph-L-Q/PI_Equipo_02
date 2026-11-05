@@ -184,7 +184,7 @@ def hardware(res, rb):
     fj = 4 * P.PET_JOINT[0]
     boya = [(f"Tornillo M3 x {std(fj + 4)} inox A2 + tuerca (union de las mitades de B1, columnas del canal y almohadillas)", "M3", n_j1),
             (f"Pin impreso de alineacion de B1 (sin ferreteria; Ø{P.PET_JOINT[2]:g})", f"Ø{P.PET_JOINT[2]:g}", n_pin),
-            (f"Tornillo M3 x {std(P.PET_COVER_T + ins)} inox A2 + inserto M3 (B2, cada mitad a sus 4 postes de B1)", "M3", n_boss),
+            (f"Tornillo M3 x {std(max(P.PET_COVER_T, P.PET_XBAR[1]) + ins)} inox A2 + inserto M3 (B2, cada mitad a sus 4 postes de B1; las barras altas pasan de {P.PET_COVER_T:g} mm)", "M3", n_boss),
             (f"Tornillo M3 x {std(P.PET_EAR[2] + ins)} inox A2 + inserto M3 (orejas de B3 a los pilares de B2)", "M3", n_ear),
             (f"Tornillo M3 x {std(P.PET_LID_T + ins)} inox A2 + inserto M3 ciego (tapa B4 a la brida de B3)", "M3", n_lid),
             ("Tornillo M3 x 8 inox A2 + inserto M3 (portabaterias a los standoffs de B3)", "M3", n_hold),
@@ -197,8 +197,11 @@ def hardware(res, rb):
             ("Prensaestopas PG7 con contratuerca (B3: umbilical, cable solar, pigtail de antena)", "PG7", 3),
             ("Botella PET de 1 L, tapon de fabrica sellado", "1 L", P.FLOT_COUNT)]
     if P.FLOT_FILL == "espuma_PU":
-        boya.append(("Espuma de poliuretano en spray (relleno de huecos del casco)", f"{BP.foam_volume_mm3(bd) * P.FLOT_FOAM_FILL / 1000:.0f} cm3", 1))
-    boya += [("Ojal de amarre: grillete inox A2 al parche del casco (pata de gallo, uno por mitad)", f"Ø{P.PET_EYE[2]:g}", 2),
+        fv_ = BP.foam_volume_mm3(bd) * P.FLOT_FOAM_FILL / 1000
+        boya.append((f"Espuma de poliuretano de celda cerrada en spray, {P.FLOT_FOAM_DENSITY:g} kg/m3 (OBLIGATORIA: rellena todos los huecos entre botellas y ranuras de las 4 bahias; "
+                     f"{fv_ * P.FLOT_FOAM_DENSITY * 1e-3:.0f} g). Comprar 1 lata de 750 ml (rinde unos 1500 a 2500 cm3 libres): alcanza para un llenado", f"{fv_:.0f} cm3", 1))
+    boya += [("Ojal de amarre: tornillo M10 inox A2 con arandela grande Ø30 y tuerca nylock, al parche del casco (uno por mitad), con grillete inox A2", f"Ø{P.PET_EYE[2]:g}", 2),
+             ("Pata de gallo de amarre: 2 ramales de cabo trenzado Ø6 de 350 mm (rotura >= 3 kN cada uno), ojo cosido en cada punta; angulo entre ramales 60 grados (cada ramal lleva 300/(2 cos 30) = 173 N con el tiron de diseno de 300 N); se unen en un anillo inox A2 al que va el cabo C1", "350 mm", 2),
              ("Manguera flexible U1 de referencia", f"Ø{P.UMB_HOSE_D:g}", 1),
              ("Cabo de amarre C1 boya-linterna", "Ø4", 1)]
     modular = common_mod + [("Tornillo M4 x 12 + inserto termico M4 (riel a la caja)", "M4", 4),

@@ -8,8 +8,8 @@ No editar a mano: se regenera con `python cad_final/build.py --rapido` cuando `v
 
 | Pieza | Archivo (`salida/simple/stl`, `step`) | Cant. | BRep/BOP | Estanco | Cuerpos | Bbox en la orientacion (mm) | Voladizo mm² | Espesor p1 | Masa al 100 % g |
 |---|---|---|---|---|---|---|---|---|---|
-| M1 caja baja con bolsillos | M1s_caja_cuerpo | 1 | ok | si | 1 | 149.0 x 156.0 x 78.0 (sin girar) | 903 |  | 467 |
-| M2 caja, tapa con asa | M2_caja_tapa | 1 | ok | si | 1 | 149.0 x 148.0 x 85.5 (sin girar) | 1576 |  | 204 |
+| M1 caja baja con bolsillos | M1s_caja_cuerpo | 1 | ok | si | 1 | 149.0 x 156.0 x 78.0 (sin girar) | 847 |  | 467 |
+| M2 caja, tapa con asa | M2_caja_tapa | 1 | ok | si | 1 | 149.0 x 148.0 x 85.5 (sin girar) | 1576 |  | 203 |
 | M3s riel con gancho, mitad | M3s_riel_gancho | 2 | ok | si | 1 | 140.5 x 79.4 x 50.0 (X+90) | 5064 | 1.50 | 217 |
 | M3t tapa del bolsillo | M3t_tapa_bolsillo | 2 | ok | si | 1 | 117.0 x 61.0 x 5.0 (X180) | 0 |  | 45 |
 | M5s tapa con pie | M5s_capsula_tapa_pie | 2 | ok | si | 1 | 51.9 x 66.0 x 72.2 (X180) | 895 | 1.36 | 102 |
@@ -29,19 +29,19 @@ Masa por pieza con su relleno (100 % cajas estancas, tapas con junta y ganchos; 
 
 | Concepto | Bandeja 40 % | Bandeja 100 % |
 |---|---|---|
-| caja (M1 con bolsillos + M2 + bandejas + electronica) | 886 | 895 |
+| caja (M1 con bolsillos + M2 + bandejas + electronica) | 885 | 894 |
 | riel con ganchos (2 M3s) | 434 | 434 |
 | marcos de los bolsillos (2 M3f) | 110 | 110 |
 | tapas del bolsillo (2 M3t) | 90 | 90 |
 | capsulas (M4, M5, M6, M7, contenido) | 447 | 447 |
 | tornilleria y correas | 40 | 40 |
-| Nodo sin lastre g | 2008 | 2017 |
+| Nodo sin lastre g | 2007 | 2016 |
 | Desplaza cm³ | 2502 | 2502 |
 | Peso aparente sin lastre g | -557 | -548 |
-| Lastre que deja el peso aparente en la ventana (200 a 500 g), total g | 870 a 1214 | 859 a 1204 |
+| Lastre que deja el peso aparente en la ventana (200 a 500 g), total g | 870 a 1215 | 859 a 1204 |
 | **Lastre puesto g (total, mitad por bolsillo)** | **980** (490) | **980** (490) |
 | **Peso aparente con ese lastre g** | **+296** | **+305** |
-| **Peso en aire g** | **2988** | **2997** |
+| **Peso en aire g** | **2987** | **2996** |
 
 Rango de lastre que mantiene ambos casos en la ventana: **870 a 1204 g** en total. El granel llena 21.8 de 30 mm del bolsillo (73 %); en el maximo del rango llenaria 26.8 mm (cabe). Con tuercas y arandelas M8 de inox, a granel: 1042 g en total, 23.2 mm llenos. Con perdigon de plomo en bolsa: 997 g en total, 15.3 mm llenos.
 
@@ -58,7 +58,7 @@ Aro Ø200, malla de referencia, **4 cuerdas** que suben rectas del aro (atadas p
 | Codo de las cuerdas / punto de amarre sobre el aro | 218 / **400 mm** (`linterna.nudo_h`) |
 | **Aire cuerda-brazo** (exigido 10) | **48.0 mm** |
 | **Aire cuerda-capsula** (exigido 10) | **70.4 mm** |
-| Aire cuerda-caja (brida de la tapa; informativo) | 1.5 mm |
+| Aire cuerda-caja (brida de la tapa; informativo) | 3.2 mm |
 | Aro y red contra el nodo | sin contacto |
 | Camara en Ø200: lente a la red | 42 mm, campo diagonal 58 mm, FUERA del enfoque (80 mm a infinito, estimado) |
 | Camara en Ø500 | el eje optico no corta la red |
@@ -88,9 +88,9 @@ Por camara: 60 + 25 + conducto 136 (recto, sin curva) + bucle 41 + 30 + 30 = **2
 
 ## 7b. Avisos (no hacen fallar el build)
 
-- cuerda-caja (brida de la tapa) a 1.5 mm, menos que los 10 que se piden a brazos y capsulas
+- cuerda-caja (brida de la tapa) a 3.2 mm, menos que los 10 que se piden a brazos y capsulas
 
 ## 8. Constantes de modulo
 
 - `PAD_BORE` = 30: agujero del cojin para la llave de vaso del PG7. `POCKET_END` = 8: paredes extremas de los bolsillos con los insertos M3 de M3t. `TIP_HOLE` = 8: salida del cable en la punta. `HOOK_CLR` = 10: aire entre el gancho y la capsula.
-- Tiempo de `simple.py`: 38 s.
+- Tiempo de `simple.py`: 37 s.

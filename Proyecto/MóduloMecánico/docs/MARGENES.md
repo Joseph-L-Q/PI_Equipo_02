@@ -33,6 +33,8 @@ Pared medida en el STL: percentil 1 del espesor local, con 3000 rayos hacia aden
 | M6_capsula_bisel | 42 × 42 | sí | 2.25 | 2.25 en el borde del bisel (no estructural). |
 | M7_capsula_ventana | 30 × 30 | sí | 3.00 |  |
 
+Aire entre cuerdas y caja (05/11): las 4 cuerdas suben a 45° junto a las esquinas de la brida de la tapa. Con paredes de 5 mm la brida creció a 149 × 148 y el aire bajó a 1.5 mm (antes 2.9). Se cortó un chaflán de 6 mm en las 4 esquinas de la brida de M1s y de la tapa M2 (`caja.chaflan_esquina`, solo P2): ahora las cuerdas pasan a 3.2 mm (3.24, 3.24, 3.24, 3.24). Las dos piezas tienen el mismo contorno, por eso había que cortar las dos. Los 4 tornillos de esquina se corrieron 5.9 mm sobre el borde para dejar 5 mm de material junto al inserto; la ranura de la junta no se toca (queda a 10 mm del chaflán). Sigue por debajo de los 10 mm que se piden a brazos y cápsulas: es un aviso, no una falla.
+
 ## Elementos esbeltos por pieza (registro con control, `esbelto.py` + `esbelto_nodo.py`)
 
 Cada elemento declarado debe medir al menos **5 mm**; si no, `esbelto.py` sale con error y `build.py` / `boya_pet.py` no construyen. Espesor = lado fino (pared, costilla, oreja, barra) o diámetro (poste, columna).

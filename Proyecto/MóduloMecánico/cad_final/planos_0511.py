@@ -280,7 +280,8 @@ def cotas_a_mano():
     return {k: " · ".join(v) for k, v in out.items()}, f.name
 
 
-def unir(tag="v5"):
+def unir(tag="v5", override=None):
+    """override: {code: (pdf, origen, escala)} wins over every other source (used by publicar_sin_api.py for v6)."""
     import html
     import subprocess
     import tempfile
@@ -295,7 +296,9 @@ def unir(tag="v5"):
             continue
         rec = R.get("piezas", {}).get(code, {})
         a4 = rec.get("a4", {})
-        if rec.get("hecho_0511") and a4.get("pdf"):
+        if override and code in override:
+            f, origen, esc = override[code]
+        elif rec.get("hecho_0511") and a4.get("pdf"):
             f, origen, esc = P.MOD / a4["pdf"], "Onshape (nuevo 04/11)", {"2:5": "1:2,5"}.get(a4.get("escala"), a4.get("escala", "-"))
         elif s.get("local", {}).get(code):
             l = s["local"][code]
@@ -318,16 +321,16 @@ h1 {{ font-size: 16pt; margin: 0; }} .sub {{ font-size: 8.5pt; color: #444; marg
 table {{ border-collapse: collapse; width: 100%; }} th, td {{ border: 1px solid #bbb; padding: 1.5pt 3pt; vertical-align: top; }}
 th {{ background: #e8eef3; text-align: left; }} .c {{ text-align: center; }} tr {{ page-break-inside: avoid; }}
 </style></head><body>
-<h1>LANTERNGUARD · planos de fabricación v5 (formato del equipo)</h1>
+<h1>LANTERNGUARD · planos de fabricación {tag} (formato del equipo)</h1>
 <div class="sub">Equipo 02 UPCH · PETG · ISO A4 horizontal, primer diedro, cotas en mm · {time.strftime('%d/%m/%Y')} · hoja 1 = esta portada ·
 Onshape LG_IMPRIMIR_P2: {html.escape(R['documento']['url'])} · Los planos «Local» se generaron desde el STEP con el script del repo
 (cuota de la API de Onshape agotada); los de Onshape se pueden completar a mano. Lista de cotas a mano: <b>docs/{html.escape(fuente)}</b>.</div>
 <table><tr><th>Hoja</th><th>Pieza</th><th>Cant.</th><th>Origen</th><th>Escala</th>
 <th>Cotas que faltan a mano (de {html.escape(fuente)})</th></tr>{''.join(rows)}</table>
 </body></html>"""
-    tmp = Path(tempfile.mkdtemp(prefix="portada_v5_"))
+    tmp = Path(tempfile.mkdtemp(prefix=f"portada_{tag}_"))
     (tmp / "p.html").write_text(page, encoding="utf-8")
-    cover = P.OUT / "portada_A4_v5.pdf"
+    cover = P.OUT / f"portada_A4_{tag}.pdf"
     subprocess.run([str(EDGE), "--headless=new", "--disable-gpu", f"--user-data-dir={tmp / 'perfil'}", "--no-pdf-header-footer",
                     f"--print-to-pdf={cover}", (tmp / "p.html").as_uri()], capture_output=True, timeout=180)
     w = PdfWriter()
