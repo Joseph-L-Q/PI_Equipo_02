@@ -113,9 +113,9 @@ PETG alcanza para una piscina; si la boya va a estar semanas al sol, imprimir en
 
 | Pieza | Antes | Ahora | Unión |
 |---|---|---|---|
-| B1 casco | 1 pieza, 254 × 226 | **2 mitades iguales** de 132 × 226 (un solo STL, se imprime 2 veces) | Brida de 4 + 4 mm en x = 0: 2 columnas en el canal y 2 almohadillas bajas en las paredes, **6 tornillos M3 × 20 inox A2 con tuerca** y 2 pines Ø4 de alineación (holgura 0,2, la de PB7) |
-| B2 cubierta | 1 pieza, 254 × 226 | Lado liso + lado mástil, 127 × 226 cada uno | Cada mitad es un marco cerrado (barra nueva en x = 0) atornillado a sus propios 4 postes del casco. La caja y el panel atornillados encima amarran las dos mitades |
-| B5 cuna (× 2) | 1 pieza, 254 × 115 | Lado base + lado cuello, 127 × 118 cada uno (× 2) | Cada mitad va atornillada al casco por su lengüeta. Entre mitades: brida 4 + 4 mm con 2 M3 en almohadillas bajas |
+| B1 casco | 1 pieza, 254 × 226 | **2 mitades iguales** de 132 × 226 (un solo STL, se imprime 2 veces) | Brida de 5 + 5 mm en x = 0: 2 columnas en el canal (cada una con una **lengüeta** de 6 × 16 × 4 mm y su ranura) y 2 almohadillas bajas en las paredes, **6 tornillos M3 × 25 inox A2 con tuerca** y 2 pines Ø5 de alineación (holgura 0,2, la de PB7) |
+| B2 cubierta | 1 pieza, 254 × 226 | Lado liso + lado mástil, 127 × 226 cada uno | Cada mitad es un marco cerrado (barra nueva en x = 0, con 4 **lengüetas** verticales de alineación) atornillado a sus propios 4 postes del casco. La caja y el panel atornillados encima amarran las dos mitades |
+| B5 cuna (× 2) | 1 pieza, 254 × 115 | Lado base + lado cuello, 127 × 118 cada uno (× 2) | Cada mitad va atornillada al casco por su lengüeta. Entre mitades: brida 5 + 5 mm con 2 M3 en almohadillas bajas, cada una con una **lengüeta** vertical (sin pines: no caben junto a la botella) |
 
 **El ojal de amarre** estaba justo en x = 0, donde se parte el casco. Ahora hay **2 ojales**, uno por mitad, en x = ±21: el cabo de amarre va en pata de gallo (dos ramales a un nudo). Así no se corta el punto que recibe la carga y queda redundante.
 

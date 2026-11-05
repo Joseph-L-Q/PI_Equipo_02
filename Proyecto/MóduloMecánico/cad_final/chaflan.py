@@ -15,13 +15,14 @@ import cadquery as cq
 import params as P
 
 LOG = {}
+OVERRIDE = None      # (size, max size) set by a pipeline with its own pair (boya_pet.py: chaflan.base_boya[_max]); None = chaflan.base_soportes[_max]
 
 
 def sizes():
-    c0, cm = P.CHAMFER_BASE, P.CHAMFER_BASE_MAX
+    c0, cm = OVERRIDE if OVERRIDE else (P.CHAMFER_BASE, P.CHAMFER_BASE_MAX)
     if c0 <= 0:
         return []
-    return ([cm] if cm > c0 else []) + [c0] + [c for c in (1.0, 0.5) if c < c0]
+    return ([cm] if cm > c0 else []) + [c0] + [c for c in (2.0, 1.5, 1.0, 0.5) if c < c0]
 
 
 def on():

@@ -49,8 +49,8 @@ BED_USE = p("impresora.cama_util", (230.0, 230.0), "equipo", OK,
             "Cama util para el check: ninguna pieza pasa de 230 en X o Y (zona excluida de la P1P y margen contra errores; "
             "pedido del equipo 04/11). PRINT_BED (256) sigue siendo la cama fisica que usan el slicer y las placas")
 WALL_MIN_NS = p("margen.pared_min", 2.4, "equipo", OK, "Pared minima en paredes no estructurales (6 perimetros de 0.4)")
-SLENDER_T_MIN = p("margen.esbelto_min", 4.0, "equipo", OK,
-                  "Espesor minimo de todo elemento vertical esbelto (alto/espesor > 8) o que recibe carga, con chaflan en la base")
+SLENDER_T_MIN = p("margen.esbelto_min", 5.0, "equipo", OK,
+                  "Espesor minimo de todo elemento vertical esbelto (alto/espesor > 8) o que recibe carga, con chaflan de 45 grados en la base (laboratorio 04/11: 4 -> 5; lo hace cumplir esbelto.py)", 4.0)
 SLENDER_RATIO = p("margen.esbelto_ratio", 8.0, "equipo", OK, "alto/espesor por encima del cual un elemento es esbelto")
 FS_TARGET_Z = p("margen.fs_entre_capas", 3.0, "equipo", OK, "FS objetivo entre capas en lo estructural")
 PRINTER = p("impresora.modelo", "Bambu Lab P1P", "fabricante", OK, "Impresora del equipo")
@@ -512,6 +512,7 @@ BUOY_SMA_HOLE = p("boya.sma_agujero", 6.5, EST, VER, "Agujero del pasamuros SMA 
 BUOY_COMP_GAP = p("boya.holgura_modulos", 5.0, EST, VER, "Aire entre modulos sobre la bandeja")
 BUOY_TOP_COMP_H = p("boya.alto_pcb_conectores", 25.0, EST, VER, "PCB con Heltec en cabezal y conectores sobre la bandeja")
 BUOY_BATT_STANDOFF = p("boya.apoyo_bateria", 6.0, EST, VER, "Refuerzo M3 bajo el portabaterias (inserto de 6 sin tocar el fondo)")
+BUOY_STANDOFF_D = p("boya.apoyo_bateria_D", 9.0, EST, VER, "Diametro de los 4 refuerzos bajo el portabaterias (era 9 fijo en el CAD; el chaflan de 45 grados crece desde ahi)", 9.0)
 BUOY_TRAY_GAP = p("boya.aire_bateria_bandeja", 3.0, EST, VER, "Aire entre el portabaterias y la bandeja")
 BUOY_HOLDER_HOLES = p("boya.portabaterias_agujeros", (66.0, 56.0), EST, VER, "Paso de los 4 agujeros del portabaterias; medir")
 BUOY_TRAY_EDGE = p("boya.bandeja_borde", 2.0, EST, VER, "Margen de la bandeja alrededor de los modulos")
@@ -764,7 +765,7 @@ FLOT_CLEAR = p("flotacion.holgura_botella", 1.5, EST, VER, "Holgura radial de la
 FLOT_CHANNEL = p("flotacion.canal", 50.0, EST, VER, "Ancho libre entre botellas: umbilical, domo del PG7 y brazo de estabilidad")
 FLOT_NECK_OUT = p("flotacion.cuello_fuera", 20.0, EST, VER, "Cuanto del cuello/tapon asoma fuera de la costilla del cuello")
 PET_WALL = p("boya_pet.pared", 2.4, "equipo", VER, "Pared de 6 perimetros de 0.4")
-PET_RIB = p("boya_pet.costilla", 4.0, "equipo", VER, "Espesor de las costillas que sujetan la botella (margen 04/11: >= 4 en lo que recibe carga)", 3.0)
+PET_RIB = p("boya_pet.costilla", 5.0, "equipo", VER, "Espesor de las costillas que sujetan la botella y de los topes bajos (laboratorio 04/11: >= 5 en todo elemento esbelto)", 4.0)
 PET_SPLIT = p("boya_pet.partir", True, "equipo", VER,
               "Casco B1, cubierta B2 y cunas B5 en 2 mitades por x = 0 (cama util 230); False = piezas enteras de 254 (no caben)")
 PET_LOW_STOPS = p("boya_pet.topes_bajos", True, "equipo", VER,
@@ -772,8 +773,15 @@ PET_LOW_STOPS = p("boya_pet.topes_bajos", True, "equipo", VER,
                   "varillas de 2.4 x 3 mm del lado del canal, que no sujetaban nada (observacion de la profesora 03/11)")
 PET_STOP_H = p("boya_pet.tope_alto", 15.0, "equipo", VER, "Alto maximo de la silla de las costillas intermedias sobre el patin")
 PET_POST_D = p("boya_pet.poste_D", 10.0, "equipo", VER, "Postes de tornillo del casco y de las correas (eran 8); con collar a 45 grados", 8.0)
-PET_JOINT = p("boya_pet.union", (4.0, 12.0, 4.0, 0.2), EST, VER,
-              "Union de mitades: brida por mitad, ancho de columna/almohadilla, pin de alineacion, holgura del pin (PB7)")
+PET_JOINT = p("boya_pet.union", (5.0, 16.0, 5.0, 0.2), EST, VER,
+              "Union de mitades: brida por mitad, ancho de columna/almohadilla, pin de alineacion, holgura del pin (PB7). 04/11: 4,12,4 -> 5,16,5 "
+              "(el tornillo y el pin dejan >= 5 de material a cada lado)", (4.0, 12.0, 4.0, 0.2))
+PET_KEY = p("boya_pet.llave", (4.0, 6.0, 0.5), EST, VER,
+            "Lengueta y ranura de la union de mitades: salida de la lengueta, ancho/alto de su seccion, holgura de la ranura en profundidad "
+            "(en los lados va la holgura del pin). Salida 0 = sin lengueta (version anterior)")
+PET_CHAMFER = p("chaflan.base_boya", 3.0, "equipo", VER,
+                "Chaflan a 45 grados en la base de los elementos esbeltos de la boya (solo B1 a B6; los del nodo siguen con chaflan.base_soportes)", 1.5)
+PET_CHAMFER_MAX = p("chaflan.base_boya_max", 4.0, "equipo", VER, "Chaflan mas grande que se prueba primero en la boya; si choca baja a 3, 2, 1.5, 1 y 0.5", 2.0)
 PET_HULL_MAX = p("boya_pet.casco_largo_max", 254.0, EST, VER, "Largo del casco (era el limite de la cama de 256; con las mitades ya no limita, se mantiene para no cambiar la flotacion)")
 PET_COVER_T = p("boya_pet.cubierta_espesor", 8.0, EST, VER, "Barras de la cubierta atornillada (no estanca). 04/11: 4 -> 8, SimScale con el golpe de ola de 200 N daba FS 0.4 con 4 mm (el esfuerzo baja con el espesor al cuadrado)", 4.0)
 PET_BAR_W = p("boya_pet.barra_ancho", 14.0, EST, VER, "Ancho de las barras de la cubierta")
@@ -781,13 +789,13 @@ PET_BOSS = p("boya_pet.cubierta_tornillo_y", 1.0, EST, VER, "Los 8 tornillos M3 
 PET_PILLAR = p("boya_pet.pilar", (10.0, 6.0), EST, VER, "Pilares de la cubierta bajo las orejas de la caja: diametro, alto (francobordo y domo PG7)")
 PET_COLUMN_D = p("boya_pet.columna_D", 12.0, EST, VER, "4 columnas del panel, integradas a la cubierta")
 PET_PANEL_LIFT = p("boya_pet.panel_elevacion", 25.0, "equipo", VER, "Panel 25 mm sobre la tapa de la caja")
-PET_MAST = p("boya_pet.mastil", (14.0, 8.0, 20.0), EST, VER, "Diametro exterior, interior y cuanto sobresale sobre la cara superior del panel")
+PET_MAST = p("boya_pet.mastil", (18.0, 8.0, 20.0), EST, VER, "Diametro exterior, interior y cuanto sobresale sobre la cara superior del panel (04/11: 14 -> 18, pared 3 -> 5)", (14.0, 8.0, 20.0))
 PET_BOX_MARGIN = p("boya_pet.caja_margen", 5.0, "equipo", VER, "La caja seca mide componentes + 5 mm")
 PET_BOX_WALL = p("boya_pet.caja_pared", 2.4, "equipo", VER, "Pared y piso de la caja seca")
-PET_LID_T = p("boya_pet.tapa_espesor", 4.0, EST, VER, "Ranura de 1.5 deja 2.5 bajo la junta")
+PET_LID_T = p("boya_pet.tapa_espesor", 6.5, EST, VER, "Ranura de 1.5 deja 5 bajo la junta (04/11: 4 -> 6.5, antes 2.5)", 4.0)
 PET_FLANGE = p("boya_pet.brida", (10.0, 7.0), EST, VER, "Ancho y espesor de la brida de la caja (chaflan de 45 grados abajo)")
 PET_GLAND_RES = p("boya_pet.caja_reserva_pg7", 14.0, EST, VER, "Largo interior reservado junto al PG7 del umbilical (contratuerca + cable)")
-PET_EAR = p("boya_pet.oreja", (14.0, 14.0, 4.0), EST, VER, "Orejas de la caja sobre los pilares: ancho, salida, espesor")
+PET_EAR = p("boya_pet.oreja", (14.0, 14.0, 5.0), EST, VER, "Orejas de la caja sobre los pilares: ancho, salida, espesor (04/11: 4 -> 5)", (14.0, 14.0, 4.0))
 PET_EYE = p("boya_pet.ojal", (28.0, 8.0, 10.5), EST, VER, "Parche de amarre en el fondo del casco: ancho en x, espesor, agujero; independiente del umbilical")
 PET_CABLE_HOLE = p("boya_pet.paso_cable", 14.0, EST, VER, "Agujero del umbilical en la costilla del extremo de la base")
 PET_EXCLUDE = p("boya_pet.zona_excluida", (18.0, 28.0), "fabricante", OK, "bed_exclude_area del perfil P1P: esquina que el slicer no deja ocupar")
@@ -799,7 +807,7 @@ FLOT_END_CLR = p("flotacion.holgura_largo", 1.0, EST, VER, "Holgura de largo de 
 PET_HULL_W_MAX = p("boya_pet.casco_ancho_max", 253.0, EST, VER, "Ancho del casco central en cruz si su largo cabe en casco_largo_alt (se imprime con el lado largo en Y, corrido fuera de la esquina excluida); si no, 225.6")
 PET_HULL_L_ALT = p("boya_pet.casco_largo_alt", 236.0, EST, VER, "256 - 18 de zona excluida - 2 de margen")
 PET_TONGUE = p("boya_pet.lengueta", (12.0, 14.0, 8.0), EST, VER, "Lenguetas de la cuna atornilladas a las costillas extremas del casco: ancho, alto, largo minimo")
-PET_STRAP = p("boya_pet.correa", (14.0, 4.0), EST, VER, "Correa que cierra cada cuna sobre la botella: ancho, espesor")
+PET_STRAP = p("boya_pet.correa", (14.0, 5.0), EST, VER, "Correa que cierra cada cuna sobre la botella: ancho, espesor (04/11: 4 -> 5)", (14.0, 4.0))
 PET_UMB_Z = p("boya_pet.pg7_umbilical_z", 30.0, EST, VER, "Altura del eje del PG7 del umbilical sobre el piso interior de la caja (era 15; subido para el francobordo con el casco mas bajo)")
 
 # =====================================================================================

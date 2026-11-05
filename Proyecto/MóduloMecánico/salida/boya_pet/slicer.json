@@ -5,10 +5,10 @@
   "orientacion": "sin girar",
   "soportes": true,
   "relleno_pct": 40,
-  "g": 133.1,
-  "h": 5.24,
-  "costo_soles": 11.98,
-  "voladizo_mm2": 322.9
+  "g": 147.9,
+  "h": 6.03,
+  "costo_soles": 13.32,
+  "voladizo_mm2": 607.2
  },
  "B2_cubierta_lisa": {
   "nombre": "B2 cubierta lado lisa",
@@ -16,9 +16,9 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 91.4,
-  "h": 5.14,
-  "costo_soles": 8.23,
+  "g": 92.9,
+  "h": 5.24,
+  "costo_soles": 8.36,
   "voladizo_mm2": 0.0
  },
  "B2_cubierta_mastil": {
@@ -27,10 +27,10 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 106.8,
-  "h": 5.73,
-  "costo_soles": 9.62,
-  "voladizo_mm2": 16.9
+  "g": 116.6,
+  "h": 6.05,
+  "costo_soles": 10.49,
+  "voladizo_mm2": 28.3
  },
  "B3_caja": {
   "nombre": "B3 caja seca",
@@ -38,9 +38,9 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 173.4,
-  "h": 5.59,
-  "costo_soles": 15.6,
+  "g": 175.0,
+  "h": 5.72,
+  "costo_soles": 15.75,
   "voladizo_mm2": 122.8
  },
  "B4_tapa": {
@@ -49,9 +49,9 @@
   "orientacion": "X180",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 57.2,
-  "h": 2.1,
-  "costo_soles": 5.15,
+  "g": 78.6,
+  "h": 3.35,
+  "costo_soles": 7.08,
   "voladizo_mm2": 0.0
  },
  "B5_cuna_base": {
@@ -60,10 +60,10 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 72.8,
-  "h": 2.98,
-  "costo_soles": 6.55,
-  "voladizo_mm2": 202.6
+  "g": 79.3,
+  "h": 3.26,
+  "costo_soles": 7.14,
+  "voladizo_mm2": 207.8
  },
  "B5_cuna_cuello": {
   "nombre": "B5 cuna lado cuello (x2)",
@@ -71,10 +71,10 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 76.2,
-  "h": 3.02,
-  "costo_soles": 6.86,
-  "voladizo_mm2": 202.6
+  "g": 81.4,
+  "h": 3.28,
+  "costo_soles": 7.33,
+  "voladizo_mm2": 207.8
  },
  "B6_correa": {
   "nombre": "B6 correa",
@@ -82,9 +82,9 @@
   "orientacion": "sin girar",
   "soportes": false,
   "relleno_pct": 40,
-  "g": 5.2,
-  "h": 0.3,
-  "costo_soles": 0.47,
+  "g": 6.1,
+  "h": 0.34,
+  "costo_soles": 0.55,
   "voladizo_mm2": 0.0
  }
 }

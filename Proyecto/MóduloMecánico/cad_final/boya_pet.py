@@ -132,7 +132,7 @@ def _dims_cruz(bottle, n):
     d["poke"] = max(0.0, d["tip_x"] - d["LH"] / 2)                  # neck beyond the outer face of the end rib
     d["X0"] = 0.0
     d["xc_bot"] = d["x_bot0"] + Lb / 2
-    xn = d["LH"] / 2 - rib / 2
+    xn = d["LH"] / 2 - rib                                          # INNER face of the neck rib: the shoulder is widest there (with a 5 mm rib the centre value cut into the bottle)
     d["neck_slot_r"] = min(r + clr, _bottle_radius(d, xn - d["x_bot0"]) + 1.0)
     tw, th, tmin = P.PET_TONGUE
     d["tongue_w"], d["tongue_h"] = tw, th
@@ -181,7 +181,7 @@ def dims(bottle, n):
     d["z_panel0"] = d["z_lid_top"] + P.PET_PANEL_LIFT
     d["z_panel1"] = d["z_panel0"] + P.BUOY_PANEL[2]
     d["z_mast"] = d["z_panel1"] + P.PET_MAST[2]
-    d["x_mast"] = d["LH"] / 2 - P.PET_BAR_W / 2
+    d["x_mast"] = d["LH"] / 2 - P.PET_MAST[0] / 2                  # mast Ø18 flush with the end of the hull (a pad widens the 14 mm bar under it)
     return d
 
 
@@ -319,9 +319,10 @@ def b1_cruz(d):
         for s in (1, -1):
             x = boss_x(d, x)
             h = h.union(cyl((x, s * boss_y(d), 0), (0, 0, 1), rp, zt))
-            if P.PET_LOW_STOPS and kind == "mid":                                # 45 deg collar where the post leaves the low saddle
-                h = h.union(cq.Workplane().add(cq.Solid.makeCone(rp, rp + 3.0, 4.0, cq.Vector(x, s * boss_y(d), zs - 4.0), cq.Vector(0, 0, 1))))
-                h = h.union(cq.Workplane().add(cq.Solid.makeCone(rp + 3.0, rp, 3.0, cq.Vector(x, s * boss_y(d), zs), cq.Vector(0, 0, 1))))
+            if P.PET_LOW_STOPS and kind == "mid":                                # 45 deg collar (radius grows by c over a height c) where the post leaves the low saddle
+                cc = P.PET_CHAMFER
+                h = h.union(cq.Workplane().add(cq.Solid.makeCone(rp, rp + cc, cc, cq.Vector(x, s * boss_y(d), zs - cc), cq.Vector(0, 0, 1))))
+                h = h.union(cq.Workplane().add(cq.Solid.makeCone(rp + cc, rp, cc, cq.Vector(x, s * boss_y(d), zs), cq.Vector(0, 0, 1))))
             h = h.cut(cyl((x, s * boss_y(d), zt - P.M3_INSERT_DEPTH), (0, 0, 1), P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.1))
     if P.PET_SPLIT:
         h = h.union(joint_blocks_b1(d))
@@ -339,23 +340,50 @@ def eye_x(d):
 
 
 def joint_b1(d):
-    """(bolts, pins) of the B1 joint: M3 through both flanges along X, at (y, z); 2 alignment pins (peg of A, peg of B)."""
+    """(bolts, pins, keys) of the B1 joint at x = 0. Channel columns (jw wide, up to the side-wall height), from the floor up:
+    M3 at z1, tongue/groove (a ridge along y through the whole column) at zk, alignment pin at zp, M3 at z2; every gap between
+    two features and every wall around a hole is >= esbelto_min. Tongue on A in the +y column, on B in the -y one (the halves
+    are the same part turned 180 deg about Z). Two more M3 on the low pads at the outer walls."""
     jw = P.PET_JOINT[1]
+    kh = P.PET_KEY[1]
     yc = d["wc"] / 2 - jw / 2
     yw = d["WH"] / 2 - jw / 2
-    z1, z2 = 12.0, d["wall_h"] - 10.0
+    z1, zk, zp = 9.0, 19.0, 30.0
+    z2 = d["wall_h"] - 9.0
     bolts = [(s * yc, z) for s in (1, -1) for z in (z1, z2)] + [(s * yw, 7.5) for s in (1, -1)]
-    return bolts, [(yc, (z1 + z2) / 2), (-yc, (z1 + z2) / 2)]
+    keys = [(yc - jw / 2, yc + jw / 2, zk - kh / 2, zk + kh / 2, "A"), (-yc - jw / 2, -yc + jw / 2, zk - kh / 2, zk + kh / 2, "B")]
+    return bolts, [(yc, zp), (-yc, zp)], keys
+
+
+def b5_pad(d):
+    """B5 low pad at each wall, measured from the outer wall inwards (all gaps >= esbelto_min): M3 bolt, then the vertical
+    tongue/groove, then the inner edge. Returns (bolt_y, tongue (y0, y1), pad_inner_y, pad_h); the y are distances from the axis, > 0."""
+    s5, hole = P.SLENDER_T_MIN, P.M3_CLEAR
+    kw, c = P.PET_KEY[1], P.PET_JOINT[3]
+    by = d["Wb"] / 2 - (s5 + hole / 2) - 0.1
+    g_hi = by - hole / 2 - s5                                    # outer edge of the groove
+    g_lo = g_hi - kw - 2 * c
+    return by, (g_lo + c, g_hi - c), g_lo - s5, math.ceil(7.0 + hole / 2 + s5)      # bolt at z = 7: the pad is 14 high
 
 
 def joint_b5(d):
-    jw = P.PET_JOINT[1]
-    return [(s * (d["Wb"] / 2 - jw / 2), 6.5) for s in (1, -1)], None
+    by, (k0, k1), _pin, ph = b5_pad(d)
+    keys = [(k0, k1, 0.0, float(ph), "A"), (-k1, -k0, 0.0, float(ph), "B")]       # vertical tongues (the bottle leaves no room for pins here)
+    return [(s * by, 7.0) for s in (1, -1)], None, keys
+
+
+def b2_keys(d):
+    """Vertical tongues (the full 8 mm height of the seam bar) at two stations per side; tongue on A at +y1 and -y2, on B at -y1 and +y2."""
+    kw, bw, WH, zt, zb = P.PET_KEY[1], P.PET_BAR_W, d["WH"], d["z_cover"], d["z_cover_top"]
+    y1 = d["yb"] / 2
+    y2 = (d["yb"] + bw / 2 + WH / 2) / 2
+    return [(y1 - kw / 2, y1 + kw / 2, zt, zb, "A"), (-y1 - kw / 2, -y1 + kw / 2, zt, zb, "B"),
+            (y2 - kw / 2, y2 + kw / 2, zt, zb, "B"), (-y2 - kw / 2, -y2 + kw / 2, zt, zb, "A")]
 
 
 def joint_blocks_b1(d):
     """Joint columns in the channel (up to the side-wall height) and low pads at the outer walls, 2 flanges thick across
-    x = 0. The bottles clear them (checked against the dummies)."""
+    x = 0 (4 half-flanges: 2 jf on each side, so the groove of the tongue keeps >= esbelto_min behind it). The bottles clear them (checked against the dummies)."""
     jf, jw = P.PET_JOINT[0], P.PET_JOINT[1]
     wc, WH, wh = d["wc"], d["WH"], d["wall_h"]
     b = None
@@ -366,21 +394,35 @@ def joint_blocks_b1(d):
 
 
 def joint_blocks_b5(d):
-    """Low pads at both walls of the cradle across x = 0 (cradle frame), for 2 M3 bolts."""
-    jf, jw = P.PET_JOINT[0], P.PET_JOINT[1]
+    """Low pads at both walls of the cradle across x = 0 (cradle frame): 1 M3 and 1 vertical tongue/groove each, trimmed by the bottle."""
+    jf = P.PET_JOINT[0]
     Wb = d["Wb"]
-    return box(-2 * jf, 2 * jf, Wb / 2 - jw, Wb / 2, 0, 12.0).union(box(-2 * jf, 2 * jf, -Wb / 2, -Wb / 2 + jw, 0, 12.0))
+    _by, _k, yin, ph = b5_pad(d)
+    bottle = cyl((-2 * jf - 1, 0, d["zc"]), (1, 0, 0), d["r"] + 0.5, 4 * jf + 2)
+    return box(-2 * jf, 2 * jf, yin, Wb / 2, 0, ph).union(box(-2 * jf, 2 * jf, -Wb / 2, -yin, 0, ph)).cut(bottle)
 
 
-def split_x(shape, bolts, pins):
+def split_x(shape, bolts, pins, keys=()):
     """Cuts a solid at x = 0 into (A: x < 0, B: x > 0). bolts: (y, z) of M3 clearance holes along X through both flanges;
-    pins: [(y, z) peg of A into B, (y, z) peg of B into A] of diameter PET_JOINT[2], socket + PET_JOINT[3] (PB7), or None."""
+    keys: (y0, y1, z0, z1, 'A'|'B') tongue of that half (taken from the other half's material, PET_KEY[0] long) and a groove
+    in the other one with the clearance PET_JOINT[3] around and PET_KEY[2] deeper; pins: [(y, z) peg of A into B, (y, z) peg of B
+    into A] of diameter PET_JOINT[2], socket + PET_JOINT[3] (PB7), or None."""
     jf, _jw, pd, pc = P.PET_JOINT
+    tl, _kw, kd = P.PET_KEY
     big = 2000.0
     for y, z in bolts:
         shape = shape.cut(cyl((-3 * jf, y, z), (1, 0, 0), P.M3_CLEAR / 2, 6 * jf))
     A = shape.intersect(box(-big, 0, -big, big, -big, big))
     B = shape.intersect(box(0, big, -big, big, -big, big))
+    for y0, y1, z0, z1, on in (keys if tl > 0 else ()):
+        if on == "A":
+            tg = shape.intersect(box(0, tl, y0, y1, z0, z1))
+            A = A.union(tg)
+            B = B.cut(box(-0.1, tl + kd, y0 - pc, y1 + pc, z0 - pc, z1 + pc))
+        else:
+            tg = shape.intersect(box(-tl, 0, y0, y1, z0, z1))
+            B = B.union(tg)
+            A = A.cut(box(-tl - kd, 0.1, y0 - pc, y1 + pc, z0 - pc, z1 + pc))
     if pins:
         (ya, za), (yb_, zb_) = pins
         A = A.union(cyl((-0.5, ya, za), (1, 0, 0), pd / 2, 0.5 + pd)).cut(cyl((0.1, yb_, zb_), (-1, 0, 0), pd / 2 + pc, pd + 1.1))
@@ -483,6 +525,8 @@ def b2_cubierta(d):
     bars += [box(-LH / 2, LH / 2, s * d["yb"] - bw / 2, s * d["yb"] + bw / 2, zt, zb) for s in (1, -1)]
     if P.PET_SPLIT:                                                  # seam crossbar: each half is a closed frame on its own 4 M3
         bars.append(box(-bw, bw, -WH / 2, WH / 2, zt, zb))
+    mo_ = P.PET_MAST[0]
+    bars.append(box(LH / 2 - mo_, LH / 2 - bw, -mo_ / 2, mo_ / 2, zt, zb))     # pad: the Ø18 mast is wider than the 14 mm end bar
     for b in bars:
         c = b if c is None else c.union(b)
     for x, kind in rib_x(d):                                         # clearance holes for the M3 into the hull bosses
@@ -503,7 +547,7 @@ def b2_cubierta(d):
     c = c.cut(cyl((xm + 1, 0, zb + 12.0), (-1, 0, 0), 3.5, mo))      # pigtail port towards the box
     if CH.on():                                                      # 45 deg feet of pillars, columns and mast on the bars
         rects = [(x - bw / 2, x + bw / 2, -WH / 2, WH / 2) for x in (d["X0"] - d["L1"], d["X0"] + d["L1"])]
-        rects += [(LH / 2 - bw, LH / 2, -WH / 2, WH / 2), (-LH / 2, -LH / 2 + bw, -WH / 2, WH / 2)]
+        rects += [(LH / 2 - bw, LH / 2, -WH / 2, WH / 2), (-LH / 2, -LH / 2 + bw, -WH / 2, WH / 2), (LH / 2 - mo_, LH / 2 - bw, -mo_ / 2, mo_ / 2)]
         rects += [(-LH / 2, LH / 2, s * d["yb"] - bw / 2, s * d["yb"] + bw / 2) for s in (1, -1)]
         heads = [CH.head_keepout(boss_x(d, x), s * boss_y(d), zb) for x, kind in rib_x(d) if kind != "mid0" for s in (1, -1)]
         plate = lambda k: CH.slab(rects, zb, k)
@@ -568,7 +612,7 @@ def b3_caja(d):
     pd = P.BUOY_POST_D
     for sx in (1, -1):
         for sy in (1, -1):
-            c = c.union(cyl((bcx + sx * hx / 2, sy * hy / 2, z0 + wall - 0.1), (0, 0, 1), 4.5, P.BUOY_BATT_STANDOFF + 0.1))
+            c = c.union(cyl((bcx + sx * hx / 2, sy * hy / 2, z0 + wall - 0.1), (0, 0, 1), P.BUOY_STANDOFF_D / 2, P.BUOY_BATT_STANDOFF + 0.1))
             c = c.cut(cyl((bcx + sx * hx / 2, sy * hy / 2, z0 + wall + P.BUOY_BATT_STANDOFF - P.M3_INSERT_DEPTH), (0, 0, 1),
                           P.M3_INSERT_HOLE / 2, P.M3_INSERT_DEPTH + 0.1))
             px, py = sx * (Li / 2 - pd / 2 - P.BUOY_POST_WALL_GAP - 1), sy * (Wi / 2 - pd / 2 - P.BUOY_POST_WALL_GAP - 3.0)
@@ -611,7 +655,7 @@ def b3_feet(d, g):
     for sx in (1, -1):
         for sy in (1, -1):
             feet.append(CH.fit("B3_caja", f"standoff del portabaterías (Ø9)#{sx}{sy}",
-                               lambda k, x=bcx + sx * hx / 2, y=sy * hy / 2: CH.cone(x, y, zf, 4.5, k), inside, ko))
+                               lambda k, x=bcx + sx * hx / 2, y=sy * hy / 2: CH.cone(x, y, zf, P.BUOY_STANDOFF_D / 2, k), inside, ko))
             px, py = sx * (Li / 2 - pd / 2 - P.BUOY_POST_WALL_GAP - 1), sy * (Wi / 2 - pd / 2 - P.BUOY_POST_WALL_GAP - 3.0)
             feet.append(CH.fit("B3_caja", f"poste de la bandeja (Ø{pd:g})#{sx}{sy}", lambda k, x=px, y=py: CH.cone(x, y, zf, pd / 2, k), inside, ko))
     ew, eo, et = P.PET_EAR
@@ -919,6 +963,7 @@ def _bb_overlap(a, b):
 
 
 def run(bottle, n, out, do_slice, render_png=True):
+    CH.OVERRIDE = (P.PET_CHAMFER, P.PET_CHAMFER_MAX)                  # the buoy has its own 45 degree chamfer pair (chaflan.base_boya[_max])
     d = dims(bottle, n)
     cruz = d["layout"] == "cruz"
     for dd in (out / "stl", out / "step"):
@@ -931,7 +976,7 @@ def run(bottle, n, out, do_slice, render_png=True):
         va, vb = sanitize(b1a).Volume(), sanitize(b1b).Volume()
         if abs(va - vb) > 1e-3 * va:
             fails.append(f"las mitades de B1 no son iguales ({va:.0f} / {vb:.0f} mm3)")
-        b2a, b2b = split_x(b2_cubierta(d), [], None)
+        b2a, b2b = split_x(b2_cubierta(d), [], None, b2_keys(d))
         b5a, b5b = split_x(b5_cuna(d), *joint_b5(d))
         halves = dict(b1=(b1a, b1b), b2=(b2a, b2b), b5=(b5a, b5b))
         rows = [process("B1 casco (mitad, x2)", "B1_casco", b1a, 2, out),
@@ -1141,6 +1186,9 @@ def main():
     ap.add_argument("--salida", default=str(OUT), help="output folder (default salida/boya_pet)")
     ap.add_argument("--limpiar-stl", action="store_true", help="delete stl/ and step/ after the run (comparison configs)")
     a = ap.parse_args()
+    import esbelto
+    if esbelto.check():                                               # slender elements >= margen.esbelto_min, before the 2 minute build
+        return 1
     out = Path(a.salida).resolve()
     res = run(a.botella, a.cantidad, out, not a.sin_slicer)
     alts = {}

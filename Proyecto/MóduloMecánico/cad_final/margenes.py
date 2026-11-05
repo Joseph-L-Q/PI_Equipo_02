@@ -105,9 +105,9 @@ def main():
 
 
 NOTES = {   # piece -> what the measured minimum is and what is done about it
-    "B1_casco": "2.4 = paredes laterales con ventanas (no estructurales). Costillas 3 → 4 mm; varillas de 2.4 × 3 mm eliminadas (topes bajos).",
-    "B2_cubierta_lisa": "Barras de 4 mm.",
-    "B2_cubierta_mastil": "3.0 = pared del mástil (Ø14 / Ø8).",
+    "B1_casco": "2.4 = paredes laterales con ventanas (no estructurales). Costillas 3 → 4 → 5 mm; varillas de 2.4 × 3 mm eliminadas (topes bajos); lengüetas y ranuras en las columnas de unión.",
+    "B2_cubierta_lisa": "Barras de 8 mm; 4 lengüetas verticales en la barra de la costura.",
+    "B2_cubierta_mastil": "Pared del mástil 3 → 5 (Ø18 / Ø8).",
     "B3_caja": "Postes de la bandeja Ø8 → Ø9: el anillo alrededor del inserto Ø4 pasa de 2.0 a 2.5 (la malla facetada lo mide 2.2). Paredes de 2.4 = placas apoyadas en sus 4 bordes.",
     "B4_tapa": "2.5 bajo la ranura de la junta.",
     "B5_cuna_base": "2.4 = paredes laterales (no estructurales). Postes de correa Ø8 → Ø10.",
