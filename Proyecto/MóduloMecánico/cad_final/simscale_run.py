@@ -3,6 +3,8 @@
     python simscale_run.py --pieza B3_caja            one piece
     python simscale_run.py --grupo B                  all pieces of a group (A = submerged node, B = buoy)
     python simscale_run.py --todo                     everything
+    python simscale_run.py --resultados               images + docs/resultados/resultados.json, no SimScale run (see resultados_bloque3.py)
+    python simscale_run.py --informe                  docs/REPORTE_SIMSCALE_LanternGuard.md/.pdf from docs/resultados/resultados.json
     python simscale_run.py --listar B3_caja           print the face inventory and the picked faces, do not touch the API
     python simscale_run.py --pieza B3_caja --solo-preparar   name faces + check picks + capture BCs, no API call at all
     options: --fineness 5 (SimScale automatic mesh, 1 coarse .. 10 fine), --rehacer (ignore the saved ids and re-create)
@@ -751,109 +753,119 @@ ORDEN = ["M3s_riel_gancho", "M5s_capsula_tapa_pie", "M1s_caja_cuerpo", "B3_caja"
          "B2_cubierta_lisa_lateral", "B2_cubierta_mastil_lateral"]
 
 
+CORRECCION_8MM = '### Corrección del mismo día: cubierta de la boya con barras de 8 mm\n\nCon barras de 4 mm la cubierta no aguantaba la ola (tabla de arriba). Por eso **las barras de B2 pasaron de 4 a 8 mm** (`boya_pet.cubierta_espesor`). La boya sigue estable: calado 41,6 mm, francobordo 83,9 mm, GM 101/710 mm, 1014 g impresos.\n\nLa simulación con la cubierta nueva **corrió en SimScale** (proyecto B), pero el plan gratuito no dejó descargar el resultado: devolvió el error 403 «export-source-locked». Por eso se verificó en la computadora con CalculiX, usando el mismo golpe de 200 N sobre las barras y la cubierta sujeta en sus agujeros M3. Antes se comprobó que el cálculo local da lo mismo que SimScale con la cubierta vieja:\n\n| Media cubierta | Barras | σ p99.5 (MPa) | FS = 50/σ p99.5 | σ pico (MPa) | Flecha (mm) | Fuente |\n|---|---|---|---|---|---|---|\n| B2 lisa | 4 mm | 58,6 | 0,85 | 120 | 35,5 | local (SimScale: 58,6 y 34,5: coincide) |\n| B2 lisa | **8 mm** | **16,4** | **3,0** | 38,7 | **5,2** | local |\n| B2 mástil | **8 mm** | **16,3** | **3,1** | 34,1 | **5,3** | local |\n\nLa cubierta de 8 mm **cumple** el golpe vertical de 200 N con FS 3 (sin contar los picos de los bordes de los agujeros), aunque cada mitad recibe los 200 N enteros, lo que es exagerado. Queda pendiente el golpe **lateral** sobre el panel solar, que hace de vela: lo resisten las 4 columnas Ø12 del panel, no las barras. Ver `docs/PENDIENTES.md`.\n\n**Cómo leer «σ máx.» y «σ p99.5».** «σ máx.» es el valor de un solo punto de la malla, en el borde de un agujero o en el lugar donde se aplica la carga. Ese pico sale de cómo se modela, no de la pieza. Por eso el cálculo local usa el percentil 99,5, que ignora el 0,5 % de puntos más altos. Con ese criterio, el riel da FS 11, el pie de la cápsula FS 6,8 y la caja M1s FS 6,5 frente a 50 MPa. Además, el cálculo local verifica la resistencia **entre capas**, que es la mitad: 22 MPa. Ahí el riel da FS 3,2 y el pie FS 3,8.\n'
+# History of the 4 -> 8 mm change of the B2 bars (04/11), kept here so --informe does not lose it; the numbers are historical, never regenerated.
+
+
 def informe():
-    """docs/REPORTE_SIMSCALE_LanternGuard.md from the saved salida/simscale/<piece>.json (Spanish, plain language)."""
-    loc = json.loads(FEM_JSON.read_text(encoding="utf-8"))["casos"] if FEM_JSON.exists() else {}
+    """docs/REPORTE_SIMSCALE_LanternGuard.md from docs/resultados/resultados.json (+ the per-piece JSON of salida/simscale), Spanish, plain language."""
+    res_f = MOD / "docs" / "resultados" / "resultados.json"
+    if not res_f.exists():
+        raise SystemExit("run resultados_bloque3.py (or --resultados) first: docs/resultados/resultados.json is missing")
+    R = json.loads(res_f.read_text(encoding="utf-8"))
     rows, secs = [], []
     for k in ORDEN:
-        f = OUT / f"{k}.json"
-        if not f.exists():
+        e = R.get(k)
+        if not e:
             continue
-        d = json.loads(f.read_text(encoding="utf-8"))
-        r = d.get("resultado")
-        if not r:
-            continue
-        lc = loc.get(LOCAL.get(k, ""))
-        loc_txt = (f"σ p99.5 {lc['smax']:.1f} MPa (máx. {lc['smax_abs']:.1f}), desplaz. {lc['umax']:.2f} mm" if lc else "no hay (caso nuevo)")
-        verdict = "cumple" if r["FS"] >= 2 else ("justo" if r["FS"] >= 1 else "NO cumple")
-        rows.append(f"| {k} | {d['titulo']} | {r['sigma_max_MPa']:.1f} | {r['FS']:.2f} ({verdict}) | {r['sigma_p995_MPa']:.1f} | {r['u_max_mm']:.2f} | {loc_txt} | [ver resultado]({d['enlace_resultado']}) |")
-        img = lambda s: f"![{k} {s}](../salida/simscale/{k}_{s}.png)"      # noqa: E731
-        sel = "\n".join(f"- Apoyo fijo: {x['label']} → {x['caras']} caras, {x['area_mm2']} mm²" for x in d["seleccion"]["fijos"])
-        sel += "\n" + "\n".join(f"- Carga: {x['label']} → {x['caras']} caras, {x['area_mm2']} mm², fuerza {x['fuerza_N']} N" for x in d["seleccion"]["cargas"])
-        horas = d["compute"]["value"] if d.get("compute") else "?"
-        secs.append(f"### {k}\n\n{d['titulo']}.\n\n" + "\n".join(f"- {n}" for n in d["notas"]) + f"\n\n**Caras elegidas (verificadas por conteo y área):**\n\n{sel}\n\n"
-                    f"**Resultado:** σ máxima {r['sigma_max_MPa']:.2f} MPa (se ubica en x, y, z = {[round(v) for v in r['sigma_max_en_mm']]} mm), FS = {r['FS']:.2f}; "
-                    f"σ sin el 0.5 % de picos {r['sigma_p995_MPa']:.2f} MPa (FS {r['FS_p995']:.1f}); desplazamiento máximo {r['u_max_mm']:.2f} mm; "
-                    f"malla de {r['celdas']} celdas de segundo orden, tiempo de cálculo {d.get('duracion')}, {horas} horas-núcleo.\n\n"
-                    f"[Proyecto en SimScale]({d['enlace_proyecto']}) · [Simulación]({d['enlace_simulacion']}) · [Resultado]({d['enlace_resultado']})\n\n"
+        jf = OUT / f"{k}.json"
+        d = json.loads(jf.read_text(encoding="utf-8")) if jf.exists() else {}
+        ok = e["fs_p995"] >= 1 and e["fs_capas"] >= 1
+        verdict = "cumple" if (ok and e["fs"] >= 1) else ("cumple sin picos" if ok else "NO cumple")
+        ss = f"{e['sigma_simscale']:.1f} / {e['umax_simscale_mm']:.2f}" if e.get("sigma_simscale") is not None else "no hay"
+        rows.append(f"| {k} | {e['titulo']} | **{e['fuente']}** | {e['sigma_max']:.1f} | {e['fs']:.2f} | {e['sigma_p995']:.1f} | {e['fs_capas']:.2f} | {e['umax_mm']:.2f} | "
+                    f"{e['sigma_local']:.1f} / {e['umax_local_mm']:.2f} | {ss} | **{verdict}** | [abrir]({e['link']}) |")
+        sel = ""
+        if d.get("seleccion"):
+            sel = "\n".join(f"- Apoyo fijo: {x['label']} → {x['caras']} caras, {x['area_mm2']} mm²" for x in d["seleccion"]["fijos"])
+            sel += "\n" + "\n".join(f"- Carga: {x['label']} → {x['caras']} caras, {x['area_mm2']} mm², fuerza {x['fuerza_N']} N" for x in d["seleccion"]["cargas"])
+        img = lambda s: f"![{k} {s}](resultados/{k}/{s}.png)"      # noqa: E731
+        why = f" Motivo: {e['motivo_fuente']}." if e.get("motivo_fuente") else ""
+        secs.append(f"### {k}\n\n{e['titulo']}.\n\n" + "\n".join(f"- {n}" for n in e["notas"]) + f"\n\n**Caras elegidas (verificadas por conteo y área):**\n\n{sel}\n\n"
+                    f"**Resultado ({e['fuente']}):** σ máxima {e['sigma_max']:.2f} MPa (FS {e['fs']:.2f}); σ sin el 0.5 % de picos {e['sigma_p995']:.2f} MPa "
+                    f"(FS {e['fs_p995']:.2f} en el plano de las capas con 50 MPa; FS **entre capas** {e['fs_capas']:.2f} con 22 MPa); desplazamiento máximo {e['umax_mm']:.2f} mm; "
+                    f"malla de {e['malla']['celdas']} elementos.{why}\n\n"
+                    f"[Proyecto en SimScale]({e['link_proyecto']}) · [Simulación]({e['link_simulacion']}) · [Resultado]({e['link']})\n\n"
+                    f"Escalas fijas en todas las imágenes: esfuerzo 0 a 50 MPa y desplazamiento 0 a 6 mm (magenta = pasa del tope).\n\n"
                     f"{img('condiciones')}\n\n{img('vonmises')}\n\n{img('desplazamiento')}\n\n{img('malla')}\n")
+    lat = R.get("B2_cubierta_mastil_lateral") or R.get("B2_cubierta_lisa_lateral")
+    lat_txt = ""
+    if lat:
+        half = lat["sigma_p995"] / 2
+        lat_txt = (f"- **Golpe lateral de 200 N sobre el panel (cubierta de 8 mm): {'cumple' if lat['cumple'] else 'NO cumple'}.** σ sin picos {lat['sigma_p995']:.1f} MPa (FS {lat['fs_p995']:.2f} en el plano, "
+                   f"{lat['fs_capas']:.2f} entre capas), desplazamiento {lat['umax_mm']:.0f} mm. Los 200 N entran enteros por las 2 columnas de una sola mitad (exagerado). Si se reparten entre las dos "
+                   f"mitades (100 N cada una; el esfuerzo es proporcional a la carga) queda σ ≈ {half:.0f} MPa: FS {SIGMA_ALLOW / half:.1f} en el plano pero {22.0 / half:.2f} entre capas, "
+                   "es decir, **las columnas Ø12 no cumplirían entre capas** aun con el reparto. La flecha de decenas de mm también muestra que la cubierta se dobla mucho.")
     head = f"""# LanternGuard: simulación con SimScale (cálculo por API)
 
 Fecha: {time.strftime('%d/%m/%Y')}. Este documento se explica solo: no hace falta abrir el repositorio.
 
 ## Qué se hizo
 
-Se calculó, con el programa SimScale (plan gratuito, por su API), cuánto se deforma y cuánto esfuerzo soporta cada pieza impresa del nodo
-sumergido (grupo A) y de la boya (grupo B) bajo las cargas de uso. Son dos proyectos separados, como el que armó María: **«{PROJECTS['A']}»** y
-**«{PROJECTS['B']}»**. Todo lo hace el script `cad_final/simscale_run.py` (se repite con `python simscale_run.py --pieza NOMBRE`).
+Se calculó cuánto se deforma y cuánto esfuerzo soporta cada pieza impresa del nodo sumergido (grupo A) y de la boya (grupo B) bajo las cargas de uso, con el programa
+SimScale (plan gratuito, por su API) y, cuando SimScale no entrega el resultado o todavía no corrió la geometría actual, con CalculiX en la computadora **con el mismo caso**
+(mismas caras, mismas fuerzas, mismo material). Son dos proyectos separados: **«{PROJECTS['A']}»** y **«{PROJECTS['B']}»**. Todo lo hace `cad_final/simscale_run.py`
+(`python simscale_run.py --pieza NOMBRE`; el informe con `--informe`) y `cad_final/resultados_bloque3.py` (imágenes y `docs/resultados/resultados.json`).
 
-- **Material (PETG):** rigidez E = 2.1 GPa, ν = 0.38, densidad 1270 kg/m³. Esfuerzo admisible 50 MPa. **FS = 50 / σ máxima** (cuántas veces cabe la carga hasta el límite).
-  El cálculo local anterior (CalculiX) usó E = 1.7 GPa y límite 45 MPa: el esfuerzo casi no cambia con E, el desplazamiento sí (unas 0.81 veces el local).
-- **Malla:** automática de SimScale, segundo orden (tetraedros que se curvan: más exactos), finura {{FINENESS}} de 10.
-- **Qué es «σ máx.»:** el valor más alto de von Mises (esfuerzo equivalente) en cualquier punto. Casi siempre cae en el borde de un apoyo o de un agujero cargado,
-  donde el modelo «pellizca» la pieza: es un pico del cálculo más que de la realidad. Por eso también se da la σ sin el 0.5 % de picos (percentil 99.5), la que usa el cálculo local.
-- **La flotación y la estabilidad de la boya NO son de este cálculo:** son analíticas y están en `docs/BOYA.md`. Esto solo revisa si las piezas resisten.
+- **Material (PETG):** E = 2.1 GPa, ν = 0.38, densidad 1270 kg/m³. Esfuerzo admisible 50 MPa en el plano de las capas (el cálculo local de la versión simple usaba 45) y 22 MPa **entre capas**.
+- **FS = 50 / σ máxima** (cuántas veces cabe la carga hasta el límite). **FS entre capas = 22 / σ p99.5.** σ p99.5 es el esfuerzo sin el 0.5 % de puntos más altos: los picos
+  en el borde de un apoyo o de un agujero cargado son un efecto del modelo («pellizca» la pieza), por eso la regla del proyecto juzga con el p99.5. «Cumple» = FS ≥ 1 con p99.5 en ambos sentidos.
+- **Fuente de cada resultado:** «SimScale» solo si la corrida existe, se pudo descargar y corrió **la geometría actual**; si no, «FEM local». Local y SimScale coinciden en las piezas
+  que tienen los dos (desplazamientos dentro de 3 %).
+- **Escalas de color fijas** en todas las imágenes (esfuerzo 0 a 50 MPa; desplazamiento 0 a 6 mm), para poder comparar piezas a simple vista.
+- **La flotación y la estabilidad de la boya NO son de este cálculo:** son analíticas y están en `docs/BOYA.md`. El diagrama de cargas del conjunto está en `docs/CARGAS_CONJUNTO.pdf`.
 
 ## Resultados
 
-| Pieza | Caso | σ máx. (MPa) | FS = 50/σ máx. | σ p99.5 (MPa) | Desplaz. máx. (mm) | Cálculo local (CalculiX) | Enlace |
-|---|---|---|---|---|---|---|---|
+| Pieza | Caso | Fuente | σ máx. (MPa) | FS = 50/σ máx. | σ p99.5 (MPa) | FS entre capas (22/σ p99.5) | Desplaz. (mm) | Local: σ máx. / desplaz. | SimScale: σ máx. / desplaz. | Veredicto | Enlace |
+|---|---|---|---|---|---|---|---|---|---|---|---|
 """
     mid = """
 
-Lectura: FS ≥ 2 «cumple»; entre 1 y 2 «justo»; menor que 1 «NO cumple» (criterio propio, no normativo). Los enlaces abren el resultado en SimScale
-(proyecto público del plan gratuito; el resumen de cada proyecto está en «Piezas»).
+Lectura: «cumple» = FS ≥ 1 con σ máx. y con σ p99.5 en los dos sentidos; «cumple sin picos» = pasa con p99.5 pero el pico puntual supera 50 MPa (criterio propio, no normativo).
+Los enlaces abren la simulación en SimScale (proyecto público del plan gratuito).
 
 ## Cargas y apoyos (supuestos, en lenguaje simple)
 
-- **Nodo sumergido (A):** igual que el cálculo local: 150 N hacia abajo en el frente de la cápsula (manipulación), más la corriente de 1.5 m/s: presión
-  0.5 · 1025 · 1.5² = 1153 Pa sobre el frente de la cápsula (área de su sección, Cd = 1), convertida en una fuerza en −X aplicada en el mismo punto. Se agrega como
-  fuerza porque estas piezas no incluyen el cuerpo de la cápsula.
-- **Ajuste obligado:** la API de SimScale no deja asignar el punto de una «fuerza remota» (error «There is no Point assigned»). En su lugar, los 150 N se reparten en una fuerza
-  por cada agujero de unión con la misma fuerza total y el mismo momento que daría el cuerpo rígido (reparto de mínima norma). Es equivalente en conjunto, pero los picos locales en
-  los agujeros pueden diferir del cálculo local, que sí usó el cuerpo rígido.
-- **Caja del nodo (M1s):** caso propio, no existe en el cálculo local: la caja cuelga de los agujeros M3 de la brida de la tapa (como al izar por el asa) y el riel con la
-  cápsula tira de los 4 M4 del cojín del lado +X.
+- **Nodo sumergido (A):** 150 N hacia abajo en el frente de la cápsula (manipulación), más la corriente de 1.5 m/s: presión 0.5 · 1025 · 1.5² = 1153 Pa sobre el frente
+  de la cápsula (área de su sección, Cd = 1), convertida en una fuerza en −X en el mismo punto, porque estas piezas no incluyen el cuerpo de la cápsula.
+- **Ajuste obligado:** la API de SimScale no deja asignar el punto de una «fuerza remota» («There is no Point assigned»). En su lugar, los 150 N se reparten en una fuerza
+  por cada agujero de unión con la misma fuerza total y el mismo momento que daría el cuerpo rígido (reparto de mínima norma). El cálculo local usa **ese mismo reparto**.
+- **Caja del nodo (M1s):** caso propio: la caja cuelga de los agujeros M3 de la brida de la tapa (como al izar por el asa) y el riel con la cápsula tira de los 4 M4 del cojín +X.
 - **Boya (B):** peso de la electrónica y del panel solar (350 g), de la tapa y de la antena, más un golpe de ola de 200 N. En la caja, los 200 N empujan de lado una pared larga.
-  En cada media cubierta hay dos casos: golpe vertical de 200 N sobre las barras, y golpe lateral de 200 N sobre el panel (que baja por sus columnas). Cada mitad recibe los
-  200 N enteros (exagerado a propósito).
-- **Apoyos de la boya:** la caja va atornillada por sus 4 orejas a los pilares de la cubierta (se fija la huella de Ø10 de cada pilar); cada media cubierta, atornillada a los 4 postes
-  del casco (huella de Ø10 de cada poste).
-- **Cómo se eligieron las caras:** cada cara de cada pieza se «bautizó» en el STEP (LGF0000, LGF0001…) y SimScale conserva ese nombre; así los apoyos y las cargas se
-  escogieron por posición y orientación y se comprobó el conteo y el área (listados en cada pieza). Para apoyar solo la huella de un pilar, esa zona se separó de la cara grande
-  del fondo antes de subir el STEP.
+  En cada media cubierta hay dos casos: golpe vertical de 200 N sobre las barras, y golpe lateral de 200 N sobre el panel (que baja por sus columnas). Cada mitad recibe los 200 N enteros (exagerado a propósito).
+- **Apoyos de la boya:** la caja va atornillada por sus 4 orejas a los pilares de la cubierta (se fija la huella de Ø10 de cada pilar); cada media cubierta, a los 4 postes del casco (huella de Ø10 de cada poste).
+- **Cómo se eligieron las caras:** cada cara del STEP se «bautiza» (LGF0000, LGF0001…) y SimScale conserva ese nombre; los apoyos y cargas se escogen por posición y orientación y se comprueba conteo y área.
+  Las cargas del cálculo local se reparten de forma consistente sobre los triángulos de esas mismas caras.
 
+""" + CORRECCION_8MM + """
 ## Piezas
 
 """
     tail = """
 ## Qué dicen los resultados
 
-- **Nodo sumergido (riel con gancho, pie de la cápsula, caja):** con 150 N en la cápsula más la corriente, las tres piezas quedan con FS cerca de 2 o mayor sobre el pico máximo, y con FS
-  de 6 a 11 si se descarta el 0.5 % de picos. La caja (M1s) es la más justa: el pico cae en el borde del cojín donde se atornilla el riel, que es donde el riel la tira.
-  Los desplazamientos son de 0.3 a 1.5 mm. Contra el cálculo local, el desplazamiento del riel coincide (1.53 mm contra 1.91 mm × 0.81 = 1.55 mm por el cambio de E); los esfuerzos
-  de SimScale en los agujeros salen distintos porque el reparto de la carga no es el del cuerpo rígido (ver «Ajuste obligado»).
-- **Caja seca de la boya (B3):** soporta su peso y un golpe lateral de 200 N con FS 3.1 sobre el pico (8 sin picos). No hay problema.
-- **Cubierta de la boya (B2):** **no soporta** un golpe de ola de 200 N sobre ella: las barras son de 14 × 4 mm y salen en voladizo desde los 4 postes (FS 0.4 y unos 35 mm de flecha
-  con la carga vertical; peor con la lateral sobre el panel). Solo con los pesos (unos 10 N en total) el esfuerzo sería unas 20 veces menor (la relación carga-esfuerzo es lineal), es decir, sin problema.
-  Si el golpe de ola es un requisito real, la cubierta necesita más postes de unión o barras más gruesas (decisión de diseño del equipo, no se tocó el CAD).
+""" + "\n".join(f"- **{k}** ({R[k]['fuente']}): FS {R[k]['fs']:.2f} (pico), {R[k]['fs_p995']:.1f} sin picos, {R[k]['fs_capas']:.2f} entre capas, {R[k]['umax_mm']:.2f} mm." for k in ORDEN if k in R) + f"""
+{lat_txt}
 
 ## Límites y avisos
 
-- La variante lateral de la media cubierta del mástil terminó en SimScale sin devolver solución (la API contesta 403 «export-source-locked» y el resultado no tiene descarga, aun repitiendo
-  la corrida); la de la media cubierta lisa, que es igual salvo por el mástil, sí salió y se da arriba.
-- El enlace de cada proyecto es el que usa el sitio para proyectos compartidos (`workbench/?pid=...`). El plan gratuito deja los proyectos públicos, pero desde el script no se
-  puede comprobar el acceso sin iniciar sesión (SimScale responde 426 a una consulta sin navegador); conviene abrirlo una vez en una ventana privada.
-
-- Los proyectos del plan gratuito de SimScale son **públicos**: cualquiera con el enlace puede verlos. Contienen solo la geometría y los resultados de estas piezas.
-- No se simuló estanqueidad, fatiga ni el efecto de las capas de impresión (material isótropo). Los STEP son los de `salida/prototipos/P2_robusto/step` y `salida/boya_pet/step`.
+- Las corridas de SimScale de la cubierta con barras de 8 mm terminaron bien pero el plan gratuito devolvió 403 «export-source-locked» al descargar el resultado; por eso esas piezas salen con FEM local.
+  No se usaron capturas del visor web de SimScale: la clave de la API no inicia sesión en la página y no hay una sesión abierta.
+- El enlace de cada proyecto es el que usa el sitio para proyectos compartidos (`workbench/?pid=...`). El plan gratuito deja los proyectos públicos (contienen solo geometría y resultados de estas piezas);
+  desde el script no se puede comprobar el acceso sin iniciar sesión, conviene abrirlo una vez en una ventana privada.
+- No se simuló estanqueidad, fatiga ni el efecto de las capas de impresión (material isótropo; las capas solo entran en el FS entre capas). Los STEP son los de `salida/prototipos/P2_robusto/step` y `salida/boya_pet/step` del momento de la corrida.
+- El FEM local usa el máximo por elemento (puntos de integración) y no el valor nodal de SimScale; el p99.5 de los dos es comparable, el máximo puntual puede diferir.
 - Los resultados dependen de las cargas supuestas arriba: si el equipo fija otras (por ejemplo la ola real), se corre de nuevo con el script.
 """
-    fin = next((json.loads((OUT / f"{k}.json").read_text(encoding="utf-8")).get("fineness") for k in ORDEN if (OUT / f"{k}.json").exists()), 5)
-    md = head.replace("{FINENESS}", f"{fin:g}") + "\n".join(rows) + mid + "\n".join(secs) + tail
     out = MOD / "docs" / "REPORTE_SIMSCALE_LanternGuard.md"
-    out.write_text(md, encoding="utf-8")
+    out.write_text(head + "\n".join(rows) + mid + "\n".join(secs) + tail, encoding="utf-8")
     print("written", out)
+    try:
+        import entrega_pdf
+        entrega_pdf.main(out)
+    except Exception as e:       # noqa: BLE001
+        print("PDF failed:", e)
 
 
 def main():
@@ -865,12 +877,17 @@ def main():
     ap.add_argument("--solo-preparar", action="store_true")
     ap.add_argument("--fineness", type=float, default=5.0)
     ap.add_argument("--rehacer", action="store_true")
-    ap.add_argument("--informe", action="store_true", help="write docs/REPORTE_SIMSCALE_LanternGuard.md from the saved JSON")
+    ap.add_argument("--informe", action="store_true", help="write docs/REPORTE_SIMSCALE_LanternGuard.md/.pdf from docs/resultados/resultados.json")
+    ap.add_argument("--resultados", action="store_true", help="images + docs/resultados/resultados.json for the chosen pieces (default all) with NO SimScale run: SimScale where it has the current geometry, local FEM otherwise")
+    ap.add_argument("--malla", type=float, default=3.0, help="local FEM mesh size in mm (resultados)")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     if a.informe:
         informe()
         return 0
+    if a.resultados:
+        import resultados_bloque3 as RB
+        return RB.update(list(a.pieza) or list(ORDEN), a.malla, False)
     if a.listar:
         sh, faces, info, case = prepare(a.listar)
         for lbl, idx in case["fixed"]:
@@ -898,6 +915,10 @@ def main():
             print(f"FAILED {k}: {type(e).__name__}: {api_err(e) if hasattr(e, 'status') else e}")
         finally:
             state_f.write_text(json.dumps(state, indent=1), encoding="utf-8")
+    if names and not a.solo_preparar:        # images (docs/resultados/<piece>/*.png) + resultados.json, then the report
+        import resultados_bloque3 as RB
+        rc = RB.update(names, a.malla, False) or rc
+        informe()
     return rc
 
 
