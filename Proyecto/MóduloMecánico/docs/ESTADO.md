@@ -1,31 +1,19 @@
-# Estado LanternGuard CAD | 04/11/2026 | **TERMINADO: 11:45**
+# Estado LanternGuard CAD | encargo del 04/11 noche | actualizado 22:14
 
-**Aviso: el total impreso pasa de 2,7 kg. Son 2846 g (nodo P2 1530 g, boya 1083 g y probetas 233 g), 96,1 h y unos S/ 171 a S/ 60/kg.**
+**Aviso: el total impreso pasa de 3 kg. Son 3132 g en 20 placas (probetas 243 g, nodo P2 1682 g, boya 1207 g), 97,5 h, S/ 188 a S/ 60/kg.**
 
 | Bloque | Estado |
 |---|---|
-| 0 Respaldo | Listo: repo privado `IchiSieben/LanternGuard-CAD-backup` y `docs/RETOMAR_EN_OTRA_PC.md` |
-| 1 Márgenes y boya | Listo: cama de 230 con chequeo, MARGENES.md, B1, B2 y B5 en mitades, topes bajos |
-| 1-FINAL Riel cerrado | Listo. Un solo volumen seco, cable plano por dentro y sin PG7 intermedios. FS entre capas: riel 3,18 y pie 3,80. Lastre de 1050 g |
-| 2 Convención de nombres | Listo. Hay que borrar a mano las pestañas «OLD …» en LG_IMPRIMIR_P2 |
-| 3 SimScale | Listo, por API, con los proyectos A (nodo) y B (boya). La cubierta B2 se corrigió a barras de 8 mm (FS 3,0) |
-| 4 Visor 3D | Listo: `docs/visor/index.html` y Drive `07_Documentos/visor/` |
-| 5 Cierre | Listo: `docs/ENTREGA_2026-11-04.pdf` en Drive `07_Documentos` |
+| 1 Correcciones del laboratorio | **Hecho 22:14.** Mínimo 5 mm en elementos esbeltos, revisado en el build (`esbelto.py`: 32 elementos, 0 bajo 5 mm; 4 excepciones documentadas, que no son elementos esbeltos), con chaflán de 45° en la base. Boya en mitades con lengüeta, pasadores y tornillos A2. Nodo sin soportes: M1s 22,3 → 0,5 %, M2 18,8 → 1,8 %, M4 14,8 → 1,6 %, M3s 20,9 → 12,2 % (excepción documentada). M1s no se dividió. Pieza nueva M3f (marco del bolsillo de lastre). FS entre capas: riel 3,37, pie 3,79, izado 5,83. Lastre 980 g. 3MF en Drive `02_Imprimir_primero_probetas/imprimir_hoy_2026-11-04_noche/` |
+| 2 Publicar piezas y planos | En curso. La cuota de Onshape (≈ 400 llamadas) no alcanza para todos los planos: los que no entren salen en local con el mismo formato |
+| 3 SimScale con imágenes | En curso: tanda final sobre la geometría nueva |
+| 4 Visor 3D | Hecho (pendiente regenerar con la geometría final) |
+| 5 Entrega | Pendiente |
 
-**Links:**
-- Drive: https://drive.google.com/drive/folders/1T8cv6NW7W2cESde3SLp9HgS4VRJMWwCO
-- LG_IMPRIMIR_P2: https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff
-- SimScale A: https://www.simscale.com/workbench/?pid=770997415227428031
-- SimScale B: https://www.simscale.com/workbench/?pid=5890288887472164333
-- Rama: https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/version-final
-
-**Problemas:**
-- La API de Onshape no borra (403).
-- La casilla SHEET sale «11».
-- SimScale no deja descargar algunas corridas (403 «export-source-locked»).
-- Queda abierto el golpe lateral sobre el panel.
-
-Detalle en `docs/PENDIENTES.md`.
+**Problemas abiertos:**
+- Golpe lateral de 200 N sobre el panel solar: **no cumple** (FS 0,93 en p99,5 y 0,42 entre capas).
+- Boya con una botella perdida: GM de balanceo 38 mm (objetivo 40).
+- Holgura entre la cuerda y la caja: 1,5 mm (antes 2,9), porque la caja creció 2 mm.
 
 ---
 
