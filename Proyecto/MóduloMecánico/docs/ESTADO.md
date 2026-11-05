@@ -1,3 +1,96 @@
+# Estado LanternGuard CAD | limpieza de pestañas OLD en LG_IMPRIMIR_P2 (05/11) | **TERMINADO**
+
+De 91 pestañas OLD se borraron 53 y quedaron 38 (19 Part Studios y sus 19 `.step`). Después de la limpieza, los 28 Drawings no tienen referencias rotas.
+
+**Criterio:** una OLD queda si la usa un Drawing que sigue en el documento. Su `.step` queda con ella porque el Part Studio importado depende de él (`dependsOnBlob`). Los Drawings `OLD … PLANO_A4_*` se borraron porque ninguno los referencia, y con ellos lo que solo ellos usaban. Lo borrado se puede restaurar desde el historial del documento.
+
+## Quedaron (cada una con su `.step`, con el mismo nombre y `.step` al final)
+
+| Drawing que la usa | Nombre actual | Nombre anterior |
+|---|---|---|
+| Drawing 1 B1_casco | OLD (usado por Drawing 1) B1_casco | OLD 2026-11-04 B1_casco (partida en mitades) |
+| Drawing 2 B2_cubierta | OLD (usado por Drawing 2) B2_cubierta | OLD 2026-11-04 B2_cubierta (partida en mitades) |
+| Drawing 3 B3_caja | OLD (usado por Drawing 3) B3_caja | OLD 2026-11-04 B3_caja (postes Ø9 y cama útil 230) |
+| Drawing 4 B4_tapa | OLD (usado por Drawing 4) B4_tapa | OLD 2026-11-04 B4_tapa (geometría anterior) |
+| Drawing 5 B5_cuna | OLD (usado por Drawing 5) B5_cuna | OLD 2026-11-04 B5_cuna (partida en mitades) |
+| Drawing 6 B6_correa | OLD (usado por Drawing 6) B6_correa | OLD 2026-11-04 B6_correa (cama útil 230) |
+| Drawing 14 M11 | OLD (usado por Drawing 14) M11_bandeja | OLD 2026-11-04 M11_bandeja (riel cerrado estanco) |
+| Drawing 15 M11 | OLD (usado por Drawing 15) M11_bandeja_sup | OLD 2026-11-04 M11_bandeja_sup (riel cerrado estanco) |
+| Drawing 7 M1s_caja_cuerpo | OLD (usado por Drawing 7) M1s_caja_cuerpo | OLD 2026-11-04 M1s_caja_cuerpo (riel cerrado estanco) |
+| Drawing 8 M2 | OLD (usado por Drawing 8) M2_caja_tapa | OLD 2026-11-04 M2_caja_tapa (geometría anterior) |
+| Drawing 9 M3s | OLD (usado por Drawing 9) M3s_riel_gancho | OLD 2026-11-04 M3s_riel_gancho (riel cerrado estanco) |
+| Drawing 10 M3t | OLD (usado por Drawing 10) M3t_tapa_bolsillo | OLD 2026-11-04 M3t_tapa_bolsillo (geometría anterior) |
+| Drawing 11 M4 | OLD (usado por Drawing 11) M4_capsula_cuerpo | OLD 2026-11-04 M4_capsula_cuerpo (riel cerrado estanco) |
+| Drawing 12 M5 | OLD (usado por Drawing 12) M5s_capsula_tapa_pie | OLD 2026-11-04 M5s_capsula_tapa_pie (riel cerrado estanco) |
+| PLANO_A4_B1_casco | OLD (usado por PLANO_A4_B1_casco) B1_casco | OLD 2026-11-05 B1_casco |
+| PLANO_A4_B2_cubierta_lisa | OLD (usado por PLANO_A4_B2_cubierta_lisa) B2_cubierta_lisa | OLD 2026-11-05 B2_cubierta_lisa |
+| PLANO_A4_B2_cubierta_mastil | OLD (usado por PLANO_A4_B2_cubierta_mastil) B2_cubierta_mastil | OLD 2026-11-05 B2_cubierta_mastil |
+| PLANO_A4_M1s_caja_cuerpo | OLD (usado por PLANO_A4_M1s_caja_cuerpo) M1s_caja_cuerpo | OLD 2026-11-05 M1s_caja_cuerpo |
+| PLANO_A4_M2_caja_tapa | OLD (usado por PLANO_A4_M2_caja_tapa) M2_caja_tapa | OLD 2026-11-05 M2_caja_tapa |
+
+## Borradas (53)
+
+**Drawings (15):**
+- OLD 2026-11-04 PLANO_A4_B1_casco (geometría anterior)
+- OLD 2026-11-04 PLANO_A4_B2_cubierta_lisa (barras de 4 mm, FS 0.4 con la ola)
+- OLD 2026-11-04 PLANO_A4_B2_cubierta_lisa (geometría anterior)
+- OLD 2026-11-04 PLANO_A4_B2_cubierta_mastil (barras de 4 mm, FS 0.4 con la ola)
+- OLD 2026-11-04 PLANO_A4_B2_cubierta_mastil (geometría anterior)
+- OLD 2026-11-04 PLANO_A4_B3_caja (geometría anterior)
+- OLD 2026-11-04 PLANO_A4_B5_cuna_base (geometría anterior)
+- OLD 2026-11-04 PLANO_A4_B5_cuna_cuello (geometría anterior)
+- OLD 2026-11-04 PLANO_A4_B6_correa (geometría anterior; vigente: plano local en el PDF v5)
+- OLD 2026-11-04 PLANO_A4_M11_bandeja (geometría anterior; vigente: plano local en el PDF v5)
+- OLD 2026-11-04 PLANO_A4_M11_bandeja_sup (geometría anterior; vigente: plano local en el PDF v5)
+- OLD 2026-11-04 PLANO_A4_M1s_caja_cuerpo (geometría anterior)
+- OLD 2026-11-04 PLANO_A4_M3s_riel_gancho (geometría anterior)
+- OLD 2026-11-04 PLANO_A4_M4_capsula_cuerpo (geometría anterior)
+- OLD 2026-11-04 PLANO_A4_M5s_capsula_tapa_pie (geometría anterior; vigente: plano local en el PDF v5)
+
+**Part Studios (17):**
+- OLD 2026-11-04 00_ENSAMBLE (ensamble anterior)
+- OLD 2026-11-04 B1_casco (geometría anterior)
+- OLD 2026-11-04 B2_cubierta_lisa (barras de 4 mm, FS 0.4 con la ola)
+- OLD 2026-11-04 B2_cubierta_lisa (geometría anterior)
+- OLD 2026-11-04 B2_cubierta_mastil (barras de 4 mm, FS 0.4 con la ola)
+- OLD 2026-11-04 B2_cubierta_mastil (geometría anterior)
+- OLD 2026-11-04 B3_caja (geometría anterior)
+- OLD 2026-11-04 B5_cuna_base (geometría anterior)
+- OLD 2026-11-04 B5_cuna_cuello (geometría anterior)
+- OLD 2026-11-04 B6_correa (geometría anterior)
+- OLD 2026-11-04 M11_bandeja (geometría anterior)
+- OLD 2026-11-04 M11_bandeja_sup (geometría anterior)
+- OLD 2026-11-04 M1s_caja_cuerpo (geometría anterior)
+- OLD 2026-11-04 M3s_riel_gancho (geometría anterior)
+- OLD 2026-11-04 M4_capsula_cuerpo (geometría anterior)
+- OLD 2026-11-04 M5s_capsula_tapa_pie (geometría anterior)
+- OLD 2026-11-05 00_ENSAMBLE
+
+**STEP (21):**
+- OLD 2026-11-01 B2_cubierta (sin chaflan)
+- OLD 2026-11-01 B3_caja (sin chaflan)
+- OLD 2026-11-01 B5_cuna (sin chaflan)
+- OLD 2026-11-01 M1s_caja_cuerpo (sin chaflan)
+- OLD 2026-11-04 00_ENSAMBLE.step (ensamble anterior)
+- OLD 2026-11-04 B1_casco (geometría anterior).step
+- OLD 2026-11-04 B2_cubierta_lisa (barras de 4 mm, FS 0.4 con la ola).step
+- OLD 2026-11-04 B2_cubierta_lisa (geometría anterior).step
+- OLD 2026-11-04 B2_cubierta_mastil (barras de 4 mm, FS 0.4 con la ola).step
+- OLD 2026-11-04 B2_cubierta_mastil (geometría anterior).step
+- OLD 2026-11-04 B3_caja (geometría anterior).step
+- OLD 2026-11-04 B5_cuna_base (geometría anterior).step
+- OLD 2026-11-04 B5_cuna_cuello (geometría anterior).step
+- OLD 2026-11-04 B6_correa (geometría anterior).step
+- OLD 2026-11-04 M11_bandeja (geometría anterior).step
+- OLD 2026-11-04 M11_bandeja_sup (geometría anterior).step
+- OLD 2026-11-04 M1s_caja_cuerpo (geometría anterior).step
+- OLD 2026-11-04 M3s_riel_gancho (geometría anterior).step
+- OLD 2026-11-04 M4_capsula_cuerpo (geometría anterior).step
+- OLD 2026-11-04 M5s_capsula_tapa_pie (geometría anterior).step
+- OLD 2026-11-05 00_ENSAMBLE.step
+
+---
+
 # Estado LanternGuard CAD | subida a Onshape del 05/11 | **TERMINADO: 6 piezas subidas y verificadas**
 
 Subidas por API a LG_IMPRIMIR_P2 con la clave de Melissa, en el orden de `IMPORTAR.md`: https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff
@@ -15,7 +108,6 @@ Subidas por API a LG_IMPRIMIR_P2 con la clave de Melissa, en el orden de `IMPORT
 
 **Pendiente a mano:**
 - Los `PLANO_A4_*` de estas piezas siguen apuntando a la geometría anterior: hay que apuntar cada vista a la pestaña nueva (`IMPORTAR.md`). Los planos vigentes están en `PLANOS_A4_LanternGuard_v6.pdf`.
-- Las 79 pestañas OLD anteriores al 05/11 siguen ahí. Revisar antes los «Drawing N»: B5_cuna y B2_cubierta solo existen como OLD.
 - Corregir SHEET «11» → «1 of 1» y las cotas a mano (`HANDOFF_siguiente.md`).
 
 ---
