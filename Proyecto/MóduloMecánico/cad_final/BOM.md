@@ -13,8 +13,12 @@ No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `s
 | nodo P2 robusto | 1683 | 45.0 | 100.98 |
 | nodo P4 estetico | 1352 | 46.0 | 81.11 |
 | boya PET 4 x 1 L | 1385 | 59.7 | 83.08 |
+| aro de la linterna | 628 | 41.8 | 37.66 |
+| estacion de tierra | 124 | 8.3 | 7.44 |
 
 **Lo que se imprime hoy: nodo P2 robusto + boya PET 4 x 1 L** (mas las probetas; total por placa en `salida/imprimir_hoy/3mf/placas.json`). Las otras filas son versiones anteriores, solo para comparar: no se suman.
+
+Aros de la linterna (LR2_aro x4, PB_aro) y estacion de tierra (T1, T2): gramos estimados de `docs/ARO_Y_ESTACION.md` (sin slicer); las medidas del Heltec y la bateria son estimadas y hay que confirmarlas antes de imprimir.
 
 El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 
@@ -52,6 +56,10 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M12_perilla | modular D200 | 4 | 30.0 × 30.0 × 12.0 | 6.7 | X180 | no | 40 % | 6 | estimado |
 | M13_casquillo_D8 | modular D200 | 2 | 15.7 × 20.0 × 13.5 | 1.6 | X-90 | no | 40 % | 2 | estimado |
 | M14_pestillo | modular D200 | 2 | 12.0 × 35.2 × 3.6 | 0.9 | X+90 | no | 40 % | 1 | estimado |
+| LR2_aro | aro de la linterna | 4 | 216.5 × 216.5 × 16.0 | 133.2 | segun guia (sin soportes) | no | 13 perimetros + 15 % | 150 | estimado |
+| PB_aro | aro de la linterna | 1 | 58.2 × 53.6 × 32.2 | 23.0 | segun guia (sin soportes) | no | tramo 13 p + 15 %, asiento 100 % | 28 | estimado |
+| T1_caja | estacion de tierra | 1 | 86.2 × 121.2 × 25.0 | 58.2 | segun guia (sin soportes) | no | 100 % | 74 | estimado |
+| T2_tapa | estacion de tierra | 1 | 86.2 × 93.2 × 6.0 | 39.5 | segun guia (sin soportes) | no | 100 % | 50 | estimado |
 | M1s_caja_cuerpo | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 436 | slicer |
 | M2_caja_tapa | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 194 | slicer |
 | M3s_riel_gancho | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 217 | slicer |
@@ -139,6 +147,12 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | modular D200 | Pivote M3 del pestillo | M3 | 2 |
 | modular D200 | Correa textil | 25 x 300 mm | 2 |
 | modular D200 | Pletina de inox | 25 x 5 x 100 | 4 |
+| estacion de tierra | Tapon de silicona del puerto USB-C / PRG / RST | 30 x 13 x 4 mm | 1 |
+| estacion de tierra | Acrilico de la ventana OLED, pegado con sellador | 31 x 20 x 2 mm | 1 |
+| estacion de tierra | SMA de mamparo con junta | SMA | 1 |
+| estacion de tierra | Tornillo M2,5 inox A4 + inserto termico M2,5 (Heltec a los 4 postes de T1; largo por definir al medir la placa) | M2,5 | 4 |
+| estacion de tierra | Tornillo M3 inox A4 + inserto termico M3 (tapa T2 a la caja T1) | M3 | 4 |
+| estacion de tierra | Cordon de junta NBR Ø2 para la ranura de T1 (unos 284 mm) | 284 mm | 1 |
 
 ## Diseño
 

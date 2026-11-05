@@ -1321,86 +1321,6 @@
    ],
    "hecho_0511": true
   },
-  "M3s_riel_gancho": {
-   "partstudio": "9758a91f4e2d9add367f7b96",
-   "pestana": "M3s_riel_gancho",
-   "inicio_0511": "2026-11-04T22:19",
-   "dibujo_anterior": "17b0094c7e9cbcaf8638c86d",
-   "a4": {
-    "drawing": "2bb74ca50b107ab8dab44275",
-    "cajetin": {
-     "Title 1": "M3s_riel_gancho",
-     "Drawn by": "Equipo 02 UPCH",
-     "Description": "LANTERNGUARD - M3s_riel_gancho",
-     "Date drawn": "2026-11-04"
-    },
-    "props_disponibles": [
-     "Approver",
-     "Category",
-     "Date approved",
-     "Date drawn",
-     "Description",
-     "Drawn by",
-     "Inspection count",
-     "Last changed by",
-     "Last changed date",
-     "Name",
-     "Not revision managed",
-     "Part number",
-     "Revision",
-     "Revision description",
-     "State",
-     "Title 1",
-     "Title 2",
-     "Title 3"
-    ],
-    "vistas": {
-     "right": "eaff481879fbabb63c755791",
-     "front": "28442304a87e45e588f3877f",
-     "left": "2333ba238a8159a4dcfe93d0",
-     "back": "08ed18a06c9543104c0267ec",
-     "top": "8e544337c77bee895444d4bc",
-     "bottom": "3e12fa34ac773bafd33e6ec2",
-     "isometric": "b375c94ad6172e8726e0c9f2"
-    },
-    "chaflan": "cota en la vista left (de canto): Chaflán 8x45°",
-    "cotas": {
-     "creadas": 12,
-     "fallidas": [],
-     "a_mano": [
-      "front: alto total 79,4 (el borde es curvo)",
-      "front: separación 6 entre nervios horizontales (sin espacio)",
-      "front: separación 7 entre nervios horizontales (sin espacio)",
-      "front: separación 6 entre nervios horizontales (sin espacio)",
-      "front: separación 4 entre nervios horizontales (sin espacio)",
-      "front: separación 6 entre nervios horizontales (sin espacio)",
-      "front: separación 7 entre nervios horizontales (sin espacio)",
-      "left: espesor 1,5 (sin espacio)",
-      "left: separación 13,3 entre nervios horizontales (sin espacio)",
-      "left: separación 10,3 entre nervios horizontales (sin espacio)",
-      "left: separación 6 entre nervios horizontales (sin espacio)",
-      "left: separación 19,5 entre nervios horizontales (sin espacio)",
-      "left: 4x Ø4,2 (sin espacio)"
-     ]
-    },
-    "escala": "1:2",
-    "escala_iso": "1:3",
-    "posterior": true,
-    "cantidad": 2,
-    "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_M3s_riel_gancho.pdf",
-    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/2bb74ca50b107ab8dab44275",
-    "llamadas": 18,
-    "segundos": 32
-   },
-   "pid": "JFD",
-   "propiedades": [
-    "Description",
-    "Material",
-    "Name",
-    "Project"
-   ],
-   "hecho_0511": true
-  },
   "M5s_capsula_tapa_pie": {
    "inicio_0411": "2026-11-04T10:33",
    "a4": {
@@ -1915,6 +1835,298 @@
     "Project"
    ],
    "hecho_0511": true
+  },
+  "LR2_aro": {
+   "partstudio": "0105e147c7a4e8f46f07161a",
+   "pestana": "LR2_aro",
+   "a4": {
+    "drawing": "b64dbc5d60c83da533be9d16",
+    "cajetin": {
+     "Title 1": "LR2_aro",
+     "Drawn by": "Equipo 02 UPCH",
+     "Description": "LANTERNGUARD - LR2_aro",
+     "Date drawn": "2026-11-05"
+    },
+    "props_disponibles": [
+     "Approver",
+     "Category",
+     "Date approved",
+     "Date drawn",
+     "Description",
+     "Drawn by",
+     "Inspection count",
+     "Last changed by",
+     "Last changed date",
+     "Name",
+     "Not revision managed",
+     "Part number",
+     "Revision",
+     "Revision description",
+     "State",
+     "Title 1",
+     "Title 2",
+     "Title 3"
+    ],
+    "vistas": {
+     "front": "852c44c1f6e5c35afe358f78",
+     "left": "55d76fc9640f40efd4a58bc0",
+     "back": "2696fb2552c0bfe93110ccdc",
+     "top": "216ff926febee1f3814bc91b",
+     "bottom": "f6e8d6f3c86e07c485a1b247",
+     "isometric": "0f5ab406e128333fb9d2bd08"
+    },
+    "cotas": {
+     "creadas": 0,
+     "fallidas": [],
+     "a_mano": [
+      "front: ancho total 205,7 (el borde es curvo)",
+      "top: sin aristas rectas, solo cotas a mano",
+      "left: ancho total 205,7 (el borde es curvo)"
+     ]
+    },
+    "escala": "1:4",
+    "escala_iso": "1:4",
+    "posterior": true,
+    "cantidad": 4,
+    "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_LR2_aro.pdf",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b64dbc5d60c83da533be9d16",
+    "llamadas": 16,
+    "segundos": 100
+   },
+   "pid": "JFD",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ]
+  },
+  "T1_caja": {
+   "partstudio": "081fe1777b92ade3e58b5980",
+   "pestana": "T1_caja",
+   "a4": {
+    "drawing": "ff8fd312cba1b15897893cdb",
+    "cajetin": {
+     "Title 1": "T1_caja",
+     "Drawn by": "Equipo 02 UPCH",
+     "Description": "LANTERNGUARD - T1_caja",
+     "Date drawn": "2026-11-05"
+    },
+    "props_disponibles": [
+     "Approver",
+     "Category",
+     "Date approved",
+     "Date drawn",
+     "Description",
+     "Drawn by",
+     "Inspection count",
+     "Last changed by",
+     "Last changed date",
+     "Name",
+     "Not revision managed",
+     "Part number",
+     "Revision",
+     "Revision description",
+     "State",
+     "Title 1",
+     "Title 2",
+     "Title 3"
+    ],
+    "vistas": {
+     "front": "0b59233c8187367827625ad2",
+     "left": "def5967d04199ea0be8dddba",
+     "back": "a249f4843ef67c3abb19d5b9",
+     "top": "b3cf6a420a2691d8f99da323",
+     "bottom": "2533a5c5c24a602edda099e3",
+     "isometric": "46f0f2040e11d579ab12e370"
+    },
+    "cotas": {
+     "creadas": 18,
+     "fallidas": [],
+     "a_mano": [
+      "front: 1 separaciones más entre nervios verticales",
+      "front: separación 5 entre nervios verticales (sin espacio)",
+      "front: separación 5 entre nervios verticales (sin espacio)",
+      "front: separación 7 entre nervios verticales (sin espacio)",
+      "front: separación 52,2 entre nervios verticales (sin espacio)",
+      "front: separación 7 entre nervios verticales (sin espacio)",
+      "front: separación 5 entre nervios verticales (sin espacio)",
+      "front: espesor 3,9 (sin espacio)",
+      "top: posición de 4x Ø4 a 2 del borde (sin espacio)",
+      "top: posición de 4x Ø3,5 a 14,1 del borde (sin espacio)",
+      "top: posición de 4x Ø3,5 a 31 del borde (sin espacio)",
+      "top: 4x Ø8,5 (sin espacio)",
+      "top: 4x Ø11,5 (sin espacio)",
+      "left: 1 separaciones más entre nervios verticales",
+      "left: espesor 0,5 (sin espacio)"
+     ]
+    },
+    "escala": "1:2",
+    "escala_iso": "1:2",
+    "posterior": true,
+    "cantidad": 1,
+    "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_T1_caja.pdf",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/ff8fd312cba1b15897893cdb",
+    "llamadas": 16,
+    "segundos": 103
+   },
+   "pid": "JFD",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ]
+  },
+  "T2_tapa": {
+   "partstudio": "f76a01b7833bfd0c4e619446",
+   "pestana": "T2_tapa",
+   "a4": {
+    "drawing": "3f6976556319bf5b1aeb0f9a",
+    "cajetin": {
+     "Title 1": "T2_tapa",
+     "Drawn by": "Equipo 02 UPCH",
+     "Description": "LANTERNGUARD - T2_tapa",
+     "Date drawn": "2026-11-05"
+    },
+    "props_disponibles": [
+     "Approver",
+     "Category",
+     "Date approved",
+     "Date drawn",
+     "Description",
+     "Drawn by",
+     "Inspection count",
+     "Last changed by",
+     "Last changed date",
+     "Name",
+     "Not revision managed",
+     "Part number",
+     "Revision",
+     "Revision description",
+     "State",
+     "Title 1",
+     "Title 2",
+     "Title 3"
+    ],
+    "vistas": {
+     "right": "ad83dc1fffea620391286e76",
+     "front": "2d0fdf410e606260b6b20bd1",
+     "left": "d2a7b41c9142450cd2ed9af3",
+     "back": "918c6b3959c20496a649c026",
+     "top": "8200e6866d37498b1c76872f",
+     "bottom": "b799bb2086384b4f7260c6ae",
+     "isometric": "fbd19abd932e9883f7294bc5"
+    },
+    "cotas": {
+     "creadas": 20,
+     "fallidas": [],
+     "a_mano": [
+      "front: 1 separaciones más entre nervios verticales",
+      "front: separación 5 entre nervios verticales (sin espacio)",
+      "front: separación 5 entre nervios verticales (sin espacio)",
+      "front: separación 7 entre nervios verticales (sin espacio)",
+      "front: separación 52,2 entre nervios verticales (sin espacio)",
+      "front: separación 7 entre nervios verticales (sin espacio)",
+      "front: separación 5 entre nervios verticales (sin espacio)",
+      "front: espesor 0,5 (sin espacio)",
+      "left: 1 separaciones más entre nervios verticales",
+      "left: espesor 0,5 (sin espacio)"
+     ]
+    },
+    "escala": "1:2",
+    "escala_iso": "1:2",
+    "posterior": true,
+    "cantidad": 1,
+    "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_T2_tapa.pdf",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/3f6976556319bf5b1aeb0f9a",
+    "llamadas": 17,
+    "segundos": 70
+   },
+   "pid": "JFD",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ]
+  },
+  "M3s_riel_gancho": {
+   "partstudio": "b72266e724b98f2af5bae60e",
+   "pestana": "M3s_riel_gancho",
+   "a4": {
+    "drawing": "02675b967c8f513dbfaa5ebc",
+    "cajetin": {
+     "Title 1": "M3s_riel_gancho",
+     "Drawn by": "Equipo 02 UPCH",
+     "Description": "LANTERNGUARD - M3s_riel_gancho",
+     "Date drawn": "2026-11-05"
+    },
+    "props_disponibles": [
+     "Approver",
+     "Category",
+     "Date approved",
+     "Date drawn",
+     "Description",
+     "Drawn by",
+     "Inspection count",
+     "Last changed by",
+     "Last changed date",
+     "Name",
+     "Not revision managed",
+     "Part number",
+     "Revision",
+     "Revision description",
+     "State",
+     "Title 1",
+     "Title 2",
+     "Title 3"
+    ],
+    "vistas": {
+     "right": "e90de2f0d44bdb86eb85cdbf",
+     "front": "a3f936f2ebe20ed212b16587",
+     "left": "439a8038a7ff056ab4018d08",
+     "back": "27eae77898e2eb3722349f45",
+     "top": "eb46724f13e6425c9ba92ac6",
+     "bottom": "7004e22f45af466b565be493",
+     "isometric": "8d04d3dddf837d42f33f11a3"
+    },
+    "chaflan": "cota en la vista left (de canto): Chaflán 8x45°",
+    "cotas": {
+     "creadas": 12,
+     "fallidas": [],
+     "a_mano": [
+      "front: alto total 81,8 (el borde es curvo)",
+      "front: separación 6 entre nervios horizontales (sin espacio)",
+      "front: separación 7 entre nervios horizontales (sin espacio)",
+      "front: separación 6 entre nervios horizontales (sin espacio)",
+      "front: separación 4 entre nervios horizontales (sin espacio)",
+      "front: separación 6 entre nervios horizontales (sin espacio)",
+      "front: separación 7 entre nervios horizontales (sin espacio)",
+      "left: espesor 1,5 (sin espacio)",
+      "left: separación 11,3 entre nervios horizontales (sin espacio)",
+      "left: separación 8,3 entre nervios horizontales (sin espacio)",
+      "left: separación 6 entre nervios horizontales (sin espacio)",
+      "left: separación 19,5 entre nervios horizontales (sin espacio)",
+      "left: 4x Ø4,2 (sin espacio)"
+     ]
+    },
+    "escala": "1:2",
+    "escala_iso": "1:3",
+    "posterior": true,
+    "cantidad": 2,
+    "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_M3s_riel_gancho.pdf",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/02675b967c8f513dbfaa5ebc",
+    "llamadas": 17,
+    "segundos": 72
+   },
+   "pid": "JFD",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ]
   }
  },
  "antes_0411": {
@@ -4462,6 +4674,232 @@
     "Project"
    ],
    "hecho_0511": true
+  }
+ },
+ "antes_165": {
+  "M3s_riel_gancho": {
+   "partstudio": "9758a91f4e2d9add367f7b96",
+   "pestana": "M3s_riel_gancho",
+   "inicio_0511": "2026-11-04T22:19",
+   "dibujo_anterior": "17b0094c7e9cbcaf8638c86d",
+   "a4": {
+    "drawing": "2bb74ca50b107ab8dab44275",
+    "cajetin": {
+     "Title 1": "M3s_riel_gancho",
+     "Drawn by": "Equipo 02 UPCH",
+     "Description": "LANTERNGUARD - M3s_riel_gancho",
+     "Date drawn": "2026-11-04"
+    },
+    "props_disponibles": [
+     "Approver",
+     "Category",
+     "Date approved",
+     "Date drawn",
+     "Description",
+     "Drawn by",
+     "Inspection count",
+     "Last changed by",
+     "Last changed date",
+     "Name",
+     "Not revision managed",
+     "Part number",
+     "Revision",
+     "Revision description",
+     "State",
+     "Title 1",
+     "Title 2",
+     "Title 3"
+    ],
+    "vistas": {
+     "right": "eaff481879fbabb63c755791",
+     "front": "28442304a87e45e588f3877f",
+     "left": "2333ba238a8159a4dcfe93d0",
+     "back": "08ed18a06c9543104c0267ec",
+     "top": "8e544337c77bee895444d4bc",
+     "bottom": "3e12fa34ac773bafd33e6ec2",
+     "isometric": "b375c94ad6172e8726e0c9f2"
+    },
+    "chaflan": "cota en la vista left (de canto): Chaflán 8x45°",
+    "cotas": {
+     "creadas": 12,
+     "fallidas": [],
+     "a_mano": [
+      "front: alto total 79,4 (el borde es curvo)",
+      "front: separación 6 entre nervios horizontales (sin espacio)",
+      "front: separación 7 entre nervios horizontales (sin espacio)",
+      "front: separación 6 entre nervios horizontales (sin espacio)",
+      "front: separación 4 entre nervios horizontales (sin espacio)",
+      "front: separación 6 entre nervios horizontales (sin espacio)",
+      "front: separación 7 entre nervios horizontales (sin espacio)",
+      "left: espesor 1,5 (sin espacio)",
+      "left: separación 13,3 entre nervios horizontales (sin espacio)",
+      "left: separación 10,3 entre nervios horizontales (sin espacio)",
+      "left: separación 6 entre nervios horizontales (sin espacio)",
+      "left: separación 19,5 entre nervios horizontales (sin espacio)",
+      "left: 4x Ø4,2 (sin espacio)"
+     ]
+    },
+    "escala": "1:2",
+    "escala_iso": "1:3",
+    "posterior": true,
+    "cantidad": 2,
+    "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_M3s_riel_gancho.pdf",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/2bb74ca50b107ab8dab44275",
+    "llamadas": 18,
+    "segundos": 32
+   },
+   "pid": "JFD",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ],
+   "hecho_0511": true
+  }
+ },
+ "antes_tierra": {
+  "T1_caja": {
+   "partstudio": "e2d9b0174d506885f0164753",
+   "pestana": "T1_caja",
+   "a4": {
+    "drawing": "c6b0ec34143fd8de6c70057b",
+    "cajetin": {
+     "Title 1": "T1_caja",
+     "Drawn by": "Equipo 02 UPCH",
+     "Description": "LANTERNGUARD - T1_caja",
+     "Date drawn": "2026-11-05"
+    },
+    "props_disponibles": [
+     "Approver",
+     "Category",
+     "Date approved",
+     "Date drawn",
+     "Description",
+     "Drawn by",
+     "Inspection count",
+     "Last changed by",
+     "Last changed date",
+     "Name",
+     "Not revision managed",
+     "Part number",
+     "Revision",
+     "Revision description",
+     "State",
+     "Title 1",
+     "Title 2",
+     "Title 3"
+    ],
+    "vistas": {
+     "front": "5b073ac9c4f688487053014b",
+     "left": "9f462569d8ec37f2641f23e6",
+     "back": "49abb5b6c1ea84dd27d0bfe6",
+     "top": "cd5fbbca92923a4b7bc5418f",
+     "bottom": "12dfa3e61aa1ab7f18e2d598",
+     "isometric": "49e7015a73a93667aeccdda9"
+    },
+    "escala": "1:2",
+    "escala_iso": "1:2",
+    "posterior": true,
+    "cantidad": 1,
+    "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_T1_caja.pdf",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/c6b0ec34143fd8de6c70057b",
+    "llamadas": 4,
+    "segundos": 64,
+    "cotas": {
+     "creadas": 18,
+     "fallidas": [],
+     "a_mano": [
+      "front: 1 separaciones más entre nervios verticales",
+      "front: separación 5 entre nervios verticales (sin espacio)",
+      "front: separación 5 entre nervios verticales (sin espacio)",
+      "front: separación 7 entre nervios verticales (sin espacio)",
+      "front: separación 52,2 entre nervios verticales (sin espacio)",
+      "front: separación 7 entre nervios verticales (sin espacio)",
+      "front: separación 5 entre nervios verticales (sin espacio)",
+      "front: espesor 3,9 (sin espacio)",
+      "top: posición de 4x Ø4 a 2 del borde (sin espacio)",
+      "top: posición de 4x Ø3,5 a 14,1 del borde (sin espacio)",
+      "top: posición de 4x Ø3,5 a 31 del borde (sin espacio)",
+      "top: 4x Ø8,5 (sin espacio)",
+      "top: 4x Ø11,5 (sin espacio)",
+      "left: 1 separaciones más entre nervios verticales",
+      "left: espesor 0,5 (sin espacio)"
+     ]
+    }
+   },
+   "pid": "JFD",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ]
+  },
+  "LR2_aro": {
+   "partstudio": "0105e147c7a4e8f46f07161a",
+   "pestana": "LR2_aro",
+   "a4": {
+    "drawing": "2adc1e03c2bcc7ed4211102e",
+    "cajetin": {
+     "Title 1": "LR2_aro",
+     "Drawn by": "Equipo 02 UPCH",
+     "Description": "LANTERNGUARD - LR2_aro",
+     "Date drawn": "2026-11-05"
+    },
+    "props_disponibles": [
+     "Approver",
+     "Category",
+     "Date approved",
+     "Date drawn",
+     "Description",
+     "Drawn by",
+     "Inspection count",
+     "Last changed by",
+     "Last changed date",
+     "Name",
+     "Not revision managed",
+     "Part number",
+     "Revision",
+     "Revision description",
+     "State",
+     "Title 1",
+     "Title 2",
+     "Title 3"
+    ],
+    "vistas": {
+     "front": "717b53b708d7bbdb7bbc5ec8",
+     "left": "3d920b8b880e8197a360c3fd",
+     "back": "caab9c022ccc2f521120dd5a",
+     "top": "09f481c9a00a13d104d1110c",
+     "bottom": "05de2ea03a9e85853c8633ce",
+     "isometric": "143ae498c9f74dadef94086e"
+    },
+    "cotas": {
+     "creadas": 2,
+     "fallidas": [],
+     "a_mano": [
+      "front: ancho total 205,7 (el borde es curvo)",
+      "top: sin aristas rectas, solo cotas a mano",
+      "left: ancho total 205,7 (el borde es curvo)"
+     ]
+    },
+    "escala": "1:4",
+    "escala_iso": "1:4",
+    "posterior": true,
+    "cantidad": 4,
+    "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_LR2_aro.pdf",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/2adc1e03c2bcc7ed4211102e",
+    "llamadas": 17,
+    "segundos": 69
+   },
+   "pid": "JFD",
+   "propiedades": [
+    "Description",
+    "Material",
+    "Name",
+    "Project"
+   ]
   }
  }
 }

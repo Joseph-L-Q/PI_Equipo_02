@@ -387,6 +387,12 @@ def trays_low(lay):
 
 
 # ------------------------------------------------------------------ rail half M3s with its C hook
+def seat_shift():
+    """x of the bore in the hook frame. The seat is straight and the ring curves away over its length by the sagitta: the
+    bore moves half of it toward the node axis, so the ring (centred by the two opposite hooks) clears at centre and ends."""
+    return -P.SIMPLE_HOOK_C[2] ** 2 / (8 * R_RING) / 2
+
+
 def hook(strap=None, holes=True, style=None):
     """C hook in its own frame: ring rod centre at the origin, rod along Y, rail bottom at z = HOOK_DROP. Open C seat
     (drops onto the rod), web with the strap slot along X. holes = M4 of the old bolted M9s (False when fused).
@@ -404,8 +410,9 @@ def hook(strap=None, holes=True, style=None):
     h = _box(-fl_l / 2, fl_l / 2, -fy, fy, zt - fl_t, zt)
     h = h.union(_box(-wx, wx, -wy, wy, ro - wall / 2, zt - fl_t + 0.01))
     h = h.union(_cyl((0, -seat / 2, 0), (0, 1, 0), ro, seat))
-    h = h.cut(_cyl((0, -wy - 1, 0), (0, 1, 0), ri, 2 * wy + 2))
-    h = h.cut(_box(-ri, ri, -wy - 1, wy + 1, -ro - 1, 0))
+    dx = seat_shift()
+    h = h.cut(_cyl((dx, -wy - 1, 0), (0, 1, 0), ri, 2 * wy + 2))
+    h = h.cut(_box(dx - ri, dx + ri, -wy - 1, wy + 1, -ro - 1, 0))
     if style == "snap":
         # flexure arms (ENGANCHES.md, 2): below z = raiz_z the wall beyond the arm is removed, so the two horns of the C
         # become cantilever arcs of thickness `brazo` rooted in the crown, each with an inward barb that narrows the mouth
@@ -434,7 +441,7 @@ def hook(strap=None, holes=True, style=None):
     else:
         flare = ri + 0.6 * wall
         h = h.cut(cq.Workplane("XZ").workplane(offset=-wy - 1).polyline(
-            [(-ri, 0.01), (ri, 0.01), (flare, -ro - 1), (-flare, -ro - 1)]).close().extrude(2 * wy + 2))
+            [(dx - ri, 0.01), (dx + ri, 0.01), (dx + flare, -ro - 1), (dx - flare, -ro - 1)]).close().extrude(2 * wy + 2))
     if CLOSED and P.NODE_NOSUP and style == "c":
         # the hook web (33 wide) floats 7.5 mm over the bed when M3s lies on its side: two ribs under its -Y face
         nrib, wrib = P.RAIL_BED_RIBS["n"], P.RAIL_BED_RIBS["ancho"]

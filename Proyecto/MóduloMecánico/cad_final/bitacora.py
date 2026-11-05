@@ -33,6 +33,17 @@ MODULAR = [("M1_caja_cuerpo", 1, "Caja, cuerpo"), ("M2_caja_tapa", 1, "Caja, tap
            ("M12_perilla", 4, "Perilla"), ("M13_casquillo_D8", 2, "Casquillo Ø8"), ("M14_pestillo", 2, "Pestillo")]
 SLICER_GROUPS = {"nodo P2 robusto": SAL / "prototipos" / "P2_robusto", "nodo P4 estetico": SAL / "prototipos" / "P4_estetico",
                  "boya PET 4 x 1 L": SAL / "boya_pet"}
+NUEVAS = [("aro de la linterna", "LR2_aro", 4, "Aro de la linterna, seccion redonda con base plana de 0,5 mm", SAL / "aro" / "step" / "LR2_aro.step", ("aro", ("LR2_aro",))),
+          ("aro de la linterna", "PB_aro", 1, "Probeta del aro: 50 mm de aro + asiento real de M3s (2 solidos)", SAL / "aro" / "step" / "PB_aro.step", ("aro", ("PB_aro_tramo", "PB_aro_asiento"))),
+          ("estacion de tierra", "T1_caja", 1, "Caja de la estacion LoRa de tierra (Heltec en 4 postes M2,5)", SAL / "tierra" / "step" / "T1_caja.step", ("tierra", ("T1_caja",))),
+          ("estacion de tierra", "T2_tapa", 1, "Tapa de la estacion de tierra con ventana OLED", SAL / "tierra" / "step" / "T2_tapa.step", ("tierra", ("T2_tapa",)))]
+
+
+def nuevas_json(kind):
+    return json.loads((SAL / kind / f"{kind}.json").read_text(encoding="utf-8"))
+
+
+NEW_GROUPS = ("aro de la linterna", "estacion de tierra")
 MODULAR_SEALED = ("M1_", "M2_", "M4_", "M5_", "M3_riel_central", "M3_riel_ext")
 
 # MEDIDAS template name -> (params key, index in the tuple or None, note)
@@ -94,6 +105,12 @@ def piece_rows():
                 best = (on, mc)
         rows.append(("modular D200", stem, qty, desc, sh.Volume() / 1000, best[1]["bbox"], best[0], best[1]["overhang_mm2"] > thr,
                      f"{inf * 100:.0f} %", FA.mass_g(sh, inf)))
+    for g, stem, q, desc, step, (kind, keys) in NUEVAS:
+        js = nuevas_json(kind)
+        mass = sum(js[k]["gramos"] for k in keys)
+        sh = cq.importers.importStep(str(step)).val()
+        bb = sh.BoundingBox()
+        rows.append((g, stem, q, desc, sh.Volume() / 1000, (bb.xlen, bb.ylen, bb.zlen), "segun guia (sin soportes)", False, "13 perimetros + 15 %" if stem == "LR2_aro" else ("tramo 13 p + 15 %, asiento 100 %" if stem == "PB_aro" else "100 %"), mass))
     rows += slicer_rows()
     return rows, res, rb
 
@@ -211,8 +228,15 @@ def hardware(res, rb):
                         ("Perno M4 hexagonal (perillas) + tuerca en la ranura T", "M4", 4),
                         ("Perno M4 x 20 + tuerca mariposa (bisagras)", "M4", 2), ("Pivote M3 del pestillo", "M3", 2),
                         ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Pletina de inox", "25 x 5 x 100", 4)]
+    cordon = nuevas_json("tierra")["cordon_mm"]
+    tierra = [("Tapon de silicona del puerto USB-C / PRG / RST", "30 x 13 x 4 mm", 1),
+              ("Acrilico de la ventana OLED, pegado con sellador", "31 x 20 x 2 mm", 1),
+              ("SMA de mamparo con junta", "SMA", 1),
+              ("Tornillo M2,5 inox A4 + inserto termico M2,5 (Heltec a los 4 postes de T1; largo por definir al medir la placa)", "M2,5", 4),
+              ("Tornillo M3 inox A4 + inserto termico M3 (tapa T2 a la caja T1)", "M3", 4),
+              (f"Cordon de junta NBR Ø2 para la ranura de T1 (unos {cordon:.0f} mm)", f"{cordon:.0f} mm", 1)]
     return ([("nodo simple", *h) for h in simple] + [("boya PET 4 x 1 L", *h) for h in boya]
-            + [("modular D200", *h) for h in modular])
+            + [("modular D200", *h) for h in modular] + [("estacion de tierra", *h) for h in tierra])
 
 
 def design_rows(res, rb):
@@ -315,7 +339,15 @@ def build_book(rows, hw, res, rb, slicer):
         rs.cell(r2, 4, f"=SUMIF(PIEZAS!$B:$B,$A{r2},PIEZAS!$Q:$Q)")
         rs.cell(r2, 5, f"=SUMIF(HARDWARE!$A:$A,$A{r2},HARDWARE!$F:$F)")
         rs.cell(r2, 6, f"=D{r2}+E{r2}")
-    r += len(SLICER_GROUPS) + 1
+    for i, g in enumerate(NEW_GROUPS):
+        r2 = r + 2 + len(SLICER_GROUPS) + i
+        rs.cell(r2, 1, g)
+        rs.cell(r2, 2, f"=SUMIF(PIEZAS!$B:$B,$A{r2},PIEZAS!$N:$N)")
+        rs.cell(r2, 3, f"=SUMIF(PIEZAS!$B:$B,$A{r2},PIEZAS!$P:$P)")
+        rs.cell(r2, 4, f"=SUMIF(PIEZAS!$B:$B,$A{r2},PIEZAS!$Q:$Q)")
+        rs.cell(r2, 5, f"=SUMIF(HARDWARE!$A:$A,$A{r2},HARDWARE!$F:$F)")
+        rs.cell(r2, 6, f"=D{r2}+E{r2}")
+    r += len(SLICER_GROUPS) + len(NEW_GROUPS) + 1
     rs.cell(r + 2, 1, "Masa por pieza = la misma del calculo de flotacion (piel + relleno de cada pieza). Llenar los precios "
                       "amarillos de HARDWARE para el costo total. La fila modular D200 es para comparar.")
 
@@ -381,7 +413,7 @@ def build_book(rows, hw, res, rb, slicer):
 def totals(rows, slicer):
     """Same numbers as the RESUMEN formulas (hardware prices are empty: cost 0 until filled)."""
     out = {}
-    for g in ("nodo simple", "linterna de prueba", "boya simple", "modular D200", *SLICER_GROUPS):
+    for g in ("nodo simple", "linterna de prueba", "boya simple", "modular D200", *SLICER_GROUPS, *NEW_GROUPS):
         m = h = 0.0
         for gg, stem, q, desc, vol, bb, orient, sup, rel, mu in rows:
             if gg != g:
@@ -408,7 +440,8 @@ def write_md(rows, hw, res, rb, slicer):
         L.append(f"| {g} | {v['masa']:.0f} | {v['horas']:.1f} | {v['costo']:.2f} |")
     L += ["", "**Lo que se imprime hoy: nodo P2 robusto + boya PET 4 x 1 L** (mas las probetas; total por placa en "
           "`salida/imprimir_hoy/3mf/placas.json`). Las otras filas son versiones anteriores, solo para comparar: no se suman.",
-          "", "El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).", "",
+          "", "Aros de la linterna (LR2_aro x4, PB_aro) y estacion de tierra (T1, T2): gramos estimados de `docs/ARO_Y_ESTACION.md` (sin slicer); las medidas del Heltec y la bateria son estimadas y hay que confirmarlas antes de imprimir.", "",
+          "El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).", "",
           "## Piezas", "", "| Pieza | Grupo | Cant. | X × Y × Z mm | Volumen cm³ | Orientacion | Soportes | Relleno | Masa por pieza g | Fuente |",
           "|---|---|---|---|---|---|---|---|---|---|"]
     for g, stem, q, desc, vol, bb, orient, sup, rel, mu in rows:

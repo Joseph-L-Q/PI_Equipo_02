@@ -234,7 +234,7 @@ def _c(v, nd=1):
     return f"{v:.{nd}f}".rstrip("0").rstrip(".").replace(".", ",") if nd else f"{round(v)}"
 
 
-def sheet_equipo(code, step, qty, out, date="2026-11-04", chamfer=None, material="PETG"):
+def sheet_equipo(code, step, qty, out, date="2026-11-04", chamfer=None, material="PETG", notas=None):
     """Local drawing in the team's format (same as planos_onshape --formato equipo): ISO A4 landscape, first angle, mm with
     decimal comma, ISO title block (TITLE / LANTERNGUARD / DRAWN / DATE / MATERIAL / SCALE / SHEET) at x 124..287, y 10..49
     of a 10 mm frame. Front, top, left side and isometric views; overall dimensions of each view, hole list and chamfer
@@ -310,7 +310,10 @@ def sheet_equipo(code, step, qty, out, date="2026-11-04", chamfer=None, material
         notes.append(f"(lista de agujeros no disponible: {str(e)[:40]})")
     if chamfer:
         notes += chamfer["lineas"][1:] and ["Chaflán 45°: " + "; ".join(chamfer["lineas"][1:])]
-    notes.append("Espesores, separación de nervios y posición de agujeros: ver cotas a mano (COTAS_A_MANO).")
+    if notas:
+        notes += list(notas)
+    else:
+        notes.append("Espesores, separación de nervios y posición de agujeros: ver cotas a mano (COTAS_A_MANO).")
     y = 50.0 + 4 * (len(notes) + 1)
     # title block: the standard layout of the Onshape A4 sheet of the team
     tx0, ty0, tx1, ty1 = 124.0, 10.0, 287.0, 49.0

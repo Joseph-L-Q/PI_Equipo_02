@@ -68,21 +68,21 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 108888.9
+   "volumen_mm3": 110000.0
   },
   {
    "nombre": "lastre_der",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 108888.9
+   "volumen_mm3": 110000.0
   },
   {
    "nombre": "M3s_riel_gancho_der",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 170833.2
+   "volumen_mm3": 168234.1
   },
   {
    "nombre": "M5s_capsula_tapa_pie_der",
@@ -117,7 +117,7 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 170833.2
+   "volumen_mm3": 168234.1
   },
   {
    "nombre": "M5s_capsula_tapa_pie_izq",
@@ -152,7 +152,7 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 31582.7
+   "volumen_mm3": 134350.0
   },
   {
    "nombre": "REF_linterna_malla",
@@ -187,28 +187,28 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 5385.8
+   "volumen_mm3": 5413.1
   },
   {
    "nombre": "REF_cuerda_2",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 5385.8
+   "volumen_mm3": 5413.1
   },
   {
    "nombre": "REF_cuerda_3",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 5385.8
+   "volumen_mm3": 5413.1
   },
   {
    "nombre": "REF_cuerda_4",
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 5385.8
+   "volumen_mm3": 5413.1
   },
   {
    "nombre": "REF_cabo",

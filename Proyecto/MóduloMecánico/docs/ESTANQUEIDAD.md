@@ -1,6 +1,6 @@
 # Estanqueidad del nodo y de la boya
 
-Versión del 2026-11-04 · concepto vigente: **un solo volumen seco** en el nodo (caja + rieles + cápsulas), con el cable plano de las cámaras por dentro. Los números de la tabla se pueden buscar en la guía de piezas (`GUIA_PIEZAS_LanternGuard.pdf`).
+Versión del 2026-11-05 · concepto vigente: **un solo volumen seco** en el nodo (caja + rieles + cápsulas), con el cable plano de las cámaras por dentro. Los números de la tabla se pueden buscar en la guía de piezas (`GUIA_PIEZAS_LanternGuard.pdf`).
 
 ## 1. La idea en dos frases
 

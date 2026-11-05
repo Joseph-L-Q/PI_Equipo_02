@@ -12,6 +12,7 @@ import scipy.sparse.linalg as spl
 A, B = 0.58541020, 0.13819660
 GAUSS = np.array([[A, B, B, B], [B, A, B, B], [B, B, A, B], [B, B, B, A]])
 EDGES = [(0, 1), (1, 2), (2, 0), (3, 0), (3, 2), (3, 1)]       # gmsh order of the 6 mid-side nodes
+DIRECT_MAX = 150000       # free dofs; above this, CG + AMG instead of the direct solver
 
 
 def mesh(step, size):
@@ -85,13 +86,33 @@ def elasticity(E, nu):
     return D
 
 
-def solve(xyz, tets, fixed, loads, E, nu):
-    """fixed: {node: dofs (0, 1, 2)}. loads: {node: (fx, fy, fz)}. Returns dict with u, von Mises, szz per element."""
+def amg_cg(K, f, xyz, free):
+    """CG with smoothed-aggregation AMG, seeded with the rigid-body modes: the direct factorization runs out of memory here."""
+    import pyamg
+    c = xyz - xyz.mean(axis=0)
+    R = np.zeros((xyz.size, 6))
+    R[0::3, 0] = R[1::3, 1] = R[2::3, 2] = 1.0
+    R[1::3, 3], R[2::3, 3] = -c[:, 2], c[:, 1]
+    R[0::3, 4], R[2::3, 4] = c[:, 2], -c[:, 0]
+    R[0::3, 5], R[1::3, 5] = -c[:, 1], c[:, 0]
+    ml = pyamg.smoothed_aggregation_solver(K.tocsr(), B=R[free], max_coarse=3000, max_levels=25, coarse_solver="splu", strength=("symmetric", {"theta": 0.02}))
+    res = []
+    x = ml.solve(f, tol=1e-8, accel="cg", maxiter=800, residuals=res)
+    if res[-1] > 1e-6 * res[0]:
+        raise RuntimeError(f"CG con AMG no convergio: residuo {res[-1] / res[0]:.1e} en {len(res)} iteraciones")
+    print(f"CG+AMG: {len(res)} iteraciones, residuo {res[-1] / res[0]:.1e}", flush=True)
+    return x
+
+
+def solve(xyz, tets, fixed, loads, E, nu, efac=None):
+    """fixed: {node: dofs (0, 1, 2)}. loads: {node: (fx, fy, fz)}. efac: E multiplier per element. Returns dict with u, von Mises, szz per element."""
     Bm, det = b_matrices(xyz, tets)
     if (det <= 0).any():
         raise ValueError(f"{(det <= 0).sum()} puntos con detJ <= 0: malla invertida")
     D = elasticity(E, nu)
     Ke = np.einsum("nqia,ij,nqjb,nq->nab", Bm, D, Bm, det / 24.0, optimize=True)
+    if efac is not None:
+        Ke *= efac[:, None, None]
     dof = (tets[:, :, None] * 3 + np.arange(3)).reshape(len(tets), 30)
     rows = np.repeat(dof, 30, axis=1).ravel()
     cols = np.tile(dof, (1, 30)).ravel()
@@ -106,15 +127,14 @@ def solve(xyz, tets, fixed, loads, E, nu):
     free = np.flatnonzero(mask)
     u = np.zeros(xyz.size)
     Kff = K[free][:, free].tocsc()
-    try:
+    if len(free) > DIRECT_MAX:
+        u[free] = amg_cg(Kff, f[free], xyz, free)
+    else:
         u[free] = spl.splu(Kff, permc_spec="MMD_AT_PLUS_A", diag_pivot_thresh=0.0, options=dict(SymmetricMode=True)).solve(f[free])
-    except (SystemError, MemoryError, RuntimeError):      # too big for a direct factorization: Jacobi-preconditioned CG
-        x, info = spl.cg(Kff, f[free], rtol=1e-8, maxiter=200000, M=sp.diags(1.0 / Kff.diagonal()))
-        if info:
-            raise RuntimeError(f"CG no convergio ({info})") from None
-        u[free] = x
     reac = (K @ u - f)
     s = np.einsum("ij,nqja,na->nqi", D, Bm, u[dof], optimize=True)
+    if efac is not None:
+        s *= efac[:, None, None]
     sx, sy, sz, txy, tyz, tzx = (s[..., i] for i in range(6))
     vm = np.sqrt(0.5 * ((sx - sy) ** 2 + (sy - sz) ** 2 + (sz - sx) ** 2) + 3 * (txy ** 2 + tyz ** 2 + tzx ** 2))
     return dict(u=u.reshape(-1, 3), vm=vm.max(axis=1), szz=sz.max(axis=1), reac=reac.reshape(-1, 3), vol=det.sum() / 24.0)

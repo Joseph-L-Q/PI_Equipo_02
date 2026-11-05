@@ -12,6 +12,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pyvista as pv  # noqa: E402
+pv.global_theme.allow_empty_mesh = True   # a smooth ring has no feature edges
 from matplotlib.patches import Circle  # noqa: E402
 from OCP.BRepAdaptor import BRepAdaptor_Surface  # noqa: E402
 
@@ -404,9 +405,9 @@ PIEZAS += [
              A("union", "Pasos M3 de las orejas", f"Cuatro orejas de {PR.PET_EAR[0]:g}×{PR.PET_EAR[1]:g}×{PR.PET_EAR[2]:g} mm en las esquinas. Un M3 por oreja entra al inserto del pilar de B2 ([[B2_cubierta_lisa:pilares]]): así la caja queda fija a la cubierta.",
                dict(D=3.4, ax="z"), key="orejas"),
              A("sello", "Insertos M3 de la brida", "Catorce insertos térmicos M3 (Ø4.0 × 6) en la brida de 7 mm. Los tornillos de la tapa B4 los aprietan. Son ciegos (no atraviesan) y quedan afuera del cordón.",
-               dict(D=4.0, ax="z", z=(160, 175)), key="ins_brida"),
+               dict(D=4.0, ax="z", z=(170, 185)), key="ins_brida"),
              A("mont", "Standoffs del portabaterías", "Cuatro standoffs Ø9 con inserto M3: sostienen el portabaterías 3×18650 separado del piso.",
-               dict(D=4.0, ax="z", z=(95, 110)), key="standoff"),
+               dict(D=4.0, ax="z", z=(110, 120)), key="standoff"),
              A("mont", "Postes de la bandeja", "Cuatro postes Ø9 con inserto M3 en la punta: sostienen la bandeja donde van la PCB y el Waveshare.",
                dict(D=4.0, ax="z", z=(125, 145)), key="postes"),
              A("cable", "PG7 del umbilical", "Agujero Ø12.6 en la pared −X (z = 30 mm sobre el piso interior). Entra el cable umbilical que baja al nodo; la contratuerca va por dentro y el prensaestopas aprieta el cable. Sella el paso.",
@@ -552,8 +553,9 @@ PIEZAS += [
                dict(D=3.4, ax="z"), key="pad_m3", tol=3),
              A("forma", "Rebajes Ø6.5 para las cabezas", "Cuatro rebajes redondos Ø6.5 junto a cada paso M3: dejan hueco para la cabeza del tornillo y la llave.",
                dict(D=6.5, ax="z"), key="rebajes", tol=3),
-             A("union", "Asiento en C del gancho", "C abierta de Ø8.8 (varilla del aro Ø8 + 0.4 de holgura): el nodo cae sobre la varilla del aro de la linterna. El alma del gancho (26 mm de ancho) está fundida al riel y lleva una ranura para una correa de 25 × 3.",
-               dict(D=8.8, ax="y"), key="gancho", tol=3),
+             IGN(dict(D=(28.0, 29.5), ax="y")),
+             A("union", "Asiento en C del gancho", "C abierta de Ø16.8 (aro LR2 Ø16.5 + 0.15 de holgura por lado): el nodo cae sobre el aro de la linterna. El alma del gancho (26 mm de ancho) está fundida al riel y lleva una ranura para una correa de 25 × 3.",
+               dict(D=16.8, ax="y"), key="gancho", tol=3),
          ]),
     dict(id="M3f_marco_bolsillo", grupo="Nodo P2", step=NODO / "M3f_marco_bolsillo.step", titulo="M3f · Marco del bolsillo de lastre",
          sub=f"Marco de {_bb(NODO / 'M3f_marco_bolsillo.step')} mm (paredes de {PR.PLATE_POCKET_WALL:g}) que guarda el lastre a granel (tuercas y arandelas M8). Se imprime ×2 (uno por bolsillo), sin soportes. Se atornilla por arriba a las orejas de la caja M1s y se cierra por abajo con la placa M3t. Queda fuera del volumen seco: se moja y no sella.",
@@ -645,9 +647,91 @@ PIEZAS += [
          ]),
 ]
 
+# ----------------------------------------------------------------------------- aro de la linterna y estacion de tierra
+ARO = ROOT / "salida" / "aro" / "step"
+TIERRA = ROOT / "salida" / "tierra" / "step"
+_AJ = json.loads((ROOT / "salida" / "aro" / "aro.json").read_text(encoding="utf-8"))
+_TJ = json.loads((ROOT / "salida" / "tierra" / "tierra.json").read_text(encoding="utf-8"))
+
+
+def _g(x):
+    return f"{x:g}".replace(".", ",")
+
+
+def _solid_center(path, small):
+    sols = sorted(cq.importers.importStep(str(path)).solids().vals(), key=lambda q: q.Volume())
+    c = sols[0 if small else -1].Center()
+    return (c.x, c.y, c.z)
+
+
+_SEC, _SEAT = _AJ["seccion_mm"], _AJ["asiento_mm"]
+_RING_R = 100.0
+_G_ARO, _G_PB = _AJ["LR2_aro"]["gramos"], _AJ["PB_aro_tramo"]["gramos"] + _AJ["PB_aro_asiento"]["gramos"]
+_USB_Z = _TJ["comprobaciones"]["usb_z"]
+_VENT = _TJ["comprobaciones"]["ventana_centro"]
+_ESTIMADO_T = "Las medidas del Heltec y de la batería son estimadas y deben confirmarse antes de imprimir."
+PIEZAS += [
+    dict(id="LR2_aro", grupo="Linterna", step=ARO / "LR2_aro.step", titulo="LR2 · Aro de la linterna",
+         sub=f"Aro de Ø200 al eje con sección redonda Ø{_g(_SEC)} y una base plana de 0,5 mm. Se imprime ×4 ({_g(_G_ARO)} g cada uno, estimado), uno por piso. "
+             f"Entra en el asiento en C del gancho de M3s con el plano hacia la boca; el asiento mide Ø{_g(_SEAT)}. "
+             "Diseñado para 2 kg por piso + 150 N de manipulación; FS entre capas ≥ 3.",
+         views=[(35, 35), (215, -30)],
+         items=[
+             M("forma", f"Sección redonda Ø{_g(_SEC)}", f"Aro de radio {_RING_R:g} mm al eje y sección redonda Ø{_g(_SEC)}. Es la parte que entra en el asiento Ø{_g(_SEAT)} del gancho de M3s con juego de 0,3 mm.",
+               [(_RING_R, 0, 0), (-_RING_R, 0, 0)], diam=_g(_SEC), key="seccion", tol=1000),
+             M("ajuste", "Base plana de 0,5 mm", "Plano de apoyo para imprimir sin soportes. Al montar el aro, el plano mira hacia la boca de la C del gancho de M3s.",
+               [(_RING_R, 0, -_SEC / 2 + 0.5), (-_RING_R, 0, -_SEC / 2 + 0.5)], key="plano", tol=1000),
+             M("union", "Carga de diseño", "Diseñado para 2 kg por piso + 150 N de manipulación; FS entre capas ≥ 3.",
+               [(0, _RING_R, 0)], key="carga", tol=1000),
+         ]),
+    dict(id="PB_aro", grupo="Linterna", step=ARO / "PB_aro.step", titulo="PB · Probeta del aro",
+         sub=f"Probeta de ajuste ({_g(_G_PB)} g, estimado): 2 sólidos, un tramo de aro de 50 mm y el asiento real de M3s. Imprímela y pruébala antes de imprimir los 4 aros LR2.",
+         views=[(35, 30), (215, 35)],
+         items=[
+             M("ajuste", "Asiento real de M3s", f"Asiento en C de Ø{_g(_SEAT)} con sus mordazas y la ranura de correa, igual al de M3s. Prueba aquí el juego del aro.",
+               [(0, 0, 0)], diam=_g(_SEAT), key="asiento", tol=1000),
+             IGN(dict(D=(16.0, 17.0), ax="y")),
+             IGN(dict(D=(28.0, 29.5), ax="y")),
+             M("forma", "Tramo de aro de 50 mm", f"Tramo del aro LR2 con la misma sección Ø{_g(_SEC)} y su base plana. Debe entrar en el asiento con el plano hacia la boca ([[LR2_aro:plano]]).",
+               [_solid_center(ARO / "PB_aro.step", True)], key="tramo", tol=1000),
+         ]),
+    dict(id="T1_caja", grupo="Tierra", step=TIERRA / "T1_caja.step", titulo="T1 · Caja de la estación de tierra",
+         sub=f"Cuerpo de la estación LoRa de tierra ({_g(_TJ['T1_caja']['gramos'])} g, estimado). El Heltec va en 4 postes M2,5; el puerto USB-C / PRG / RST con tapón de silicona está en −X y el agujero de la SMA de mamparo en +X. "
+             f"Se monta con el USB-C hacia abajo. {_ESTIMADO_T}",
+         views=[(35, 40), (215, 40)],
+         items=[
+             A("union", "Insertos M2,5 de los postes del Heltec", "Cuatro postes Ø8,5 con inserto térmico M2,5: sostienen el Heltec. La distancia entre agujeros (44 × 19,5) es estimada: confírmala con tu placa antes de imprimir.",
+               dict(D=3.5, ax="z"), key="postes", tol=3),
+             A("union", "Insertos M3 de la tapa", "Cuatro insertos térmicos M3 en las esquinas: reciben los tornillos M3 inox A4 de la tapa T2 ([[T2_tapa:pasos]]).",
+               dict(D=4.0, ax="z"), key="m3", tol=3),
+             M("cable", "Puerto USB-C / PRG / RST con tapón", f"Abertura en la pared −X (z = {_g(_USB_Z)}) para el USB-C, PRG y RST, cerrada con un tapón de silicona de 30 × 13 × 4 mm. Con el USB-C hacia abajo el puerto no mira a la lluvia. Falta verificar en qué cara de la placa están PRG y RST.",
+               [(-43.1, -19.9, _USB_Z)], key="usb", tol=1000),
+             A("cable", "Agujero de la SMA de mamparo", "Agujero Ø6,5 en la pared +X para la SMA de mamparo con su junta. La pared lisa de 3 mm es el asiento de la SMA.",
+               dict(D=6.5, ax="x"), key="sma", tol=3),
+             A("sello", "Ranura del cordón NBR Ø2 (4 esquinas)", f"Ranura de 2,6 × 1,5 mm en el borde de la caja para un cordón NBR Ø2 de unos {_TJ['cordon_mm']:.0f} mm, comprimido {_TJ['compresion_junta_pct']:g} %. Se marcan las 4 esquinas.",
+               dict(D=22.0, ax="z"), key="groove", tol=3),
+             A("ajuste", "Ojales de las pestañas", "Cuatro pestañas de 6 mm con ojal de 5,5 × 12 mm para fijar la caja.",
+               dict(D=5.5, ax="z"), key="pestanas", tol=3),
+             IGN(dict(D=12.0, ax="z")),
+             IGN(dict(D=18.0, ax="z")),
+         ]),
+    dict(id="T2_tapa", grupo="Tierra", step=TIERRA / "T2_tapa.step", titulo="T2 · Tapa de la estación de tierra",
+         sub=f"Tapa de la caja T1 ({_g(_TJ['T2_tapa']['gramos'])} g, estimado) con la ventana de la pantalla OLED, que lleva un acrílico de 31 × 20 × 2 mm pegado con sellador. {_ESTIMADO_T}",
+         views=[(35, 40), (215, -40)],
+         items=[
+             A("union", "Pasos M3 de la tapa", "Cuatro pasos M3 (Ø3,4) para los tornillos M3 inox A4 que van a los insertos de T1 ([[T1_caja:m3]]). Al apretarlos comprimen el cordón NBR.",
+               dict(D=3.4, ax="z"), key="pasos", tol=3),
+             M("cable", "Ventana de la OLED", "Ventana rectangular con rebaje para el acrílico de 31 × 20 × 2 mm, pegado con sellador. La posición de la pantalla es estimada: confírmala con tu Heltec antes de imprimir.",
+               [(_VENT[0], _VENT[1], 3)], key="ventana", tol=1000),
+         ]),
+]
+
 # ----------------------------------------------------------------------------- seals of the current concept
 COD = {"B2_cubierta_lisa": "B2 lisa", "B2_cubierta_mastil": "B2 mástil", "B5_cuna_base": "B5 base", "B5_cuna_cuello": "B5 cuello",
        "M11_bandeja": "M11 inferior", "M11_bandeja_sup": "M11 superior"}
+
+
+GRUPOS = {"Boya": "Boya con botellas PET", "Nodo P2": "Nodo de cámaras P2_robusto", "Linterna": "Aro de la linterna", "Tierra": "Estación de tierra"}
 
 
 def cod(pid):
@@ -777,12 +861,15 @@ def cover_figure(piezas, pages):
         fig.text(0.05, 0.795 - i * 0.034, l, fontsize=8.8)
     fig.text(0.05, 0.47, "Piezas", fontsize=14, fontweight="bold")
     y = 0.435
-    for grp in ("Boya", "Nodo P2"):
-        fig.text(0.05, y, "Boya con botellas PET" if grp == "Boya" else "Nodo de cámaras P2_robusto", fontsize=9.5, fontweight="bold", color="#1f5fbf")
+    x0 = 0.05
+    for grp in GRUPOS:
+        if grp == "Linterna":
+            x0, y = 0.55, 0.235
+        fig.text(x0, y, GRUPOS[grp], fontsize=9.5, fontweight="bold", color="#1f5fbf")
         y -= 0.026
         for p in [q for q in piezas if q["grupo"] == grp]:
-            fig.text(0.06, y, f"{p['titulo']}", fontsize=8.3)
-            fig.text(0.40, y, f"pág. {pages[p['id']]}", fontsize=8.3, color="#555555")
+            fig.text(x0 + 0.01, y, f"{p['titulo']}", fontsize=8.3)
+            fig.text(x0 + 0.35, y, f"pág. {pages[p['id']]}", fontsize=8.3, color="#555555")
             y -= 0.0205
         y -= 0.01
     fig.text(0.55, 0.47, "Estado", fontsize=14, fontweight="bold")
@@ -1097,7 +1184,7 @@ def main():
          "Colores en los PNG: azul = tornillo / unión · naranja = cable · rojo = sello · verde = forma / ahorro de material · morado = alineación · gris = montaje interno.",
          "Medidas: M3 de paso Ø3.4 · inserto M3 Ø4.0 · M4 de paso Ø4.2 · inserto M4 Ø5.6 · piloto M2 Ø1.8 · PG7 Ø12.6 · cordón O-ring Ø2 en ranura de 2.6 × 1.5.",
          "Regenerar: `cd cad_final && ..\\.venv\\Scripts\\python.exe guia_piezas.py`.", ""]
-    for grp, ttl in (("Boya", "Boya con botellas PET"), ("Nodo P2", "Nodo de cámaras P2_robusto")):
+    for grp, ttl in GRUPOS.items():
         g += [f"# {ttl}", ""]
         for p in [q for q in PIEZAS if q["grupo"] == grp]:
             g += md_piece(p, built[p["id"]][0])

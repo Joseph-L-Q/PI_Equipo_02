@@ -31,7 +31,7 @@ Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 - **SimScale:** clave verificada el 04/11 (listar proyectos responde). El plan A va por API; no hace falta la guía manual.
 
 ## Medidas físicas (no se pueden resolver desde la PC)
-- `aro.seccion`: 8,5 mm real desde el 05/11 (aro impreso LR2_aro). No cumple FS con 150 N: decidir la sección en `ARO_Y_ESTACION.md`.
+- `aro.seccion`: 16,5 mm, decisión final del 05/11 (aro impreso LR2_aro, asiento Ø16,8). Diseñado para 2 kg por piso + 150 N; con 13 perímetros + 15 % de gyroid, FS pico entre capas 3,01 (150 g por aro). Margen real en el asiento 0,06 mm por lado: probar PB_aro antes de imprimir (`ARO_Y_ESTACION.md`).
 - KIT A real, PG7, peso del panel: sin medir (MEDIDAS.md).
 
 ## Decisiones abiertas del equipo
@@ -62,7 +62,7 @@ Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 - Cotas que hay que agregar a mano (la API solo acota entre aristas rectas; las que chocaban se omitieron):
   - M1s_caja_cuerpo: 4x Ø5.6 y Ø30 en la lateral.
   - M2_caja_tapa: alto en la frontal (el alto total 63 ya está en la lateral).
-  - M3s_riel_gancho: alto 79.4 en la frontal; 4x Ø4.2 y Ø8 en la lateral.
+  - M3s_riel_gancho: 4x Ø4.2 y Ø16.8 en la lateral.
   - M4_capsula_cuerpo: casi todo (Ø12.6 arriba; 3x Ø1.8, Ø16.4 y Ø30.4 en la lateral; espesor): es un cilindro y sus contornos son curvos.
   - M5s_capsula_tapa_pie: ancho 55.2 y alto 95.9 en la frontal, 2x Ø4.2.
   - M6_capsula_bisel: anillo, solo salieron 3 cotas; faltan Ø exterior 42 y espesor 2.5.

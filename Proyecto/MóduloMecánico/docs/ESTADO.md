@@ -1,4 +1,49 @@
-# Estado LanternGuard CAD | aros, estación de tierra y planos nuevos (05/11)
+# Estado LanternGuard CAD | aro Ø16,5 con relleno, M3s nuevo, estación de tierra (05/11) | **TERMINADO**
+
+**El proyecto necesita 5 rollos, no 4:** unos 4172 g estimados. Con FS ≥ 3, cada aro pesa 150 g (13 perímetros + 15 % de gyroid), y los 4 rollos pedían unos 70 g.
+
+| Verificación | Resultado | Pedido |
+|---|---|---|
+| Aro impreso, 2 kg + 150 N, pico de flexión | FS entre capas **3,01** (macizo 3,16) | ≥ 3 |
+| Riel M3s en el agua / al izar | FS entre capas **3,94** / 5,19 | ≥ 3 |
+| Choque aro-gancho y con la cápsula | ninguno; margen del asiento 0,06 mm por lado | sin choque |
+| Aire cuerda-caja | 7,5 mm | ≥ 3 |
+| Cama | aro Ø216,5; M3s 140,5 | ≤ 230 |
+| Ensamble de tierra | 30 sólidos sin choques; 30 partes en Onshape | sin choques |
+
+Todos los FS salen de `fem_tet10.py` (sin CalculiX en esta PC). La rigidez del gyroid está estimada, sin ensayo.
+
+## Gramos
+| Pieza | Cant. | Impresión | g c/u | g total |
+|---|---|---|---|---|
+| LR2_aro | 4 | 13 perímetros + 15 % gyroid | 150,0 | 600,0 |
+| PB_aro_tramo | 1 | 13 perímetros + 15 % gyroid | 12,0 | 12,0 |
+| PB_aro_asiento | 1 | 100 % | 15,7 | 15,7 |
+| T1_caja | 1 | 100 % | 73,9 | 73,9 |
+| T2_tapa | 1 | 100 % | 50,1 | 50,1 |
+| **Piezas nuevas** | | | | **751,7** |
+| Las 20 placas del 05/11 (slicer) | | | | 3427 |
+| Cambio del par de M3s (por volumen y relleno) | | | | −7 |
+| **Total del proyecto** | | | | **≈ 4172 g** |
+
+**Rollos: 5 de 1 kg.** El objetivo de 4 rollos con 150 g de margen pedía 3850 g como máximo; el total se pasa por 322 g, y por 172 g de los 4000 g aun sin margen. Para llegar, cada aro debería pesar unos 70 g, y el más liviano probado (76 g) tiene FS 1,70.
+
+## Links en Onshape (LG_IMPRIMIR_P2)
+| Pieza | Pestaña | Plano A4 |
+|---|---|---|
+| LR2_aro | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/0105e147c7a4e8f46f07161a) | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b64dbc5d60c83da533be9d16) |
+| PB_aro | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/80b871519eaba8cd1f27bd1f) | no aplica |
+| T1_caja | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/081fe1777b92ade3e58b5980) | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/ff8fd312cba1b15897893cdb) |
+| T2_tapa | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/f76a01b7833bfd0c4e619446) | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/3f6976556319bf5b1aeb0f9a) |
+| M3s_riel_gancho | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b72266e724b98f2af5bae60e) | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/02675b967c8f513dbfaa5ebc) |
+| 00_ENSAMBLE | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/9f5db126d529a7a6219ab47f) | no aplica |
+| 00_ENSAMBLE_tierra | [abrir](https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/5516991cd254ef9b0bc3baca) | no aplica |
+
+Revisión final del documento: 125 pestañas, sin referencias rotas ni nombres duplicados. Llamadas: 230. El `.env` se borró al terminar. Lo pendiente está en `HANDOFF_siguiente.md` y el detalle en `ARO_Y_ESTACION.md`.
+
+---
+
+# Estado LanternGuard CAD | aros, estación de tierra y planos nuevos (05/11) | **SUPERADO por el bloque de arriba**
 
 **El aro LR2 de 8,5 mm NO cumple:** FS entre capas 0,54 (0,48 en el pico de flexión) con 2 kg + 150 N. No se cambió el diámetro. Propuesta sin aplicar: aro Ø16,5 y asiento Ø16,8. Detalle, supuestos y lista de verificación en `docs/ARO_Y_ESTACION.md`.
 

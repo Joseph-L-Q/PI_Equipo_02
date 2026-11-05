@@ -59,7 +59,8 @@ def seat_coupon():
 
 def fit(seat):
     """Arc of ring in the seat. The bore touches the rod only along the seat length of gancho.c (the web above starts over
-    the rod), where the curve of the ring deviates by the sagitta: the rod settles centred, half of it to each side."""
+    the rod), where the curve of the ring deviates by the sagitta; simple.seat_shift() puts the bore half of it inward, so
+    the ring on its nominal circle has that half to each side and clears with holgura - sagitta / 2."""
     seat_l = P.SIMPLE_HOOK_C[2]
     sag = seat_l ** 2 / (8 * R)
 
@@ -70,8 +71,15 @@ def fit(seat):
         except ValueError:
             return 0.0
     return dict(asiento_efectivo_mm=seat_l, flecha_aro_mm=round(sag, 3), holgura_radial_mm=round(P.SIMPLE_HOOK_C[0], 3),
-                margen_radial_centrado_mm=round(P.SIMPLE_HOOK_C[0] - sag / 2, 3), interferencia_sin_centrar_mm3=round(vol(0.0), 3),
-                interferencia_centrado_mm3=round(vol(sag / 2), 3))
+                margen_radial_mm=round(P.SIMPLE_HOOK_C[0] - sag / 2, 3), interferencia_mm3=round(vol(0.0), 3))
+
+
+def printed_fraction(d=None):
+    """Printed mass / solid mass: wall of aro.impreso (perimeters) plus its infill in the core."""
+    d = d or P.RING_SECTION
+    t = P.AROS["perimetros"] * P.AROS["ancho_linea"]
+    solid, core = ring(d).val().Volume(), ring(d - 2 * t).val().Volume()
+    return (solid - core + P.AROS["relleno"] * core) / solid
 
 
 def export(shape, stem):
@@ -143,25 +151,13 @@ def fem_hook(d, size=2.5):
     xyz, tets = F.mesh(p, size)
     zt = xyz[:, 2].max()
     fixed = {int(n): (0, 1, 2) for n in np.flatnonzero(xyz[:, 2] > zt - 1e-3)}
-    bore = np.hypot(xyz[:, 0], xyz[:, 2])
+    bore = np.hypot(xyz[:, 0] - SM.seat_shift(), xyz[:, 2])
     crown = np.flatnonzero((np.abs(bore - ri) < 0.05) & (xyz[:, 2] > 0.5 * ri))
     F_n = P.ARO_FEM["manipulacion_N"]
     r = F.solve(xyz, tets, fixed, {int(n): (0.0, 0.0, -F_n / len(crown)) for n in crown}, P.PETG_E, P.PETG_NU)
     rep = F.report(r, P.PETG_YIELD, P.PETG_YIELD_Z)
     rep.update(d=d, asiento=2 * ri, pared=keep[1][1], nodos=len(xyz), elementos=len(tets), nodos_carga=len(crown), nodos_fijos=len(fixed))
     return rep
-
-
-def extra():
-    """Refines the proposal, and tells how much the printed section carries."""
-    out = {"aro_15_malla_2.5": fem_ring(15.0, 2.5), "aro_16_malla_2.5": fem_ring(16.0, 2.5), "aro_16.5_malla_2.5": fem_ring(16.5, 2.5), "aro_16.5_en_plano": fem_ring(16.5, 2.5, inplane=True), "gancho_16.5": fem_hook(16.5)}
-    keep = P.ARO_FEM["manipulacion_N"]
-    try:
-        P.ARO_FEM["manipulacion_N"] = 0.0
-        out["aro_8.5_solo_2kg"] = fem_ring(P.RING_SECTION, 2.5)
-    finally:
-        P.ARO_FEM["manipulacion_N"] = keep
-    return out
 
 
 def main():
@@ -171,24 +167,23 @@ def main():
            "ancho_plano_base_mm": round(2 * math.sqrt(d * FLAT - FLAT ** 2), 2)}
     res["LR2_aro"] = export(ring(d), "LR2_aro")
     res["PB_aro_tramo"] = export(ring(d, angle=math.degrees(50.0 / R)), "PB_aro_tramo")
+    frac = printed_fraction(d)
+    res["impresion"] = dict(perimetros=P.AROS["perimetros"], ancho_linea_mm=P.AROS["ancho_linea"], relleno=P.AROS["relleno"], fraccion_de_macizo=round(frac, 4))
+    for k in ("LR2_aro", "PB_aro_tramo"):
+        res[k]["gramos_macizo"] = res[k]["gramos"]
+        res[k]["gramos"] = round(res[k]["gramos"] * frac, 1)
     seat = seat_coupon()
     res["PB_aro_asiento"] = export(seat, "PB_aro_asiento")
     res["calce"] = fit(seat)
     res["gramos_juego_4"] = round(res["LR2_aro"]["gramos"] * P.AROS["cantidad"], 1)
     print(json.dumps(res, ensure_ascii=False, indent=1))
     if "--sin-fem" not in sys.argv:
-        fem = {}
-        for size in (2.5, 1.7):
-            fem[f"aro_{d:g}_malla_{size}"] = fem_ring(d, size)
-        fem["aro_8.5_en_plano"] = fem_ring(d, 2.5, inplane=True)
-        for cand in (12.0, 14.0, 16.0, 18.0, 20.0, 22.0):
-            fem[f"aro_{cand:g}"] = fem_ring(cand, max(2.5, cand / 5))
-        for cand in (8.5, 14.0, 16.0, 18.0, 20.0):
-            fem[f"gancho_{cand:g}"] = fem_hook(cand)
-        fem.update(extra())
+        fem = {f"aro_{d:g}_malla_2.5": fem_ring(d, 2.5), f"aro_{d:g}_en_plano": fem_ring(d, 2.5, inplane=True), f"gancho_{d:g}": fem_hook(d)}
         res["fem"] = fem
         for k, v in fem.items():
             print(k, {x: round(v[x], 2) if isinstance(v[x], float) else v[x] for x in ("s995", "s_flexion_limpia", "fs_capas", "fs", "umax", "szz995", "elementos", "reaccion_z_N", "carga_N", "nodos_carga", "nodos_fijos") if x in v}, flush=True)
+    elif (OUT / "aro.json").exists():
+        res["fem"] = json.loads((OUT / "aro.json").read_text(encoding="utf-8")).get("fem", {})
     (OUT / "aro.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
 
 

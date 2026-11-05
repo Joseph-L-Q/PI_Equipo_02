@@ -21,8 +21,8 @@ Estructura que sostiene las botellas PET. Se imprime 2 veces: la segunda mitad e
 4. **Lengüeta y ranura de la unión** Ø6 _(alineación / ajuste)_. Lengüeta de 6 × 6 mm que sale 4 mm de la brida (z = 19) en la columna del lado +y; en la otra mitad entra en una ranura con 0.2 mm de holgura. Como las dos mitades son la misma pieza girada 180°, cada mitad lleva lengüeta de un lado y ranura del otro. Alinea y toma el esfuerzo cortante que no deben tomar los tornillos.
 5. **Pasos M3 hacia las cunas** Ø3.4 ×4 _(tornillo / unión)_. Cuatro pasos M3 (Ø3.4) en la costilla del extremo. Los tornillos vienen de las bahías del casco y se enroscan en los insertos de las lengüetas de las cunas B5.
 6. **Insertos M3 de los postes** Ø4.0 ×4 _(tornillo / unión)_. Inserto térmico M3 (Ø4.0 × 6) en la punta de cada poste: reciben los 4 tornillos M3 con que se atornilla la cubierta B2 (cada mitad de B2 va a sus propios 4 postes).
-7. **Poste Ø10** Ø10 ×4 _(forma / ahorro de material)_. Cuatro postes Ø10 que nacen del piso y suben hasta el inserto. Pasaron de Ø8 a Ø10 el 04/11; los del medio llevan un collar a 45° donde salen de la silla baja.
-8. **Ojal de amarre** Ø10.5 _(cable)_. Agujero Ø10.5 en el parche de la quilla. Hay uno por mitad (x = ±23): el cabo de amarre va en pata de gallo, con dos ramales a un nudo. Es independiente del umbilical.
+7. **Poste Ø16** Ø16 ×4 _(forma / ahorro de material)_. Cuatro postes Ø16 que nacen del piso y suben hasta el inserto. Pasaron de Ø8 a Ø10 el 04/11 y a Ø16 el 05/11 (tirón del cabo); los del medio llevan un collar a 45° donde salen de la silla baja.
+8. **Ojal de amarre** Ø10.5 _(cable)_. Agujero Ø10.5 en el parche de la quilla. Hay uno por mitad (x = ±43.5): el cabo de amarre va en pata de gallo (dos ramales de 350 mm a 60° entre sí, 173 N cada uno con el tirón de 300 N) con un tornillo M10 y arandela Ø30. El parche de 34 × 14 mm queda bajo el poste de la cubierta. Es independiente del umbilical.
 9. **Canal central** ×2 _(cable)_. Hueco de 50 mm entre las dos bahías (y = ±25), sin costillas. Por aquí baja el cable umbilical y caben el domo del PG7 y la contratuerca de la caja B3.
 10. **Silla baja de la botella** Ø83 ×4 _(forma / ahorro de material)_. Ranura en U Ø83 (botella Ø80 + 1.5 de holgura). Desde el 04/11 las costillas intermedias son sillas bajas (≤ 15 mm sobre el patín) de 5 mm de espesor. Lo que sujeta la botella hacia arriba son las barras de B2 y las correas.
 11. **Ranura del cuello** Ø35.33 _(forma / ahorro de material)_. Ranura Ø35.33 en la costilla del extremo (bahía y = −69): por ella asoma el cuello de la botella, unos 21 mm fuera del casco. El diámetro sale del cálculo del casco (boya_pet.neck_slot_r), no es un número fijo.
@@ -38,9 +38,9 @@ Marco de barras que cierra el casco por arriba y sostiene la caja B3 y el panel 
 ![B2_cubierta_lisa](../salida/guia_piezas/B2_cubierta_lisa.png)
 
 1. **Pasos M3 al casco** Ø3.4 ×4 _(tornillo / unión)_. Cuatro pasos M3 (Ø3.4) en las barras: los tornillos entran a los insertos de los postes de B1 (N° 6 de B1).
-2. **Pilares con inserto M3** Ø4.0 ×2 _(tornillo / unión)_. Dos pilares Ø10 × 6 bajo las orejas de la caja. Inserto M3 (Ø4.0): recibe el tornillo que atraviesa la oreja de B3.
-3. **Columnas del panel con inserto M3** Ø4.0 ×2 _(tornillo / unión)_. Dos columnas Ø12 que suben 107 mm. Inserto M3 (Ø4.0) en la punta: el panel solar de 170×170 se atornilla a las cuatro columnas (2 por mitad), 25 mm sobre la tapa.
-4. **Barras de 14 × 8 mm** ×2 _(forma / ahorro de material)_. Barras de 14 × 8 mm que cruzan sobre las botellas: no las dejan salir hacia arriba. Los huecos entre barras son por donde se inyecta la espuma. La barra de x = 0 es nueva: cierra el marco de cada mitad.
+2. **Pilares con inserto M3** Ø4.0 ×2 _(tornillo / unión)_. Dos pilares Ø10 que sobresalen 1 mm de la barra alta, bajo las orejas de la caja. Inserto M3 (Ø4.0): recibe el tornillo que atraviesa la oreja de B3.
+3. **Columnas del panel con inserto M3** Ø4.0 ×2 _(tornillo / unión)_. Dos columnas Ø14 con chaflán de 45° en la base. Inserto M3 (Ø4.0) en la punta: el panel solar de 170×170 se atornilla a las cuatro columnas (2 por mitad), 15 mm sobre la tapa. Cada columna lleva un tirante diagonal de 10 mm hacia afuera y un marco de 0 × 0 mm une las dos puntas bajo el panel: así aguanta el golpe lateral de 200 N (docs/BOYA.md).
+4. **Barras de 14 × 8 mm** ×2 _(forma / ahorro de material)_. Barras de 14 × 8 mm que cruzan sobre las botellas: no las dejan salir hacia arriba. Las dos líneas de tornillos de cada mitad (x = ±63.5 y el extremo) son barras altas de 26 × 20 mm, con un rebaje Ø7.5 para la cabeza del tornillo bajo la caja. Los huecos entre barras son por donde se inyecta la espuma. La barra de x = 0 cierra el marco de cada mitad.
 5. **Pie a 45° de pilares y columnas** ×4 _(forma / ahorro de material)_. Chaflán de 45° × 3 mm en la base de pilares y columnas sobre las barras: imprime sin soporte.
 
 ## B2 · Cubierta, lado mástil
@@ -51,10 +51,10 @@ La otra mitad de la cubierta, con el mástil de la antena. Mismos pilares y colu
 
 1. **Pasos M3 al casco** Ø3.4 ×4 _(tornillo / unión)_. Cuatro pasos M3 (Ø3.4): tornillos hacia los insertos de los postes de B1.
 2. **Pilares con inserto M3** Ø4.0 ×2 _(tornillo / unión)_. Dos pilares Ø10 bajo las orejas de la caja: inserto M3 (Ø4.0) para el tornillo de la oreja de B3.
-3. **Columnas del panel con inserto M3** Ø4.0 ×2 _(tornillo / unión)_. Dos columnas Ø12 con inserto M3 (Ø4.0) en la punta para el panel solar.
+3. **Columnas del panel con inserto M3** Ø4.0 ×2 _(tornillo / unión)_. Dos columnas Ø14 con tirante, e inserto M3 (Ø4.0) en la punta para el panel solar.
 4. **Hueco del mástil Ø8** Ø8.0 _(cable)_. Mástil Ø18 con hueco interior Ø8 desde z = 99 hasta la punta. Por dentro sube el pigtail de la antena (un cable corto con el conector de antena).
 5. **Puerto del pigtail Ø7** Ø7.0 _(cable)_. Agujero Ø7 en el mástil hacia la caja: por aquí sale el pigtail y va a un PG7 de la cara +X de B3 (N° 7 de B3).
-6. **Barras y barra de costura** ×2 _(forma / ahorro de material)_. Marco de barras de 14 × 8 mm; la barra en x = 0 cierra este marco. Igual que en el lado liso: retiene las botellas y deja huecos para la espuma.
+6. **Barras y barra de costura** ×2 _(forma / ahorro de material)_. Marco de barras de 14 × 8 mm; la barra en x = 0 cierra este marco. Igual que en el lado liso: barras altas de 26 × 20 mm en las líneas de tornillos; retiene las botellas y deja huecos para la espuma.
 7. **Pie a 45° de pilares y columnas** ×4 _(forma / ahorro de material)_. Chaflán de 45° × 3 mm en la base de pilares, columnas y mástil.
 
 ## B3 · Caja seca
@@ -163,7 +163,7 @@ Ahora es una caja cerrada y seca de 36 × 30 mm que sale de la caja M1s y lleva 
 7. **Almohadilla de 6 mm bajo el riel** _(forma / ahorro de material)_. Placa de 50 × 50 × 6 mm bajo el riel, cerca de la punta. Es el asiento plano de la silla de M5s. Sus alas (7 mm a cada lado del riel) llevan los pasos M3 (N° 8): los tornillos quedan FUERA del canal, no lo perforan.
 8. **Pasos M3 de la almohadilla** Ø3.4 ×4 _(tornillo / unión)_. Cuatro pasos M3 (Ø3.4) en las alas de la almohadilla, en cuadro de 34 × 40 mm: tornillos M3 que bajan a los 4 insertos ciegos de la silla de M5s (N° 4 de M5s).
 9. **Rebajes Ø6.5 para las cabezas** Ø6.5 ×4 _(forma / ahorro de material)_. Cuatro rebajes redondos Ø6.5 junto a cada paso M3: dejan hueco para la cabeza del tornillo y la llave.
-10. **Asiento en C del gancho** Ø8.8 _(tornillo / unión)_. C abierta de Ø8.8 (varilla del aro Ø8 + 0.4 de holgura): el nodo cae sobre la varilla del aro de la linterna. El alma del gancho (26 mm de ancho) está fundida al riel y lleva una ranura para una correa de 25 × 3.
+10. **Asiento en C del gancho** Ø16.8 _(tornillo / unión)_. C abierta de Ø16.8 (aro LR2 Ø16.5 + 0.15 de holgura por lado): el nodo cae sobre el aro de la linterna. El alma del gancho (26 mm de ancho) está fundida al riel y lleva una ranura para una correa de 25 × 3.
 
 ## M3f · Marco del bolsillo de lastre
 
@@ -238,3 +238,48 @@ Segundo piso de la caja seca. Placa de 3 mm que se apoya en los 4 postes de la b
 ![M11_bandeja_sup](../salida/guia_piezas/M11_bandeja_sup.png)
 
 1. **Pasos M3 de los postes** Ø3.4 ×4 _(tornillo / unión)_. Cuatro pasos M3 (Ø3.4): por cada uno entra la cabeza de un tornillo M3 × 38 inoxidable que baja por el poste de la bandeja inferior (N° 1 de M11 inferior) hasta el inserto de M1s.
+
+# Aro de la linterna
+
+## LR2 · Aro de la linterna
+
+Aro de Ø200 al eje con sección redonda Ø16,5 y una base plana de 0,5 mm. Se imprime ×4 (150 g cada uno, estimado), uno por piso. Entra en el asiento en C del gancho de M3s con el plano hacia la boca; el asiento mide Ø16,8. Diseñado para 2 kg por piso + 150 N de manipulación; FS entre capas ≥ 3.
+
+![LR2_aro](../salida/guia_piezas/LR2_aro.png)
+
+1. **Sección redonda Ø16,5** Ø16,5 ×2 _(forma / ahorro de material)_. Aro de radio 100 mm al eje y sección redonda Ø16,5. Es la parte que entra en el asiento Ø16,8 del gancho de M3s con juego de 0,3 mm.
+2. **Base plana de 0,5 mm** ×2 _(alineación / ajuste)_. Plano de apoyo para imprimir sin soportes. Al montar el aro, el plano mira hacia la boca de la C del gancho de M3s.
+3. **Carga de diseño** _(tornillo / unión)_. Diseñado para 2 kg por piso + 150 N de manipulación; FS entre capas ≥ 3.
+
+## PB · Probeta del aro
+
+Probeta de ajuste (27,7 g, estimado): 2 sólidos, un tramo de aro de 50 mm y el asiento real de M3s. Imprímela y pruébala antes de imprimir los 4 aros LR2.
+
+![PB_aro](../salida/guia_piezas/PB_aro.png)
+
+1. **Asiento real de M3s** Ø16,8 _(alineación / ajuste)_. Asiento en C de Ø16,8 con sus mordazas y la ranura de correa, igual al de M3s. Prueba aquí el juego del aro.
+2. **Tramo de aro de 50 mm** _(forma / ahorro de material)_. Tramo del aro LR2 con la misma sección Ø16,5 y su base plana. Debe entrar en el asiento con el plano hacia la boca (N° 2 de LR2).
+
+# Estación de tierra
+
+## T1 · Caja de la estación de tierra
+
+Cuerpo de la estación LoRa de tierra (73,9 g, estimado). El Heltec va en 4 postes M2,5; el puerto USB-C / PRG / RST con tapón de silicona está en −X y el agujero de la SMA de mamparo en +X. Se monta con el USB-C hacia abajo. Las medidas del Heltec y de la batería son estimadas y deben confirmarse antes de imprimir.
+
+![T1_caja](../salida/guia_piezas/T1_caja.png)
+
+1. **Insertos M2,5 de los postes del Heltec** Ø3.5 ×4 _(tornillo / unión)_. Cuatro postes Ø8,5 con inserto térmico M2,5: sostienen el Heltec. La distancia entre agujeros (44 × 19,5) es estimada: confírmala con tu placa antes de imprimir.
+2. **Insertos M3 de la tapa** Ø4.0 ×4 _(tornillo / unión)_. Cuatro insertos térmicos M3 en las esquinas: reciben los tornillos M3 inox A4 de la tapa T2 (N° 1 de T2).
+3. **Puerto USB-C / PRG / RST con tapón** _(cable)_. Abertura en la pared −X (z = 14,2) para el USB-C, PRG y RST, cerrada con un tapón de silicona de 30 × 13 × 4 mm. Con el USB-C hacia abajo el puerto no mira a la lluvia. Falta verificar en qué cara de la placa están PRG y RST.
+4. **Agujero de la SMA de mamparo** Ø6.5 _(cable)_. Agujero Ø6,5 en la pared +X para la SMA de mamparo con su junta. La pared lisa de 3 mm es el asiento de la SMA.
+5. **Ranura del cordón NBR Ø2 (4 esquinas)** Ø22 ×4 _(sello / agua)_. Ranura de 2,6 × 1,5 mm en el borde de la caja para un cordón NBR Ø2 de unos 284 mm, comprimido 25 %. Se marcan las 4 esquinas.
+6. **Ojales de las pestañas** Ø5.5 ×8 _(alineación / ajuste)_. Cuatro pestañas de 6 mm con ojal de 5,5 × 12 mm para fijar la caja.
+
+## T2 · Tapa de la estación de tierra
+
+Tapa de la caja T1 (50,1 g, estimado) con la ventana de la pantalla OLED, que lleva un acrílico de 31 × 20 × 2 mm pegado con sellador. Las medidas del Heltec y de la batería son estimadas y deben confirmarse antes de imprimir.
+
+![T2_tapa](../salida/guia_piezas/T2_tapa.png)
+
+1. **Pasos M3 de la tapa** Ø3.4 ×4 _(tornillo / unión)_. Cuatro pasos M3 (Ø3,4) para los tornillos M3 inox A4 que van a los insertos de T1 (N° 2 de T1). Al apretarlos comprimen el cordón NBR.
+2. **Ventana de la OLED** _(cable)_. Ventana rectangular con rebaje para el acrílico de 31 × 20 × 2 mm, pegado con sellador. La posición de la pantalla es estimada: confírmala con tu Heltec antes de imprimir.

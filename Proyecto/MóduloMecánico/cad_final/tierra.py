@@ -1,6 +1,7 @@
 """Ground LoRa station: T1_caja (body, printed with the floor on the bed) and T2_tapa (lid, printed inner face on the bed).
 
-    python tierra.py     salida/tierra/ (STEP, STL, tierra.json)
+    python tierra.py              salida/tierra/ (STEP, STL, tierra.json)
+    python tierra.py --ensamble   salida/tierra/step/00_ENSAMBLE_tierra.step, closed + exploded, with the collision check
 
 Layout: Heltec and battery side by side on the floor, Heltec on 4 M2.5 posts with the USB-C end against the -X wall, SMA
 bulkhead in the +X wall at the Heltec side. Mount it USB-C down: the plugged port then points away from the rain.
@@ -38,6 +39,7 @@ TX, TY = L_IN / 2 + RIM - 2, W_IN / 2 + RIM - 2    # screw axes: the towers over
 SCREWS = [(sx * TX, sy * TY) for sx in (-1, 1) for sy in (-1, 1)]
 WALL_MIN = 2.4                                      # encargo 05/11
 RC = 6.0                                            # cavity corner radius
+SMA_Z = FLOOR + 7.0                                 # the Ø12 outer face of the SMA stays under the 45 degree rim, which starts at z = 16.1
 
 
 def rbox(lx, ly, h, r, z=0.0):
@@ -103,7 +105,7 @@ def t1():
     body = body.cut(cq.Workplane("YZ").workplane(offset=x_out - td_ - 1).center(uy, USB_Z).rect(pw, ph).extrude(td_ + WALL + 2))
     body = body.cut(cq.Workplane("YZ").workplane(offset=x_out - td_ - 0.01).center(uy, USB_Z).rect(tw_, th_).extrude(td_ + 0.01))
     # SMA bulkhead at +X: round hole in the plain wall, whose outer face seats its washer
-    body = body.cut(cq.Workplane("YZ").workplane(offset=L_IN / 2 - 1).center(uy, FLOOR + 8.0).circle(T["sma_d"] / 2).extrude(WALL + 2))
+    body = body.cut(cq.Workplane("YZ").workplane(offset=L_IN / 2 - 1).center(uy, SMA_Z).circle(T["sma_d"] / 2).extrude(WALL + 2))
     # posts for the Heltec: M2.5 heat-set inserts, 45 degree foot
     ins_d, ins_h = C["inserto_m25"]
     for x, y in HOLES:
@@ -188,7 +190,85 @@ def checks(t1_shape):
     return out
 
 
+# references of the assembly: dimensions of tierra.medidas. Generic hardware, simplified: boxes and cylinders, not catalogue parts.
+SCREW_L, HEAD_D, HEAD_H = 10.0, 5.5, 3.0            # M3 x 10 DIN 912
+INSERT_L, THREAD_D = 5.7, 3.0                        # heat-set insert M3 x 5.7, bore simplified to the nominal thread
+SMA_BARREL, SMA_NUT, SMA_INNER, SMA_OUTER, SMA_T = 6.4, 10.0, 5.0, 5.0, 2.0
+CORD_W = 2.1                                         # closed, the cord is compressed to the groove depth: same area as the 2 mm circle
+EXPLODE_Z, EXPLODE_X = 40.0, 200.0
+
+
+def _cyl(x, y, z, d, h):
+    return cq.Workplane("XY").workplane(offset=z).center(x, y).circle(d / 2).extrude(h)
+
+
+def references():
+    """Closed position. The cord is shown compressed; everything else is at its nominal size."""
+    th = C["tapa"]
+    box = lambda x0, y0, z0, lx, ly, lz: cq.Workplane("XY").box(lx, ly, lz, centered=False).translate((x0, y0, z0))  # noqa: E731
+    by0 = HY0 + HW + POST_EXTRA + GAP
+    uy, sma_z = HY0 + HW / 2, SMA_Z
+    ow, oh = T["oled"]
+    margin, depth = C["ventana_rebaje"]
+    ox, oy = HX0 + T["oled_x"], HY0 + HW / 2
+    wx = L_IN / 2
+    axis = lambda x0, d, l: cq.Workplane("YZ").workplane(offset=x0).center(uy, sma_z).circle(d / 2).extrude(l)  # noqa: E731
+    sma = axis(wx - SMA_INNER, SMA_BARREL, SMA_INNER + WALL + SMA_OUTER).union(axis(wx - SMA_T, SMA_NUT, SMA_T)).union(axis(wx + WALL, T["sma_cara"], SMA_T))
+    go = C["ranura_pared"] + P.GROOVE_WIDTH / 2
+    z_cord = H_T1 - P.GROOVE_DEPTH
+    cord = rbox(L_IN + 2 * go + CORD_W, W_IN + 2 * go + CORD_W, P.GROOVE_DEPTH, RC + go + CORD_W / 2, z_cord).cut(
+        rbox(L_IN + 2 * go - CORD_W, W_IN + 2 * go - CORD_W, P.GROOVE_DEPTH + 1, RC + go - CORD_W / 2, z_cord - 0.5))
+    out = dict(REF_Heltec=box(HX0, HY0, PCB_Z, HL, HW, T["heltec_pcb"] + T["heltec_sobre_pcb"]),
+               REF_bateria=box(-L_IN / 2 + GAP, by0, FLOOR, BL, BW, BH),
+               REF_SMA=sma,
+               REF_acrilico_OLED=box(ox - (ow + margin) / 2, oy - (oh + margin) / 2, H_T1 + th - depth, ow + margin, oh + margin, 2.0),
+               REF_cordon_NBR=cord)
+    for k, (x, y) in enumerate(SCREWS, 1):
+        out[f"REF_tornillo_M3_{k}"] = _cyl(x, y, H_T1 + th - SCREW_L, THREAD_D, SCREW_L).union(_cyl(x, y, H_T1 + th, HEAD_D, HEAD_H))
+        out[f"REF_inserto_M3_{k}"] = _cyl(x, y, H_T1 - INSERT_L, P.M3_INSERT_HOLE, INSERT_L).cut(_cyl(x, y, H_T1 - INSERT_L - 1, THREAD_D, INSERT_L + 2))
+    return out
+
+
+LID_GROUP = ("T2_tapa", "REF_acrilico_OLED", "REF_tornillo")
+
+
+def assembly():
+    """Closed station at the origin and, beside it, the exploded copy (EXP_*): the lid group raised EXPLODE_Z mm."""
+    import itertools
+    closed = dict(T1_caja=t1(), T2_tapa=t2().translate((0, 0, H_T1)), **references())
+    hits = {}
+    for (a, sa), (b, sb) in itertools.combinations(closed.items(), 2):
+        ba, bb = sa.val().BoundingBox(), sb.val().BoundingBox()
+        if ba.xmax < bb.xmin or bb.xmax < ba.xmin or ba.ymax < bb.ymin or bb.ymax < ba.ymin or ba.zmax < bb.zmin or bb.zmax < ba.zmin:
+            continue
+        try:
+            v = sa.intersect(sb).val().Volume()
+        except ValueError:
+            v = 0.0
+        if v > P.INTERF_TOL:
+            hits[f"{a} / {b}"] = round(v, 3)
+    bad = {k: len(v.solids().vals()) for k, v in closed.items() if len(v.solids().vals()) != 1 or not v.val().isValid()}
+    asm = cq.Assembly(name="LG_tierra")
+    for k, v in closed.items():
+        asm.add(v, name=k)
+    for k, v in closed.items():
+        dz = EXPLODE_Z if k.startswith(LID_GROUP) else 0.0
+        asm.add(v.translate((EXPLODE_X, 0, dz)), name=f"EXP_{k}")
+    path = OUT / "step" / "00_ENSAMBLE_tierra.step"
+    asm.export(str(path))
+    back = cq.importers.importStep(str(path)).solids().vals()
+    res = dict(piezas=list(closed), solidos_esperados=2 * len(closed), solidos_step=len(back), choques_mm3=hits, no_validos=bad,
+               T1_cm3=round(closed["T1_caja"].val().Volume() / 1000, 2), T2_cm3=round(closed["T2_tapa"].val().Volume() / 1000, 2))
+    print(json.dumps(res, ensure_ascii=False, indent=1))
+    return res
+
+
 def main():
+    import sys
+    if "--ensamble" in sys.argv:
+        res = assembly()
+        (OUT / "ensamble.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+        return
     body = t1()
     res = dict(interior=[round(L_IN, 2), round(W_IN, 2), H_IN], reborde=RIM, tornillos_paso=[round(2 * TX, 1), round(2 * TY, 1)], T1_caja=export(body, "T1_caja"), T2_tapa=export(t2(), "T2_tapa"))
     res["comprobaciones"] = checks(body)

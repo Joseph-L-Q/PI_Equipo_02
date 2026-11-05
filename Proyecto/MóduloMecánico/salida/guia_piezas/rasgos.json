@@ -6,21 +6,11 @@
    "diam": "3.4",
    "texto": "Paso M3 (Ø3.4) en x = 0. Seis M3×25 inox con tuerca cruzan las dos bridas de 5 + 5 mm: 4 en las columnas del canal (y = ±17) y 2 en las almohadillas bajas de las paredes (y = ±104.8).",
    "punto": [
-    -7.5,
-    -17.0,
-    9.0
+    -5.0,
+    -104.8,
+    7.5
    ],
    "puntos": [
-    [
-     -7.5,
-     -17.0,
-     9.0
-    ],
-    [
-     -7.5,
-     17.0,
-     9.0
-    ],
     [
      -5.0,
      -104.8,
@@ -29,7 +19,17 @@
     [
      -5.0,
      -17.0,
+     9.0
+    ],
+    [
+     -5.0,
+     -17.0,
      44.9
+    ],
+    [
+     -5.0,
+     17.0,
+     9.0
     ],
     [
      -5.0,
@@ -142,28 +142,28 @@
    "texto": "Inserto térmico M3 (Ø4.0 × 6) en la punta de cada poste: reciben los 4 tornillos M3 con que se atornilla la cubierta B2 (cada mitad de B2 va a sus propios 4 postes).",
    "punto": [
     -123.0,
-    -23.0,
+    -20.0,
     82.4
    ],
    "puntos": [
     [
      -123.0,
-     -23.0,
+     -20.0,
      82.4
     ],
     [
      -123.0,
-     23.0,
+     20.0,
      82.4
     ],
     [
      -63.5,
-     -23.0,
+     -20.0,
      82.4
     ],
     [
      -63.5,
-     23.0,
+     20.0,
      82.4
     ]
    ],
@@ -171,33 +171,33 @@
   },
   {
    "n": 7,
-   "tipo": "Poste Ø10",
-   "diam": "10",
-   "texto": "Cuatro postes Ø10 que nacen del piso y suben hasta el inserto. Pasaron de Ø8 a Ø10 el 04/11; los del medio llevan un collar a 45° donde salen de la silla baja.",
+   "tipo": "Poste Ø16",
+   "diam": "16",
+   "texto": "Cuatro postes Ø16 que nacen del piso y suben hasta el inserto. Pasaron de Ø8 a Ø10 el 04/11 y a Ø16 el 05/11 (tirón del cabo); los del medio llevan un collar a 45° donde salen de la silla baja.",
    "punto": [
     -123.0,
-    23.0,
+    20.0,
     70.0
    ],
    "puntos": [
     [
      -123.0,
-     23.0,
+     20.0,
      70.0
     ],
     [
      -123.0,
-     -23.0,
+     -20.0,
      70.0
     ],
     [
      -63.5,
-     23.0,
+     20.0,
      70.0
     ],
     [
      -63.5,
-     -23.0,
+     -20.0,
      70.0
     ]
    ],
@@ -207,17 +207,17 @@
    "n": 8,
    "tipo": "Ojal de amarre",
    "diam": "10.5",
-   "texto": "Agujero Ø10.5 en el parche de la quilla. Hay uno por mitad (x = ±23): el cabo de amarre va en pata de gallo, con dos ramales a un nudo. Es independiente del umbilical.",
+   "texto": "Agujero Ø10.5 en el parche de la quilla. Hay uno por mitad (x = ±43.5): el cabo de amarre va en pata de gallo (dos ramales de 350 mm a 60° entre sí, 173 N cada uno con el tirón de 300 N) con un tornillo M10 y arandela Ø30. El parche de 34 × 14 mm queda bajo el poste de la cubierta. Es independiente del umbilical.",
    "punto": [
-    -23.0,
-    0.0,
-    4.0
+    -43.5,
+    -20.0,
+    7.0
    ],
    "puntos": [
     [
-     -23.0,
-     0.0,
-     4.0
+     -43.5,
+     -20.0,
+     7.0
     ]
    ],
    "categoria": "cable"
@@ -419,29 +419,29 @@
    "texto": "Cuatro pasos M3 (Ø3.4) en las barras: los tornillos entran a los insertos de los postes de B1 (N° 6 de B1).",
    "punto": [
     -123.0,
-    -23.0,
-    89.4
+    -20.0,
+    93.4
    ],
    "puntos": [
     [
      -123.0,
-     -23.0,
-     89.4
+     -20.0,
+     93.4
     ],
     [
      -123.0,
-     23.0,
-     89.4
+     20.0,
+     93.4
     ],
     [
      -63.5,
-     -23.0,
-     89.4
+     -20.0,
+     93.4
     ],
     [
      -63.5,
-     23.0,
-     89.4
+     20.0,
+     93.4
     ]
    ],
    "categoria": "union"
@@ -450,22 +450,22 @@
    "n": 2,
    "tipo": "Pilares con inserto M3",
    "diam": "4.0",
-   "texto": "Dos pilares Ø10 × 6 bajo las orejas de la caja. Inserto M3 (Ø4.0): recibe el tornillo que atraviesa la oreja de B3.",
+   "texto": "Dos pilares Ø10 que sobresalen 1 mm de la barra alta, bajo las orejas de la caja. Inserto M3 (Ø4.0): recibe el tornillo que atraviesa la oreja de B3.",
    "punto": [
     -63.5,
     -51.4,
-    98.4
+    103.4
    ],
    "puntos": [
     [
      -63.5,
      -51.4,
-     98.4
+     103.4
     ],
     [
      -63.5,
      51.4,
-     98.4
+     103.4
     ]
    ],
    "categoria": "union"
@@ -474,22 +474,22 @@
    "n": 3,
    "tipo": "Columnas del panel con inserto M3",
    "diam": "4.0",
-   "texto": "Dos columnas Ø12 que suben 107 mm. Inserto M3 (Ø4.0) en la punta: el panel solar de 170×170 se atornilla a las cuatro columnas (2 por mitad), 25 mm sobre la tapa.",
+   "texto": "Dos columnas Ø14 con chaflán de 45° en la base. Inserto M3 (Ø4.0) en la punta: el panel solar de 170×170 se atornilla a las cuatro columnas (2 por mitad), 15 mm sobre la tapa. Cada columna lleva un tirante diagonal de 10 mm hacia afuera y un marco de 0 × 0 mm une las dos puntas bajo el panel: así aguanta el golpe lateral de 200 N (docs/BOYA.md).",
    "punto": [
     -63.5,
     -68.9,
-    202.3
+    199.3
    ],
    "puntos": [
     [
      -63.5,
      -68.9,
-     202.3
+     199.3
     ],
     [
      -63.5,
      68.9,
-     202.3
+     199.3
     ]
    ],
    "categoria": "union"
@@ -498,22 +498,22 @@
    "n": 4,
    "tipo": "Barras de 14 × 8 mm",
    "diam": null,
-   "texto": "Barras de 14 × 8 mm que cruzan sobre las botellas: no las dejan salir hacia arriba. Los huecos entre barras son por donde se inyecta la espuma. La barra de x = 0 es nueva: cierra el marco de cada mitad.",
+   "texto": "Barras de 14 × 8 mm que cruzan sobre las botellas: no las dejan salir hacia arriba. Las dos líneas de tornillos de cada mitad (x = ±63.5 y el extremo) son barras altas de 26 × 20 mm, con un rebaje Ø7.5 para la cabeza del tornillo bajo la caja. Los huecos entre barras son por donde se inyecta la espuma. La barra de x = 0 cierra el marco de cada mitad.",
    "punto": [
     -63.5,
     23.0,
-    93.4
+    105.4
    ],
    "puntos": [
     [
      -63.5,
      23.0,
-     93.4
+     105.4
     ],
     [
      -123.0,
      -23.0,
-     93.4
+     105.4
     ]
    ],
    "categoria": "forma"
@@ -561,29 +561,29 @@
    "texto": "Cuatro pasos M3 (Ø3.4): tornillos hacia los insertos de los postes de B1.",
    "punto": [
     63.5,
-    -23.0,
-    89.4
+    -20.0,
+    93.4
    ],
    "puntos": [
     [
      63.5,
-     -23.0,
-     89.4
+     -20.0,
+     93.4
     ],
     [
      63.5,
-     23.0,
-     89.4
+     20.0,
+     93.4
     ],
     [
      123.0,
-     -23.0,
-     89.4
+     -20.0,
+     93.4
     ],
     [
      123.0,
-     23.0,
-     89.4
+     20.0,
+     93.4
     ]
    ],
    "categoria": "union"
@@ -596,18 +596,18 @@
    "punto": [
     63.5,
     -51.4,
-    98.4
+    103.4
    ],
    "puntos": [
     [
      63.5,
      -51.4,
-     98.4
+     103.4
     ],
     [
      63.5,
      51.4,
-     98.4
+     103.4
     ]
    ],
    "categoria": "union"
@@ -616,22 +616,22 @@
    "n": 3,
    "tipo": "Columnas del panel con inserto M3",
    "diam": "4.0",
-   "texto": "Dos columnas Ø12 con inserto M3 (Ø4.0) en la punta para el panel solar.",
+   "texto": "Dos columnas Ø14 con tirante, e inserto M3 (Ø4.0) en la punta para el panel solar.",
    "punto": [
     63.5,
     -68.9,
-    202.3
+    199.3
    ],
    "puntos": [
     [
      63.5,
      -68.9,
-     202.3
+     199.3
     ],
     [
      63.5,
      68.9,
-     202.3
+     199.3
     ]
    ],
    "categoria": "union"
@@ -644,13 +644,13 @@
    "punto": [
     118.0,
     0.0,
-    163.9
+    168.4
    ],
    "puntos": [
     [
      118.0,
      0.0,
-     163.9
+     168.4
     ]
    ],
    "categoria": "cable"
@@ -663,13 +663,13 @@
    "punto": [
     111.5,
     0.0,
-    105.4
+    117.4
    ],
    "puntos": [
     [
      111.5,
      0.0,
-     105.4
+     117.4
     ]
    ],
    "categoria": "cable"
@@ -678,22 +678,22 @@
    "n": 6,
    "tipo": "Barras y barra de costura",
    "diam": null,
-   "texto": "Marco de barras de 14 × 8 mm; la barra en x = 0 cierra este marco. Igual que en el lado liso: retiene las botellas y deja huecos para la espuma.",
+   "texto": "Marco de barras de 14 × 8 mm; la barra en x = 0 cierra este marco. Igual que en el lado liso: barras altas de 26 × 20 mm en las líneas de tornillos; retiene las botellas y deja huecos para la espuma.",
    "punto": [
     63.5,
     23.0,
-    93.4
+    105.4
    ],
    "puntos": [
     [
      63.5,
      23.0,
-     93.4
+     105.4
     ],
     [
      123.0,
      -23.0,
-     93.4
+     105.4
     ]
    ],
    "categoria": "forma"
@@ -742,28 +742,28 @@
    "punto": [
     -63.5,
     -51.4,
-    101.9
+    108.9
    ],
    "puntos": [
     [
      -63.5,
      -51.4,
-     101.9
+     108.9
     ],
     [
      -63.5,
      51.4,
-     101.9
+     108.9
     ],
     [
      63.5,
      -51.4,
-     101.9
+     108.9
     ],
     [
      63.5,
      51.4,
-     101.9
+     108.9
     ]
    ],
    "categoria": "union"
@@ -776,58 +776,58 @@
    "punto": [
     -80.6,
     -51.6,
-    170.8
+    177.8
    ],
    "puntos": [
     [
      -80.6,
      -51.6,
-     170.8
+     177.8
     ],
     [
      -80.6,
      0.0,
-     170.8
+     177.8
     ],
     [
      -80.6,
      51.6,
-     170.8
+     177.8
     ],
     [
      -26.9,
      -51.6,
-     170.8
+     177.8
     ],
     [
      -26.9,
      51.6,
-     170.8
+     177.8
     ],
     [
      26.9,
      -51.6,
-     170.8
+     177.8
     ],
     [
      26.9,
      51.6,
-     170.8
+     177.8
     ],
     [
      80.6,
      -51.6,
-     170.8
+     177.8
     ],
     [
      80.6,
      0.0,
-     170.8
+     177.8
     ],
     [
      80.6,
      51.6,
-     170.8
+     177.8
     ]
    ],
    "categoria": "sello"
@@ -840,28 +840,28 @@
    "punto": [
     -50.0,
     -28.0,
-    106.8
+    113.8
    ],
    "puntos": [
     [
      -50.0,
      -28.0,
-     106.8
+     113.8
     ],
     [
      -50.0,
      28.0,
-     106.8
+     113.8
     ],
     [
      16.0,
      -28.0,
-     106.8
+     113.8
     ],
     [
      16.0,
      28.0,
-     106.8
+     113.8
     ]
    ],
    "categoria": "mont"
@@ -874,28 +874,28 @@
    "punto": [
     -64.5,
     -33.5,
-    137.8
+    144.8
    ],
    "puntos": [
     [
      -64.5,
      -33.5,
-     137.8
+     144.8
     ],
     [
      -64.5,
      33.5,
-     137.8
+     144.8
     ],
     [
      64.5,
      -33.5,
-     137.8
+     144.8
     ],
     [
      64.5,
      33.5,
-     137.8
+     144.8
     ]
    ],
    "categoria": "mont"
@@ -908,13 +908,13 @@
    "punto": [
     -72.2,
     0.0,
-    131.8
+    138.8
    ],
    "puntos": [
     [
      -72.2,
      0.0,
-     131.8
+     138.8
     ]
    ],
    "categoria": "cable"
@@ -927,13 +927,13 @@
    "punto": [
     72.7,
     -25.0,
-    163.8
+    170.8
    ],
    "puntos": [
     [
      72.7,
      -25.0,
-     163.8
+     170.8
     ]
    ],
    "categoria": "cable"
@@ -946,13 +946,13 @@
    "punto": [
     72.7,
     25.0,
-    163.8
+    170.8
    ],
    "puntos": [
     [
      72.7,
      25.0,
-     163.8
+     170.8
     ]
    ],
    "categoria": "cable"
@@ -991,58 +991,58 @@
    "punto": [
     -80.6,
     -51.6,
-    177.0
+    184.0
    ],
    "puntos": [
     [
      -80.6,
      -51.6,
-     177.0
+     184.0
     ],
     [
      -80.6,
      0.0,
-     177.0
+     184.0
     ],
     [
      -80.6,
      51.6,
-     177.0
+     184.0
     ],
     [
      -26.9,
      -51.6,
-     177.0
+     184.0
     ],
     [
      -26.9,
      51.6,
-     177.0
+     184.0
     ],
     [
      26.9,
      -51.6,
-     177.0
+     184.0
     ],
     [
      26.9,
      51.6,
-     177.0
+     184.0
     ],
     [
      80.6,
      -51.6,
-     177.0
+     184.0
     ],
     [
      80.6,
      0.0,
-     177.0
+     184.0
     ],
     [
      80.6,
      51.6,
-     177.0
+     184.0
     ]
    ],
    "categoria": "union"
@@ -1626,17 +1626,12 @@
    "texto": "Doce insertos térmicos M3 (Ø4.0 × 6) en la brida: los 12 tornillos de la tapa M2 los aprietan y comprimen el cordón O-ring. Ciegos y fuera del cordón.",
    "punto": [
     -69.5,
-    -69.0,
+    -23.0,
     75.0
    ],
    "puntos": [
     [
      -69.5,
-     -69.0,
-     75.0
-    ],
-    [
-     -69.5,
      -23.0,
      75.0
     ],
@@ -1646,7 +1641,12 @@
      75.0
     ],
     [
-     -69.5,
+     -63.6,
+     -69.0,
+     75.0
+    ],
+    [
+     -63.6,
      69.0,
      75.0
     ],
@@ -1671,8 +1671,13 @@
      75.0
     ],
     [
-     69.5,
+     63.6,
      -69.0,
+     75.0
+    ],
+    [
+     63.6,
+     69.0,
      75.0
     ],
     [
@@ -1683,11 +1688,6 @@
     [
      69.5,
      23.0,
-     75.0
-    ],
-    [
-     69.5,
-     69.0,
      75.0
     ]
    ],
@@ -1818,17 +1818,12 @@
    "texto": "Doce pasos M3 (Ø3.4): los tornillos entran a los doce insertos de la brida de M1s (N° 5 de M1s) y aprietan el cordón.",
    "punto": [
     -69.5,
-    -69.0,
+    -23.0,
     80.5
    ],
    "puntos": [
     [
      -69.5,
-     -69.0,
-     80.5
-    ],
-    [
-     -69.5,
      -23.0,
      80.5
     ],
@@ -1838,7 +1833,12 @@
      80.5
     ],
     [
-     -69.5,
+     -63.6,
+     -69.0,
+     80.5
+    ],
+    [
+     -63.6,
      69.0,
      80.5
     ],
@@ -1863,8 +1863,13 @@
      80.5
     ],
     [
-     69.5,
+     63.6,
      -69.0,
+     80.5
+    ],
+    [
+     63.6,
+     69.0,
      80.5
     ],
     [
@@ -1875,11 +1880,6 @@
     [
      69.5,
      23.0,
-     80.5
-    ],
-    [
-     69.5,
-     69.0,
      80.5
     ]
    ],
@@ -2227,16 +2227,16 @@
   {
    "n": 10,
    "tipo": "Asiento en C del gancho",
-   "diam": "8.8",
-   "texto": "C abierta de Ø8.8 (varilla del aro Ø8 + 0.4 de holgura): el nodo cae sobre la varilla del aro de la linterna. El alma del gancho (26 mm de ancho) está fundida al riel y lleva una ranura para una correa de 25 × 3.",
+   "diam": "16.8",
+   "texto": "C abierta de Ø16.8 (aro LR2 Ø16.5 + 0.15 de holgura por lado): el nodo cae sobre el aro de la linterna. El alma del gancho (26 mm de ancho) está fundida al riel y lleva una ranura para una correa de 25 × 3.",
    "punto": [
-    100.0,
+    99.9,
     0.0,
     -40.3
    ],
    "puntos": [
     [
-     100.0,
+     99.9,
      0.0,
      -40.3
     ]
@@ -2881,6 +2881,366 @@
     ]
    ],
    "categoria": "union"
+  }
+ ],
+ "LR2_aro": [
+  {
+   "n": 1,
+   "tipo": "Sección redonda Ø16,5",
+   "diam": "16,5",
+   "texto": "Aro de radio 100 mm al eje y sección redonda Ø16,5. Es la parte que entra en el asiento Ø16,8 del gancho de M3s con juego de 0,3 mm.",
+   "punto": [
+    100.0,
+    0.0,
+    0.0
+   ],
+   "puntos": [
+    [
+     100.0,
+     0.0,
+     0.0
+    ],
+    [
+     -100.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "categoria": "forma"
+  },
+  {
+   "n": 2,
+   "tipo": "Base plana de 0,5 mm",
+   "diam": null,
+   "texto": "Plano de apoyo para imprimir sin soportes. Al montar el aro, el plano mira hacia la boca de la C del gancho de M3s.",
+   "punto": [
+    100.0,
+    0.0,
+    -7.75
+   ],
+   "puntos": [
+    [
+     100.0,
+     0.0,
+     -7.75
+    ],
+    [
+     -100.0,
+     0.0,
+     -7.75
+    ]
+   ],
+   "categoria": "ajuste"
+  },
+  {
+   "n": 3,
+   "tipo": "Carga de diseño",
+   "diam": null,
+   "texto": "Diseñado para 2 kg por piso + 150 N de manipulación; FS entre capas ≥ 3.",
+   "punto": [
+    0.0,
+    100.0,
+    0.0
+   ],
+   "puntos": [
+    [
+     0.0,
+     100.0,
+     0.0
+    ]
+   ],
+   "categoria": "union"
+  }
+ ],
+ "PB_aro": [
+  {
+   "n": 1,
+   "tipo": "Asiento real de M3s",
+   "diam": "16,8",
+   "texto": "Asiento en C de Ø16,8 con sus mordazas y la ranura de correa, igual al de M3s. Prueba aquí el juego del aro.",
+   "punto": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "puntos": [
+    [
+     0.0,
+     0.0,
+     0.0
+    ]
+   ],
+   "categoria": "ajuste"
+  },
+  {
+   "n": 2,
+   "tipo": "Tramo de aro de 50 mm",
+   "diam": null,
+   "texto": "Tramo del aro LR2 con la misma sección Ø16,5 y su base plana. Debe entrar en el asiento con el plano hacia la boca (N° 2 de LR2).",
+   "punto": [
+    34.63362311753647,
+    -1.9273139174783058e-11,
+    -3.939088045042261
+   ],
+   "puntos": [
+    [
+     34.63362311753647,
+     -1.9273139174783058e-11,
+     -3.939088045042261
+    ]
+   ],
+   "categoria": "forma"
+  }
+ ],
+ "T1_caja": [
+  {
+   "n": 1,
+   "tipo": "Insertos M2,5 de los postes del Heltec",
+   "diam": "3.5",
+   "texto": "Cuatro postes Ø8,5 con inserto térmico M2,5: sostienen el Heltec. La distancia entre agujeros (44 × 19,5) es estimada: confírmala con tu placa antes de imprimir.",
+   "punto": [
+    -26.0,
+    -29.6,
+    8.5
+   ],
+   "puntos": [
+    [
+     -26.0,
+     -29.6,
+     8.5
+    ],
+    [
+     -26.0,
+     -10.1,
+     8.5
+    ],
+    [
+     18.0,
+     -29.6,
+     8.5
+    ],
+    [
+     18.0,
+     -10.1,
+     8.5
+    ]
+   ],
+   "categoria": "union"
+  },
+  {
+   "n": 2,
+   "tipo": "Insertos M3 de la tapa",
+   "diam": "4.0",
+   "texto": "Cuatro insertos térmicos M3 en las esquinas: reciben los tornillos M3 inox A4 de la tapa T2 (N° 1 de T2).",
+   "punto": [
+    -38.1,
+    -41.6,
+    22.0
+   ],
+   "puntos": [
+    [
+     -38.1,
+     -41.6,
+     22.0
+    ],
+    [
+     -38.1,
+     41.6,
+     22.0
+    ],
+    [
+     38.1,
+     -41.6,
+     22.0
+    ],
+    [
+     38.1,
+     41.6,
+     22.0
+    ]
+   ],
+   "categoria": "union"
+  },
+  {
+   "n": 3,
+   "tipo": "Puerto USB-C / PRG / RST con tapón",
+   "diam": null,
+   "texto": "Abertura en la pared −X (z = 14,2) para el USB-C, PRG y RST, cerrada con un tapón de silicona de 30 × 13 × 4 mm. Con el USB-C hacia abajo el puerto no mira a la lluvia. Falta verificar en qué cara de la placa están PRG y RST.",
+   "punto": [
+    -43.1,
+    -19.9,
+    14.2
+   ],
+   "puntos": [
+    [
+     -43.1,
+     -19.9,
+     14.2
+    ]
+   ],
+   "categoria": "cable"
+  },
+  {
+   "n": 4,
+   "tipo": "Agujero de la SMA de mamparo",
+   "diam": "6.5",
+   "texto": "Agujero Ø6,5 en la pared +X para la SMA de mamparo con su junta. La pared lisa de 3 mm es el asiento de la SMA.",
+   "punto": [
+    33.6,
+    -19.9,
+    10.0
+   ],
+   "puntos": [
+    [
+     33.6,
+     -19.9,
+     10.0
+    ]
+   ],
+   "categoria": "cable"
+  },
+  {
+   "n": 5,
+   "tipo": "Ranura del cordón NBR Ø2 (4 esquinas)",
+   "diam": "22",
+   "texto": "Ranura de 2,6 × 1,5 mm en el borde de la caja para un cordón NBR Ø2 de unos 284 mm, comprimido 25 %. Se marcan las 4 esquinas.",
+   "punto": [
+    -26.1,
+    -29.6,
+    24.2
+   ],
+   "puntos": [
+    [
+     -26.1,
+     -29.6,
+     24.2
+    ],
+    [
+     -26.1,
+     29.6,
+     24.2
+    ],
+    [
+     26.1,
+     -29.6,
+     24.2
+    ],
+    [
+     26.1,
+     29.6,
+     24.2
+    ]
+   ],
+   "categoria": "sello"
+  },
+  {
+   "n": 6,
+   "tipo": "Ojales de las pestañas",
+   "diam": "5.5",
+   "texto": "Cuatro pestañas de 6 mm con ojal de 5,5 × 12 mm para fijar la caja.",
+   "punto": [
+    -19.1,
+    -53.9,
+    3.0
+   ],
+   "puntos": [
+    [
+     -19.1,
+     -53.9,
+     3.0
+    ],
+    [
+     -19.1,
+     -47.4,
+     3.0
+    ],
+    [
+     -19.1,
+     47.4,
+     3.0
+    ],
+    [
+     -19.1,
+     53.9,
+     3.0
+    ],
+    [
+     19.1,
+     -53.9,
+     3.0
+    ],
+    [
+     19.1,
+     -47.4,
+     3.0
+    ],
+    [
+     19.1,
+     47.4,
+     3.0
+    ],
+    [
+     19.1,
+     53.9,
+     3.0
+    ]
+   ],
+   "categoria": "ajuste"
+  }
+ ],
+ "T2_tapa": [
+  {
+   "n": 1,
+   "tipo": "Pasos M3 de la tapa",
+   "diam": "3.4",
+   "texto": "Cuatro pasos M3 (Ø3,4) para los tornillos M3 inox A4 que van a los insertos de T1 (N° 2 de T1). Al apretarlos comprimen el cordón NBR.",
+   "punto": [
+    -38.1,
+    -41.6,
+    3.0
+   ],
+   "puntos": [
+    [
+     -38.1,
+     -41.6,
+     3.0
+    ],
+    [
+     -38.1,
+     41.6,
+     3.0
+    ],
+    [
+     38.1,
+     -41.6,
+     3.0
+    ],
+    [
+     38.1,
+     41.6,
+     3.0
+    ]
+   ],
+   "categoria": "union"
+  },
+  {
+   "n": 2,
+   "tipo": "Ventana de la OLED",
+   "diam": null,
+   "texto": "Ventana rectangular con rebaje para el acrílico de 31 × 20 × 2 mm, pegado con sellador. La posición de la pantalla es estimada: confírmala con tu Heltec antes de imprimir.",
+   "punto": [
+    -5.1,
+    -19.88,
+    3.0
+   ],
+   "puntos": [
+    [
+     -5.1,
+     -19.88,
+     3.0
+    ]
+   ],
+   "categoria": "cable"
   }
  ]
 }

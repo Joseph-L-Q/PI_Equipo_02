@@ -228,6 +228,20 @@ def seal_texts(s):
 
 
 # ----------------------------------------------------------------------------- main
+def gramos_estimados():
+    """{key: g} of the new pieces, read from aro.json / tierra.json (volume x density, ring with its printed infill; no slicer data)."""
+    a, t = rj(SAL / "aro" / "aro.json") or {}, rj(SAL / "tierra" / "tierra.json") or {}
+    out = {}
+    if "LR2_aro" in a:
+        out["LR2_aro"] = a["LR2_aro"]["gramos"]
+    if "PB_aro_tramo" in a and "PB_aro_asiento" in a:
+        out["PB_aro"] = a["PB_aro_tramo"]["gramos"] + a["PB_aro_asiento"]["gramos"]
+    for k in ("T1_caja", "T2_tapa"):
+        if k in t:
+            out[k] = t[k]["gramos"]
+    return out
+
+
 def piece_types(sl_node, sl_boya, lista):
     """{key: dict(g, h, qty, relleno, soportes, orient, paredes, estanca...)} from the two slicer.json (+ lista.json for orientation)."""
     tipos = {}
@@ -295,6 +309,7 @@ def main():
     lista = rj(SAL / "imprimir_hoy" / "lista.json") or []
     plan = rj(SAL / "imprimir_hoy" / "plan_placas.json") or {"placas": []}
     tipos = piece_types(sl_node, sl_boya, lista)
+    est_g = gramos_estimados()
 
     # print profile for the watertight parts (read-only import of params)
     perfil = dict(perimetros=4, capas_arriba=5, capas_abajo=5, relleno=100, piezas=["M1s", "M2", "M3s", "M4", "M5s", "B3", "B4"])
@@ -339,6 +354,11 @@ def main():
                         orient=orient_text(t.get("orient")))
             if V.JOINS.get(key):
                 info["une"] = V.JOINS[key]
+            if key in V.AVISOS:
+                info["aviso"] = V.AVISOS[key]
+            if g is None and key in est_g:
+                info.update(g=round(float(est_g[key]), 1), h=None, costo=None, g_estimado=True,
+                            nota_g="Gramos estimados (volumen × 1,27 g/cm³, relleno 100 %). No hay datos de OrcaSlicer para esta pieza: tiempo y costo pendientes.")
             rk = V.lookup(rasgos, key)
             rs = rasgos.get(rk, []) if rk else []
             pts = e.get("rasgos_pts", {})
@@ -377,7 +397,7 @@ def main():
         ps = [n for n in solid if any(re.search(p, n) for p in pats) and n not in used]
         if ps:
             used.update(ps)
-            steps.append(dict(titulo=tit, texto=txt, partes=ps, grupo=grp))
+            steps.append(dict(titulo=tit, texto=txt, partes=ps, grupo=grp, aviso=V.AVISO_PASO.get(tit)))
     rest = [n for n in solid if n not in used]
     if rest:
         steps.append(dict(titulo="Otras piezas", texto="Piezas nuevas que todavía no tienen paso propio en el visor.", partes=rest, grupo="nodo"))
@@ -394,7 +414,7 @@ def main():
             piezas[n]["paso"] = i
 
     # ---- hardware lists
-    herraje = dict(nodo=[], boya=[])
+    herraje = dict(nodo=[], boya=[], tierra=[])
     try:
         import bitacora as B
         res = rj(B.SAL / "simple" / "resultados.json")
@@ -402,6 +422,8 @@ def main():
         for grp, item, med, cant in B.hardware(res, rb):
             if grp == "nodo simple":
                 herraje["nodo"].append(dict(item=item, medida=med, cant=cant))
+            elif grp == "estacion de tierra":
+                herraje["tierra"].append(dict(item=item, medida=med, cant=cant))
     except Exception as e:                          # noqa: BLE001
         print("bitacora.hardware no disponible:", e)
         herraje["nodo_nota"] = "Lista de compra del nodo no disponible en esta corrida."
@@ -451,7 +473,7 @@ def main():
     # totals by group over the 3D pieces (qty x unit)
     tot = {"nodo": dict(g=0.0, h=0.0), "boya": dict(g=0.0, h=0.0)}
     for n, p in piezas.items():
-        if p["kind"] == "impresa" and p.get("g") is not None:
+        if p["kind"] == "impresa" and p.get("g") is not None and not p.get("g_estimado"):
             tot[p["group"]]["g"] += p["g"]
             tot[p["group"]]["h"] += p.get("h") or 0
     for v in tot.values():

@@ -37,13 +37,19 @@ RASGOS = MOD / "salida" / "guia_piezas" / "rasgos.json"
 SELLOS_JSON = MOD / "salida" / "guia_piezas" / "sellos.json"
 GUIA_MD = MOD / "docs" / "GUIA_PIEZAS.md"
 ESTANQ_MD = MOD / "docs" / "ESTANQUEIDAD.md"
+LOCAL_JSON = MOD / "salida" / "nuevas" / "local.json"        # ensamble.niveles: z of the 4 ring centres (read only)
+ARO_STEP = MOD / "salida" / "aro" / "step" / "LR2_aro.step"
+BENCH_PIECES = [("PB_aro", "linterna", MOD / "salida" / "aro" / "step" / "PB_aro.step", -260.0),
+                ("T1_caja", "tierra", MOD / "salida" / "tierra" / "step" / "T1_caja.step", -100.0),
+                ("T2_tapa", "tierra", MOD / "salida" / "tierra" / "step" / "T2_tapa.step", 60.0)]   # name, group, STEP, x of the centre (mm)
+BENCH_Y, BENCH_Z = -300.0, -244.34                           # mm: beside the node (y < node), resting on its lowest level
 NODE_STEPS = MOD / "salida" / "prototipos" / "P2_robusto" / "step"     # one STEP per piece (frame of guia_piezas / rasgos.json)
 BUOY_STEPS = MOD / "salida" / "boya_pet" / "step"
 SIDECAR = MOD / "salida" / "_tmp" / "visor_geometria.json"
 ALIGN_TOL = 1.0                          # mm: mean distance (piece STEP vs assembly body) accepted for placing hole markers
 
 BUOY_SHIFT = (620.0, 0.0, 300.0)        # mm, buoy origin in the node frame (beside the node, not at true distance)
-DROP = {"REF_boya", "REF_umbilical"}     # node placeholders replaced by the real buoy and a drawn umbilical
+DROP = {"REF_boya", "REF_umbilical", "REF_aro_superior"}     # node placeholders replaced by the real buoy, a drawn umbilical and the real ring LR2_aro_1
 TRI_BUDGET_PRINTED = 30000
 TRI_BUDGET_REF = 6000
 
@@ -211,6 +217,7 @@ def base_key(name):
     n = re.sub(r"^(B1_casco)_[ab]$", r"\1", n)
     n = re.sub(r"^(B5_cuna)_[DI]_(base|cuello)$", r"\1_\2", n)
     n = re.sub(r"^(B6_correa)_[DI]\d+$", r"\1", n)
+    n = re.sub(r"^(LR2_aro)_\d+$", r"\1", n)
     return n
 
 
@@ -259,7 +266,19 @@ JOINS = {
     "B5_cuna_base": "Casco B1 (M3 a las lengüetas) y la botella PET por el lado de la base.",
     "B5_cuna_cuello": "Casco B1 (M3 a las lengüetas) y la botella PET por el lado del cuello.",
     "B6_correa": "Casco B1 y botella: la correa abraza la botella desde arriba.",
+    "LR2_aro": "Asiento en C de los ganchos M3s, con la base plana hacia la boca de la C; las cuerdas de la linterna cuelgan de cada aro (uno por piso).",
+    "PB_aro": "Es una probeta: reproduce un tramo del aro LR2 y el asiento real de M3s. No se monta en el nodo.",
+    "T1_caja": "Tapa T2 (4 M3 inox A4 a insertos, con cordón NBR Ø2), Heltec en 4 postes M2,5, SMA de mamparo con junta y tapón de silicona en el puerto USB-C.",
+    "T2_tapa": "Caja T1 (4 M3 inox A4 con cordón NBR Ø2) y acrílico de la ventana OLED pegado con sellador.",
 }
+
+EST_TIERRA = "Las medidas del Heltec y de la batería son estimadas: confírmalas antes de imprimir."
+AVISOS = {"LR2_aro": "Diseñado para 2 kg por piso + 150 N de manipulación; FS entre capas ≥ 3.",
+          "PB_aro": "Imprímela y pruébala en el asiento de la probeta antes de imprimir los 4 aros LR2.",
+          "T1_caja": EST_TIERRA, "T2_tapa": EST_TIERRA}
+AVISO_PASO = {"Aros de la linterna": AVISOS["LR2_aro"], "Probeta del aro": AVISOS["PB_aro"],
+              "Caja de la estación de tierra": EST_TIERRA, "Tapa de la estación de tierra": EST_TIERRA}
+
 
 
 def material_of(name, kind):
@@ -305,6 +324,8 @@ def offset_for(name, c, group, gc):
         if "M7" in name:
             return (s * 55, 0, -90)
         return (0, 0, 0)
+    if group in ("linterna", "tierra"):
+        return (0, 0, 60) if name.startswith("T2_") else (0, 0, 0)
     ox, oy, oz = gc
     cx, cy, cz = x - ox, y - oy, z - oz
     n = name
@@ -337,6 +358,8 @@ STEPS = [
     ("nodo", "Bandejas de la electrónica", "Atornilla la bandeja inferior y la superior a los 4 postes del piso de la caja (zona seca).", [r"^M11"]),
     ("nodo", "Tapa con asa", "Pon el cordón de goma Ø2 en la ranura de la tapa M2 y apriétala con 12 tornillos M3. El umbilical sale por su prensaestopas.", [r"^M2_"]),
     ("nodo", "Rieles con gancho", "Cada riel M3s se atornilla a un costado de la caja con 4 tornillos M4. El gancho en C cuelga del aro de la linterna.", [r"^M3s"]),
+    ("linterna", "Probeta del aro", "Antes de imprimir los 4 aros, imprime la probeta PB_aro y comprueba que el aro entra en el asiento con el plano hacia la boca.", [r"^PB_aro"]),
+    ("linterna", "Aros de la linterna", "Cada aro LR2 entra en el asiento en C de los ganchos M3s con la base plana hacia la boca de la C. Va un aro por piso, a los niveles del ensamble.", [r"^LR2_aro"]),
     ("nodo", "Cápsulas de cámara", "En la punta de cada riel va la cápsula: cuerpo M4, tapa con pie M5s, bisel M6 y ventana de acrílico.", [r"^M4_", r"^M5s", r"^M6_", r"^REF_M7"]),
     ("nodo", "Linterna, aro y cuerdas", "Piezas de referencia: el aro, la malla, los pisos y las cuerdas donde cuelga el nodo.", [r"^REF_aro", r"^REF_linterna", r"^REF_cuerda", r"^REF_cabo", r"^REF_estructura"]),
     ("boya", "Casco de la boya", "Une las dos mitades del casco B1 (6 tornillos M3 y un pin de alineación).", [r"^B1_"]),
@@ -346,6 +369,8 @@ STEPS = [
     ("boya", "Caja seca y electrónica", "Dentro de la caja B3 van las baterías, la placa, el módulo Waveshare y el reloj. Se fija a la cubierta por sus orejas.", [r"^B3_", r"^REF_batt", r"^REF_pcb", r"^REF_ws", r"^REF_rtc"]),
     ("boya", "Tapa de la caja seca", "Cordón O-ring Ø2 en la ranura y tornillos M3 a los insertos de la brida de B3.", [r"^B4_"]),
     ("boya", "Panel solar", "El panel de 170 × 170 se atornilla a las cuatro columnas de la cubierta.", [r"^REF_panel"]),
+    ("tierra", "Caja de la estación de tierra", "Funde los insertos M2,5 en los 4 postes y los M3 en las esquinas. El Heltec va sobre los postes, la SMA de mamparo en el agujero de +X y el tapón de silicona en el puerto de −X. Se monta con el USB-C hacia abajo.", [r"^T1_"]),
+    ("tierra", "Tapa de la estación de tierra", "Pon el cordón NBR Ø2 en la ranura de T1, pega el acrílico en la ventana OLED y cierra con 4 tornillos M3 inox A4.", [r"^T2_"]),
     ("nodo", "Cable umbilical", "Une la tapa del nodo con la caja seca de la boya. Va flojo, con curva, para que el oleaje no lo tense.", [r"^REF_umbilical"]),
 ]
 
@@ -575,6 +600,27 @@ def main():
             m.apply_translation(shift)
             meshes[nm] = (group, "impresa" if printed else "ref", m)
 
+    # new pieces: 4 rings at the assembly levels (node axis x = y = 0, flat down) and the bench pieces beside the model
+    placed = {}
+    niveles = read_json(LOCAL_JSON).get("ensamble", {}).get("niveles", [])
+    if niveles:
+        ring = tessellate(cq.importers.importStep(str(ARO_STEP)).val(), TRI_BUDGET_PRINTED)
+        for i, z in enumerate(niveles, 1):
+            t = np.array([0.0, 0.0, float(z)])
+            m = ring.copy()
+            m.apply_translation(t)
+            meshes[f"LR2_aro_{i}"] = ("linterna", "impresa", m)
+            placed[f"LR2_aro_{i}"] = t
+    else:
+        print(f"  AVISO: {LOCAL_JSON.name} sin ensamble.niveles: no se colocan los aros LR2")
+    for nm, group, f, x in BENCH_PIECES:
+        m = tessellate(cq.importers.importStep(str(f)).val(), TRI_BUDGET_PRINTED)
+        c, lo = (m.bounds[0] + m.bounds[1]) / 2, m.bounds[0][2]
+        t = np.array([x - c[0], BENCH_Y - c[1], BENCH_Z - lo])
+        m.apply_translation(t)
+        meshes[nm] = (group, "impresa", m)
+        placed[nm] = t
+
     # drawn umbilical: node lid top -> buoy box side
     b3 = next((m for n, (g, k, m) in meshes.items() if n.startswith("B3_")), None)
     lid = next((m for n, (g, k, m) in meshes.items() if n.startswith("M2_")), None)
@@ -590,6 +636,9 @@ def main():
         if kind != "impresa":
             continue
         key = base_key(nm)
+        if nm in placed:
+            inst[nm] = dict(key=key, M=np.eye(3), t=placed[nm], ok=True, d=0.0)
+            continue
         f = (NODE_STEPS if group == "nodo" else BUOY_STEPS) / f"{key}.step"
         ok, d, M, t = False, None, np.eye(3), np.zeros(3)
         if f.exists():

@@ -332,17 +332,19 @@ $("#zoom").onclick=()=>{$("#zoom").style.display="none";};
 
 // ----- PIEZAS
 function sw(n){return `<span class="sw" style="background:${colorOf(n,P[n])}"></span>`;}
-function totalsLine(items){let g=0,h=0,c=0,n=0;items.forEach(i=>{n++;g+=(i.g||0);h+=(i.h||0);c+=(i.costo||0);});return `${n} tipos de pieza · ${nf(g,0)} g · ${nf(h,1)} h de impresión · S/ ${nf(c,2)}`;}
+function totalsLine(items){if(items.some(i=>i.g_estimado))return `${items.length} tipos de pieza · ${nf(items.reduce((a,i)=>a+(i.g||0),0),0)} g estimados (sin datos del slicer)`;let g=0,h=0,c=0,n=0;items.forEach(i=>{n++;g+=(i.g||0);h+=(i.h||0);c+=(i.costo||0);});return `${n} tipos de pieza · ${nf(g,0)} g · ${nf(h,1)} h de impresión · S/ ${nf(c,2)}`;}
 function rPiezas(){
  if(detail){rFicha(detail);return;}
  const printed=Object.keys(P).filter(n=>P[n].kind==="impresa");
  const q=qtext.trim().toLowerCase();
  const ok=n=>!q||(n+" "+P[n].titulo+" "+P[n].code+" "+(P[n].material||"")).toLowerCase().includes(q);
  let h=`<input class="search" id="q" type="search" placeholder="Buscar pieza por nombre o código…" value="${esc(qtext)}" autocomplete="off">`;
- h+=`<div class="filters">${[["todas","Todas"],["nodo","Nodo"],["boya","Boya"],["probetas","Probetas"]].map(([k,l])=>`<button data-act="filt" data-v="${k}" class="${filt===k?"on":""}">${l}</button>`).join("")}</div>`;
+ h+=`<div class="filters">${[["todas","Todas"],["nodo","Nodo"],["boya","Boya"],["linterna","Linterna"],["tierra","Estación de tierra"],["probetas","Probetas"]].map(([k,l])=>`<button data-act="filt" data-v="${k}" class="${filt===k?"on":""}">${l}</button>`).join("")}</div>`;
  const groups=[];
  if(filt==="todas"||filt==="nodo")groups.push(["Nodo de cámaras · piezas impresas","nodo","impresa"]);
  if(filt==="todas"||filt==="boya")groups.push(["Boya · piezas impresas","boya","impresa"]);
+ if(filt==="todas"||filt==="linterna")groups.push(["Linterna · aros y probeta","linterna","impresa"]);
+ if(filt==="todas"||filt==="tierra")groups.push(["Estación de tierra · piezas impresas","tierra","impresa"]);
  groups.forEach(([t,g,k])=>{const ns=printed.filter(n=>P[n].group===g&&ok(n));if(!ns.length)return;
   const types={};ns.forEach(n=>{types[P[n].code]=P[n];});
   h+=`<h3>${t}</h3><div class="sum">${totalsLine(Object.values(types).filter(x=>true))} (una de cada)</div>`;
@@ -359,21 +361,23 @@ function rPiezas(){
 }
 function probetasList(){const out=[];(DATA.impresion.grupos||[]).forEach(g=>{if(g.n!==1)return;g.placas.forEach(pl=>pl.piezas.forEach(p=>out.push(p)));});return out;}
 function itemHTML(n){const i=P[n];
- const extra=i.kind==="impresa"?`${nf(i.g)} g · ${nf(i.h,2)} h · S/ ${nf(i.costo,2)}`:(i.g!=null?nf(i.g,0)+" g":"");
+ const extra=i.kind==="impresa"?(i.g_estimado?`${nf(i.g)} g (estimado)`:`${nf(i.g)} g · ${nf(i.h,2)} h · S/ ${nf(i.costo,2)}`):(i.g!=null?nf(i.g,0)+" g":"");
  return `<div class="item${n===sel?" sel":""}" data-act="piece" data-v="${n}">${sw(n)}<div class="t"><b>${esc(i.titulo)}</b><small>${esc(n)}${extra?" · "+extra:""}</small></div>${(i.sellos||[]).length?`<span class="badge">junta</span>`:""}</div>`;}
 const CATN={union:"Tornillo o unión",ajuste:"Alineación",cable:"Cable",sello:"Junta contra el agua",forma:"Forma o ahorro de material",mont:"Montaje interno",montaje:"Montaje interno"};
 function rFicha(n){
  const i=P[n];
  let h=`<button class="btn small back" data-act="back">← Volver a la lista</button>`;
- h+=`<h2>${esc(i.titulo)}</h2><span class="chip">${esc(i.code)}</span><span class="chip">${i.group==="nodo"?"Nodo de cámaras":"Boya"}</span>`;
+ h+=`<h2>${esc(i.titulo)}</h2><span class="chip">${esc(i.code)}</span><span class="chip">${({nodo:"Nodo de cámaras",boya:"Boya",linterna:"Linterna",tierra:"Estación de tierra"})[i.group]||i.group}</span>`;
  h+=i.kind==="impresa"?`<span class="chip">Se imprime en 3D</span>`:`<span class="chip">No se imprime</span>`;
  (i.sellos||[]).forEach(k=>h+=`<span class="chip red">Junta ${k}</span>`);
+ if(i.aviso)h+=`<div class="card red"><b>Aviso:</b> ${esc(i.aviso)}</div>`;
  h+=`<p>${esc(i.funcion)}</p>`;
  h+=`<dl><dt>Material</dt><dd>${esc(i.material)}</dd>`;
- if(i.g!=null){h+=`<dt>Peso</dt><dd>${nf(i.g)} g${i.kind==="impresa"?" cada una":""}</dd>`;}
+ if(i.g!=null){h+=`<dt>Peso</dt><dd>${nf(i.g)} g${i.g_estimado?" (estimado)":""}${i.kind==="impresa"?" cada una":""}</dd>`;}
  if(i.h!=null)h+=`<dt>Tiempo</dt><dd>${nf(i.h,2)} h de impresión cada una</dd>`;
  if(i.costo!=null)h+=`<dt>Costo</dt><dd>S/ ${nf(i.costo,2)} cada una <small class="lead">(gramos × S/ ${nf(DATA.precio_kg,0)} por kg)</small></dd>`;
- if(i.kind==="impresa"&&i.qty>1)h+=`<dt>Cantidad</dt><dd>${i.qty} en total · S/ ${nf(i.costo*i.qty,2)} · ${nf(i.g*i.qty,0)} g · ${nf(i.h*i.qty,1)} h</dd>`;
+ if(i.kind==="impresa"&&i.qty>1&&i.costo==null)h+=`<dt>Cantidad</dt><dd>${i.qty} en total · ${nf(i.g*i.qty,0)} g${i.g_estimado?" (estimado)":""}</dd>`;
+ else if(i.kind==="impresa"&&i.qty>1)h+=`<dt>Cantidad</dt><dd>${i.qty} en total · S/ ${nf(i.costo*i.qty,2)} · ${nf(i.g*i.qty,0)} g · ${nf(i.h*i.qty,1)} h</dd>`;
  if(i.relleno!=null)h+=`<dt>Relleno</dt><dd>${i.relleno} %${i.paredes?` · ${i.paredes} paredes`:""}${i.soportes?" · lleva soportes":" · sin soportes"}${i.estanca?" · perfil estanco":""}</dd>`;
  if(i.orient)h+=`<dt>En la cama</dt><dd>${esc(i.orient)}</dd>`;
  if(i.paso!=null)h+=`<dt>Se arma en</dt><dd>Paso ${i.paso+1}: ${esc(DATA.pasos[i.paso].titulo)}</dd>`;
@@ -453,11 +457,11 @@ function rEnsamble(){
  const S=DATA.pasos;let h=`<h2>Cómo se arma</h2>`;
  if(stepIdx==null){
   h+=`<p class="lead">${S.length} pasos. Cada paso mueve sus piezas hasta su lugar y marca en naranja los tornillos que van ahí.</p><div class="row"><button class="btn on" data-act="sstart">▶ Armar paso a paso</button></div>`;
-  h+=`<h3>Los pasos</h3>`+S.map((s,i)=>`<div class="item" data-act="sgo" data-v="${i}"><span class="num">${i+1}</span><div class="t"><b>${esc(s.titulo)}</b><small>${s.grupo==="boya"?"boya":"nodo"} · ${s.partes.length} pieza${s.partes.length>1?"s":""}${s.tornillos.length?" · tornillos":""}</small></div></div>`).join("");
+  h+=`<h3>Los pasos</h3>`+S.map((s,i)=>`<div class="item" data-act="sgo" data-v="${i}"><span class="num">${i+1}</span><div class="t"><b>${esc(s.titulo)}</b><small>${({boya:"boya",linterna:"linterna",tierra:"estación de tierra"})[s.grupo]||"nodo"} · ${s.partes.length} pieza${s.partes.length>1?"s":""}${s.tornillos.length?" · tornillos":""}</small></div></div>`).join("");
  }else{
   const s=S[stepIdx];
   h+=`<div class="bar"><i style="width:${(stepIdx+1)/S.length*100}%"></i></div>`;
-  h+=`<div class="stepbox"><h4>Paso ${stepIdx+1} de ${S.length}: ${esc(s.titulo)}</h4><p>${esc(s.texto)}</p>`;
+  h+=`<div class="stepbox"><h4>Paso ${stepIdx+1} de ${S.length}: ${esc(s.titulo)}</h4><p>${esc(s.texto)}</p>${s.aviso?`<div class="card red"><b>Aviso:</b> ${esc(s.aviso)}</div>`:""}`;
   h+=`<div class="row"><button class="btn" data-act="sprev" ${stepIdx===0?"disabled":""}>← Anterior</button><button class="btn on" data-act="snext" ${stepIdx===S.length-1?"disabled":""}>Siguiente →</button><button class="btn" data-act="splay">${playT?"⏸ Pausa":"▶ Automático"}</button><button class="btn" data-act="sgo" data-v="${stepIdx}">↻ Repetir</button><button class="btn" data-act="send">Salir</button></div></div>`;
   h+=`<h3>Piezas que entran</h3><div>${s.partes.map(p=>`<span class="chip" style="cursor:pointer" data-act="piece" data-v="${p}">${esc(p)}</span>`).join("")}</div>`;
   if(s.sellos.length){const ns=[...new Set(s.sellos.map(m=>P[m].n))];h+=`<h3>Juntas de este paso</h3><div>${ns.map(n=>`<span class="chip red" style="cursor:pointer" data-act="seal" data-v="${n}">Junta ${n}</span>`).join("")}</div>`;}
@@ -466,6 +470,7 @@ function rEnsamble(){
   h+=`<h3>Todos los pasos</h3>`+S.map((x,i)=>`<div class="item${i===stepIdx?" sel":""}" data-act="sgo" data-v="${i}"><span class="num">${i+1}</span><div class="t"><b>${esc(x.titulo)}</b></div></div>`).join("");
  }
  h+=`<details><summary>Lista de compra: nodo</summary><table><tr><th>Qué</th><th>Medida</th><th>Cant.</th></tr>${(DATA.herraje.nodo||[]).map(x=>`<tr><td>${esc(x.item)}</td><td>${esc(x.medida)}</td><td>${esc(x.cant)}</td></tr>`).join("")||"<tr><td colspan=3>No disponible en esta corrida.</td></tr>"}</table></details>`;
+ if((DATA.herraje.tierra||[]).length)h+=`<details><summary>Lista de compra: estación de tierra</summary><table><tr><th>Qué</th><th>Medida</th><th>Cant.</th></tr>${DATA.herraje.tierra.map(x=>`<tr><td>${esc(x.item)}</td><td>${esc(x.medida)}</td><td>${esc(x.cant)}</td></tr>`).join("")}</table></details>`;
  h+=`<details><summary>Lista de compra: boya</summary><table><tr><th>Qué</th><th>Medida</th><th>Cant.</th></tr>${(DATA.herraje.boya||[]).map(x=>`<tr><td>${esc(x.item)}</td><td>${esc(x.medida)}</td><td>${esc(x.cant)}</td></tr>`).join("")}</table></details>`;
  pbody.innerHTML=h;
 }
