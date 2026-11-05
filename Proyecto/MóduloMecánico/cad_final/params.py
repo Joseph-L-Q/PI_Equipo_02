@@ -79,7 +79,7 @@ PETG_DENSITY = p("petg.densidad", 1.27, EST, VER, "Sustituir por el dato del sli
 FILL_FACTOR = p("costo.factor_relleno", 0.45, EST, VER,
                 "EN DESUSO desde el 29/10 (bloque J): la bitacora usa la masa por pieza del calculo de flotacion (piel + relleno de cada pieza)")
 PRINT_RATE_GH = p("costo.g_por_h", 15.0, EST, VER, "Bitacora: gramos por hora de la impresora; el slicer lo reemplaza")
-FILAMENT_PRICE = p("costo.filamento_soles_kg", 90.0, EST, VER, "Bitacora: precio del PETG en soles por kg; confirmar con la boleta")
+FILAMENT_PRICE = p("costo.filamento_soles_kg", 60.0, "equipo", OK, "Bitacora: precio del PETG en soles por kg (encargo del 04/11: S/ 60)")
 PETG_E = p("petg.E", 1700.0, EST, VER, "PETG manual para SimScale")                            # MPa
 PETG_NU = p("petg.nu", 0.38, EST, VER, "PETG manual")
 PETG_YIELD = p("petg.sigma_y", 45.0, EST, VER, "Macizo, a lo largo de las capas", 45.0)        # MPa
@@ -753,7 +753,7 @@ FILLETS = p("proto.redondeos", dict(caja=3.0, riel=3.0, capsula=3.0), EST, VER,
             "P4: radios (mm) de los redondeos: borde superior de la tapa y bajo la brida de la caja, aristas largas del conducto del riel, "
             "borde frontal de la capsula (no se aplica: parte el cuerpo en el asiento del bisel). Las esquinas verticales de la caja y las aristas largas de la capsula ya son redondeadas en el diseno base")
 LOGO = p("proto.logo", dict(texto="LanternGuard", relieve=0.6, alto=9.0), EST, VER, "P4: texto en relieve sobre la tapa M2")
-PETG_PRICE = p("costo.petg_soles_kg", 90.0, EST, VER, "Precio del PETG por kg (soles); costo = gramos reales del slicer x precio")
+PETG_PRICE = p("costo.petg_soles_kg", 60.0, "equipo", OK, "Precio del PETG por kg (soles, encargo del 04/11); costo = gramos reales del slicer x precio")
 PROTO_NAME = VERSION                                   # alias used in reports
 FAMILY = ("simple",) + PROTOTYPES                      # versions built by simple.py
 CFG = PROTO_CFG.get(VERSION, PROTO_CFG["simple"])
