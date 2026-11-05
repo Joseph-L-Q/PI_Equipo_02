@@ -2,6 +2,16 @@
 
 Cada línea: qué falta, por qué y qué hace falta para destrabarlo.
 
+## Encargo del 05/11/2026 (diseño para mar)
+- **Resuelto:** golpe lateral sobre el panel (FS 3,42 entre capas), GM con una botella perdida (88 mm con espuma) y holgura cuerda-caja (3,2 mm). Las líneas de abajo sobre esos temas quedan como historia.
+- **Riesgo abierto:** con la espuma al 50 % y una botella de cuna perdida, la boya vuelca. Control: pesar la lata (≥ 55 g de espuma). La escora con una botella perdida es de 11° (criterio propio 10°).
+- **Onshape sin API:**
+  - importar a mano los 5 STEP y `00_ENSAMBLE.step` de `salida/onshape_importar/2026-11-05/` (Drive `01_Onshape_importar/2026-11-05/`), siguiendo `IMPORTAR.md`;
+  - después, borrar las pestañas «OLD 2026-11-04 …» y «OLD 2026-11-05 …».
+- **Drive, borrar a mano** (ya están copiados en `OLD/`):
+  - `02_Imprimir_primero_probetas/imprimir_hoy_2026-11-04_noche/`;
+  - los PDF `PLANOS_A4_LanternGuard_v5.pdf` y anteriores de `04_Planos/`.
+
 ## Bloqueos del 04/11/2026
 - **SimScale:**
   - El plan gratuito no deja descargar los resultados de las corridas nuevas de B2 (cubierta de 8 mm) ni de la variante lateral (error 403 «export-source-locked»). La verificación de esas corridas se hizo con CalculiX local.

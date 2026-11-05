@@ -1,4 +1,4 @@
-# Estado LanternGuard CAD | encargo del 05/11 (diseño para mar) | 02:33
+# Estado LanternGuard CAD | encargo del 05/11 (diseño para mar) | **TERMINADO: 05:32**
 
 Modo sin API de Onshape: las piezas cambiadas quedan como STEP con `IMPORTAR.md` para subirlas a mano.
 
@@ -6,11 +6,14 @@ Modo sin API de Onshape: las piezas cambiadas quedan como STEP con `IMPORTAR.md`
 |---|---|
 | 1 Diseño para mar | Hecho. Panel lateral 200 N: FS 3,02 entre capas (era 0,41). Ola sobre la cubierta: FS 3,7. Cabo 300 N con pata de gallo de dos ramales: FS 3,2. Espuma PU obligatoria: con una botella perdida GM 85/506 mm (era 38). Holgura cuerda-caja 3,2 mm con chaflán de 6 mm en M1s y M2 |
 | 2 Regenerar y publicar | Hecho. 20 placas sin fallas: 3427 g, 110,9 h, S/ 206 (4 rollos de 1 kg). Cubiertas B2 sin soportes (0,1 y 0,4 %). 5 STEP + `00_ENSAMBLE` (32 sólidos) con `IMPORTAR.md` en Drive `01_Onshape_importar/2026-11-05/`. `PLANOS_A4_LanternGuard_v6.pdf` en `04_Planos`. STL por pieza, visor, BITACORA, BOM, BOYA.pdf, reporte de SimScale y CARGAS_CONJUNTO subidos; lo viejo en `OLD/2026-11-05/` |
-| 3 Cierre | Pendiente |
+| 3 Cierre | Hecho. `ENTREGA_2026-11-05.pdf` actualizado, `HANDOFF_siguiente.md` con los STEP por importar, las pestañas OLD, SHEET y cotas a mano |
+
+**Links:** Drive https://drive.google.com/drive/folders/1T8cv6NW7W2cESde3SLp9HgS4VRJMWwCO · Onshape https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff · Rama https://github.com/Joseph-L-Q/PI_Equipo_02/tree/cad/version-final
 
 **Problemas abiertos:**
 - Si la espuma llena solo la mitad de los huecos, la boya vuelca al perder una botella. Control al armar: pesar la lata antes y después (≥ 55 g de espuma).
-- Con una botella perdida la boya escora 11,6° (criterio propio 10°).
+- Con una botella perdida la boya escora 11° (criterio propio 10°).
+- Onshape: hay que importar a mano 5 STEP y el ensamble (`IMPORTAR.md`).
 - La boya impresa pesa 1385 g (antes 1105 g) y tarda 59,7 h.
 
 ---
