@@ -14,6 +14,8 @@ Documento: [LanternGuard - PIEZAS PARA IMPRIMIR](https://cad.onshape.com/documen
 | Ensambles | nodo 20 + 4 REF, boya 14 + 4 REF, tierra 2 | suma de la BOM |
 | Documento | 21 piezas, 21 planos, 3 ensambles, 00_LEEME; 0 referencias rotas, 0 faltantes | sin rotas ni faltantes |
 
+**Aviso:** el cálculo a mano del gancho en C da FS 1,8 entre capas con 150 N (antes 1,9). El FEM fija el asiento y no evalúa bien esa zona: confirmar con CalculiX.
+
 **Pasos a mano en Onshape:**
 1. Activar Share > Link con vista y exportación: la API rechaza la clave con un 403.
 2. Arrastrar `00_LEEME` al primer lugar: la API no reordena pestañas.

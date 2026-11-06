@@ -26,6 +26,7 @@ Documento: [LanternGuard - PIEZAS PARA IMPRIMIR](https://cad.onshape.com/documen
 - **Probetas:** antes del cambio de plan se cargaron y dibujaron; se quitaron de este documento. No están en `LG_IMPRIMIR_P2` las P01 a P05 (nunca estuvieron ahí; hay STL en `LG_probetas`); PB_aro sí sigue ahí, con asiento Ø16,8. Los STEP de P01 a P05 quedan en `salida/limpio/step/`.
 - **Números de pestaña:** no los cambié. Identifican la pieza; el orden de impresión está en las fases del LEEME. Renumerar costaría unas 40 llamadas.
 - **Prueba de agua:** añadí a tu procedimiento las 2 placas de prueba con junta (8 M4) y el tapón del PG7, porque la caja tiene 2 ventanas hacia los rieles (`docs/ESTANQUEIDAD.md`). Sin eso entra agua por ahí.
+- **Revisar el gancho:** el cálculo a mano de `REPORTE.md` da FS 1,8 entre capas en el gancho en C con 150 N (antes 1,9). El FEM del riel da 3,95, pero fija el asiento, así que no evalúa bien esa zona. El FEM de `aro.py`/CalculiX debe confirmarlo. En la fase 1, tirar del gancho a mano antes de seguir.
 - **Juego:** 0,3 mm es el nominal; el agujero sigue corrido 0,09 mm por la curva del aro, así que el mínimo real es 0,21 mm por lado.
 - **BOM:** B3 y B4 pasan a 100 % (247 y 111 g, reparto de la placa P16): la tabla decía 175 y 79 g al 40 %. T1 y T2 en PLA (72 y 49 g). Lastre del nodo: 990 g.
 - **Planos editados además de lo pedido:** T1 y T2 ahora dicen PLA; LR2_aro cita el asiento Ø17,1 y juego 0,6 en diámetro.
