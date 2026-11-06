@@ -1,3 +1,39 @@
+# HANDOFF siguiente | PC de casa | documento limpio sin probetas (05/11)
+
+Documento: [LanternGuard - PIEZAS PARA IMPRIMIR](https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d), did `76e36e0130a8d259842ecee7`, wid `fdd58e8bdf77f39a1781a12d`. Generado con `cad_final/documento_limpio.py`; estado en `salida/limpio/estado.json`.
+
+## Por hacer
+1. **Onshape, a mano:** Share > Link (vista + exportación; la API da 403) y arrastrar `00_LEEME` al primer lugar.
+2. **Drive, carpeta `LanternGuard_CAD/08_PARA_IMPRIMIR`:** solo STL, 3MF y PDF de planos de estas 21 piezas, con los mismos números (`10_M1s_caja_cuerpo`, ...). Sin probetas. Exportar los PDF desde este documento: no se exportaron aquí.
+3. **Slicer real** de M3s (asiento Ø17,1), LR2_aro, T1 y T2 (en PLA). La placa P12 anterior no sirve.
+4. **FEM con `fem.py` (CalculiX)** del riel: el FS 3,95 / 5,19 es de `fem_tet10`.
+5. **Confirmar Heltec, batería y SMA** antes de imprimir T1 y T2.
+6. **Cotas a mano** que no cupieron: M3s, M5s, M11, M11_sup y B6 (detalle en `salida/limpio/registro_planos.json`).
+7. **El `.env` sigue en `cad_final/`:** no se borró, como pediste. Borrarlo cuando termine el trabajo con la clave.
+
+## Gramos
+| Conjunto | g | h |
+|---|---|---|
+| Nodo P2 (16 piezas) | 1677 | 45 |
+| Boya PET (14 piezas) | 1489 | 58,5 |
+| 4 aros LR2 | 600 | 40 |
+| Tierra T1 + T2, PLA | 121 | 8,1 |
+| **Total (36 piezas)** | **3887** | **152** |
+
+**Rollos: 4, con 113 g de margen.** Aro, T1, T2 y M3s son estimados, sin slicer. Las horas del aro y de tierra usan el ritmo de `BOM.md` (15 g/h), más prudente que los 31 g/h de `ARO_Y_ESTACION.md`.
+
+## Decisiones que tomé solo
+- **Probetas:** antes del cambio de plan se cargaron y dibujaron; se quitaron de este documento. No están en `LG_IMPRIMIR_P2` las P01 a P05 (nunca estuvieron ahí; hay STL en `LG_probetas`); PB_aro sí sigue ahí, con asiento Ø16,8. Los STEP de P01 a P05 quedan en `salida/limpio/step/`.
+- **Números de pestaña:** no los cambié. Identifican la pieza; el orden de impresión está en las fases del LEEME. Renumerar costaría unas 40 llamadas.
+- **Prueba de agua:** añadí a tu procedimiento las 2 placas de prueba con junta (8 M4) y el tapón del PG7, porque la caja tiene 2 ventanas hacia los rieles (`docs/ESTANQUEIDAD.md`). Sin eso entra agua por ahí.
+- **Juego:** 0,3 mm es el nominal; el agujero sigue corrido 0,09 mm por la curva del aro, así que el mínimo real es 0,21 mm por lado.
+- **BOM:** B3 y B4 pasan a 100 % (247 y 111 g, reparto de la placa P16): la tabla decía 175 y 79 g al 40 %. T1 y T2 en PLA (72 y 49 g). Lastre del nodo: 990 g.
+- **Planos editados además de lo pedido:** T1 y T2 ahora dicen PLA; LR2_aro cita el asiento Ø17,1 y juego 0,6 en diámetro.
+- **Plano de M6:** es el `Drawing 13` de Melissa, renombrado; no es un PLANO_A4 generado.
+- **Llamadas:** 249 de 250 en el encargo del documento. Este cambio llevó un contador aparte con tope 70, que fijé yo porque tu mensaje no daba uno. El tope de 250 lo tomé como del encargo anterior.
+
+---
+
 # HANDOFF siguiente | PC de casa | aro Ø16,5 con relleno, M3s nuevo, T1 corregido y ensamble de tierra (05/11)
 
 Detalle en `docs/ARO_Y_ESTACION.md`. Generado en la PC de trabajo, que no tiene OrcaSlicer ni CalculiX.

@@ -1,0 +1,24 @@
+caja 3s exterior [129.0, 128.0, 78.0]
+M1s_caja_cuerpo          ok=True or=sin girar bbox=(149.0, 156.0, 78.0) ov=847 p1=nan
+M2_caja_tapa             ok=True or=sin girar bbox=(149.0, 148.0, 85.5) ov=1576 p1=nan
+M3s_riel_gancho          ok=True or=X+90 bbox=(140.5, 81.8, 50.0) ov=5046 p1=1.50
+M3t_tapa_bolsillo        ok=True or=X180 bbox=(117.0, 61.0, 5.0) ov=0 p1=nan
+M5s_capsula_tapa_pie     ok=True or=X180 bbox=(51.9, 66.0, 72.2) ov=895 p1=1.36
+M3f_marco_bolsillo       ok=True or=X180 bbox=(117.0, 77.0, 30.0) ov=0 p1=nan
+M11_bandeja              ok=True or=sin girar bbox=(115.0, 114.0, 30.0) ov=0 p1=nan
+M11_bandeja_sup          ok=True or=sin girar bbox=(115.0, 114.0, 3.0) ov=0 p1=nan
+M4_capsula_cuerpo        ok=True or=Y+90 bbox=(66.0, 66.0, 45.0) ov=606 p1=nan
+M6_capsula_bisel         ok=True or=Y+90 bbox=(42.0, 42.0, 2.5) ov=0 p1=nan
+M7_capsula_ventana       ok=True or=Y+90 bbox=(30.0, 30.0, 3.0) ov=0 p1=nan
+piezas 8s
+lastre 990 g en 2 bolsillos de 30 mm (22.0 mm llenos), rango 871 a 1206 g, peso aparente +303 g, 10s
+interferencias 0 tuercas 0 10s
+linterna {'brazo': 51.0, 'capsula': 70.6, 'caja': 7.5} nudo + 400 camara [{'lens': (135.66506350946108, -72.41858428704208), 'dist': np.float64(41.5), 'campo_diag': np.float64(58.117225671405905), 'en_foco': False, 'D': 200.0}, {'lens': (135.66506350946108, -72.41858428704208), 'dist': None, 'campo_diag': None, 'en_foco': False, 'D': 500.0}] 16s
+AVISO: cuerda-caja (brida de la tapa) a 7.5 mm, menos que los 10 que se piden a brazos y capsulas
+ensamble 33 cuerpos, 33 solidos leidos del STEP 18s
+written C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\salida\prototipos\P2_robusto\ensamble_simple_iso.png
+written C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\salida\prototipos\P2_robusto\ensamble_simple_lado.png
+written C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\salida\prototipos\P2_robusto\nodo_simple_iso.png
+written C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\salida\prototipos\P2_robusto\nodo_simple_corte.png
+peso aparente +303 g, lastre 990 g, total 2990 g, nudo 400 mm sobre el aro, aire cuerda-brazo 51.0 / capsula 70.6 / caja 7.5 mm, alto 257 mm, 34s
+FALLAS: ninguna

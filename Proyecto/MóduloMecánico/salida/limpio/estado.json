@@ -1,0 +1,266 @@
+{
+  "did": "76e36e0130a8d259842ecee7",
+  "wid": "fdd58e8bdf77f39a1781a12d",
+  "url": "https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d",
+  "pid": "57f3fb8efa3416c06701d60d",
+  "prueba_blob": {
+    "hecha": true,
+    "borrado": true,
+    "resultado": "DELETE del blob aceptado, pero el Import del Part Studio queda en ERROR y con 0 partes: los .step en uso no se pueden borrar"
+  },
+  "bom_en_cascada": 45,
+  "renombradas": {
+    "PB_aro": "06_PB_aro",
+    "M1s_caja_cuerpo": "10_M1s_caja_cuerpo",
+    "M2_caja_tapa": "11_M2_caja_tapa",
+    "M3s_riel_gancho": "12_M3s_riel_gancho_x2",
+    "M3t_tapa_bolsillo": "13_M3t_tapa_bolsillo_x2",
+    "M3f_marco_bolsillo": "14_M3f_marco_bolsillo_x2",
+    "M4_capsula_cuerpo": "15_M4_capsula_cuerpo_x2",
+    "M5s_capsula_tapa_pie": "16_M5s_capsula_tapa_pie_x2",
+    "M6_capsula_bisel": "17_M6_capsula_bisel_x2",
+    "M11_bandeja": "18_M11_bandeja",
+    "M11_bandeja_sup": "19_M11_bandeja_sup",
+    "B1_casco": "30_B1_casco_mitad_x2",
+    "B2_cubierta_lisa": "31_B2_cubierta_lisa",
+    "B2_cubierta_mastil": "32_B2_cubierta_mastil",
+    "B3_caja": "33_B3_caja",
+    "B4_tapa": "34_B4_tapa",
+    "B5_cuna_base": "35_B5_cuna_base_x2",
+    "B5_cuna_cuello": "36_B5_cuna_cuello_x2",
+    "B6_correa": "37_B6_correa_x4",
+    "LR2_aro": "40_LR2_aro_x4",
+    "T1_caja": "50_T1_caja",
+    "T2_tapa": "51_T2_tapa",
+    "PLANO_A4_M1s_caja_cuerpo (1)": "10_PLANO_M1s_caja_cuerpo",
+    "PLANO_A4_M2_caja_tapa (1)": "11_PLANO_M2_caja_tapa",
+    "PLANO_A4_M3s_riel_gancho": "12_PLANO_M3s_riel_gancho_x2",
+    "PLANO_A4_M3f_marco_bolsillo": "14_PLANO_M3f_marco_bolsillo_x2",
+    "PLANO_A4_M4_capsula_cuerpo": "15_PLANO_M4_capsula_cuerpo_x2",
+    "Drawing 13 M6": "17_PLANO_M6_capsula_bisel_x2",
+    "PLANO_A4_B1_casco (1)": "30_PLANO_B1_casco_mitad_x2",
+    "PLANO_A4_B2_cubierta_lisa (1)": "31_PLANO_B2_cubierta_lisa",
+    "PLANO_A4_B2_cubierta_mastil (1)": "32_PLANO_B2_cubierta_mastil",
+    "PLANO_A4_B3_caja": "33_PLANO_B3_caja",
+    "PLANO_A4_B4_tapa": "34_PLANO_B4_tapa",
+    "PLANO_A4_B5_cuna_base": "35_PLANO_B5_cuna_base_x2",
+    "PLANO_A4_B5_cuna_cuello": "36_PLANO_B5_cuna_cuello_x2",
+    "PLANO_A4_LR2_aro": "40_PLANO_LR2_aro_x4",
+    "PLANO_A4_T1_caja": "50_PLANO_T1_caja",
+    "PLANO_A4_T2_tapa": "51_PLANO_T2_tapa"
+  },
+  "subidas": {
+    "00_ENSAMBLE_boya": {
+      "blob": "0f8e8745e740b90fc79d4036",
+      "estudio": "aeaf95a0a2e80d930287ae36",
+      "elementos": [
+        "aeaf95a0a2e80d930287ae36"
+      ],
+      "partes": 18,
+      "solidos": 18,
+      "verificado": true,
+      "part0": "JFD",
+      "impresas": 14,
+      "refs": 4,
+      "color_ref": {
+        "red": 153,
+        "green": 153,
+        "blue": 153
+      }
+    },
+    "00_ENSAMBLE_tierra": {
+      "blob": "378bad6289ce61088edd6268",
+      "estudio": "c854c17398ec7071566002a4",
+      "elementos": [
+        "c854c17398ec7071566002a4"
+      ],
+      "partes": 2,
+      "solidos": 2,
+      "verificado": true,
+      "part0": "JFD",
+      "impresas": 2,
+      "refs": 0,
+      "color_ref": null
+    },
+    "12_M3s_riel_gancho_x2": {
+      "blob": "708f241fa6afc33b29a2332a",
+      "estudio": "cdf9309ba4d0f14b4f594ce4",
+      "elementos": [
+        "cdf9309ba4d0f14b4f594ce4"
+      ],
+      "partes": 1,
+      "solidos": 1,
+      "part0": "JFD",
+      "impresas": 1,
+      "refs": 0
+    },
+    "00_ENSAMBLE_nodo": {
+      "blob": "4d0227bc1bda1a3807757772",
+      "estudio": "3a6c082584e7ddfa99198c57",
+      "elementos": [
+        "3a6c082584e7ddfa99198c57"
+      ],
+      "partes": 24,
+      "solidos": 24,
+      "part0": "JFD",
+      "impresas": 20,
+      "refs": 4
+    }
+  },
+  "leeme": "374310fe149fb601e6f5cc9f",
+  "link": "a mano: POST /documents/76e36e0130a8d259842ecee7/acl/anonymousAccess -> 403: {\n  \"message\" : \"Access denied.\",\n  \"moreInfoUrl\" :",
+  "verificacion": {
+    "pestanas": 70,
+    "rotas": [],
+    "faltan": [],
+    "plano_mal_apuntado": [],
+    "sobran": [],
+    "blobs_en_uso": 24,
+    "llamadas": 65
+  },
+  "planos": {
+    "13_M3t_tapa_bolsillo_x2": {
+      "id": "5ac2e8f05c20a460b757fa52",
+      "url": "https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d/e/5ac2e8f05c20a460b757fa52",
+      "cotas": {
+        "creadas": 9,
+        "fallidas": [],
+        "a_mano": []
+      },
+      "escala": "1:2"
+    },
+    "16_M5s_capsula_tapa_pie_x2": {
+      "id": "c1996dc58a524112ff7a0d58",
+      "url": "https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d/e/c1996dc58a524112ff7a0d58",
+      "cotas": {
+        "creadas": 15,
+        "fallidas": [],
+        "a_mano": [
+          "front: ancho total 51,9 (el borde es curvo)",
+          "front: alto total 72,2 (el borde es curvo)",
+          "top: espesor 1,8 (sin espacio)",
+          "top: posición de 4x Ø4 a 9,9 del borde (sin espacio)",
+          "top: posición de 4x Ø3,4 a 7,4 del borde (sin espacio)",
+          "top: posición de 4x Ø3,4 a 4,5 del borde (sin espacio)",
+          "left: espesor 2x 0,8 (sin espacio)",
+          "left: separación 6,9 entre nervios horizontales (sin espacio)",
+          "left: separación 38,9 entre nervios horizontales (sin espacio)",
+          "left: separación 6,9 entre nervios horizontales (sin espacio)",
+          "left: separación 10 entre nervios horizontales (sin espacio)"
+        ]
+      },
+      "escala": "1:2"
+    },
+    "18_M11_bandeja": {
+      "id": "86a80de1f53087cbe320898b",
+      "url": "https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d/e/86a80de1f53087cbe320898b",
+      "cotas": {
+        "creadas": 7,
+        "fallidas": [],
+        "a_mano": [
+          "front: alto total 30 (el borde es curvo)",
+          "front: espesor 4x 4 (sin espacio)",
+          "top: posición de 4x Ø8 a 6 del borde (sin espacio)",
+          "top: 4x Ø3,4 (sin espacio)",
+          "left: alto total 30 (el borde es curvo)"
+        ]
+      },
+      "escala": "1:2"
+    },
+    "19_M11_bandeja_sup": {
+      "id": "d78e8c7c0d8c508c2716bb82",
+      "url": "https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d/e/d78e8c7c0d8c508c2716bb82",
+      "cotas": {
+        "creadas": 10,
+        "fallidas": [],
+        "a_mano": [
+          "front: espesor 2x 2 (sin espacio)"
+        ]
+      },
+      "escala": "1:2"
+    },
+    "37_B6_correa_x4": {
+      "id": "95f643d8ff7be6510a36f995",
+      "url": "https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d/e/95f643d8ff7be6510a36f995",
+      "cotas": {
+        "creadas": 8,
+        "fallidas": [],
+        "a_mano": [
+          "top: posición de 2x Ø3,4 a 7 del borde (sin espacio)"
+        ]
+      },
+      "escala": "1:2"
+    },
+    "12_M3s_riel_gancho_x2": {
+      "id": "ed3c601af25af53cbc9324e7",
+      "url": "https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d/e/ed3c601af25af53cbc9324e7",
+      "cotas": {
+        "creadas": 12,
+        "fallidas": [],
+        "a_mano": [
+          "front: alto total 81,8 (el borde es curvo)",
+          "front: separación 6 entre nervios horizontales (sin espacio)",
+          "front: separación 7 entre nervios horizontales (sin espacio)",
+          "front: separación 6 entre nervios horizontales (sin espacio)",
+          "front: separación 4 entre nervios horizontales (sin espacio)",
+          "front: separación 6 entre nervios horizontales (sin espacio)",
+          "front: separación 7 entre nervios horizontales (sin espacio)",
+          "left: espesor 1,5 (sin espacio)",
+          "left: separación 11,2 entre nervios horizontales (sin espacio)",
+          "left: separación 8,2 entre nervios horizontales (sin espacio)",
+          "left: separación 6 entre nervios horizontales (sin espacio)",
+          "left: separación 19,5 entre nervios horizontales (sin espacio)",
+          "left: 4x Ø4,2 (sin espacio)"
+        ]
+      },
+      "escala": "1:2"
+    }
+  },
+  "cambio_0511": {
+    "borradas": [
+      "01_P01_probeta_calibracion",
+      "01_PLANO_P01_probeta_calibracion",
+      "01_P01_probeta_calibracion.step",
+      "02_P02_probeta_inserto_M4_x3",
+      "02_PLANO_P02_probeta_inserto_M4_x3",
+      "02_P02_probeta_inserto_M4_x3.step",
+      "03_P03_probeta_junta",
+      "03_PLANO_P03_probeta_junta",
+      "03_P03_probeta_junta.step",
+      "04_P04_probeta_gancho",
+      "04_PLANO_P04_probeta_gancho",
+      "04_P04_probeta_gancho.step",
+      "05_P05_probeta_bahia_botella",
+      "05_PLANO_P05_probeta_bahia_botella",
+      "05_P05_probeta_bahia_botella.step",
+      "06_PB_aro",
+      "06_PLANO_PB_aro",
+      "PB_aro.step",
+      "12_PLANO_M3s_riel_gancho_x2",
+      "12_M3s_riel_gancho_x2",
+      "M3s_riel_gancho.step",
+      "00_ENSAMBLE_nodo",
+      "00_ENSAMBLE_nodo.step",
+      "00_LEEME.pdf"
+    ],
+    "leeme": true,
+    "50_PLANO_T1_caja": {
+      "notas": 1,
+      "resultado": [
+        "OK"
+      ]
+    },
+    "51_PLANO_T2_tapa": {
+      "notas": 1,
+      "resultado": [
+        "OK"
+      ]
+    },
+    "40_PLANO_LR2_aro_x4": {
+      "notas": 1,
+      "resultado": [
+        "OK"
+      ]
+    }
+  }
+}

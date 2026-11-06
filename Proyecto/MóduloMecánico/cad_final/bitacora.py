@@ -34,7 +34,6 @@ MODULAR = [("M1_caja_cuerpo", 1, "Caja, cuerpo"), ("M2_caja_tapa", 1, "Caja, tap
 SLICER_GROUPS = {"nodo P2 robusto": SAL / "prototipos" / "P2_robusto", "nodo P4 estetico": SAL / "prototipos" / "P4_estetico",
                  "boya PET 4 x 1 L": SAL / "boya_pet"}
 NUEVAS = [("aro de la linterna", "LR2_aro", 4, "Aro de la linterna, seccion redonda con base plana de 0,5 mm", SAL / "aro" / "step" / "LR2_aro.step", ("aro", ("LR2_aro",))),
-          ("aro de la linterna", "PB_aro", 1, "Probeta del aro: 50 mm de aro + asiento real de M3s (2 solidos)", SAL / "aro" / "step" / "PB_aro.step", ("aro", ("PB_aro_tramo", "PB_aro_asiento"))),
           ("estacion de tierra", "T1_caja", 1, "Caja de la estacion LoRa de tierra (Heltec en 4 postes M2,5)", SAL / "tierra" / "step" / "T1_caja.step", ("tierra", ("T1_caja",))),
           ("estacion de tierra", "T2_tapa", 1, "Tapa de la estacion de tierra con ventana OLED", SAL / "tierra" / "step" / "T2_tapa.step", ("tierra", ("T2_tapa",)))]
 
@@ -107,10 +106,10 @@ def piece_rows():
                      f"{inf * 100:.0f} %", FA.mass_g(sh, inf)))
     for g, stem, q, desc, step, (kind, keys) in NUEVAS:
         js = nuevas_json(kind)
-        mass = sum(js[k]["gramos"] for k in keys)
+        mass = sum(js[k]["gramos"] for k in keys) * (PLA_POR_PETG if g == "estacion de tierra" else 1.0)
         sh = cq.importers.importStep(str(step)).val()
         bb = sh.BoundingBox()
-        rows.append((g, stem, q, desc, sh.Volume() / 1000, (bb.xlen, bb.ylen, bb.zlen), "segun guia (sin soportes)", False, "13 perimetros + 15 %" if stem == "LR2_aro" else ("tramo 13 p + 15 %, asiento 100 %" if stem == "PB_aro" else "100 %"), mass))
+        rows.append((g, stem, q, desc, sh.Volume() / 1000, (bb.xlen, bb.ylen, bb.zlen), "segun guia (sin soportes)", False, "13 perimetros + 15 %" if stem == "LR2_aro" else ("100 % PLA" if g == "estacion de tierra" else "100 %"), mass))
     rows += slicer_rows()
     return rows, res, rb
 
@@ -125,12 +124,17 @@ def slicer_rows():
             qtys = json.loads((d / "resultados.json").read_text(encoding="utf-8"))["cantidades"]
         for stem, v in sl.items():
             q = v["qty"] if "qty" in v else qtys.get(stem, 1)
+            v = {**v, **AJUSTE_SLICER.get(stem, {})}
             rows.append((g, stem, q, v.get("nombre", stem), 0.0, (0, 0, 0), "slicer", v["soportes"], f"{v['relleno_pct']} %", v["g"]))
             SLICER_DATA.setdefault(g, {})[stem] = v
     return rows
 
 
 SLICER_DATA = {}
+# slicer.json is older than these: B3/B4 sealed at 100 % (mass split of plate P16, 358.5 g), M3s with the Ø17.1 seat (by volume)
+AJUSTE_SLICER = {"B3_caja": dict(g=247, h=4.96, relleno_pct=100), "B4_tapa": dict(g=111, h=2.90, relleno_pct=100), "M3s_riel_gancho": dict(g=214)}
+PLA_POR_PETG = 1.24 / 1.27      # T1 and T2 are printed in PLA
+IMPRIMIR = ("nodo P2 robusto", "boya PET 4 x 1 L", "aro de la linterna", "estacion de tierra")
 
 
 def slicer_of(g, stem, slicer):
@@ -182,7 +186,7 @@ def hardware(res, rb):
     simple = common + [("Tornillo M4 x 20 + inserto termico M4 (bridas del riel a la caja)", "M4", 8),
                        (f"Tornillo M3 x {std_n(P.PLATE_POCKET_WALL + P.M3_INSERT_DEPTH)} inox A2 avellanado + inserto M3 ciego (2 tapas M3t a los marcos M3f)", "M3", 4),
                        (f"Tornillo M3 x {std_n(P.PLATE_POCKET_WALL + P.M3_INSERT_DEPTH)} inox A2 avellanado + inserto M3 ciego (2 marcos M3f a las orejas de M1s)", "M3", 4), *pie,
-                       ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Lastre a granel: tuercas y arandelas M8 de inox", f"{lastre_g:.0f} g", 1)]
+                       ("Correa textil", f"{P.STRAP_W:g} x 300 mm", 2), ("Lastre a granel: tuercas y arandelas M8 de inox", f"{json.loads((SAL / 'prototipos' / 'P2_robusto' / 'resultados.json').read_text(encoding='utf-8'))['lastre']['total_g']:.0f} g", 1)]
     bd = BP.dims(P.FLOT_BOTTLE, P.FLOT_COUNT)
     ins = P.M3_INSERT_DEPTH
     std = lambda t: next(n for n in (6, 8, 10, 12, 16, 20, 25, 30, 35, 40) if n >= t)
@@ -438,9 +442,10 @@ def write_md(rows, hw, res, rb, slicer):
          "## Resumen", "", "| Grupo | Masa impresa g | Horas | Costo filamento S/ |", "|---|---|---|---|"]
     for g, v in t.items():
         L.append(f"| {g} | {v['masa']:.0f} | {v['horas']:.1f} | {v['costo']:.2f} |")
-    L += ["", "**Lo que se imprime hoy: nodo P2 robusto + boya PET 4 x 1 L** (mas las probetas; total por placa en "
-          "`salida/imprimir_hoy/3mf/placas.json`). Las otras filas son versiones anteriores, solo para comparar: no se suman.",
-          "", "Aros de la linterna (LR2_aro x4, PB_aro) y estacion de tierra (T1, T2): gramos estimados de `docs/ARO_Y_ESTACION.md` (sin slicer); las medidas del Heltec y la bateria son estimadas y hay que confirmarlas antes de imprimir.", "",
+    L += ["", "**Lo que se imprime: nodo P2 robusto + boya PET 4 x 1 L + aros de la linterna + estacion de tierra. No se imprimen probetas.** Las otras filas son versiones anteriores, solo para comparar: no se suman.",
+          "", "**Total: %.0f g, %.0f h** (%s). Con 4 rollos de 1 kg quedan %.0f g de margen." % (
+              sum(t[g]["masa"] for g in IMPRIMIR), sum(t[g]["horas"] for g in IMPRIMIR), ", ".join("%s %.0f g" % (g, t[g]["masa"]) for g in IMPRIMIR), 4000 - sum(t[g]["masa"] for g in IMPRIMIR)),
+          "", "Aros de la linterna (LR2_aro x4) y estacion de tierra (T1, T2, en PLA): gramos estimados de `docs/ARO_Y_ESTACION.md` (sin slicer); las medidas del Heltec y la bateria son estimadas y hay que confirmarlas antes de imprimir.", "",
           "El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).", "",
           "## Piezas", "", "| Pieza | Grupo | Cant. | X × Y × Z mm | Volumen cm³ | Orientacion | Soportes | Relleno | Masa por pieza g | Fuente |",
           "|---|---|---|---|---|---|---|---|---|---|"]

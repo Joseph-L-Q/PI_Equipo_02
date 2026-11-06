@@ -82,7 +82,7 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 168234.1
+   "volumen_mm3": 168136.1
   },
   {
    "nombre": "M5s_capsula_tapa_pie_der",
@@ -117,7 +117,7 @@
    "solidos": 1,
    "valido": true,
    "corregido": false,
-   "volumen_mm3": 168234.1
+   "volumen_mm3": 168136.1
   },
   {
    "nombre": "M5s_capsula_tapa_pie_izq",

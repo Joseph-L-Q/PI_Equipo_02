@@ -10,15 +10,17 @@ No editar a mano: `python cad_final/build.py --bitacora`. Excel con formulas: `s
 | linterna de prueba | 0 | 0.0 | 0.00 |
 | boya simple | 1943 | 129.5 | 116.59 |
 | modular D200 | 1229 | 82.0 | 73.76 |
-| nodo P2 robusto | 1683 | 45.0 | 100.98 |
+| nodo P2 robusto | 1677 | 45.0 | 100.61 |
 | nodo P4 estetico | 1352 | 46.0 | 81.11 |
-| boya PET 4 x 1 L | 1385 | 59.7 | 83.08 |
-| aro de la linterna | 628 | 41.8 | 37.66 |
-| estacion de tierra | 124 | 8.3 | 7.44 |
+| boya PET 4 x 1 L | 1489 | 58.5 | 89.34 |
+| aro de la linterna | 600 | 40.0 | 36.00 |
+| estacion de tierra | 121 | 8.1 | 7.26 |
 
-**Lo que se imprime hoy: nodo P2 robusto + boya PET 4 x 1 L** (mas las probetas; total por placa en `salida/imprimir_hoy/3mf/placas.json`). Las otras filas son versiones anteriores, solo para comparar: no se suman.
+**Lo que se imprime: nodo P2 robusto + boya PET 4 x 1 L + aros de la linterna + estacion de tierra. No se imprimen probetas.** Las otras filas son versiones anteriores, solo para comparar: no se suman.
 
-Aros de la linterna (LR2_aro x4, PB_aro) y estacion de tierra (T1, T2): gramos estimados de `docs/ARO_Y_ESTACION.md` (sin slicer); las medidas del Heltec y la bateria son estimadas y hay que confirmarlas antes de imprimir.
+**Total: 3887 g, 152 h** (nodo P2 robusto 1677 g, boya PET 4 x 1 L 1489 g, aro de la linterna 600 g, estacion de tierra 121 g). Con 4 rollos de 1 kg quedan 113 g de margen.
+
+Aros de la linterna (LR2_aro x4) y estacion de tierra (T1, T2, en PLA): gramos estimados de `docs/ARO_Y_ESTACION.md` (sin slicer); las medidas del Heltec y la bateria son estimadas y hay que confirmarlas antes de imprimir.
 
 El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 
@@ -57,12 +59,11 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | M13_casquillo_D8 | modular D200 | 2 | 15.7 × 20.0 × 13.5 | 1.6 | X-90 | no | 40 % | 2 | estimado |
 | M14_pestillo | modular D200 | 2 | 12.0 × 35.2 × 3.6 | 0.9 | X+90 | no | 40 % | 1 | estimado |
 | LR2_aro | aro de la linterna | 4 | 216.5 × 216.5 × 16.0 | 133.2 | segun guia (sin soportes) | no | 13 perimetros + 15 % | 150 | estimado |
-| PB_aro | aro de la linterna | 1 | 58.2 × 53.6 × 32.2 | 23.0 | segun guia (sin soportes) | no | tramo 13 p + 15 %, asiento 100 % | 28 | estimado |
-| T1_caja | estacion de tierra | 1 | 86.2 × 121.2 × 25.0 | 58.2 | segun guia (sin soportes) | no | 100 % | 74 | estimado |
-| T2_tapa | estacion de tierra | 1 | 86.2 × 93.2 × 6.0 | 39.5 | segun guia (sin soportes) | no | 100 % | 50 | estimado |
+| T1_caja | estacion de tierra | 1 | 86.2 × 121.2 × 25.0 | 58.2 | segun guia (sin soportes) | no | 100 % PLA | 72 | estimado |
+| T2_tapa | estacion de tierra | 1 | 86.2 × 93.2 × 6.0 | 39.5 | segun guia (sin soportes) | no | 100 % PLA | 49 | estimado |
 | M1s_caja_cuerpo | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 436 | slicer |
 | M2_caja_tapa | nodo P2 robusto | 1 | - | - | slicer | si | 100 % | 194 | slicer |
-| M3s_riel_gancho | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 217 | slicer |
+| M3s_riel_gancho | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 214 | slicer |
 | M3t_tapa_bolsillo | nodo P2 robusto | 2 | - | - | slicer | no | 100 % | 42 | slicer |
 | M5s_capsula_tapa_pie | nodo P2 robusto | 2 | - | - | slicer | si | 100 % | 97 | slicer |
 | M3f_marco_bolsillo | nodo P2 robusto | 2 | - | - | slicer | no | 40 % | 52 | slicer |
@@ -82,8 +83,8 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | B1_casco | boya PET 4 x 1 L | 2 | - | - | slicer | si | 40 % | 173 | slicer |
 | B2_cubierta_lisa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 210 | slicer |
 | B2_cubierta_mastil | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 230 | slicer |
-| B3_caja | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 175 | slicer |
-| B4_tapa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 40 % | 79 | slicer |
+| B3_caja | boya PET 4 x 1 L | 1 | - | - | slicer | no | 100 % | 247 | slicer |
+| B4_tapa | boya PET 4 x 1 L | 1 | - | - | slicer | no | 100 % | 111 | slicer |
 | B5_cuna_base | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 79 | slicer |
 | B5_cuna_cuello | boya PET 4 x 1 L | 2 | - | - | slicer | no | 40 % | 81 | slicer |
 | B6_correa | boya PET 4 x 1 L | 4 | - | - | slicer | no | 40 % | 6 | slicer |
@@ -108,7 +109,7 @@ El hardware no tiene precios todavia (columna amarilla de HARDWARE en el Excel).
 | nodo simple | Tornillo M3 x 12 inox A2 avellanado + inserto M3 ciego (2 marcos M3f a las orejas de M1s) | M3 | 4 |
 | nodo simple | Tornillo M3 x 16 inox A2 + inserto termico M3 (brida del riel a la silla de M5s) | M3 | 8 |
 | nodo simple | Correa textil | 25 x 300 mm | 2 |
-| nodo simple | Lastre a granel: tuercas y arandelas M8 de inox | 1140 g | 1 |
+| nodo simple | Lastre a granel: tuercas y arandelas M8 de inox | 990 g | 1 |
 | boya PET 4 x 1 L | Tornillo M3 x 25 inox A2 + tuerca (union de las mitades de B1, columnas del canal y almohadillas) | M3 | 6 |
 | boya PET 4 x 1 L | Pin impreso de alineacion de B1 (sin ferreteria; Ø5) | Ø5 | 2 |
 | boya PET 4 x 1 L | Tornillo M3 x 30 inox A2 + inserto M3 (B2, cada mitad a sus 4 postes de B1; las barras altas pasan de 8 mm) | M3 | 8 |

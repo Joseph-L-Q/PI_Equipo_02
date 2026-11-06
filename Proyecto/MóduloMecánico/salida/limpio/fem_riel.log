@@ -1,0 +1,4 @@
+CG+AMG: 47 iteraciones, residuo 8.0e-09
+riel_agua {'s995': 5.58, 'smax': 15.45, 'umax': 1.36, 'szz995': 3.74, 'fs': 8.07, 'fs_capas': 3.95, 'nodos': 107579, 'elementos': 65095, 'nodos_fijos': 593, 'nodos_carga': 584, 'reaccion_z': 150.0}
+CG+AMG: 40 iteraciones, residuo 7.2e-09
+riel_izado {'s995': 4.24, 'smax': 10.05, 'umax': 0.21, 'szz995': 2.25, 'fs': 10.62, 'fs_capas': 5.19, 'nodos': 107579, 'elementos': 65095, 'nodos_fijos': 1201, 'nodos_carga': 584, 'reaccion_z': 150.0}

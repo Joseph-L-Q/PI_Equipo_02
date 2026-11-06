@@ -106,7 +106,7 @@ def subir(c, ctx):
 BUOY_DX = 700.0      # mm: the buoy is moved in +X next to the node (node x -215..215, buoy x -248..248)
 
 
-def build_assembly(dst):
+def build_assembly(dst, keep_ref=()):
     """Node (ensamble_simple_D200) + buoy (ENSAMBLE_boya_pet) in one STEP, without REF_/ref_ bodies. Both keep their own
     frames; the buoy is moved BUOY_DX in +X (REF_boya of the node is only a 210x140x76 box, not a mooring frame).
     Returns the list of (name, solids). Names come from the XCAF labels of the sources."""
@@ -153,7 +153,7 @@ def build_assembly(dst):
         for i in range(1, roots.Length() + 1):
             leaves(stool, roots.Value(i), TopLoc_Location(), got)
         for nm, sh in got:
-            if nm.lower().startswith("ref_"):
+            if nm.lower().startswith("ref_") and not (keep_ref and nm.lower().startswith(keep_ref)):
                 continue
             items.append((nm, cq.Shape.cast(sh).moved(cq.Location(cq.Vector(dx, 0, 0)))))
     if dst is not None:

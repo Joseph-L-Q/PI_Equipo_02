@@ -58,3 +58,6 @@ para imprimir se usan los STL/3MF, que salen del CAD local.
   arrastrar la pestaña ENSAMBLE al primer lugar. Los documentos que se crean desde ahora ya suben el ENSAMBLE primero,
   así que queda primero solo.
 - Mover los 2 documentos viejos a `LanternGuard/_historico`.
+
+## Documento para imprimir (05/11)
+- [LanternGuard - PIEZAS PARA IMPRIMIR](https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d). Solo con acceso hasta activar Share > Link.

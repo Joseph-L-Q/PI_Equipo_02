@@ -1,3 +1,27 @@
+# Estado LanternGuard CAD | documento limpio, sin probetas, juego del aro 0,3 mm por lado (05/11) | **TERMINADO, con 2 pasos a mano**
+
+**Total a imprimir: 3887 g, unas 152 h, 36 piezas.** 4 rollos de 1 kg alcanzan con 113 g de margen, 37 g menos que los 150 g pedidos. No alcanza para repetir una pieza grande.
+
+Documento: [LanternGuard - PIEZAS PARA IMPRIMIR](https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d) (did `76e36e0130a8d259842ecee7`, wid `fdd58e8bdf77f39a1781a12d`). El original `LG_IMPRIMIR_P2` no se escribió, y sigue con las probetas y el M3s de asiento Ø16,8.
+
+| Verificación | Resultado | Pedido |
+|---|---|---|
+| Asiento de M3s | Ø17,1 (aro Ø16,5): 0,3 mm nominal por lado; 0,21 mm reales por la curva del aro | 0,3 por lado |
+| FEM riel en el agua, 150 N | FS entre capas 3,95, flecha 1,36 mm (`fem_tet10`, sin CalculiX) | ≥ 3 |
+| FEM riel al izar, 150 N | FS entre capas 5,19, flecha 0,21 mm | ≥ 3 |
+| Choques | aro-gancho 0 mm³; `simple.py`: 0 interferencias, sin fallas | sin choque |
+| Otras piezas del nodo | solo cambió el volumen de M3s | sin cambios |
+| Ensambles | nodo 20 + 4 REF, boya 14 + 4 REF, tierra 2 | suma de la BOM |
+| Documento | 21 piezas, 21 planos, 3 ensambles, 00_LEEME; 0 referencias rotas, 0 faltantes | sin rotas ni faltantes |
+
+**Pasos a mano en Onshape:**
+1. Activar Share > Link con vista y exportación: la API rechaza la clave con un 403.
+2. Arrastrar `00_LEEME` al primer lugar: la API no reordena pestañas.
+
+Quedan 24 pestañas `.step`: si se borran, el Part Studio queda en error y con 0 partes (probado).
+
+---
+
 # Estado LanternGuard CAD | aro Ø16,5 con relleno, M3s nuevo, estación de tierra (05/11) | **TERMINADO**
 
 **El proyecto necesita 5 rollos, no 4:** unos 4172 g estimados. Con FS ≥ 3, cada aro pesa 150 g (13 perímetros + 15 % de gyroid), y los 4 rollos pedían unos 70 g.

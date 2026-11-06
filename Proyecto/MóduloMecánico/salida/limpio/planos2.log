@@ -1,0 +1,7 @@
+P01_probeta_calibracion {"escala": "1:1", "posterior": false, "cotas": {"creadas": 11, "fallidas": [], "a_mano": ["front: alto total 8 (el borde es curvo)", "front: espesor 2x 2 (sin espacio)", "front: separación 72 entre nervios verticales (sin espacio)", "front: separación 10 entre nervios verticales (sin espacio)", "front: separación 10 entre nervios verticales (sin espacio)", "front: separación 10 entre nervios verticales (sin espacio)", "front: separación 10 entre nervios verticales (sin espacio)", "top: ancho total 140,5 (el borde es curvo)", "top: Ø8,3 (sin espacio)", "top: Ø8,2 (más de 4 diámetros en la vista)", "left: alto total 8 (el borde es curvo)"]}, "llamadas": 8, "segundos": 77}
+01_P01_probeta_calibracion 11 usadas 221
+02_P02_probeta_inserto_M4_x3 sin cotas usadas 227
+03_P03_probeta_junta sin cotas usadas 232
+04_P04_probeta_gancho sin cotas usadas 237
+05_P05_probeta_bahia_botella sin cotas usadas 242
+llamadas 242

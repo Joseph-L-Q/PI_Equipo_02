@@ -35,13 +35,13 @@ Masa por pieza con su relleno (100 % cajas estancas, tapas con junta y ganchos; 
 | tapas del bolsillo (2 M3t) | 90 | 90 |
 | capsulas (M4, M5, M6, M7, contenido) | 447 | 447 |
 | tornilleria y correas | 40 | 40 |
-| Nodo sin lastre g | 2000 | 2010 |
+| Nodo sin lastre g | 2000 | 2009 |
 | Desplaza cm³ | 2496 | 2496 |
 | Peso aparente sin lastre g | -558 | -549 |
 | Lastre que deja el peso aparente en la ventana (200 a 500 g), total g | 871 a 1216 | 861 a 1206 |
 | **Lastre puesto g (total, mitad por bolsillo)** | **990** (495) | **990** (495) |
 | **Peso aparente con ese lastre g** | **+303** | **+312** |
-| **Peso en aire g** | **2990** | **3000** |
+| **Peso en aire g** | **2990** | **2999** |
 
 Rango de lastre que mantiene ambos casos en la ventana: **871 a 1206 g** en total. El granel llena 22.0 de 30 mm del bolsillo (73 %); en el maximo del rango llenaria 26.8 mm (cabe). Con tuercas y arandelas M8 de inox, a granel: 1044 g en total, 23.2 mm llenos. Con perdigon de plomo en bolsa: 999 g en total, 15.4 mm llenos.
 
@@ -75,7 +75,7 @@ Contratuercas de los PG7 de las paredes contra bandeja, modulos y caja: 0.00 mm�
 
 - **Riel en los ganchos (en el agua):** M = F·|x_capsula − 100| = 8784 N·mm; seccion en x = 142: I = 74313 mm⁴, c = 15.5; σ = 1.8 MPa → FS 24.6 / 12.0 entre capas.
 - **Brida del riel a la caja, izado por el asa:** M = 12609 N·mm sobre 4 insertos M4 con 20 de brazo: **353 N por inserto** (PB8). En el agua, sobre los ganchos: 28 N.
-- **Gancho en C (fusionado) con 150 N** (la capsula cuelga junto a su gancho: uno solo lleva la carga):** σ = 11.9 MPa → FS 3.8 / 1.9 entre capas.
+- **Gancho en C (fusionado) con 150 N** (la capsula cuelga junto a su gancho: uno solo lleva la carga):** σ = 12.0 MPa → FS 3.7 / 1.8 entre capas.
 - **Pie de la capsula:** M = 7400 N·mm, 146 N por M4 sobre las paredes de 6 del riel: 1.9 MPa → FS 23.2 / **11.3** entre capas (cumple FS ≥ 2 sin inserto ni pared de 6: la capsula mirando adentro queda bajo la silla y la palanca es corta).
 
 ## 6. Cable
@@ -93,4 +93,4 @@ Por camara: 60 + 25 + conducto 136 (recto, sin curva) + bucle 41 + 30 + 30 = **2
 ## 8. Constantes de modulo
 
 - `PAD_BORE` = 30: agujero del cojin para la llave de vaso del PG7. `POCKET_END` = 8: paredes extremas de los bolsillos con los insertos M3 de M3t. `TIP_HOLE` = 8: salida del cable en la punta. `HOOK_CLR` = 10: aire entre el gancho y la capsula.
-- Tiempo de `simple.py`: 45 s.
+- Tiempo de `simple.py`: 34 s.

@@ -1,5 +1,7 @@
 # Aros de la linterna y estación LoRa de tierra (05/11)
 
+> **05/11, decisión de equipo:** sin probetas. `gancho.c` pasa a 0,30 mm por lado, asiento Ø17,1, FS entre capas 3,95 / 5,19 y sin choques. Total 3887 g, 4 rollos. Donde abajo dice Ø16,8, PB_aro o 5 rollos, vale esto; detalle en `ESTADO.md`.
+
 Regenerar desde `cad_final/`: `aro.py` (con `LG_VERSION=P2_robusto`) y `tierra.py`. Salidas en `salida/aro/` y `salida/tierra/`.
 
 ## LR2_aro: Ø16,5 parejo en los 4 aros
