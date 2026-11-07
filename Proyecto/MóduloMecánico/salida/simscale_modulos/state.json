@@ -935,5 +935,1278 @@
     "Las 4 cargas actuan juntas (caso envolvente, exagerado)."
    ]
   }
+ },
+ "modulo_nodo/nodo_hidrostatico_1m": {
+  "gid": "a2b14b37-a43b-41c4-b56f-474c9ec29b78",
+  "sim_id": "c68c2eab-3176-4054-86db-a4d05b05e805",
+  "mesh_op": "1827f7cc-2a96-4cc9-94a9-97632bfb0985",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT23M",
+    "interval_min": "PT17M",
+    "interval_max": "PT29M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.76,
+    "interval_min": 0.56,
+    "interval_max": 0.96
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 5527530,
+    "interval_min": 4422024,
+    "interval_max": 6633036
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "13766622-3567-4873-898d-b6e8f4f3b4c9",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "dadf1a8b-6b25-40dc-a27a-23321f68585e",
+  "run_estimate": {
+   "duration": {
+    "value": "PT6M",
+    "interval_min": "PT0S",
+    "interval_max": "PT12M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.2,
+    "interval_min": 0.0,
+    "interval_max": 0.4
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT11M30.271935S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.38333333333333336
+  },
+  "pid": "4039119794151323480",
+  "regions": [
+   [
+    "A1_I12_B14_TE99",
+    "18177"
+   ],
+   [
+    "A1_I15_B13_TE63",
+    "19193"
+   ],
+   [
+    "A1_I18_B12_TE63",
+    "19815"
+   ],
+   [
+    "A1_I21_B11_TE169",
+    "20437"
+   ],
+   [
+    "A1_I24_B10_TE169",
+    "22179"
+   ],
+   [
+    "A1_I27_B9_TE874",
+    "23921"
+   ],
+   [
+    "A1_I30_B8_TE502",
+    "33438"
+   ],
+   [
+    "A1_I33_B7_TE385",
+    "38788"
+   ],
+   [
+    "A1_I36_B6_TE50",
+    "42909"
+   ],
+   [
+    "A1_I39_B5_TE874",
+    "43357"
+   ],
+   [
+    "A1_I3_B17_TE1078",
+    "15"
+   ],
+   [
+    "A1_I42_B4_TE502",
+    "52891"
+   ],
+   [
+    "A1_I45_B3_TE385",
+    "58241"
+   ],
+   [
+    "A1_I48_B2_TE50",
+    "62362"
+   ],
+   [
+    "A1_I6_B16_TE477",
+    "11387"
+   ],
+   [
+    "A1_I9_B15_TE167",
+    "16473"
+   ]
+  ],
+  "case": {
+   "titulo": "Nodo, servicio: peso + lastre 990 g + presion hidrostatica a 1 m de profundidad",
+   "fixed": [
+    [
+     "asiento \u00d817,1 de los 2 ganchos (colgados del aro)",
+     2
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "mass",
+     "label": "lastre 990 g como masa puntual, mitad en cada tapa de bolsillo",
+     "faces": 2
+    },
+    {
+     "kind": "pressure_expr",
+     "label": "presion hidrostatica a 1 m (centro del nodo): p = 10055.2*(1.0351-Z) Pa, z en m",
+     "faces": 213
+    }
+   ],
+   "notes": [
+    "p en el centro = 10055 Pa; varia \u00b11307 Pa entre arriba y abajo del nodo. 213 caras mojadas del volumen seco, 1493 cm\u00b2: el empuje sale de integrar esta presion.",
+    "Apoyo igual al caso combinado (asiento de los ganchos) para comparar."
+   ]
+  }
+ },
+ "modulo_boya/boya_v3_mallaA_mixto": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "sim_id": "1332a9b8-bec2-402d-873b-e5d5e4a0f020",
+  "mesh_op": "ce38ec69-2d29-4c61-8d08-7aadc548d659",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "8aac34db-8ff8-4a42-8311-82d97f773537",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "13b959cd-3425-4ca3-b65e-acd6f5b085f9",
+  "run_estimate": {
+   "duration": {
+    "value": "PT9M",
+    "interval_min": "PT6M",
+    "interval_max": "PT12M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.57,
+    "interval_min": 0.37,
+    "interval_max": 0.77
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT18M21.496905S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 1.2236111111111112
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya, caso combinado, apoyo elastico en ojales y agua, malla A (1.5 mm en el ojal)",
+   "fixed": [],
+   "loads": [
+    {
+     "kind": "elastic",
+     "label": "ojal 1: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "elastic",
+     "label": "ojal 2: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "elastic",
+     "label": "agua bajo las botellas: rho g A_flotacion = 1207 N/m repartido en los asientos (13287 N/m3)",
+     "faces": 154
+    },
+    {
+     "kind": "mass",
+     "label": "electronica 354 g como masa puntual sobre el piso de B3",
+     "faces": 1
+    },
+    {
+     "kind": "mass",
+     "label": "panel solar 350.0 g como masa puntual sobre las 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "mass",
+     "label": "antena 20.0 g sobre el mastil",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "ola 200 N vertical sobre la cara de arriba de las barras de la cubierta",
+     "faces": 10
+    },
+    {
+     "kind": "force",
+     "label": "golpe lateral 200 N (+Y) sobre el panel, por sus 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "force",
+     "label": "tiro del cabo 300 N a 45\u00b0: las botellas empujan la boya contra el amarre (reaccion en los ojales)",
+     "faces": 154
+    }
+   ],
+   "notes": [
+    "Supuesto del apoyo: la boya queda fija en el amarre y el cabo de 300 N a 45\u00b0 es la reaccion. La fuerza que lo equilibra entra por donde las botellas apoyan en el casco y las cunas (154 caras): empuje y arrastre de las botellas.",
+    "Las 4 cargas actuan juntas (caso envolvente, exagerado).",
+    "Refinamiento local 1.5 mm en 8 caras alrededor de los ojales (3727 mm\u00b2)."
+   ]
+  }
+ },
+ "modulo_boya/boya_v3_mallaB_mixto": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "sim_id": "dd46ea8b-43fa-46c3-b28b-8d274b088546",
+  "mesh_op": "eff9811e-b4e0-4d20-9e8c-397c5e4aa02c",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "6bd53f93-1c79-48ec-927e-bd16d02ed362",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "abf33260-14a5-4793-a19b-4c2b23cbc13e",
+  "run_estimate": {
+   "duration": {
+    "value": "PT9M",
+    "interval_min": "PT6M",
+    "interval_max": "PT12M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.58,
+    "interval_min": 0.38,
+    "interval_max": 0.78
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT26M9.613112S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 1.7438888888888888
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya, caso combinado, apoyo elastico en ojales y agua, malla B (0.75 mm en el ojal)",
+   "fixed": [],
+   "loads": [
+    {
+     "kind": "elastic",
+     "label": "ojal 1: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "elastic",
+     "label": "ojal 2: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "elastic",
+     "label": "agua bajo las botellas: rho g A_flotacion = 1207 N/m repartido en los asientos (13287 N/m3)",
+     "faces": 154
+    },
+    {
+     "kind": "mass",
+     "label": "electronica 354 g como masa puntual sobre el piso de B3",
+     "faces": 1
+    },
+    {
+     "kind": "mass",
+     "label": "panel solar 350.0 g como masa puntual sobre las 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "mass",
+     "label": "antena 20.0 g sobre el mastil",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "ola 200 N vertical sobre la cara de arriba de las barras de la cubierta",
+     "faces": 10
+    },
+    {
+     "kind": "force",
+     "label": "golpe lateral 200 N (+Y) sobre el panel, por sus 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "force",
+     "label": "tiro del cabo 300 N a 45\u00b0: las botellas empujan la boya contra el amarre (reaccion en los ojales)",
+     "faces": 154
+    }
+   ],
+   "notes": [
+    "Supuesto del apoyo: la boya queda fija en el amarre y el cabo de 300 N a 45\u00b0 es la reaccion. La fuerza que lo equilibra entra por donde las botellas apoyan en el casco y las cunas (154 caras): empuje y arrastre de las botellas.",
+    "Las 4 cargas actuan juntas (caso envolvente, exagerado).",
+    "Refinamiento local 0.75 mm en 8 caras alrededor de los ojales (3727 mm\u00b2)."
+   ]
+  }
+ },
+ "modulo_boya/boya_cabo_mallaA_mixto": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "mesh_op": "ce38ec69-2d29-4c61-8d08-7aadc548d659",
+  "mesh_id": "8aac34db-8ff8-4a42-8311-82d97f773537",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "sim_id": "3644e3ca-bde0-4d15-9818-b85cdb386b97",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "0e9d3e91-bc8f-4cc4-94af-07ceee9595bc",
+  "run_estimate": {
+   "duration": {
+    "value": "PT11M",
+    "interval_min": "PT5M",
+    "interval_max": "PT17M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.36,
+    "interval_min": 0.16,
+    "interval_max": 0.56
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT5M56.866201S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.19805555555555557
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya, solo cabo, malla A",
+   "fixed": [],
+   "loads": [
+    {
+     "kind": "elastic",
+     "label": "ojal 1: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "elastic",
+     "label": "ojal 2: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "tiro del cabo 300 N a 45\u00b0: las botellas empujan la boya contra el amarre (reaccion en los ojales)",
+     "faces": 154
+    }
+   ],
+   "notes": [
+    "Caso de una sola carga (cabo); sin peso propio para aislarla."
+   ]
+  }
+ },
+ "modulo_boya/boya_cabo_mallaB_mixto": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "mesh_op": "eff9811e-b4e0-4d20-9e8c-397c5e4aa02c",
+  "mesh_id": "6bd53f93-1c79-48ec-927e-bd16d02ed362",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "sim_id": "bb065a63-7ee8-4ccd-bc59-bb8ce67d4d79",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "88fec716-5660-4b08-9248-0c4121c40997",
+  "run_estimate": {
+   "duration": {
+    "value": "PT9M",
+    "interval_min": "PT6M",
+    "interval_max": "PT12M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.58,
+    "interval_min": 0.38,
+    "interval_max": 0.78
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT6M21.113776S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.42333333333333334
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya, solo cabo, malla B",
+   "fixed": [],
+   "loads": [
+    {
+     "kind": "elastic",
+     "label": "ojal 1: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "elastic",
+     "label": "ojal 2: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "tiro del cabo 300 N a 45\u00b0: las botellas empujan la boya contra el amarre (reaccion en los ojales)",
+     "faces": 154
+    }
+   ],
+   "notes": [
+    "Caso de una sola carga (cabo); sin peso propio para aislarla."
+   ]
+  }
+ },
+ "modulo_boya/boya_ola_mallaA_mixto": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "mesh_op": "ce38ec69-2d29-4c61-8d08-7aadc548d659",
+  "mesh_id": "8aac34db-8ff8-4a42-8311-82d97f773537",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "sim_id": "4e40914c-bc09-48b8-90a2-1820b5a93d70",
+  "check": {
+   "severity": "WARNING",
+   "entries": [
+    "You are trying to set up a constraint on faces that are already fully constrained by slave faces of a contact or by remote boundary conditions, thus, these faces will be ignored for the boundary condition. Please check your simulation setup and proceed with caution. Name of the affected boundary condition and faces: Fixed support 1, affected face(s): LGF00960@B5_cuna_D_cuello, LGF00862@B5_cuna_D_cuello, LGF00913@B5_cuna_D_cuello, more..."
+   ]
+  },
+  "run_id": "d062e50d-da99-4b8c-b036-dc8b53ef6322",
+  "run_estimate": {
+   "duration": {
+    "value": "PT11M",
+    "interval_min": "PT5M",
+    "interval_max": "PT17M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.36,
+    "interval_min": 0.16,
+    "interval_max": 0.56
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT4M47.287098S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.15944444444444444
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya, solo ola, malla A",
+   "fixed": [
+    [
+     "asientos de las botellas (las botellas y el agua toman la carga)",
+     154
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "force",
+     "label": "ola 200 N vertical sobre la cara de arriba de las barras de la cubierta",
+     "faces": 10
+    }
+   ],
+   "notes": [
+    "Caso de una sola carga (ola); sin peso propio para aislarla."
+   ]
+  }
+ },
+ "modulo_boya/boya_lateral_mallaA_mixto": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "mesh_op": "ce38ec69-2d29-4c61-8d08-7aadc548d659",
+  "mesh_id": "8aac34db-8ff8-4a42-8311-82d97f773537",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "sim_id": "5aa8421c-cbde-454a-b33e-9a972f15ee9b",
+  "check": {
+   "severity": "WARNING",
+   "entries": [
+    "You are trying to set up a constraint on faces that are already fully constrained by slave faces of a contact or by remote boundary conditions, thus, these faces will be ignored for the boundary condition. Please check your simulation setup and proceed with caution. Name of the affected boundary condition and faces: Fixed support 1, affected face(s): LGF00960@B5_cuna_D_cuello, LGF00862@B5_cuna_D_cuello, LGF00913@B5_cuna_D_cuello, more..."
+   ]
+  },
+  "run_id": "0114beb7-44fc-4fc1-8eb8-9354641f1098",
+  "run_estimate": {
+   "duration": {
+    "value": "PT11M",
+    "interval_min": "PT5M",
+    "interval_max": "PT17M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.36,
+    "interval_min": 0.16,
+    "interval_max": 0.56
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT4M56.878011S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.16472222222222221
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya, solo lateral, malla A",
+   "fixed": [
+    [
+     "asientos de las botellas (las botellas y el agua toman la carga)",
+     154
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "force",
+     "label": "golpe lateral 200 N (+Y) sobre el panel, por sus 4 columnas",
+     "faces": 4
+    }
+   ],
+   "notes": [
+    "Caso de una sola carga (lateral); sin peso propio para aislarla."
+   ]
+  }
+ },
+ "modulo_boya/boya_cabocol_mallaA_mixto": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "mesh_op": "ce38ec69-2d29-4c61-8d08-7aadc548d659",
+  "mesh_id": "8aac34db-8ff8-4a42-8311-82d97f773537",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "sim_id": "42c2d050-c536-42e5-b6ad-d218dfb20f93",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "59f6e3e3-8f32-4b93-808b-a170b9f7c384",
+  "run_estimate": {
+   "duration": {
+    "value": "PT11M",
+    "interval_min": "PT5M",
+    "interval_max": "PT17M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.36,
+    "interval_min": 0.16,
+    "interval_max": 0.56
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT7M18.603692S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.2436111111111111
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya, solo cabocol, malla A",
+   "fixed": [],
+   "loads": [
+    {
+     "kind": "elastic",
+     "label": "ojal 1: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "elastic",
+     "label": "ojal 2: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "tiro del cabo 300 N colineal con los ojales (-0.0, -0.0, 300.0) N, sobre los asientos de las botellas",
+     "faces": 154
+    }
+   ],
+   "notes": [
+    "Caso de una sola carga (cabocol); sin peso propio para aislarla."
+   ]
+  }
+ },
+ "modulo_boya/boya_cabocol_mallaB_mixto": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "mesh_op": "eff9811e-b4e0-4d20-9e8c-397c5e4aa02c",
+  "mesh_id": "6bd53f93-1c79-48ec-927e-bd16d02ed362",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "sim_id": "92033ea9-a5dd-4848-8c3a-dc1c16a15350",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "129370d9-f7a9-48c8-94b4-2ea81ae06c50",
+  "run_estimate": {
+   "duration": {
+    "value": "PT9M",
+    "interval_min": "PT6M",
+    "interval_max": "PT12M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.58,
+    "interval_min": 0.38,
+    "interval_max": 0.78
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT7M46.970875S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.5186111111111111
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya, solo cabocol, malla B",
+   "fixed": [],
+   "loads": [
+    {
+     "kind": "elastic",
+     "label": "ojal 1: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "elastic",
+     "label": "ojal 2: grillete + pata de gallo, resorte 2e5 N/m",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "tiro del cabo 300 N colineal con los ojales (-0.0, -0.0, 300.0) N, sobre los asientos de las botellas",
+     "faces": 154
+    }
+   ],
+   "notes": [
+    "Caso de una sola carga (cabocol); sin peso propio para aislarla."
+   ]
+  }
  }
 }

@@ -1,0 +1,541 @@
+{
+ "simulation_id": "8ca3ba3b-6708-4b4c-b14d-9b35ad68488a",
+ "name": "Incompressible",
+ "version": "internal:636",
+ "created_at": "2026-11-03 11:28:19.001000+00:00",
+ "modified_at": "2026-11-03 20:02:25.545000+00:00",
+ "geometry_id": "948f829d-c9f0-4389-ab2b-b94d57abc922",
+ "mesh_id": "9ea1c3fc-2f25-4927-b441-a54970d26f4d",
+ "model": {
+  "type": "INCOMPRESSIBLE",
+  "turbulence_model": "KOMEGASST",
+  "adjoint_turbulence_model": null,
+  "time_dependency": {
+   "type": "STATIONARY"
+  },
+  "algorithm": "SIMPLE",
+  "num_of_passive_species": 0,
+  "enable_adjoint_optimization": false,
+  "model": {
+   "turbulent_schmidt_number": null,
+   "diffusion_coefficients": null,
+   "delta_coefficient": null,
+   "gravity": null,
+   "surface_tension": null
+  },
+  "materials": {
+   "fluids": [
+    {
+     "type": "INCOMPRESSIBLE",
+     "name": "Seawater 3.5 pc saline",
+     "fluid_type": null,
+     "associated_phase": null,
+     "viscosity_model": {
+      "type": "NEWTONIAN",
+      "kinematic_viscosity": {
+       "value": 9.88e-07,
+       "unit": "m\u00b2/s"
+      },
+      "kinematic_viscosity_function": null,
+      "dynamic_viscosity_function": null
+     },
+     "density": {
+      "value": 1024.065,
+      "unit": "kg/m\u00b3"
+     },
+     "thermal_expansion_coefficient": null,
+     "reference_temperature": null,
+     "laminar_prandtl_number": null,
+     "laminar_prandtl_number_function": null,
+     "turbulent_prandtl_number": null,
+     "specific_heat": null,
+     "specific_heat_function": null,
+     "molar_weight": null,
+     "cavitation": null,
+     "radiative_behavior": null,
+     "topological_reference": {
+      "entities": [
+       "B12_TE5"
+      ],
+      "sets": []
+     },
+     "geometry_primitive_uuids": null,
+     "built_in_material": null,
+     "material_library_reference": {
+      "material_group_id": "internal:af500b1b-bafb-421d-afa3-c976dc706f52",
+      "material_id": "internal:3c1937f3-1784-418f-8cc7-dea1ca0b2137",
+      "interpolation_parameters": {}
+     }
+    }
+   ]
+  },
+  "initial_conditions": {
+   "pressure": null,
+   "pressure_rgh": null,
+   "gauge_pressure": {
+    "_global": {
+     "value": 0.0,
+     "unit": "Pa"
+    },
+    "subdomains": []
+   },
+   "gauge_pressure_rgh": null,
+   "velocity": {
+    "_global": {
+     "value": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+     },
+     "unit": "m/s"
+    },
+    "subdomains": []
+   },
+   "temperature": null,
+   "turbulent_kinetic_energy": {
+    "_global": {
+     "value": 0.00375,
+     "unit": "m\u00b2/s\u00b2"
+    },
+    "subdomains": null
+   },
+   "omega_dissipation_rate": {
+    "_global": {
+     "value": 3.375,
+     "unit": "1/s"
+    },
+    "subdomains": null
+   },
+   "epsilon_dissipation_rate": null,
+   "nu_tilda": null,
+   "passive_scalars": null,
+   "phase_fraction": null,
+   "phase_fractions": null,
+   "mass_fractions": null,
+   "relative_humidity": null
+  },
+  "boundary_conditions": [
+   {
+    "type": "VELOCITY_INLET_V3",
+    "name": "Velocity inlet 1",
+    "velocity": {
+     "type": "FIXED_VALUE",
+     "value": {
+      "value": {
+       "type": "COMPONENT",
+       "x": {
+        "type": "CONSTANT",
+        "value": 0.0
+       },
+       "y": {
+        "type": "CONSTANT",
+        "value": 0.3
+       },
+       "z": {
+        "type": "CONSTANT",
+        "value": 0.0
+       }
+      },
+      "unit": "m/s"
+     }
+    },
+    "turbulence": {
+     "type": "AUTOMATIC_TURBULENCE"
+    },
+    "temperature": null,
+    "passive_scalars": null,
+    "phase_fraction": null,
+    "phase_fractions_v2": null,
+    "mass_fractions_v2": null,
+    "turbulence_intensity": null,
+    "dissipation_type": null,
+    "net_radiative_heat_flux": null,
+    "radiative_intensity_ray": null,
+    "relative_humidity": null,
+    "topological_reference": {
+     "entities": [
+      "B12_TE33"
+     ],
+     "sets": []
+    }
+   },
+   {
+    "type": "PRESSURE_OUTLET_V30",
+    "name": "Pressure outlet 2",
+    "pressure": null,
+    "pressure_rgh": null,
+    "gauge_pressure": {
+     "type": "FIXED_VALUE",
+     "value": {
+      "value": {
+       "type": "CONSTANT",
+       "value": 0.0
+      },
+      "unit": "Pa"
+     }
+    },
+    "phase_fractions_v2": null,
+    "mass_fractions_v2": null,
+    "hydrostatic_pressure": null,
+    "gauge_pressure_rgh": null,
+    "net_radiative_heat_flux": null,
+    "radiative_intensity_ray": null,
+    "relative_humidity": null,
+    "temperature": null,
+    "topological_reference": {
+     "entities": [
+      "B12_TE27"
+     ],
+     "sets": []
+    }
+   },
+   {
+    "type": "WALL_V34",
+    "name": "Wall 3",
+    "velocity": {
+     "type": "SLIP"
+    },
+    "temperature": null,
+    "relative_humidity": null,
+    "phase_fraction": null,
+    "net_radiative_heat_flux": null,
+    "radiative_intensity_ray": null,
+    "electric_boundary_condition": null,
+    "topological_reference": {
+     "entities": [
+      "B12_TE2",
+      "B12_TE9",
+      "B12_TE36",
+      "B12_TE30"
+     ],
+     "sets": []
+    }
+   }
+  ],
+  "advanced_concepts": {
+   "thermal_contact_resistance": null,
+   "humidity_sources": null,
+   "momentum_sources": [],
+   "passive_scalar_sources": null,
+   "porous_mediums": [],
+   "power_sources": null,
+   "rotating_zones": [],
+   "solid_body_motions": null,
+   "thermal_resistance_networks": null
+  },
+  "numerics": {
+   "relaxation_type": "MANUAL",
+   "relaxation_factor": {
+    "pressure_field": 0.3,
+    "pressure_rgh_field": null,
+    "passive_scalar_equation": null,
+    "velocity_equation": 0.7,
+    "velocity": null,
+    "temperature_equation": null,
+    "temperature_field": null,
+    "density_field": null,
+    "enthalpy_equation": null,
+    "internal_energy_equation": null,
+    "turbulent_kinetic_energy_equation": 0.3,
+    "omega_dissipation_rate_equation": 0.3,
+    "epsilon_dissipation_rate_equation": null,
+    "turbulent_kinetic_energy": null,
+    "turbulent_energy_dissipation_rate": null,
+    "nu_tilda_equation": null,
+    "net_radiative_heat_flux_field": null,
+    "internal_energy": null,
+    "gas_mixture_transport": null,
+    "radiative_intensity_ray_equation": null,
+    "radiative_intensity_ray_field": null,
+    "specific_humidity_equation": null,
+    "age_of_fluid_equation": 0.8,
+    "voltage_field": null
+   },
+   "diagonal_relaxation_factor": null,
+   "viscous_work_included": null,
+   "radiation_resolution": null,
+   "momentum_predictor": null,
+   "transonic": null,
+   "num_outer_correctors": null,
+   "num_correctors": null,
+   "num_non_orthogonal_correctors": 1,
+   "smoothing_parameter": null,
+   "damping_coefficient": null,
+   "num_alpha_spread_iterations": null,
+   "num_alpha_sweep_iterations": null,
+   "evaluate_turbulence_only_on_final_iteration": null,
+   "pressure_reference_cell": 0,
+   "pressure_reference_value": {
+    "value": 0.0,
+    "unit": "Pa"
+   },
+   "velocity_limit": null,
+   "max_voltage_initial_iterations": null,
+   "voltage_initial_tolerance": null,
+   "residual_controls": {
+    "velocity": {
+     "absolute_tolerance": 1e-06,
+     "relative_tolerance": null
+    },
+    "pressure": {
+     "absolute_tolerance": 1e-06,
+     "relative_tolerance": null
+    },
+    "pressure_rgh": null,
+    "temperature": null,
+    "turbulent_kinetic_energy": {
+     "absolute_tolerance": 1e-06,
+     "relative_tolerance": null
+    },
+    "omega_dissipation_rate": {
+     "absolute_tolerance": 1e-06,
+     "relative_tolerance": null
+    },
+    "epsilon_dissipation_rate": null
+   },
+   "solvers": {
+    "phase_fraction_solver": null,
+    "velocity_solver": {
+     "type": "PBICGStab",
+     "absolute_tolerance": 1e-08,
+     "relative_tolerance": 0.01,
+     "preconditioner": {
+      "type": "DILU"
+     }
+    },
+    "velocity_final_solver": null,
+    "density_solver": null,
+    "density_final_solver": null,
+    "pressure_solver": {
+     "type": "GAMG",
+     "absolute_tolerance": 1e-06,
+     "relative_tolerance": 0.001,
+     "smoother": "GAUSSSEIDEL",
+     "num_pre_sweeps": 2,
+     "num_post_sweeps": 1,
+     "cache_agglomeration_on": true,
+     "num_cells_coarsest_level": 100,
+     "num_merge_levels": 1
+    },
+    "pressure_final_solver": null,
+    "temperature_solver": null,
+    "temperature_final_solver": null,
+    "pressure_rgh_solver": null,
+    "pressure_rgh_final_solver": null,
+    "solid_enthalpy_solver": null,
+    "solid_enthalpy_final_solver": null,
+    "enthalpy_solver": null,
+    "enthalpy_final_solver": null,
+    "internal_energy_solver": null,
+    "internal_energy_final_solver": null,
+    "turbulent_kinetic_energy_solver": {
+     "type": "PBICGStab",
+     "absolute_tolerance": 1e-08,
+     "relative_tolerance": 0.01,
+     "preconditioner": {
+      "type": "DILU"
+     }
+    },
+    "turbulent_kinetic_energy_final_solver": null,
+    "nu_tilda_solver": null,
+    "nu_tilda_final_solver": null,
+    "omega_dissipation_rate_solver": {
+     "type": "PBICGStab",
+     "absolute_tolerance": 1e-08,
+     "relative_tolerance": 0.01,
+     "preconditioner": {
+      "type": "DILU"
+     }
+    },
+    "omega_dissipation_rate_final_solver": null,
+    "epsilon_dissipation_rate_solver": null,
+    "epsilon_dissipation_rate_final_solver": null,
+    "passive_scalar_solver": null,
+    "radiative_intensity_ray_solver": null,
+    "internal_net_radiative_heat_flux_solver": null,
+    "specific_humidity_solver": null,
+    "voltage_solver": null
+   },
+   "schemes": {
+    "flux": null,
+    "time_differentiation": {
+     "for_default": {
+      "type": "STEADYSTATE"
+     },
+     "second_order_scheme": null
+    },
+    "spatial_discretization": null,
+    "gradient": {
+     "for_default": {
+      "type": "CELLLIMITED_LEASTSQUARES",
+      "limiter_coefficient": 1.0
+     },
+     "grad_pressure": {
+      "type": "CELLLIMITED_LEASTSQUARES",
+      "limiter_coefficient": 1.0
+     },
+     "grad_velocity": {
+      "type": "CELLLIMITED_LEASTSQUARES",
+      "limiter_coefficient": 1.0
+     },
+     "grad_pressure_rgh": null,
+     "grad_density": null,
+     "grad_enthalpy": null,
+     "grad_internal_energy": null,
+     "grad_turbulent_kinetic_energy": null,
+     "grad_epsilon_dissipation_rate": null,
+     "grad_omega_dissipation_rate": null,
+     "grad_nu_tilda": null,
+     "grad_temperature": null,
+     "grad_rhok": null
+    },
+    "divergence": {
+     "for_default": {
+      "type": "GAUSS_LINEAR"
+     },
+     "div_phi_velocity": {
+      "type": "GAUSS_LINEARUPWINDV_GRAD_U_"
+     },
+     "div_phi_kinetic_energy": null,
+     "div_phi_enthalpy": null,
+     "div_phi_internal_energy": null,
+     "div_phiv_pressure": null,
+     "div_phi_turbulent_kinetic_energy": {
+      "type": "BOUNDED_GAUSS_UPWIND"
+     },
+     "div_nu_eff_dev_t_grad_velocity": {
+      "type": "GAUSS_LINEAR"
+     },
+     "div_mu_eff_dev2_t_grad_velocity": null,
+     "div_phi_omega_dissipation_rate": {
+      "type": "BOUNDED_GAUSS_UPWIND"
+     },
+     "div_phi_epsilon_dissipation_rate": null,
+     "div_r": null,
+     "div_phi_r": null,
+     "div_phi_nu_tilda": null,
+     "div_phi_temperature": null,
+     "div_phi_passive_scalar": null,
+     "div_tau_mc": null,
+     "div_phid_pressure": null,
+     "div_velocity": null,
+     "div_phi_ekp": null,
+     "div_phirb_alpha": null,
+     "div_mu_eff_dev_t_grad_velocity": null,
+     "div_phi_alpha": null,
+     "div_rho_phi_velocity": null
+    },
+    "laplacian": {
+     "for_default": {
+      "type": "GAUSS_LINEAR_LIMITED_CORRECTED",
+      "limiter_coefficient": 0.5
+     },
+     "laplacian_nu_eff_velocity": {
+      "type": "GAUSS_LINEAR_LIMITED_CORRECTED",
+      "limiter_coefficient": 0.5
+     },
+     "laplacian_1_a_u_pressure": {
+      "type": "GAUSS_LINEAR_LIMITED_CORRECTED",
+      "limiter_coefficient": 0.5
+     },
+     "laplacian_nu_velocity": {
+      "type": "GAUSS_LINEAR_LIMITED_CORRECTED",
+      "limiter_coefficient": 0.5
+     },
+     "laplacian_dr_eff_r": null,
+     "laplacian_dnu_tilda_eff_nu_tilda": null,
+     "laplacian_dk_eff_turbulent_kinetic_energy": null,
+     "laplacian_alpha_eff_enthalpy": null,
+     "laplacian_alpha_enthalpy": null,
+     "laplacian_mu_eff_velocity": null,
+     "laplacian_alpha_eff_internal_energy": null,
+     "laplacian_rhor_a_uf_pressure_rgh": null,
+     "laplacian_depsilon_eff_epsilon_dissipation_rate": null,
+     "laplacian_domega_eff_omega_dissipation_rate": null,
+     "laplacian_r_a_uf_pressure": null,
+     "laplacian_dt_passive_scalar": null,
+     "laplacian_dp_pressure": null,
+     "laplacian_rhor_a_uf_pressure": null,
+     "laplacian_rho_1_a_u_pressure": null,
+     "laplacian_mut_velocity": null,
+     "laplacian_alpha_eff_temperature": null,
+     "laplacian_r_a_uf_pressure_rgh": null
+    },
+    "interpolation": {
+     "for_default": {
+      "type": "LINEAR"
+     },
+     "interpolate_hby_a": {
+      "type": "LINEAR"
+     },
+     "interpolate_velocity": null,
+     "interpolate_kappa": null,
+     "interpolate_rho": null,
+     "interpolate_thermo_rho_cp": null,
+     "interpolate_map_kappa": null,
+     "interpolate_rho_hbya": null,
+     "interpolate_rho_0_velocity0": null,
+     "interpolate_grad_enthalpy": null,
+     "interpolate_rho_r_au": null,
+     "interpolate_r_au": null,
+     "interpolate_velocity0": null,
+     "reconstruct_velocity": null,
+     "reconstruct_temperature": null,
+     "reconstruct_rho": null
+    },
+    "surface_normal_gradient": {
+     "for_default": {
+      "type": "LIMITED",
+      "limiter_coefficient": 0.5
+     },
+     "surface_normal_gradient_rho": null,
+     "surface_normal_gradient_pressure_rgh": null,
+     "surface_normal_gradient_rhok": null
+    },
+    "second_order_convection": null
+   },
+   "stabilization": null
+  },
+  "simulation_control": {
+   "end_time": {
+    "value": 1000.0,
+    "unit": "s"
+   },
+   "adjoint_end_time": null,
+   "number_of_iterations": null,
+   "delta_t": {
+    "value": 1.0,
+    "unit": "s"
+   },
+   "variable_delta_t": null,
+   "adjustable_timestep": null,
+   "write_control": {
+    "type": "TIME_STEP",
+    "write_interval": 1000
+   },
+   "relative_convergence_criteria": null,
+   "num_processors": -1,
+   "max_run_time": {
+    "value": 20000.0,
+    "unit": "s"
+   },
+   "velocity_scaling": null,
+   "potential_foam_initialization": false,
+   "decompose_algorithm": {
+    "type": "SCOTCH"
+   }
+  },
+  "result_control": {
+   "custom_comfort_criteria": null,
+   "forces_moments": [],
+   "surface_data": [],
+   "scalar_transport": [],
+   "probe_points": [],
+   "field_calculations": [],
+   "transient_result_control": null,
+   "statistical_averaging_result_control": null,
+   "snapshot_result_control": null
+  }
+ },
+ "parameters": null
+}

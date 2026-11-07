@@ -292,7 +292,142 @@ def case_tierra(sol, faces, info):
                 gravity=True, notes=["PLA: E 3,5 GPa, ν 0,36, ρ 1240 kg/m³, σ admisible 40 MPa."])
 
 
+
+# ------------------------------------------------------------------------------------------------ 07/11 logged-in pass cases
+RHO_W, G_W = 1025.0, 9.81
+DRY = ("M1s", "M2_", "M3s", "M4_", "M5s")          # the single dry volume of the node (docs/ESTANQUEIDAD.md)
+
+
+def wet_exterior(sol, faces, info, keep_solid):
+    """Faces of the dry-volume solids whose outward normal sees open water: a ray from the face centre (offset 0.05 mm) along the
+    normal hits none of the dry solids. Cavity faces (inside the dry volume) hit the opposite wall and are left out."""
+    from OCP.gp import gp_Lin, gp_Pnt, gp_Dir
+    from OCP.IntCurvesFace import IntCurvesFace_ShapeIntersector
+    ints = []
+    for k, (n, s_) in enumerate(sol):
+        if keep_solid(n):
+            it = IntCurvesFace_ShapeIntersector()
+            it.Load(s_.wrapped, 1e-6)
+            ints.append(it)
+    out = []
+    for i, f in enumerate(faces):
+        if not keep_solid(sol[info[i]["solid"]][0]):
+            continue
+        try:
+            c = f.Center()
+            nv = f.normalAt(c)
+        except Exception:      # noqa: BLE001
+            continue
+        line = gp_Lin(gp_Pnt(c.x + 0.05 * nv.x, c.y + 0.05 * nv.y, c.z + 0.05 * nv.z), gp_Dir(nv.x, nv.y, nv.z))
+        if not any((it.Perform(line, 0.0, 1e5), it.IsDone() and it.NbPnt() > 0)[1] for it in ints):
+            out.append(i)
+    return out
+
+
+def case_nodo_hidro(sol, faces, info):
+    """Service case (a): self weight + 990 g ballast + hydrostatic pressure with the node centre 1 m under the surface.
+    p(z) = rho g (1 m - (z - z_c)), on the wetted outside of the dry volume only (the rest is flooded: pressure on both sides)."""
+    base = case_nodo(sol, faces, info)
+    zs = [v for n, s_ in sol for v in (s_.BoundingBox().zmin, s_.BoundingBox().zmax)]
+    zc = 0.5 * (min(zs) + max(zs)) * 1e-3
+    wet = wet_exterior(sol, faces, info, lambda n: n.startswith(DRY))
+    expr = f"{RHO_W * G_W:.1f}*({1.0 + zc:.4f}-Z)"
+    p_c = RHO_W * G_W * 1.0
+    loads = [base["loads"][0],
+             dict(kind="pressure_expr", label=f"presion hidrostatica a 1 m (centro del nodo): p = {expr} Pa, z en m", idx=wet, expr=expr)]
+    return dict(name="nodo_hidrostatico_1m", titulo="Nodo, servicio: peso + lastre 990 g + presion hidrostatica a 1 m de profundidad",
+                fixed=base["fixed"], loads=loads, gravity=True,
+                notes=[f"p en el centro = {p_c:.0f} Pa; varia ±{RHO_W * G_W * 0.13:.0f} Pa entre arriba y abajo del nodo. "
+                       f"{len(wet)} caras mojadas del volumen seco, {area(info, wet) / 100:.0f} cm²: el empuje sale de integrar esta presion.",
+                       "Apoyo igual al caso combinado (asiento de los ganchos) para comparar."])
+
+
+EYES_REFINE = {}       # mesh level -> max element size in mm around the eyes
+
+
+def eye_zone(sol, faces, info, eye_idx, r=12.0):
+    """The eye hole plus the small faces of its boss (the big hull bottom is left out of the refinement)."""
+    out = set(eye_idx)
+    for e in eye_idx:
+        bb = info[e]["bb"]
+        c = ((bb[0] + bb[3]) / 2, (bb[1] + bb[4]) / 2)
+        box = (c[0] - r, c[1] - r, bb[2] - 1, c[0] + r, c[1] + r, bb[5] + 3)
+        out |= {j for j, g in enumerate(info) if g["solid"] == info[e]["solid"] and g["area"] < 2000 and _bb_gap(g["bb"], box) <= 0}
+    return sorted(out)
+
+
+def case_boya_v3(sol, faces, info, level="A"):
+    """Buoy, combined case, realistic support: each mooring eye hangs from a DEFORMABLE remote point at the hole centre
+    (shackle pin: translations fixed, rotation about the hole axis free), so the hole is not a rigid face. Full contacts
+    (prepare(..., mixto=True)). Local mesh refinement on the eyes; two levels for a basic convergence check."""
+    base = case_boya(sol, faces, info)
+    eyes = base["fixed"][0][1]
+    sup = []
+    for e in eyes:
+        ax = faces[e]._geomAdaptor().Cylinder().Axis()
+        bb = info[e]["bb"]
+        pt = ((bb[0] + bb[3]) / 2, (bb[1] + bb[4]) / 2, (bb[2] + bb[5]) / 2)
+        d = ax.Direction()
+        sup.append(dict(kind="remote_support", label=f"ojal en ({pt[0]:.0f}, {pt[1]:.0f}) mm: punto remoto deformable, traslaciones fijas, giro libre alrededor del eje del agujero",
+                        idx=[e], point_mm=pt, free_axis=(d.X(), d.Y(), d.Z())))
+    # remote displacement needs a geometry-primitive Point that SDK 19.1 cannot attach ("There is no Point assigned"): elastic supports instead.
+    # Eyes: shackle + bridle, 2e5 N/m each (~1 mm under the ~290 N reaction). Bottle seats: the water, rho g A_waterplane spread over the
+    # seats (A_wp ~ 0.12 m2 for the bottles -> ~1.2e3 N/m in total): it carries the moments of the wave and the lateral hit, as buoyancy does.
+    seats = [ld for ld in base["loads"] if ld["label"].startswith("tiro del cabo")][0]["idx"]
+    k_w = RHO_W * G_W * 0.12
+    a_s = area(info, seats) * 1e-6
+    sup = [dict(kind="elastic", label=f"ojal {k + 1}: grillete + pata de gallo, resorte 2e5 N/m", idx=[e], total_N_m=2.0e5) for k, e in enumerate(eyes)]
+    sup.append(dict(kind="elastic", label=f"agua bajo las botellas: rho g A_flotacion = {k_w:.0f} N/m repartido en los asientos ({k_w / a_s:.0f} N/m3)",
+                    idx=seats, dist_N_m3=k_w / a_s))
+    zone = eye_zone(sol, faces, info, eyes)
+    size = {"A": 1.5, "B": 0.75}[level]
+    return dict(name=f"boya_v3_malla{level}", titulo=f"Boya, caso combinado, apoyo elastico en ojales y agua, malla {level} ({size} mm en el ojal)",
+                fixed=[], loads=sup + base["loads"], gravity=True, refine=[(f"ojales {size} mm", zone, size)],
+                averages=[("vM medio agujero ojal 1", [eyes[0]]), ("vM medio agujero ojal 2", [eyes[1]]),
+                          ("vM medio zona ojales", zone)],
+                notes=base["notes"] + [f"Refinamiento local {size} mm en {len(zone)} caras alrededor de los ojales ({area(info, zone):.0f} mm²)."])
+
+
+def case_boya_single(sol, faces, info, which, level="A"):
+    """Buoy, ONE load at a time with its own physical support (the combined case has no static reaction path without inertia relief:
+    147 / 70.6 / 539 MPa singular peaks with three supports, docs/DECISIONES.md 07/11).
+    cabo: 300 N line pull on the bottle seats, eyes on 2e5 N/m springs (they are the real reaction); meshes A and B (eye refinement).
+    ola / lateral: 200 N on the deck bars / column tops, bottle seats fixed (the bottles and the water carry it, far from where it is read)."""
+    v3 = case_boya_v3(sol, faces, info, level)
+    base = case_boya(sol, faces, info)
+    eyes = base["fixed"][0][1]
+    pick = lambda pre: [ld for ld in base["loads"] if ld["label"].startswith(pre)][0]   # noqa: E731
+    seats = pick("tiro del cabo")["idx"]
+    zone = eye_zone(sol, faces, info, eyes)
+    if which in ("cabo", "cabocol"):
+        tiro = pick("tiro del cabo")
+        if which == "cabocol":     # two-force body: water resultant and line tension must be collinear, so aim the 300 N through the eyes
+            cen = lambda idx: [sum(faces[i].Center().toTuple()[k] * info[i]["area"] for i in idx) / area(info, idx) for k in range(3)]  # noqa: E731
+            cs, ce = cen(seats), cen(eyes)
+            d = [ce[k] - cs[k] for k in range(3)]
+            nd = sum(x * x for x in d) ** 0.5
+            sg = 1.0 if sum(d[k] * tiro["force_N"][k] for k in range(3)) >= 0 else -1.0
+            f = tuple(round(sg * 300.0 * x / nd, 2) for x in d)
+            print(f"   cabocol: seats {[round(x, 1) for x in cs]} eyes {[round(x, 1) for x in ce]} -> F {f} N")
+            tiro = dict(tiro, label=f"tiro del cabo 300 N colineal con los ojales {f} N, sobre los asientos de las botellas", force_N=f)
+        loads = [ld for ld in v3["loads"] if ld["kind"] == "elastic" and ld["label"].startswith("ojal")] + [tiro]
+        fixed = []
+        refine, avg = v3["refine"], v3["averages"]
+    else:
+        loads = [pick("ola") if which == "ola" else pick("golpe lateral")]
+        fixed = [("asientos de las botellas (las botellas y el agua toman la carga)", seats)]
+        refine, avg = [], []
+    return dict(name=f"boya_{which}_malla{level}", titulo=f"Boya, solo {which}, malla {level}", fixed=fixed, loads=loads, gravity=False,
+                refine=refine, averages=avg, reuse_mesh=f"modulo_boya/boya_v3_malla{level}_mixto",
+                notes=[f"Caso de una sola carga ({which}); sin peso propio para aislarla."])
+
+
 CASES = {"nodo": case_nodo, "boya": case_boya, "tierra": case_tierra}
+EXTRA_CASES = {"nodo_hidro": ("nodo", case_nodo_hidro), "boya_v3A": ("boya", lambda *a: case_boya_v3(*a, level="A")),
+               "boya_v3B": ("boya", lambda *a: case_boya_v3(*a, level="B")),
+               "boya_caboA": ("boya", lambda *a: case_boya_single(*a, "cabo", "A")), "boya_caboB": ("boya", lambda *a: case_boya_single(*a, "cabo", "B")),
+               "boya_cabocolA": ("boya", lambda *a: case_boya_single(*a, "cabocol", "A")), "boya_cabocolB": ("boya", lambda *a: case_boya_single(*a, "cabocol", "B")),
+               "boya_olaA": ("boya", lambda *a: case_boya_single(*a, "ola", "A")), "boya_lateralA": ("boya", lambda *a: case_boya_single(*a, "lateral", "A"))}
 
 
 # ------------------------------------------------------------------------------------------------ STEP with named faces and bodies
@@ -374,6 +509,31 @@ def make_spec_builder(mod, case, pairs, mat, only_disp=False):
                     type="POINT_MASS", name=f"Point mass {n + 1}", mass=sim.DimensionalMass(value=ld["mass_kg"], unit="kg"),
                     external_point=sim.DimensionalVectorLength(value=sim.DecimalVector(*[c * 1e-3 for c in centroid(case_, ld)]), unit="m"),
                     deformation_behavior="DEFORMABLE", enable_search_radius=False, topological_reference=ref(ld["idx"])))
+            elif ld["kind"] == "remote_support":
+                free = [abs(c) > 0.9 for c in ld["free_axis"]]
+                fix = lambda: sim.PrescribedOptionalFunction(type="PRESCRIBED", value=const(0.0))   # noqa: E731
+                unc = lambda: sim.UnconstrainedOptionalFunction(type="UNCONSTRAINED")                # noqa: E731
+                spec.boundary_conditions.append(sim.RemoteDisplacementLoadBC(
+                    type="REMOTE_DISPLACEMENT_LOAD", name=f"Remote support {n + 1}",
+                    displacement=sim.DimensionalPartialVectorFunctionLength(value=sim.PartialVectorFunction(x=fix(), y=fix(), z=fix()), unit="m"),
+                    rotation=sim.DimensionalPartialVectorFunctionAngle(value=sim.PartialVectorFunction(
+                        x=unc() if free[0] else fix(), y=unc() if free[1] else fix(), z=unc() if free[2] else fix()), unit="rad"),
+                    external_point=sim.DimensionalVectorLength(value=sim.DecimalVector(*[c * 1e-3 for c in ld["point_mm"]]), unit="m"),
+                    deformation_behavior="DEFORMABLE", enable_search_radius=False, topological_reference=ref(ld["idx"])))
+            elif ld["kind"] == "elastic":
+                if "total_N_m" in ld:
+                    sd = sim.TotalIsotropicStiffnessDefinition(type="TOTAL_ISOTROPIC", total=sim.DimensionalSurfaceTension(value=ld["total_N_m"], unit="N/m"))
+                else:
+                    sd = sim.DistributedIsotropicStiffnessDefinition(type="DISTRIBUTED_ISOTROPIC", distributed=sim.DimensionalVolumeForce(value=ld["dist_N_m3"], unit="N/m³"))
+                spec.boundary_conditions.append(sim.ElasticSupportBC(
+                    type="ELASTIC_SUPPORT", name=f"Elastic support {n + 1}",
+                    spring_stiffness=sim.IsotropicSpringStiffness(type="ISOTROPIC", stiffness_definition=sd), topological_reference=ref(ld["idx"])))
+            elif ld["kind"] == "pressure_expr":
+                fn = sim.ExpressionFunction(type="EXPRESSION", expression=ld["expr"],
+                                            available_variables=[sim.FunctionParameter(parameter=v, unit="m") for v in ("X", "Y", "Z")])
+                spec.boundary_conditions.append(sim.PressureBC(
+                    type="PRESSURE", name=f"Hydrostatic pressure {n + 1}", pressure=sim.DimensionalFunctionPressure(value=fn, unit="Pa"),
+                    topological_reference=ref(ld["idx"])))
             elif ld["kind"] == "pressure":
                 spec.boundary_conditions.append(sim.PressureBC(
                     type="PRESSURE", name=f"Pressure {n + 1}", pressure=sim.DimensionalFunctionPressure(value=const(ld["pressure_pa"]), unit="Pa"),
@@ -384,6 +544,15 @@ def make_spec_builder(mod, case, pairs, mat, only_disp=False):
                                            position_tolerance=sim.SetValuePositionTolerance(type="SET_VALUE", tolerance=sim.DimensionalLength(value=PROJ_TOL * 1e-3, unit="m")),
                                            master_topological_reference=ref(fa), slave_topological_reference=ref(fb)))
         spec.connection_groups = [sim.Contact(type="CONTACT", node_merging_bonded=True, connections=conns)]
+        for lab, idx in case_.get("averages", []):
+            spec.result_control.area_calculation.append(sim.AverageFieldsCalculationResultControlItem(
+                type="AVERAGE_FIELDS_CALCULATION", name=lab,
+                field_selection=sim.StressFieldSelection(type="STRESS", stress_type=sim.VonMisesStressType(type="VON_MISES")),
+                topological_reference=ref(idx)))
+            spec.result_control.area_calculation.append(sim.MinMaxFieldsCalculationResultControlItem(
+                type="MIN_MAX_FIELDS_CALCULATION", name=lab.replace("medio", "min-max"),
+                field_selection=sim.StressFieldSelection(type="STRESS", stress_type=sim.VonMisesStressType(type="VON_MISES")),
+                topological_reference=ref(idx)))
         if only_disp:      # the public viewer publishes one field per run: this run keeps only the displacement
             spec.result_control.solution_fields = [f for f in spec.result_control.solution_fields if f.type == "DISPLACEMENT"]
         return spec
@@ -398,7 +567,7 @@ def centroid(case, ld):
 
 
 # ------------------------------------------------------------------------------------------------ main
-def prepare(mod, mixto=False):
+def prepare(mod, mixto=False, caso=None):
     """mixto: full (0.35 mm) bonded contacts everywhere, strict face-to-face only between B2 and B3, the pair SimScale could not project
     (the all-strict boya kept only ~311 mm2 of each cradle on the hull and peaked at a contact singularity: docs/DECISIONES.md)."""
     sol, faces, info = load_module(mod)
@@ -413,7 +582,7 @@ def prepare(mod, mixto=False):
     else:
         pairs = contacts(sol, faces, info, strict=MODULES[mod].get("strict", False))
     comps = components(len(sol), list(pairs))
-    case = CASES[mod](sol, faces, info)
+    case = (EXTRA_CASES[caso][1] if caso else CASES[mod])(sol, faces, info)
     for ld in case["loads"]:
         if ld["kind"] == "mass":
             a = area(info, ld["idx"])
@@ -470,8 +639,10 @@ def get_project(api, mod):
     return P.create_project(sim.Project(name=name, description=MODULES[mod]["desc"], measurement_system="SI")).project_id
 
 
-def run(mod, fineness, rehacer, only_disp=False, mixto=False):
-    sol, faces, info, pairs, comps, case = prepare(mod, mixto)
+def run(mod, fineness, rehacer, only_disp=False, mixto=False, caso=None):
+    if caso:
+        mod = EXTRA_CASES[caso][0]
+    sol, faces, info, pairs, comps, case = prepare(mod, mixto, caso)
     if mixto:
         case = dict(case, name=case["name"] + "_mixto")
     base_key = f"modulo_{mod}/{case['name']}"
@@ -497,6 +668,14 @@ def run(mod, fineness, rehacer, only_disp=False, mixto=False):
     state = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else {}
     R.STATE_FILE = STATE
     R.build_spec = make_spec_builder(mod, case, pairs, MODULES[mod]["mat"], only_disp)
+    R.MESH_REFINE = None
+    if case.get("refine"):
+        import simscale_sdk as sim
+        R.MESH_REFINE = lambda ent_: [sim.SimmetrixLocalSizingRefinement(
+            type="SIMMETRIX_LOCAL_SIZING_V10", name=lab, max_element_size=sim.DimensionalLength(value=size * 1e-3, unit="m"),
+            curvature=sim.AutomaticCurvature(type="AUTOMATIC_CURVATURE"),
+            topological_reference=sim.TopologicalReference(entities=sorted({e for i in idx for e in ent_[i]}), sets=[]))
+            for lab, idx, size in case["refine"]]
     if only_disp:      # same geometry and mesh as the von Mises run
         B = state.get(base_key, {})
         if B.get("gid") != gid or not B.get("mesh_id"):
@@ -506,6 +685,11 @@ def run(mod, fineness, rehacer, only_disp=False, mixto=False):
             D.clear()
         D.update(gid=gid, mesh_op=B["mesh_op"], mesh_id=B["mesh_id"], mesh_estimate=B.get("mesh_estimate"))
         rehacer = False
+    if case.get("reuse_mesh") and not only_disp:      # same geometry and an existing mesh: pay only the solve
+        B = state.get(case["reuse_mesh"], {})
+        D = state.setdefault(f"modulo_{mod}/{case['name']}", {})
+        if B.get("gid") == gid and B.get("mesh_id") and not D.get("mesh_id"):
+            D.update(gid=gid, mesh_op=B["mesh_op"], mesh_id=B["mesh_id"], mesh_estimate=B.get("mesh_estimate"))
     S = R.run_simscale(f"modulo_{mod}", case, ent, gid, pid, api, fineness, state, rehacer)
     S["pid"] = pid
     S["regions"] = regs
@@ -524,6 +708,7 @@ def main():
     ap.add_argument("--fineness", type=float, default=4)
     ap.add_argument("--rehacer", action="store_true")
     ap.add_argument("--desplazamiento", action="store_true", help="second run, same mesh, only the displacement field")
+    ap.add_argument("--caso", choices=list(EXTRA_CASES), help="07/11 cases: nodo_hidro, boya_v3A/B, boya_cabo/cabocol A/B, boya_olaA, boya_lateralA (the boya ones imply --mixto)")
     ap.add_argument("--mixto", action="store_true", help="full contacts, strict only B2-B3 (new case name, keeps the earlier run)")
     a = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -534,7 +719,7 @@ def main():
     elif a.listar:
         prepare(a.listar)
     elif a.modulo:
-        run(a.modulo, a.fineness, a.rehacer, a.desplazamiento, a.mixto)
+        run(a.modulo, a.fineness, a.rehacer, a.desplazamiento, a.mixto or (a.caso or "").startswith("boya"), a.caso)
     else:
         ap.print_help()
 

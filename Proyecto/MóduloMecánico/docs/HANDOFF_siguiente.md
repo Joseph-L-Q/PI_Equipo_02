@@ -161,3 +161,14 @@ Leer primero:
 | STEP para Onshape + planos v6 | `publicar_sin_api.py --importar --planos` (no llama a la API) |
 | Visor | `visor.py`; prueba con `python visor_prueba.py` |
 | BOM y bitácora | `bitacora.py` |
+
+## 07/11, segunda pasada: SimScale con sesión
+
+- Reporte v2: `docs/REPORTE_SIMSCALE_MODULOS.md/.pdf`.
+- FS mínimo por módulo:
+  - nodo: 5,7 entre capas;
+  - boya: 2,2 en macizo y 0,95 entre capas, en los nudos de B1/B5 con el cabo de 300 N;
+  - tierra: 4,5 entre capas (PLA, supuesto de 20 MPa).
+- Pendiente de la boya: filete r ≥ 2 mm y más perímetros en los nudos del reticulado que reciben las botellas.
+- El plan Community de SimScale está excedido: con sesión no se ven valores ni sondas. Los máximos salen del `modelInfo` público.
+- Las capturas con sesión están en `salida/simscale_modulos/capturas_sesion/`, y las decisiones en `docs/DECISIONES.md` (07/11).

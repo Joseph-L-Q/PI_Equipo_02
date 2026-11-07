@@ -1,0 +1,867 @@
+{
+ "simulation_id": "dbd5d331-2e7c-47fb-b3a0-09e17b0c70b8",
+ "name": "Static",
+ "version": "internal:637",
+ "created_at": "2026-11-04 20:31:19.312000+00:00",
+ "modified_at": "2026-11-04 20:31:29.348000+00:00",
+ "geometry_id": "d6f79489-0394-43bd-bab1-6a6bd210836d",
+ "mesh_id": "3cd4b246-af9c-465e-9e60-5f07fa4c14d7",
+ "model": {
+  "type": "STATIC_ANALYSIS",
+  "non_linear_analysis": false,
+  "connection_groups": [
+   {
+    "type": "CONTACT",
+    "node_merging_bonded": false,
+    "connections": [
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 1",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I58_B4_TE347"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I13_B13_TE20"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 2",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I58_B4_TE700",
+        "A1_I58_B4_TE705",
+        "A1_I58_B4_TE710",
+        "A1_I58_B4_TE715"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I33_B9_TE66"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 3",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I58_B4_TE146"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I43_B7_TE3"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 4",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I58_B4_TE374"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I53_B5_TE236",
+        "A1_I53_B5_TE448"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 5",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I58_B4_TE120"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I63_B3_TE3"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 6",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I58_B4_TE330"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I8_B14_TE20"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 7",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I63_B3_TE557"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I48_B6_TE84"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 8",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I48_B6_TE344",
+        "A1_I48_B6_TE222"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I68_B2_TE3"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 9",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I43_B7_TE557"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I3_B15_TE84"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 10",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I33_B9_TE209",
+        "A1_I33_B9_TE199",
+        "A1_I33_B9_TE204",
+        "A1_I33_B9_TE214"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I38_B8_TE61"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 11",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I68_B2_TE313"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I28_B10_TE10"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 12",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I3_B15_TE222",
+        "A1_I3_B15_TE344"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I23_B11_TE3"
+       ],
+       "sets": []
+      }
+     },
+     {
+      "type": "BONDED_CONTACT",
+      "name": "Bonded 13",
+      "enable_heat_transfer": null,
+      "position_tolerance": {
+       "type": "SET_VALUE",
+       "tolerance": {
+        "value": 0.001,
+        "unit": "m"
+       }
+      },
+      "master_topological_reference": {
+       "entities": [
+        "A1_I23_B11_TE313"
+       ],
+       "sets": []
+      },
+      "slave_topological_reference": {
+       "entities": [
+        "A1_I18_B12_TE10"
+       ],
+       "sets": []
+      }
+     }
+    ]
+   }
+  ],
+  "connectors": [],
+  "element_technology": {
+   "element_technology3_d": {
+    "definition_method": {
+     "type": "AUTOMATIC"
+    }
+   }
+  },
+  "model": {
+   "geometric_behavior": null,
+   "magnitude": {
+    "value": {
+     "type": "CONSTANT",
+     "value": 9.81
+    },
+    "unit": "m/s\u00b2"
+   },
+   "e": {
+    "value": {
+     "x": 0.0,
+     "y": 0.0,
+     "z": -1.0
+    },
+    "unit": "m"
+   }
+  },
+  "materials": [
+   {
+    "name": "PET G",
+    "material_behavior": {
+     "type": "LINEAR_ELASTIC",
+     "directional_dependency": {
+      "type": "ISOTROPIC",
+      "youngs_modulus": {
+       "value": {
+        "type": "CONSTANT",
+        "value": 2100000000.0
+       },
+       "unit": "Pa"
+      },
+      "poissons_ratio": {
+       "type": "CONSTANT",
+       "value": 0.38
+      },
+      "expansion_coefficient": null,
+      "reference_temperature": null
+     },
+     "damping": null,
+     "creep_formulation": null
+    },
+    "density": {
+     "value": {
+      "type": "CONSTANT",
+      "value": 1250.0
+     },
+     "unit": "kg/m\u00b3"
+    },
+    "expansion": null,
+    "conductivity": null,
+    "specific_heat": null,
+    "topological_reference": {
+     "entities": [
+      "A1_I3_B15_TE346",
+      "A1_I8_B14_TE63",
+      "A1_I13_B13_TE63",
+      "A1_I18_B12_TE50",
+      "A1_I23_B11_TE369",
+      "A1_I28_B10_TE50",
+      "A1_I33_B9_TE255",
+      "A1_I38_B8_TE155",
+      "A1_I43_B7_TE658",
+      "A1_I48_B6_TE346",
+      "A1_I53_B5_TE463",
+      "A1_I58_B4_TE748",
+      "A1_I63_B3_TE658",
+      "A1_I68_B2_TE369"
+     ],
+     "sets": []
+    },
+    "built_in_material": null,
+    "material_library_reference": {
+     "material_group_id": "internal:29fcf90d-1094-4198-8124-fcf3f8f0c8c0",
+     "material_id": "internal:db15fe29-a82b-40ef-a3f2-5f4e0341060c",
+     "interpolation_parameters": {}
+    }
+   }
+  ],
+  "initial_conditions": {
+   "displacement": null,
+   "velocity": null,
+   "acceleration": null,
+   "stress": null,
+   "temperature": null
+  },
+  "boundary_conditions": [
+   {
+    "type": "FIXED_SUPPORT",
+    "name": "Fixed support 1",
+    "topological_reference": {
+     "entities": [
+      "A1_I53_B5_TE371"
+     ],
+     "sets": []
+    }
+   },
+   {
+    "type": "PRESSURE",
+    "name": "Pressure 2",
+    "pressure": {
+     "value": {
+      "type": "CONSTANT",
+      "value": 30.0
+     },
+     "unit": "kPa"
+    },
+    "phase_angle": null,
+    "topological_reference": {
+     "entities": [
+      "A1_I53_B5_TE376",
+      "A1_I53_B5_TE219",
+      "A1_I53_B5_TE212",
+      "A1_I53_B5_TE205",
+      "A1_I53_B5_TE198",
+      "A1_I53_B5_TE156",
+      "A1_I53_B5_TE163",
+      "A1_I53_B5_TE170",
+      "A1_I53_B5_TE177",
+      "A1_I53_B5_TE184",
+      "A1_I53_B5_TE191",
+      "A1_I53_B5_TE128",
+      "A1_I53_B5_TE121",
+      "A1_I43_B7_TE554",
+      "A1_I63_B3_TE3",
+      "A1_I63_B3_TE554",
+      "A1_I43_B7_TE563",
+      "A1_I43_B7_TE432",
+      "A1_I43_B7_TE3",
+      "A1_I43_B7_TE256",
+      "A1_I43_B7_TE318",
+      "A1_I63_B3_TE156",
+      "A1_I43_B7_TE156",
+      "A1_I48_B6_TE68",
+      "A1_I48_B6_TE100",
+      "A1_I3_B15_TE100",
+      "A1_I3_B15_TE68",
+      "A1_I3_B15_TE160",
+      "A1_I48_B6_TE160",
+      "A1_I48_B6_TE38",
+      "A1_I3_B15_TE50",
+      "A1_I48_B6_TE50",
+      "A1_I3_B15_TE38",
+      "A1_I63_B3_TE96",
+      "A1_I43_B7_TE184",
+      "A1_I63_B3_TE256",
+      "A1_I43_B7_TE381",
+      "A1_I63_B3_TE184",
+      "A1_I43_B7_TE96",
+      "A1_I3_B15_TE103",
+      "A1_I48_B6_TE103",
+      "A1_I3_B15_TE117",
+      "A1_I48_B6_TE112",
+      "A1_I53_B5_TE13",
+      "A1_I3_B15_TE57",
+      "A1_I48_B6_TE25",
+      "A1_I63_B3_TE569",
+      "A1_I43_B7_TE569",
+      "A1_I43_B7_TE174",
+      "A1_I63_B3_TE174",
+      "A1_I63_B3_TE557",
+      "A1_I43_B7_TE557",
+      "A1_I43_B7_TE534",
+      "A1_I43_B7_TE525",
+      "A1_I43_B7_TE498",
+      "A1_I43_B7_TE507",
+      "A1_I43_B7_TE516",
+      "A1_I43_B7_TE543",
+      "A1_I43_B7_TE539",
+      "A1_I43_B7_TE530",
+      "A1_I43_B7_TE521",
+      "A1_I43_B7_TE546",
+      "A1_I43_B7_TE512",
+      "A1_I43_B7_TE503",
+      "A1_I43_B7_TE537",
+      "A1_I43_B7_TE528",
+      "A1_I43_B7_TE519",
+      "A1_I43_B7_TE510",
+      "A1_I43_B7_TE501",
+      "A1_I43_B7_TE494",
+      "A1_I43_B7_TE572",
+      "A1_I63_B3_TE572",
+      "A1_I43_B7_TE403",
+      "A1_I63_B3_TE403",
+      "A1_I43_B7_TE599",
+      "A1_I63_B3_TE599",
+      "A1_I63_B3_TE575",
+      "A1_I43_B7_TE575",
+      "A1_I43_B7_TE75",
+      "A1_I63_B3_TE75",
+      "A1_I43_B7_TE633",
+      "A1_I43_B7_TE647",
+      "A1_I63_B3_TE647",
+      "A1_I63_B3_TE633",
+      "A1_I43_B7_TE587",
+      "A1_I63_B3_TE587",
+      "A1_I43_B7_TE566",
+      "A1_I63_B3_TE566",
+      "A1_I3_B15_TE3",
+      "A1_I48_B6_TE3",
+      "A1_I63_B3_TE381",
+      "A1_I63_B3_TE462",
+      "A1_I63_B3_TE471",
+      "A1_I63_B3_TE480",
+      "A1_I63_B3_TE459",
+      "A1_I63_B3_TE432",
+      "A1_I63_B3_TE446",
+      "A1_I63_B3_TE437",
+      "A1_I63_B3_TE428",
+      "A1_I63_B3_TE441",
+      "A1_I63_B3_TE468",
+      "A1_I63_B3_TE450",
+      "A1_I63_B3_TE477",
+      "A1_I63_B3_TE435",
+      "A1_I63_B3_TE444",
+      "A1_I63_B3_TE453",
+      "A1_I63_B3_TE455",
+      "A1_I63_B3_TE464",
+      "A1_I63_B3_TE473",
+      "A1_I63_B3_TE563",
+      "A1_I43_B7_TE453",
+      "A1_I43_B7_TE444",
+      "A1_I43_B7_TE435",
+      "A1_I43_B7_TE473",
+      "A1_I43_B7_TE464",
+      "A1_I43_B7_TE455",
+      "A1_I43_B7_TE459",
+      "A1_I43_B7_TE441",
+      "A1_I43_B7_TE468",
+      "A1_I43_B7_TE477",
+      "A1_I43_B7_TE450",
+      "A1_I43_B7_TE480",
+      "A1_I43_B7_TE446",
+      "A1_I43_B7_TE471",
+      "A1_I43_B7_TE437",
+      "A1_I43_B7_TE462",
+      "A1_I43_B7_TE428",
+      "A1_I63_B3_TE501",
+      "A1_I63_B3_TE510",
+      "A1_I63_B3_TE519",
+      "A1_I63_B3_TE525",
+      "A1_I63_B3_TE534",
+      "A1_I63_B3_TE546",
+      "A1_I63_B3_TE537",
+      "A1_I63_B3_TE528",
+      "A1_I63_B3_TE521",
+      "A1_I63_B3_TE530",
+      "A1_I63_B3_TE539",
+      "A1_I63_B3_TE543",
+      "A1_I63_B3_TE498",
+      "A1_I63_B3_TE507",
+      "A1_I63_B3_TE516",
+      "A1_I63_B3_TE512",
+      "A1_I63_B3_TE503",
+      "A1_I63_B3_TE494",
+      "A1_I43_B7_TE638",
+      "A1_I63_B3_TE622",
+      "A1_I48_B6_TE184",
+      "A1_I68_B2_TE72",
+      "A1_I3_B15_TE179",
+      "A1_I3_B15_TE122",
+      "A1_I48_B6_TE122",
+      "A1_I48_B6_TE199",
+      "A1_I3_B15_TE199",
+      "A1_I23_B11_TE87",
+      "A1_I68_B2_TE87",
+      "A1_I68_B2_TE246",
+      "A1_I23_B11_TE241",
+      "A1_I68_B2_TE251",
+      "A1_I23_B11_TE251",
+      "A1_I68_B2_TE82",
+      "A1_I48_B6_TE194",
+      "A1_I23_B11_TE77",
+      "A1_I3_B15_TE189",
+      "A1_I23_B11_TE67",
+      "A1_I43_B7_TE386",
+      "A1_I63_B3_TE408",
+      "A1_I63_B3_TE263",
+      "A1_I43_B7_TE326",
+      "A1_I63_B3_TE65",
+      "A1_I43_B7_TE70",
+      "A1_I63_B3_TE318",
+      "A1_I23_B11_TE313",
+      "A1_I68_B2_TE313",
+      "A1_I23_B11_TE221",
+      "A1_I68_B2_TE226",
+      "A1_I3_B15_TE169",
+      "A1_I23_B11_TE57",
+      "A1_I68_B2_TE62",
+      "A1_I48_B6_TE174",
+      "A1_I68_B2_TE153",
+      "A1_I23_B11_TE153",
+      "A1_I48_B6_TE162",
+      "A1_I3_B15_TE162",
+      "A1_I68_B2_TE50",
+      "A1_I23_B11_TE50",
+      "A1_I23_B11_TE212",
+      "A1_I68_B2_TE212",
+      "A1_I28_B10_TE24",
+      "A1_I18_B12_TE24",
+      "A1_I18_B12_TE3",
+      "A1_I28_B10_TE3",
+      "A1_I3_B15_TE174",
+      "A1_I23_B11_TE62",
+      "A1_I48_B6_TE169",
+      "A1_I68_B2_TE57",
+      "A1_I23_B11_TE226",
+      "A1_I68_B2_TE221",
+      "A1_I68_B2_TE241",
+      "A1_I23_B11_TE246",
+      "A1_I23_B11_TE82",
+      "A1_I3_B15_TE194",
+      "A1_I68_B2_TE77",
+      "A1_I48_B6_TE189",
+      "A1_I23_B11_TE72",
+      "A1_I68_B2_TE67",
+      "A1_I3_B15_TE184",
+      "A1_I48_B6_TE179",
+      "A1_I43_B7_TE65",
+      "A1_I63_B3_TE70",
+      "A1_I63_B3_TE326",
+      "A1_I43_B7_TE263",
+      "A1_I43_B7_TE622",
+      "A1_I63_B3_TE638",
+      "A1_I63_B3_TE386",
+      "A1_I43_B7_TE408",
+      "A1_I68_B2_TE236",
+      "A1_I23_B11_TE231",
+      "A1_I13_B13_TE31",
+      "A1_I58_B4_TE233",
+      "A1_I58_B4_TE120",
+      "A1_I58_B4_TE146",
+      "A1_I43_B7_TE50",
+      "A1_I63_B3_TE50",
+      "A1_I13_B13_TE36",
+      "A1_I8_B14_TE36",
+      "A1_I8_B14_TE13",
+      "A1_I58_B4_TE208",
+      "A1_I13_B13_TE13",
+      "A1_I58_B4_TE216",
+      "A1_I13_B13_TE3",
+      "A1_I8_B14_TE45",
+      "A1_I8_B14_TE31",
+      "A1_I8_B14_TE3",
+      "A1_I13_B13_TE45",
+      "A1_I58_B4_TE183",
+      "A1_I58_B4_TE95",
+      "A1_I58_B4_TE13",
+      "A1_I58_B4_TE110",
+      "A1_I58_B4_TE193",
+      "A1_I58_B4_TE188",
+      "A1_I58_B4_TE253",
+      "A1_I58_B4_TE177",
+      "A1_I58_B4_TE260",
+      "A1_I58_B4_TE180",
+      "A1_I58_B4_TE223",
+      "A1_I58_B4_TE228",
+      "A1_I53_B5_TE383",
+      "A1_I53_B5_TE100",
+      "A1_I53_B5_TE135",
+      "A1_I53_B5_TE114",
+      "A1_I53_B5_TE107",
+      "A1_I53_B5_TE142",
+      "A1_I53_B5_TE149",
+      "A1_I53_B5_TE379",
+      "A1_I53_B5_TE364",
+      "A1_I58_B4_TE213",
+      "A1_I58_B4_TE203",
+      "A1_I58_B4_TE236",
+      "A1_I58_B4_TE83",
+      "A1_I58_B4_TE248",
+      "A1_I58_B4_TE255",
+      "A1_I58_B4_TE317",
+      "A1_I58_B4_TE322",
+      "A1_I58_B4_TE327",
+      "A1_I58_B4_TE262",
+      "A1_I53_B5_TE432",
+      "A1_I58_B4_TE441",
+      "A1_I58_B4_TE482",
+      "A1_I53_B5_TE422",
+      "A1_I58_B4_TE479",
+      "A1_I53_B5_TE415",
+      "A1_I53_B5_TE427",
+      "A1_I58_B4_TE476",
+      "A1_I53_B5_TE437",
+      "A1_I58_B4_TE438",
+      "A1_I58_B4_TE241",
+      "A1_I53_B5_TE3",
+      "A1_I53_B5_TE445",
+      "A1_I53_B5_TE442",
+      "A1_I58_B4_TE364",
+      "A1_I58_B4_TE369",
+      "A1_I58_B4_TE90",
+      "A1_I58_B4_TE78",
+      "A1_I58_B4_TE138",
+      "A1_I58_B4_TE105",
+      "A1_I58_B4_TE196",
+      "A1_I58_B4_TE3",
+      "A1_I23_B11_TE236",
+      "A1_I68_B2_TE231",
+      "A1_I3_B15_TE112",
+      "A1_I3_B15_TE25",
+      "A1_I48_B6_TE117",
+      "A1_I48_B6_TE57"
+     ],
+     "sets": []
+    }
+   }
+  ],
+  "numerics": {
+   "harmonic_solution_method": null,
+   "solver": {
+    "type": "CHRONOS",
+    "convergence_threshold": 1e-06,
+    "max_iterations": 1000,
+    "non_convergence_action": "SWITCH_TO_DIRECT_SOLVER",
+    "advanced_settings": {
+     "force_fsai": false,
+     "algorithm": null,
+     "smoother": "FSAI_LIGHT",
+     "prolongation": "ENERGY_MINIMIZATION",
+     "improve_test_space": false,
+     "test_space_iterations": null,
+     "preconditioner_recycling": 1.0,
+     "restart_gmres": 50,
+     "distributed_matrix_storage": true,
+     "num_of_threads": 0,
+     "verbosity": 0,
+     "write_coords_and_matrix": 0
+    }
+   },
+   "solve_model": null,
+   "eigen_solver": null,
+   "calculate_frequency": null,
+   "eigen_mode": null,
+   "enhanced_accuracy": null,
+   "modal_base": null,
+   "harmonic_response": null,
+   "mechanical_time_integration_type": null,
+   "mechanical_resolution_type": null,
+   "mechanical_line_search": null,
+   "thermal_time_integration_type": null,
+   "thermal_resolution_type": null,
+   "thermal_line_search": null,
+   "remote_point_stiffness_multiplier": 0.0
+  },
+  "simulation_control": {
+   "timestep_definition": null,
+   "pseudo_time_stepping": {
+    "type": "SINGLE_STEP",
+    "static_timesteps": {
+     "value": 0.0,
+     "unit": "s"
+    }
+   },
+   "auto_load_ramping": null,
+   "write_control_definition": null,
+   "excitation_frequencies": null,
+   "eigenfrequency_scope": null,
+   "modal_base": null,
+   "harmonic_response": null,
+   "processors": {
+    "num_of_processors": -1,
+    "num_of_computing_processors": -1,
+    "domain_decomposition": {
+     "type": "AUTOMATIC"
+    },
+    "num_of_threads": 1,
+    "partition_mesh": false
+   },
+   "max_run_time": {
+    "value": 3600.0,
+    "unit": "s"
+   }
+  },
+  "result_control": {
+   "solution_fields": [
+    {
+     "type": "DISPLACEMENT",
+     "name": "Displacement",
+     "displacement_type": {
+      "type": "GLOBAL",
+      "complex_number": null
+     }
+    },
+    {
+     "type": "STRESS",
+     "name": "Cauchy stress",
+     "stress_type": {
+      "type": "CAUCHY",
+      "complex_number": null
+     }
+    },
+    {
+     "type": "STRESS",
+     "name": "Von Mises stress",
+     "stress_type": {
+      "type": "VON_MISES",
+      "complex_number": null
+     }
+    },
+    {
+     "type": "STRAIN",
+     "name": "Total strain",
+     "strain_type": {
+      "type": "TOTAL",
+      "complex_number": null
+     }
+    }
+   ],
+   "edge_calculation": [],
+   "area_calculation": [],
+   "volume_calculation": [],
+   "point_data": []
+  },
+  "mesh_order": "NONE"
+ },
+ "parameters": null
+}

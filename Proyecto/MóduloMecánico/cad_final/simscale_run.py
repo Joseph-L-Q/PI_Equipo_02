@@ -520,6 +520,7 @@ def build_spec(case, ent, body_names):
 
 
 STATE_FILE = OUT / "state.json"
+MESH_REFINE = None      # optional callable(ent) -> list of Simmetrix refinements (simscale_modulos.py sets it per case)
 
 
 def save_state(state):
@@ -544,7 +545,7 @@ def run_simscale(piece, case, ent, gid, pid, api, fineness, state, rehacer):
     if not S.get("mesh_op"):
         algo = sim.SimmetrixMeshingSolid(
             type="SIMMETRIX_MESHING_SOLID", sizing=sim.AutomaticMeshSizingSimmetrix(type="AUTOMATIC_V9", fineness=fineness, curvature=sim.AutomaticCurvature(type="AUTOMATIC_CURVATURE")),
-            refinements=[], automatic_sweep_parameters=sim.AutomaticSweepOff(type="AUTOMATIC_SWEEP_MESHING_OFF"), num_of_processors=-1,
+            refinements=MESH_REFINE(ent) if MESH_REFINE else [], automatic_sweep_parameters=sim.AutomaticSweepOff(type="AUTOMATIC_SWEEP_MESHING_OFF"), num_of_processors=-1,
             max_meshing_run_time=sim.DimensionalTime(value=18000, unit="s"))
         S["mesh_op"] = M.create_mesh_operation(pid, sim.MeshOperation(name=f"Mesh {piece} f{fineness:g}", geometry_id=gid, model=algo)).mesh_operation_id
         save_state(state)

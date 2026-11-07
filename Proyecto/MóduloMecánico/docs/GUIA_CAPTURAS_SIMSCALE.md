@@ -37,3 +37,10 @@ Mientras no estén esas capturas, el informe usa:
 ## Trampa del script de capturas
 
 El `cug` que `vistas.json` asocia a cada captura no es fiable: a veces es el del modelo anterior. Cada captura se identifica por el título y el máximo de su leyenda. En tierra, la tarjeta 3 era la corrida descartada (0,92 MPa) y quedó en `capturas/tierra/_descartadas/`.
+
+## 07/11: límite del plan y flujo usado
+
+- Con el plan Community excedido, el post-procesador del workbench desactiva los valores de la leyenda y las estadísticas. Por eso no hay sondas.
+- Los valores salen de la página pública del proyecto. Se toma el uuid del modelo CUG de `performance.getEntriesByType('resource')` y se lee `.../cug/v1/models/<uuid>/data/modelInfo` (`resultInfoArr[0].maximumValue`).
+- Las capturas se toman desde la extensión Claude in Chrome, en el Brave del usuario con su sesión. Se usa `zoom` con `save_to_disk` sobre el visor.
+- La malla se ve en el post-procesador con «Surfaces with mesh edges».
