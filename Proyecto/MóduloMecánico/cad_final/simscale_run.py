@@ -918,10 +918,16 @@ def main():
     ap.add_argument("--solo-preparar", action="store_true")
     ap.add_argument("--fineness", type=float, default=5.0)
     ap.add_argument("--rehacer", action="store_true")
+    ap.add_argument("--modulo", choices=["nodo", "boya", "tierra"], help="whole assembled module, bonded contacts (simscale_modulos.py)")
+    ap.add_argument("--desplazamiento", action="store_true", help="with --modulo: re-run publishing only the displacement field")
     ap.add_argument("--informe", action="store_true", help="write docs/REPORTE_SIMSCALE_LanternGuard.md/.pdf from docs/resultados/resultados.json")
     ap.add_argument("--resultados", action="store_true", help="images + docs/resultados/resultados.json for the chosen pieces (default all) with NO SimScale run: SimScale where it has the current geometry, local FEM otherwise")
     ap.add_argument("--malla", type=float, default=3.0, help="local FEM mesh size in mm (resultados)")
     a = ap.parse_args()
+    if a.modulo:                                   # modules live in their own script, sharing this one's client and spec
+        import simscale_modulos as M
+        M.run(a.modulo, a.fineness if a.fineness != 5.0 else 4.0, a.rehacer, a.desplazamiento)
+        return 0
     OUT.mkdir(parents=True, exist_ok=True)
     if a.informe:
         informe()

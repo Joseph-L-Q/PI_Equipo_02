@@ -1,0 +1,939 @@
+{
+ "modulo_tierra/tierra_estatico": {
+  "gid": "d8d8135a-39e1-4d9e-be00-1319e16a55e4",
+  "sim_id": "574ea9ed-a2fe-4cdd-9651-677cb02e90a1",
+  "mesh_op": "f3eb0634-308b-4f56-a76b-9ec3b0323149",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT5M",
+    "interval_min": "PT0S",
+    "interval_max": "PT11M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.17,
+    "interval_min": 0.0,
+    "interval_max": 0.37
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 2468508,
+    "interval_min": 1974806,
+    "interval_max": 2962209
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "656072fa-1248-479c-97a6-a262f1484151",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "578e7d4a-7597-4f0b-a35f-919e7229d410",
+  "run_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.05,
+    "interval_min": 0.0,
+    "interval_max": 0.25
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT2M30.739498S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.08361111111111111
+  },
+  "pid": "120690419689208349",
+  "regions": [
+   [
+    "A1_I3_B3_TE1326",
+    "15"
+   ],
+   [
+    "A1_I6_B2_TE384",
+    "18334"
+   ]
+  ],
+  "case": {
+   "titulo": "Estacion de tierra T1 + T2 (PLA): 50 N sobre la tapa, 30 N lateral en la antena; fija en las pesta\u00f1as",
+   "fixed": [
+    [
+     "paredes de las ranuras de tornillo de las pesta\u00f1as de T1",
+     12
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "force",
+     "label": "50 N sobre la tapa T2",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "30 N lateral sobre el agujero del conector SMA (palanca de la antena)",
+     "faces": 1
+    }
+   ],
+   "notes": [
+    "PLA: E 3,5 GPa, \u03bd 0,36, \u03c1 1240 kg/m\u00b3, \u03c3 admisible 40 MPa."
+   ]
+  }
+ },
+ "modulo_nodo/nodo_estatico": {
+  "gid": "a2b14b37-a43b-41c4-b56f-474c9ec29b78",
+  "sim_id": "50074539-693f-4d30-9084-548ba2fd65eb",
+  "mesh_op": "bf9c7c4d-1312-4a91-b4a1-c2f0e006d9f8",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT23M",
+    "interval_min": "PT17M",
+    "interval_max": "PT29M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.76,
+    "interval_min": 0.56,
+    "interval_max": 0.96
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 5527530,
+    "interval_min": 4422024,
+    "interval_max": 6633036
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "0a57ae7e-aef4-4f30-9216-fcc5c47210df",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "12396544-ad91-4c54-9fcd-3e2d09c5fd4d",
+  "run_estimate": {
+   "duration": {
+    "value": "PT9M",
+    "interval_min": "PT6M",
+    "interval_max": "PT12M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.57,
+    "interval_min": 0.37,
+    "interval_max": 0.77
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT18M53.486159S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 1.2591666666666668
+  },
+  "pid": "4039119794151323480",
+  "regions": [
+   [
+    "A1_I12_B14_TE99",
+    "18177"
+   ],
+   [
+    "A1_I15_B13_TE63",
+    "19193"
+   ],
+   [
+    "A1_I18_B12_TE63",
+    "19815"
+   ],
+   [
+    "A1_I21_B11_TE169",
+    "20437"
+   ],
+   [
+    "A1_I24_B10_TE169",
+    "22179"
+   ],
+   [
+    "A1_I27_B9_TE874",
+    "23921"
+   ],
+   [
+    "A1_I30_B8_TE502",
+    "33438"
+   ],
+   [
+    "A1_I33_B7_TE385",
+    "38788"
+   ],
+   [
+    "A1_I36_B6_TE50",
+    "42909"
+   ],
+   [
+    "A1_I39_B5_TE874",
+    "43357"
+   ],
+   [
+    "A1_I3_B17_TE1078",
+    "15"
+   ],
+   [
+    "A1_I42_B4_TE502",
+    "52891"
+   ],
+   [
+    "A1_I45_B3_TE385",
+    "58241"
+   ],
+   [
+    "A1_I48_B2_TE50",
+    "62362"
+   ],
+   [
+    "A1_I6_B16_TE477",
+    "11387"
+   ],
+   [
+    "A1_I9_B15_TE167",
+    "16473"
+   ]
+  ],
+  "case": {
+   "titulo": "Nodo sumergido completo: peso + lastre 990 g + 150 N en una capsula + corriente 1,5 m/s",
+   "fixed": [
+    [
+     "asiento \u00d817,1 de los 2 ganchos (colgados del aro)",
+     2
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "mass",
+     "label": "lastre 990 g como masa puntual, mitad en cada tapa de bolsillo",
+     "faces": 2
+    },
+    {
+     "kind": "force",
+     "label": "150 N hacia abajo sobre el frente (bisel) de la capsula +X",
+     "faces": 7
+    },
+    {
+     "kind": "pressure",
+     "label": "corriente 1,5 m/s: 1153 Pa sobre las caras mojadas que miran a la corriente (+X)",
+     "faces": 32
+    }
+   ],
+   "notes": [
+    "Presion dinamica 0,5\u00b71025\u00b71,5\u00b2 = 1153 Pa (Cd = 1) sobre 32 caras, 200 cm\u00b2, fuerza \u2248 23.1 N en -X.",
+    "El asiento del gancho se fija entero (como el FEM viejo y el modelo de Maria): el aro no se modela."
+   ]
+  }
+ },
+ "modulo_boya/boya_estatico": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "sim_id": "4ad020e1-5305-4255-bda7-07fe2da89d5d",
+  "mesh_op": "3b17fa72-172b-4d68-9956-ceafa8e79006",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "35c14fed-124f-4dd9-bac4-fee8e1ca1617",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "failed_runs": [
+   "a68cbdb4-2aca-4fe4-aca3-b454806270ed",
+   "13c26fac-b79d-4afe-a6c8-0cba9d0ef9fe"
+  ],
+  "run_id": "bbd4a91e-492c-4154-81e4-62e84d88e533",
+  "run_estimate": {
+   "duration": {
+    "value": "PT12M",
+    "interval_min": "PT9M",
+    "interval_max": "PT15M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.82,
+    "interval_min": 0.62,
+    "interval_max": 1.02
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT14M16.0984S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.9511111111111111
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya completa: peso + panel + electronica, ola 200 N, golpe lateral 200 N, cabo 300 N; apoyo en el amarre",
+   "fixed": [
+    [
+     "agujeros de los ojales de amarre de las 2 mitades de B1 (pata de gallo)",
+     2
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "mass",
+     "label": "electronica 354 g como masa puntual sobre el piso de B3",
+     "faces": 1
+    },
+    {
+     "kind": "mass",
+     "label": "panel solar 350.0 g como masa puntual sobre las 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "mass",
+     "label": "antena 20.0 g sobre el mastil",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "ola 200 N vertical sobre la cara de arriba de las barras de la cubierta",
+     "faces": 10
+    },
+    {
+     "kind": "force",
+     "label": "golpe lateral 200 N (+Y) sobre el panel, por sus 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "force",
+     "label": "tiro del cabo 300 N a 45\u00b0: las botellas empujan la boya contra el amarre (reaccion en los ojales)",
+     "faces": 154
+    }
+   ],
+   "notes": [
+    "Supuesto del apoyo: la boya queda fija en el amarre y el cabo de 300 N a 45\u00b0 es la reaccion. La fuerza que lo equilibra entra por donde las botellas apoyan en el casco y las cunas (154 caras): empuje y arrastre de las botellas.",
+    "Las 4 cargas actuan juntas (caso envolvente, exagerado)."
+   ]
+  }
+ },
+ "modulo_tierra/tierra_estatico_desplazamiento": {
+  "gid": "d8d8135a-39e1-4d9e-be00-1319e16a55e4",
+  "mesh_op": "f3eb0634-308b-4f56-a76b-9ec3b0323149",
+  "mesh_id": "656072fa-1248-479c-97a6-a262f1484151",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT5M",
+    "interval_min": "PT0S",
+    "interval_max": "PT11M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.17,
+    "interval_min": 0.0,
+    "interval_max": 0.37
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 2468508,
+    "interval_min": 1974806,
+    "interval_max": 2962209
+   },
+   "total_run_count": 1
+  },
+  "sim_id": "a896001a-dd44-4054-ad87-c406165e956c",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "1346c9f3-cfa8-42c3-93fa-2aa6816edeb0",
+  "run_estimate": {
+   "duration": {
+    "value": "PT2M",
+    "interval_min": "PT0S",
+    "interval_max": "PT8M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.05,
+    "interval_min": 0.0,
+    "interval_max": 0.25
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT1M13.109671S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.04055555555555555
+  },
+  "pid": "120690419689208349",
+  "regions": [
+   [
+    "A1_I3_B3_TE1326",
+    "15"
+   ],
+   [
+    "A1_I6_B2_TE384",
+    "18334"
+   ]
+  ],
+  "case": {
+   "titulo": "Estacion de tierra T1 + T2 (PLA): 50 N sobre la tapa, 30 N lateral en la antena; fija en las pesta\u00f1as",
+   "fixed": [
+    [
+     "paredes de las ranuras de tornillo de las pesta\u00f1as de T1",
+     12
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "force",
+     "label": "50 N sobre la tapa T2",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "30 N lateral sobre el agujero del conector SMA (palanca de la antena)",
+     "faces": 1
+    }
+   ],
+   "notes": [
+    "PLA: E 3,5 GPa, \u03bd 0,36, \u03c1 1240 kg/m\u00b3, \u03c3 admisible 40 MPa."
+   ]
+  }
+ },
+ "modulo_nodo/nodo_estatico_desplazamiento": {
+  "gid": "a2b14b37-a43b-41c4-b56f-474c9ec29b78",
+  "mesh_op": "bf9c7c4d-1312-4a91-b4a1-c2f0e006d9f8",
+  "mesh_id": "0a57ae7e-aef4-4f30-9216-fcc5c47210df",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT23M",
+    "interval_min": "PT17M",
+    "interval_max": "PT29M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.76,
+    "interval_min": 0.56,
+    "interval_max": 0.96
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 5527530,
+    "interval_min": 4422024,
+    "interval_max": 6633036
+   },
+   "total_run_count": 1
+  },
+  "sim_id": "c22d5e44-8194-4a56-9826-c78f57408a97",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "f99ffa3b-e16b-4629-a0eb-38c140394c1b",
+  "run_estimate": {
+   "duration": {
+    "value": "PT50M",
+    "interval_min": "PT40M",
+    "interval_max": "PT59M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 6.61,
+    "interval_min": 5.29,
+    "interval_max": 7.93
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT18M39.626771S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 2.4880555555555555
+  },
+  "pid": "4039119794151323480",
+  "regions": [
+   [
+    "A1_I12_B14_TE99",
+    "18177"
+   ],
+   [
+    "A1_I15_B13_TE63",
+    "19193"
+   ],
+   [
+    "A1_I18_B12_TE63",
+    "19815"
+   ],
+   [
+    "A1_I21_B11_TE169",
+    "20437"
+   ],
+   [
+    "A1_I24_B10_TE169",
+    "22179"
+   ],
+   [
+    "A1_I27_B9_TE874",
+    "23921"
+   ],
+   [
+    "A1_I30_B8_TE502",
+    "33438"
+   ],
+   [
+    "A1_I33_B7_TE385",
+    "38788"
+   ],
+   [
+    "A1_I36_B6_TE50",
+    "42909"
+   ],
+   [
+    "A1_I39_B5_TE874",
+    "43357"
+   ],
+   [
+    "A1_I3_B17_TE1078",
+    "15"
+   ],
+   [
+    "A1_I42_B4_TE502",
+    "52891"
+   ],
+   [
+    "A1_I45_B3_TE385",
+    "58241"
+   ],
+   [
+    "A1_I48_B2_TE50",
+    "62362"
+   ],
+   [
+    "A1_I6_B16_TE477",
+    "11387"
+   ],
+   [
+    "A1_I9_B15_TE167",
+    "16473"
+   ]
+  ],
+  "case": {
+   "titulo": "Nodo sumergido completo: peso + lastre 990 g + 150 N en una capsula + corriente 1,5 m/s",
+   "fixed": [
+    [
+     "asiento \u00d817,1 de los 2 ganchos (colgados del aro)",
+     2
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "mass",
+     "label": "lastre 990 g como masa puntual, mitad en cada tapa de bolsillo",
+     "faces": 2
+    },
+    {
+     "kind": "force",
+     "label": "150 N hacia abajo sobre el frente (bisel) de la capsula +X",
+     "faces": 7
+    },
+    {
+     "kind": "pressure",
+     "label": "corriente 1,5 m/s: 1153 Pa sobre las caras mojadas que miran a la corriente (+X)",
+     "faces": 32
+    }
+   ],
+   "notes": [
+    "Presion dinamica 0,5\u00b71025\u00b71,5\u00b2 = 1153 Pa (Cd = 1) sobre 32 caras, 200 cm\u00b2, fuerza \u2248 23.1 N en -X.",
+    "El asiento del gancho se fija entero (como el FEM viejo y el modelo de Maria): el aro no se modela."
+   ]
+  }
+ },
+ "modulo_boya/boya_estatico_desplazamiento": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "mesh_op": "3b17fa72-172b-4d68-9956-ceafa8e79006",
+  "mesh_id": "35c14fed-124f-4dd9-bac4-fee8e1ca1617",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "sim_id": "7dc77878-71e0-434a-8a30-2d1df0373f53",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "5acbcf36-695d-48a5-9bce-18dec18be83f",
+  "run_estimate": {
+   "duration": {
+    "value": "PT39M",
+    "interval_min": "PT31M",
+    "interval_max": "PT47M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 2.59,
+    "interval_min": 2.07,
+    "interval_max": 3.11
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT15M10.734221S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 1.0116666666666667
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya completa: peso + panel + electronica, ola 200 N, golpe lateral 200 N, cabo 300 N; apoyo en el amarre",
+   "fixed": [
+    [
+     "agujeros de los ojales de amarre de las 2 mitades de B1 (pata de gallo)",
+     2
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "mass",
+     "label": "electronica 354 g como masa puntual sobre el piso de B3",
+     "faces": 1
+    },
+    {
+     "kind": "mass",
+     "label": "panel solar 350.0 g como masa puntual sobre las 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "mass",
+     "label": "antena 20.0 g sobre el mastil",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "ola 200 N vertical sobre la cara de arriba de las barras de la cubierta",
+     "faces": 10
+    },
+    {
+     "kind": "force",
+     "label": "golpe lateral 200 N (+Y) sobre el panel, por sus 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "force",
+     "label": "tiro del cabo 300 N a 45\u00b0: las botellas empujan la boya contra el amarre (reaccion en los ojales)",
+     "faces": 154
+    }
+   ],
+   "notes": [
+    "Supuesto del apoyo: la boya queda fija en el amarre y el cabo de 300 N a 45\u00b0 es la reaccion. La fuerza que lo equilibra entra por donde las botellas apoyan en el casco y las cunas (154 caras): empuje y arrastre de las botellas.",
+    "Las 4 cargas actuan juntas (caso envolvente, exagerado)."
+   ]
+  }
+ },
+ "modulo_boya/boya_estatico_mixto": {
+  "gid": "2ffe32f7-acf3-40e6-af34-b7ca3e886b42",
+  "sim_id": "929f0380-0865-4996-a212-804c084d1689",
+  "mesh_op": "54717b30-c936-4d93-b194-d94b2d3094fd",
+  "mesh_estimate": {
+   "duration": {
+    "value": "PT14M",
+    "interval_min": "PT8M",
+    "interval_max": "PT20M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.46,
+    "interval_min": 0.26,
+    "interval_max": 0.66
+   },
+   "cell_count": {
+    "type": "CELLS",
+    "value": 9179519,
+    "interval_min": 7343615,
+    "interval_max": 11015422
+   },
+   "total_run_count": 1
+  },
+  "mesh_id": "d029e414-a2cd-4d69-b01d-5b2b3143251a",
+  "check": {
+   "severity": "SUCCESS",
+   "entries": []
+  },
+  "run_id": "323621df-8532-446c-89c1-a8a2ff8ff16e",
+  "run_estimate": {
+   "duration": {
+    "value": "PT13M",
+    "interval_min": "PT10M",
+    "interval_max": "PT16M"
+   },
+   "compute_resource": {
+    "type": "CPU_HOURS",
+    "value": 0.84,
+    "interval_min": 0.64,
+    "interval_max": 1.04
+   },
+   "cell_count": null,
+   "total_run_count": 1
+  },
+  "duration": "PT14M21.730294S",
+  "compute": {
+   "type": "CPU_HOURS",
+   "value": 0.9572222222222222
+  },
+  "pid": "133929070339263934",
+  "regions": [
+   [
+    "A1_I12_B12_TE657",
+    "33836"
+   ],
+   [
+    "A1_I15_B11_TE783",
+    "41789"
+   ],
+   [
+    "A1_I18_B10_TE291",
+    "51335"
+   ],
+   [
+    "A1_I21_B9_TE921",
+    "54467"
+   ],
+   [
+    "A1_I24_B8_TE919",
+    "65070"
+   ],
+   [
+    "A1_I27_B7_TE53",
+    "75671"
+   ],
+   [
+    "A1_I30_B6_TE53",
+    "76183"
+   ],
+   [
+    "A1_I33_B5_TE921",
+    "76695"
+   ],
+   [
+    "A1_I36_B4_TE919",
+    "87298"
+   ],
+   [
+    "A1_I39_B3_TE53",
+    "97899"
+   ],
+   [
+    "A1_I3_B15_TE1233",
+    "15"
+   ],
+   [
+    "A1_I42_B2_TE53",
+    "98411"
+   ],
+   [
+    "A1_I6_B14_TE1233",
+    "13565"
+   ],
+   [
+    "A1_I9_B13_TE621",
+    "27119"
+   ]
+  ],
+  "case": {
+   "titulo": "Boya completa: peso + panel + electronica, ola 200 N, golpe lateral 200 N, cabo 300 N; apoyo en el amarre",
+   "fixed": [
+    [
+     "agujeros de los ojales de amarre de las 2 mitades de B1 (pata de gallo)",
+     2
+    ]
+   ],
+   "loads": [
+    {
+     "kind": "mass",
+     "label": "electronica 354 g como masa puntual sobre el piso de B3",
+     "faces": 1
+    },
+    {
+     "kind": "mass",
+     "label": "panel solar 350.0 g como masa puntual sobre las 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "mass",
+     "label": "antena 20.0 g sobre el mastil",
+     "faces": 1
+    },
+    {
+     "kind": "force",
+     "label": "ola 200 N vertical sobre la cara de arriba de las barras de la cubierta",
+     "faces": 10
+    },
+    {
+     "kind": "force",
+     "label": "golpe lateral 200 N (+Y) sobre el panel, por sus 4 columnas",
+     "faces": 4
+    },
+    {
+     "kind": "force",
+     "label": "tiro del cabo 300 N a 45\u00b0: las botellas empujan la boya contra el amarre (reaccion en los ojales)",
+     "faces": 154
+    }
+   ],
+   "notes": [
+    "Supuesto del apoyo: la boya queda fija en el amarre y el cabo de 300 N a 45\u00b0 es la reaccion. La fuerza que lo equilibra entra por donde las botellas apoyan en el casco y las cunas (154 caras): empuje y arrastre de las botellas.",
+    "Las 4 cargas actuan juntas (caso envolvente, exagerado)."
+   ]
+  }
+ }
+}

@@ -1,3 +1,19 @@
+# Estado LanternGuard CAD | SimScale por módulo ensamblado (07/11) | **HECHO, con 1 verificación pendiente en la boya**
+
+**Paso 0:** el repo, el documento entregado en Onshape y Drive tienen la misma geometría (`docs/VERIFICACION_2026-11-07.md`). En Drive se reemplazó el STL viejo de M3s y se subieron LR2, T1 y T2 con sus planos A4.
+
+| Módulo | σ máx. | FS | Dónde | Proyecto público |
+|---|---|---|---|---|
+| Nodo sumergido (PETG) | 3,87 MPa | 12,9 | asiento Ø17,1 del gancho de M3s | [nodo](https://www.simscale.com/projects/yoichi_palacio/lanternguard_1_-_nodo_sumergido_1336844629/) |
+| Boya (PETG) | 70,6 MPa bruto · ≤ 28 MPa fuera del pico | 0,71 bruto · ≥ 1,8 | pico singular en el ojal de amarre empotrado | [boya](https://www.simscale.com/projects/yoichi_palacio/lanternguard_2_-_boya_661668473/) |
+| Estación de tierra (PLA) | 4,43 MPa | 9,0 | ranuras de las pestañas de T1, agujero SMA | [tierra](https://www.simscale.com/projects/yoichi_palacio/lanternguard_3_-_estacion_de_tierra_418577745/) |
+
+Informe: `docs/REPORTE_SIMSCALE_MODULOS.md/.pdf`, también en Drive `06_SimScale/` con las capturas en `06_SimScale/modulos_2026-11-07/`. Referencia: María tenía 19,5 MPa en el nodo, con otra carga (presión hidrostática).
+
+**Boya:** la corrida 1, con todos los contactos estrictos, dio 146,8 MPa. Era un artefacto: las cunas quedaban pegadas por 311 mm² y una gira 5,8 mm. La corrida 2 (`--mixto`) da 70,6 MPa en el borde del ojal empotrado. A mano, el ojal trabaja a 1–2 MPa. **Falta sondear el valor a 2–3 mm del ojal con sesión en el workbench.** El CFD de la boya (opción b) no se hizo.
+
+---
+
 # Estado LanternGuard CAD | documento limpio, sin probetas, juego del aro 0,3 mm por lado (05/11) | **TERMINADO, con 2 pasos a mano**
 
 **Total a imprimir: 3887 g, unas 152 h, 36 piezas.** 4 rollos de 1 kg alcanzan con 113 g de margen, 37 g menos que los 150 g pedidos. No alcanza para repetir una pieza grande.

@@ -65,3 +65,8 @@ salida/planos_onshape/cache_vistas/
 salida/simscale/_res/
 salida/simscale/_named/
 salida/simscale/_local/
+
+# SimScale por modulo: STEP con nombres (se regeneran) y capturas descartadas/temporales
+salida/simscale_modulos/_named/
+salida/simscale_modulos/**/_*/
+salida/simscale_modulos/**/_*.png

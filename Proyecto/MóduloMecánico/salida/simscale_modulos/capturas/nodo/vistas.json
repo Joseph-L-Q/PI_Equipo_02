@@ -1,0 +1,99 @@
+{
+ "pid": "4039119794151323480",
+ "url": "https://www.simscale.com/projects/yoichi_palacio/lanternguard_1_-_nodo_sumergido_1336844629/",
+ "owner": "yoichi_palacio",
+ "nombre": "LanternGuard 1 - Nodo sumergido",
+ "vistas": [
+  {
+   "cug": "6e599dcf-5585-4390-9310-e3a8e5a3b7ad",
+   "titulo": "Displacement X (m)",
+   "campo": "DISPLACEMENT_N.X",
+   "minimo": -1.60805e-05,
+   "maximo": 6.43453e-05,
+   "partes": [
+    "region12",
+    "region15",
+    "region1",
+    "region7",
+    "region10",
+    "region5",
+    "region9",
+    "region13",
+    "region16",
+    "region3",
+    "region6",
+    "region8",
+    "region11",
+    "region14",
+    "region2",
+    "region4"
+   ],
+   "bbox": {
+    "minimum": {
+     "x": -0.215,
+     "y": -0.078,
+     "z": -0.0932032
+    },
+    "maximum": {
+     "x": 0.215,
+     "y": 0.078,
+     "z": 0.163497
+    }
+   }
+  },
+  {
+   "cug": "f2dc52f9-ddb4-400c-9114-0acb11ac2522",
+   "titulo": "Von Mises Stress (Pa)",
+   "campo": "VON_MISES_STRESS_N",
+   "minimo": 4.54589,
+   "maximo": 3867170,
+   "partes": [
+    "region12",
+    "region15",
+    "region1",
+    "region7",
+    "region10",
+    "region5",
+    "region9",
+    "region13",
+    "region16",
+    "region3",
+    "region6",
+    "region8",
+    "region11",
+    "region14",
+    "region2",
+    "region4"
+   ],
+   "bbox": {
+    "minimum": {
+     "x": -0.215,
+     "y": -0.078,
+     "z": -0.0932032
+    },
+    "maximum": {
+     "x": 0.215,
+     "y": 0.078,
+     "z": 0.163497
+    }
+   }
+  }
+ ],
+ "capturas": [
+  {
+   "guardada": "vista_01_guardada.png",
+   "iso": "vista_01_iso.png",
+   "cug": "6e599dcf-5585-4390-9310-e3a8e5a3b7ad"
+  },
+  {
+   "guardada": "vista_02_guardada.png",
+   "iso": "vista_02_iso.png",
+   "cug": "6e599dcf-5585-4390-9310-e3a8e5a3b7ad"
+  },
+  {
+   "guardada": "vista_03_guardada.png",
+   "iso": "vista_03_iso.png",
+   "cug": "f2dc52f9-ddb4-400c-9114-0acb11ac2522"
+  }
+ ]
+}

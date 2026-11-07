@@ -1,3 +1,21 @@
+# HANDOFF siguiente | PC de casa | SimScale por módulo ensamblado (07/11)
+
+Proyectos públicos: [nodo](https://www.simscale.com/projects/yoichi_palacio/lanternguard_1_-_nodo_sumergido_1336844629/) · [boya](https://www.simscale.com/projects/yoichi_palacio/lanternguard_2_-_boya_661668473/) · [tierra](https://www.simscale.com/projects/yoichi_palacio/lanternguard_3_-_estacion_de_tierra_418577745/). Los pids y el estado están en `salida/simscale_modulos/state.json`. Scripts: `cad_final/simscale_modulos.py` (o `simscale_run.py --modulo <m>`) y `cad_final/capturas_simscale.py`.
+
+## Por hacer
+1. **Boya, con sesión en SimScale:** sondear von Mises a 2–3 mm del ojal en la corrida `boya_estatico_mixto`. Si fuera del pico pasa de 25 MPa (FS < 2), revisar el ojal y la cuna.
+2. **Capturas que piden sesión** (`docs/GUIA_CAPTURAS_SIMSCALE.md`): la magnitud del desplazamiento, la malla, las condiciones de borde en el workbench y la configuración del proyecto de María.
+3. **Desplazamiento de la boya, corrida 2:** no se corrió. El publicado es de la corrida 1. Comando: `simscale_modulos.py --modulo boya --mixto --desplazamiento`.
+4. **CFD de la boya** (opción b del encargo): no se hizo.
+5. Lo pendiente del bloque del 05/11 sigue igual (abajo).
+
+## Decisiones que tomé solo (detalle en `docs/DECISIONES.md`, 07/11)
+- **Contactos pegados detectados por script**, a 0,35 mm. La API no tiene la detección automática del workbench.
+- **Boya:** el informe toma la corrida 2 y conserva la 1, que se publica con su diagnóstico.
+- **Tierra:** el apoyo va en las ranuras de las pestañas. La primera corrida, que empotraba todo el fondo, se descartó.
+
+---
+
 # HANDOFF siguiente | PC de casa | documento limpio sin probetas (05/11)
 
 Documento: [LanternGuard - PIEZAS PARA IMPRIMIR](https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d), did `76e36e0130a8d259842ecee7`, wid `fdd58e8bdf77f39a1781a12d`. Generado con `cad_final/documento_limpio.py`; estado en `salida/limpio/estado.json`.

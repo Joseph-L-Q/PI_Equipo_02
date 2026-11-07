@@ -1,0 +1,95 @@
+{
+ "pid": "133929070339263934",
+ "url": "https://www.simscale.com/projects/yoichi_palacio/lanternguard_2_-_boya_661668473/",
+ "owner": "yoichi_palacio",
+ "nombre": "LanternGuard 2 - Boya",
+ "vistas": [
+  {
+   "cug": "636d94fa-634a-49e4-826c-43052e460d7f",
+   "titulo": "Displacement X (m)",
+   "campo": "DISPLACEMENT_N.X",
+   "minimo": -0.00576321,
+   "maximo": 9.18634e-05,
+   "partes": [
+    "region10",
+    "region4",
+    "region6",
+    "region11",
+    "region12",
+    "region13",
+    "region14",
+    "region1",
+    "region2",
+    "region3",
+    "region5",
+    "region7",
+    "region8",
+    "region9"
+   ],
+   "bbox": {
+    "minimum": {
+     "x": -0.2478,
+     "y": -0.127,
+     "z": 0
+    },
+    "maximum": {
+     "x": 0.2478,
+     "y": 0.127,
+     "z": 0.2253
+    }
+   }
+  },
+  {
+   "cug": "52cfa008-66e4-4d76-8985-26cc3c1687f3",
+   "titulo": "Von Mises Stress (Pa)",
+   "campo": "VON_MISES_STRESS_N",
+   "minimo": 0.280328,
+   "maximo": 146815000,
+   "partes": [
+    "region10",
+    "region4",
+    "region6",
+    "region11",
+    "region12",
+    "region13",
+    "region14",
+    "region1",
+    "region2",
+    "region3",
+    "region5",
+    "region7",
+    "region8",
+    "region9"
+   ],
+   "bbox": {
+    "minimum": {
+     "x": -0.2478,
+     "y": -0.127,
+     "z": 0
+    },
+    "maximum": {
+     "x": 0.2478,
+     "y": 0.127,
+     "z": 0.2253
+    }
+   }
+  }
+ ],
+ "capturas": [
+  {
+   "guardada": "vista_01_guardada.png",
+   "iso": "vista_01_iso.png",
+   "cug": "636d94fa-634a-49e4-826c-43052e460d7f"
+  },
+  {
+   "guardada": "vista_02_guardada.png",
+   "iso": "vista_02_iso.png",
+   "cug": "636d94fa-634a-49e4-826c-43052e460d7f"
+  },
+  {
+   "guardada": "vista_03_guardada.png",
+   "iso": "vista_03_iso.png",
+   "cug": "52cfa008-66e4-4d76-8985-26cc3c1687f3"
+  }
+ ]
+}
