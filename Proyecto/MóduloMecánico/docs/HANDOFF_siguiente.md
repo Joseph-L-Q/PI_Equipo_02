@@ -1,5 +1,7 @@
 # HANDOFF siguiente | PC de casa | SimScale por módulo ensamblado (07/11)
 
+Commit del trabajo: `c41610b` (origin y personal, rama `cad/version-final`). Informe en Drive: `06_SimScale/REPORTE_SIMSCALE_MODULOS.pdf`.
+
 Proyectos públicos: [nodo](https://www.simscale.com/projects/yoichi_palacio/lanternguard_1_-_nodo_sumergido_1336844629/) · [boya](https://www.simscale.com/projects/yoichi_palacio/lanternguard_2_-_boya_661668473/) · [tierra](https://www.simscale.com/projects/yoichi_palacio/lanternguard_3_-_estacion_de_tierra_418577745/). Los pids y el estado están en `salida/simscale_modulos/state.json`. Scripts: `cad_final/simscale_modulos.py` (o `simscale_run.py --modulo <m>`) y `cad_final/capturas_simscale.py`.
 
 ## Por hacer
