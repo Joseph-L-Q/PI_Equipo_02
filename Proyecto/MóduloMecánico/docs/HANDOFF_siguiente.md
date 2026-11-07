@@ -172,3 +172,4 @@ Leer primero:
 - Pendiente de la boya: filete r ≥ 2 mm y más perímetros en los nudos del reticulado que reciben las botellas.
 - El plan Community de SimScale está excedido: con sesión no se ven valores ni sondas. Los máximos salen del `modelInfo` público.
 - Las capturas con sesión están en `salida/simscale_modulos/capturas_sesion/`, y las decisiones en `docs/DECISIONES.md` (07/11).
+- Commit: `20133bb` (rama cad/version-final, en origin y personal). PDF en Drive: `lgdrive:06_SimScale/REPORTE_SIMSCALE_MODULOS.pdf`; la v1 está en `OLD/2026-11-07/`.
