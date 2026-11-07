@@ -1,0 +1,75 @@
+{
+ "PB_aro_solidos": 2,
+ "ensamble": {
+  "solidos_step": 36,
+  "piezas_base": 32,
+  "volumen_base_cm3": 3405.0,
+  "volumen_importado_0511_cm3": 3408.0,
+  "z_rod": -40.33974596215561,
+  "niveles": [
+   -40.33974596215561,
+   -90.3397459621556,
+   -140.3397459621556,
+   -190.3397459621556
+  ],
+  "choque_aro_gancho_mm3": {
+   "M3s_riel_gancho_der": 0.0,
+   "M3s_riel_gancho_izq": 0.0
+  },
+  "z_ganchos": {
+   "M3s_riel_gancho_der": [
+    -52.1,
+    29.7
+   ],
+   "M3s_riel_gancho_izq": [
+    -52.1,
+    29.7
+   ]
+  }
+ },
+ "planos": {
+  "LR2_aro": {
+   "pdf": "salida\\nuevas\\planos_A4\\PLANO_A4_LR2_aro_local.pdf",
+   "escala": "1:2,5",
+   "notas": [
+    "Sección Ø16,5 con base plana de 0,5. Asiento del gancho M3s Ø16,8: juego 0,3 en diámetro.",
+    "Diseñado para 2 kg por piso + 150 N de manipulación; FS entre capas ≥ 3."
+   ]
+  },
+  "PB_aro": {
+   "pdf": "salida\\nuevas\\planos_A4\\PLANO_A4_PB_aro_local.pdf",
+   "escala": "1:1",
+   "notas": [
+    "Sección Ø16,5 con base plana de 0,5. Asiento del gancho M3s Ø16,8: juego 0,3 en diámetro.",
+    "Probar el calce antes de imprimir los 4 aros: tramo de 50 mm y asiento real de M3s."
+   ]
+  },
+  "T1_caja": {
+   "pdf": "salida\\nuevas\\planos_A4\\PLANO_A4_T1_caja_local.pdf",
+   "escala": "1:2",
+   "notas": [
+    "Agujeros: 4x Ø3,5; 4x Ø4; 1x Ø6,5",
+    "Cordón NBR Ø2 en ranura 2,6 x 1,5. Insertos M3 y M2,5. Montar con el USB-C hacia abajo.",
+    "Medidas del Heltec y la batería estimadas: confirmar antes de imprimir."
+   ]
+  },
+  "T2_tapa": {
+   "pdf": "salida\\nuevas\\planos_A4\\PLANO_A4_T2_tapa_local.pdf",
+   "escala": "1:1",
+   "notas": [
+    "Agujeros: 4x Ø3,4",
+    "4 M3 inox A4. Ventana OLED: acrílico de 31 x 20 x 2 pegado con sellador en el rebaje.",
+    "Medidas del Heltec estimadas: confirmar la ventana antes de imprimir."
+   ]
+  },
+  "M3s_riel_gancho": {
+   "pdf": "salida\\nuevas\\planos_A4\\PLANO_A4_M3s_riel_gancho_local.pdf",
+   "escala": "1:2",
+   "notas": [
+    "Agujeros: 4x Ø3,4; 4x Ø4,2",
+    "Asiento Ø16,8 para el aro Ø16,5: juego 0,3 en diámetro.",
+    "Diseñado para 2 kg por piso + 150 N de manipulación; FS entre capas ≥ 3."
+   ]
+  }
+ }
+}

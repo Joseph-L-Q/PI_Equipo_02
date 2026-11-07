@@ -1,0 +1,241 @@
+{
+ "origen": "ensamble_modular_D200.step",
+ "solidos": 47,
+ "partes": [
+  {
+   "n": 0,
+   "nombre": "M1_caja_cuerpo",
+   "volumen_mm3": 214823.7
+  },
+  {
+   "n": 1,
+   "nombre": "M2_caja_tapa",
+   "volumen_mm3": 129409.8
+  },
+  {
+   "n": 2,
+   "nombre": "M3_riel_central",
+   "volumen_mm3": 170109.3
+  },
+  {
+   "n": 3,
+   "nombre": "M11_bandeja",
+   "volumen_mm3": 35638.8
+  },
+  {
+   "n": 4,
+   "nombre": "lastre_+Y_pletina_1",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 5,
+   "nombre": "lastre_+Y_pletina_2",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 6,
+   "nombre": "lastre_+Y_pletina_3",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 7,
+   "nombre": "lastre_+Y_pletina_4",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 8,
+   "nombre": "lastre_-Y_pletina_1",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 9,
+   "nombre": "lastre_-Y_pletina_2",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 10,
+   "nombre": "lastre_-Y_pletina_3",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 11,
+   "nombre": "lastre_-Y_pletina_4",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 12,
+   "nombre": "M3_tapa_bolsillo_+Y",
+   "volumen_mm3": 9578.7
+  },
+  {
+   "n": 13,
+   "nombre": "M3_tapa_bolsillo_-Y",
+   "volumen_mm3": 9578.7
+  },
+  {
+   "n": 14,
+   "nombre": "REF_varilla_M8",
+   "volumen_mm3": 22669.7
+  },
+  {
+   "n": 15,
+   "nombre": "REF_arandela_M8_+X",
+   "volumen_mm3": 793.9
+  },
+  {
+   "n": 16,
+   "nombre": "REF_tuerca_M8_+X",
+   "volumen_mm3": 624.6
+  },
+  {
+   "n": 17,
+   "nombre": "REF_arandela_M8_-X",
+   "volumen_mm3": 793.9
+  },
+  {
+   "n": 18,
+   "nombre": "REF_tuerca_M8_-X",
+   "volumen_mm3": 624.6
+  },
+  {
+   "n": 19,
+   "nombre": "M3_riel_ext_+X",
+   "volumen_mm3": 44756.1
+  },
+  {
+   "n": 20,
+   "nombre": "M3_riel_punta_+X",
+   "volumen_mm3": 25319.3
+  },
+  {
+   "n": 21,
+   "nombre": "M9_gancho_+X",
+   "volumen_mm3": 19511.9
+  },
+  {
+   "n": 22,
+   "nombre": "M14_pestillo_+X",
+   "volumen_mm3": 919.2
+  },
+  {
+   "n": 23,
+   "nombre": "M12_perilla_+X",
+   "volumen_mm3": 6709.8
+  },
+  {
+   "n": 24,
+   "nombre": "M13_casquillo_D8_+X",
+   "volumen_mm3": 1611.7
+  },
+  {
+   "n": 25,
+   "nombre": "M10_carro_capsula_+X",
+   "volumen_mm3": 54499.8
+  },
+  {
+   "n": 26,
+   "nombre": "M4_capsula_cuerpo_+X",
+   "volumen_mm3": 45954.5
+  },
+  {
+   "n": 27,
+   "nombre": "M5_capsula_tapa_+X",
+   "volumen_mm3": 23467.3
+  },
+  {
+   "n": 28,
+   "nombre": "M6_capsula_bisel_+X",
+   "volumen_mm3": 1890.3
+  },
+  {
+   "n": 29,
+   "nombre": "M7_capsula_ventana_+X",
+   "volumen_mm3": 2120.6
+  },
+  {
+   "n": 30,
+   "nombre": "M3_riel_ext_-X",
+   "volumen_mm3": 44756.1
+  },
+  {
+   "n": 31,
+   "nombre": "M3_riel_punta_-X",
+   "volumen_mm3": 25319.3
+  },
+  {
+   "n": 32,
+   "nombre": "M9_gancho_-X",
+   "volumen_mm3": 19511.9
+  },
+  {
+   "n": 33,
+   "nombre": "M14_pestillo_-X",
+   "volumen_mm3": 919.2
+  },
+  {
+   "n": 34,
+   "nombre": "M12_perilla_-X",
+   "volumen_mm3": 6709.8
+  },
+  {
+   "n": 35,
+   "nombre": "M13_casquillo_D8_-X",
+   "volumen_mm3": 1611.7
+  },
+  {
+   "n": 36,
+   "nombre": "M10_carro_capsula_-X",
+   "volumen_mm3": 54499.8
+  },
+  {
+   "n": 37,
+   "nombre": "M4_capsula_cuerpo_-X",
+   "volumen_mm3": 45954.5
+  },
+  {
+   "n": 38,
+   "nombre": "M5_capsula_tapa_-X",
+   "volumen_mm3": 23467.3
+  },
+  {
+   "n": 39,
+   "nombre": "M6_capsula_bisel_-X",
+   "volumen_mm3": 1890.3
+  },
+  {
+   "n": 40,
+   "nombre": "M7_capsula_ventana_-X",
+   "volumen_mm3": 2120.6
+  },
+  {
+   "n": 41,
+   "nombre": "REF_aro_superior",
+   "volumen_mm3": 31582.7
+  },
+  {
+   "n": 42,
+   "nombre": "REF_linterna_malla",
+   "volumen_mm3": 125035.4
+  },
+  {
+   "n": 43,
+   "nombre": "REF_cuerda_1",
+   "volumen_mm3": 3237.7
+  },
+  {
+   "n": 44,
+   "nombre": "REF_cuerda_2",
+   "volumen_mm3": 3237.7
+  },
+  {
+   "n": 45,
+   "nombre": "REF_cuerda_3",
+   "volumen_mm3": 3237.7
+  },
+  {
+   "n": 46,
+   "nombre": "REF_cuerda_4",
+   "volumen_mm3": 3237.7
+  }
+ ]
+}

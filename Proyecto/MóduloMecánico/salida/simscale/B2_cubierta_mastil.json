@@ -1,0 +1,68 @@
+{
+ "pieza": "B2_cubierta_mastil",
+ "grupo": "B",
+ "caso": "cubierta_ola_vertical",
+ "titulo": "Media cubierta: peso de la caja y del panel + golpe de ola de 200 N vertical sobre las barras",
+ "notas": [
+  "Caja completa 582 g repartida en 4 pilares (cada mitad carga 2); panel 350.0 g en 4 columnas (cada mitad carga 2).",
+  "Golpe de ola vertical: 200 N hacia abajo sobre la cara de arriba de las barras de esa mitad (cada mitad recibe los 200 N enteros: exagerado, en la boya completa se reparten)."
+ ],
+ "seleccion": {
+  "fijos": [
+   {
+    "label": "huella de los 4 bosses D10 del casco bajo los agujeros M3",
+    "caras": 4,
+    "area_mm2": 269.7
+   }
+  ],
+  "cargas": [
+   {
+    "label": "peso de la caja (1/4 por pilar)",
+    "caras": 2,
+    "area_mm2": 131.9,
+    "fuerza_N": [
+     0,
+     0,
+     -2.856
+    ]
+   },
+   {
+    "label": "peso del panel (1/4 por columna)",
+    "caras": 2,
+    "area_mm2": 201.1,
+    "fuerza_N": [
+     0,
+     0,
+     -1.717
+    ]
+   },
+   {
+    "label": "antena",
+    "caras": 1,
+    "area_mm2": 204.2,
+    "fuerza_N": [
+     0,
+     0,
+     -0.196
+    ]
+   },
+   {
+    "label": "golpe de ola vertical de 200 N sobre las barras",
+    "caras": 6,
+    "area_mm2": 10382.2,
+    "fuerza_N": [
+     0,
+     0,
+     -200.0
+    ]
+   }
+  ]
+ },
+ "material": {
+  "E_MPa": 2100.0,
+  "nu": 0.38,
+  "rho": 1270.0,
+  "sigma_adm_MPa": 50.0
+ },
+ "fineness": 5.0
+}

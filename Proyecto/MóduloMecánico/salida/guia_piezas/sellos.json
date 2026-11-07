@@ -1,0 +1,215 @@
+[
+ {
+  "n": 1,
+  "sello": "Tapa M2 sobre la caja M1s",
+  "piezas": [
+   "M1s_caja_cuerpo",
+   "M2_caja_tapa"
+  ],
+  "tipo": "cordón O-ring Ø2 en ranura",
+  "protege": "La electrónica del nodo (bandejas M11) y todo el volumen seco, que desde la caja se extiende por los rieles hasta las cápsulas.",
+  "donde": [
+   "M2 N° 2",
+   "M2 N° 1",
+   "M1s N° 6"
+  ],
+  "zona": "nodo",
+  "cant": "×1"
+ },
+ {
+  "n": 2,
+  "sello": "Riel M3s ↔ caja M1s: cordón plano (×2)",
+  "piezas": [
+   "M3s_riel_gancho",
+   "M1s_caja_cuerpo"
+  ],
+  "tipo": "cordón de goma Ø2 NBR en ranura plana, 20 % de compresión (ranura 1.6 × 2.6 mm)",
+  "protege": "La unión entre la caja y cada riel, alrededor de la ventana por donde pasa el cable.",
+  "donde": [
+   "M3s N° 4",
+   "M3s N° 5",
+   "M1s N° 3",
+   "M1s N° 4"
+  ],
+  "zona": "nodo",
+  "cant": "×2"
+ },
+ {
+  "n": 3,
+  "sello": "Almohadilla del riel M3s ↔ silla de M5s: cordón plano (×2)",
+  "piezas": [
+   "M3s_riel_gancho",
+   "M5s_capsula_tapa_pie"
+  ],
+  "tipo": "cordón de goma Ø2 NBR en ranura plana, 20 % de compresión",
+  "protege": "La unión entre el riel y la tapa de la cápsula, alrededor de la abertura de 8 × 22 mm por donde baja el cable.",
+  "donde": [
+   "M5s N° 2",
+   "M3s N° 6",
+   "M3s N° 8",
+   "M5s N° 4"
+  ],
+  "zona": "nodo",
+  "cant": "×2"
+ },
+ {
+  "n": 4,
+  "sello": "Tapa M5s sobre la cápsula M4 (×2)",
+  "piezas": [
+   "M4_capsula_cuerpo",
+   "M5s_capsula_tapa_pie"
+  ],
+  "tipo": "cordón O-ring Ø2 en ranura",
+  "protege": "La cámara Arducam y el anillo LED dentro de cada cápsula. El cable plano entra por la ranura de esta tapa, que queda dentro del sello.",
+  "donde": [
+   "M5s N° 8",
+   "M5s N° 7",
+   "M4 N° 1"
+  ],
+  "zona": "nodo",
+  "cant": "×2"
+ },
+ {
+  "n": 5,
+  "sello": "Ventana de acrílico M7: junta plana + silicona (×2)",
+  "piezas": [
+   "M4_capsula_cuerpo",
+   "M6_capsula_bisel"
+  ],
+  "tipo": "junta plana de silicona de 1 mm (Ø30 × Ø26.5) comprimida 20 % por el bisel M6 + cordón de silicona marina en el borde",
+  "protege": "El frente de cada cápsula: la ventana deja pasar la luz y no el agua.",
+  "donde": [
+   "M4 N° 2",
+   "M6 N° 2",
+   "M6 N° 1"
+  ],
+  "zona": "nodo",
+  "cant": "×2"
+ },
+ {
+  "n": 6,
+  "sello": "PG7 del umbilical en la tapa M2",
+  "piezas": [
+   "M2_caja_tapa"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del cable umbilical hacia la caja seca. Es el único prensaestopas que queda en el nodo.",
+  "donde": [
+   "M2 N° 3"
+  ],
+  "zona": "nodo",
+  "cant": "×1"
+ },
+ {
+  "n": 7,
+  "sello": "Insertos ciegos que no perforan paredes",
+  "piezas": [
+   "M1s_caja_cuerpo",
+   "M5s_capsula_tapa_pie",
+   "M3s_riel_gancho"
+  ],
+  "tipo": "inserto térmico ciego (no atraviesa)",
+  "protege": "Los 12 M3 de la brida de M1s, los 8 M4 de los cojines y los 4 M3 de cada silla de M5s se enroscan en insertos ciegos: ningún tornillo abre un camino al interior. Los 4 M3 de la almohadilla del riel pasan por las alas, fuera del canal.",
+  "donde": [
+   "M1s N° 5",
+   "M1s N° 4",
+   "M5s N° 4",
+   "M3s N° 8"
+  ],
+  "zona": "nodo",
+  "cant": ""
+ },
+ {
+  "n": 8,
+  "sello": "Tapa B4 sobre la caja seca B3",
+  "piezas": [
+   "B3_caja",
+   "B4_tapa"
+  ],
+  "tipo": "cordón O-ring Ø2 en ranura",
+  "protege": "La electrónica de la boya: PCB, Waveshare, portabaterías 3×18650 y RTC.",
+  "donde": [
+   "B4 N° 2",
+   "B4 N° 1",
+   "B3 N° 8"
+  ],
+  "zona": "boya",
+  "cant": "×1"
+ },
+ {
+  "n": 9,
+  "sello": "PG7 del umbilical en B3 (pared −X)",
+  "piezas": [
+   "B3_caja"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del cable umbilical (boya ↔ nodo) hacia la caja seca.",
+  "donde": [
+   "B3 N° 5"
+  ],
+  "zona": "boya",
+  "cant": "×1"
+ },
+ {
+  "n": 10,
+  "sello": "PG7 del cable solar en B3 (pared +X)",
+  "piezas": [
+   "B3_caja"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del cable del panel solar hacia la caja seca.",
+  "donde": [
+   "B3 N° 6"
+  ],
+  "zona": "boya",
+  "cant": "×1"
+ },
+ {
+  "n": 11,
+  "sello": "PG7 del pigtail de antena en B3 (pared +X)",
+  "piezas": [
+   "B3_caja",
+   "B2_cubierta_mastil"
+  ],
+  "tipo": "prensaestopas PG7 (Ø12.6) con contratuerca",
+  "protege": "El paso del pigtail de la antena hacia la caja seca. El mástil de B2 solo guía el cable: no sella.",
+  "donde": [
+   "B3 N° 7",
+   "B2 mástil N° 5"
+  ],
+  "zona": "boya",
+  "cant": "×1"
+ },
+ {
+  "n": 12,
+  "sello": "Insertos M3 de la brida de B3",
+  "piezas": [
+   "B3_caja"
+  ],
+  "tipo": "inserto térmico ciego (no atraviesa la brida)",
+  "protege": "La brida no queda perforada y los tornillos quedan fuera del cordón: el agua no tiene camino por los tornillos.",
+  "donde": [
+   "B3 N° 2"
+  ],
+  "zona": "boya",
+  "cant": ""
+ },
+ {
+  "n": 13,
+  "sello": "Botellas PET selladas (flotación)",
+  "piezas": [
+   "B1_casco",
+   "B5_cuna_base",
+   "B5_cuna_cuello"
+  ],
+  "tipo": "tapón de rosca de fábrica (botella comprada)",
+  "protege": "El aire que flota la boya. El casco impreso NO es estanco: solo sostiene las botellas.",
+  "donde": [
+   "B1 N° 10",
+   "B1 N° 11",
+   "B5 cuello N° 5"
+  ],
+  "zona": "boya",
+  "cant": ""
+ }
+]

@@ -1,0 +1,359 @@
+{
+ "B2_cubierta_mastil_lateral": {
+  "pieza": "B2_cubierta_mastil_lateral",
+  "caso": "cubierta_ola_lateral",
+  "titulo": "Media cubierta: peso de la caja y del panel + golpe de ola de 200 N lateral sobre el panel",
+  "grupo": "B",
+  "fuente": "FEM local",
+  "motivo_fuente": "la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked)",
+  "sigma_max": 15.84,
+  "sigma_p995": 6.33,
+  "fs": 3.156,
+  "fs_p995": 7.9,
+  "fs_capas": 3.47,
+  "fs_plano": 7.11,
+  "umax_mm": 2.442,
+  "sigma_local": 15.84,
+  "sigma_local_p995": 6.33,
+  "umax_local_mm": 2.442,
+  "sigma_simscale": null,
+  "sigma_simscale_p995": null,
+  "umax_simscale_mm": null,
+  "cumple": true,
+  "cumple_pico": true,
+  "link": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:20e49dc4-4483-4d80-a2eb-1d7f35f411d9%2Cservice:SIMULATION%2Cstrategy:1",
+  "link_proyecto": "https://www.simscale.com/workbench/?pid=5890288887472164333",
+  "link_simulacion": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:20e49dc4-4483-4d80-a2eb-1d7f35f411d9%2Cservice:SIMULATION%2Cstrategy:1",
+  "malla": {
+   "celdas": 73037,
+   "nodos": 123528
+  },
+  "imagenes": {
+   "vonmises": "resultados/B2_cubierta_mastil_lateral/vonmises.png",
+   "desplazamiento": "resultados/B2_cubierta_mastil_lateral/desplazamiento.png",
+   "malla": "resultados/B2_cubierta_mastil_lateral/malla.png",
+   "condiciones": "resultados/B2_cubierta_mastil_lateral/condiciones.png"
+  },
+  "notas": [
+   "Caja completa 582 g repartida en 4 pilares (cada mitad carga 2); panel 350.0 g en 4 columnas (cada mitad carga 2).",
+   "Variante lateral: la ola de 200 N golpea el panel (hace de vela) y baja por sus columnas; cada media cubierta recibe los 200 N enteros en sus 2 columnas (exagerado: en la boya completa se reparten entre las dos mitades)."
+  ]
+ },
+ "M3s_riel_gancho": {
+  "pieza": "M3s_riel_gancho",
+  "caso": "riel_agua",
+  "titulo": "Riel con gancho colgado del anillo: capsula con 150 N hacia abajo + corriente de 1.5 m/s",
+  "grupo": "A",
+  "fuente": "FEM local",
+  "motivo_fuente": "la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked)",
+  "sigma_max": 16.9,
+  "sigma_p995": 6.4,
+  "fs": 2.959,
+  "fs_p995": 7.81,
+  "fs_capas": 3.44,
+  "fs_plano": 7.03,
+  "umax_mm": 1.474,
+  "sigma_local": 16.9,
+  "sigma_local_p995": 6.4,
+  "umax_local_mm": 1.474,
+  "sigma_simscale": null,
+  "sigma_simscale_p995": null,
+  "umax_simscale_mm": null,
+  "cumple": true,
+  "cumple_pico": true,
+  "link": "https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:288d6bda-8d82-402b-a6f2-7d2cccd2a913%2Cservice:SIMULATION%2Cstrategy:1",
+  "link_proyecto": "https://www.simscale.com/workbench/?pid=770997415227428031",
+  "link_simulacion": "https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:288d6bda-8d82-402b-a6f2-7d2cccd2a913%2Cservice:SIMULATION%2Cstrategy:1",
+  "malla": {
+   "celdas": 40355,
+   "nodos": 68890
+  },
+  "imagenes": {
+   "vonmises": "resultados/M3s_riel_gancho/vonmises.png",
+   "desplazamiento": "resultados/M3s_riel_gancho/desplazamiento.png",
+   "malla": "resultados/M3s_riel_gancho/malla.png",
+   "condiciones": "resultados/M3s_riel_gancho/condiciones.png"
+  },
+  "notas": [
+   "Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 18.1 cm2, Cd = 1) = 2.09 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente."
+  ]
+ },
+ "M5s_capsula_tapa_pie": {
+  "pieza": "M5s_capsula_tapa_pie",
+  "caso": "pie",
+  "titulo": "Tapa de capsula con pie: silla fija, 150 N + corriente en el frente de la capsula",
+  "grupo": "A",
+  "fuente": "FEM local",
+  "motivo_fuente": "la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked)",
+  "sigma_max": 16.96,
+  "sigma_p995": 6.58,
+  "fs": 2.947,
+  "fs_p995": 7.6,
+  "fs_capas": 3.35,
+  "fs_plano": 6.84,
+  "umax_mm": 0.301,
+  "sigma_local": 16.96,
+  "sigma_local_p995": 6.58,
+  "umax_local_mm": 0.301,
+  "sigma_simscale": null,
+  "sigma_simscale_p995": null,
+  "umax_simscale_mm": null,
+  "cumple": true,
+  "cumple_pico": true,
+  "link": "https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:1e5436ec-c92b-43e7-8438-86a9eb22d7b4%2Cservice:SIMULATION%2Cstrategy:1",
+  "link_proyecto": "https://www.simscale.com/workbench/?pid=770997415227428031",
+  "link_simulacion": "https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:1e5436ec-c92b-43e7-8438-86a9eb22d7b4%2Cservice:SIMULATION%2Cstrategy:1",
+  "malla": {
+   "celdas": 20901,
+   "nodos": 35958
+  },
+  "imagenes": {
+   "vonmises": "resultados/M5s_capsula_tapa_pie/vonmises.png",
+   "desplazamiento": "resultados/M5s_capsula_tapa_pie/desplazamiento.png",
+   "malla": "resultados/M5s_capsula_tapa_pie/malla.png",
+   "condiciones": "resultados/M5s_capsula_tapa_pie/condiciones.png"
+  },
+  "notas": [
+   "Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 18.1 cm2, Cd = 1) = 2.09 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente."
+  ]
+ },
+ "M1s_caja_cuerpo": {
+  "pieza": "M1s_caja_cuerpo",
+  "caso": "izado",
+  "titulo": "Caja: colgada de los insertos M3 de la tapa, el riel con la capsula tira del cojin +X (150 N + corriente)",
+  "grupo": "A",
+  "fuente": "FEM local",
+  "motivo_fuente": "la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked)",
+  "sigma_max": 18.88,
+  "sigma_p995": 5.84,
+  "fs": 2.648,
+  "fs_p995": 8.56,
+  "fs_capas": 3.77,
+  "fs_plano": 7.7,
+  "umax_mm": 0.306,
+  "sigma_local": 18.88,
+  "sigma_local_p995": 5.84,
+  "umax_local_mm": 0.306,
+  "sigma_simscale": null,
+  "sigma_simscale_p995": null,
+  "umax_simscale_mm": null,
+  "cumple": true,
+  "cumple_pico": true,
+  "link": "https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:6936e052-5dc1-4552-aa16-9e394ce3c29e%2Cservice:SIMULATION%2Cstrategy:1",
+  "link_proyecto": "https://www.simscale.com/workbench/?pid=770997415227428031",
+  "link_simulacion": "https://www.simscale.com/workbench/?pid=770997415227428031&mi=spec:6936e052-5dc1-4552-aa16-9e394ce3c29e%2Cservice:SIMULATION%2Cstrategy:1",
+  "malla": {
+   "celdas": 91578,
+   "nodos": 161560
+  },
+  "imagenes": {
+   "vonmises": "resultados/M1s_caja_cuerpo/vonmises.png",
+   "desplazamiento": "resultados/M1s_caja_cuerpo/desplazamiento.png",
+   "malla": "resultados/M1s_caja_cuerpo/malla.png",
+   "condiciones": "resultados/M1s_caja_cuerpo/condiciones.png"
+  },
+  "notas": [
+   "Corriente de 1.5 m/s: presion dinamica 0.5*1025*1.5^2 = 1153 Pa sobre el frente de la capsula (area 18.1 cm2, Cd = 1) = 2.09 N, en -X (la corriente empuja la capsula hacia atras), aplicada en el frente.",
+   "Caso propio (el FEM local no tiene la caja): la caja cuelga de la tapa como al izar por el asa; los insertos M3 de la tapa se toman como apoyos fijos y el riel con la capsula tira de los 4 M4 del cojin."
+  ]
+ },
+ "B3_caja": {
+  "pieza": "B3_caja",
+  "caso": "caja_peso_y_ola",
+  "titulo": "Caja seca: peso de la electronica y de la tapa + golpe de ola de 200 N de costado",
+  "grupo": "B",
+  "fuente": "FEM local",
+  "motivo_fuente": "la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked)",
+  "sigma_max": 12.3,
+  "sigma_p995": 5.55,
+  "fs": 4.065,
+  "fs_p995": 9.01,
+  "fs_capas": 3.96,
+  "fs_plano": 8.11,
+  "umax_mm": 0.992,
+  "sigma_local": 12.3,
+  "sigma_local_p995": 5.55,
+  "umax_local_mm": 0.992,
+  "sigma_simscale": null,
+  "sigma_simscale_p995": null,
+  "umax_simscale_mm": null,
+  "cumple": true,
+  "cumple_pico": true,
+  "link": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:49ee5788-0087-4653-8c60-84a48bf61ff1%2Cservice:SIMULATION%2Cstrategy:1",
+  "link_proyecto": "https://www.simscale.com/workbench/?pid=5890288887472164333",
+  "link_simulacion": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:49ee5788-0087-4653-8c60-84a48bf61ff1%2Cservice:SIMULATION%2Cstrategy:1",
+  "malla": {
+   "celdas": 57043,
+   "nodos": 108222
+  },
+  "imagenes": {
+   "vonmises": "resultados/B3_caja/vonmises.png",
+   "desplazamiento": "resultados/B3_caja/desplazamiento.png",
+   "malla": "resultados/B3_caja/malla.png",
+   "condiciones": "resultados/B3_caja/condiciones.png"
+  },
+  "notas": [
+   "Electronica 354 g (parametros del modelo, sin panel ni antena) y tapa 57.2 g, 1 g de gravedad.",
+   "La ola de 200 N se aplica entera contra una pared larga: caso exagerado (la caja va bajo el panel)."
+  ]
+ },
+ "B2_cubierta_lisa": {
+  "pieza": "B2_cubierta_lisa",
+  "caso": "cubierta_ola_vertical",
+  "titulo": "Media cubierta: peso de la caja y del panel + golpe de ola de 200 N vertical sobre las barras",
+  "grupo": "B",
+  "fuente": "FEM local",
+  "motivo_fuente": "la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked)",
+  "sigma_max": 10.21,
+  "sigma_p995": 4.5,
+  "fs": 4.895,
+  "fs_p995": 11.12,
+  "fs_capas": 4.89,
+  "fs_plano": 10.01,
+  "umax_mm": 1.254,
+  "sigma_local": 10.21,
+  "sigma_local_p995": 4.5,
+  "umax_local_mm": 1.254,
+  "sigma_simscale": null,
+  "sigma_simscale_p995": null,
+  "umax_simscale_mm": null,
+  "cumple": true,
+  "cumple_pico": true,
+  "link": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:c3704cf9-d345-48d5-bd74-23e0498e84b0%2Cservice:SIMULATION%2Cstrategy:1",
+  "link_proyecto": "https://www.simscale.com/workbench/?pid=5890288887472164333",
+  "link_simulacion": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:c3704cf9-d345-48d5-bd74-23e0498e84b0%2Cservice:SIMULATION%2Cstrategy:1",
+  "malla": {
+   "celdas": 68213,
+   "nodos": 114359
+  },
+  "imagenes": {
+   "vonmises": "resultados/B2_cubierta_lisa/vonmises.png",
+   "desplazamiento": "resultados/B2_cubierta_lisa/desplazamiento.png",
+   "malla": "resultados/B2_cubierta_lisa/malla.png",
+   "condiciones": "resultados/B2_cubierta_lisa/condiciones.png"
+  },
+  "notas": [
+   "Caja completa 582 g repartida en 4 pilares (cada mitad carga 2); panel 350.0 g en 4 columnas (cada mitad carga 2).",
+   "Golpe de ola vertical: 200 N hacia abajo sobre la cara de arriba de las barras de esa mitad (cada mitad recibe los 200 N enteros: exagerado, en la boya completa se reparten)."
+  ]
+ },
+ "B2_cubierta_mastil": {
+  "pieza": "B2_cubierta_mastil",
+  "caso": "cubierta_ola_vertical",
+  "titulo": "Media cubierta: peso de la caja y del panel + golpe de ola de 200 N vertical sobre las barras",
+  "grupo": "B",
+  "fuente": "FEM local",
+  "motivo_fuente": "la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked)",
+  "sigma_max": 10.85,
+  "sigma_p995": 4.6,
+  "fs": 4.608,
+  "fs_p995": 10.88,
+  "fs_capas": 4.79,
+  "fs_plano": 9.79,
+  "umax_mm": 1.295,
+  "sigma_local": 10.85,
+  "sigma_local_p995": 4.6,
+  "umax_local_mm": 1.295,
+  "sigma_simscale": null,
+  "sigma_simscale_p995": null,
+  "umax_simscale_mm": null,
+  "cumple": true,
+  "cumple_pico": true,
+  "link": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:cad9c74c-c3b0-4a84-91f6-677d0dafeb04%2Cservice:SIMULATION%2Cstrategy:1",
+  "link_proyecto": "https://www.simscale.com/workbench/?pid=5890288887472164333",
+  "link_simulacion": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:cad9c74c-c3b0-4a84-91f6-677d0dafeb04%2Cservice:SIMULATION%2Cstrategy:1",
+  "malla": {
+   "celdas": 73037,
+   "nodos": 123528
+  },
+  "imagenes": {
+   "vonmises": "resultados/B2_cubierta_mastil/vonmises.png",
+   "desplazamiento": "resultados/B2_cubierta_mastil/desplazamiento.png",
+   "malla": "resultados/B2_cubierta_mastil/malla.png",
+   "condiciones": "resultados/B2_cubierta_mastil/condiciones.png"
+  },
+  "notas": [
+   "Caja completa 582 g repartida en 4 pilares (cada mitad carga 2); panel 350.0 g en 4 columnas (cada mitad carga 2).",
+   "Golpe de ola vertical: 200 N hacia abajo sobre la cara de arriba de las barras de esa mitad (cada mitad recibe los 200 N enteros: exagerado, en la boya completa se reparten)."
+  ]
+ },
+ "B2_cubierta_lisa_lateral": {
+  "pieza": "B2_cubierta_lisa_lateral",
+  "caso": "cubierta_ola_lateral",
+  "titulo": "Media cubierta: peso de la caja y del panel + golpe de ola de 200 N lateral sobre el panel",
+  "grupo": "B",
+  "fuente": "FEM local",
+  "motivo_fuente": "la corrida existe pero SimScale no devolvió el resultado (403 export-source-locked)",
+  "sigma_max": 15.41,
+  "sigma_p995": 6.43,
+  "fs": 3.245,
+  "fs_p995": 7.77,
+  "fs_capas": 3.42,
+  "fs_plano": 6.99,
+  "umax_mm": 2.445,
+  "sigma_local": 15.41,
+  "sigma_local_p995": 6.43,
+  "umax_local_mm": 2.445,
+  "sigma_simscale": null,
+  "sigma_simscale_p995": null,
+  "umax_simscale_mm": null,
+  "cumple": true,
+  "cumple_pico": true,
+  "link": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:fd4db8a5-6f03-495c-864d-0ca180edebbe%2Cservice:SIMULATION%2Cstrategy:1",
+  "link_proyecto": "https://www.simscale.com/workbench/?pid=5890288887472164333",
+  "link_simulacion": "https://www.simscale.com/workbench/?pid=5890288887472164333&mi=spec:fd4db8a5-6f03-495c-864d-0ca180edebbe%2Cservice:SIMULATION%2Cstrategy:1",
+  "malla": {
+   "celdas": 68213,
+   "nodos": 114359
+  },
+  "imagenes": {
+   "vonmises": "resultados/B2_cubierta_lisa_lateral/vonmises.png",
+   "desplazamiento": "resultados/B2_cubierta_lisa_lateral/desplazamiento.png",
+   "malla": "resultados/B2_cubierta_lisa_lateral/malla.png",
+   "condiciones": "resultados/B2_cubierta_lisa_lateral/condiciones.png"
+  },
+  "notas": [
+   "Caja completa 582 g repartida en 4 pilares (cada mitad carga 2); panel 350.0 g en 4 columnas (cada mitad carga 2).",
+   "Variante lateral: la ola de 200 N golpea el panel (hace de vela) y baja por sus columnas; cada media cubierta recibe los 200 N enteros en sus 2 columnas (exagerado: en la boya completa se reparten entre las dos mitades)."
+  ]
+ },
+ "B1_casco_cabo": {
+  "pieza": "B1_casco_cabo",
+  "caso": "casco_cabo",
+  "titulo": "Casco B1 (mitad): tiron de 300 N repartido en 2 ramales: 173 N en el ojal de esta mitad, a 45 grados",
+  "grupo": "B",
+  "fuente": "FEM local",
+  "motivo_fuente": "sin corrida en SimScale",
+  "sigma_max": 20.63,
+  "sigma_p995": 6.88,
+  "fs": 2.424,
+  "fs_p995": 7.26,
+  "fs_capas": 3.2,
+  "fs_plano": 6.54,
+  "umax_mm": 2.048,
+  "sigma_local": 20.63,
+  "sigma_local_p995": 6.88,
+  "umax_local_mm": 2.048,
+  "sigma_simscale": null,
+  "sigma_simscale_p995": null,
+  "umax_simscale_mm": null,
+  "cumple": true,
+  "cumple_pico": true,
+  "link": "https://www.simscale.com/workbench/?pid=5890288887472164333",
+  "link_proyecto": "https://www.simscale.com/workbench/?pid=5890288887472164333",
+  "link_simulacion": "https://www.simscale.com/workbench/?pid=5890288887472164333",
+  "malla": {
+   "celdas": 57839,
+   "nodos": 109786
+  },
+  "imagenes": {
+   "vonmises": "resultados/B1_casco_cabo/vonmises.png",
+   "desplazamiento": "resultados/B1_casco_cabo/desplazamiento.png",
+   "malla": "resultados/B1_casco_cabo/malla.png",
+   "condiciones": "resultados/B1_casco_cabo/condiciones.png"
+  },
+  "notas": [
+   "Pata de gallo a 60 grados entre ramales: cada ramal lleva 300 / (2 cos 30) = 173 N (122 N vertical + 122 N horizontal a 45 grados). El casco cuelga de las botellas por las barras de B2 atornilladas a los 4 bosses de esta mitad; el empuje de las botellas es la reaccion."
+  ]
+ }
+}

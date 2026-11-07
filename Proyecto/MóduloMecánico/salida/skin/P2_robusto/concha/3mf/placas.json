@@ -1,0 +1,22 @@
+{
+ "placas": {
+  "SKIN_concha_P2": {
+   "g": 34.9,
+   "h": 1.11,
+   "veces": 1,
+   "relleno": 100,
+   "soportes": false,
+   "piezas": [
+    [
+     "salida/skin/P2_robusto/concha/SKIN_concha.stl",
+     1
+    ]
+   ],
+   "tresmf": "salida/skin/P2_robusto/concha/3mf/SKIN_concha_P2.3mf"
+  }
+ },
+ "total": {
+  "g": 34.9,
+  "h": 1.11
+ }
+}

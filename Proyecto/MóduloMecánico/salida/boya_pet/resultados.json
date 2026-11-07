@@ -1,0 +1,1042 @@
+{
+ "botella": "1L",
+ "cantidad": 4,
+ "disposicion": "cruz",
+ "masa_g": 2287.1325873646256,
+ "masa_impresa_g": 1384.6,
+ "fuente_masa_impresa": "slicer",
+ "KG": 105.84499667409548,
+ "LCG": 0.9300136171839658,
+ "YCG": 0.00013004911109436163,
+ "empuje_botellas_g": 4100.0,
+ "reserva_g": 1812.8674126353744,
+ "reserva_pct": 79.26376558362415,
+ "espuma_reserva_estimada_g": 1808.664147593408,
+ "espuma_volumen_cm3": 1817.752912154179,
+ "hidro": {
+  "flota": true,
+  "calado": 47.28515991413645,
+  "V": 2231348.865721586,
+  "KB": 29.92429986252844,
+  "GM_roll": 73.91062577147437,
+  "GM_pitch": 581.6272043476023,
+  "BMr": 149.8313225830414,
+  "BMp": 657.5479011591693,
+  "cb_x": 0.0,
+  "cb_y": 0.0,
+  "arm_x": -0.9300136171839658,
+  "arm_y": -0.00013004911109436163,
+  "area_flot": 68166.89000288144
+ },
+ "dims": {
+  "layout": "cruz",
+  "bottle": "1L",
+  "n": 4,
+  "D": 80.0,
+  "r": 40.0,
+  "Lb": 270.0,
+  "V": 1000.0,
+  "neck_D": 30.0,
+  "neck_len": 25.0,
+  "m_bottle": 25.0,
+  "wall": 2.4,
+  "rib": 5.0,
+  "clr": 1.5,
+  "end_clr": 1.0,
+  "slot_w": 83.0,
+  "Wb": 87.8,
+  "LH": 254.0,
+  "yb": 68.9,
+  "WH": 225.6,
+  "wc": 50.0,
+  "zc": 43.9,
+  "z_top": 85.4,
+  "L1": 63.5,
+  "x_bot0": -121.0,
+  "tip_x": 149.0,
+  "poke": 22.0,
+  "X0": 0.0,
+  "xc_bot": 14.0,
+  "neck_slot_r": 17.67,
+  "tongue_w": 12.0,
+  "tongue_h": 14.0,
+  "tongue_l": 23.8,
+  "x_wall": 151.0,
+  "Xc": 194.9,
+  "tongue_y": [
+   -90.9,
+   -46.900000000000006,
+   46.900000000000006,
+   90.9
+  ],
+  "col_y": 68.9,
+  "wall_h": 53.9,
+  "Li": 142.0,
+  "Wi": 84,
+  "Hi": 72.0,
+  "Lx": 146.8,
+  "Wy": 88.8,
+  "HB": 74.4,
+  "pillar_h": 1.0,
+  "z_cover": 85.4,
+  "z_cover_top": 93.4,
+  "z_bar": 105.4,
+  "z0": 106.4,
+  "z_lid": 180.8,
+  "z_lid_top": 187.3,
+  "z_panel0": 202.3,
+  "z_panel1": 205.3,
+  "z_mast": 225.3,
+  "x_mast": 118.0
+ },
+ "botellas": [
+  {
+   "eje": "x",
+   "x": 14.0,
+   "y": 68.9
+  },
+  {
+   "eje": "x",
+   "x": -14.0,
+   "y": -68.9
+  },
+  {
+   "eje": "y",
+   "x": 194.9,
+   "y": 14.0
+  },
+  {
+   "eje": "y",
+   "x": -194.9,
+   "y": -14.0
+  }
+ ],
+ "piezas": {
+  "B1_casco": {
+   "nombre": "B1 casco (mitad, x2)",
+   "qty": 2,
+   "orient": "sin girar",
+   "bbox": [
+    135.99356079101562,
+    225.60000610351562,
+    85.4000015258789
+   ],
+   "voladizo_mm2": 721.2324123675628,
+   "volumen_cm3": 201.99652521671868,
+   "g": 172.8,
+   "h": 7.21,
+   "g_estimado": 189.66776278925386
+  },
+  "B2_cubierta_lisa": {
+   "nombre": "B2 cubierta lado lisa",
+   "qty": 1,
+   "orient": "sin girar",
+   "bbox": [
+    131.0,
+    226.0,
+    116.9000015258789
+   ],
+   "voladizo_mm2": 139.99998854452232,
+   "volumen_cm3": 326.59193503561835,
+   "g": 209.7,
+   "h": 10.41,
+   "g_estimado": 235.12687297532267
+  },
+  "B2_cubierta_mastil": {
+   "nombre": "B2 cubierta lado mastil",
+   "qty": 1,
+   "orient": "sin girar",
+   "bbox": [
+    131.0,
+    226.0,
+    139.9000015258789
+   ],
+   "voladizo_mm2": 168.2891003748948,
+   "volumen_cm3": 351.61452880207213,
+   "g": 229.9,
+   "h": 11.38,
+   "g_estimado": 256.61424284355815
+  },
+  "B3_caja": {
+   "nombre": "B3 caja seca",
+   "qty": 1,
+   "orient": "sin girar",
+   "bbox": [
+    166.8000030517578,
+    116.80000305175781,
+    74.4000015258789
+   ],
+   "voladizo_mm2": 122.8202744638876,
+   "volumen_cm3": 187.72297645827217,
+   "g": 175.0,
+   "h": 5.72,
+   "g_estimado": 194.29571675362268
+  },
+  "B4_tapa": {
+   "nombre": "B4 tapa",
+   "qty": 1,
+   "orient": "X180",
+   "bbox": [
+    166.8000030517578,
+    108.80000305175781,
+    6.5
+   ],
+   "voladizo_mm2": 0.0,
+   "volumen_cm3": 114.89605014762606,
+   "g": 78.6,
+   "h": 3.35,
+   "g_estimado": 96.08785964520317
+  },
+  "B5_cuna_base": {
+   "nombre": "B5 cuna lado base (x2)",
+   "qty": 2,
+   "orient": "sin girar",
+   "bbox": [
+    131.0,
+    118.59982299804688,
+    85.4000015258789
+   ],
+   "voladizo_mm2": 207.839232481971,
+   "volumen_cm3": 81.750616182989,
+   "g": 79.3,
+   "h": 3.26,
+   "g_estimado": 87.56433240692613
+  },
+  "B5_cuna_cuello": {
+   "nombre": "B5 cuna lado cuello (x2)",
+   "qty": 2,
+   "orient": "sin girar",
+   "bbox": [
+    131.0,
+    118.59982299804688,
+    85.4000015258789
+   ],
+   "voladizo_mm2": 207.83923248197104,
+   "volumen_cm3": 85.62805064692866,
+   "g": 81.4,
+   "h": 3.28,
+   "g_estimado": 90.4680626805199
+  },
+  "B6_correa": {
+   "nombre": "B6 correa",
+   "qty": 4,
+   "orient": "sin girar",
+   "bbox": [
+    14.0,
+    105.80000305175781,
+    5.0
+   ],
+   "voladizo_mm2": 0.0,
+   "volumen_cm3": 7.315207972311255,
+   "g": 6.1,
+   "h": 0.34,
+   "g_estimado": 7.584858176849727
+  }
+ },
+ "masas": [
+  {
+   "elemento": "B1 casco mitad 1 impreso",
+   "g": 172.8,
+   "z": 30.322521167890283,
+   "x": -79.11260910260705,
+   "y": -2.54130620441125
+  },
+  {
+   "elemento": "B1 casco mitad 2 impreso",
+   "g": 172.8,
+   "z": 30.322521167890184,
+   "x": 79.11260910260722,
+   "y": 2.5413062044112955
+  },
+  {
+   "elemento": "B2 cubierta lisa impreso",
+   "g": 209.7,
+   "z": 103.56632851345866,
+   "x": -76.83465678370727,
+   "y": -0.07747208547410124
+  },
+  {
+   "elemento": "B2 cubierta mastil impreso",
+   "g": 229.9,
+   "z": 107.868641411715,
+   "x": 79.76542528561507,
+   "y": 0.07195883847241674
+  },
+  {
+   "elemento": "B3 caja impreso",
+   "g": 175.0,
+   "z": 145.41790537334774,
+   "x": -0.4473102575156165,
+   "y": -6.176914725863935e-09
+  },
+  {
+   "elemento": "B4 tapa impreso",
+   "g": 78.6,
+   "z": 184.09079389952527,
+   "x": 1.3182783368261729e-14,
+   "y": -1.5344381200773812e-15
+  },
+  {
+   "elemento": "B5 cuna D base impreso",
+   "g": 79.3,
+   "z": 27.352412475522552,
+   "x": 189.62954982694654,
+   "y": -73.9790317956981
+  },
+  {
+   "elemento": "B5 cuna D cuello impreso",
+   "g": 81.4,
+   "z": 26.539711256832216,
+   "x": 190.31662342986795,
+   "y": 76.26673700049601
+  },
+  {
+   "elemento": "B6 correa D1 impreso",
+   "g": 6.1,
+   "z": 87.90000000000002,
+   "x": 194.90000000000006,
+   "y": -46.900000000000006
+  },
+  {
+   "elemento": "B6 correa D2 impreso",
+   "g": 6.1,
+   "z": 87.9,
+   "x": 194.9,
+   "y": 46.900000000000006
+  },
+  {
+   "elemento": "B5 cuna I base impreso",
+   "g": 79.3,
+   "z": 27.352412475522605,
+   "x": -189.6295498269465,
+   "y": 73.9790317956982
+  },
+  {
+   "elemento": "B5 cuna I cuello impreso",
+   "g": 81.4,
+   "z": 26.53971125683225,
+   "x": -190.31662342986786,
+   "y": -76.26673700049605
+  },
+  {
+   "elemento": "B6 correa I1 impreso",
+   "g": 6.1,
+   "z": 87.9,
+   "x": -194.9,
+   "y": 46.900000000000006
+  },
+  {
+   "elemento": "B6 correa I2 impreso",
+   "g": 6.1,
+   "z": 87.90000000000002,
+   "x": -194.9,
+   "y": -46.90000000000001
+  },
+  {
+   "elemento": "3 x celdas 18650",
+   "g": 141.0,
+   "z": 129.8,
+   "x": -17.0,
+   "y": 0.0
+  },
+  {
+   "elemento": "portabaterias",
+   "g": 25.0,
+   "z": 129.8,
+   "x": -17.0,
+   "y": 0.0
+  },
+  {
+   "elemento": "PCB + Heltec",
+   "g": 35.0,
+   "z": 163.3,
+   "x": -17.0,
+   "y": 0.0
+  },
+  {
+   "elemento": "Waveshare D",
+   "g": 15.0,
+   "z": 155.85000000000002,
+   "x": 43.5,
+   "y": 0.0
+  },
+  {
+   "elemento": "RTC",
+   "g": 8.0,
+   "z": 116.30000000000001,
+   "x": 48.0,
+   "y": 0.0
+  },
+  {
+   "elemento": "panel solar",
+   "g": 350.0,
+   "z": 203.8,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "elemento": "antena LoRa (en el mastil)",
+   "g": 20.0,
+   "z": 185.3,
+   "x": 118.0,
+   "y": 0.0
+  },
+  {
+   "elemento": "cables y fusible",
+   "g": 40.0,
+   "z": 138.8,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "elemento": "3 PG7",
+   "g": 30.0,
+   "z": 138.8,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "elemento": "tornilleria (M3, insertos, junta)",
+   "g": 84.0,
+   "z": 146.4,
+   "x": 0.0,
+   "y": 0.0
+  },
+  {
+   "elemento": "botella 1 vacia",
+   "g": 25.0,
+   "z": 43.9,
+   "x": 14.0,
+   "y": 68.9
+  },
+  {
+   "elemento": "botella 2 vacia",
+   "g": 25.0,
+   "z": 43.9,
+   "x": -14.0,
+   "y": -68.9
+  },
+  {
+   "elemento": "botella 3 vacia",
+   "g": 25.0,
+   "z": 43.9,
+   "x": 194.9,
+   "y": 14.0
+  },
+  {
+   "elemento": "botella 4 vacia",
+   "g": 25.0,
+   "z": 43.9,
+   "x": -194.9,
+   "y": -14.0
+  },
+  {
+   "elemento": "espuma PU (masa)",
+   "g": 54.53258736462537,
+   "z": 43.9,
+   "x": 0.0,
+   "y": 0.0
+  }
+ ],
+ "francobordo_caja_mm": 59.114840085863555,
+ "francobordo_tapa_mm": 140.01484008586357,
+ "francobordo_cubierta_mm": 46.114840085863555,
+ "francobordo_junta_mm": 133.51484008586357,
+ "francobordo_abertura_mm": 85.21484008586356,
+ "verificacion_3d_base": {
+  "escora_deg": 0.06925752564976285,
+  "cabeceo_deg": 0.09394516851002561,
+  "residuo_mm": 5.99960586715929e-13,
+  "GM_roll": 75.22477819870069,
+  "GM_pitch": 582.5148688389494,
+  "inclinacion_deg": 0.11671458883695471,
+  "converge": true,
+  "estable": true,
+  "francobordo_abertura_mm": 85.3470080947353
+ },
+ "una_botella_perdida": {
+  "sin_espuma": [
+   {
+    "botella_perdida": 1,
+    "eje": "x",
+    "x": 14.0,
+    "y": 68.9,
+    "masa_g": 2207.6000000000004,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 56.90502826366016,
+     "V": 2153756.097560976,
+     "KB": 34.857145413465645,
+     "GM_roll": 21.90559226931674,
+     "GM_pitch": 532.1498044164997,
+     "BMr": 95.12511858873616,
+     "BMp": 605.3693307359191,
+     "cb_x": -4.666666666666668,
+     "cb_y": -22.966666666666672,
+     "arm_x": -5.471642409805958,
+     "arm_y": -22.186542296110385,
+     "area_flot": 48098.99414742306
+    },
+    "equilibrio": {
+     "escora_deg": -161.5180363777282,
+     "cabeceo_deg": 111.88128128893133,
+     "residuo_mm": 5.26094508743167e-13,
+     "GM_roll": 41.130521669703455,
+     "GM_pitch": -90.91458051299466,
+     "inclinacion_deg": 69.3007337413456,
+     "converge": true,
+     "estable": false,
+     "francobordo_abertura_mm": 64.81547557020612
+    }
+   },
+   {
+    "botella_perdida": 2,
+    "eje": "x",
+    "x": -14.0,
+    "y": -68.9,
+    "masa_g": 2207.6000000000004,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 56.90502826366016,
+     "V": 2153756.097560976,
+     "KB": 34.857145413465645,
+     "GM_roll": 21.90559226931674,
+     "GM_pitch": 532.1498044164997,
+     "BMr": 95.12511858873616,
+     "BMp": 605.3693307359191,
+     "cb_x": 4.666666666666661,
+     "cb_y": 22.966666666666665,
+     "arm_x": 3.5446044948265185,
+     "arm_y": 22.18627282740233,
+     "area_flot": 48098.99414742306
+    },
+    "equilibrio": {
+     "escora_deg": -39.62592721974937,
+     "cabeceo_deg": -5.956774109408339,
+     "residuo_mm": 2.715894327322234e-13,
+     "GM_roll": -76.20229410852505,
+     "GM_pitch": 160.80475022925836,
+     "inclinacion_deg": 39.99809005137421,
+     "converge": true,
+     "estable": false,
+     "francobordo_abertura_mm": 49.038549249061624
+    }
+   },
+   {
+    "botella_perdida": 3,
+    "eje": "y",
+    "x": 194.9,
+    "y": 14.0,
+    "masa_g": 2207.6000000000004,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 56.90502826366016,
+     "V": 2153756.097560976,
+     "KB": 34.857145413465645,
+     "GM_roll": 37.277041284878806,
+     "GM_pitch": 186.86317997985702,
+     "BMr": 110.49656760429824,
+     "BMp": 260.0827062992764,
+     "cb_x": -64.96666666666667,
+     "cb_y": -4.666666666666666,
+     "arm_x": -63.72303759009225,
+     "arm_y": -4.508258186670264,
+     "area_flot": 48098.99414742306
+    },
+    "equilibrio": {
+     "escora_deg": -347.70153930960106,
+     "cabeceo_deg": -63.843677059555574,
+     "residuo_mm": 3.764512375792377e-13,
+     "GM_roll": -47.27722171128359,
+     "GM_pitch": -100.8925563832566,
+     "inclinacion_deg": 64.48766190148471,
+     "converge": true,
+     "estable": false,
+     "francobordo_abertura_mm": -26.71092841699007
+    }
+   },
+   {
+    "botella_perdida": 4,
+    "eje": "y",
+    "x": -194.9,
+    "y": -14.0,
+    "masa_g": 2207.6000000000004,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 56.90502826366016,
+     "V": 2153756.097560976,
+     "KB": 34.857145413465645,
+     "GM_roll": 37.277041284878806,
+     "GM_pitch": 186.86317997985702,
+     "BMr": 110.49656760429824,
+     "BMp": 260.0827062992764,
+     "cb_x": 64.96666666666667,
+     "cb_y": 4.666666666666666,
+     "arm_x": 61.79599967511281,
+     "arm_y": 4.507988717962217,
+     "area_flot": 48098.99414742306
+    },
+    "equilibrio": {
+     "escora_deg": 167.69573902594254,
+     "cabeceo_deg": 116.65067529082974,
+     "residuo_mm": 2.185761145307079e-13,
+     "GM_roll": 47.13921594184204,
+     "GM_pitch": -98.32746802801564,
+     "inclinacion_deg": 64.00794954730938,
+     "converge": true,
+     "estable": false,
+     "francobordo_abertura_mm": 105.01793901192639
+    }
+   }
+  ],
+  "espuma_huecos": [
+   {
+    "botella_perdida": 1,
+    "eje": "x",
+    "x": 14.0,
+    "y": 68.9,
+    "masa_g": 2262.1325873646256,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 41.17169252816713,
+     "V": 2206958.6218191474,
+     "KB": 24.7885764419519,
+     "GM_roll": 17.492552792791557,
+     "GM_pitch": 547.9553403300722,
+     "BMr": 99.2335592978629,
+     "BMp": 629.6963468351436,
+     "cb_x": -4.6666666666666625,
+     "cb_y": -22.96666666666667,
+     "arm_x": -5.452237088347635,
+     "arm_y": -22.205348532592833,
+     "area_flot": 51199.903792242105
+    },
+    "equilibrio": {
+     "escora_deg": -11.314322540261667,
+     "cabeceo_deg": -0.36034702555432213,
+     "residuo_mm": 1.0598763558338557e-11,
+     "GM_roll": 111.03799653530841,
+     "GM_pitch": 800.170165070216,
+     "inclinacion_deg": 11.319984640917147,
+     "converge": true,
+     "estable": true,
+     "francobordo_abertura_mm": 86.13627381532963
+    }
+   },
+   {
+    "botella_perdida": 2,
+    "eje": "x",
+    "x": -14.0,
+    "y": -68.9,
+    "masa_g": 2262.1325873646256,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 41.17169252816713,
+     "V": 2206958.6218191474,
+     "KB": 24.7885764419519,
+     "GM_roll": 17.492552792791557,
+     "GM_pitch": 547.9553403300722,
+     "BMr": 99.2335592978629,
+     "BMp": 629.6963468351436,
+     "cb_x": 4.6666666666666625,
+     "cb_y": 22.96666666666667,
+     "arm_x": 3.571653728702638,
+     "arm_y": 22.205085559890342,
+     "area_flot": 51199.903792242105
+    },
+    "equilibrio": {
+     "escora_deg": 11.322119658535229,
+     "cabeceo_deg": 0.5036442729371121,
+     "residuo_mm": 1.7743090778166332e-12,
+     "GM_roll": 92.96249786769508,
+     "GM_pitch": 783.2308398770213,
+     "inclinacion_deg": 11.333169935112561,
+     "converge": true,
+     "estable": true,
+     "francobordo_abertura_mm": 87.23330358271518
+    }
+   },
+   {
+    "botella_perdida": 3,
+    "eje": "y",
+    "x": 194.9,
+    "y": 14.0,
+    "masa_g": 2262.1325873646256,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 41.17169252816713,
+     "V": 2206958.6218191474,
+     "KB": 24.7885764419519,
+     "GM_roll": 33.87732504863138,
+     "GM_pitch": 188.85189121993847,
+     "BMr": 115.61833155370273,
+     "BMp": 270.59289772500983,
+     "cb_x": -64.96666666666667,
+     "cb_y": -4.666666666666667,
+     "arm_x": -63.753017402790356,
+     "arm_y": -4.512076894876385,
+     "area_flot": 51199.903792242105
+    },
+    "equilibrio": {
+     "escora_deg": 0.08499938407884723,
+     "cabeceo_deg": 5.3496664704821875,
+     "residuo_mm": 9.727177347187895e-12,
+     "GM_roll": 92.36038329110774,
+     "GM_pitch": 538.0587438765447,
+     "inclinacion_deg": 5.350339730648447,
+     "converge": true,
+     "estable": true,
+     "francobordo_abertura_mm": 93.86562240379385
+    }
+   },
+   {
+    "botella_perdida": 4,
+    "eje": "y",
+    "x": -194.9,
+    "y": -14.0,
+    "masa_g": 2262.1325873646256,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 41.17169252816713,
+     "V": 2206958.6218191474,
+     "KB": 24.7885764419519,
+     "GM_roll": 33.87732504863138,
+     "GM_pitch": 188.85189121993847,
+     "BMr": 115.61833155370273,
+     "BMp": 270.59289772500983,
+     "cb_x": 64.96666666666667,
+     "cb_y": 4.666666666666667,
+     "arm_x": 61.872434043145354,
+     "arm_y": 4.511813922173897,
+     "area_flot": 51199.903792242105
+    },
+    "equilibrio": {
+     "escora_deg": -0.020553142903585817,
+     "cabeceo_deg": -5.153429712141646,
+     "residuo_mm": 4.5847863886233395e-11,
+     "GM_roll": 88.33805377869372,
+     "GM_pitch": 506.9015123385048,
+     "inclinacion_deg": 5.153470586885852,
+     "converge": true,
+     "estable": true,
+     "francobordo_abertura_mm": 80.54704076268092
+    }
+   }
+  ],
+  "espuma_50": [
+   {
+    "botella_perdida": 1,
+    "eje": "x",
+    "x": 14.0,
+    "y": 68.9,
+    "masa_g": 2234.866293682313,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 47.549977021243556,
+     "V": 2180357.359690062,
+     "KB": 28.924403381246428,
+     "GM_roll": 21.844944759749424,
+     "GM_pitch": 557.6165222756856,
+     "BMr": 100.21423115673208,
+     "BMp": 635.9858086726683,
+     "cb_x": -4.6666666666666705,
+     "cb_y": -22.96666666666667,
+     "arm_x": -5.46182137260046,
+     "arm_y": -22.19606013628563,
+     "area_flot": 51090.45711338088
+    },
+    "equilibrio": {
+     "escora_deg": 45.05760955940465,
+     "cabeceo_deg": 5.470806794898044,
+     "residuo_mm": 2.2698919743081066e-13,
+     "GM_roll": -83.39044588913795,
+     "GM_pitch": 174.4190503838546,
+     "inclinacion_deg": 45.317485730499364,
+     "converge": true,
+     "estable": false,
+     "francobordo_abertura_mm": 83.50159809675549
+    }
+   },
+   {
+    "botella_perdida": 2,
+    "eje": "x",
+    "x": -14.0,
+    "y": -68.9,
+    "masa_g": 2234.866293682313,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 47.549977021243556,
+     "V": 2180357.359690062,
+     "KB": 28.924403381246428,
+     "GM_roll": 21.844944759749424,
+     "GM_pitch": 557.6165222756856,
+     "BMr": 100.21423115673208,
+     "BMp": 635.9858086726683,
+     "cb_x": 4.6666666666666705,
+     "cb_y": 22.96666666666667,
+     "arm_x": 3.558294117688394,
+     "arm_y": 22.195793955207343,
+     "area_flot": 51090.45711338088
+    },
+    "equilibrio": {
+     "escora_deg": -45.258118967583165,
+     "cabeceo_deg": -4.8712923850480045,
+     "residuo_mm": 4.32076119338746e-13,
+     "GM_roll": -82.96055750693185,
+     "GM_pitch": 183.68643271208572,
+     "inclinacion_deg": 45.46285472798476,
+     "converge": true,
+     "estable": false,
+     "francobordo_abertura_mm": 70.40981958807679
+    }
+   },
+   {
+    "botella_perdida": 3,
+    "eje": "y",
+    "x": 194.9,
+    "y": 14.0,
+    "masa_g": 2234.866293682313,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 47.549977021243556,
+     "V": 2180357.359690062,
+     "KB": 28.924403381246428,
+     "GM_roll": 38.37886050644205,
+     "GM_pitch": 194.92416534949734,
+     "BMr": 116.74814690342471,
+     "BMp": 273.29345174648,
+     "cb_x": -64.96666666666667,
+     "cb_y": -4.666666666666666,
+     "arm_x": -63.73821037950233,
+     "arm_y": -4.510190835683567,
+     "area_flot": 51090.45711338088
+    },
+    "equilibrio": {
+     "escora_deg": 1.471685576296955,
+     "cabeceo_deg": 9.464846359276022,
+     "residuo_mm": 4.91403520553894e-12,
+     "GM_roll": 47.005135036446795,
+     "GM_pitch": 191.0743829579125,
+     "inclinacion_deg": 9.577548597326398,
+     "converge": true,
+     "estable": true,
+     "francobordo_abertura_mm": 86.8211551792411
+    }
+   },
+   {
+    "botella_perdida": 4,
+    "eje": "y",
+    "x": -194.9,
+    "y": -14.0,
+    "masa_g": 2234.866293682313,
+    "empuje_restante_g": 3074.9999999999995,
+    "vertical": {
+     "flota": true,
+     "calado": 47.549977021243556,
+     "V": 2180357.359690062,
+     "KB": 28.924403381246428,
+     "GM_roll": 38.37886050644205,
+     "GM_pitch": 194.92416534949734,
+     "BMr": 116.74814690342471,
+     "BMp": 273.29345174648,
+     "cb_x": 64.96666666666667,
+     "cb_y": 4.666666666666666,
+     "arm_x": 61.83468312459026,
+     "arm_y": 4.509924654605278,
+     "area_flot": 51090.45711338088
+    },
+    "equilibrio": {
+     "escora_deg": -1.1885632267734116,
+     "cabeceo_deg": -8.881282122934492,
+     "residuo_mm": 3.995072198138106e-12,
+     "GM_roll": 52.868090897476684,
+     "GM_pitch": 217.03579421760884,
+     "inclinacion_deg": 8.959828227069686,
+     "converge": true,
+     "estable": true,
+     "francobordo_abertura_mm": 64.25331704630372
+    }
+   }
+  ]
+ },
+ "amarre_botellas": [
+  {
+   "botella": 1,
+   "eje": "x",
+   "juego": {
+    "+X": {
+     "mm": 2.0,
+     "tope": "B1 casco mitad 2"
+    },
+    "-X": {
+     "mm": 1.25,
+     "tope": "B1 casco mitad 1"
+    },
+    "+Y": {
+     "mm": 1.75,
+     "tope": "B1 casco mitad 1"
+    },
+    "-Y": {
+     "mm": 1.5,
+     "tope": "B1 casco mitad 1"
+    },
+    "+Z": {
+     "mm": 1.75,
+     "tope": "B2 cubierta lisa"
+    },
+    "-Z": {
+     "mm": 0.75,
+     "tope": "B1 casco mitad 1"
+    }
+   }
+  },
+  {
+   "botella": 2,
+   "eje": "x",
+   "juego": {
+    "+X": {
+     "mm": 1.25,
+     "tope": "B1 casco mitad 2"
+    },
+    "-X": {
+     "mm": 1.5,
+     "tope": "B1 casco mitad 1"
+    },
+    "+Y": {
+     "mm": 1.25,
+     "tope": "B1 casco mitad 1"
+    },
+    "-Y": {
+     "mm": 1.75,
+     "tope": "B1 casco mitad 1"
+    },
+    "+Z": {
+     "mm": 1.75,
+     "tope": "B2 cubierta lisa"
+    },
+    "-Z": {
+     "mm": 0.75,
+     "tope": "B1 casco mitad 1"
+    }
+   }
+  },
+  {
+   "botella": 3,
+   "eje": "y",
+   "juego": {
+    "+X": {
+     "mm": 1.0,
+     "tope": "B5 cuna D cuello"
+    },
+    "-X": {
+     "mm": 1.0,
+     "tope": "B5 cuna D base"
+    },
+    "+Y": {
+     "mm": 2.25,
+     "tope": "B5 cuna D cuello"
+    },
+    "-Y": {
+     "mm": 1.25,
+     "tope": "B5 cuna D base"
+    },
+    "+Z": {
+     "mm": 1.75,
+     "tope": "B6 correa D1"
+    },
+    "-Z": {
+     "mm": 0.75,
+     "tope": "B5 cuna D base"
+    }
+   }
+  },
+  {
+   "botella": 4,
+   "eje": "y",
+   "juego": {
+    "+X": {
+     "mm": 1.0,
+     "tope": "B5 cuna I base"
+    },
+    "-X": {
+     "mm": 1.0,
+     "tope": "B5 cuna I cuello"
+    },
+    "+Y": {
+     "mm": 1.25,
+     "tope": "B5 cuna I base"
+    },
+    "-Y": {
+     "mm": 2.25,
+     "tope": "B5 cuna I cuello"
+    },
+    "+Z": {
+     "mm": 1.75,
+     "tope": "B6 correa I1"
+    },
+    "-Z": {
+     "mm": 0.75,
+     "tope": "B5 cuna I base"
+    }
+   }
+  }
+ ],
+ "piezas_cabe_cama": true,
+ "total_impreso_g": 1384.6,
+ "total_impreso_h": 59.72,
+ "costo_soles": 83.076,
+ "veredicto_perdida_sin_espuma": {
+  "cumple": false,
+  "peor_botella": 1,
+  "inclinacion_deg": 69.3007337413456,
+  "GM_roll": 41.130521669703455,
+  "GM_pitch": -90.91458051299466,
+  "GM_roll_min": -76.20229410852505,
+  "GM_pitch_min": -100.8925563832566,
+  "francobordo_abertura_mm": 64.81547557020612,
+  "equilibrio_estable": false
+ },
+ "veredicto_perdida_espuma_huecos": {
+  "cumple": false,
+  "peor_botella": 2,
+  "inclinacion_deg": 11.333169935112561,
+  "GM_roll": 92.96249786769508,
+  "GM_pitch": 783.2308398770213,
+  "GM_roll_min": 88.33805377869372,
+  "GM_pitch_min": 506.9015123385048,
+  "francobordo_abertura_mm": 87.23330358271518,
+  "equilibrio_estable": true
+ },
+ "veredicto_perdida_espuma_50": {
+  "cumple": false,
+  "peor_botella": 2,
+  "inclinacion_deg": 45.46285472798476,
+  "GM_roll": -82.96055750693185,
+  "GM_pitch": 183.68643271208572,
+  "GM_roll_min": -83.39044588913795,
+  "GM_pitch_min": 174.4190503838546,
+  "francobordo_abertura_mm": 70.40981958807679,
+  "equilibrio_estable": false
+ },
+ "fallas": [],
+ "objetivos_no_cumplidos": [
+  "masa impresa 1385 g > 700",
+  "tiempo 59.7 h > 25",
+  "con una botella perdida (sin espuma) no cumple: flota derecha, GM > 0, escora pequena y abertura sobre el agua",
+  "con una botella perdida (espuma_huecos) no cumple GM >= 40 (peor 88 / 507), escora <= 10 o abertura sobre el agua",
+  "con una botella perdida (espuma_50) no cumple GM >= 40 (peor -83 / 174), escora <= 10 o abertura sobre el agua"
+ ],
+ "interferencias": [],
+ "alternativas": {}
+}

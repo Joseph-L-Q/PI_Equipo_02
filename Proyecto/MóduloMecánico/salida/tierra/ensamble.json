@@ -1,0 +1,25 @@
+{
+ "piezas": [
+  "T1_caja",
+  "T2_tapa",
+  "REF_Heltec",
+  "REF_bateria",
+  "REF_SMA",
+  "REF_acrilico_OLED",
+  "REF_cordon_NBR",
+  "REF_tornillo_M3_1",
+  "REF_inserto_M3_1",
+  "REF_tornillo_M3_2",
+  "REF_inserto_M3_2",
+  "REF_tornillo_M3_3",
+  "REF_inserto_M3_3",
+  "REF_tornillo_M3_4",
+  "REF_inserto_M3_4"
+ ],
+ "solidos_esperados": 30,
+ "solidos_step": 30,
+ "choques_mm3": {},
+ "no_validos": {},
+ "T1_cm3": 58.18,
+ "T2_cm3": 39.47
+}

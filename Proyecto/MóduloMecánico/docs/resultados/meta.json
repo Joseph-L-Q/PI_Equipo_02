@@ -1,0 +1,18 @@
+{
+ "generado": "2026-11-05 05:20",
+ "escala_vonmises_MPa": [
+  0.0,
+  50.0
+ ],
+ "escala_desplazamiento_mm": [
+  0.0,
+  6.0
+ ],
+ "convenciones": "fs = 50/sigma_max; fs_capas = 22/sigma_p995 (entre capas); fs_plano = 45/sigma_p995; cumple = fs_p995>=1 y fs_capas>=1",
+ "material": {
+  "E_MPa": 2100.0,
+  "nu": 0.38,
+  "rho": 1270.0,
+  "sigma_adm_MPa": 50.0
+ }
+}

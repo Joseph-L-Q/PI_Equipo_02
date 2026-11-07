@@ -1,0 +1,99 @@
+{
+ "pid": "120690419689208349",
+ "url": "https://www.simscale.com/projects/yoichi_palacio/lanternguard_3_-_estacion_de_tierra_418577745/",
+ "owner": "yoichi_palacio",
+ "nombre": "LanternGuard 3 - Estacion de tierra",
+ "vistas": [
+  {
+   "cug": "142b2a55-2b30-4fd9-b49f-f6e2175a1460",
+   "titulo": "Displacement X (m)",
+   "campo": "DISPLACEMENT_N.X",
+   "minimo": -9.11385e-07,
+   "maximo": 1.57876e-06,
+   "partes": [
+    "region1",
+    "region2"
+   ],
+   "bbox": {
+    "minimum": {
+     "x": -0.0431,
+     "y": -0.060625,
+     "z": -2.05391e-18
+    },
+    "maximum": {
+     "x": 0.0431,
+     "y": 0.060625,
+     "z": 0.031
+    }
+   }
+  },
+  {
+   "cug": "0b214b22-9e3d-426f-bd5b-ec7ee4793933",
+   "titulo": "Von Mises Stress (Pa)",
+   "campo": "VON_MISES_STRESS_N",
+   "minimo": 1.81542,
+   "maximo": 4425830,
+   "partes": [
+    "region1",
+    "region2"
+   ],
+   "bbox": {
+    "minimum": {
+     "x": -0.0431,
+     "y": -0.060625,
+     "z": -2.05391e-18
+    },
+    "maximum": {
+     "x": 0.0431,
+     "y": 0.060625,
+     "z": 0.031
+    }
+   }
+  },
+  {
+   "cug": "cb3d4a5c-97df-40d7-bd5d-3fa366ac3fc0",
+   "titulo": "Von Mises Stress (Pa)",
+   "campo": "VON_MISES_STRESS_N",
+   "minimo": 0.705628,
+   "maximo": 919938,
+   "partes": [
+    "region1",
+    "region2"
+   ],
+   "bbox": {
+    "minimum": {
+     "x": -0.0431,
+     "y": -0.060625,
+     "z": -2.05391e-18
+    },
+    "maximum": {
+     "x": 0.0431,
+     "y": 0.060625,
+     "z": 0.031
+    }
+   }
+  }
+ ],
+ "capturas": [
+  {
+   "guardada": "vista_01_guardada.png",
+   "iso": "vista_01_iso.png",
+   "cug": "142b2a55-2b30-4fd9-b49f-f6e2175a1460"
+  },
+  {
+   "guardada": "vista_02_guardada.png",
+   "iso": "vista_02_iso.png",
+   "cug": "142b2a55-2b30-4fd9-b49f-f6e2175a1460"
+  },
+  {
+   "guardada": "vista_03_guardada.png",
+   "iso": "vista_03_iso.png",
+   "cug": "0b214b22-9e3d-426f-bd5b-ec7ee4793933"
+  },
+  {
+   "guardada": "vista_04_guardada.png",
+   "iso": "vista_04_iso.png",
+   "cug": "cb3d4a5c-97df-40d7-bd5d-3fa366ac3fc0"
+  }
+ ]
+}

@@ -1,0 +1,271 @@
+{
+ "origen": "ensamble_simple_V1.step",
+ "solidos": 53,
+ "partes": [
+  {
+   "n": 0,
+   "nombre": "M1_caja_cuerpo",
+   "volumen_mm3": 214823.7
+  },
+  {
+   "n": 1,
+   "nombre": "M2_caja_tapa",
+   "volumen_mm3": 129409.8
+  },
+  {
+   "n": 2,
+   "nombre": "M11_bandeja",
+   "volumen_mm3": 35638.8
+  },
+  {
+   "n": 3,
+   "nombre": "M3t_tapa_bolsillo_+Y",
+   "volumen_mm3": 9578.7
+  },
+  {
+   "n": 4,
+   "nombre": "M3t_tapa_bolsillo_-Y",
+   "volumen_mm3": 9578.7
+  },
+  {
+   "n": 5,
+   "nombre": "lastre_+Y_pletina_1",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 6,
+   "nombre": "lastre_+Y_pletina_2",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 7,
+   "nombre": "lastre_+Y_pletina_3",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 8,
+   "nombre": "lastre_-Y_pletina_1",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 9,
+   "nombre": "lastre_-Y_pletina_2",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 10,
+   "nombre": "lastre_-Y_pletina_3",
+   "volumen_mm3": 12500.0
+  },
+  {
+   "n": 11,
+   "nombre": "M3s_riel_mitad_+X",
+   "volumen_mm3": 148450.0
+  },
+  {
+   "n": 12,
+   "nombre": "M9s_gancho_+X",
+   "volumen_mm3": 21035.1
+  },
+  {
+   "n": 13,
+   "nombre": "M5s_capsula_tapa_pie_+X",
+   "volumen_mm3": 94264.7
+  },
+  {
+   "n": 14,
+   "nombre": "M4_capsula_cuerpo_+X",
+   "volumen_mm3": 45954.5
+  },
+  {
+   "n": 15,
+   "nombre": "M6_capsula_bisel_+X",
+   "volumen_mm3": 1890.3
+  },
+  {
+   "n": 16,
+   "nombre": "M7_capsula_ventana_+X",
+   "volumen_mm3": 2120.6
+  },
+  {
+   "n": 17,
+   "nombre": "M3s_riel_mitad_-X",
+   "volumen_mm3": 148450.0
+  },
+  {
+   "n": 18,
+   "nombre": "M9s_gancho_-X",
+   "volumen_mm3": 21035.1
+  },
+  {
+   "n": 19,
+   "nombre": "M5s_capsula_tapa_pie_-X",
+   "volumen_mm3": 94264.7
+  },
+  {
+   "n": 20,
+   "nombre": "M4_capsula_cuerpo_-X",
+   "volumen_mm3": 45954.5
+  },
+  {
+   "n": 21,
+   "nombre": "M6_capsula_bisel_-X",
+   "volumen_mm3": 1890.3
+  },
+  {
+   "n": 22,
+   "nombre": "M7_capsula_ventana_-X",
+   "volumen_mm3": 2120.6
+  },
+  {
+   "n": 23,
+   "nombre": "REF_aro_superior",
+   "volumen_mm3": 31582.7
+  },
+  {
+   "n": 24,
+   "nombre": "REF_linterna_malla",
+   "volumen_mm3": 125035.4
+  },
+  {
+   "n": 25,
+   "nombre": "REF_linterna_piso_1",
+   "volumen_mm3": 30171.9
+  },
+  {
+   "n": 26,
+   "nombre": "REF_linterna_piso_2",
+   "volumen_mm3": 30171.9
+  },
+  {
+   "n": 27,
+   "nombre": "REF_linterna_piso_3",
+   "volumen_mm3": 30171.9
+  },
+  {
+   "n": 28,
+   "nombre": "REF_cuerda_1",
+   "volumen_mm3": 3141.6
+  },
+  {
+   "n": 29,
+   "nombre": "REF_cuerda_apice_1",
+   "volumen_mm3": 2265.4
+  },
+  {
+   "n": 30,
+   "nombre": "REF_cuerda_2",
+   "volumen_mm3": 3141.6
+  },
+  {
+   "n": 31,
+   "nombre": "REF_cuerda_apice_2",
+   "volumen_mm3": 2265.4
+  },
+  {
+   "n": 32,
+   "nombre": "REF_cuerda_3",
+   "volumen_mm3": 3141.6
+  },
+  {
+   "n": 33,
+   "nombre": "REF_cuerda_apice_3",
+   "volumen_mm3": 2265.4
+  },
+  {
+   "n": 34,
+   "nombre": "REF_cuerda_4",
+   "volumen_mm3": 3141.6
+  },
+  {
+   "n": 35,
+   "nombre": "REF_cuerda_apice_4",
+   "volumen_mm3": 2265.4
+  },
+  {
+   "n": 36,
+   "nombre": "REF_cabo",
+   "volumen_mm3": 3769.9
+  },
+  {
+   "n": 37,
+   "nombre": "REF_long_line",
+   "volumen_mm3": 120000.0
+  },
+  {
+   "n": 38,
+   "nombre": "REF_boya",
+   "volumen_mm3": 2234400.0
+  },
+  {
+   "n": 39,
+   "nombre": "LR1_separador",
+   "volumen_mm3": 44857.2
+  },
+  {
+   "n": 40,
+   "nombre": "REF_umbilical_1",
+   "volumen_mm3": 1131.0
+  },
+  {
+   "n": 41,
+   "nombre": "REF_umbilical_2",
+   "volumen_mm3": 675.0
+  },
+  {
+   "n": 42,
+   "nombre": "REF_umbilical_3",
+   "volumen_mm3": 773.5
+  },
+  {
+   "n": 43,
+   "nombre": "REF_umbilical_4",
+   "volumen_mm3": 879.0
+  },
+  {
+   "n": 44,
+   "nombre": "REF_umbilical_5",
+   "volumen_mm3": 989.2
+  },
+  {
+   "n": 45,
+   "nombre": "REF_umbilical_6",
+   "volumen_mm3": 1102.7
+  },
+  {
+   "n": 46,
+   "nombre": "REF_umbilical_7",
+   "volumen_mm3": 1218.6
+  },
+  {
+   "n": 47,
+   "nombre": "REF_umbilical_8",
+   "volumen_mm3": 1336.2
+  },
+  {
+   "n": 48,
+   "nombre": "REF_umbilical_9",
+   "volumen_mm3": 1455.3
+  },
+  {
+   "n": 49,
+   "nombre": "REF_umbilical_10",
+   "volumen_mm3": 1575.3
+  },
+  {
+   "n": 50,
+   "nombre": "REF_umbilical_11",
+   "volumen_mm3": 1696.1
+  },
+  {
+   "n": 51,
+   "nombre": "REF_umbilical_12",
+   "volumen_mm3": 1817.7
+  },
+  {
+   "n": 52,
+   "nombre": "REF_umbilical_13",
+   "volumen_mm3": 1939.7
+  }
+ ]
+}

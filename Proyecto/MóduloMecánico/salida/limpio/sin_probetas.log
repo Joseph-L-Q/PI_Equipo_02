@@ -1,0 +1,9 @@
+borradas 24 usadas 25
+12_M3s_riel_gancho_x2 1 1 1 usadas 28
+00_ENSAMBLE_nodo 24 24 20 usadas 31
+leeme 374310fe149fb601e6f5cc9f usadas 33
+50_PLANO_T1_caja {'notas': 1, 'resultado': ['OK']} usadas 39
+51_PLANO_T2_tapa {'notas': 1, 'resultado': ['OK']} usadas 44
+40_PLANO_LR2_aro_x4 {'notas': 1, 'resultado': ['OK']} usadas 49
+{"pestanas": 69, "rotas": [], "faltan": ["12_PLANO_M3s_riel_gancho_x2"], "plano_mal_apuntado": [], "sobran": [], "blobs_en_uso": 24, "llamadas": 51}
+llamadas 51

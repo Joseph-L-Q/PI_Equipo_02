@@ -1,0 +1,693 @@
+{
+ "parametro": {
+  "chaflan.base_soportes": 1.5,
+  "chaflan.base_soportes_max": 2.0
+ },
+ "chaflanes": {
+  "B2_cubierta": {
+   "c": 2.0,
+   "texto": "Chaflanes 45° en la base de los soportes (mm). pilar bajo oreja de la caja (Ø10): 2; columna del panel (Ø12): 2; mástil de antena (Ø14): 2",
+   "grupos": {
+    "pilar bajo oreja de la caja (Ø10)": [
+     2.0,
+     2.0,
+     2.0,
+     2.0
+    ],
+    "columna del panel (Ø12)": [
+     2.0,
+     2.0,
+     2.0,
+     2.0
+    ],
+    "mástil de antena (Ø14)": [
+     2.0
+    ]
+   },
+   "lineas": [
+    "Chaflanes a 45°:",
+    "pilares Ø10: 2",
+    "columnas Ø12: 2 (1 lat.)",
+    "mástil Ø14: 2 (en la barra)"
+   ]
+  },
+  "B3_caja": {
+   "c": 2.0,
+   "texto": "Chaflanes 45° en la base de los soportes (mm). piso con paredes interiores (todo el perímetro): 2; standoff del portabaterías (Ø9): 2; poste de la bandeja (Ø8): 2; oreja con pared exterior: 2",
+   "grupos": {
+    "piso con paredes interiores (todo el perímetro)": [
+     2.0
+    ],
+    "standoff del portabaterías (Ø9)": [
+     2.0,
+     2.0,
+     2.0,
+     2.0
+    ],
+    "poste de la bandeja (Ø8)": [
+     2.0,
+     2.0,
+     2.0,
+     2.0
+    ],
+    "oreja con pared exterior": [
+     2.0,
+     2.0,
+     2.0,
+     2.0
+    ]
+   },
+   "lineas": [
+    "Chaflanes a 45°:",
+    "piso-paredes int.: 2",
+    "standoffs Ø9: 2",
+    "postes bandeja Ø8: 2",
+    "orejas-pared ext.: 2"
+   ]
+  },
+  "B5_cuna": {
+   "c": 2.0,
+   "texto": "Chaflanes 45° en la base de los soportes (mm). costilla extremo base con el patín: 1; costilla intermedia con el patín: 1; costilla central con el patín: 1; costilla extremo cuello con el patín: 1; pared lateral sobre la lengüeta: 2; poste de correa (Ø8) sobre la lengüeta: 2",
+   "grupos": {
+    "costilla extremo base con el patín": [
+     1.0
+    ],
+    "costilla intermedia con el patín": [
+     1.0,
+     1.0
+    ],
+    "costilla central con el patín": [
+     1.0
+    ],
+    "costilla extremo cuello con el patín": [
+     1.0
+    ],
+    "pared lateral sobre la lengüeta": [
+     2.0,
+     2.0,
+     2.0,
+     2.0
+    ],
+    "poste de correa (Ø8) sobre la lengüeta": [
+     2.0,
+     2.0
+    ]
+   },
+   "lineas": [
+    "Chaflanes a 45°:",
+    "costillas-patín: 1",
+    "(botella a 1,5 del patín)",
+    "pared-lengüetas: 2",
+    "postes-lengüetas: 2"
+   ]
+  },
+  "M1s_caja_cuerpo": {
+   "c": 2.0,
+   "texto": "Chaflanes 45° en la base de los soportes (mm). piso con paredes interiores (perímetro, menos junto a las 2 contratuercas PG7): 2; piso con paredes interiores junto a las contratuercas PG7 (sin chaflán); boss de la bandeja (Ø8): 2; paredes del bolsillo de lastre con el piso (por dentro): 1",
+   "grupos": {
+    "piso con paredes interiores (perímetro, menos junto a las 2 contratuercas PG7)": [
+     2.0
+    ],
+    "piso con paredes interiores junto a las contratuercas PG7 (sin chaflán)": [
+     0.0
+    ],
+    "boss de la bandeja (Ø8)": [
+     2.0,
+     2.0,
+     2.0,
+     2.0
+    ],
+    "paredes del bolsillo de lastre con el piso (por dentro)": [
+     1.0,
+     1.0
+    ]
+   },
+   "lineas": [
+    "Chaflanes a 45°:",
+    "piso-paredes int.: 2",
+    "(no junto a las PG7)",
+    "bosses bandeja Ø8: 2",
+    "techo bolsillos: 1"
+   ]
+  }
+ },
+ "registro": {
+  "B2_cubierta": [
+   [
+    "pilar bajo oreja de la caja (Ø10)#0",
+    2.0
+   ],
+   [
+    "pilar bajo oreja de la caja (Ø10)#1",
+    2.0
+   ],
+   [
+    "pilar bajo oreja de la caja (Ø10)#2",
+    2.0
+   ],
+   [
+    "pilar bajo oreja de la caja (Ø10)#3",
+    2.0
+   ],
+   [
+    "columna del panel (Ø12)#0",
+    2.0
+   ],
+   [
+    "columna del panel (Ø12)#1",
+    2.0
+   ],
+   [
+    "columna del panel (Ø12)#2",
+    2.0
+   ],
+   [
+    "columna del panel (Ø12)#3",
+    2.0
+   ],
+   [
+    "mástil de antena (Ø14)",
+    2.0
+   ]
+  ],
+  "B3_caja": [
+   [
+    "piso con paredes interiores (todo el perímetro)",
+    2.0
+   ],
+   [
+    "standoff del portabaterías (Ø9)#11",
+    2.0
+   ],
+   [
+    "poste de la bandeja (Ø8)#11",
+    2.0
+   ],
+   [
+    "standoff del portabaterías (Ø9)#1-1",
+    2.0
+   ],
+   [
+    "poste de la bandeja (Ø8)#1-1",
+    2.0
+   ],
+   [
+    "standoff del portabaterías (Ø9)#-11",
+    2.0
+   ],
+   [
+    "poste de la bandeja (Ø8)#-11",
+    2.0
+   ],
+   [
+    "standoff del portabaterías (Ø9)#-1-1",
+    2.0
+   ],
+   [
+    "poste de la bandeja (Ø8)#-1-1",
+    2.0
+   ],
+   [
+    "oreja con pared exterior#0",
+    2.0
+   ],
+   [
+    "oreja con pared exterior#1",
+    2.0
+   ],
+   [
+    "oreja con pared exterior#2",
+    2.0
+   ],
+   [
+    "oreja con pared exterior#3",
+    2.0
+   ]
+  ],
+  "B5_cuna": [
+   [
+    "costilla extremo base con el patín#0",
+    1.0
+   ],
+   [
+    "costilla intermedia con el patín#1",
+    1.0
+   ],
+   [
+    "costilla central con el patín#2",
+    1.0
+   ],
+   [
+    "costilla intermedia con el patín#3",
+    1.0
+   ],
+   [
+    "costilla extremo cuello con el patín#4",
+    1.0
+   ],
+   [
+    "pared lateral sobre la lengüeta#0",
+    2.0
+   ],
+   [
+    "pared lateral sobre la lengüeta#1",
+    2.0
+   ],
+   [
+    "poste de correa (Ø8) sobre la lengüeta#1",
+    2.0
+   ],
+   [
+    "pared lateral sobre la lengüeta#2",
+    2.0
+   ],
+   [
+    "poste de correa (Ø8) sobre la lengüeta#2",
+    2.0
+   ],
+   [
+    "pared lateral sobre la lengüeta#3",
+    2.0
+   ]
+  ],
+  "M1s_caja_cuerpo": [
+   [
+    "piso con paredes interiores (perímetro, menos junto a las 2 contratuercas PG7)",
+    2.0
+   ],
+   [
+    "piso con paredes interiores junto a las contratuercas PG7 (sin chaflán)",
+    0.0
+   ],
+   [
+    "boss de la bandeja (Ø8)#0",
+    2.0
+   ],
+   [
+    "boss de la bandeja (Ø8)#1",
+    2.0
+   ],
+   [
+    "boss de la bandeja (Ø8)#2",
+    2.0
+   ],
+   [
+    "boss de la bandeja (Ø8)#3",
+    2.0
+   ],
+   [
+    "paredes del bolsillo de lastre con el piso (por dentro)#1",
+    1.0
+   ],
+   [
+    "paredes del bolsillo de lastre con el piso (por dentro)#-1",
+    1.0
+   ]
+  ]
+ },
+ "interferencias": {
+  "B2_cubierta / B1_casco": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / B3_caja": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / batt": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / pcb": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / ws": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / rtc": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / panel": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / botella1": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / botella2": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / botella3": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B2_cubierta / botella4": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / B2_cubierta": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / B4_tapa": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / batt": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / pcb": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / ws": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / rtc": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / panel": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / botella1": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / botella2": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / botella3": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B3_caja / botella4": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / B1_casco": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / batt": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / pcb": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / ws": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / rtc": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / panel": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / botella1": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / botella2": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / botella3": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_+x / botella4": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / B1_casco": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / batt": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / pcb": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / ws": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / rtc": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / panel": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / botella1": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / botella2": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / botella3": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "B5_cuna_-x / botella4": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / contratuerca PG7 1": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / contratuerca PG7 2": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / módulo xy017": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / módulo mpu6050": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / módulo hw517_1": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / módulo hw517_2": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / módulo kit_a": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / módulo esp32": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / módulo microsd": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / bandeja M11_bandeja": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / bandeja M11_bandeja_sup": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / lastre_izq (máximo 654 g)": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / lastre_der (máximo 654 g)": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  },
+  "M1s_caja_cuerpo / M3t tapa del bolsillo": {
+   "v1_mm3": 0,
+   "v2_mm3": 0
+  }
+ },
+ "interferencias_nuevas": {},
+ "slicer": {
+  "B2_cubierta": {
+   "cantidad": 1,
+   "g": [
+    119.0,
+    119.2
+   ],
+   "h": [
+    5.8,
+    5.84
+   ],
+   "soles": [
+    7.14,
+    7.15
+   ],
+   "soportes": [
+    false,
+    false
+   ],
+   "voladizo_mm2": [
+    16.9,
+    16.9
+   ]
+  },
+  "B3_caja": {
+   "cantidad": 1,
+   "g": [
+    171.0,
+    171.7
+   ],
+   "h": [
+    5.46,
+    5.53
+   ],
+   "soles": [
+    10.26,
+    10.3
+   ],
+   "soportes": [
+    false,
+    false
+   ],
+   "voladizo_mm2": [
+    122.8,
+    122.8
+   ]
+  },
+  "B5_cuna": {
+   "cantidad": 2,
+   "g": [
+    141.0,
+    141.2
+   ],
+   "h": [
+    5.01,
+    5.03
+   ],
+   "soles": [
+    8.46,
+    8.47
+   ],
+   "soportes": [
+    true,
+    true
+   ],
+   "voladizo_mm2": [
+    342.5,
+    342.5
+   ]
+  },
+  "M1s_caja_cuerpo": {
+   "cantidad": 1,
+   "g": [
+    509.23,
+    509.32
+   ],
+   "h": [
+    16.13,
+    16.06
+   ],
+   "soles": [
+    30.55,
+    30.56
+   ],
+   "soportes": [
+    true,
+    true
+   ],
+   "voladizo_mm2": [
+    15115.2,
+    14515.2
+   ]
+  }
+ },
+ "placas_3mf": {
+  "placas": {
+   "B2_cubierta_v2": {
+    "g": 119.2,
+    "h": 5.84,
+    "veces": 1,
+    "relleno": 40,
+    "soportes": false,
+    "piezas": [
+     [
+      "salida/correccion_chaflan/stl/B2_cubierta_v2.stl",
+      1
+     ]
+    ],
+    "tresmf": "salida/correccion_chaflan/3mf/B2_cubierta_v2.3mf"
+   },
+   "B3_caja_v2": {
+    "g": 171.7,
+    "h": 5.53,
+    "veces": 1,
+    "relleno": 40,
+    "soportes": false,
+    "piezas": [
+     [
+      "salida/correccion_chaflan/stl/B3_caja_v2.stl",
+      1
+     ]
+    ],
+    "tresmf": "salida/correccion_chaflan/3mf/B3_caja_v2.3mf"
+   },
+   "B5_cuna_v2": {
+    "g": 282.4,
+    "h": 10.06,
+    "veces": 2,
+    "relleno": 40,
+    "soportes": true,
+    "piezas": [
+     [
+      "salida/correccion_chaflan/stl/B5_cuna_v2.stl",
+      2
+     ]
+    ],
+    "tresmf": "salida/correccion_chaflan/3mf/B5_cuna_v2.3mf"
+   },
+   "M1s_caja_cuerpo_v2": {
+    "g": 509.5,
+    "h": 16.07,
+    "veces": 1,
+    "relleno": 100,
+    "soportes": true,
+    "piezas": [
+     [
+      "salida/correccion_chaflan/stl/M1s_caja_cuerpo_v2.stl",
+      1
+     ]
+    ],
+    "tresmf": "salida/correccion_chaflan/3mf/M1s_caja_cuerpo_v2.3mf"
+   }
+  },
+  "total": {
+   "g": 1082.8,
+   "h": 37.5
+  }
+ }
+}

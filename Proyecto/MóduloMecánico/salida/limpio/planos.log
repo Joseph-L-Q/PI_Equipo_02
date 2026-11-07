@@ -1,0 +1,35 @@
+PB_aro {"escala": "1:1", "posterior": true, "cotas": {"creadas": 3, "fallidas": [], "a_mano": ["front: ancho total 115,8 (el borde es curvo)", "front: alto total 32,2 (el borde es curvo)", "left: ancho total 50,9 (el borde es curvo)", "left: separación 11,4 entre nervios horizontales (sin espacio)", "left: separación 9 entre nervios horizontales (sin espacio)"]}, "llamadas": 12, "segundos": 81}
+06_PB_aro 3 usadas 154
+M3t_tapa_bolsillo {"escala": "1:2", "posterior": true, "cotas": {"creadas": 9, "fallidas": [], "a_mano": []}, "llamadas": 11, "segundos": 79}
+13_M3t_tapa_bolsillo_x2 9 usadas 165
+M5s_capsula_tapa_pie {"escala": "1:2", "posterior": true, "cotas": {"creadas": 15, "fallidas": [], "a_mano": ["front: ancho total 51,9 (el borde es curvo)", "front: alto total 72,2 (el borde es curvo)", "top: espesor 1,8 (sin espacio)", "top: posición de 4x Ø4 a 9,9 del borde (sin espacio)", "top: posición de 4x Ø3,4 a 7,4 del borde (sin espacio)", "top: posición de 4x Ø3,4 a 4,5 del borde (sin espacio)", "left: espesor 2x 0,8 (sin espacio)", "left: separación 6,9 entre nervios horizontales (sin espacio)", "left: separación 38,9 entre nervios horizontales (sin espacio)", "left: separación 6,9 entre nervios horizontales (sin espacio)", "left: separación 10 entre nervios horizontales (sin espacio)"]}, "llamadas": 11, "segundos": 79}
+16_M5s_capsula_tapa_pie_x2 15 usadas 176
+M11_bandeja {"escala": "1:2", "posterior": true, "cotas": {"creadas": 7, "fallidas": [], "a_mano": ["front: alto total 30 (el borde es curvo)", "front: espesor 4x 4 (sin espacio)", "top: posición de 4x Ø8 a 6 del borde (sin espacio)", "top: 4x Ø3,4 (sin espacio)", "left: alto total 30 (el borde es curvo)"]}, "llamadas": 11, "segundos": 78}
+18_M11_bandeja 7 usadas 187
+M11_bandeja_sup {"escala": "1:2", "posterior": true, "cotas": {"creadas": 10, "fallidas": [], "a_mano": ["front: espesor 2x 2 (sin espacio)"]}, "llamadas": 11, "segundos": 79}
+19_M11_bandeja_sup 10 usadas 198
+B6_correa {"escala": "1:2", "posterior": true, "cotas": {"creadas": 8, "fallidas": [], "a_mano": ["top: posición de 2x Ø3,4 a 7 del borde (sin espacio)"]}, "llamadas": 11, "segundos": 78}
+37_B6_correa_x4 8 usadas 209
+Traceback (most recent call last):
+  File "C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\cad_final\documento_limpio.py", line 548, in <module>
+    sys.exit(main())
+  File "C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\cad_final\documento_limpio.py", line 541, in main
+    planos(c)
+  File "C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\cad_final\documento_limpio.py", line 446, in planos
+    a4 = P.piece_a4(code, stp, qty, c, {"elements": {}, "name_pid": None}, chamfer=None if row[1] else ())
+  File "C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\cad_final\planos_onshape.py", line 851, in piece_a4
+    res = wait_modify(c, did, wid, deid, [{"messageName": "onshapeCreateViews", "formatVersion": "2021-01-01",
+  File "C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\cad_final\documento_limpio.py", line 414, in <lambda>
+    P.wait_modify = lambda cl, d, w, e, reqs, desc: wm(cl, d, w, e, reqs, desc, T)
+  File "C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\cad_final\documento_limpio.py", line 476, in wm
+    r = c.call("POST", f"/drawings/d/{did}/w/{wid}/e/{eid}/modify", {"description": desc, "jsonRequests": reqs})
+  File "C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\cad_final\documento_limpio.py", line 101, in call
+    r = _orig(self, method, path, body, content_type)
+  File "C:\Users\consultor_ogti_100\Videos\Portafolio\proyecto integrador\PI_Equipo_02\Proyecto\MóduloMecánico\cad_final\onshape_sync.py", line 117, in call
+    raise OnshapeError(f"{method} {path} -> {e.code}: {detail}") from None
+onshape_sync.OnshapeError: POST /drawings/d/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d/e/68f179b4db1ff1072298a668/modify -> 400: [ {
+  "message" : "Description too long. Cannot exceed 32 characters.",
+  "messageTemplate" : "Description too long. Cannot exceed 32 characters.",
+  "path" : "BTRestDrawing.modifyDrawing.modificationParams.description_",
+  "invalidValue" : "vistas A4 P01_probeta_calibracion"
+} ]

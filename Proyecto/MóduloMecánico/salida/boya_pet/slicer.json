@@ -1,0 +1,90 @@
+{
+ "B1_casco": {
+  "nombre": "B1 casco (mitad, x2)",
+  "qty": 2,
+  "orientacion": "sin girar",
+  "soportes": true,
+  "relleno_pct": 40,
+  "g": 172.8,
+  "h": 7.21,
+  "costo_soles": 10.37,
+  "voladizo_mm2": 721.2
+ },
+ "B2_cubierta_lisa": {
+  "nombre": "B2 cubierta lado lisa",
+  "qty": 1,
+  "orientacion": "sin girar",
+  "soportes": false,
+  "relleno_pct": 40,
+  "g": 209.7,
+  "h": 10.41,
+  "costo_soles": 12.58,
+  "voladizo_mm2": 140.0
+ },
+ "B2_cubierta_mastil": {
+  "nombre": "B2 cubierta lado mastil",
+  "qty": 1,
+  "orientacion": "sin girar",
+  "soportes": false,
+  "relleno_pct": 40,
+  "g": 229.9,
+  "h": 11.38,
+  "costo_soles": 13.8,
+  "voladizo_mm2": 168.3
+ },
+ "B3_caja": {
+  "nombre": "B3 caja seca",
+  "qty": 1,
+  "orientacion": "sin girar",
+  "soportes": false,
+  "relleno_pct": 40,
+  "g": 175.0,
+  "h": 5.72,
+  "costo_soles": 10.5,
+  "voladizo_mm2": 122.8
+ },
+ "B4_tapa": {
+  "nombre": "B4 tapa",
+  "qty": 1,
+  "orientacion": "X180",
+  "soportes": false,
+  "relleno_pct": 40,
+  "g": 78.6,
+  "h": 3.35,
+  "costo_soles": 4.72,
+  "voladizo_mm2": 0.0
+ },
+ "B5_cuna_base": {
+  "nombre": "B5 cuna lado base (x2)",
+  "qty": 2,
+  "orientacion": "sin girar",
+  "soportes": false,
+  "relleno_pct": 40,
+  "g": 79.3,
+  "h": 3.26,
+  "costo_soles": 4.76,
+  "voladizo_mm2": 207.8
+ },
+ "B5_cuna_cuello": {
+  "nombre": "B5 cuna lado cuello (x2)",
+  "qty": 2,
+  "orientacion": "sin girar",
+  "soportes": false,
+  "relleno_pct": 40,
+  "g": 81.4,
+  "h": 3.28,
+  "costo_soles": 4.89,
+  "voladizo_mm2": 207.8
+ },
+ "B6_correa": {
+  "nombre": "B6 correa",
+  "qty": 4,
+  "orientacion": "sin girar",
+  "soportes": false,
+  "relleno_pct": 40,
+  "g": 6.1,
+  "h": 0.34,
+  "costo_soles": 0.37,
+  "voladizo_mm2": 0.0
+ }
+}

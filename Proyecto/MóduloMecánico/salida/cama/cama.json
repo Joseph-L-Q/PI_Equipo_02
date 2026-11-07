@@ -1,0 +1,678 @@
+{
+ "cama_util": [
+  230.0,
+  230.0
+ ],
+ "piezas": [
+  {
+   "pieza": "P1_minimo/M1s_caja_cuerpo",
+   "bbox": [
+    137.0,
+    146.0,
+    105.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P1_minimo/M2_caja_tapa",
+   "bbox": [
+    63.0,
+    146.0,
+    137.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P1_minimo/M3s_riel_gancho",
+   "bbox": [
+    146.5,
+    75.2,
+    50.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P1_minimo/M3t_tapa_bolsillo",
+   "bbox": [
+    117.0,
+    57.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P1_minimo/M5s_capsula_tapa_pie",
+   "bbox": [
+    57.3,
+    62.0,
+    94.2
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P1_minimo/M11_bandeja",
+   "bbox": [
+    105.0,
+    114.0,
+    30.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P1_minimo/M11_bandeja_sup",
+   "bbox": [
+    105.0,
+    114.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P1_minimo/M4_capsula_cuerpo",
+   "bbox": [
+    41.0,
+    62.0,
+    62.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P1_minimo/M6_capsula_bisel",
+   "bbox": [
+    42.0,
+    42.0,
+    2.5
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P1_minimo/M7_capsula_ventana",
+   "bbox": [
+    30.0,
+    30.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M1s_caja_cuerpo",
+   "bbox": [
+    149.0,
+    156.0,
+    78.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M2_caja_tapa",
+   "bbox": [
+    149.0,
+    148.0,
+    85.5
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M3s_riel_gancho",
+   "bbox": [
+    140.5,
+    79.4,
+    50.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M3t_tapa_bolsillo",
+   "bbox": [
+    117.0,
+    61.0,
+    5.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M5s_capsula_tapa_pie",
+   "bbox": [
+    51.9,
+    66.0,
+    72.2
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M3f_marco_bolsillo",
+   "bbox": [
+    117.0,
+    77.0,
+    30.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M11_bandeja",
+   "bbox": [
+    115.0,
+    114.0,
+    30.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M11_bandeja_sup",
+   "bbox": [
+    115.0,
+    114.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M4_capsula_cuerpo",
+   "bbox": [
+    66.0,
+    66.0,
+    45.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M6_capsula_bisel",
+   "bbox": [
+    42.0,
+    42.0,
+    2.5
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P2_robusto/M7_capsula_ventana",
+   "bbox": [
+    30.0,
+    30.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P3_monocasco/M1m_caja_riel",
+   "bbox": [
+    250.0,
+    146.0,
+    118.3
+   ],
+   "cabe": false
+  },
+  {
+   "pieza": "P3_monocasco/M2_caja_tapa",
+   "bbox": [
+    63.0,
+    146.0,
+    137.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P3_monocasco/M3t_tapa_bolsillo",
+   "bbox": [
+    117.0,
+    57.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P3_monocasco/M5m_extremo_pie",
+   "bbox": [
+    90.0,
+    64.0,
+    95.9
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P3_monocasco/M9c_abrazadera",
+   "bbox": [
+    36.8,
+    10.4,
+    12.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P3_monocasco/M11_bandeja",
+   "bbox": [
+    105.0,
+    114.0,
+    30.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P3_monocasco/M11_bandeja_sup",
+   "bbox": [
+    105.0,
+    114.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P3_monocasco/M4_capsula_cuerpo",
+   "bbox": [
+    44.0,
+    64.0,
+    64.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P3_monocasco/M6_capsula_bisel",
+   "bbox": [
+    42.0,
+    42.0,
+    2.5
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P3_monocasco/M7_capsula_ventana",
+   "bbox": [
+    30.0,
+    30.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P4_estetico/M1m_caja_riel",
+   "bbox": [
+    250.0,
+    146.0,
+    118.3
+   ],
+   "cabe": false
+  },
+  {
+   "pieza": "P4_estetico/M2_caja_tapa",
+   "bbox": [
+    63.0,
+    146.0,
+    137.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P4_estetico/M3t_tapa_bolsillo",
+   "bbox": [
+    117.0,
+    57.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P4_estetico/M5m_extremo_pie",
+   "bbox": [
+    90.0,
+    64.0,
+    95.9
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P4_estetico/M9c_abrazadera",
+   "bbox": [
+    36.8,
+    10.4,
+    12.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P4_estetico/M11_bandeja",
+   "bbox": [
+    105.0,
+    114.0,
+    30.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P4_estetico/M11_bandeja_sup",
+   "bbox": [
+    105.0,
+    114.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P4_estetico/M4_capsula_cuerpo",
+   "bbox": [
+    44.0,
+    64.0,
+    64.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P4_estetico/M6_capsula_bisel",
+   "bbox": [
+    42.0,
+    42.0,
+    2.5
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "P4_estetico/M7_capsula_ventana",
+   "bbox": [
+    30.0,
+    30.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "boya_pet/B1_casco",
+   "bbox": [
+    133.0,
+    225.6,
+    85.4
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "boya_pet/B2_cubierta_lisa",
+   "bbox": [
+    131.0,
+    225.6,
+    119.9
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "boya_pet/B2_cubierta_mastil",
+   "bbox": [
+    131.0,
+    225.6,
+    142.9
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "boya_pet/B3_caja",
+   "bbox": [
+    166.8,
+    116.8,
+    74.4
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "boya_pet/B4_tapa",
+   "bbox": [
+    166.8,
+    108.8,
+    6.5
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "boya_pet/B5_cuna_base",
+   "bbox": [
+    131.0,
+    118.6,
+    85.4
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "boya_pet/B5_cuna_cuello",
+   "bbox": [
+    131.0,
+    118.6,
+    85.4
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "boya_pet/B6_correa",
+   "bbox": [
+    14.0,
+    105.8,
+    5.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/01_PB7_peine_holguras_x1",
+   "bbox": [
+    76.0,
+    26.0,
+    6.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/02_PB7_pines_x1",
+   "bbox": [
+    62.0,
+    8.0,
+    8.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/03_PB8_inserto_M4_x3",
+   "bbox": [
+    40.0,
+    40.0,
+    10.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/04_PB6_junta_base_x1",
+   "bbox": [
+    60.0,
+    60.0,
+    20.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/05_PB6_junta_tapa_x1",
+   "bbox": [
+    60.0,
+    60.0,
+    5.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/06_PB10_gancho_tramo_x1",
+   "bbox": [
+    50.0,
+    79.4,
+    50.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/07_PB9_bahia_botella_x1",
+   "bbox": [
+    81.0,
+    112.8,
+    85.4
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/08_M6_bisel_x2",
+   "bbox": [
+    42.0,
+    42.0,
+    2.5
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/09_M11_bandeja_x1",
+   "bbox": [
+    115.0,
+    114.0,
+    30.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/10_M11_bandeja_sup_x1",
+   "bbox": [
+    115.0,
+    114.0,
+    3.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/11_M3t_tapa_bolsillo_x2",
+   "bbox": [
+    117.0,
+    61.0,
+    5.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/12_M4_capsula_cuerpo_x2",
+   "bbox": [
+    66.0,
+    66.0,
+    45.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/13_M2_caja_tapa_x1",
+   "bbox": [
+    149.0,
+    148.0,
+    85.5
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/14_M1s_caja_cuerpo_x1",
+   "bbox": [
+    149.0,
+    156.0,
+    78.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/15_M5s_capsula_tapa_pie_x2",
+   "bbox": [
+    51.9,
+    66.0,
+    72.2
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/16_M3s_riel_gancho_x2",
+   "bbox": [
+    140.5,
+    79.4,
+    50.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/17_M3f_marco_bolsillo_x2",
+   "bbox": [
+    117.0,
+    77.0,
+    30.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/18_B1_casco_x2",
+   "bbox": [
+    133.0,
+    225.6,
+    85.4
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/19_B2_cubierta_lisa_x1",
+   "bbox": [
+    131.0,
+    225.6,
+    119.9
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/20_B3_caja_x1",
+   "bbox": [
+    166.8,
+    116.8,
+    74.4
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/21_B4_tapa_x1",
+   "bbox": [
+    166.8,
+    108.8,
+    6.5
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/22_B5_cuna_base_x2",
+   "bbox": [
+    131.0,
+    118.6,
+    85.4
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/23_B6_correa_x4",
+   "bbox": [
+    14.0,
+    105.8,
+    5.0
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/24_B2_cubierta_mastil_x1",
+   "bbox": [
+    131.0,
+    225.6,
+    142.9
+   ],
+   "cabe": true
+  },
+  {
+   "pieza": "imprimir_hoy/25_B5_cuna_cuello_x2",
+   "bbox": [
+    131.0,
+    118.6,
+    85.4
+   ],
+   "cabe": true
+  }
+ ],
+ "fuera": [
+  "P3_monocasco/M1m_caja_riel: 250.0 x 146.0 > 230 x 230",
+  "P4_estetico/M1m_caja_riel: 250.0 x 146.0 > 230 x 230"
+ ]
+}

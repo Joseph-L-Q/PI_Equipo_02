@@ -1,0 +1,150 @@
+{
+ "units": "mm",
+ "tilt_deg": 40.0,
+ "hinge_der": {
+  "pivot": [
+   310.5,
+   0.0,
+   4.0
+  ],
+  "axis": [
+   0,
+   1,
+   0
+  ]
+ },
+ "parts": [
+  {
+   "file": "M1_caja_cuerpo.stl",
+   "part": "M1",
+   "color": "red",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "group": null
+  },
+  {
+   "file": "M2_caja_tapa.stl",
+   "part": "M2",
+   "color": "grey",
+   "explode": [
+    0,
+    0,
+    70
+   ],
+   "group": null
+  },
+  {
+   "file": "M3_brazo_der.stl",
+   "part": "M3",
+   "color": "black",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "group": null
+  },
+  {
+   "file": "M4_capsula_cuerpo_der.stl",
+   "part": "M4",
+   "color": "red",
+   "explode": [
+    45.0,
+    0.0,
+    0.0
+   ],
+   "group": "hinge_der"
+  },
+  {
+   "file": "M5_capsula_tapa_der.stl",
+   "part": "M5",
+   "color": "grey",
+   "explode": [
+    0.0,
+    0.0,
+    45.0
+   ],
+   "group": "hinge_der"
+  },
+  {
+   "file": "M6_bisel_der.stl",
+   "part": "M6",
+   "color": "grey",
+   "explode": [
+    85.0,
+    0.0,
+    0.0
+   ],
+   "group": "hinge_der"
+  },
+  {
+   "file": "M7_ventana_der.stl",
+   "part": "M7",
+   "color": "glass",
+   "explode": [
+    120.0,
+    0.0,
+    0.0
+   ],
+   "group": "hinge_der"
+  },
+  {
+   "file": "M3_brazo_izq.stl",
+   "part": "M3",
+   "color": "black",
+   "explode": [
+    0,
+    0,
+    0
+   ],
+   "group": null
+  },
+  {
+   "file": "M4_capsula_cuerpo_izq.stl",
+   "part": "M4",
+   "color": "red",
+   "explode": [
+    -34.472,
+    0.0,
+    -28.925
+   ],
+   "group": null
+  },
+  {
+   "file": "M5_capsula_tapa_izq.stl",
+   "part": "M5",
+   "color": "grey",
+   "explode": [
+    0.0,
+    0.0,
+    45.0
+   ],
+   "group": null
+  },
+  {
+   "file": "M6_bisel_izq.stl",
+   "part": "M6",
+   "color": "grey",
+   "explode": [
+    -65.114,
+    0.0,
+    -54.637
+   ],
+   "group": null
+  },
+  {
+   "file": "M7_ventana_izq.stl",
+   "part": "M7",
+   "color": "glass",
+   "explode": [
+    -91.925,
+    0.0,
+    -77.135
+   ],
+   "group": null
+  }
+ ]
+}

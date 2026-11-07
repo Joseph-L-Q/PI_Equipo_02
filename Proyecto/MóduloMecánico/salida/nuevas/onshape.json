@@ -1,0 +1,166 @@
+{
+  "T1_caja": {
+    "blob": "73f6f4235662ac53d8ece134",
+    "estudio": "081fe1777b92ade3e58b5980",
+    "partes": 1,
+    "solidos": 1,
+    "verificado": true,
+    "part0": "JFD",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/081fe1777b92ade3e58b5980",
+    "nombres_ref": 0,
+    "sma_z_7": true,
+    "plano": {
+      "id": "ff8fd312cba1b15897893cdb",
+      "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/ff8fd312cba1b15897893cdb",
+      "cotas": {
+        "creadas": 18,
+        "fallidas": [],
+        "a_mano": [
+          "front: 1 separaciones más entre nervios verticales",
+          "front: separación 5 entre nervios verticales (sin espacio)",
+          "front: separación 5 entre nervios verticales (sin espacio)",
+          "front: separación 7 entre nervios verticales (sin espacio)",
+          "front: separación 52,2 entre nervios verticales (sin espacio)",
+          "front: separación 7 entre nervios verticales (sin espacio)",
+          "front: separación 5 entre nervios verticales (sin espacio)",
+          "front: espesor 3,9 (sin espacio)",
+          "top: posición de 4x Ø4 a 2 del borde (sin espacio)",
+          "top: posición de 4x Ø3,5 a 14,1 del borde (sin espacio)",
+          "top: posición de 4x Ø3,5 a 31 del borde (sin espacio)",
+          "top: 4x Ø8,5 (sin espacio)",
+          "top: 4x Ø11,5 (sin espacio)",
+          "left: 1 separaciones más entre nervios verticales",
+          "left: espesor 0,5 (sin espacio)"
+        ]
+      },
+      "escala": "1:2",
+      "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_T1_caja.pdf"
+    }
+  },
+  "T2_tapa": {
+    "blob": "7dc2c84ac6cd04b52783cc3d",
+    "estudio": "f76a01b7833bfd0c4e619446",
+    "partes": 1,
+    "solidos": 1,
+    "verificado": true,
+    "part0": "JFD",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/f76a01b7833bfd0c4e619446",
+    "plano": {
+      "id": "3f6976556319bf5b1aeb0f9a",
+      "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/3f6976556319bf5b1aeb0f9a",
+      "cotas": {
+        "creadas": 20,
+        "fallidas": [],
+        "a_mano": [
+          "front: 1 separaciones más entre nervios verticales",
+          "front: separación 5 entre nervios verticales (sin espacio)",
+          "front: separación 5 entre nervios verticales (sin espacio)",
+          "front: separación 7 entre nervios verticales (sin espacio)",
+          "front: separación 52,2 entre nervios verticales (sin espacio)",
+          "front: separación 7 entre nervios verticales (sin espacio)",
+          "front: separación 5 entre nervios verticales (sin espacio)",
+          "front: espesor 0,5 (sin espacio)",
+          "left: 1 separaciones más entre nervios verticales",
+          "left: espesor 0,5 (sin espacio)"
+        ]
+      },
+      "escala": "1:2",
+      "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_T2_tapa.pdf"
+    }
+  },
+  "00_ENSAMBLE": {
+    "retirado": true,
+    "blob": "54bc97bdf04ec831ed696f67",
+    "estudio": "9f5db126d529a7a6219ab47f",
+    "partes": 36,
+    "solidos": 36,
+    "verificado": true,
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/9f5db126d529a7a6219ab47f",
+    "aros": 4
+  },
+  "reemplazo_165": true,
+  "LR2_aro": {
+    "blob": "376a4df6dd3d7fc695d7ffa1",
+    "estudio": "0105e147c7a4e8f46f07161a",
+    "partes": 1,
+    "solidos": 1,
+    "verificado": true,
+    "part0": "JFD",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/0105e147c7a4e8f46f07161a",
+    "plano": {
+      "id": "b64dbc5d60c83da533be9d16",
+      "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b64dbc5d60c83da533be9d16",
+      "cotas": {
+        "creadas": 0,
+        "fallidas": [],
+        "a_mano": [
+          "front: ancho total 205,7 (el borde es curvo)",
+          "top: sin aristas rectas, solo cotas a mano",
+          "left: ancho total 205,7 (el borde es curvo)"
+        ]
+      },
+      "escala": "1:4",
+      "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_LR2_aro.pdf"
+    }
+  },
+  "PB_aro": {
+    "blob": "6466f7df6ef032de0ec050cb",
+    "estudio": "80b871519eaba8cd1f27bd1f",
+    "partes": 2,
+    "solidos": 2,
+    "verificado": true,
+    "part0": "JFD",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/80b871519eaba8cd1f27bd1f"
+  },
+  "M3s_riel_gancho": {
+    "blob": "ed5000df30ee0d151637abe9",
+    "estudio": "b72266e724b98f2af5bae60e",
+    "partes": 1,
+    "solidos": 1,
+    "verificado": true,
+    "part0": "JFD",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b72266e724b98f2af5bae60e",
+    "plano": {
+      "id": "02675b967c8f513dbfaa5ebc",
+      "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/02675b967c8f513dbfaa5ebc",
+      "cotas": {
+        "creadas": 12,
+        "fallidas": [],
+        "a_mano": [
+          "front: alto total 81,8 (el borde es curvo)",
+          "front: separación 6 entre nervios horizontales (sin espacio)",
+          "front: separación 7 entre nervios horizontales (sin espacio)",
+          "front: separación 6 entre nervios horizontales (sin espacio)",
+          "front: separación 4 entre nervios horizontales (sin espacio)",
+          "front: separación 6 entre nervios horizontales (sin espacio)",
+          "front: separación 7 entre nervios horizontales (sin espacio)",
+          "left: espesor 1,5 (sin espacio)",
+          "left: separación 11,3 entre nervios horizontales (sin espacio)",
+          "left: separación 8,3 entre nervios horizontales (sin espacio)",
+          "left: separación 6 entre nervios horizontales (sin espacio)",
+          "left: separación 19,5 entre nervios horizontales (sin espacio)",
+          "left: 4x Ø4,2 (sin espacio)"
+        ]
+      },
+      "escala": "1:2",
+      "pdf": "salida\\planos_onshape\\pdf_a4\\PLANO_A4_M3s_riel_gancho.pdf"
+    }
+  },
+  "final": {
+    "pestanas": 125,
+    "rotas": [],
+    "duplicados": [],
+    "llamadas_aro_y_planos": 158,
+    "llamadas_tierra_y_correcciones": 72
+  },
+  "00_ENSAMBLE_tierra": {
+    "blob": "eb17b752b15dcffd02450b9c",
+    "estudio": "5516991cd254ef9b0bc3baca",
+    "partes": 30,
+    "solidos": 30,
+    "verificado": true,
+    "part0": "JFD",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/5516991cd254ef9b0bc3baca",
+    "nombres_ref": 28
+  }
+}

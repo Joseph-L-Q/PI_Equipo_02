@@ -1,0 +1,117 @@
+{
+  "LG_probetas": {
+    "did": "dfcea0e1fd7d960062f6631e",
+    "wid": "7030967448e32d98d4462131",
+    "url": "https://cad.onshape.com/documents/dfcea0e1fd7d960062f6631e/w/7030967448e32d98d4462131"
+  },
+  "LG_P0_original": {
+    "did": "95702b685c4703a1812f1cd5",
+    "wid": "22e05e9a953df1fd6ec5ee2a",
+    "url": "https://cad.onshape.com/documents/95702b685c4703a1812f1cd5/w/22e05e9a953df1fd6ec5ee2a"
+  },
+  "LG_sistema": {
+    "did": "add9a482719cd49ae97ca226",
+    "wid": "bc4e69d2a95cf63d59e5dc97",
+    "url": "https://cad.onshape.com/documents/add9a482719cd49ae97ca226/w/bc4e69d2a95cf63d59e5dc97"
+  },
+  "LG_P1_minimo": {
+    "did": "78580e61be69350e3e1577c4",
+    "wid": "e8effc28aa305039dd6d79cb",
+    "url": "https://cad.onshape.com/documents/78580e61be69350e3e1577c4/w/e8effc28aa305039dd6d79cb"
+  },
+  "LG_P2_robusto": {
+    "did": "999b4e78fb31ffdeaf864392",
+    "wid": "5004d17b81ec1ab1c916dc78",
+    "url": "https://cad.onshape.com/documents/999b4e78fb31ffdeaf864392/w/5004d17b81ec1ab1c916dc78"
+  },
+  "LG_P3_monocasco": {
+    "did": "a3f5a3445acf709539d118a1",
+    "wid": "6bec4bfed0a0cd181c80b6d6",
+    "url": "https://cad.onshape.com/documents/a3f5a3445acf709539d118a1/w/6bec4bfed0a0cd181c80b6d6"
+  },
+  "LG_P4_estetico": {
+    "did": "d8e4b0f024f7efcb8f94ed99",
+    "wid": "fabae97231abb068b21c50e6",
+    "url": "https://cad.onshape.com/documents/d8e4b0f024f7efcb8f94ed99/w/fabae97231abb068b21c50e6"
+  },
+  "LG_boya_PET": {
+    "did": "9bef1aea8cb725d8b9ef74ea",
+    "wid": "e0a2bb379713e51552ccdaf9",
+    "url": "https://cad.onshape.com/documents/9bef1aea8cb725d8b9ef74ea/w/e0a2bb379713e51552ccdaf9"
+  },
+  "LG_boya_PET_v2": {
+    "did": "f4e8ac814316f253d53d94e0",
+    "wid": "a972a01f232336138e011bc2",
+    "url": "https://cad.onshape.com/documents/f4e8ac814316f253d53d94e0/w/a972a01f232336138e011bc2"
+  },
+  "LG_00_LEER_PRIMERO": {
+    "did": "b9bce32f5ed7658b40f45777",
+    "wid": "5b938b69e9a7352f33c5075c",
+    "url": "https://cad.onshape.com/documents/b9bce32f5ed7658b40f45777/w/5b938b69e9a7352f33c5075c"
+  },
+  "LG_IMPRIMIR_P2": {
+    "did": "b2a875b87e1322c259f4cd3b",
+    "wid": "3bda440db9eda84724dc5cff",
+    "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff",
+    "subidas_2026-11-05": {
+      "M1s_caja_cuerpo": {
+        "estudio": "44a95b160abfe866f19bf95e",
+        "blob": "0c49e14458045b34620a7369",
+        "partes": 1,
+        "solidos": 1,
+        "verificado": true,
+        "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/44a95b160abfe866f19bf95e"
+      },
+      "M2_caja_tapa": {
+        "estudio": "55f19eb539b3a82a029f39c1",
+        "blob": "e0bda775dc65304fb49a404f",
+        "partes": 1,
+        "solidos": 1,
+        "verificado": true,
+        "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/55f19eb539b3a82a029f39c1"
+      },
+      "B1_casco": {
+        "estudio": "ff2a57f172f6f9814e18550a",
+        "blob": "5741ac2258c4e98427f3cf1d",
+        "partes": 1,
+        "solidos": 1,
+        "verificado": true,
+        "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/ff2a57f172f6f9814e18550a"
+      },
+      "B2_cubierta_lisa": {
+        "estudio": "ed6cb3efba6bf7742ef61ce8",
+        "blob": "da23302c66288789427a7de5",
+        "partes": 1,
+        "solidos": 1,
+        "verificado": true,
+        "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/ed6cb3efba6bf7742ef61ce8"
+      },
+      "B2_cubierta_mastil": {
+        "estudio": "b1fba20195398ad4baf6847b",
+        "blob": "57f1bfadd4fe6677371a090f",
+        "partes": 1,
+        "solidos": 1,
+        "verificado": true,
+        "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/b1fba20195398ad4baf6847b"
+      },
+      "00_ENSAMBLE": {
+        "estudio": "53a25ac22b33b97a8c87e645",
+        "blob": "3c5611447e5091e8ecf3c096",
+        "partes": 32,
+        "solidos": 32,
+        "verificado": true,
+        "url": "https://cad.onshape.com/documents/b2a875b87e1322c259f4cd3b/w/3bda440db9eda84724dc5cff/e/53a25ac22b33b97a8c87e645"
+      }
+    }
+  },
+  "LG_HISTORICO": {
+    "did": "a4aa11146fea799e39033e69",
+    "wid": "cdec90d6d97d03749d018593",
+    "url": "https://cad.onshape.com/documents/a4aa11146fea799e39033e69/w/cdec90d6d97d03749d018593"
+  },
+  "LanternGuard_PIEZAS_PARA_IMPRIMIR": {
+    "did": "76e36e0130a8d259842ecee7",
+    "wid": "fdd58e8bdf77f39a1781a12d",
+    "url": "https://cad.onshape.com/documents/76e36e0130a8d259842ecee7/w/fdd58e8bdf77f39a1781a12d"
+  }
+}

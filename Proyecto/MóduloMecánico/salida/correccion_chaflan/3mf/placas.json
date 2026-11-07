@@ -1,0 +1,64 @@
+{
+ "placas": {
+  "B2_cubierta_v2": {
+   "g": 119.2,
+   "h": 5.84,
+   "veces": 1,
+   "relleno": 40,
+   "soportes": false,
+   "piezas": [
+    [
+     "salida/correccion_chaflan/stl/B2_cubierta_v2.stl",
+     1
+    ]
+   ],
+   "tresmf": "salida/correccion_chaflan/3mf/B2_cubierta_v2.3mf"
+  },
+  "B3_caja_v2": {
+   "g": 171.7,
+   "h": 5.53,
+   "veces": 1,
+   "relleno": 40,
+   "soportes": false,
+   "piezas": [
+    [
+     "salida/correccion_chaflan/stl/B3_caja_v2.stl",
+     1
+    ]
+   ],
+   "tresmf": "salida/correccion_chaflan/3mf/B3_caja_v2.3mf"
+  },
+  "B5_cuna_v2": {
+   "g": 282.4,
+   "h": 10.06,
+   "veces": 2,
+   "relleno": 40,
+   "soportes": true,
+   "piezas": [
+    [
+     "salida/correccion_chaflan/stl/B5_cuna_v2.stl",
+     2
+    ]
+   ],
+   "tresmf": "salida/correccion_chaflan/3mf/B5_cuna_v2.3mf"
+  },
+  "M1s_caja_cuerpo_v2": {
+   "g": 509.5,
+   "h": 16.07,
+   "veces": 1,
+   "relleno": 100,
+   "soportes": true,
+   "piezas": [
+    [
+     "salida/correccion_chaflan/stl/M1s_caja_cuerpo_v2.stl",
+     1
+    ]
+   ],
+   "tresmf": "salida/correccion_chaflan/3mf/M1s_caja_cuerpo_v2.3mf"
+  }
+ },
+ "total": {
+  "g": 1082.8,
+  "h": 37.5
+ }
+}

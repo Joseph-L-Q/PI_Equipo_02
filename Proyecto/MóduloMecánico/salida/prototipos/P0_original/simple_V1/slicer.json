@@ -1,0 +1,65 @@
+{
+ "M3s_riel_mitad": {
+  "g": 170.1,
+  "h": 8.92,
+  "soportes": true,
+  "relleno_pct": 40,
+  "costo_soles": 15.31
+ },
+ "M9s_gancho": {
+  "g": 25.3,
+  "h": 0.95,
+  "soportes": false,
+  "relleno_pct": 100,
+  "costo_soles": 2.28
+ },
+ "M5s_capsula_tapa_pie": {
+  "g": 124.6,
+  "h": 4.15,
+  "soportes": true,
+  "relleno_pct": 100,
+  "costo_soles": 11.21
+ },
+ "M3t_tapa_bolsillo": {
+  "g": 11.4,
+  "h": 0.35,
+  "soportes": false,
+  "relleno_pct": 100,
+  "costo_soles": 1.03
+ },
+ "M1_caja_cuerpo": {
+  "g": 255.1,
+  "h": 5.54,
+  "soportes": true,
+  "relleno_pct": 100,
+  "costo_soles": 22.96
+ },
+ "M2_caja_tapa": {
+  "g": 172.8,
+  "h": 4.95,
+  "soportes": true,
+  "relleno_pct": 100,
+  "costo_soles": 15.55
+ },
+ "M11_bandeja": {
+  "g": 34.0,
+  "h": 1.38,
+  "soportes": false,
+  "relleno_pct": 40,
+  "costo_soles": 3.06
+ },
+ "M4_capsula_cuerpo": {
+  "g": 59.6,
+  "h": 2.05,
+  "soportes": true,
+  "relleno_pct": 100,
+  "costo_soles": 5.37
+ },
+ "M6_capsula_bisel": {
+  "g": 2.0,
+  "h": 0.2,
+  "soportes": false,
+  "relleno_pct": 40,
+  "costo_soles": 0.18
+ }
+}

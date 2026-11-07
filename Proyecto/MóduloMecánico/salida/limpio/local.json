@@ -1,0 +1,110 @@
+{
+ "ensambles": {
+  "00_ENSAMBLE_nodo": {
+   "solidos": 24,
+   "impresas": 20,
+   "referencias_gris": [
+    "REF_linterna_malla",
+    "REF_linterna_piso_1",
+    "REF_linterna_piso_2",
+    "REF_linterna_piso_3"
+   ],
+   "nombres": [
+    "LR2_aro_1",
+    "LR2_aro_2",
+    "LR2_aro_3",
+    "LR2_aro_4",
+    "M11_bandeja",
+    "M11_bandeja_sup",
+    "M1s_caja_cuerpo",
+    "M2_caja_tapa",
+    "M3f_marco_bolsillo_der",
+    "M3f_marco_bolsillo_izq",
+    "M3s_riel_gancho_der",
+    "M3s_riel_gancho_izq",
+    "M3t_tapa_bolsillo_der",
+    "M3t_tapa_bolsillo_izq",
+    "M4_capsula_cuerpo_der",
+    "M4_capsula_cuerpo_izq",
+    "M5s_capsula_tapa_pie_der",
+    "M5s_capsula_tapa_pie_izq",
+    "M6_capsula_bisel_der",
+    "M6_capsula_bisel_izq"
+   ]
+  },
+  "00_ENSAMBLE_boya": {
+   "solidos": 18,
+   "impresas": 14,
+   "referencias_gris": [
+    "ref_botella1",
+    "ref_botella2",
+    "ref_botella3",
+    "ref_botella4"
+   ],
+   "nombres": [
+    "B1_casco_mitad_1",
+    "B1_casco_mitad_2",
+    "B2_cubierta_lisa",
+    "B2_cubierta_mastil",
+    "B3_caja",
+    "B4_tapa",
+    "B5_cuna_D_base",
+    "B5_cuna_D_cuello",
+    "B5_cuna_I_base",
+    "B5_cuna_I_cuello",
+    "B6_correa_D1",
+    "B6_correa_D2",
+    "B6_correa_I1",
+    "B6_correa_I2"
+   ]
+  },
+  "00_ENSAMBLE_tierra": {
+   "solidos": 2,
+   "impresas": 2,
+   "referencias_gris": [],
+   "nombres": [
+    "T1_caja",
+    "T2_tapa"
+   ]
+  }
+ },
+ "probetas": {
+  "P01": {
+   "solidos": 2,
+   "nombres": [
+    "PB7_peine",
+    "PB7_pines"
+   ]
+  },
+  "P02": {
+   "solidos": 1,
+   "nombres": [
+    "PB8_inserto_M4"
+   ]
+  },
+  "P03": {
+   "solidos": 2,
+   "nombres": [
+    "PB6_base",
+    "PB6_tapa"
+   ]
+  },
+  "P04": {
+   "solidos": 1,
+   "nombres": [
+    "PB10_gancho_tramo"
+   ]
+  },
+  "P05": {
+   "solidos": 1,
+   "nombres": [
+    "PB9_bahia_botella"
+   ]
+  }
+ },
+ "leeme": {
+  "paginas": 4,
+  "gramos": 4070,
+  "horas": 164.0
+ }
+}

@@ -1,0 +1,7 @@
+{
+ "M1s_caja_cuerpo": "chaflán de 6 mm en las 4 esquinas de la brida (holgura de la cuerda); tornillos de esquina corridos 5,9 mm",
+ "M2_caja_tapa": "chaflán de 6 mm en las 4 esquinas en planta (holgura de la cuerda); tornillos de esquina corridos 5,9 mm",
+ "B1_casco": "postes de la cubierta Ø16 y parches de amarre de 34 x 14 para la pata de gallo (cabo de 300 N)",
+ "B2_cubierta_lisa": "panel a 15 mm, columnas Ø14, 4 tirantes, marco bajo el panel y barras de 20 x 20 (golpe lateral de 200 N)",
+ "B2_cubierta_mastil": "igual que B2 lisa, más el mástil de la antena"
+}

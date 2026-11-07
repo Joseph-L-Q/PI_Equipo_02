@@ -1,0 +1,363 @@
+{
+ "ensambles": {
+  "00_ENSAMBLE_nodo": [
+   {
+    "nombre": "M1s_caja_cuerpo",
+    "vol_mm3": 367481.9,
+    "fuente": "salida/prototipos/P2_robusto/step/M1s_caja_cuerpo.step",
+    "vol_fuente_mm3": 367481.9,
+    "igual": true
+   },
+   {
+    "nombre": "M2_caja_tapa",
+    "vol_mm3": 160230.6,
+    "fuente": "salida/prototipos/P2_robusto/step/M2_caja_tapa.step",
+    "vol_fuente_mm3": 160230.6,
+    "igual": true
+   },
+   {
+    "nombre": "M11_bandeja",
+    "vol_mm3": 43658.9,
+    "fuente": "salida/prototipos/P2_robusto/step/M11_bandeja.step",
+    "vol_fuente_mm3": 43658.9,
+    "igual": true
+   },
+   {
+    "nombre": "M11_bandeja_sup",
+    "vol_mm3": 39210.7,
+    "fuente": "salida/prototipos/P2_robusto/step/M11_bandeja_sup.step",
+    "vol_fuente_mm3": 39210.7,
+    "igual": true
+   },
+   {
+    "nombre": "M3t_tapa_bolsillo_izq",
+    "vol_mm3": 35555.2,
+    "fuente": "salida/prototipos/P2_robusto/step/M3t_tapa_bolsillo.step",
+    "vol_fuente_mm3": 35555.2,
+    "igual": true
+   },
+   {
+    "nombre": "M3t_tapa_bolsillo_der",
+    "vol_mm3": 35555.2,
+    "fuente": "salida/prototipos/P2_robusto/step/M3t_tapa_bolsillo.step",
+    "vol_fuente_mm3": 35555.2,
+    "igual": true
+   },
+   {
+    "nombre": "M3f_marco_bolsillo_izq",
+    "vol_mm3": 62499.4,
+    "fuente": "salida/prototipos/P2_robusto/step/M3f_marco_bolsillo.step",
+    "vol_fuente_mm3": 62499.4,
+    "igual": true
+   },
+   {
+    "nombre": "M3f_marco_bolsillo_der",
+    "vol_mm3": 62499.4,
+    "fuente": "salida/prototipos/P2_robusto/step/M3f_marco_bolsillo.step",
+    "vol_fuente_mm3": 62499.4,
+    "igual": true
+   },
+   {
+    "nombre": "M3s_riel_gancho_der",
+    "vol_mm3": 168136.1,
+    "fuente": "salida/prototipos/P2_robusto/step/M3s_riel_gancho.step",
+    "vol_fuente_mm3": 168136.1,
+    "igual": true
+   },
+   {
+    "nombre": "M5s_capsula_tapa_pie_der",
+    "vol_mm3": 80070.3,
+    "fuente": "salida/prototipos/P2_robusto/step/M5s_capsula_tapa_pie.step",
+    "vol_fuente_mm3": 80070.3,
+    "igual": true
+   },
+   {
+    "nombre": "M4_capsula_cuerpo_der",
+    "vol_mm3": 64565.5,
+    "fuente": "salida/prototipos/P2_robusto/step/M4_capsula_cuerpo.step",
+    "vol_fuente_mm3": 64565.5,
+    "igual": true
+   },
+   {
+    "nombre": "M6_capsula_bisel_der",
+    "vol_mm3": 1890.3,
+    "fuente": "salida/prototipos/P2_robusto/step/M6_capsula_bisel.step",
+    "vol_fuente_mm3": 1890.3,
+    "igual": true
+   },
+   {
+    "nombre": "M3s_riel_gancho_izq",
+    "vol_mm3": 168136.1,
+    "fuente": "salida/prototipos/P2_robusto/step/M3s_riel_gancho.step",
+    "vol_fuente_mm3": 168136.1,
+    "igual": true
+   },
+   {
+    "nombre": "M5s_capsula_tapa_pie_izq",
+    "vol_mm3": 80070.3,
+    "fuente": "salida/prototipos/P2_robusto/step/M5s_capsula_tapa_pie.step",
+    "vol_fuente_mm3": 80070.3,
+    "igual": true
+   },
+   {
+    "nombre": "M4_capsula_cuerpo_izq",
+    "vol_mm3": 64565.5,
+    "fuente": "salida/prototipos/P2_robusto/step/M4_capsula_cuerpo.step",
+    "vol_fuente_mm3": 64565.5,
+    "igual": true
+   },
+   {
+    "nombre": "M6_capsula_bisel_izq",
+    "vol_mm3": 1890.3,
+    "fuente": "salida/prototipos/P2_robusto/step/M6_capsula_bisel.step",
+    "vol_fuente_mm3": 1890.3,
+    "igual": true
+   },
+   {
+    "nombre": "REF_linterna_malla",
+    "vol_mm3": 125035.4,
+    "fuente": null,
+    "ref": true
+   },
+   {
+    "nombre": "REF_linterna_piso_1",
+    "vol_mm3": 30171.9,
+    "fuente": null,
+    "ref": true
+   },
+   {
+    "nombre": "REF_linterna_piso_2",
+    "vol_mm3": 30171.9,
+    "fuente": null,
+    "ref": true
+   },
+   {
+    "nombre": "REF_linterna_piso_3",
+    "vol_mm3": 30171.9,
+    "fuente": null,
+    "ref": true
+   },
+   {
+    "nombre": "LR2_aro_1",
+    "vol_mm3": 133157.8,
+    "fuente": "salida/aro/step/LR2_aro.step",
+    "vol_fuente_mm3": 133157.8,
+    "igual": true
+   },
+   {
+    "nombre": "LR2_aro_2",
+    "vol_mm3": 133157.8,
+    "fuente": "salida/aro/step/LR2_aro.step",
+    "vol_fuente_mm3": 133157.8,
+    "igual": true
+   },
+   {
+    "nombre": "LR2_aro_3",
+    "vol_mm3": 133157.8,
+    "fuente": "salida/aro/step/LR2_aro.step",
+    "vol_fuente_mm3": 133157.8,
+    "igual": true
+   },
+   {
+    "nombre": "LR2_aro_4",
+    "vol_mm3": 133157.8,
+    "fuente": "salida/aro/step/LR2_aro.step",
+    "vol_fuente_mm3": 133157.8,
+    "igual": true
+   }
+  ],
+  "00_ENSAMBLE_boya": [
+   {
+    "nombre": "B1_casco_mitad_1",
+    "vol_mm3": 201996.5,
+    "fuente": "salida/boya_pet/step/B1_casco.step",
+    "vol_fuente_mm3": 201996.5,
+    "igual": true
+   },
+   {
+    "nombre": "B1_casco_mitad_2",
+    "vol_mm3": 201996.5,
+    "fuente": "salida/boya_pet/step/B1_casco.step",
+    "vol_fuente_mm3": 201996.5,
+    "igual": true
+   },
+   {
+    "nombre": "B2_cubierta_lisa",
+    "vol_mm3": 326591.9,
+    "fuente": "salida/boya_pet/step/B2_cubierta_lisa.step",
+    "vol_fuente_mm3": 326591.9,
+    "igual": true
+   },
+   {
+    "nombre": "B2_cubierta_mastil",
+    "vol_mm3": 351614.5,
+    "fuente": "salida/boya_pet/step/B2_cubierta_mastil.step",
+    "vol_fuente_mm3": 351614.5,
+    "igual": true
+   },
+   {
+    "nombre": "B3_caja",
+    "vol_mm3": 187723.0,
+    "fuente": "salida/boya_pet/step/B3_caja.step",
+    "vol_fuente_mm3": 187723.0,
+    "igual": true
+   },
+   {
+    "nombre": "B4_tapa",
+    "vol_mm3": 114896.1,
+    "fuente": "salida/boya_pet/step/B4_tapa.step",
+    "vol_fuente_mm3": 114896.1,
+    "igual": true
+   },
+   {
+    "nombre": "B5_cuna_D_base",
+    "vol_mm3": 81750.6,
+    "fuente": "salida/boya_pet/step/B5_cuna_base.step",
+    "vol_fuente_mm3": 81750.6,
+    "igual": true
+   },
+   {
+    "nombre": "B5_cuna_D_cuello",
+    "vol_mm3": 85628.1,
+    "fuente": "salida/boya_pet/step/B5_cuna_cuello.step",
+    "vol_fuente_mm3": 85628.1,
+    "igual": true
+   },
+   {
+    "nombre": "B6_correa_D1",
+    "vol_mm3": 7315.2,
+    "fuente": "salida/boya_pet/step/B6_correa.step",
+    "vol_fuente_mm3": 7315.2,
+    "igual": true
+   },
+   {
+    "nombre": "B6_correa_D2",
+    "vol_mm3": 7315.2,
+    "fuente": "salida/boya_pet/step/B6_correa.step",
+    "vol_fuente_mm3": 7315.2,
+    "igual": true
+   },
+   {
+    "nombre": "B5_cuna_I_base",
+    "vol_mm3": 81750.6,
+    "fuente": "salida/boya_pet/step/B5_cuna_base.step",
+    "vol_fuente_mm3": 81750.6,
+    "igual": true
+   },
+   {
+    "nombre": "B5_cuna_I_cuello",
+    "vol_mm3": 85628.1,
+    "fuente": "salida/boya_pet/step/B5_cuna_cuello.step",
+    "vol_fuente_mm3": 85628.1,
+    "igual": true
+   },
+   {
+    "nombre": "B6_correa_I1",
+    "vol_mm3": 7315.2,
+    "fuente": "salida/boya_pet/step/B6_correa.step",
+    "vol_fuente_mm3": 7315.2,
+    "igual": true
+   },
+   {
+    "nombre": "B6_correa_I2",
+    "vol_mm3": 7315.2,
+    "fuente": "salida/boya_pet/step/B6_correa.step",
+    "vol_fuente_mm3": 7315.2,
+    "igual": true
+   },
+   {
+    "nombre": "ref_botella1",
+    "vol_mm3": 1174563.0,
+    "fuente": null,
+    "ref": true
+   },
+   {
+    "nombre": "ref_botella2",
+    "vol_mm3": 1174563.0,
+    "fuente": null,
+    "ref": true
+   },
+   {
+    "nombre": "ref_botella3",
+    "vol_mm3": 1174563.0,
+    "fuente": null,
+    "ref": true
+   },
+   {
+    "nombre": "ref_botella4",
+    "vol_mm3": 1174563.0,
+    "fuente": null,
+    "ref": true
+   }
+  ],
+  "00_ENSAMBLE_tierra": [
+   {
+    "nombre": "T1_caja",
+    "vol_mm3": 58181.1,
+    "fuente": "salida/tierra/step/T1_caja.step",
+    "vol_fuente_mm3": 58181.1,
+    "igual": true
+   },
+   {
+    "nombre": "T2_tapa",
+    "vol_mm3": 39470.6,
+    "fuente": "salida/tierra/step/T2_tapa.step",
+    "vol_fuente_mm3": 39470.6,
+    "igual": true
+   }
+  ]
+ },
+ "piezas": {},
+ "hechos": {
+  "M3s_asiento_17.1": {
+   "ok": true,
+   "diametros_cilindros": [
+    2.0,
+    3.4,
+    4.2,
+    5.0,
+    6.5,
+    10.2,
+    17.1,
+    20.0,
+    29.1
+   ]
+  },
+  "LR2_aro_seccion_16.5": {
+   "ok": true,
+   "params": 16.5,
+   "alto_bbox": 16.0,
+   "perimetros": 13,
+   "ok_perimetros": true
+  },
+  "M1s_M2_chaflan_6": {
+   "ok": true,
+   "caras_M1s": 4,
+   "caras_M2": 4,
+   "params": {
+    "P2_robusto": 6.0
+   }
+  },
+  "B2_barras_26x20": {
+   "ok": true,
+   "params": [
+    26.0,
+    20.0,
+    113.0,
+    true
+   ]
+  },
+  "mitades_B1_B5": {
+   "ok": true,
+   "B1": 2,
+   "B5": 4,
+   "B2": 2
+  },
+  "riel_cerrado_M3s_x2": {
+   "ok": true
+  },
+  "T1_T2": {
+   "ok": true
+  }
+ }
+}

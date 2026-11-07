@@ -1,0 +1,217 @@
+{
+ "M1s_caja_cuerpo": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\prototipos\\P2_robusto\\step\\M1s_caja_cuerpo.step",
+  "sha": "663cfed9079b18bf01c112d6b4d3f8e0ea44eb111e3e15acb7ba7146808ad953",
+  "mtime": 1793847450.769637,
+  "vol": 368007.2,
+  "bb": [
+   149.0,
+   156.0,
+   78.0
+  ],
+  "n": 1
+ },
+ "M2_caja_tapa": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\prototipos\\P2_robusto\\step\\M2_caja_tapa.step",
+  "sha": "1a893e0750b6f30611a841ef9b78caa24c1d82348936a61ddcec2436d5f3c4f4",
+  "mtime": 1793847452.091894,
+  "vol": 160436.1,
+  "bb": [
+   149.0,
+   148.0,
+   85.5
+  ],
+  "n": 1
+ },
+ "M3s_riel_gancho": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\prototipos\\P2_robusto\\step\\M3s_riel_gancho.step",
+  "sha": "7d17994e7673c0159ebac72323bd1b78bfe2db6924babdf0fe5b9c87cf204627",
+  "mtime": 1793847452.789266,
+  "vol": 170833.2,
+  "bb": [
+   140.5,
+   50.0,
+   79.42
+  ],
+  "n": 1
+ },
+ "M3t_tapa_bolsillo": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\prototipos\\P2_robusto\\step\\M3t_tapa_bolsillo.step",
+  "sha": "d1013817282d112fabf62e2899c881b7d457fbd309f8e02dddfcebc366425e1a",
+  "mtime": 1793847453.5610807,
+  "vol": 35555.2,
+  "bb": [
+   117.0,
+   61.0,
+   5.0
+  ],
+  "n": 1
+ },
+ "M4_capsula_cuerpo": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\prototipos\\P2_robusto\\step\\M4_capsula_cuerpo.step",
+  "sha": "8afe96f947e743c5219873519b72dbcf63e8e116ac9e618bb39402cb6af71f38",
+  "mtime": 1793847455.6917086,
+  "vol": 64565.5,
+  "bb": [
+   45.0,
+   66.0,
+   66.0
+  ],
+  "n": 1
+ },
+ "M5s_capsula_tapa_pie": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\prototipos\\P2_robusto\\step\\M5s_capsula_tapa_pie.step",
+  "sha": "4d9f027d24e125b30022161993cc27be22d9605e4bb212a692700007f653f5e5",
+  "mtime": 1793847453.8659394,
+  "vol": 80070.3,
+  "bb": [
+   51.86,
+   66.0,
+   72.16
+  ],
+  "n": 1
+ },
+ "M6_capsula_bisel": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\prototipos\\P2_robusto\\step\\M6_capsula_bisel.step",
+  "sha": "59f8f6bd5bf9b3977c335c9769973c1feb21429a6a8d520f375e6bd77df7deb7",
+  "mtime": 1793847455.9094434,
+  "vol": 1890.3,
+  "bb": [
+   2.5,
+   42.0,
+   42.0
+  ],
+  "n": 1
+ },
+ "M11_bandeja": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\prototipos\\P2_robusto\\step\\M11_bandeja.step",
+  "sha": "6cbce8607d7008b00c4729b181df726faedd3486b4fd3e683bf84e4e8c69c0fb",
+  "mtime": 1793847454.9180057,
+  "vol": 43658.9,
+  "bb": [
+   115.0,
+   114.0,
+   30.0
+  ],
+  "n": 1
+ },
+ "M11_bandeja_sup": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\prototipos\\P2_robusto\\step\\M11_bandeja_sup.step",
+  "sha": "f95cca755e44afde75afdb4daa7eaf12ace7cf0d4897f281401e4e5048a0cb7b",
+  "mtime": 1793847455.0820992,
+  "vol": 39210.7,
+  "bb": [
+   115.0,
+   114.0,
+   3.0
+  ],
+  "n": 1
+ },
+ "B1_casco": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\boya_pet\\step\\B1_casco.step",
+  "sha": "28d0b91c29b44ba30a018908b41ccbf06836467589228c26bb4a429972927d9a",
+  "mtime": 1793846302.3274922,
+  "vol": 157416.4,
+  "bb": [
+   133.0,
+   225.6,
+   85.4
+  ],
+  "n": 1
+ },
+ "B2_cubierta_lisa": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\boya_pet\\step\\B2_cubierta_lisa.step",
+  "sha": "2a942f768d1ae0183f8526241f32590f27765c49ecc47f3a90dc4e2543bb779d",
+  "mtime": 1793846305.344734,
+  "vol": 121848.1,
+  "bb": [
+   131.0,
+   225.6,
+   119.9
+  ],
+  "n": 1
+ },
+ "B2_cubierta_mastil": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\boya_pet\\step\\B2_cubierta_mastil.step",
+  "sha": "d827dd335fda3ae92ced83782077669a9f247dfbbf1c610a875890b95bf210eb",
+  "mtime": 1793846306.378755,
+  "vol": 150415.8,
+  "bb": [
+   131.0,
+   225.6,
+   142.9
+  ],
+  "n": 1
+ },
+ "B3_caja": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\boya_pet\\step\\B3_caja.step",
+  "sha": "f01d3f8aaea41cd48e01c06015a853fe94beb2f4086eff5a48acb94d4cba230a",
+  "mtime": 1793846312.4573622,
+  "vol": 187723.0,
+  "bb": [
+   166.8,
+   116.8,
+   74.4
+  ],
+  "n": 1
+ },
+ "B4_tapa": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\boya_pet\\step\\B4_tapa.step",
+  "sha": "c1d6d864017e0f08768f8177b5ec576584c2e2adcb8219cac0e0cefff8d65670",
+  "mtime": 1793846313.4343562,
+  "vol": 114896.1,
+  "bb": [
+   166.8,
+   108.8,
+   6.5
+  ],
+  "n": 1
+ },
+ "B5_cuna_base": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\boya_pet\\step\\B5_cuna_base.step",
+  "sha": "7cd772480978e967b2b777de760fbcee3916edc8fd2bfd0b6397d85b06895b8e",
+  "mtime": 1793846314.4549246,
+  "vol": 81750.6,
+  "bb": [
+   131.0,
+   118.6,
+   85.4
+  ],
+  "n": 1
+ },
+ "B5_cuna_cuello": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\boya_pet\\step\\B5_cuna_cuello.step",
+  "sha": "b6afa0344b3cfd7ff62bfdec940a0014b43dd5f9a3397a04fa64f565634c8a0a",
+  "mtime": 1793846315.5349038,
+  "vol": 85628.1,
+  "bb": [
+   131.0,
+   118.6,
+   85.4
+  ],
+  "n": 1
+ },
+ "B6_correa": {
+  "step": "C:\\Users\\Usuario\\Documents\\Portfolio\\laptop\\PI_Equipo_02\\Proyecto\\M\u00f3duloMec\u00e1nico\\salida\\boya_pet\\step\\B6_correa.step",
+  "sha": "70c8b433094a6e661d56a41189fa520855491ebeab83ce105cdd652fc1ca55ad",
+  "mtime": 1793846315.8723829,
+  "vol": 7315.2,
+  "bb": [
+   14.0,
+   105.8,
+   5.0
+  ],
+  "n": 1
+ },
+ "M3f_marco_bolsillo": {
+  "step": "../salida/prototipos/P2_robusto/step/M3f_marco_bolsillo.step",
+  "sha": "ded93d3a1790f042e30035df2578e0a1006187b577b4877eb46cee4de61fe755",
+  "vol": 62499.4,
+  "bb": [
+   117.0,
+   77.0,
+   30.0
+  ],
+  "n": 1
+ }
+}

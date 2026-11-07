@@ -1,0 +1,128 @@
+{
+ "B2_cubierta": {
+  "c": 2.0,
+  "texto": "Chaflanes 45° en la base de los soportes (mm). pilar bajo oreja de la caja (Ø10): 2; columna del panel (Ø12): 2; mástil de antena (Ø14): 2",
+  "grupos": {
+   "pilar bajo oreja de la caja (Ø10)": [
+    2.0,
+    2.0,
+    2.0,
+    2.0
+   ],
+   "columna del panel (Ø12)": [
+    2.0,
+    2.0,
+    2.0,
+    2.0
+   ],
+   "mástil de antena (Ø14)": [
+    2.0
+   ]
+  },
+  "lineas": [
+   "Chaflanes a 45°:",
+   "pilares Ø10: 2",
+   "columnas Ø12: 2 (1 lat.)",
+   "mástil Ø14: 2 (en la barra)"
+  ]
+ },
+ "B3_caja": {
+  "c": 2.0,
+  "texto": "Chaflanes 45° en la base de los soportes (mm). piso con paredes interiores (todo el perímetro): 2; standoff del portabaterías (Ø9): 2; poste de la bandeja (Ø8): 2; oreja con pared exterior: 2",
+  "grupos": {
+   "piso con paredes interiores (todo el perímetro)": [
+    2.0
+   ],
+   "standoff del portabaterías (Ø9)": [
+    2.0,
+    2.0,
+    2.0,
+    2.0
+   ],
+   "poste de la bandeja (Ø8)": [
+    2.0,
+    2.0,
+    2.0,
+    2.0
+   ],
+   "oreja con pared exterior": [
+    2.0,
+    2.0,
+    2.0,
+    2.0
+   ]
+  },
+  "lineas": [
+   "Chaflanes a 45°:",
+   "piso-paredes int.: 2",
+   "standoffs Ø9: 2",
+   "postes bandeja Ø8: 2",
+   "orejas-pared ext.: 2"
+  ]
+ },
+ "B5_cuna": {
+  "c": 2.0,
+  "texto": "Chaflanes 45° en la base de los soportes (mm). costilla extremo base con el patín: 1; costilla intermedia con el patín: 1; costilla central con el patín: 1; costilla extremo cuello con el patín: 1; pared lateral sobre la lengüeta: 2; poste de correa (Ø8) sobre la lengüeta: 2",
+  "grupos": {
+   "costilla extremo base con el patín": [
+    1.0
+   ],
+   "costilla intermedia con el patín": [
+    1.0,
+    1.0
+   ],
+   "costilla central con el patín": [
+    1.0
+   ],
+   "costilla extremo cuello con el patín": [
+    1.0
+   ],
+   "pared lateral sobre la lengüeta": [
+    2.0,
+    2.0,
+    2.0,
+    2.0
+   ],
+   "poste de correa (Ø8) sobre la lengüeta": [
+    2.0,
+    2.0
+   ]
+  },
+  "lineas": [
+   "Chaflanes a 45°:",
+   "costillas-patín: 1",
+   "(botella a 1,5 del patín)",
+   "pared-lengüetas: 2",
+   "postes-lengüetas: 2"
+  ]
+ },
+ "M1s_caja_cuerpo": {
+  "c": 2.0,
+  "texto": "Chaflanes 45° en la base de los soportes (mm). piso con paredes interiores (perímetro, menos junto a las 2 contratuercas PG7): 2; piso con paredes interiores junto a las contratuercas PG7 (sin chaflán); boss de la bandeja (Ø8): 2; paredes del bolsillo de lastre con el piso (por dentro): 1",
+  "grupos": {
+   "piso con paredes interiores (perímetro, menos junto a las 2 contratuercas PG7)": [
+    2.0
+   ],
+   "piso con paredes interiores junto a las contratuercas PG7 (sin chaflán)": [
+    0.0
+   ],
+   "boss de la bandeja (Ø8)": [
+    2.0,
+    2.0,
+    2.0,
+    2.0
+   ],
+   "paredes del bolsillo de lastre con el piso (por dentro)": [
+    1.0,
+    1.0
+   ]
+  },
+  "lineas": [
+   "Chaflanes a 45°:",
+   "piso-paredes int.: 2",
+   "(no junto a las PG7)",
+   "bosses bandeja Ø8: 2",
+   "techo bolsillos: 1"
+  ]
+ }
+}
