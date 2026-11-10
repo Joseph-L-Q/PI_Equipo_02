@@ -2,7 +2,7 @@
 
 <h2 align="center">TRL 3 — Validación mediante simulación en SimScale</h2>
 
-<p align="center"><strong>Sección de simulaciones CFD y estructurales (FEA) de la boya, el módulo sumergido y el módulo en tierra</strong></p>
+<p align="center"><strong>Sección de simulaciones CFD y estructurales (FEA) de la boya, el módulo sumergido y el módulo en tierra junto con las pruebas de la parte electrónica y de software del proyecto. </strong></p>
 
 <h2 align="center">Información académica</h2>
 
