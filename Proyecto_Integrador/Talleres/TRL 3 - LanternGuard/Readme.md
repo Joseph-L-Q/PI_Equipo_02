@@ -1,8 +1,8 @@
 <h1 align="center">LanternGuard</h1>
 
-<h2 align="center">TRL 3 — Validación mediante simulación en SimScale</h2>
+<h2 align="center">TRL 3 — Simulaciones en SimScale y pruebas de banco</h2>
 
-<p align="center"><strong>Sección de simulaciones CFD y estructurales (FEA) de la boya, el módulo sumergido y el módulo en tierra</strong></p>
+<p align="center"><strong>Simulaciones CFD y estructurales (FEA) y pruebas de banco de electrónica y software</strong></p>
 
 <h2 align="center">Información académica</h2>
 
@@ -62,7 +62,7 @@ LanternGuard es una propuesta tecnológica para el monitoreo periódico de la bi
 
 Esta sección del TRL 3 [[1]](#ref-1) presenta la validación de la geometría de los tres módulos mediante simulaciones en SimScale, antes de su impresión 3D. Se simuló el flujo de agua alrededor de la boya (CFD) y se evaluó el esfuerzo y el desplazamiento del módulo sumergido y del módulo en tierra (análisis estático). La boya y el módulo sumergido se fabricarán en PETG [[2]](#ref-2), y el módulo en tierra en PLA.
 
-Esta sección no incluye conclusiones generales ni pruebas de hardware, que se presentan por separado.
+Las pruebas de banco de electrónica y software se documentan en la sección 5.
 
 ---
 
@@ -427,6 +427,52 @@ El módulo en tierra recibe por radio los datos de la boya y los envía a intern
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Escala de 0 a 0,0131 mm.</em></p>
 
 **Interpretación.** El esfuerzo máximo (2,938 MPa) es unas 17 veces menor que la resistencia de referencia del PLA (~50 MPa) [[10]](#ref-10), y el desplazamiento de la tapa es de solo 13 µm bajo una presión de mano de 50 N. Por ello, la carcasa es mecánicamente viable: soporta el peso de los componentes y el uso normal de apertura y cierre, sin riesgo de rotura ni de deformaciones que afecten el cierre de la tapa. La principal limitación del PLA es térmica, y se resuelve con instalación a la sombra.
+
+---
+
+## 5. Pruebas de banco de electrónica y software
+
+### 5.1. Acelerómetro — prueba preliminar de la ruta de telemetría
+
+El objetivo de esta prueba fue ensayar la ruta prevista para transmitir las lecturas del acelerómetro. En el banco se conectó un **sensor ultrasónico de proximidad** al ESP32 integrado en la placa Heltec para usar lecturas de distancia como datos de prueba.
+
+En una prueba separada del enlace, un segundo Heltec recibió a 915 MHz el mensaje de 20 bytes `PRUEBA HELTEC EMISOR`, con un RSSI de −14 dBm y un SNR de 12 dB. Este resultado confirma la recepción del paquete de prueba. Queda pendiente verificar la recepción de lecturas de aceleración con el sensor previsto.
+
+<p align="center">
+  <img src="evidencias/sensor-montaje.jpg" alt="Montaje en protoboard del sensor ultrasónico y la placa Heltec." width="560" />
+  <br><em>Figura 26. Montaje en protoboard del sensor ultrasónico y la placa Heltec.</em>
+</p>
+
+<p align="center">
+  <img src="evidencias/sensor-vista-frontal.jpg" alt="Vista frontal del sensor ultrasónico y del cableado hacia el Heltec." width="560" />
+  <br><em>Figura 27. Vista frontal del sensor ultrasónico y del cableado hacia el Heltec.</em>
+</p>
+
+### 5.2. Cámara — captura y reconstrucción JPEG en Python
+
+Se montó una cámara con una placa Heltec y se inspeccionó la salida en el monitor serie durante las pruebas. Para reconstruir la imagen en la computadora, el script de Python extrajo los datos hexadecimales de la captura, los convirtió a bytes y comprobó los marcadores de inicio (`FF D8`) y fin (`FF D9`) del JPEG antes de guardar el archivo. Una ejecución detectó que faltaba el marcador final. En una ejecución posterior se guardó el JPEG y se abrió la imagen en la computadora.
+
+La evidencia corresponde a la **reconstrucción local de la fotografía en el lado emisor**. Para cerrar la prueba de extremo a extremo queda por documentar la recepción de los fragmentos en el segundo Heltec y la reconstrucción automática del JPEG a partir de esos datos.
+
+<p align="center">
+  <img src="evidencias/camara-montaje.jpg" alt="Montaje de banco con la cámara, la placa Heltec y el Arduino IDE." width="560" />
+  <br><em>Figura 28. Montaje de banco con la cámara, la placa Heltec y el Arduino IDE.</em>
+</p>
+
+<p align="center">
+  <img src="evidencias/monitor-serie.jpg" alt="Salida del monitor serie observada durante las pruebas de banco." width="560" />
+  <br><em>Figura 29. Salida del monitor serie observada durante las pruebas de banco.</em>
+</p>
+
+<p align="center">
+  <img src="evidencias/python-reconstruccion.jpg" alt="Script de reconstrucción en Python y confirmación de guardado en la terminal." width="560" />
+  <br><em>Figura 30. Script de reconstrucción en Python y confirmación de guardado en la terminal.</em>
+</p>
+
+<p align="center">
+  <img src="evidencias/jpeg-visualizado.jpg" alt="Imagen JPEG reconstruida y abierta en la computadora." width="560" />
+  <br><em>Figura 31. Imagen JPEG reconstruida y abierta en la computadora.</em>
+</p>
 
 ---
 
