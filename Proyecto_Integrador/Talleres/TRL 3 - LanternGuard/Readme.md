@@ -453,7 +453,7 @@ En una prueba separada del enlace, un segundo Heltec recibió a 915 MHz el mensa
 <p align="center">
   <img src="evidencias/sensor-montaje.jpg" alt="Montaje en protoboard del sensor ultrasónico y la placa Heltec." width="560" />
 
-<p align="center"><strong><em>>Figura 27. Vista frontal del sensor ultrasónico y del cableado hacia el Heltec.</em></strong></p>
+<p align="center"><strong><em>Figura 27. Vista frontal del sensor ultrasónico y del cableado hacia el Heltec.</em></strong></p>
 
 <p align="center">
   <img src="evidencias/sensor-vista-frontal.jpg" alt="Vista frontal del sensor ultrasónico y del cableado hacia el Heltec." width="560" />
@@ -464,22 +464,22 @@ Se montó una cámara con una placa Heltec y se inspeccionó la salida en el mon
 
 La evidencia corresponde a la **reconstrucción local de la fotografía en el lado emisor**. Para cerrar la prueba de extremo a extremo queda por documentar la recepción de los fragmentos en el segundo Heltec y la reconstrucción automática del JPEG a partir de esos datos.
 
-<p align="center"><strong><em>>Figura 28. Montaje de banco con la cámara, la placa Heltec y el Arduino IDE.</em></strong></p>
+<p align="center"><strong><em>Figura 28. Montaje de banco con la cámara, la placa Heltec y el Arduino IDE.</em></strong></p>
 
 <p align="center">
   <img src="evidencias/camara-montaje.jpg" alt="Montaje de banco con la cámara, la placa Heltec y el Arduino IDE." width="560" />
 
-<p align="center"><strong><em>>Figura 29. Salida del monitor serie observada durante las pruebas de banco.</em></strong></p>
+<p align="center"><strong><em>Figura 29. Salida del monitor serie observada durante las pruebas de banco.</em></strong></p>
 
 <p align="center">
   <img src="evidencias/monitor-serie.jpg" alt="Salida del monitor serie observada durante las pruebas de banco." width="560" />
 
-<p align="center"><strong><em>>Figura 30. Script de reconstrucción en Python y confirmación de guardado en la terminal.</em></strong></p>
+<p align="center"><strong><em>Figura 30. Script de reconstrucción en Python y confirmación de guardado en la terminal.</em></strong></p>
 
 <p align="center">
   <img src="evidencias/python-reconstruccion.jpg" alt="Script de reconstrucción en Python y confirmación de guardado en la terminal." width="560" />
 
-<p align="center"><strong><em>>Figura 31. Imagen JPEG reconstruida y abierta en la computadora.</em></strong></p>
+<p align="center"><strong><em>Figura 31. Imagen JPEG reconstruida y abierta en la computadora.</em></strong></p>
 
 <p align="center">
   <img src="evidencias/jpeg-visualizado.jpg" alt="Imagen JPEG reconstruida y abierta en la computadora." width="560" />
