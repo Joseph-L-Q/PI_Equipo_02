@@ -1,8 +1,8 @@
 <h1 align="center">LanternGuard</h1>
 
-<h2 align="center">TRL 3 — Simulaciones en SimScale y pruebas de banco</h2>
+<h2 align="center">TRL 3 — Validación mediante simulación en SimScale</h2>
 
-<p align="center"><strong>Simulaciones CFD y estructurales (FEA) y pruebas de banco de electrónica y software</strong></p>
+<p align="center"><strong>Sección de simulaciones CFD y estructurales (FEA) de la boya, el módulo sumergido y el módulo en tierra</strong></p>
 
 <h2 align="center">Información académica</h2>
 
@@ -87,21 +87,21 @@ Se simuló el paso de la corriente marina alrededor de la boya mediante un anál
 | Turbulencia | Automática |
 
 </div>
-
 <p align="center"><em><strong>Nota.</strong> Elaboración propia a partir de la configuración de SimScale.</em></p>
 
 <p align="center"><strong><em>Figura 1. Material y volumen de fluido (agua de mar) de la simulación de la boya.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Material agua de mar y volumen Flow region" width="760" />
+  <img src="https://github.com/user-attachments/assets/e26dc36e-85f5-4b6b-9cee-dba2a4deb254" alt="Material agua de mar y volumen Flow region" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Se asignó el agua de mar al volumen Flow region.</em></p>
 
+
 <p align="center"><strong><em>Figura 2. Condición de entrada de velocidad (Velocity inlet).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Velocity inlet de la boya" width="760" />
+  <img src="https://github.com/user-attachments/assets/c2b77d82-fe2d-40d4-8bd2-9182eb06e52a" alt="Velocity inlet de la boya" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. La corriente entra por la cara Min Y con Uy = 0,3 m/s.</em></p>
@@ -109,7 +109,7 @@ Se simuló el paso de la corriente marina alrededor de la boya mediante un anál
 <p align="center"><strong><em>Figura 3. Condición de salida de presión (Pressure outlet).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Pressure outlet de la boya" width="760" />
+  <img src="https://github.com/user-attachments/assets/82344549-8b50-45d9-ad15-8d449cd1bae9" alt="Pressure outlet de la boya" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. La salida se ubica en la cara Max Y con presión manométrica de 0 Pa.</em></p>
@@ -117,7 +117,7 @@ Se simuló el paso de la corriente marina alrededor de la boya mediante un anál
 <p align="center"><strong><em>Figura 4. Condición de pared con deslizamiento (Wall – Slip).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Wall slip de la boya" width="760" />
+  <img src="https://github.com/user-attachments/assets/3b18d68f-74d6-42d1-8cdb-7090166ff3c3" alt="Wall slip de la boya" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Se asignó a las cuatro caras laterales del volumen de agua.</em></p>
@@ -151,7 +151,7 @@ La Tabla 2 explica por qué se eligió cada valor numérico.
 <p align="center"><strong><em>Figura 5. Mapa de magnitud de velocidad en un plano de corte de la boya.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Velocity Magnitude en plano de corte" width="760" />
+  <img src="https://github.com/user-attachments/assets/0dae0bac-9aa7-4408-b250-9f1f611559a3" alt="Velocity Magnitude en plano de corte" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Escala de 0 a 1,858 km/h.</em></p>
@@ -159,7 +159,7 @@ La Tabla 2 explica por qué se eligió cada valor numérico.
 <p align="center"><strong><em>Figura 6. Vectores de velocidad alrededor de la boya.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Vectores de velocidad" width="760" />
+  <img src= "https://github.com/user-attachments/assets/6b90258b-5cb1-4586-850b-90df0dfb7bad" alt="Vectores de velocidad" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Los vectores muestran la dirección de la corriente a lo largo del eje Y.</em></p>
@@ -169,15 +169,15 @@ La Tabla 2 explica por qué se eligió cada valor numérico.
 <p align="center"><strong><em>Figura 7. Mapa de presión en un plano de corte de la boya.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Pressure en plano de corte" width="760" />
+  <img src="https://github.com/user-attachments/assets/4053aaca-7556-44b3-82a3-452526d2e0d1" alt="Pressure en plano de corte" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Escala de −289,7 Pa a 53,79 Pa.</em></p>
 
-<p align="center"><strong><em>Figura 8. Valor de presión en un punto del dominio.</em></strong></p>
+<p align="center"><strong><em>Figura 8. Valor de presión en un punto específico.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Presión en un punto del dominio" width="760" />
+  <img src="https://github.com/user-attachments/assets/a867b959-47c0-444a-a203-8b0482ead9cc" alt="Presión en un punto del dominio" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. El punto marcado registra −14,41 Pa.</em></p>
@@ -187,7 +187,7 @@ La Tabla 2 explica por qué se eligió cada valor numérico.
 <p align="center"><strong><em>Figura 9. Residuos de la simulación de la boya.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Gráfica de residuos" width="760" />
+  <img src="https://github.com/user-attachments/assets/9f1f9950-5df3-43f0-a780-94168b65a0d4" alt="Gráfica de residuos" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Se muestran los residuos de Ux, Uy, Uz, p, k y ω.</em></p>
@@ -218,12 +218,10 @@ Se realizó un análisis estático del conjunto del módulo sumergido (*Rnamble-
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia a partir de la configuración de SimScale.</em></p>
 
-<!-- VERIFICAR: la captura de Force 2 (gancho derecho) no se recibió; confirmar que también es -30 N en Z. -->
-
 <p align="center"><strong><em>Figura 10. Gravedad del modelo del módulo sumergido.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Gravedad del modelo" width="760" />
+  <img src="https://github.com/user-attachments/assets/6309dc49-921f-4017-89eb-a8294b18d0e0" alt="Gravedad del modelo" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Gravedad de 9,81 m/s² hacia −Z.</em></p>
@@ -231,31 +229,31 @@ Se realizó un análisis estático del conjunto del módulo sumergido (*Rnamble-
 <p align="center"><strong><em>Figura 11. Material PETG asignado al módulo sumergido.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Material PETG" width="760" />
+  <img src="https://github.com/user-attachments/assets/acc2848a-6fc6-48b8-a2bc-9a4f555c0d61" alt="Material PETG" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Se asignó a 16 volúmenes del ensamble.</em></p>
 
-<p align="center"><strong><em>Figura 12. Soporte fijo en la argolla del módulo.</em></strong></p>
+<p align="center"><strong><em>Figura 12. Soporte fijo en el agujero tipo argolla del módulo.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Fixed support" width="760" />
+  <img src="https://github.com/user-attachments/assets/e4496e4a-eba1-4161-9037-e843cfd1e13e" alt="Fixed support" width="900" />
 </p>
 
-<p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Se fijaron 3 caras de la pieza M2_caja_tapa.</em></p>
+<p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Se fijaron 3 caras de la pieza M2_caja_tapa, toda la parte interna.</em></p>
 
-<p align="center"><strong><em>Figura 13. Fuerza aplicada en los ganchos (Force 4).</em></strong></p>
+<p align="center"><strong><em>Figura 13. Fuerza aplicada en los ganchos que sujetan la linterna (Force 2 y 4).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Force 4" width="760" />
+  <img src="https://github.com/user-attachments/assets/ff12b0cb-770b-470a-98e4-a9741d8ce796" alt="Force 2 y 4" width="900" />
 </p>
 
-<p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Fuerza de −30 N en Z sobre 3 caras del gancho.</em></p>
+<p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Fuerza de −30 N en Z sobre las caras del gancho que tienen contacto con la linterna.</em></p>
 
 <p align="center"><strong><em>Figura 14. Presión hidrostática de 30 kPa.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Pressure 3" width="760" />
+  <img src="https://github.com/user-attachments/assets/4122d116-7c7c-419b-85af-fe3c65076596" alt="Pressure 3" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. La presión se aplicó sobre 353 caras en contacto con el agua.</em></p>
@@ -287,10 +285,16 @@ Se realizó un análisis estático del conjunto del módulo sumergido (*Rnamble-
 
 **Esfuerzo de von Mises.** El esfuerzo máximo fue de **16,37 MPa**. En la vista superior predominan valores bajos (azul, menores de ~3 MPa) y los esfuerzos más altos se concentran en zonas puntuales. El criterio de von Mises permite comparar este valor con el límite elástico de materiales dúctiles como el PETG [[9]](#ref-9).
 
-<p align="center"><strong><em>Figura 15. Esfuerzo de von Mises del módulo sumergido (vista superior).</em></strong></p>
+<p align="center"><strong><em>Figura 15a. Esfuerzo de von Mises del módulo sumergido (vista superior).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Von Mises módulo sumergido" width="760" />
+  <img src="https://github.com/user-attachments/assets/3374113f-6c0b-4bff-9bba-364a3ba976f7" alt="Von Mises módulo sumergido" width="900" />
+</p>
+
+<p align="center"><strong><em>Figura 15b. Esfuerzo de von Mises del módulo sumergido (vista inferior).</em></strong></p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3460cab2-9149-45ea-901b-e61ac95ce510" alt="Von Mises módulo sumergido" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Escala de 7,28 × 10⁻⁶ a 16,37 MPa.</em></p>
@@ -300,7 +304,7 @@ Se realizó un análisis estático del conjunto del módulo sumergido (*Rnamble-
 <p align="center"><strong><em>Figura 16. Desplazamiento del módulo sumergido (vista superior).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Desplazamiento vista superior" width="760" />
+  <img src="https://github.com/user-attachments/assets/08d37743-327d-4be0-9277-69a9a2cf166f" alt="Desplazamiento vista superior" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Escala de 0 a 0,2859 mm.</em></p>
@@ -308,15 +312,15 @@ Se realizó un análisis estático del conjunto del módulo sumergido (*Rnamble-
 <p align="center"><strong><em>Figura 17. Desplazamiento del módulo sumergido (vista frontal).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Desplazamiento vista frontal" width="760" />
+  <img src="https://github.com/user-attachments/assets/ce6e85f5-b450-4f07-ae3c-d38c5a777325" alt="Desplazamiento vista frontal" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. La zona roja de la base de la caja corresponde al máximo desplazamiento.</em></p>
 
-<p align="center"><strong><em>Figura 18. Desplazamiento del módulo sumergido (vista posterior).</em></strong></p>
+<p align="center"><strong><em>Figura 18. Desplazamiento del módulo sumergido (análisis de un punto específico).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Desplazamiento vista posterior" width="760" />
+  <img src="https://github.com/user-attachments/assets/9d907f7b-9249-4252-b66d-1f5e6510a5e5" alt="Desplazamiento vista posterior" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. El punto marcado en el brazo derecho registra 0,180 mm.</em></p>
@@ -352,23 +356,23 @@ El módulo en tierra recibe por radio los datos de la boya y los envía a intern
 <p align="center"><strong><em>Figura 19. Material PLA asignado al módulo en tierra.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Material PLA" width="760" />
+  <img src= "https://github.com/user-attachments/assets/6d4367d3-c42a-4b87-ab29-cecb4801e8cc" alt="Material PLA" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Se asignó a T1_caja y T2_tapa.</em></p>
 
-<p align="center"><strong><em>Figura 20. Soporte fijo en las pestañas de la caja.</em></strong></p>
+<p align="center"><strong><em>Figura 20. Soporte fijo del módulo.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Fixed support del módulo en tierra" width="760" />
+  <img src= "https://github.com/user-attachments/assets/0daedfc1-3cec-4436-ad2c-d08df7b18c9e" alt="Fixed support del módulo en tierra" width="760" />
 </p>
 
-<p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Se fijaron 12 caras de las ranuras de las pestañas.</em></p>
+<p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Se fijaron 12 caras de las ranuras de las orificios laterales.</em></p>
 
 <p align="center"><strong><em>Figura 21. Fuerza del peso de los componentes (Force 2).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Force 2 módulo en tierra" width="760" />
+  <img src= "https://github.com/user-attachments/assets/3116065d-9a36-4ec5-ab9d-d7d8b798e719" alt="Force 2 módulo en tierra" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Fuerza de −1 N sobre la base interior de la caja.</em></p>
@@ -376,7 +380,7 @@ El módulo en tierra recibe por radio los datos de la boya y los envía a intern
 <p align="center"><strong><em>Figura 22. Fuerza de manipulación sobre la tapa (Force 3).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Force 3 módulo en tierra" width="760" />
+  <img src= "https://github.com/user-attachments/assets/67e91cf9-77ce-4379-833a-8c6f12978654" alt="Force 3 módulo en tierra" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Fuerza de −50 N sobre la tapa.</em></p>
@@ -384,7 +388,7 @@ El módulo en tierra recibe por radio los datos de la boya y los envía a intern
 <p align="center"><strong><em>Figura 23. Gravedad del modelo del módulo en tierra.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Gravedad del módulo en tierra" width="760" />
+  <img src= "https://github.com/user-attachments/assets/bbb8b049-ce1f-48ac-b717-b9b8f5b8a103" alt="Gravedad del módulo en tierra" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Gravedad de 9,81 m/s² hacia −Z.</em></p>
@@ -411,17 +415,23 @@ El módulo en tierra recibe por radio los datos de la boya y los envía a intern
 <p align="center"><strong><em>Figura 24. Esfuerzo de von Mises de la caja del módulo en tierra.</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Von Mises módulo en tierra" width="760" />
+  <img src="https://github.com/user-attachments/assets/5dd3465e-817c-4075-bcfd-70d8ea0d7c3f" alt="Von Mises módulo en tierra" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Escala de 1,604 × 10⁻⁶ a 2,938 MPa.</em></p>
 
 **Desplazamiento.** El desplazamiento máximo fue de **0,0131 mm** (13 µm) y se presenta en el centro de la tapa, cerca de la ventana, que es la zona más alejada de los apoyos.
 
-<p align="center"><strong><em>Figura 25. Desplazamiento de la tapa del módulo en tierra.</em></strong></p>
+<p align="center"><strong><em>Figura 25a. Desplazamiento del módulo en tierra (vista posterior).</em></strong></p>
 
 <p align="center">
-  <img src="TU_IMAGEN_URL" alt="Desplazamiento de la tapa" width="760" />
+  <img src="https://github.com/user-attachments/assets/72287ca7-5c4a-44fb-8df5-303c15124aa4" alt="Desplazamiento de la tapa" width="900" />
+</p>
+
+<p align="center"><strong><em>Figura 25b. Desplazamiento del módulo en tierra (vista inferior).</em></strong></p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/31f3c682-e32a-4cf8-835b-00e2e666f5cb" alt="Desplazamiento de la tapa" width="900" />
 </p>
 
 <p align="center"><em><strong>Nota.</strong> Elaboración propia en SimScale. Escala de 0 a 0,0131 mm.</em></p>
